@@ -1,0 +1,17 @@
+node_modules/
+.pnpm-store/
+.env
+.env.*
+!.env.example
+coverage/
+dist/
+.expo/
+android/
+ios/
+*.jks
+*.keystore
+*.p12
+*.pem
+*.key
+*.crt
+*.log

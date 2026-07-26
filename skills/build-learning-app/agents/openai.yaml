@@ -1,0 +1,7 @@
+interface:
+  display_name: "Build Learning App"
+  short_description: "用最少正确代码构建、测试、修改并审查本地学习应用项目"
+  default_prompt: "Use $build-learning-app to implement and review this learning-app task with the project rules."
+
+policy:
+  allow_implicit_invocation: true
