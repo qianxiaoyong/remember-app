@@ -122,6 +122,14 @@ Expected: 当前分支严格为`feat/technical-spikes`；若为`main`立即停�
 
 自测通过临时目录分别放入含/不含`android.package`的`app.json`、含/不含release profile的构建配置，以及可自动验证/缺失/只能人工核验的签名配置证据，断言状态随文件内容变化；不得硬编码`NOT_DECIDED`、`NOT_AVAILABLE`或任何假值。
 
+Run:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/technical-spikes/read-environment-status.ps1 -SelfTest
+```
+
+Expected: 自测使用隔离临时目录覆盖上述动态分支，全部断言通过且不读取或输出真实敏感值。
+
 - [ ] **Step 2: 实现只读状态报告**
 
 脚本的报告字段固定为：
@@ -379,18 +387,20 @@ docker compose --project-name remember-technical-spikes-postgres --file infra/te
 
 - [ ] **Step 3: 创建最小验证Schema和订单种子**
 
-Schema只包含`orders`、`payment_events`、`pack_access`。约束至少包括：
+Schema只包含`orders`、`payment_events`、`pack_access`。`orders`必须保存权威`user_id`和`pack_id`，约束至少包括：
 
 - `payment_events.notification_id`唯一。
 - `payment_events.transaction_id`唯一。
 - `pack_access(user_id, pack_id)`唯一。
 - 支付事件与购买权限引用已存在订单。
 
-`002-seed-order.sql`只写入一笔待支付订单，不预写支付事件或购买权限。
+`002-seed-order.sql`只写入一笔包含`user_id`和`pack_id`的待支付订单，不预写支付事件或购买权限。
 
 - [ ] **Step 4: 实现可重复成功的事务通知处理**
 
-`001-create-spike-schema.sql`同时创建只供Spike调用的`process_spike_payment_notification(...)` PL/pgSQL函数。函数先以`notification_id`查询并锁定既有事件：若既有`transaction_id`或`order_id`与本次输入任一不同，使用固定错误标识`PAYMENT_NOTIFICATION_CONFLICT`抛出异常；完全相同则返回`false`并成功结束，不再更新订单或写入权益。首次处理使用`INSERT ... ON CONFLICT (notification_id) DO NOTHING`处理并发竞争；未插入时重新读取并锁定冲突行，再执行相同的一致性判断。只有确实插入新事件时才推进订单并写入权益。
+`001-create-spike-schema.sql`同时创建只供Spike调用的`process_spike_payment_notification(notification_id, transaction_id, order_id, processed_at)` PL/pgSQL函数；函数不得接收`user_id`或`pack_id`。函数先以`notification_id`查询并锁定既有事件：若既有`transaction_id`或`order_id`与本次输入任一不同，使用固定错误标识`PAYMENT_NOTIFICATION_CONFLICT`抛出异常；完全相同则返回`false`并成功结束，不再更新订单或写入权益。
+
+首次处理必须以`order_id`读取并`FOR UPDATE`锁定订单，从该订单取得权威`user_id`和`pack_id`；未知订单直接拒绝。随后使用`INSERT ... ON CONFLICT (notification_id) DO NOTHING`处理并发竞争；未插入时重新读取并锁定冲突事件，再执行相同的一致性判断。只有确实插入新事件时才推进已锁定订单，并用订单中读取的`user_id`和`pack_id`写入`pack_access`，不能相信或接收通知调用方提供的用户和学习包。
 
 `003-process-payment-notification.sql`在单个事务中调用该函数：
 
@@ -400,8 +410,6 @@ SELECT process_spike_payment_notification(
   :'notification_id',
   :'transaction_id',
   :'order_id',
-  :'user_id',
-  :'pack_id',
   :'processed_at'
 );
 COMMIT;
@@ -417,6 +425,7 @@ COMMIT;
 - 订单状态为`PAID`。
 - `payment_events`恰好1行。
 - `pack_access`恰好1行。
+- `pack_access.user_id`和`pack_access.pack_id`严格等于已锁定`orders`行中的权威字段。
 - 第二次执行前后上述计数不变。
 
 唯一约束是最终防线，但正常重复通知必须走成功的幂等路径，不能依赖唯一冲突异常。
@@ -656,6 +665,7 @@ Run:
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/technical-spikes/read-environment-status.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/technical-spikes/read-environment-status.ps1 -SelfTest
 pnpm --filter @remember/api exec vitest run src/technical-spikes/wechat-pay/build-wechat-signature-message.test.ts
 pnpm --filter @remember/api exec vitest run src/technical-spikes/wechat-pay/build-wechat-authorization.test.ts
 pnpm --filter @remember/api exec vitest run src/technical-spikes/wechat-pay/verify-wechat-message.test.ts
@@ -682,7 +692,7 @@ adb install -r apps/mobile/android/app/build/outputs/apk/release/app-release.apk
 adb shell monkey -p $spikeApplicationId 1
 ```
 
-Expected: `expo-doctor`、`typecheck`和`assembleRelease`退出码为0；APK安装成功；真实Android 8或更高设备启动临时入口并自动显示SQLite、Ed25519和OpenSDK加载边界的非硬编码结果。记录API level和三项结果，不记录设备标识或包名。若APK产物名由已确认的签名方案改变，先将实际稳定产物路径更新进本计划并再次确认，不使用模糊搜索或猜测路径。
+Expected: `expo-doctor`、`typecheck`和`assembleRelease`退出码为0；APK安装成功；`adb shell monkey`只负责启动App，不声称或断言它会进入`technical-spike`路由。启动后由验收人员在App中人工点击临时“技术验证”入口，再记录真实Android 8或更高设备上SQLite、Ed25519和OpenSDK加载边界的非硬编码结果。不得为此增加Deep Link、scheme或路由跳转参数；记录API level和三项结果，不记录设备标识或包名。若APK产物名由已确认的签名方案改变，先将实际稳定产物路径更新进本计划并再次确认，不使用模糊搜索或猜测路径。
 
 - [ ] **Step 3: 删除临时入口并重建release APK**
 
@@ -746,5 +756,5 @@ Pause A和B解除并再次取得确认后，才增加：
 - Spec coverage: 五项高风险验证均有任务或明确暂停点；APIv3和PostgreSQL可独立先完成。
 - Placeholder scan: 未写入未知包名、签名、AppID、商户号或依赖`applicationId`的路径。
 - Type consistency: APIv3类型和函数名在测试与产出中保持一致；移动端OpenSDK唯一接口为`assertWechatOpenSdkLoaded(): Promise<void>`。
-- Security review: Authorization五字段、官方样例对照、带query GET、原始body、AES-GCM末尾16字节认证标签、冲突重放拒绝与回滚、Spike专属volume清理、敏感值脱敏和正式签名人工核验边界均有明确验收。
+- Security review: Authorization五字段、官方样例对照、带query GET、原始body、AES-GCM末尾16字节认证标签、从已锁定订单读取权益主体、冲突重放拒绝与回滚、Spike专属volume清理、敏感值脱敏和正式签名人工核验边界均有明确验收。
 - Scope review: 没有业务页面、正式支付模块、正式数据库迁移、学习包协议或假成功实现。
