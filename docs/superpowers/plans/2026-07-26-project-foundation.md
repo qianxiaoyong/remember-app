@@ -341,7 +341,14 @@ import react from './packages/config/eslint/react.mjs';
 
 export default [
   {
-    ignores: ['**/node_modules/**', '**/dist/**', '**/coverage/**', '.expo/**', 'android/**', 'ios/**'],
+    ignores: [
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/coverage/**',
+      '.expo/**',
+      'android/**',
+      'ios/**',
+    ],
   },
   ...base,
   node,
@@ -806,10 +813,7 @@ pnpm --filter @remember/mobile exec expo install expo-build-properties
     "name": "记得",
     "slug": "remember",
     "orientation": "portrait",
-    "plugins": [
-      "expo-router",
-      ["expo-build-properties", { "android": { "minSdkVersion": 26 } }]
-    ]
+    "plugins": ["expo-router", ["expo-build-properties", { "android": { "minSdkVersion": 26 } }]]
   }
 }
 ```
@@ -903,17 +907,12 @@ test('发现禁止的锁文件', async () => {
 
 test('发现禁止的源码模式', async () => {
   const filePath = path.join(rootPath, 'src', 'bad.ts');
-  const badSource = [
-    "requ" + "ire('x');",
-    'TO' + 'DO',
-    "describe." + "only('x', () => {});",
-  ].join('\n');
+  const badSource = ['requ' + "ire('x');", 'TO' + 'DO', 'describe.' + "only('x', () => {});"].join(
+    '\n',
+  );
   await writeFile(filePath, badSource);
   const rules = (await scanProject(rootPath)).map((issue) => issue.rule);
-  assert.deepEqual(
-    new Set(rules),
-    new Set(['COMMONJS_REQUIRE', 'UNTRACKED_NOTE', 'FOCUSED_TEST']),
-  );
+  assert.deepEqual(new Set(rules), new Set(['COMMONJS_REQUIRE', 'UNTRACKED_NOTE', 'FOCUSED_TEST']));
   await rm(filePath);
 });
 
@@ -951,7 +950,13 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ignoredDirs = new Set([
-  '.git', '.expo', 'android', 'coverage', 'dist', 'ios', 'node_modules',
+  '.git',
+  '.expo',
+  'android',
+  'coverage',
+  'dist',
+  'ios',
+  'node_modules',
 ]);
 const sourceExtensions = new Set(['.cjs', '.js', '.mjs', '.ts', '.tsx']);
 const forbiddenLocks = new Set(['package-lock.json', 'yarn.lock']);
@@ -959,10 +964,7 @@ const patterns = [
   { rule: 'COMMONJS_REQUIRE', value: /\brequire\s*\(/g },
   {
     rule: 'UNTRACKED_NOTE',
-    value: new RegExp(
-      '\\b(?:TO' + 'DO|FIX' + 'ME|HA' + 'CK)\\b(?!\\s*#\\d+)',
-      'g',
-    ),
+    value: new RegExp('\\b(?:TO' + 'DO|FIX' + 'ME|HA' + 'CK)\\b(?!\\s*#\\d+)', 'g'),
   },
   { rule: 'FOCUSED_TEST', value: /\.(?:only|skip)\s*\(/g },
 ];
@@ -976,7 +978,7 @@ async function listFiles(rootPath, currentPath = rootPath) {
   for (const entry of await readdir(currentPath, { withFileTypes: true })) {
     if (entry.isDirectory() && ignoredDirs.has(entry.name)) continue;
     const entryPath = path.join(currentPath, entry.name);
-    if (entry.isDirectory()) files.push(...await listFiles(rootPath, entryPath));
+    if (entry.isDirectory()) files.push(...(await listFiles(rootPath, entryPath)));
     else files.push(entryPath);
   }
   return files;
@@ -1031,7 +1033,7 @@ Expected: 测试全部通过；真实工程没有违规项。
 - 禁止`apps/mobile`导入`apps/api`或未来`apps/admin`源码。
 - 禁止`apps/api`导入其他App源码。
 - 禁止`packages/contracts`导入任何`apps`内容。
-包的`exports`字段负责拒绝跨workspace深层导入。配置内容：
+  包的`exports`字段负责拒绝跨workspace深层导入。配置内容：
 
 ```js
 module.exports = {
@@ -1083,9 +1085,7 @@ Expected: 当前依赖图通过。随后通过`apply_patch`临时创建`packages
 
 ```json
 {
-  "rules": [
-    { "id": "@secretlint/secretlint-rule-preset-recommend" }
-  ]
+  "rules": [{ "id": "@secretlint/secretlint-rule-preset-recommend" }]
 }
 ```
 

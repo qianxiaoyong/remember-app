@@ -37,6 +37,7 @@
 ### Task 1: Correct the approved design and write canonical rules
 
 **Files:**
+
 - Modify: `docs/superpowers/specs/2026-07-26-ai-coding-skill-design.md`
 - Create: `docs/ai-rules/core-rules.md`
 - Create: `docs/ai-rules/code-shape.md`
@@ -46,6 +47,7 @@
 - Create: `docs/ai-rules/words.md`
 
 **Interfaces:**
+
 - Consumes: approved design sections 1 through 27.
 - Produces: six stable Markdown rule sources referenced by Codex and future Cursor adapters.
 
@@ -90,10 +92,12 @@ Expected: every search concept appears in the appropriate rule file, with no mis
 ### Task 2: Initialize and implement the Codex Skill
 
 **Files:**
+
 - Create: `skills/build-learning-app/SKILL.md`
 - Create: `skills/build-learning-app/agents/openai.yaml`
 
 **Interfaces:**
+
 - Consumes: `docs/ai-rules/*.md` and the MVP architecture spec.
 - Produces: `$build-learning-app`, implicitly triggered for implementation, review, testing, database, contract, dependency, and configuration work in this project.
 
@@ -142,10 +146,12 @@ Expected: validation succeeds with exit code 0.
 ### Task 3: Add the repository entry and deterministic installer
 
 **Files:**
+
 - Create: `AGENTS.md`
 - Create: `tools/sync-codex-skill.ps1`
 
 **Interfaces:**
+
 - Consumes: repository Skill at `skills/build-learning-app`.
 - Produces: a short repository entry point and a command that installs or checks the personal copy.
 
@@ -172,9 +178,11 @@ Expected: install succeeds, identical check succeeds, changed-copy check fails.
 ### Task 4: Install and verify the Codex Skill
 
 **Files:**
+
 - Install outside repository: personal Codex skills directory.
 
 **Interfaces:**
+
 - Consumes: validated repository Skill and sync script.
 - Produces: an installed personal `$build-learning-app` Skill matching the repository copy.
 
@@ -209,9 +217,11 @@ State that the files are installed and validated. If the current Codex task does
 ### Task 5: Final self-review
 
 **Files:**
+
 - Inspect all files created or modified by Tasks 1 through 4.
 
 **Interfaces:**
+
 - Consumes: completed artifacts.
 - Produces: evidence that the Codex path is complete and Cursor remains untouched.
 

@@ -40,29 +40,29 @@
 
 ## 3. 总体采用矩阵
 
-| 区域 | 候选 | 判定 | 原因 |
-|---|---|---|---|
-| 移动端 | Expo 官方 `create-expo-app` | 采用 | 与 Expo prebuild、pnpm、Android 首发完全一致 |
-| Monorepo | Expo 官方 monorepo 指南 | 采用 | 官方支持 pnpm workspace，避免过时 Metro 配置 |
-| 全栈模板 | `create-t3-turbo` | 借鉴 | monorepo 包边界成熟，但默认 Next.js、tRPC、Drizzle/Supabase、Better Auth 与本项目冲突 |
-| API | NestJS + Prisma 官方指南/示例 | 采用并裁剪 | 连接和迁移结构可靠；API 契约仍须使用项目 Zod schema |
-| NestJS 社区样板 | Brocoders、nestjs-prisma-starter | 排除 | JWT、GraphQL、TypeORM、Redis及企业功能过多，删改成本大于收益 |
-| 后台 | React-admin 开源核心 | 采用 | 订单、权益、知识库管理天然是列表、筛选、表单和详情场景 |
-| 后台替代 | Refine | 排除（MVP） | 灵活但选择面和 provider 组合更多，单人+AI项目反而增加决策与样板代码 |
-| 本地数据库 | `expo-sqlite` | 采用 | 官方、持久化、事务、prepared statement、FTS 能覆盖需求 |
-| 离线同步 | WatermelonDB | 排除 | 擅长大型响应式数据库和通用同步；本项目只有少量用户状态，模型/迁移/原生层成本不值 |
-| 离线同步 | PowerSync / RxDB | 排除 | 引入同步服务、额外数据库适配器或商业能力，破坏简单 outbox 设计 |
-| 复习算法 | 项目内 SM-2 纯函数 | 采用 | 逻辑小、三按钮语义已确定、最容易测试和迁移 |
-| 复习算法 | `ts-fsrs` | 未来候选 | 项目成熟，但算法和四档评分会改变既有产品语义，不是 SM-2 的无感替换 |
-| 数据包验签 | `@noble/ed25519` | 条件采用 | 体积小、零运行时依赖、供应链措施好；RN 需随机数/SHA-512 polyfill 验证 |
-| 微信支付后端 | 社区 Node APIv3 SDK | 排除 | 无官方背书，主要候选维护/测试质量不足，处于资金链路不可接受 |
-| 微信支付后端 | 项目内窄适配器 | 采用 | 仅封装签名、请求、验签、解密及所需支付接口，攻击面与依赖更小 |
-| 短信 | 腾讯云 Node.js SDK 3.0 | 采用并隔离 | 官方维护；只在 `SmsSender` 适配器内使用 |
-| 对象存储 | 腾讯云 COS Node.js SDK | 采用并隔离 | 官方支持；密钥仅服务端持有，按最小权限配置 |
-| 反向代理 | Caddy 官方镜像 | 采用 | 自动签发/续期 HTTPS，配置少，适合单机 Compose |
-| 容器示例 | Docker `awesome-compose` | 借鉴 | 官方明确这些示例主要用于本地开发，不能原样用于生产 |
-| 中国生产部署 | 腾讯云轻量服务器 + COS | 采用 | 靠近目标用户，适合轻中量服务，运维面小 |
-| 海外 PaaS | Railway / Render | 仅测试候选 | 部署方便，但不适合作为面向中国大陆用户和微信回调的首选生产环境 |
+| 区域            | 候选                             | 判定        | 原因                                                                                  |
+| --------------- | -------------------------------- | ----------- | ------------------------------------------------------------------------------------- |
+| 移动端          | Expo 官方 `create-expo-app`      | 采用        | 与 Expo prebuild、pnpm、Android 首发完全一致                                          |
+| Monorepo        | Expo 官方 monorepo 指南          | 采用        | 官方支持 pnpm workspace，避免过时 Metro 配置                                          |
+| 全栈模板        | `create-t3-turbo`                | 借鉴        | monorepo 包边界成熟，但默认 Next.js、tRPC、Drizzle/Supabase、Better Auth 与本项目冲突 |
+| API             | NestJS + Prisma 官方指南/示例    | 采用并裁剪  | 连接和迁移结构可靠；API 契约仍须使用项目 Zod schema                                   |
+| NestJS 社区样板 | Brocoders、nestjs-prisma-starter | 排除        | JWT、GraphQL、TypeORM、Redis及企业功能过多，删改成本大于收益                          |
+| 后台            | React-admin 开源核心             | 采用        | 订单、权益、知识库管理天然是列表、筛选、表单和详情场景                                |
+| 后台替代        | Refine                           | 排除（MVP） | 灵活但选择面和 provider 组合更多，单人+AI项目反而增加决策与样板代码                   |
+| 本地数据库      | `expo-sqlite`                    | 采用        | 官方、持久化、事务、prepared statement、FTS 能覆盖需求                                |
+| 离线同步        | WatermelonDB                     | 排除        | 擅长大型响应式数据库和通用同步；本项目只有少量用户状态，模型/迁移/原生层成本不值      |
+| 离线同步        | PowerSync / RxDB                 | 排除        | 引入同步服务、额外数据库适配器或商业能力，破坏简单 outbox 设计                        |
+| 复习算法        | 项目内 SM-2 纯函数               | 采用        | 逻辑小、三按钮语义已确定、最容易测试和迁移                                            |
+| 复习算法        | `ts-fsrs`                        | 未来候选    | 项目成熟，但算法和四档评分会改变既有产品语义，不是 SM-2 的无感替换                    |
+| 数据包验签      | `@noble/ed25519`                 | 条件采用    | 体积小、零运行时依赖、供应链措施好；RN 需随机数/SHA-512 polyfill 验证                 |
+| 微信支付后端    | 社区 Node APIv3 SDK              | 排除        | 无官方背书，主要候选维护/测试质量不足，处于资金链路不可接受                           |
+| 微信支付后端    | 项目内窄适配器                   | 采用        | 仅封装签名、请求、验签、解密及所需支付接口，攻击面与依赖更小                          |
+| 短信            | 腾讯云 Node.js SDK 3.0           | 采用并隔离  | 官方维护；只在 `SmsSender` 适配器内使用                                               |
+| 对象存储        | 腾讯云 COS Node.js SDK           | 采用并隔离  | 官方支持；密钥仅服务端持有，按最小权限配置                                            |
+| 反向代理        | Caddy 官方镜像                   | 采用        | 自动签发/续期 HTTPS，配置少，适合单机 Compose                                         |
+| 容器示例        | Docker `awesome-compose`         | 借鉴        | 官方明确这些示例主要用于本地开发，不能原样用于生产                                    |
+| 中国生产部署    | 腾讯云轻量服务器 + COS           | 采用        | 靠近目标用户，适合轻中量服务，运维面小                                                |
+| 海外 PaaS       | Railway / Render                 | 仅测试候选  | 部署方便，但不适合作为面向中国大陆用户和微信回调的首选生产环境                        |
 
 ## 4. 移动端与 Monorepo
 
@@ -361,4 +361,3 @@ docs/
 ### 唯一需谨慎自研的部分
 
 微信支付 Node.js APIv3 窄适配器。原因不是偏好自研，而是官方没有 Node SDK，社区候选又不足以承载资金链路。该适配器必须限制功能范围、使用 Node 原生密码学和 `fetch`、依照官方样例测试，并接受专项 review。除此之外，不再自研通用基础设施。
-
