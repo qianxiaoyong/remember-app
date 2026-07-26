@@ -362,7 +362,7 @@ git commit -m "test(api): 验证微信支付APIv3密码学"
 - Consumes: Docker Compose与官方`postgres:18.4-bookworm`镜像。
 - Produces: 两次均成功且无重复业务效果的幂等通知处理、冲突重放拒绝与事务回滚证据、custom-format dump、独立空库恢复结果及约束验证；不创建Prisma模型或正式迁移。
 
-- [ ] **Step 1: 安装并验证Docker环境**
+- [x] **Step 1: 安装并验证Docker环境**
 
 Docker Desktop/Engine安装属于外部环境操作，执行前取得权限。安装后运行：
 
@@ -373,7 +373,7 @@ docker compose version
 
 Expected: 两条命令退出码为0。失败时只标记Task 3暂停，不影响Task 2结论。
 
-- [ ] **Step 2: 创建隔离的源库与恢复库Compose**
+- [x] **Step 2: 创建隔离的源库与恢复库Compose**
 
 `compose.yaml`固定使用`postgres:18.4-bookworm`，定义`source-db`和`restore-db`两个服务、两个由Compose项目限定作用域的独立volume，不设置跨项目固定volume名称，不开放公网端口。所有命令固定使用Spike专属Compose项目名`remember-technical-spikes-postgres`。
 
@@ -383,9 +383,9 @@ Expected: 两条命令退出码为0。失败时只标记Task 3暂停，不影响
 docker compose --project-name remember-technical-spikes-postgres --file infra/technical-spikes/postgres/compose.yaml down --volumes --remove-orphans
 ```
 
-禁止使用`docker system prune`、`docker volume prune`或删除其他Compose项目资源。`.env.example`只列变量名与空值；实际`.env`保持Git忽略且缺失时脚本失败，不使用默认密码。
+禁止使用`docker system prune`、`docker volume prune`或删除其他Compose项目资源。`.env.example`只列变量名与空值；密码可由当前进程环境或保持Git忽略的实际`.env`提供，两者均缺失时脚本失败，不使用默认密码，也不输出敏感值。
 
-- [ ] **Step 3: 创建最小验证Schema和订单种子**
+- [x] **Step 3: 创建最小验证Schema和订单种子**
 
 Schema只包含`orders`、`payment_events`、`pack_access`。`orders`必须保存权威`user_id`和`pack_id`，约束至少包括：
 
@@ -394,9 +394,9 @@ Schema只包含`orders`、`payment_events`、`pack_access`。`orders`必须保�
 - `pack_access(user_id, pack_id)`唯一。
 - 支付事件与购买权限引用已存在订单。
 
-`002-seed-order.sql`只写入一笔包含`user_id`和`pack_id`的待支付订单，不预写支付事件或购买权限。
+`002-seed-order.sql`写入一笔用于正常支付的待支付订单，以及一笔只用于验证冲突`order_id`的隔离订单；两者均包含权威`user_id`和`pack_id`，且不预写支付事件或购买权限。
 
-- [ ] **Step 4: 实现可重复成功的事务通知处理**
+- [x] **Step 4: 实现可重复成功的事务通知处理**
 
 `001-create-spike-schema.sql`同时创建只供Spike调用的`process_spike_payment_notification(notification_id, transaction_id, order_id, processed_at)` PL/pgSQL函数；函数不得接收`user_id`或`pack_id`。函数先以`notification_id`查询并锁定既有事件：若既有`transaction_id`或`order_id`与本次输入任一不同，使用固定错误标识`PAYMENT_NOTIFICATION_CONFLICT`抛出异常；完全相同则返回`false`并成功结束，不再更新订单或写入权益。
 
@@ -417,7 +417,7 @@ COMMIT;
 
 函数内部的事件插入与权益插入保留精确冲突目标的`ON CONFLICT`，但不得用`DO NOTHING`吞掉不一致重放。`003`通过`psql -v ON_ERROR_STOP=1`执行，函数异常必须令整个事务失败且由连接结束回滚。
 
-- [ ] **Step 5: 证明第二次执行成功且业务效果不重复**
+- [x] **Step 5: 证明第二次执行成功且业务效果不重复**
 
 `run-backup-restore.ps1`使用`psql -v ON_ERROR_STOP=1`连续执行完全相同的通知两次，分别记录退出码。`004-verify-business-effect.sql`断言：
 
@@ -430,7 +430,7 @@ COMMIT;
 
 唯一约束是最终防线，但正常重复通知必须走成功的幂等路径，不能依赖唯一冲突异常。
 
-- [ ] **Step 6: 证明冲突重放被拒绝且事务回滚**
+- [x] **Step 6: 证明冲突重放被拒绝且事务回滚**
 
 `005-reject-conflicting-notification.sql`先在事务内把已支付订单状态临时改回`PENDING`，再调用同一`notification_id`。`run-backup-restore.ps1`分别传入：
 
@@ -439,7 +439,7 @@ COMMIT;
 
 两次命令都必须以非0退出并包含固定错误标识`PAYMENT_NOTIFICATION_CONFLICT`，否则主脚本失败。每次预期失败后重新连接并运行`004-verify-business-effect.sql`，断言订单仍为`PAID`、原事件字段未变化、`payment_events`与`pack_access`仍各1行，从而证明异常前的临时订单更新也已回滚，而非仅由唯一约束报错。
 
-- [ ] **Step 7: 导出并恢复到独立空数据库**
+- [x] **Step 7: 导出并恢复到独立空数据库**
 
 Run through script:
 
@@ -461,15 +461,15 @@ WHERE schemaname = 'public'
 
 该空库来自本次运行刚安全清理并重新创建的Spike专属`restore-data` volume；不能通过先恢复再清表来制造“空库”。
 
-- [ ] **Step 8: 验证恢复数据、约束和冲突回滚**
+- [x] **Step 8: 验证恢复数据、约束和冲突回滚**
 
 `006-verify-restored-data.sql`验证三张表数据、外键、三个唯一约束与幂等重放能力。恢复库再次执行通知脚本两次，两次仍成功且业务行数保持1；随后重跑两种冲突输入，仍必须得到固定错误且通过事务回滚断言。
 
-- [ ] **Step 9: 记录恢复证据并独立审查**
+- [x] **Step 9: 记录恢复证据并独立审查**
 
 ADR记录PostgreSQL精确版本、镜像、Compose项目名、被安全清理的本项目资源计数、恢复前业务表计数、dump大小、SHA-256、备份耗时、恢复耗时、正常重放退出码、两种冲突退出码、回滚断言和恢复后计数。审查必须检查事务边界、重放输入一致性校验、`ON CONFLICT`目标、资源清理标签和恢复库确实为空。
 
-- [ ] **Step 10: 提交PostgreSQL技术验证**
+- [x] **Step 10: 提交PostgreSQL技术验证**
 
 ```powershell
 git add .gitignore infra/technical-spikes/postgres docs/decisions/0003-postgresql-backup-restore.md

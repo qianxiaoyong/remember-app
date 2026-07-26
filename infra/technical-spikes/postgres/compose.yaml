@@ -1,0 +1,32 @@
+services:
+  source-db:
+    image: postgres:18.4-bookworm
+    environment:
+      POSTGRES_DB: spike_source
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set}
+      POSTGRES_USER: postgres
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d spike_source']
+      interval: 2s
+      timeout: 3s
+      retries: 30
+    volumes:
+      - source-data:/var/lib/postgresql
+
+  restore-db:
+    image: postgres:18.4-bookworm
+    environment:
+      POSTGRES_DB: spike_restore
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set}
+      POSTGRES_USER: postgres
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d spike_restore']
+      interval: 2s
+      timeout: 3s
+      retries: 30
+    volumes:
+      - restore-data:/var/lib/postgresql
+
+volumes:
+  source-data:
+  restore-data:
