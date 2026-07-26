@@ -1,12 +1,12 @@
 # 记得项目基础 Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** 在空的`remember-app`根目录建立可重复安装、可统一检查、能启动NestJS健康接口并能导出Expo Android bundle的最小pnpm Monorepo。
 
 **Architecture:** 第一阶段只创建已有真实职责的移动端、API、健康检查契约和共享工程配置，不创建后台、领域包、学习包构建器或部署空壳。根命令通过pnpm递归调用各workspace脚本；依赖边界、敏感信息、格式、类型、测试和构建均具有真实失败条件。
 
-**Tech Stack:** Node.js 22.23.1、pnpm 10.33.2、TypeScript 5.9、Expo SDK 57、React Native 0.86、NestJS 11、Zod、Vitest、ESLint 10 flat config、Prettier 3.9、dependency-cruiser、Secretlint、GitHub Actions。
+**Tech Stack:** Node.js 22.23.1、pnpm 10.33.2、TypeScript 6.0.3、Expo SDK 57、React Native 0.86、NestJS 11、Zod、Vitest、ESLint 10 flat config、Prettier 3.9、dependency-cruiser、Secretlint、GitHub Actions。
 
 ## Global Constraints
 
@@ -31,6 +31,8 @@
 - Node.js 22目前处于LTS，适合生产应用：[Node.js release schedule](https://nodejs.org/en/about/previous-releases)。
 - Vite和ESLint 10均支持Node.js 22.13以上；后台尚无真实职责，因此本阶段不安装Vite或React-admin。
 
+执行时以Expo SDK 57实际发布基线为准：官方模板与Expo Doctor要求TypeScript 6.0.3和`@types/react` 19.2.4，因此原计划的TypeScript 5.9已统一升级。`dependency-cruiser`配置采用ESM `.mjs`，避免为了工具配置引入CommonJS。`expo-doctor`作为移动端精确版本开发依赖安装，确保本地和CI检查可重复执行。
+
 ---
 
 ### Task 1: 初始化Git、运行时约束和Workspace根文件
@@ -54,7 +56,7 @@
 - Consumes: 已落盘的架构、AI规则和总开发顺序。
 - Produces: Node.js 22.23.1、pnpm 10.33.2、workspace路径和根级脚本命名约定。
 
-- [ ] **Step 1: 检查根目录并初始化Git**
+- [x] **Step 1: 检查根目录并初始化Git**
 
 Run:
 
@@ -66,7 +68,7 @@ git status --short
 
 Expected: Git初始化成功；未跟踪内容仅为当前正式文档、Skill和随后新建的工程文件。
 
-- [ ] **Step 2: 创建编辑器、运行时和忽略规则**
+- [x] **Step 2: 创建编辑器、运行时和忽略规则**
 
 `.node-version`必须为：
 
@@ -119,7 +121,7 @@ ios/
 *.log
 ```
 
-- [ ] **Step 3: 创建根package和workspace配置**
+- [x] **Step 3: 创建根package和workspace配置**
 
 `package.json`初始内容：
 
@@ -142,7 +144,7 @@ ios/
     "test": "pnpm build:packages && pnpm -r --if-present test",
     "test:contract": "pnpm --filter @remember/contracts test",
     "test:integration": "pnpm build:packages && pnpm -r --if-present test:integration",
-    "check:deps": "depcruise --config dependency-cruiser.cjs apps packages tools",
+    "check:deps": "depcruise --config dependency-cruiser.config.mjs apps packages tools",
     "check:secrets": "secretlint \"**/*\"",
     "check:source": "node tools/checks/check-source.mjs",
     "build": "pnpm -r --if-present build",
@@ -171,11 +173,11 @@ nodeLinker: hoisted
 }
 ```
 
-- [ ] **Step 4: 创建仅描述当前真实命令的README**
+- [x] **Step 4: 创建仅描述当前真实命令的README**
 
 `README.md`必须包含产品名、Node/pnpm版本、`pnpm install`、`pnpm check`、API启动命令、Expo启动/导出命令以及架构和规则文件链接；不得写尚未实现的功能完成情况。
 
-- [ ] **Step 5: 验证运行时，不安装依赖**
+- [x] **Step 5: 验证运行时，不安装依赖**
 
 Run:
 
@@ -187,7 +189,7 @@ git status --short
 
 Expected: Node输出`v22.23.1`；pnpm输出`10.33.2`。若本机版本不同，停止任务并切换版本，不能忽略`engines`继续安装。
 
-- [ ] **Step 6: 提交根基线**
+- [x] **Step 6: 提交根基线**
 
 ```powershell
 git add .gitignore .editorconfig .node-version .npmrc package.json pnpm-workspace.yaml tsconfig.json README.md AGENTS.md docs skills
@@ -220,17 +222,17 @@ Expected: 一个只包含文档和根配置的提交。
 - Consumes: 根目录Node/pnpm约束和workspace路径。
 - Produces: `@remember/config`公开的TypeScript与ESLint配置；后续workspace只继承，不复制规则。
 
-- [ ] **Step 1: 安装根工程依赖并生成唯一锁文件**
+- [x] **Step 1: 安装根工程依赖并生成唯一锁文件**
 
 Run:
 
 ```powershell
-pnpm add -Dw typescript@5.9 eslint@10 @eslint/js typescript-eslint prettier@3.9.0 globals vitest @vitest/eslint-plugin dependency-cruiser secretlint @secretlint/secretlint-rule-preset-recommend @types/node
+pnpm add -Dw typescript@6.0.3 eslint@10 @eslint/js typescript-eslint prettier@3.9.0 globals vitest @vitest/eslint-plugin dependency-cruiser secretlint @secretlint/secretlint-rule-preset-recommend @types/node
 ```
 
 Expected: 只生成`pnpm-lock.yaml`，不存在`package-lock.json`或`yarn.lock`；`package.json`中的依赖均为精确版本。
 
-- [ ] **Step 2: 创建共享配置package**
+- [x] **Step 2: 创建共享配置package**
 
 `packages/config/package.json`：
 
@@ -251,7 +253,7 @@ Expected: 只生成`pnpm-lock.yaml`，不存在`package-lock.json`或`yarn.lock`
 }
 ```
 
-- [ ] **Step 3: 创建严格TypeScript配置**
+- [x] **Step 3: 创建严格TypeScript配置**
 
 `packages/config/typescript/base.json`必须包含：
 
@@ -277,7 +279,7 @@ Expected: 只生成`pnpm-lock.yaml`，不存在`package-lock.json`或`yarn.lock`
 
 `node.json`继承`base.json`，设置`target: ES2022`、`module: NodeNext`、`moduleResolution: NodeNext`和`types: ["node"]`。`react.json`继承`base.json`，设置`jsx: react-jsx`、`module: ESNext`、`moduleResolution: Bundler`和`noEmit: true`。
 
-- [ ] **Step 4: 创建ESLint flat config**
+- [x] **Step 4: 创建ESLint flat config**
 
 `base.mjs`必须导出数组，并组合`@eslint/js` recommended、`typescript-eslint` strict type-checked规则及以下项目规则：
 
@@ -361,7 +363,7 @@ export default [
 ];
 ```
 
-- [ ] **Step 5: 创建统一Prettier配置**
+- [x] **Step 5: 创建统一Prettier配置**
 
 `prettier.config.mjs`：
 
@@ -375,7 +377,7 @@ export default {
 
 `.prettierignore`忽略`node_modules`、`pnpm-lock.yaml`、`dist`、`coverage`、`.expo`、`android`和`ios`。
 
-- [ ] **Step 6: 验证共享配置能被解析**
+- [x] **Step 6: 验证共享配置能被解析**
 
 Run:
 
@@ -387,7 +389,7 @@ pnpm exec prettier --check package.json pnpm-workspace.yaml packages/config
 
 Expected: 三条命令退出码均为0。
 
-- [ ] **Step 7: 提交共享配置**
+- [x] **Step 7: 提交共享配置**
 
 ```powershell
 git add package.json pnpm-lock.yaml packages/config eslint.config.mjs prettier.config.mjs .prettierignore
@@ -414,7 +416,7 @@ git commit -m "chore: 建立共享代码质量配置"
 - Consumes: `@remember/config/typescript/node`。
 - Produces: `healthResponseSchema`及其推导类型`HealthResponse`，结构固定为`{ status: 'ok' }`。
 
-- [ ] **Step 1: 创建package并安装唯一运行时依赖**
+- [x] **Step 1: 创建package并安装唯一运行时依赖**
 
 `packages/contracts/package.json`必须包含：
 
@@ -450,7 +452,7 @@ pnpm --filter @remember/contracts add zod
 
 Expected: Zod只安装到contracts workspace，并以精确版本记录。
 
-- [ ] **Step 2: 先写失败的契约测试**
+- [x] **Step 2: 先写失败的契约测试**
 
 `packages/contracts/src/api/health.test.ts`：
 
@@ -470,7 +472,7 @@ describe('healthResponseSchema', () => {
 });
 ```
 
-- [ ] **Step 3: 运行测试确认失败**
+- [x] **Step 3: 运行测试确认失败**
 
 Run:
 
@@ -480,7 +482,7 @@ pnpm --filter @remember/contracts test
 
 Expected: FAIL，原因是`./health.js`不存在。
 
-- [ ] **Step 4: 实现最小健康契约**
+- [x] **Step 4: 实现最小健康契约**
 
 `packages/contracts/src/api/health.ts`：
 
@@ -500,7 +502,7 @@ export { healthResponseSchema, type HealthResponse } from './api/health.js';
 
 `tsconfig.json`继承`@remember/config/typescript/node`并包含`src`。`tsconfig.build.json`继承前者，设置`rootDir: src`、`outDir: dist`、`declaration: true`、`sourceMap: true`，并排除`*.test.ts`。
 
-- [ ] **Step 5: 运行契约检查**
+- [x] **Step 5: 运行契约检查**
 
 Run:
 
@@ -512,7 +514,7 @@ pnpm --filter @remember/contracts build
 
 Expected: 2个测试通过，类型检查退出码为0，`dist/index.js`和`dist/index.d.ts`生成但不提交。
 
-- [ ] **Step 6: 提交健康契约**
+- [x] **Step 6: 提交健康契约**
 
 ```powershell
 git add packages/contracts package.json pnpm-lock.yaml tsconfig.json
@@ -544,7 +546,7 @@ git commit -m "feat(contracts): 定义API健康检查契约"
 - Consumes: `healthResponseSchema`和`HealthResponse`。
 - Produces: `GET /api/v1/health -> 200 { "status": "ok" }`。
 
-- [ ] **Step 1: 使用NestJS 11官方CLI生成严格项目但不保留示例业务**
+- [x] **Step 1: 使用NestJS 11官方CLI生成严格项目但不保留示例业务**
 
 Run:
 
@@ -555,7 +557,7 @@ pnpm install
 
 Expected: 生成NestJS 11项目并由根workspace统一安装；禁止产生子目录锁文件。
 
-- [ ] **Step 2: 删除CLI示例并接入workspace契约**
+- [x] **Step 2: 删除CLI示例并接入workspace契约**
 
 删除`app.controller.ts`、`app.controller.spec.ts`和`app.service.ts`。将`apps/api/package.json`的name改为`@remember/api`并设置`"type": "module"`，保留Nest官方运行依赖，加入：
 
@@ -570,7 +572,7 @@ Expected: 生成NestJS 11项目并由根workspace统一安装；禁止产生子�
     "typecheck": "tsc --noEmit",
     "pretest": "pnpm --filter @remember/contracts build",
     "test": "vitest run src",
-    "test:integration": "vitest run test",
+    "test:integration": "vitest run --dir test",
     "prebuild": "pnpm --filter @remember/contracts build",
     "build": "nest build"
   }
@@ -581,12 +583,12 @@ Expected: 生成NestJS 11项目并由根workspace统一安装；禁止产生子�
 
 ```powershell
 pnpm --filter @remember/api add -D vitest supertest @types/supertest
-pnpm --filter @remember/api add -D typescript@5.9
+pnpm --filter @remember/api add -D typescript@6.0.3
 ```
 
 `apps/api/tsconfig.json`继承`@remember/config/typescript/node`，并设置`experimentalDecorators: true`、`emitDecoratorMetadata: true`和`outDir: dist`；源码和生成文件都不得出现`require()`。
 
-- [ ] **Step 3: 先写失败的Controller测试**
+- [x] **Step 3: 先写失败的Controller测试**
 
 `health.controller.test.ts`：
 
@@ -609,7 +611,7 @@ pnpm --filter @remember/api test
 
 Expected: FAIL，原因是`HealthController`不存在。
 
-- [ ] **Step 4: 实现最小Controller、Module和启动入口**
+- [x] **Step 4: 实现最小Controller、Module和启动入口**
 
 `health.controller.ts`：
 
@@ -681,7 +683,7 @@ async function startApi(): Promise<void> {
 await startApi();
 ```
 
-- [ ] **Step 5: 写并运行真实HTTP集成测试**
+- [x] **Step 5: 写并运行真实HTTP集成测试**
 
 `apps/api/test/health.e2e.test.ts`使用以下测试：
 
@@ -724,7 +726,7 @@ pnpm --filter @remember/api build
 
 Expected: Controller、端口解析和HTTP集成测试全部通过；API构建生成`dist`，没有数据库或外部服务依赖。
 
-- [ ] **Step 6: 手动验证健康接口**
+- [x] **Step 6: 手动验证健康接口**
 
 Terminal 1:
 
@@ -740,7 +742,7 @@ Invoke-RestMethod http://localhost:3000/api/v1/health
 
 Expected: 输出对象的`status`为`ok`。停止开发进程后不得残留后台Node进程。
 
-- [ ] **Step 7: 提交API基础**
+- [x] **Step 7: 提交API基础**
 
 ```powershell
 git add apps/api package.json pnpm-lock.yaml
@@ -768,19 +770,19 @@ git commit -m "feat(api): 建立契约化健康检查接口"
 - Consumes: Node.js、pnpm、Expo SDK和Android 8最低版本约束。
 - Produces: `@remember/mobile`；开发入口和Android JavaScript bundle导出命令。
 
-- [ ] **Step 1: 使用Expo官方稳定模板生成移动端**
+- [x] **Step 1: 使用Expo官方稳定模板生成移动端**
 
 Run:
 
 ```powershell
 pnpm dlx create-expo-app@latest apps/mobile --template default@sdk-57 --no-install --no-agents-md
 pnpm install
-pnpm --filter @remember/mobile add -D typescript@5.9
+pnpm --filter @remember/mobile add -D typescript@6.0.3 expo-doctor@1.20.1
 ```
 
 Expected: `apps/mobile`使用Expo SDK 57；根目录只有一个`pnpm-lock.yaml`；模板没有生成第二份AGENTS规则。
 
-- [ ] **Step 2: 收敛移动端package和脚本**
+- [x] **Step 2: 收敛移动端package和脚本**
 
 将package name改为`@remember/mobile`，脚本固定为：
 
@@ -797,7 +799,7 @@ Expected: `apps/mobile`使用Expo SDK 57；根目录只有一个`pnpm-lock.yaml`
 
 删除模板教程页面和不使用的演示依赖。保留Expo Router，因为已确认页面具有启动分流、两项主导航、详情和学习沉浸路由。
 
-- [ ] **Step 3: 配置品牌和Android最低版本**
+- [x] **Step 3: 配置品牌和Android最低版本**
 
 安装官方配置插件：
 
@@ -820,11 +822,11 @@ pnpm --filter @remember/mobile exec expo install expo-build-properties
 
 本阶段不填写`android.package`：它会参与微信开放平台校验，必须在下一阶段微信OpenSDK验证前由用户确认主体标识，一旦注册后不能随意改名。
 
-- [ ] **Step 4: 创建真实的工程启动屏而非产品占位页**
+- [x] **Step 4: 创建真实的工程启动屏而非产品占位页**
 
 `start-screen.tsx`只负责显示App名称“记得”和工程状态“开发环境”，明确它是开发构建入口；不伪造知识库、学习进度、登录或购买数据。`app/index.tsx`只导入并渲染`StartScreen`，`_layout.tsx`只建立根Stack且隐藏默认header。
 
-- [ ] **Step 5: 运行Expo兼容、类型和Android bundle检查**
+- [x] **Step 5: 运行Expo兼容、类型和Android bundle检查**
 
 Run:
 
@@ -835,9 +837,9 @@ pnpm --filter @remember/mobile build
 pnpm list typescript react react-native -r
 ```
 
-Expected: Expo Doctor无错误；类型检查通过；`apps/mobile/dist`生成Android平台bundle；所有workspace使用同一TypeScript 5.9解析版本，React与React Native不存在冲突版本。`dist`保持Git忽略。
+Expected: Expo Doctor无错误；类型检查通过；`apps/mobile/dist`生成Android平台bundle；所有workspace使用同一TypeScript 6.0.3解析版本，React与React Native不存在冲突版本。`dist`保持Git忽略。
 
-- [ ] **Step 6: 记录下一阶段本机前置缺口**
+- [x] **Step 6: 记录下一阶段本机前置缺口**
 
 Run:
 
@@ -848,7 +850,7 @@ $env:ANDROID_HOME
 
 Expected for当前电脑: Java命令目前不存在，`ANDROID_HOME`未配置。把这一事实写入`docs/decisions/0001-local-android-toolchain.md`，并明确“阶段2开始前安装JDK 17和Android SDK”；不得声称Android release构建已通过。
 
-- [ ] **Step 7: 提交移动端基线**
+- [x] **Step 7: 提交移动端基线**
 
 ```powershell
 git add apps/mobile package.json pnpm-lock.yaml docs/decisions/0001-local-android-toolchain.md
@@ -863,7 +865,7 @@ git commit -m "feat(mobile): 建立Expo Android构建基线"
 
 - Create: `tools/checks/check-source.mjs`
 - Create: `tools/checks/check-source.test.mjs`
-- Create: `dependency-cruiser.cjs`
+- Create: `dependency-cruiser.config.mjs`
 - Create: `.secretlintrc.json`
 - Create: `.secretlintignore`
 - Modify: `eslint.config.mjs`
@@ -875,7 +877,7 @@ git commit -m "feat(mobile): 建立Expo Android构建基线"
 - Consumes: 已存在的`apps`与`packages`目录结构。
 - Produces: `pnpm check:source`、`pnpm check:deps`和`pnpm check:secrets`三个真实失败门禁。
 
-- [ ] **Step 1: 先写源码门禁失败测试**
+- [x] **Step 1: 先写源码门禁失败测试**
 
 `check-source.test.mjs`使用以下完整测试结构：
 
@@ -940,7 +942,7 @@ node --test tools/checks/check-source.test.mjs
 
 Expected: FAIL，原因是`check-source.mjs`不存在。
 
-- [ ] **Step 2: 实现最小源码扫描器**
+- [x] **Step 2: 实现最小源码扫描器**
 
 `check-source.mjs`实现以下接口和规则；允许按相同职责拆成不超过80行的两个文件，但不得改变返回字段：
 
@@ -1014,7 +1016,7 @@ if (isCli) {
 }
 ```
 
-- [ ] **Step 3: 运行源码门禁测试和真实扫描**
+- [x] **Step 3: 运行源码门禁测试和真实扫描**
 
 Run:
 
@@ -1025,9 +1027,9 @@ pnpm check:source
 
 Expected: 测试全部通过；真实工程没有违规项。
 
-- [ ] **Step 4: 配置dependency-cruiser边界**
+- [x] **Step 4: 配置dependency-cruiser边界**
 
-`dependency-cruiser.cjs`必须采用以下最小规则：
+`dependency-cruiser.config.mjs`必须采用以下最小规则：
 
 - 禁止循环依赖。
 - 禁止`apps/mobile`导入`apps/api`或未来`apps/admin`源码。
@@ -1036,7 +1038,7 @@ Expected: 测试全部通过；真实工程没有违规项。
   包的`exports`字段负责拒绝跨workspace深层导入。配置内容：
 
 ```js
-module.exports = {
+export default {
   forbidden: [
     {
       name: 'no-circular',
@@ -1079,7 +1081,7 @@ pnpm check:deps
 
 Expected: 当前依赖图通过。随后通过`apply_patch`临时创建`packages/contracts/src/bad-boundary.ts`，内容为`import '../../../apps/api/src/app.module.js';`，确认`pnpm check:deps`因`packages-do-not-read-apps`失败；再删除该临时文件并重新确认通过。
 
-- [ ] **Step 5: 配置Secretlint**
+- [x] **Step 5: 配置Secretlint**
 
 `.secretlintrc.json`：
 
@@ -1099,14 +1101,14 @@ pnpm check:secrets
 
 Expected: 当前仓库通过。随后通过`apply_patch`临时创建`secret-check.txt`，运行时拼接GitHub令牌前缀与无效测试字符，确认命令失败；删除后重新确认通过。测试串不得写入计划或提交。
 
-- [ ] **Step 6: 收紧ESLint自动规则**
+- [x] **Step 6: 收紧ESLint自动规则**
 
 在测试文件配置中启用Vitest推荐规则，确保`.only`和`.skip`失败；加入文件级复杂度、参数和嵌套规则。React组件120行、普通函数80行的最终人工判定保留给审查，不写脆弱的正则推断函数边界。
 
-- [ ] **Step 7: 提交自动门禁**
+- [x] **Step 7: 提交自动门禁**
 
 ```powershell
-git add tools/checks dependency-cruiser.cjs .secretlintrc.json .secretlintignore eslint.config.mjs package.json pnpm-lock.yaml
+git add tools/checks dependency-cruiser.config.mjs .secretlintrc.json .secretlintignore eslint.config.mjs package.json pnpm-lock.yaml
 git commit -m "chore: 增加依赖源码与密钥门禁"
 ```
 
@@ -1126,11 +1128,11 @@ git commit -m "chore: 增加依赖源码与密钥门禁"
 - Consumes: 所有workspace脚本和门禁命令。
 - Produces: `pnpm check`作为本地和CI唯一快速质量入口。
 
-- [ ] **Step 1: 校正根脚本执行顺序**
+- [x] **Step 1: 校正根脚本执行顺序**
 
 根`check`保持以下顺序：格式、Lint、类型、单元测试、契约测试、依赖边界、密钥、源码约束、构建。`test:integration`不放入日常快速`check`，但保留独立命令并在CI运行。
 
-- [ ] **Step 2: 创建GitHub Actions检查流程**
+- [x] **Step 2: 创建GitHub Actions检查流程**
 
 `check.yml`必须：
 
@@ -1144,7 +1146,7 @@ git commit -m "chore: 增加依赖源码与密钥门禁"
 
 不得使用`continue-on-error`，不得把失败步骤标记为允许失败。
 
-- [ ] **Step 3: 执行本地完整门禁**
+- [x] **Step 3: 执行本地完整门禁**
 
 Run:
 
@@ -1156,7 +1158,7 @@ pnpm test:integration
 
 Expected: 所有命令退出码为0；集成测试实际执行API健康HTTP测试，不能因为“没有测试”而通过。
 
-- [ ] **Step 4: 验证冷安装**
+- [x] **Step 4: 验证冷安装**
 
 在仓库内只删除可恢复的`node_modules`，保留`pnpm-lock.yaml`，然后运行：
 
@@ -1167,7 +1169,7 @@ pnpm check
 
 Expected: 冷安装和完整检查通过；不得删除或重建用户文档。执行删除前必须解析并确认目标严格等于`D:\AIcoder\remember-app\node_modules`及各workspace的`node_modules`。
 
-- [ ] **Step 5: 更新README为真实状态**
+- [x] **Step 5: 更新README为真实状态**
 
 README写明：
 
@@ -1176,7 +1178,7 @@ README写明：
 - `pnpm check`和`pnpm test:integration`用途。
 - 下一步是五项高风险技术验证，不是直接开发业务页面。
 
-- [ ] **Step 6: 提交CI和完整门禁**
+- [x] **Step 6: 提交CI和完整门禁**
 
 ```powershell
 git add .github/workflows/check.yml README.md package.json pnpm-lock.yaml
@@ -1197,7 +1199,7 @@ git commit -m "chore: 建立项目持续检查流程"
 - Consumes: 第一阶段全部提交。
 - Produces: 可以进入五项技术验证阶段的工程基线，或一份明确阻塞清单。
 
-- [ ] **Step 1: 检查工作区和提交历史**
+- [x] **Step 1: 检查工作区和提交历史**
 
 Run:
 
@@ -1208,7 +1210,7 @@ git log --oneline --decorate -8
 
 Expected: 工作区干净；每个提交只有一个目的，没有生成物、密钥或无关文件。
 
-- [ ] **Step 2: 运行最终验证**
+- [x] **Step 2: 运行最终验证**
 
 Run:
 
@@ -1221,7 +1223,7 @@ pnpm --filter @remember/mobile exec expo-doctor
 
 Expected: 四条命令退出码为0。不得把Java/Android原生构建列为已验证，因为本机工具链尚未安装。
 
-- [ ] **Step 3: 审查最小代码和边界**
+- [x] **Step 3: 审查最小代码和边界**
 
 逐项确认：
 
@@ -1232,11 +1234,11 @@ Expected: 四条命令退出码为0。不得把Java/Android原生构建列为已
 - contracts不依赖任何App；App之间互不导入。
 - 所有文件和函数符合行数、命名、参数和注释规则。
 
-- [ ] **Step 4: 独立上下文复审**
+- [x] **Step 4: 独立上下文复审**
 
 请求独立上下文AI按`docs/ai-rules/testing-and-review.md`检查：过度设计、依赖边界、门禁是否真失败、锁文件是否唯一、测试是否真实。发现P0/P1/P2必须修复并重新执行Step 2；P3修复或记录理由。
 
-- [ ] **Step 5: 标记计划完成并提交文档状态**
+- [x] **Step 5: 标记计划完成并提交文档状态**
 
 只有前述命令真实通过后，勾选本计划已完成步骤并提交：
 
@@ -1246,3 +1248,11 @@ git commit -m "docs: 记录项目基础阶段验收结果"
 ```
 
 **阶段完成定义：** API健康接口可通过真实HTTP测试；Expo SDK 57 Android bundle可导出；根目录冷安装、完整检查和CI配置一致；已明确记录Java/Android SDK这一下一阶段前置缺口。
+
+## 实际验收记录
+
+- 2026-07-26在`feat/project-foundation`分支完成冻结安装、`pnpm check`、HTTP集成测试和Expo Doctor；四项退出码均为0，Expo Doctor为20/20。
+- 独立复审未发现P0或P1问题；发现的P2已修复：子目录额外`pnpm-lock.yaml`现在会被拒绝，400行且带标准末尾换行的源码不再误报。
+- API集成测试命令已限定为`vitest run --dir test`，只执行真实HTTP测试目录。
+- Expo SDK 57的实际兼容基线采用TypeScript 6.0.3；根、API和移动端均锁定相同精确版本。
+- 当前电脑仍缺少JDK和Android SDK，因此本阶段只验证Android JavaScript bundle，不声称原生release构建通过。
