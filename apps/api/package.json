@@ -9,7 +9,7 @@
     "typecheck": "tsc --noEmit",
     "pretest": "pnpm --filter @remember/contracts build",
     "test": "vitest run src",
-    "test:integration": "vitest run test",
+    "test:integration": "vitest run --dir test",
     "prebuild": "pnpm --filter @remember/contracts build",
     "build": "nest build"
   },
