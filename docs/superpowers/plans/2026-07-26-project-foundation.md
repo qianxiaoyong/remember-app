@@ -1097,7 +1097,7 @@ Run:
 pnpm check:secrets
 ```
 
-Expected: 当前仓库通过。随后通过`apply_patch`临时创建`secret-check.txt`，写入无效测试字符串`ghp_abcdefghijklmnopqrstuvwxyz1234567890`，确认命令失败；删除后重新确认通过。该字符串只用于本地门禁测试，不提交。
+Expected: 当前仓库通过。随后通过`apply_patch`临时创建`secret-check.txt`，运行时拼接GitHub令牌前缀与无效测试字符，确认命令失败；删除后重新确认通过。测试串不得写入计划或提交。
 
 - [ ] **Step 6: 收紧ESLint自动规则**
 
