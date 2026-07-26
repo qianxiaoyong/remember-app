@@ -21,5 +21,19 @@
     "check:source": "node tools/checks/check-source.mjs",
     "build": "pnpm -r --if-present build",
     "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm test:contract && pnpm check:deps && pnpm check:secrets && pnpm check:source && pnpm build"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@secretlint/secretlint-rule-preset-recommend": "13.0.4",
+    "@types/node": "26.1.1",
+    "@vitest/eslint-plugin": "1.6.24",
+    "dependency-cruiser": "18.1.0",
+    "eslint": "10.8.0",
+    "globals": "17.7.0",
+    "prettier": "3.9.0",
+    "secretlint": "13.0.4",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.65.0",
+    "vitest": "4.1.10"
   }
 }
