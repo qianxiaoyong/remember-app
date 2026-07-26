@@ -265,7 +265,7 @@ POST
 Run:
 
 ```powershell
-pnpm --filter @remember/api exec vitest run src/technical-spikes/wechat-pay/build-wechat-signature-message.test.ts
+.\node_modules\.bin\vitest.CMD run apps/api/src/technical-spikes/wechat-pay/build-wechat-signature-message.test.ts
 ```
 
 Expected: POST、空body GET、带query GET的字段顺序、大小写、原始query和换行断言全部通过。
@@ -305,7 +305,7 @@ signature="..."
 Run:
 
 ```powershell
-pnpm --filter @remember/api exec vitest run src/technical-spikes/wechat-pay/build-wechat-authorization.test.ts
+.\node_modules\.bin\vitest.CMD run apps/api/src/technical-spikes/wechat-pay/build-wechat-authorization.test.ts
 ```
 
 Expected: 临时密钥密码学断言与官方公开样例格式对照均通过。
@@ -666,10 +666,10 @@ Run:
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/technical-spikes/read-environment-status.ps1
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/technical-spikes/read-environment-status.ps1 -SelfTest
-pnpm --filter @remember/api exec vitest run src/technical-spikes/wechat-pay/build-wechat-signature-message.test.ts
-pnpm --filter @remember/api exec vitest run src/technical-spikes/wechat-pay/build-wechat-authorization.test.ts
-pnpm --filter @remember/api exec vitest run src/technical-spikes/wechat-pay/verify-wechat-message.test.ts
-pnpm --filter @remember/api exec vitest run src/technical-spikes/wechat-pay/decrypt-wechat-resource.test.ts
+.\node_modules\.bin\vitest.CMD run apps/api/src/technical-spikes/wechat-pay/build-wechat-signature-message.test.ts
+.\node_modules\.bin\vitest.CMD run apps/api/src/technical-spikes/wechat-pay/build-wechat-authorization.test.ts
+.\node_modules\.bin\vitest.CMD run apps/api/src/technical-spikes/wechat-pay/verify-wechat-message.test.ts
+.\node_modules\.bin\vitest.CMD run apps/api/src/technical-spikes/wechat-pay/decrypt-wechat-resource.test.ts
 powershell -NoProfile -ExecutionPolicy Bypass -File infra/technical-spikes/postgres/run-backup-restore.ps1
 ```
 
