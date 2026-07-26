@@ -94,14 +94,63 @@ function Get-ConfiguredStatus([string]$Value) {
   return 'CONFIGURED'
 }
 
-function Invoke-VersionCommand([string]$Name, [string[]]$Arguments) {
-  $command = Get-Command $Name -ErrorAction SilentlyContinue
-  if ($null -eq $command) {
+function Get-EnvironmentValueAcrossScopes([string]$Name) {
+  foreach ($scope in @('Process', 'User', 'Machine')) {
+    $value = [Environment]::GetEnvironmentVariable($Name, $scope)
+    if (-not [string]::IsNullOrWhiteSpace([string]$value)) {
+      return [string]$value
+    }
+  }
+
+  return ''
+}
+
+function Resolve-Executable([string]$CommandName, [string[]]$Candidates = @()) {
+  $command = Get-Command $CommandName -ErrorAction SilentlyContinue
+  if ($null -ne $command) {
+    return $command.Source
+  }
+
+  foreach ($candidate in $Candidates) {
+    if (-not [string]::IsNullOrWhiteSpace([string]$candidate) -and
+      (Test-Path -LiteralPath $candidate -PathType Leaf)) {
+      return [System.IO.Path]::GetFullPath($candidate)
+    }
+  }
+
+  return ''
+}
+
+function Get-DockerExecutableCandidates {
+  $candidates = @()
+  foreach ($registryPath in @(
+      'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Docker Desktop',
+      'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Docker Desktop'
+    )) {
+    $installation = Get-ItemProperty -LiteralPath $registryPath -ErrorAction SilentlyContinue
+    if ($null -ne $installation -and
+      -not [string]::IsNullOrWhiteSpace([string]$installation.InstallLocation)) {
+      $candidates += Join-Path $installation.InstallLocation 'resources\bin\docker.exe'
+    }
+  }
+  return $candidates
+}
+
+function Invoke-VersionCommand([string]$Executable, [string[]]$Arguments) {
+  if ([string]::IsNullOrWhiteSpace($Executable)) {
     return @{ IsAvailable = $false; Output = '' }
   }
 
-  $output = & $command.Source @Arguments 2>&1 | Out-String
-  return @{ IsAvailable = ($LASTEXITCODE -eq 0); Output = $output.Trim() }
+  $previousPreference = $ErrorActionPreference
+  $ErrorActionPreference = 'Continue'
+  try {
+    $output = & $Executable @Arguments 2>&1 | Out-String
+    $exitCode = $LASTEXITCODE
+  }
+  finally {
+    $ErrorActionPreference = $previousPreference
+  }
+  return @{ IsAvailable = ($exitCode -eq 0); Output = $output.Trim() }
 }
 
 function Get-MatchedVersion([hashtable]$Result, [string]$Pattern) {
@@ -117,13 +166,21 @@ function Get-MatchedVersion([hashtable]$Result, [string]$Pattern) {
   return 'CONFIGURED'
 }
 
-function Get-AndroidDeviceStatus([hashtable]$AdbResult) {
+function Get-AndroidDeviceStatus([hashtable]$AdbResult, [string]$AdbExecutable) {
   if (-not $AdbResult.IsAvailable) {
     return @{ Count = 'NOT_APPLICABLE'; ApiLevels = 'NOT_APPLICABLE' }
   }
 
-  $deviceOutput = & adb devices 2>&1
-  if ($LASTEXITCODE -ne 0) {
+  $previousPreference = $ErrorActionPreference
+  $ErrorActionPreference = 'Continue'
+  try {
+    $deviceOutput = & $AdbExecutable devices 2>&1
+    $deviceExitCode = $LASTEXITCODE
+  }
+  finally {
+    $ErrorActionPreference = $previousPreference
+  }
+  if ($deviceExitCode -ne 0) {
     return @{ Count = 'NOT_APPLICABLE'; ApiLevels = 'NOT_APPLICABLE' }
   }
 
@@ -132,7 +189,7 @@ function Get-AndroidDeviceStatus([hashtable]$AdbResult) {
     })
   $apiLevels = @()
   foreach ($device in $devices) {
-    $apiLevel = (& adb -s $device shell getprop ro.build.version.sdk 2>$null | Out-String).Trim()
+    $apiLevel = (& $AdbExecutable -s $device shell getprop ro.build.version.sdk 2>$null | Out-String).Trim()
     if ($LASTEXITCODE -eq 0 -and $apiLevel -match '^\d+$') {
       $apiLevels += $apiLevel
     }
@@ -173,6 +230,21 @@ function Invoke-SelfTest {
     Assert-Equal 'signing-configured' 'CONFIGURED' (Get-ReleaseSigningStatus $testRoot)
     Assert-Equal 'secret-missing' 'MISSING' (Get-ConfiguredStatus '')
     Assert-Equal 'secret-configured' 'CONFIGURED' (Get-ConfiguredStatus 'present')
+
+    $fakeBin = Join-Path $testRoot 'fake-bin'
+    New-Item -ItemType Directory -Path $fakeBin -Force | Out-Null
+    $fakeExecutable = Join-Path $fakeBin 'fake-tool.exe'
+    Set-Content -Encoding UTF8 -LiteralPath $fakeExecutable -Value 'self-test-only'
+    Assert-Equal 'candidate-executable' $fakeExecutable (Resolve-Executable 'missing-self-test-tool' @($fakeExecutable))
+
+    $previousSelfTestValue = [Environment]::GetEnvironmentVariable('REMEMBER_SPIKE_SELF_TEST', 'Process')
+    try {
+      [Environment]::SetEnvironmentVariable('REMEMBER_SPIKE_SELF_TEST', 'configured', 'Process')
+      Assert-Equal 'environment-scope' 'configured' (Get-EnvironmentValueAcrossScopes 'REMEMBER_SPIKE_SELF_TEST')
+    }
+    finally {
+      [Environment]::SetEnvironmentVariable('REMEMBER_SPIKE_SELF_TEST', $previousSelfTestValue, 'Process')
+    }
     Write-Output 'SELF_TEST_OK'
   }
   finally {
@@ -192,13 +264,27 @@ if ([string]::IsNullOrWhiteSpace($ProjectRoot)) {
 }
 $ProjectRoot = [System.IO.Path]::GetFullPath($ProjectRoot)
 
-$node = Invoke-VersionCommand 'node' @('--version')
-$pnpm = Invoke-VersionCommand 'pnpm' @('--version')
-$java = Invoke-VersionCommand 'java' @('-version')
-$adb = Invoke-VersionCommand 'adb' @('version')
-$docker = Invoke-VersionCommand 'docker' @('version', '--format', '{{.Server.Version}}')
-$compose = Invoke-VersionCommand 'docker' @('compose', 'version', '--short')
-$devices = Get-AndroidDeviceStatus $adb
+$javaHome = Get-EnvironmentValueAcrossScopes 'JAVA_HOME'
+$androidHome = Get-EnvironmentValueAcrossScopes 'ANDROID_HOME'
+if ([string]::IsNullOrWhiteSpace($androidHome)) {
+  $androidHome = Get-EnvironmentValueAcrossScopes 'ANDROID_SDK_ROOT'
+}
+
+$nodeExecutable = Resolve-Executable 'node'
+$pnpmExecutable = Resolve-Executable 'pnpm'
+$javaCandidates = if ([string]::IsNullOrWhiteSpace($javaHome)) { @() } else { @((Join-Path $javaHome 'bin\java.exe')) }
+$adbCandidates = if ([string]::IsNullOrWhiteSpace($androidHome)) { @() } else { @((Join-Path $androidHome 'platform-tools\adb.exe')) }
+$javaExecutable = Resolve-Executable 'java' $javaCandidates
+$adbExecutable = Resolve-Executable 'adb' $adbCandidates
+$dockerExecutable = Resolve-Executable 'docker' @(Get-DockerExecutableCandidates)
+
+$node = Invoke-VersionCommand $nodeExecutable @('--version')
+$pnpm = Invoke-VersionCommand $pnpmExecutable @('--version')
+$java = Invoke-VersionCommand $javaExecutable @('-version')
+$adb = Invoke-VersionCommand $adbExecutable @('version')
+$docker = Invoke-VersionCommand $dockerExecutable @('version', '--format', '{{.Server.Version}}')
+$compose = Invoke-VersionCommand $dockerExecutable @('compose', 'version', '--short')
+$devices = Get-AndroidDeviceStatus $adb $adbExecutable
 $javaVersion = Get-MatchedVersion $java 'version[ ="]+([0-9]+(?:\.[0-9._]+)?)'
 if ($javaVersion -ne 'MISSING' -and $javaVersion -ne 'CONFIGURED' -and -not $javaVersion.StartsWith('17.')) {
   $javaVersion = 'MISSING'
@@ -208,8 +294,8 @@ $report = [ordered]@{
   NODE = Get-MatchedVersion $node 'v?([0-9]+(?:\.[0-9]+){2})'
   PNPM = Get-MatchedVersion $pnpm '([0-9]+(?:\.[0-9]+){2})'
   JDK_17 = $javaVersion
-  JAVA_HOME = Get-ConfiguredStatus ([Environment]::GetEnvironmentVariable('JAVA_HOME', 'Process'))
-  ANDROID_SDK = Get-ConfiguredStatus ([Environment]::GetEnvironmentVariable('ANDROID_HOME', 'Process'))
+  JAVA_HOME = Get-ConfiguredStatus $javaHome
+  ANDROID_SDK = Get-ConfiguredStatus $androidHome
   ADB = Get-MatchedVersion $adb 'Android Debug Bridge version ([0-9]+(?:\.[0-9]+){2})'
   ANDROID_DEVICE_COUNT = $devices.Count
   ANDROID_DEVICE_API_LEVELS = $devices.ApiLevels
@@ -218,8 +304,8 @@ $report = [ordered]@{
   ANDROID_APPLICATION_ID = Get-ApplicationIdStatus $ProjectRoot
   RELEASE_BUILD_PROFILE = Get-ReleaseBuildProfileStatus $ProjectRoot
   RELEASE_SIGNING_STATUS = Get-ReleaseSigningStatus $ProjectRoot
-  WECHAT_APP_ID = Get-ConfiguredStatus ([Environment]::GetEnvironmentVariable('EXPO_PUBLIC_WECHAT_APP_ID', 'Process'))
-  WECHAT_MERCHANT_ID = Get-ConfiguredStatus ([Environment]::GetEnvironmentVariable('WECHAT_PAY_MCH_ID', 'Process'))
+  WECHAT_APP_ID = Get-ConfiguredStatus (Get-EnvironmentValueAcrossScopes 'EXPO_PUBLIC_WECHAT_APP_ID')
+  WECHAT_MERCHANT_ID = Get-ConfiguredStatus (Get-EnvironmentValueAcrossScopes 'WECHAT_PAY_MCH_ID')
 }
 
 foreach ($entry in $report.GetEnumerator()) {

@@ -490,11 +490,11 @@ git commit -m "test(infra): 验证支付记录备份恢复与幂等"
 - Consumes: JDK 17、Android SDK API 36、Build Tools、Platform Tools、ADB及真实Android 8+设备。
 - Produces: 可进行后续release构建的环境事实；不产生Android身份或原生工程。
 
-- [ ] **Step 1: 安装JDK 17和Android SDK工具**
+- [x] **Step 1: 安装JDK 17和Android SDK工具**
 
 外部安装需要权限。只安装JDK 17、Android SDK API 36、对应Build Tools与Platform Tools；不安装微信SDK，不运行Expo prebuild。
 
-- [ ] **Step 2: 运行动态环境报告**
+- [x] **Step 2: 运行动态环境报告**
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/technical-spikes/read-environment-status.ps1
@@ -502,11 +502,11 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/technical-spikes/read-
 
 Expected: 工具链项根据实际安装结果动态变化并显示安全版本信息；身份、构建profile和签名项仍分别根据当前项目证据显示`CONFIGURED`、`MISSING`或`MANUAL_CHECK_REQUIRED`，没有硬编码状态或敏感值。
 
-- [ ] **Step 3: 更新工具链ADR**
+- [x] **Step 3: 更新工具链ADR**
 
 记录实际JDK、SDK、Build Tools和ADB版本，以及以下尚未解除的暂停条件：applicationId、release签名、微信平台注册和AppID。
 
-- [ ] **Step 4: 提交工具链事实**
+- [x] **Step 4: 提交工具链事实**
 
 ```powershell
 git add docs/decisions/0001-local-android-toolchain.md
