@@ -80,7 +80,8 @@ function Get-ReleaseSigningStatus([string]$Root) {
 
   $storePath = Join-Path $appDirectory $storeMatch.Groups[1].Value
   if (Test-Path -LiteralPath $storePath -PathType Leaf) {
-    return 'CONFIGURED'
+    # A file path cannot prove the release APK certificate fingerprint.
+    return 'MANUAL_CHECK_REQUIRED'
   }
 
   return 'MISSING'
@@ -227,7 +228,7 @@ function Invoke-SelfTest {
     Set-Content -Encoding UTF8 -LiteralPath (Join-Path $androidApp 'build.gradle') -Value $gradle
     Assert-Equal 'signing-file-missing' 'MISSING' (Get-ReleaseSigningStatus $testRoot)
     Set-Content -Encoding UTF8 -LiteralPath (Join-Path $androidApp 'release.keystore') -Value 'self-test-only'
-    Assert-Equal 'signing-configured' 'CONFIGURED' (Get-ReleaseSigningStatus $testRoot)
+    Assert-Equal 'plain-text-keystore-requires-manual-check' 'MANUAL_CHECK_REQUIRED' (Get-ReleaseSigningStatus $testRoot)
     Assert-Equal 'secret-missing' 'MISSING' (Get-ConfiguredStatus '')
     Assert-Equal 'secret-configured' 'CONFIGURED' (Get-ConfiguredStatus 'present')
 

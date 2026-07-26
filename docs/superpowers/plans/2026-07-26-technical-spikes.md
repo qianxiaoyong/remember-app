@@ -108,7 +108,7 @@ Expected: 当前分支严格为`feat/technical-spikes`；若为`main`立即停�
 - Consumes: 当前PowerShell进程环境、`apps/mobile/app.json`、可选的构建配置文件、可调用的系统命令和当前连接设备。
 - Produces: 只包含工具版本及`CONFIGURED`、`MISSING`、`NOT_APPLICABLE`、`MANUAL_CHECK_REQUIRED`状态的控制台报告；不返回全局失败码来阻塞无关任务。
 
-- [ ] **Step 1: 为状态解析器编写Pester之外的纯PowerShell自测入口**
+- [x] **Step 1: 为状态解析器编写Pester之外的纯PowerShell自测入口**
 
 脚本接受可选`-ProjectRoot`，默认使用脚本位置向上解析仓库根；不得读取或输出环境变量集合。内部只检查以下证据：
 
@@ -116,11 +116,11 @@ Expected: 当前分支严格为`feat/technical-spikes`；若为`main`立即停�
 - `JAVA_HOME`和`ANDROID_HOME`是否存在且目标目录存在，只输出状态，不输出路径。
 - `apps/mobile/app.json`当前是否存在`expo.android.package`，只输出`CONFIGURED`或`MISSING`，不输出包名。
 - 动态解析项目实际使用的构建配置，检查是否定义release构建profile，仅据此输出`RELEASE_BUILD_PROFILE=CONFIGURED|MISSING`；`eas.json`存在本身不构成签名证据。
-- 独立检查本地Gradle签名配置引用、引用文件存在性及release变体是否明确绑定签名配置；能安全自动验证时输出`RELEASE_SIGNING_STATUS=CONFIGURED|MISSING`，EAS托管凭证或其他无法从本机非敏感证据确认的方案输出`MANUAL_CHECK_REQUIRED`。不得把`eas.json`存在、release profile存在或debug签名误报为正式release签名。
+- 独立检查本地Gradle签名配置引用、引用文件存在性及release变体是否明确绑定签名配置；仅当真实release APK已通过签名校验且证书指纹与已批准指纹一致时，才允许输出`RELEASE_SIGNING_STATUS=CONFIGURED`。只有路径或文件存在、普通文本伪keystore、EAS托管凭证或其他无法从本机非敏感证据确认的方案一律输出`MANUAL_CHECK_REQUIRED`；明确缺少配置或引用文件时输出`MISSING`。不得把`eas.json`存在、release profile存在或debug签名误报为正式release签名。
 - 当前进程是否配置`EXPO_PUBLIC_WECHAT_APP_ID`与`WECHAT_PAY_MCH_ID`，只输出状态，不输出值。
 - `adb devices`只统计已授权设备数量；读取Android API level时只输出API数字，不输出序列号、型号或设备名。
 
-自测通过临时目录分别放入含/不含`android.package`的`app.json`、含/不含release profile的构建配置，以及可自动验证/缺失/只能人工核验的签名配置证据，断言状态随文件内容变化；不得硬编码`NOT_DECIDED`、`NOT_AVAILABLE`或任何假值。
+自测通过临时目录分别放入含/不含`android.package`的`app.json`、含/不含release profile的构建配置，以及缺失签名文件和普通文本伪keystore，断言伪keystore不能得到`CONFIGURED`、没有release APK签名与证书指纹证据时只能得到`MANUAL_CHECK_REQUIRED`；不得硬编码`NOT_DECIDED`、`NOT_AVAILABLE`或任何假值。
 
 Run:
 
@@ -130,7 +130,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/technical-spikes/read-
 
 Expected: 自测使用隔离临时目录覆盖上述动态分支，全部断言通过且不读取或输出真实敏感值。
 
-- [ ] **Step 2: 实现只读状态报告**
+- [x] **Step 2: 实现只读状态报告**
 
 脚本的报告字段固定为：
 
@@ -154,7 +154,7 @@ WECHAT_MERCHANT_ID
 
 工具版本可输出；路径、包名、AppID、商户号、设备序列号、证书指纹、别名和签名材料不得输出。缺失项标记`MISSING`；无法安全自动证明的正式签名状态标记`MANUAL_CHECK_REQUIRED`，脚本仍以退出码0完成报告。
 
-- [ ] **Step 3: 运行当前环境报告并检查脱敏**
+- [x] **Step 3: 运行当前环境报告并检查脱敏**
 
 Run:
 
@@ -164,7 +164,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/technical-spikes/read-
 
 Expected: 每个状态都来自当前文件和环境证据；缺失的applicationId、AppID或商户配置显示`MISSING`，无法自动确认的正式签名显示`MANUAL_CHECK_REQUIRED`，且不显示任何具体值；报告不修改任何文件。
 
-- [ ] **Step 4: 提交环境报告脚本**
+- [x] **Step 4: 提交环境报告脚本**
 
 ```powershell
 git add tools/technical-spikes/read-environment-status.ps1
@@ -246,7 +246,7 @@ export function decryptWechatResource(
 ): Uint8Array;
 ```
 
-- [ ] **Step 1: 写官方签名原文失败测试**
+- [x] **Step 1: 写官方签名原文失败测试**
 
 断言请求原文严格为：
 
@@ -260,7 +260,7 @@ POST
 
 最后一行之后仍有一个ASCII LF。GET空body同样保留第五行空行及结尾LF。另增加带query的GET固定向量，例如`/v3/pay/transactions/out-trade-no/ORDER_001?mchid=1900007291`：签名原文必须保留原始path与query、不丢参数、不重排或重新编码，body为空且仍保留第五行空行和结尾LF。回调/响应原文严格为`timestamp\nnonce\nbody\n`。
 
-- [ ] **Step 2: 实现并验证签名原文构造**
+- [x] **Step 2: 实现并验证签名原文构造**
 
 Run:
 
@@ -270,7 +270,7 @@ Run:
 
 Expected: POST、空body GET、带query GET的字段顺序、大小写、原始query和换行断言全部通过。
 
-- [ ] **Step 3: 写完整Authorization失败测试**
+- [x] **Step 3: 写完整Authorization失败测试**
 
 使用运行期生成的RSA-2048临时密钥，固定`mchId`、`serialNo`、nonce和timestamp，断言输出认证类型严格为`WECHATPAY2-SHA256-RSA2048`，并且完整包含且只包含：
 
@@ -284,7 +284,7 @@ signature="..."
 
 测试从输出中提取Base64签名，使用临时公钥对同一签名原文验签；缺失字段、重复字段、空值、未转义引号或换行输入必须在生成前拒绝。
 
-- [ ] **Step 4: 增加官方样例/Postman对照**
+- [x] **Step 4: 增加官方样例/Postman对照**
 
 `official-wechat-samples.ts`只保存微信公开文档中的非敏感方法、路径、timestamp、nonce、mchid、serial_no、签名原文和公开Authorization示例；不保存官方或自建私钥、APIv3 key或真实项目配置。
 
@@ -300,7 +300,7 @@ signature="..."
 - `https://pay.wechatpay.cn/doc/v3/merchant/4013053420`
 - `https://github.com/wechatpay-apiv3/wechatpay-postman-script`
 
-- [ ] **Step 5: 实现Authorization并运行测试**
+- [x] **Step 5: 实现Authorization并运行测试**
 
 Run:
 
@@ -310,11 +310,11 @@ Run:
 
 Expected: 临时密钥密码学断言与官方公开样例格式对照均通过。
 
-- [ ] **Step 6: 写验签和AES-256-GCM失败测试**
+- [x] **Step 6: 写验签和AES-256-GCM失败测试**
 
 覆盖正确响应/回调验签；逐一篡改body、timestamp、nonce、签名和公钥后拒绝。AES-GCM覆盖正确解密；Base64解码后的密文格式明确为“加密内容 + 末尾16字节认证标签”，长度不大于16字节时直接拒绝，并覆盖错误算法、32字节之外的APIv3 key、错误nonce、AAD、ciphertext和认证标签全部抛出异常。
 
-- [ ] **Step 7: 实现最小验签和解密函数**
+- [x] **Step 7: 实现最小验签和解密函数**
 
 使用`createVerify('RSA-SHA256')`与`createDecipheriv('aes-256-gcm', ...)`；AES-GCM先从Base64解码结果中切出末尾16字节并传给`setAuthTag()`，其余字节作为加密内容；不得捕获后返回假成功或空数据。
 
@@ -328,11 +328,11 @@ pnpm --filter @remember/api build
 
 Expected: 全部退出码为0，测试不访问微信网络服务。
 
-- [ ] **Step 8: 记录ADR并进行支付密码学独立审查**
+- [x] **Step 8: 记录ADR并进行支付密码学独立审查**
 
 ADR记录实际命令、Node版本、官方样例来源、Postman版本、通过分支、未验证的真实商户联调及生产`WechatPayClient`建议边界。独立审查必须检查换行、Authorization字段、原始body、RSA算法、GCM认证标签和敏感信息处理。
 
-- [ ] **Step 9: 提交APIv3技术验证**
+- [x] **Step 9: 提交APIv3技术验证**
 
 ```powershell
 git add apps/api/src/technical-spikes/wechat-pay docs/decisions/0002-wechat-pay-apiv3-crypto.md
