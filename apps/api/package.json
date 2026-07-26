@@ -1,0 +1,35 @@
+{
+  "name": "@remember/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "pnpm --filter @remember/contracts build && nest start --watch",
+    "start": "node dist/main.js",
+    "typecheck": "tsc --noEmit",
+    "pretest": "pnpm --filter @remember/contracts build",
+    "test": "vitest run src",
+    "test:integration": "vitest run test",
+    "prebuild": "pnpm --filter @remember/contracts build",
+    "build": "nest build"
+  },
+  "dependencies": {
+    "@nestjs/common": "11.1.28",
+    "@nestjs/core": "11.1.28",
+    "@nestjs/platform-express": "11.1.28",
+    "@remember/contracts": "workspace:*",
+    "reflect-metadata": "0.2.2",
+    "rxjs": "7.8.2"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "11.0.24",
+    "@nestjs/schematics": "11.1.0",
+    "@nestjs/testing": "11.1.28",
+    "@remember/config": "workspace:*",
+    "@types/node": "26.1.1",
+    "@types/supertest": "7.2.1",
+    "supertest": "7.2.2",
+    "typescript": "5.9.3",
+    "vitest": "4.1.10"
+  }
+}

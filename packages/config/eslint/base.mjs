@@ -12,6 +12,7 @@ export default tseslint.config(
     },
     rules: {
       '@typescript-eslint/no-explicit-any': 'error',
+      '@typescript-eslint/no-extraneous-class': ['error', { allowWithDecorator: true }],
       '@typescript-eslint/no-floating-promises': 'error',
       '@typescript-eslint/no-misused-promises': 'error',
       'no-console': ['error', { allow: ['warn', 'error'] }],
