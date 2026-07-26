@@ -23,6 +23,14 @@ test('发现禁止的锁文件', async () => {
   await rm(path.join(rootPath, 'package-lock.json'));
 });
 
+test('发现子目录中的 pnpm 锁文件', async () => {
+  const filePath = path.join(rootPath, 'src', 'pnpm-lock.yaml');
+  await writeFile(filePath, 'lockfileVersion: 9.0\n');
+  const issues = await scanProject(rootPath);
+  assert.ok(issues.some((issue) => issue.rule === 'ONLY_PNPM_LOCK'));
+  await rm(filePath);
+});
+
 test('发现禁止的源码模式', async () => {
   const filePath = path.join(rootPath, 'src', 'bad.ts');
   const badSource = ['requ' + "ire('x');", 'TO' + 'DO', 'describe.' + "only('x', () => {});"].join(
@@ -39,6 +47,13 @@ test('发现超过400行的人工源码', async () => {
   await writeFile(filePath, Array.from({ length: 401 }, () => 'export {};').join('\n'));
   const issues = await scanProject(rootPath);
   assert.ok(issues.some((issue) => issue.rule === 'SOURCE_TOO_LONG'));
+  await rm(filePath);
+});
+
+test('允许400行且带末尾换行的源码', async () => {
+  const filePath = path.join(rootPath, 'src', 'limit.ts');
+  await writeFile(filePath, `${Array.from({ length: 400 }, () => 'export {};').join('\n')}\n`);
+  assert.deepEqual(await scanProject(rootPath), []);
   await rm(filePath);
 });
 

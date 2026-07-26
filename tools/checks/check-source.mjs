@@ -42,14 +42,17 @@ export async function scanProject(rootPath) {
   const issues = [];
   for (const filePath of await listFiles(rootPath)) {
     const relativePath = path.relative(rootPath, filePath);
-    if (forbiddenLocks.has(path.basename(filePath))) {
+    const fileName = path.basename(filePath);
+    const hasExtraPnpmLock = fileName === 'pnpm-lock.yaml' && relativePath !== 'pnpm-lock.yaml';
+    if (forbiddenLocks.has(fileName) || hasExtraPnpmLock) {
       issues.push({ path: relativePath, line: 1, rule: 'ONLY_PNPM_LOCK' });
       continue;
     }
     if (!sourceExtensions.has(path.extname(filePath)) || filePath.includes('.generated.')) continue;
 
     const text = await readFile(filePath, 'utf8');
-    if (text.split('\n').length > 400) {
+    const textWithoutFinalNewline = text.endsWith('\n') ? text.slice(0, -1) : text;
+    if (textWithoutFinalNewline.split('\n').length > 400) {
       issues.push({ path: relativePath, line: 401, rule: 'SOURCE_TOO_LONG' });
     }
     for (const pattern of patterns) {
