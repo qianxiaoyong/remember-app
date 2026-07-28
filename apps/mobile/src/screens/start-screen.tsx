@@ -45,6 +45,18 @@ export function StartScreen(): ReactElement {
         </Pressable>
       </Link>
 
+      <Link asChild href="/search">
+        <Pressable accessibilityRole="button" style={styles.outlineButton}>
+          <Text style={styles.outlineButtonLabel}>搜索当前知识库</Text>
+        </Pressable>
+      </Link>
+
+      <Link asChild href="/favorites">
+        <Pressable accessibilityRole="button" style={styles.outlineButton}>
+          <Text style={styles.outlineButtonLabel}>收藏本</Text>
+        </Pressable>
+      </Link>
+
       <Pressable
         accessibilityRole="button"
         disabled={isInstalling}
@@ -115,6 +127,20 @@ const styles = StyleSheet.create({
   },
   secondaryButtonLabel: {
     color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  outlineButton: {
+    alignItems: 'center',
+    borderColor: '#D4D4D4',
+    borderRadius: 12,
+    borderWidth: 1,
+    height: 48,
+    justifyContent: 'center',
+    marginTop: 12,
+  },
+  outlineButtonLabel: {
+    color: '#404040',
     fontSize: 16,
     fontWeight: '600',
   },

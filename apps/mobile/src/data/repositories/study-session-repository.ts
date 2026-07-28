@@ -106,6 +106,42 @@ export function markQueueItemDone(itemId: string, db: SQLiteDatabase = openUserD
   db.runSync('UPDATE study_queue_items SET status = ? WHERE itemId = ?', ['done', itemId]);
 }
 
+export function hasPendingQueueItemForKnowledge(
+  sessionId: string,
+  knowledgeId: string,
+  db: SQLiteDatabase = openUserDatabase(),
+): boolean {
+  const row = db.getFirstSync<{ itemId: string }>(
+    `SELECT itemId FROM study_queue_items
+     WHERE sessionId = ? AND knowledgeId = ? AND status = 'pending'`,
+    [sessionId, knowledgeId],
+  );
+  return row !== null;
+}
+
+export function appendQueueItem(
+  item: StudyQueueItemRow,
+  db: SQLiteDatabase = openUserDatabase(),
+): void {
+  db.runSync(
+    `INSERT INTO study_queue_items (itemId, sessionId, knowledgeId, itemType, sortOrder, status)
+     VALUES (?, ?, ?, ?, ?, ?)`,
+    [item.itemId, item.sessionId, item.knowledgeId, item.itemType, item.sortOrder, item.status],
+  );
+}
+
+export function getMaxQueueSortOrder(
+  sessionId: string,
+  db: SQLiteDatabase = openUserDatabase(),
+): number {
+  return (
+    db.getFirstSync<{ maxOrder: number }>(
+      'SELECT COALESCE(MAX(sortOrder), 0) AS maxOrder FROM study_queue_items WHERE sessionId = ?',
+      [sessionId],
+    )?.maxOrder ?? 0
+  );
+}
+
 export function touchSessionUpdatedAt(
   sessionId: string,
   updatedAt: string,
