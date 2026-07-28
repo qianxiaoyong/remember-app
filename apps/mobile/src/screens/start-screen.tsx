@@ -1,6 +1,7 @@
 import type { ReactElement } from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Link } from 'expo-router';
 import type { InstalledPackRow } from '../data/repositories/installed-pack-repository';
 import { installBundledTestPack } from '../use-cases/install-bundled-test-pack';
 import { listInstalledPacksUseCase } from '../use-cases/list-installed-packs';
@@ -36,7 +37,13 @@ export function StartScreen(): ReactElement {
   return (
     <ScrollView contentContainerStyle={styles.page}>
       <Text style={styles.name}>记得</Text>
-      <Text style={styles.status}>阶段 4 · 包安装验收</Text>
+      <Text style={styles.status}>阶段 4 · 包安装与学习验收</Text>
+
+      <Link asChild href="/study">
+        <Pressable accessibilityRole="button" style={styles.secondaryButton}>
+          <Text style={styles.secondaryButtonLabel}>开始学习（SM-2）</Text>
+        </Pressable>
+      </Link>
 
       <Pressable
         accessibilityRole="button"
@@ -97,6 +104,19 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     height: 48,
     justifyContent: 'center',
+    marginTop: 12,
+  },
+  secondaryButton: {
+    alignItems: 'center',
+    backgroundColor: '#171717',
+    borderRadius: 12,
+    height: 48,
+    justifyContent: 'center',
+  },
+  secondaryButtonLabel: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '600',
   },
   buttonDisabled: {
     opacity: 0.7,

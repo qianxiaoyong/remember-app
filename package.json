@@ -11,7 +11,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint .",
-    "build:packages": "pnpm --filter @remember/contracts build",
+    "build:packages": "pnpm --filter @remember/contracts build && pnpm --filter @remember/domain build",
     "typecheck": "pnpm build:packages && pnpm -r --if-present typecheck",
     "test": "node --test tools/checks/check-source.test.mjs && pnpm build:packages && pnpm -r --if-present test",
     "test:contract": "pnpm --filter @remember/contracts test",

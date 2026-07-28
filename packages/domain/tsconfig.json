@@ -1,0 +1,5 @@
+{
+  "extends": "@remember/config/typescript/base",
+  "include": ["src/**/*.ts"],
+  "exclude": ["dist", "node_modules"]
+}
