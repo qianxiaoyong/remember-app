@@ -166,3 +166,26 @@ pnpm --filter @remember/pack-builder verify -- fixtures/remember-test-pack.zip
 ```
 
 阶段 3 退出门禁：固定测试包 **构建 → 独立校验 → release 实机只读打开**；篡改任一受保护字节必须失败。
+
+## 附录：审查记录（pack 验签链）
+
+日期：2026-07-28  
+范围：`packages/contracts/src/pack/*`、`apps/mobile/src/pack/verify-bundled-pack.ts`  
+方式：独立上下文审查（未依赖本对话内实现记忆）
+
+**结论：无 P0/P1；可进入阶段 4。**
+
+| 项       | 结论                                                                                                                                                |
+| -------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 验签顺序 | `verifyPackArchive` 固定为：体积 → manifest 解析 → 协议版本 → 路径/大小 → 逐文件 sha256 → Ed25519 → SQLite 结构 → 内容 Zod；失败即停，未见 bypass。 |
+| 签名消息 | 仅对去掉 `signature` 的 canonical JSON 验签；文件完整性靠 `files[]` 哈希，未混淆。                                                                  |
+| 公钥来源 | `PACK_TRUSTED_PUBLIC_KEYS` 白名单 `keyId`；未知 key 拒装（`PACK_KEY_UNKNOWN`）。私钥不在 App。                                                      |
+| 路径安全 | manifest 路径白名单 + zip `normalizeZipEntryPath` 拒 `..`；移动端已与 builder 共用 contracts helper。                                               |
+| 内容校验 | `cardType` 非 `vocabulary` 拒；`surfaceForm` 须已规范化；资产路径须在 manifest 清单内。                                                             |
+| 错误处理 | 统一 `PackVerificationError` + 稳定 `PACK_*` 码；移动端/ builder 不吞异常。                                                                         |
+
+**残余风险（阶段 4 跟踪，非阻塞）：**
+
+- 完整「下载 → 临时目录 → 验包 → 原子安装」链路与安装时篡改拒装尚未落地（阶段 4）。
+- 生产 `keyId` 轮换策略与多公钥发布流程待运营密钥就绪后补充 runbook。
+- `verify-bundled-pack.ts` 仍含测试向量密钥验签路径，仅供开发/复测；正式安装应复用同一 `verifyPackArchive` 入口。

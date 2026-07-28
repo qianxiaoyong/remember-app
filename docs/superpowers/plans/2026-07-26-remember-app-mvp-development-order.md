@@ -140,27 +140,25 @@ tsconfig.json
 
 ## 6. 阶段3：学习包协议与固定样例包
 
-**计划创建：** `docs/superpowers/plans/<date>-pack-protocol.md`
+**计划：** [`2026-07-28-phase3-pack-protocol-kickoff.md`](2026-07-28-phase3-pack-protocol-kickoff.md)、[`2026-07-28-phase3-pack-protocol-completion.md`](2026-07-28-phase3-pack-protocol-completion.md)
 
-这是下一项需要和产品继续对齐的设计工作。字段可变，但安装、安全和稳定ID规则不能留到页面开发时临时决定。
+**必须确定（已冻结，见 ADR [0008](../decisions/0008-pack-protocol.md)）：**
 
-**必须确定：**
+- [x] `packManifest`版本、`packId`、`packVersion`、协议版本、hash、签名、资源清单和`keyId`。
+- [x] `cards`、`lexicon_entries`、`lexicon_forms`三张表的最小字段、索引和外键。
+- [x] 单词与短句卡片的题面/答案受控字段，主音频、图片及点词音频引用方式。
+- [x] 稳定`knowledgeId`生成、冲突检测和跨版本保持规则。
+- [x] 文件大小、允许路径、字符编码、SQLite只读自检和失败错误码。
+- [x] AI生成内容进入构建器前的结构校验和人工抽样边界（pack-builder 构建链 + Zod）。
 
-- [ ] `packManifest`版本、`packId`、`packVersion`、协议版本、hash、签名、资源清单和`keyId`。
-- [ ] `cards`、`lexicon_entries`、`lexicon_forms`三张表的最小字段、索引和外键。
-- [ ] 单词与短句卡片的题面/答案受控字段，主音频、图片及点词音频引用方式。
-- [ ] 稳定`knowledgeId`生成、冲突检测和跨版本保持规则。
-- [ ] 文件大小、允许路径、字符编码、SQLite只读自检和失败错误码。
-- [ ] AI生成内容进入构建器前的结构校验和人工抽样边界。
+**实现产出（已完成）：**
 
-**实现产出：**
+- [x] `packages/contracts/src/pack/`中的Zod schema。
+- [x] `tools/pack-builder/`中的最小构建、校验和签名命令。
+- [x] 固定测试包（单词 + 短句 + lexicon + 音视频资源）。
+- [x] 损坏hash、错误签名、未知协议和路径穿越负例。
 
-- `packages/contracts/src/pack/`中的Zod schema。
-- `tools/pack-builder/`中的最小构建、校验和签名命令。
-- 一个极小但覆盖单词、短句、例句点词、图片和音频引用的固定测试包。
-- 损坏hash、错误签名、未知协议和路径穿越样例。
-
-**退出门禁：** 同一测试包能被构建器生成、独立校验器验证、Android App只读打开；修改任一受保护内容都会失败。
+**退出门禁：** ✅ 构建 → 独立校验 → release 实机只读打开（pack-spike 验收后临时入口已删除）。
 
 ## 7. 阶段4：本地学习完整闭环
 

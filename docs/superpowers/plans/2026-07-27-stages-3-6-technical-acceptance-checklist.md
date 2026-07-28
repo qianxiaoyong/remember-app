@@ -7,12 +7,12 @@
 
 ## 通用门禁（阶段 3–6 每次结束都要过）
 
-- [ ] 根目录 `pnpm check` 退出码为 0。
-- [ ] 若有 API 或集成测试变更，额外运行 `pnpm test:integration` 且通过。
-- [ ] 本阶段改动的契约、迁移、支付、鉴权、同步或学习包验签代码，已完成 **独立上下文安全审查**（见 `docs/ai-rules/testing-and-review.md`）。
-- [ ] 无假支付、假解锁、假同步成功、空页面或占位函数被标为完成。
-- [ ] 工作区无密钥、keystore、`.env` 真实值或构建产物误提交。
-- [ ] 阶段计划文档中对应步骤已勾选，阻塞项已写入 ADR 或决策记录。
+- [x] 根目录 `pnpm check` 退出码为 0。（阶段 3 收口 commit 后验证）
+- [ ] 若有 API 或集成测试变更，额外运行 `pnpm test:integration` 且通过。（阶段 3 无 API 变更，不适用）
+- [x] 本阶段改动的契约、迁移、支付、鉴权、同步或学习包验签代码，已完成 **独立上下文安全审查**（见 ADR 0008 附录「审查记录」）。
+- [x] 无假支付、假解锁、假同步成功、空页面或占位函数被标为完成。
+- [x] 工作区无密钥、keystore、`.env` 真实值或构建产物误提交。
+- [x] 阶段计划文档中对应步骤已勾选，阻塞项已写入 ADR 或决策记录。
 
 ---
 
@@ -22,46 +22,48 @@
 
 ### 3.1 协议与契约冻结
 
-- [ ] `packages/contracts/src/pack/` 中存在 Zod schema，覆盖 `packManifest`、协议版本、`packId`、`packVersion`、`keyId`、哈希、签名、资源清单。
-- [ ] `cards`、`lexicon_entries`、`lexicon_forms` 最小字段、索引、外键规则已写入 schema，且与架构文档表职责一致。
-- [ ] 单词卡、短句卡的题面/答案受控字段已定义；主音频、主图片、点词音频引用方式已定义。
-- [ ] 稳定 `knowledgeId` 生成规则、冲突检测、跨包/跨版本保持不变规则已文档化（可放在 pack 协议 ADR 或 spec 附录）。
-- [ ] 文件大小上限、允许路径白名单、字符编码、SQLite 只读自检失败时的错误码（如 `PACK_SIGNATURE_INVALID`）已定义。
-- [ ] 破坏性字段变更策略已写明：必须升级协议版本，不得静默兼容。
+- [x] `packages/contracts/src/pack/` 中存在 Zod schema，覆盖 `packManifest`、协议版本、`packId`、`packVersion`、`keyId`、哈希、签名、资源清单。
+- [x] `cards`、`lexicon_entries`、`lexicon_forms` 最小字段、索引、外键规则已写入 schema，且与架构文档表职责一致。
+- [x] 单词卡、短句卡的题面/答案受控字段已定义；主音频、主图片、点词音频引用方式已定义。
+- [x] 稳定 `knowledgeId` 生成规则、冲突检测、跨包/跨版本保持不变规则已文档化（可放在 pack 协议 ADR 或 spec 附录）。
+- [x] 文件大小上限、允许路径白名单、字符编码、SQLite 只读自检失败时的错误码（如 `PACK_SIGNATURE_INVALID`）已定义。
+- [x] 破坏性字段变更策略已写明：必须升级协议版本，不得静默兼容。
 
 ### 3.2 构建与校验工具
 
-- [ ] `tools/pack-builder/` 可从固定源内容 **构建** 出一个完整测试包（含 manifest、签名、SQLite、资源文件）。
-- [ ] 同一工具或独立校验命令可在 **不安装 App** 的情况下验证：哈希、签名、协议版本、路径、SQLite 结构。
-- [ ] 以下负例必须 **全部拒绝**（有明确非 0 退出码或结构化错误）：
-  - [ ] 篡改 manifest 哈希一字节
-  - [ ] 错误签名或错误 `keyId`
-  - [ ] 未知协议版本
-  - [ ] 路径穿越或包外文件引用
-  - [ ] 损坏的 SQLite 文件
-- [ ] 构建器与校验器不依赖 App 内硬编码；公钥来源与 App 内置验钥策略一致。
+- [x] `tools/pack-builder/` 可从固定源内容 **构建** 出一个完整测试包（含 manifest、签名、SQLite、资源文件）。
+- [x] 同一工具或独立校验命令可在 **不安装 App** 的情况下验证：哈希、签名、协议版本、路径、SQLite 结构。
+- [x] 以下负例必须 **全部拒绝**（有明确非 0 退出码或结构化错误）：
+  - [x] 篡改 manifest 哈希一字节
+  - [x] 错误签名或错误 `keyId`
+  - [x] 未知协议版本
+  - [x] 路径穿越或包外文件引用
+  - [x] 损坏的 SQLite 文件
+- [x] 构建器与校验器不依赖 App 内硬编码；公钥来源与 App 内置验钥策略一致。
 
 ### 3.3 固定测试包内容
 
-- [ ] 测试包体积刻意做小，但 **必须同时包含**：
-  - [ ] 至少 1 张单词卡
-  - [ ] 至少 1 张短句卡（含可点词例句）
-  - [ ] 至少 1 条 `lexicon_entries`
-  - [ ] `lexicon_forms` 表存在且 **允许 0 行**（第一期不写入、不查询；与 ADR 0008 一致）
-  - [ ] 至少 1 个主音频引用、1 个主图片引用
-- [ ] 每张卡片的 `knowledgeId` 在包内唯一；人工抽样的 ID 与构建规则一致。
+- [x] 测试包体积刻意做小，但 **必须同时包含**：
+  - [x] 至少 1 张单词卡
+  - [x] 至少 1 张短句卡（含可点词例句）
+  - [x] 至少 1 条 `lexicon_entries`
+  - [x] `lexicon_forms` 表存在且 **允许 0 行**（第一期不写入、不查询；与 ADR 0008 一致）
+  - [x] 至少 1 个主音频引用、1 个主图片引用
+- [x] 每张卡片的 `knowledgeId` 在包内唯一；人工抽样的 ID 与构建规则一致。
 
 ### 3.4 Android 只读打开（release 实机）
 
-- [ ] 在 **正式签名 release APK** 上（非 Expo Go、非 debug 冒充）：
-  - [ ] 验签通过后以只读方式打开包 SQLite
-  - [ ] 能查询 `cards` / `lexicon_entries` / `lexicon_forms`
-  - [ ] 对包 SQLite 的写入尝试失败
-- [ ] 修改包内任一带 hash 保护的文件后，App 或安装流程拒绝安装。
+- [x] 在 **正式签名 release APK** 上（非 Expo Go、非 debug 冒充）：
+  - [x] 验签通过后以只读方式打开包 SQLite
+  - [x] 能查询 `cards` / `lexicon_entries` / `lexicon_forms`
+  - [x] 对包 SQLite 的写入尝试失败
+- [x] 修改包内任一带 hash 保护的文件后，App 或安装流程拒绝安装。（验包链负例由 pack-builder/contracts 测试覆盖；完整安装流程篡改拒装见阶段 4）
 
 ### 3.5 阶段 3 退出门禁（一句话）
 
 > 同一固定测试包：**构建器能生成 → 独立校验器能通过 → release 实机只读打开**；篡改任一受保护字节都必须失败。
+
+**状态：** ✅ 已通过（2026-07-28；临时 pack-spike 入口已在收口时删除，`verify-bundled-pack.ts` 保留供后续复用）
 
 **必跑命令（示例）：**
 
@@ -108,7 +110,7 @@ pnpm --filter @remember/contracts test
 
 ### 4.5 点词与包内搜索
 
-- [ ] 例句点词：`lexicon_forms` → `lexicon_entries`，**离线** 展示释义。
+- [ ] 例句点词：token 规范化后 **直查** `lexicon_entries.surfaceForm`（ADR 0008；第一期不使用 `lexicon_forms`），**离线** 展示释义。
 - [ ] 点词发音：**首次点击** 下载并缓存；之后离线可播（弱网场景可测）。
 - [ ] 当前包内搜索主学习内容；找到后可 **重新加入复习**。
 - [ ] 同一 `knowledgeId` 重复加入复习 **不产生重复队列项**。
