@@ -2,7 +2,7 @@ import { Asset } from 'expo-asset';
 import * as ed from '@noble/ed25519';
 import { sha256 } from '@noble/hashes/sha2.js';
 import { sha512 } from '@noble/hashes/sha2.js';
-import { verifyPackArchive, type PackSqliteReader } from '@remember/contracts';
+import { verifyPackArchive, normalizeZipEntryPath, type PackSqliteReader } from '@remember/contracts';
 import {
   cacheDirectory,
   deleteAsync,
@@ -146,7 +146,8 @@ function readZipEntries(zipBytes: Uint8Array): Map<string, Uint8Array> {
     if (entryPath.endsWith('/')) {
       continue;
     }
-    filesByPath.set(entryPath.replace(/\\/g, '/').replace(/^\/+/, ''), bytes);
+    const normalized = normalizeZipEntryPath(entryPath);
+    filesByPath.set(normalized, bytes);
   }
   return filesByPath;
 }

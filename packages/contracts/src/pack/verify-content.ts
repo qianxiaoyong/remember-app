@@ -1,9 +1,11 @@
 import { PackVerificationError } from './errors.js';
-import { parseCardContentJson } from './card.js';
+import { CARD_TYPE_VOCABULARY } from './constants.js';
+import { packCardRowSchema, parseCardContentJson } from './card.js';
 import { isValidKnowledgeIdFormat, knowledgeIdMatchesHeadword } from './knowledge-id.js';
 import { parseLexiconDefinitionsJson } from './lexicon.js';
 import type { PackManifest } from './manifest.js';
 import { assertAllowedPackPath } from './paths.js';
+import { normalizeSurfaceForm } from './normalize.js';
 import type { PackCardRow } from './card.js';
 import type { LexiconEntry } from './lexicon.js';
 
@@ -60,6 +62,13 @@ export function validatePackCards(
     }
     sortOrders.add(card.sortOrder);
 
+    if (card.cardType !== CARD_TYPE_VOCABULARY) {
+      throw new PackVerificationError(
+        'PACK_CONTENT_INVALID',
+        `unsupported cardType: ${card.knowledgeId}`,
+      );
+    }
+
     let content: ReturnType<typeof parseCardContentJson>;
     try {
       content = parseCardContentJson(card.content);
@@ -94,12 +103,14 @@ export function validatePackCards(
       }
     }
 
-    validated.push({
-      knowledgeId: card.knowledgeId,
-      cardType: 'vocabulary',
-      sortOrder: card.sortOrder,
-      content,
-    });
+    validated.push(
+      packCardRowSchema.parse({
+        knowledgeId: card.knowledgeId,
+        cardType: card.cardType,
+        sortOrder: card.sortOrder,
+        content,
+      }),
+    );
   }
 
   return validated;
@@ -112,6 +123,14 @@ export function validateLexiconEntries(records: PackLexiconRecord[]): LexiconEnt
 
   const validated: LexiconEntry[] = [];
   for (const record of records) {
+    const normalizedSurface = normalizeSurfaceForm(record.surfaceForm);
+    if (normalizedSurface === null || normalizedSurface !== record.surfaceForm) {
+      throw new PackVerificationError(
+        'PACK_CONTENT_INVALID',
+        `invalid lexicon surfaceForm: ${record.surfaceForm}`,
+      );
+    }
+
     let definitions: ReturnType<typeof parseLexiconDefinitionsJson>;
     try {
       definitions = parseLexiconDefinitionsJson(record.definitions);
