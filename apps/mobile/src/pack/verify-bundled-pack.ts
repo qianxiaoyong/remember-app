@@ -2,7 +2,11 @@ import { Asset } from 'expo-asset';
 import * as ed from '@noble/ed25519';
 import { sha256 } from '@noble/hashes/sha2.js';
 import { sha512 } from '@noble/hashes/sha2.js';
-import { verifyPackArchive, normalizeZipEntryPath, type PackSqliteReader } from '@remember/contracts';
+import {
+  verifyPackArchive,
+  normalizeZipEntryPath,
+  type PackSqliteReader,
+} from '@remember/contracts';
 import {
   cacheDirectory,
   deleteAsync,
@@ -63,7 +67,8 @@ export async function verifyPackZipBytes(zipBytes: Uint8Array): Promise<PackRead
     ? (JSON.parse(new TextDecoder().decode(manifestBytes)) as { packId: string })
     : { packId: 'unknown' };
 
-  const cardCount = db.getFirstSync<{ count: number }>('SELECT COUNT(*) AS count FROM cards')?.count ?? 0;
+  const cardCount =
+    db.getFirstSync<{ count: number }>('SELECT COUNT(*) AS count FROM cards')?.count ?? 0;
   const lexiconCount =
     db.getFirstSync<{ count: number }>('SELECT COUNT(*) AS count FROM lexicon_entries')?.count ?? 0;
   const lexiconFormCount =
@@ -71,12 +76,10 @@ export async function verifyPackZipBytes(zipBytes: Uint8Array): Promise<PackRead
 
   let writeRejected = false;
   try {
-    db.runSync('INSERT INTO cards (knowledgeId, cardType, sortOrder, content) VALUES (?, ?, ?, ?)', [
-      'hack',
-      'vocabulary',
-      99,
-      '{}',
-    ]);
+    db.runSync(
+      'INSERT INTO cards (knowledgeId, cardType, sortOrder, content) VALUES (?, ?, ?, ?)',
+      ['hack', 'vocabulary', 99, '{}'],
+    );
   } catch {
     writeRejected = true;
   }
@@ -100,12 +103,16 @@ function createExpoSqliteReader(db: SQLiteDatabase): PackSqliteReader {
   return {
     listTables(): string[] {
       return db
-        .getAllSync<{ name: string }>("SELECT name FROM sqlite_master WHERE type = 'table' ORDER BY name")
+        .getAllSync<{ name: string }>(
+          "SELECT name FROM sqlite_master WHERE type = 'table' ORDER BY name",
+        )
         .map((row) => row.name);
     },
     readTableInfo(tableName: string) {
       return db
-        .getAllSync<{ name: string; type: string; notnull: number; pk: number }>(`PRAGMA table_info(${tableName})`)
+        .getAllSync<{ name: string; type: string; notnull: number; pk: number }>(
+          `PRAGMA table_info(${tableName})`,
+        )
         .map((row) => ({
           name: row.name,
           type: row.type,
@@ -114,7 +121,9 @@ function createExpoSqliteReader(db: SQLiteDatabase): PackSqliteReader {
         }));
     },
     countRows(tableName: string): number {
-      return db.getFirstSync<{ count: number }>(`SELECT COUNT(*) AS count FROM ${tableName}`)?.count ?? 0;
+      return (
+        db.getFirstSync<{ count: number }>(`SELECT COUNT(*) AS count FROM ${tableName}`)?.count ?? 0
+      );
     },
     readAllCards() {
       return db.getAllSync<{

@@ -45,11 +45,7 @@ function makeLexicon(overrides: Partial<PackLexiconRecord> = {}): PackLexiconRec
 describe('validatePackCards', () => {
   it('拒绝非 vocabulary 的 cardType', () => {
     expect(() =>
-      validatePackCards(
-        'remember-test-pack',
-        [makeCard({ cardType: 'choice' })],
-        manifestPaths,
-      ),
+      validatePackCards('remember-test-pack', [makeCard({ cardType: 'choice' })], manifestPaths),
     ).toThrow(
       expect.objectContaining({
         code: 'PACK_CONTENT_INVALID',
@@ -58,11 +54,7 @@ describe('validatePackCards', () => {
   });
 
   it('接受 vocabulary 行并返回 packCardRowSchema 结果', () => {
-    const rows = validatePackCards(
-      'remember-test-pack',
-      [makeCard()],
-      manifestPaths,
-    );
+    const rows = validatePackCards('remember-test-pack', [makeCard()], manifestPaths);
     expect(rows[0]?.cardType).toBe('vocabulary');
   });
 });

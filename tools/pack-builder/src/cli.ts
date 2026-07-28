@@ -57,9 +57,7 @@ async function main(): Promise<void> {
 main().catch((error: unknown) => {
   const message = error instanceof Error ? error.message : String(error);
   const code =
-    typeof error === 'object' && error !== null && 'code' in error
-      ? String((error).code)
-      : 'ERROR';
+    typeof error === 'object' && error !== null && 'code' in error ? String(error.code) : 'ERROR';
   console.error(`${code}: ${message}`);
   process.exit(1);
 });

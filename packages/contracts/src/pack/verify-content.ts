@@ -80,12 +80,14 @@ export function validatePackCards(
     }
 
     const kind = card.knowledgeId.includes(':en:phrase:') ? 'phrase' : 'word';
-    if (!knowledgeIdMatchesHeadword({
-      knowledgeId: card.knowledgeId,
-      packId,
-      headword: content.prompt.headword,
-      kind,
-    })) {
+    if (
+      !knowledgeIdMatchesHeadword({
+        knowledgeId: card.knowledgeId,
+        packId,
+        headword: content.prompt.headword,
+        kind,
+      })
+    ) {
       throw new PackVerificationError(
         'PACK_CONTENT_INVALID',
         `knowledgeId does not match headword: ${card.knowledgeId}`,

@@ -8,7 +8,10 @@ export const lexiconEntrySchema = z
     definitions: z.array(vocabularyDefinitionSchema).min(1),
     ipa: z.string().min(1).optional(),
     formNote: z.string().min(1).optional(),
-    audioUrl: z.url().refine((value) => value.startsWith('https://')).optional(),
+    audioUrl: z
+      .url()
+      .refine((value) => value.startsWith('https://'))
+      .optional(),
   })
   .strict();
 
