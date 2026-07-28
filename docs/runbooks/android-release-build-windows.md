@@ -217,6 +217,34 @@ adb install -r "D:\r\a\apps\mobile\android\app\build\outputs\apk\release\app-rel
 
 Release SHA-1（微信开放平台用）见 ADR 0004，与 debug 签名不同。
 
+### 6.4 应用内数据验收（release 必读）
+
+**release APK 默认 `android:debuggable=false`，以下命令会失败，属于正常现象：**
+
+```powershell
+adb shell run-as com.remember.app ls files/packs/remember-test-pack/
+adb shell run-as com.remember.app sqlite3 databases/user.sqlite "SELECT packId FROM installed_packs;"
+# 典型输出：run-as: package not debuggable: com.remember.app
+```
+
+| 构建类型    | `run-as` 查私有目录   | 阶段 4 退出门禁                |
+| ----------- | --------------------- | ------------------------------ |
+| **release** | ❌ 不可用             | ✅ 以 App 内真实 UI / 功能为准 |
+| **debug**   | ✅ 可用（仅开发调试） | 不能替代 release 验收          |
+
+**release 实机验收替代方式：**
+
+1. 使用 App 内开发/验收入口展示的数据（如首页 `installed_packs` 列表，来自真实 SQLite 查询）。
+2. 仅需命令行抽查时，构建并安装 **debug APK**（`assembleDebug`），在同一分支上用 `run-as` 查库；debug 通过 **不能** 代替 release 门禁。
+
+```powershell
+# 可选：仅开发期查库（debug 包）
+cd D:\r\a\apps\mobile\android
+.\gradlew.bat assembleDebug
+adb install -r app\build\outputs\apk\debug\app-debug.apk
+adb shell run-as com.remember.app sqlite3 databases/user.sqlite "SELECT packId, packVersion, installStatus FROM installed_packs;"
+```
+
 ---
 
 ## 7. 故障排查
