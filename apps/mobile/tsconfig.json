@@ -6,6 +6,7 @@
     "src/**/*.ts",
     "src/**/*.tsx",
     "modules/**/*.ts",
-    ".expo/types/**/*.ts"
+    ".expo/types/**/*.ts",
+    "vitest.config.ts"
   ]
 }

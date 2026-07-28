@@ -1,10 +1,9 @@
 import { Asset } from 'expo-asset';
 import testPackModule from '../../assets/packs/remember-test-pack.zip';
-import { verifyPackZipBytes, type VerifiedPackSummary } from '../data/pack/verify-pack-zip-bytes';
+import { installPackFromZipBytes } from '../data/pack/install-pack-from-zip';
+import type { InstalledPackRow } from '../data/repositories/installed-pack-repository';
 
-export type PackReadSummary = VerifiedPackSummary;
-
-export async function verifyBundledTestPack(): Promise<PackReadSummary> {
+export async function installBundledTestPack(): Promise<InstalledPackRow> {
   const asset = Asset.fromModule(testPackModule);
   await asset.downloadAsync();
   if (!asset.localUri) {
@@ -13,7 +12,5 @@ export async function verifyBundledTestPack(): Promise<PackReadSummary> {
 
   const response = await fetch(asset.localUri);
   const buffer = await response.arrayBuffer();
-  return verifyPackZipBytes(new Uint8Array(buffer));
+  return installPackFromZipBytes(new Uint8Array(buffer));
 }
-
-export { verifyPackZipBytes };

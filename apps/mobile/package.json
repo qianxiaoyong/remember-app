@@ -7,6 +7,7 @@
     "dev": "expo start --dev-client",
     "android": "expo run:android",
     "typecheck": "tsc --noEmit",
+    "test": "vitest run",
     "build": "expo export --platform android --output-dir dist"
   },
   "dependencies": {
@@ -36,6 +37,7 @@
     "@remember/config": "workspace:*",
     "@types/react": "19.2.4",
     "expo-doctor": "1.20.1",
-    "typescript": "6.0.3"
+    "typescript": "6.0.3",
+    "vitest": "4.1.10"
   }
 }
