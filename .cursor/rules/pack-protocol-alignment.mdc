@@ -1,0 +1,248 @@
+---
+description: 阶段3学习包协议对齐——用户已确认的对齐项（knowledgeId、vocabulary prompt/reveal 等）
+alwaysApply: true
+---
+
+# 学习包协议对齐（待阶段3冻结）
+
+用户已确认：第一期仅 `vocabulary` 一种 cardType，包内不混用。以下三项应在阶段3写进 pack 协议时 **预留**，即使第一期测试包尚未用到：
+
+1. **`cardType` 枚举可扩展**：schema 设计为可追加新值（如未来的 `choice`）；App 按白名单渲染器注册。
+2. **`cards` 行级 type，不按包固定一种**：同一包内可混排多种 `cardType`（靠 `sortOrder`）；不是「整包只能一种 UI」。
+3. **`manifest sections`（可选）**：分段元数据（标题、cardType、sortOrder 范围、可选 entryGuide）；用于 UI 分段/学练过渡，非必须，可仅用 sortOrder + 行级 cardType。
+
+## knowledgeId（已对齐，待阶段3冻结契约）
+
+- **跨包不合并进度**：`knowledgeId` 带稳定 `packId` 前缀；不同 pack 中同一英文词各自独立 `learning_states`。
+- **格式**：`{packId}:en:{word|phrase}:{slug}`；`slug` 由 `prompt.headword` 规范化（trim、小写、空格→`-`、合法字符 `[a-z0-9-]`）。
+- **第一期**：仅 `vocabulary`；一行 `cards` ↔ 一个 `knowledgeId`；字段在表列，不进 content JSON。
+- **包内唯一**；包版本小修（typo/音频/例句）ID 不变；headword 规范化结果变了则新 ID。
+- 与架构 §16「跨包共享」的差异：阶段3 用 ADR 记录——「同一知识内容」定义为 **某 pack 内的一条 card**。
+
+## vocabulary：cards 行与 content（已对齐，待阶段3冻结契约）
+
+**表列：** `knowledgeId`、`cardType`（固定 `vocabulary`）、`sortOrder`、`content`（JSON）。
+
+**content 仅两键：** `prompt`（阶段 A）、`reveal`（阶段 B）。单词与短语共用同一 schema；差别在 headword 与 knowledgeId 的 `word|phrase` 段。
+
+**原则：** prompt 不含释义/例句/助记；reveal 随包下载、展开不联网；顶栏发音始终读 `prompt.primaryAudio`；可选字段 **省略键** 不用 `null`；包内搜索匹配 `prompt.headword`。
+
+### prompt（阶段 A）
+
+| 字段 | 必填 | 说明 |
+| --- | --- | --- |
+| `headword` | ✅ | 顶栏大字；knowledgeId slug 来源 |
+| `primaryAudio` | ✅ | 包内相对路径；须在 manifest 资源清单 |
+| `phonetic` | ❌ | 无则隐藏音标行 |
+| `phonetic.ipa` | 有 phonetic 则 ✅ | IPA |
+| `phonetic.dialect` | ❌ | `us` \| `uk`；缺省 App 当 `us` |
+| `primaryImage` | ❌ | 回忆页主图；MVP 多数卡可省略 |
+
+**交互（协议说明，不进 JSON）：** 点顶栏/喇叭 → 只播 primaryAudio、不展开；点中间空白 → 进入阶段 B；进入页不自动播。
+
+### reveal（阶段 B）
+
+**必填：**
+
+- `definitions`：数组 ≥1；`definitions[].text` ✅；`definitions[].pos` ❌
+- `examples`：数组 1～5 条；`examples[].en` ✅、`examples[].zh` ✅；`examples[].audio` ❌（有则显示例句喇叭）
+
+**可选（有则显示整块）：**
+
+- `mnemonic` / `mnemonic.kind`（MVP 仅 `association`）/ `mnemonic.text`
+- `inflectionNote`：词形说明字符串；不做变形表
+
+**MVP 不做：** 词典外链、HTML/视频、记忆历史、三按钮间隔文案。
+
+### 构建校验底线
+
+- `knowledgeId` 格式 + 包内唯一 + 与 headword slug 一致
+- 未知 JSON 键拒绝；资源路径禁止 `..`；SQLite 引用须在 manifest 资源清单
+- 例句可点词 → 构建时从 `examples[].en` 写入 `lexicon_entries`（不在 reveal 嵌点词释义）
+
+## lexicon 与点词弹窗（已对齐，待阶段3冻结契约）
+
+### 两表分工（修订）
+
+**点词规则：点的是什么查什么**——不做表面形→原形跳转；`went` 与 `go` 是 **两条独立条目**（若例句会出现就要各写一行）。
+
+| 表 | 第一期用途 |
+| --- | --- |
+| **`lexicon_entries`** | 主表：按 **`surfaceForm`**（标准化后）查词条；存释义、音标、变形说明、远程发音 |
+| **`lexicon_forms`** | 架构三表保留；**第一期不写入、不参与点词查询**（ADR 说明暂缓；以后若做短语/别名索引再用） |
+
+**查询链：** 点击 token → normalize → `SELECT * FROM lexicon_entries WHERE surfaceForm = ?`
+
+**`lexicon_entries` 字段：**
+
+| 列 | 必填 | 说明 |
+| --- | --- | --- |
+| `surfaceForm` | ✅ PK | 标准化点击形，如 `picture`、`drew` |
+| `displayForm` | ✅ | 展示用，如 `Picture`、`drew`；可与 surfaceForm 相同 |
+| `definitions` | ✅ JSON | 同 vocabulary `definitions[]`（`text` 必填，`pos` 可选） |
+| `ipa` | ❌ | 弹窗音标 |
+| `formNote` | ❌ | 变形/词根说明，如「动词 draw 的过去式」；**在弹窗展示，不用于跳转** |
+| `audioUrl` | ❌ | HTTPS 远程发音；首次点击下载缓存；不进 pack manifest |
+
+**normalize（App 与构建器一致）：** 小写、去首尾标点；token 匹配 `[a-zA-Z']+`。
+
+**MVP 弹窗内容：** displayForm + ipa + definitions + formNote（有则显示）+ 喇叭（有 audioUrl）+ **收藏按钮**；无「查看详情」、无词频/难度/人数统计、无短语二选一、无「加入记忆」进 SM-2。
+
+**未收录：** 友好提示，不崩溃、不展开答案。
+
+### 服务端主词库（内容生产，非装机）
+
+- **后台/master lexicon**：编辑、AI 生成、审核用的 **服务端词库**（PostgreSQL 或等价存储）；**不**整库下发到手机。
+- **pack-builder** 构建时：扫描例句 token → 从主词库 **拷贝/生成** 对应 `surfaceForm` 行 → 写入 **该 pack** 的 `lexicon_entries`（仅包内出现的词，体积小、可离线点词）。
+- 用户手机只读 **已安装 pack.sqlite** 里的 lexicon 子集。
+
+### 点词收藏（MVP 纳入）
+
+- 弹窗「收藏 / 已收藏」：收藏 **`packId + surfaceForm`**（点词所见词条），**不是** SM-2 卡片进度。
+- 存 **`user.sqlite`** 新表（如 `saved_lexicon_items`；阶段 4 落地，阶段 3 ADR 先定字段）。
+- **第一期仅本地收藏**；云端同步留阶段 5+。
+- **入口：** 首页/global **左侧抽屉 →「学习」分组 →「生词本」**（与 UI §9 抽屉结构一致；未实现时不显示占位）。
+- **第二期：** 学习卡 **`knowledgeId` 收藏**（学习页更多 / 搜索结果等）；MVP 不做，避免与「加入复习」重复。
+
+### 与架构原文差异（阶段3 ADR）
+
+- 点词不再使用 `lexicon_forms` 做原形映射（§8.3 流程描述需更新为直查 `surfaceForm`）。
+- 新增 user 表支撑点词收藏。
+- 服务端主词库为 **构建管线依赖**，非 MVP 用户 API 必交付项（可先手工维护测试包 lexicon）。
+
+## packManifest（已对齐，待阶段3冻结契约）
+
+**交付物：** 一个 **`.zip` 单文件**（不是 APK）。用户先装 App，再下载 zip；App 解压到临时目录 → 验 manifest → 安装到私有目录。
+
+**zip 根目录固定三样：**
+
+```text
+packManifest.json
+pack.sqlite
+assets/…          （音频、图片；仅包内资源）
+```
+
+### packManifest.json 字段（从简）
+
+| 字段 | 必填 | 说明 |
+| --- | --- | --- |
+| `manifestVersion` | ✅ | manifest 格式版本；第一期固定 `1` |
+| `protocolVersion` | ✅ | 内容协议版本（cards/lexicon schema）；第一期固定 `1` |
+| `packId` | ✅ | 商品 ID，稳定不变 |
+| `packVersion` | ✅ | 内容版本，如 `1.0.0` |
+| `keyId` | ✅ | 验签公钥 ID（支持轮换） |
+| `files` | ✅ | 受保护文件清单，见下 |
+| `signature` | ✅ | Ed25519，Base64 |
+| `sections` | ❌ | 可选；第一期可不填 |
+
+**`files[]` 每项：** `path`（相对路径）、`sha256`、`sizeBytes`。
+
+- 必须包含 `pack.sqlite` 及所有 `assets/` 下被 SQLite 引用的文件。
+- **不含** lexicon 远程 `audioUrl`。
+- 路径只允许 `pack.sqlite` 或 `assets/` 下；禁止 `..`、绝对路径。
+
+**验签顺序（App / 校验器一致）：** 读 manifest → 查 `protocolVersion` → 逐文件 sha256 → Ed25519 验签 → 只读打开 `pack.sqlite` 结构自检 → 原子安装。
+
+**签名：** 对 **去掉 `signature` 字段后** 的 canonical JSON 做 Ed25519（阶段 3 实现时写死一种 canonical 规则，不多种并存）。
+
+**上限（从简）：** 单 zip **200MB**；UTF-8；失败即拒装、保留旧包。
+
+**与 APK 无关：** APK = App 程序；zip = 一本知识库内容。
+
+## pack.sqlite 三表物理 schema（已对齐，待阶段3冻结契约）
+
+**文件：** zip 内的 `pack.sqlite`；**只读**打开；每 pack 一个文件；与 `user.sqlite`（进度库）分离。
+
+### 表 `cards`
+
+| 列 | SQLite 类型 | 约束 | 说明 |
+| --- | --- | --- | --- |
+| `knowledgeId` | TEXT | PRIMARY KEY | 已定格式 `{packId}:en:…` |
+| `cardType` | TEXT | NOT NULL | 第一期仅 `vocabulary` |
+| `sortOrder` | INTEGER | NOT NULL, UNIQUE | 学习顺序；包内不重复 |
+| `content` | TEXT | NOT NULL | JSON 字符串；仅 `prompt` + `reveal` |
+
+索引：`idx_cards_sort_order` ON (`sortOrder`)。
+
+### 表 `lexicon_entries`
+
+| 列 | SQLite 类型 | 约束 | 说明 |
+| --- | --- | --- | --- |
+| `surfaceForm` | TEXT | PRIMARY KEY | 标准化点击形（小写等） |
+| `displayForm` | TEXT | NOT NULL | 弹窗展示 |
+| `definitions` | TEXT | NOT NULL | JSON 数组 |
+| `ipa` | TEXT | 可 NULL | 省略列或 NULL 等价「无音标」 |
+| `formNote` | TEXT | 可 NULL | 变形说明 |
+| `audioUrl` | TEXT | 可 NULL | 远程 HTTPS |
+
+### 表 `lexicon_forms`（结构保留，第一期 0 行）
+
+| 列 | SQLite 类型 | 约束 | 说明 |
+| --- | --- | --- | --- |
+| `aliasForm` | TEXT | PRIMARY KEY | 备用：别名/短语形 → 某 entry |
+| `surfaceForm` | TEXT | NOT NULL, FK → `lexicon_entries(surfaceForm)` | 指向已有词条 |
+
+第一期 **不写入、不查询**；安装自检仍要求 **表存在**。
+
+### 建表 SQL（阶段 3 实现参考）
+
+```sql
+CREATE TABLE cards (
+  knowledgeId TEXT NOT NULL PRIMARY KEY,
+  cardType TEXT NOT NULL,
+  sortOrder INTEGER NOT NULL UNIQUE,
+  content TEXT NOT NULL
+);
+CREATE INDEX idx_cards_sort_order ON cards (sortOrder);
+
+CREATE TABLE lexicon_entries (
+  surfaceForm TEXT NOT NULL PRIMARY KEY,
+  displayForm TEXT NOT NULL,
+  definitions TEXT NOT NULL,
+  ipa TEXT,
+  formNote TEXT,
+  audioUrl TEXT
+);
+
+CREATE TABLE lexicon_forms (
+  aliasForm TEXT NOT NULL PRIMARY KEY,
+  surfaceForm TEXT NOT NULL,
+  FOREIGN KEY (surfaceForm) REFERENCES lexicon_entries (surfaceForm)
+);
+```
+
+### 结构自检（安装时，从简）
+
+1. 恰好 3 张表：`cards`、`lexicon_entries`、`lexicon_forms`（无多余用户表）。
+2. `PRAGMA table_info` 各列与上表一致（阶段 3 写死期望列表）。
+3. `cards` 至少 1 行；`lexicon_entries` 至少 1 行；`lexicon_forms` 允许 0 行。
+4. 只读打开；UTF-8；`content` / `definitions` 由 App 用 Zod 再校验 JSON。
+
+**不做：** 第 4 张 meta 表、数据库加密、包内 `protocolVersion` 列（版本只在 packManifest）。
+
+## 安装错误码（已对齐，待阶段3冻结契约）
+
+**约定：** 稳定英文 `PACK_*`；日志/telemetry 用码；**UI 不直接展示码**（见 UI 规范），只展示人话 + 可执行动作（重试、更新 App、联系客服）。
+
+**原则：** 能合并的不拆码；构建器 `verify` 与 App 安装 **同一套码**；官方经 builder 出的包应 **全流程通过**。
+
+| 错误码 | 何时 | 用户侧大意 |
+| --- | --- | --- |
+| `PACK_ARCHIVE_INVALID` | zip 损坏、缺根文件 | 下载不完整，请重试 |
+| `PACK_MANIFEST_INVALID` | manifest JSON 非法、缺必填字段、路径非法 | 包格式错误，请重新下载 |
+| `PACK_PROTOCOL_UNSUPPORTED` | `protocolVersion` App 不支持 | 请更新 App |
+| `PACK_INTEGRITY_FAILED` | 任一条 `files[]` 的 sha256 或 size 不符 | 文件损坏，请重新下载 |
+| `PACK_SIGNATURE_INVALID` | Ed25519 验签失败 | 不是有效官方包，请勿安装 |
+| `PACK_KEY_UNKNOWN` | `keyId` 无对应内置公钥 | 请更新 App |
+| `PACK_SIZE_EXCEEDED` | zip 或单文件超上限 | 包过大，联系客服 |
+| `PACK_SCHEMA_INVALID` | SQLite 缺表/缺列/打不开/0 行 cards 或 entries | 包内容损坏，请重新下载 |
+| `PACK_CONTENT_INVALID` | 打开后 Zod 校验 card/lexicon JSON 失败 | 包内容损坏，请重新下载 |
+
+**安装顺序与失败即停：** 解压 → manifest 解析 → protocolVersion → 路径与大小 → hash → 签名 → 只读 SQLite 结构自检 → （可选）抽样或全量 Zod 内容校验。
+
+**不在安装链上的码（另域）：** `PACK_NOT_FOUND`（目录 API）、`PACK_ACCESS_DENIED`（无权益）、下载网络错误用通用 `DOWNLOAD_FAILED` 或等价，不混入验包链。
+
+**严格但可安装：** 正常官方包在 **builder 发布前 verify 一遍**；用户端与 builder 规则一致，坏包、篡改包才拒；不因「列太多」误杀——自检只验表名与列清单，不验业务创意。
+
+Zod 契约与 ADR 在阶段3实施时落盘；确认前不得单独写入 `packages/contracts/src/pack/` 除非进入阶段3实现任务。
+
