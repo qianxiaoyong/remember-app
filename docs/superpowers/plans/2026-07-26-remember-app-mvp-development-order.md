@@ -164,10 +164,12 @@ tsconfig.json
 
 **计划拆分：**
 
-1. `<date>-pack-install-and-library.md`
-2. `<date>-study-scheduler-and-session.md`
-3. `<date>-word-lookup-and-search.md`
-4. `<date>-mvp-mobile-ui.md`
+1. [`2026-07-28-pack-install-and-library.md`](2026-07-28-pack-install-and-library.md)（实施前用 writing-plans 创建）
+2. [`2026-07-28-study-scheduler-and-session.md`](2026-07-28-study-scheduler-and-session.md)
+3. [`2026-07-28-word-lookup-and-search.md`](2026-07-28-word-lookup-and-search.md)
+4. [`2026-07-28-mvp-mobile-ui.md`](2026-07-28-mvp-mobile-ui.md)
+
+**启动说明：** [`2026-07-28-phase4-local-study-loop-kickoff.md`](2026-07-28-phase4-local-study-loop-kickoff.md)
 
 **执行顺序：**
 
@@ -178,7 +180,7 @@ tsconfig.json
 - [ ] 实现任务生成：恢复未完成任务、到期复习、补充本次新内容；缺席日期不累积新任务。
 - [ ] 在同一SQLite事务保存作答结果、任务位置和`sync_outbox`。
 - [ ] 实现当前知识库搜索和重新加入复习，重复加入不制造重复任务。
-- [ ] 实现例句点词、变形到原形查询、离线释义和首次语音缓存。
+- [ ] 实现例句点词（token 规范化后直查 `lexicon_entries.surfaceForm`）、离线释义和首次语音缓存。
 - [ ] 按已确认UI规范完成悬浮胶囊、详情页、学习页、更多菜单和全局抽屉。
 
 **退出门禁：** 一台断网Android设备可以安装固定测试包、退出重启、跨天继承原任务、完成三按钮复习、点词、搜索遗忘内容并重新加入复习；杀死App不会丢失最后一次已确认作答。

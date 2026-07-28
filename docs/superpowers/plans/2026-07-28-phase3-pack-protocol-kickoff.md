@@ -26,7 +26,8 @@
 阶段 1  Monorepo + 质量门禁    ✅
 阶段 2  五项高风险技术验证      ✅（Task 9 Step 1–4 已通过）
 阶段 3  学习包协议与固定样例包  ✅（ADR 0008、contracts、pack-builder、实机 pass）
-阶段 4–8                      ⏸
+阶段 4  本地学习完整闭环        ← 见 2026-07-28-phase4-local-study-loop-kickoff.md
+阶段 5–8                      ⏸
 ```
 
 ### 阶段 2 结论摘要

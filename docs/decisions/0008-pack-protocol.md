@@ -93,7 +93,7 @@ App 与 `pack-builder verify` 一致，失败即停：
 
 **normalize：** 小写、去首尾标点；token 匹配 `[a-zA-Z']+`。构建器从 `examples[].en` 扫描 token 写入包内 `lexicon_entries` 子集。
 
-**点词收藏（阶段 4 落地）：** `user.sqlite` 存 `packId + surfaceForm`；入口：抽屉「学习」→「生词本」。MVP 不做学习卡 `knowledgeId` 收藏。
+**点词收藏（阶段 4 落地）：** `user.sqlite` 存 `packId + surfaceForm`；入口：抽屉「学习」→「**收藏本**」（用户可见名；代码可用 `savedLexicon` 等稳定命名）。MVP 不做学习卡 `knowledgeId` 收藏。
 
 ## pack.sqlite 物理 schema
 

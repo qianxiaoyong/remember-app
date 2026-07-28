@@ -110,7 +110,7 @@ pnpm --filter @remember/contracts test
 
 ### 4.5 点词与包内搜索
 
-- [ ] 例句点词：token 规范化后 **直查** `lexicon_entries.surfaceForm`（ADR 0008；第一期不使用 `lexicon_forms`），**离线** 展示释义。
+- [ ] 例句点词：token 规范化后 **直查** `lexicon_entries.surfaceForm`（ADR 0008）；**离线** 展示释义；点词可加入 **收藏本**（抽屉「学习」→「收藏本」）。
 - [ ] 点词发音：**首次点击** 下载并缓存；之后离线可播（弱网场景可测）。
 - [ ] 当前包内搜索主学习内容；找到后可 **重新加入复习**。
 - [ ] 同一 `knowledgeId` 重复加入复习 **不产生重复队列项**。
