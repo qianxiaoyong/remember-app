@@ -1,0 +1,6 @@
+# 复制到仓库外安全目录，或通过 REMEMBER_ANDROID_SIGNING_PROPERTIES 指向该文件。
+# 不得提交真实密码或 keystore 路径中的敏感信息到 Git。
+storeFile=D:/AIcoder/remember-secrets/remember-release.jks
+storePassword=替换为安全密码
+keyAlias=remember-release
+keyPassword=替换为安全密码

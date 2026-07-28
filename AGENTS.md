@@ -2,6 +2,7 @@
 
 - 产品展示名：`记得`；项目根目录和Git仓库名：`remember-app`。
 - 对本项目进行实现、修改、调试、测试、审查、迁移、契约、依赖或配置工作时，使用 `$build-learning-app`。
+- Skill 原件：`skills/build-learning-app/`；Cursor 适配副本：`.cursor/skills/build-learning-app/`（修改 Skill 时两处保持同步）。
 - 架构原件：`docs/superpowers/specs/2026-07-26-learning-app-mvp-architecture-design.md`。
 - UI原件：`docs/superpowers/specs/2026-07-26-learning-app-mvp-ui-design.md`。
 - AI编码规范原件：`docs/ai-rules/`。

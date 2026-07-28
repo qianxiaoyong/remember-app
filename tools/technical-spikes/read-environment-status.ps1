@@ -68,9 +68,16 @@ function Get-ReleaseSigningStatus([string]$Root) {
   }
 
   $gradle = Get-Content -Raw -Encoding UTF8 -LiteralPath $gradlePath
-  $hasReleaseBinding = $gradle -match '(?s)release\s*\{.*?signingConfig(?:\s*=)?\s*signingConfigs[.\[]release'
+  $hasReleaseBinding = $gradle -match '(?s)release\s*\{.*?signingConfig(?:\s*=)?\s*signingConfigs[.\[]rememberRelease'
+  if (-not $hasReleaseBinding) {
+    $hasReleaseBinding = $gradle -match '(?s)release\s*\{.*?signingConfig(?:\s*=)?\s*signingConfigs[.\[]release'
+  }
   if (-not $hasReleaseBinding) {
     return 'MISSING'
+  }
+
+  if ($gradle -match 'rememberReleaseSigningFromProperties') {
+    return 'MANUAL_CHECK_REQUIRED'
   }
 
   $storeMatch = [regex]::Match($gradle, 'storeFile\s*(?:=\s*)?file\(["'']([^"'']+)["'']\)')

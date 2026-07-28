@@ -21,6 +21,7 @@ const patterns = [
   },
   { rule: 'FOCUSED_TEST', value: /\.(?:only|skip)\s*\(/g },
 ];
+const commonJsRequireAllowedPrefixes = ['apps/mobile/plugins/'];
 
 function findLine(text, index) {
   return text.slice(0, index).split('\n').length;
@@ -41,7 +42,7 @@ async function listFiles(rootPath, currentPath = rootPath) {
 export async function scanProject(rootPath) {
   const issues = [];
   for (const filePath of await listFiles(rootPath)) {
-    const relativePath = path.relative(rootPath, filePath);
+    const relativePath = path.relative(rootPath, filePath).replace(/\\/g, '/');
     const fileName = path.basename(filePath);
     const hasExtraPnpmLock = fileName === 'pnpm-lock.yaml' && relativePath !== 'pnpm-lock.yaml';
     if (forbiddenLocks.has(fileName) || hasExtraPnpmLock) {
@@ -56,6 +57,12 @@ export async function scanProject(rootPath) {
       issues.push({ path: relativePath, line: 401, rule: 'SOURCE_TOO_LONG' });
     }
     for (const pattern of patterns) {
+      if (
+        pattern.rule === 'COMMONJS_REQUIRE' &&
+        commonJsRequireAllowedPrefixes.some((prefix) => relativePath.startsWith(prefix))
+      ) {
+        continue;
+      }
       for (const match of text.matchAll(pattern.value)) {
         issues.push({ path: relativePath, line: findLine(text, match.index), rule: pattern.rule });
       }

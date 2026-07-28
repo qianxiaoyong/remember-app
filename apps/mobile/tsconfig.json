@@ -1,4 +1,11 @@
 {
   "extends": ["expo/tsconfig.base", "@remember/config/typescript/react"],
-  "include": ["app/**/*.ts", "app/**/*.tsx", "src/**/*.ts", "src/**/*.tsx", ".expo/types/**/*.ts"]
+  "include": [
+    "app/**/*.ts",
+    "app/**/*.tsx",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "modules/**/*.ts",
+    ".expo/types/**/*.ts"
+  ]
 }

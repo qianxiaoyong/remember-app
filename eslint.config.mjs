@@ -12,6 +12,7 @@ export default [
       '.expo/**',
       'android/**',
       'ios/**',
+      'apps/mobile/plugins/**',
     ],
   },
   ...base,

@@ -1,0 +1,5 @@
+remember.wehub.top {
+	root * /srv/remember-site
+	encode gzip
+	file_server
+}

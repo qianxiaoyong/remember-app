@@ -659,7 +659,7 @@ ADR状态只能写`LIMITED_PASS`或`FAIL`，不能写“OpenSDK接入完成”�
 - Modify: `docs/superpowers/plans/2026-07-26-technical-spikes.md`
 - Modify: 已执行任务对应ADR，仅填写实际结果
 
-- [ ] **Step 1: 重跑首批环境与服务端Spike验收**
+- [x] **Step 1: 重跑首批环境与服务端Spike验收**（2026-07-28）
 
 Run:
 
@@ -673,9 +673,17 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/technical-spikes/read-
 powershell -NoProfile -ExecutionPolicy Bypass -File infra/technical-spikes/postgres/run-backup-restore.ps1
 ```
 
-Expected: 环境报告保持脱敏且退出码为0；四个精确测试文件分别通过；PostgreSQL脚本再次从自己的空volume开始，正常重放、两种冲突回滚、备份、恢复前空库断言和恢复后复验全部通过。
+实际结果：
 
-- [ ] **Step 2: 在Pause A、Pause B和移动批次确认后重跑Android验收**
+| 子项                    | 结果                                                                                            |
+| ----------------------- | ----------------------------------------------------------------------------------------------- |
+| 环境报告 + SelfTest     | 通过（退出码 0）                                                                                |
+| 微信 APIv3 四测试文件   | 通过（31 tests）                                                                                |
+| PostgreSQL 备份恢复脚本 | 通过（`STATUS=PASS`；PostgreSQL 18.4；需 Docker Desktop 运行 + 进程作用域 `POSTGRES_PASSWORD`） |
+
+PostgreSQL 重跑前需启动 Docker Desktop；密码通过进程作用域注入，不写入仓库。
+
+- [x] **Step 2: 在Pause A、Pause B和移动批次确认后重跑Android验收**（2026-07-28）
 
 以下命令不得在身份与签名暂停点解除前运行：
 
@@ -692,13 +700,21 @@ adb install -r apps/mobile/android/app/build/outputs/apk/release/app-release.apk
 adb shell monkey -p $spikeApplicationId 1
 ```
 
-Expected: `expo-doctor`、`typecheck`和`assembleRelease`退出码为0；APK安装成功；`adb shell monkey`只负责启动App，不声称或断言它会进入`technical-spike`路由。启动后由验收人员在App中人工点击临时“技术验证”入口，再记录真实Android 8或更高设备上SQLite、Ed25519和OpenSDK加载边界的非硬编码结果。不得为此增加Deep Link、scheme或路由跳转参数；记录API level和三项结果，不记录设备标识或包名。若APK产物名由已确认的签名方案改变，先将实际稳定产物路径更新进本计划并再次确认，不使用模糊搜索或猜测路径。
+实际结果（API 29 真机，短路径 `D:\r\a` release 签名 APK）：
 
-- [ ] **Step 3: 删除临时入口并重建release APK**
+| 项             | 结果         |
+| -------------- | ------------ |
+| SQLITE         | PASS         |
+| ED25519        | PASS         |
+| WECHAT_OPENSDK | LIMITED_PASS |
 
-删除`apps/mobile/app/technical-spike.tsx`和`apps/mobile/src/technical-spikes/run-mobile-spikes.ts`，移除`start-screen.tsx`中的临时入口，然后再次运行`expo-doctor`、`typecheck`和`assembleRelease`，确认正式产物不再包含Spike入口。
+ADR：`docs/decisions/0005-expo-multi-sqlite.md`、`0006-ed25519-android-verification.md`、`0007-wechat-opensdk-limited-validation.md`。
 
-- [ ] **Step 4: 运行仓库完整门禁**
+- [x] **Step 3: 删除临时入口并重建release APK**（2026-07-28）
+
+已删除 `apps/mobile/app/technical-spike.tsx`、`apps/mobile/src/technical-spikes/`（含 `run-mobile-spikes.ts`），并移除 `start-screen.tsx` 临时入口。重建 release APK 确认产物不再包含 Spike 路由。
+
+- [x] **Step 4: 运行仓库完整门禁**（2026-07-28）
 
 Run:
 
@@ -716,7 +732,9 @@ git status --short
 git diff --check
 ```
 
-APIv3与PostgreSQL通过只完成两个子项；Android工具链安装只表示环境就绪；SQLite或Ed25519缺少正式签名release实机结果时为`PAUSED`；OpenSDK核心类加载最多为`LIMITED_PASS`。五项没有全部达到架构退出门禁时，阶段2保持`IN_PROGRESS`并禁止进入阶段3。
+实际结果：上述命令均退出码 0。`format:check` 初跑因 11 个文档/站点文件 Prettier 未格式化失败，已 `prettier --write` 修复后重跑通过。`git diff --check` 无冲突标记问题。
+
+五项 Spike 均已有可重复命令与实际输出：APIv3、PostgreSQL、SQLite、Ed25519 为 PASS；OpenSDK 为 LIMITED_PASS。Task 9 Step 1–4 已于 2026-07-28 完成；**阶段 2 可进入阶段 3**（OpenSDK 完整注册/回跳仍待 Pause C/D）。
 
 ## Allowed Paths
 

@@ -1,0 +1,9 @@
+{
+  "name": "@remember/site",
+  "private": true,
+  "version": "0.0.0",
+  "description": "记得官方介绍站（静态 HTML，部署于 remember.wehub.top）",
+  "scripts": {
+    "preview": "npx --yes serve . -p 4173"
+  }
+}

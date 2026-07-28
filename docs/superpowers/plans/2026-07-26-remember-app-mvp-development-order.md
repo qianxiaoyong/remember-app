@@ -108,33 +108,33 @@ tsconfig.json
 
 ### 5.1 Expo多SQLite
 
-- [ ] 同时打开可写`user.sqlite`和一个只读知识库SQLite。
-- [ ] 验证查询、关闭句柄、临时文件替换和损坏文件回滚。
-- [ ] 在Android release包而不是只在开发模式验证。
+- [x] 同时打开可写`user.sqlite`和一个只读知识库SQLite。（ADR [0005](../decisions/0005-expo-multi-sqlite.md)，2026-07-28 API 29 真机）
+- [x] 验证查询、关闭句柄、临时文件替换和损坏文件回滚。
+- [x] 在Android release包而不是只在开发模式验证。
 
 ### 5.2 Ed25519验签
 
-- [ ] 使用固定公钥和测试向量验证正确签名。
-- [ ] 修改数据库、manifest和资源各一个字节，验证全部拒绝安装。
-- [ ] 记录`@noble/ed25519`、随机数与SHA-512 polyfill的精确兼容组合。
+- [x] 使用固定公钥和测试向量验证正确签名。（ADR [0006](../decisions/0006-ed25519-android-verification.md)）
+- [x] 修改数据库、manifest和资源各一个字节，验证全部拒绝安装。
+- [x] 记录`@noble/ed25519`、随机数与SHA-512 polyfill的精确兼容组合。（同步`verify` + `@noble/hashes` SHA-512；无需随机数 polyfill）
 
 ### 5.3 微信OpenSDK
 
-- [ ] 通过Expo config plugin或最小native bridge注册OpenSDK。
-- [ ] 验证Android包名、签名、`WXPayEntryActivity`和返回App链路。
-- [ ] 没有商户权限时只验证native调用边界，不伪造支付成功。
+- [x] 通过Expo config plugin或最小native bridge注册OpenSDK。（`apps/mobile/modules/wechat-open-sdk`，ADR [0007](../decisions/0007-wechat-opensdk-limited-validation.md)）
+- [ ] 验证Android包名、签名、`WXPayEntryActivity`和返回App链路。（Pause C/D 后另计划）
+- [x] 没有商户权限时只验证native调用边界，不伪造支付成功。（`LIMITED_PASS`）
 
 ### 5.4 微信APIv3密码学
 
-- [ ] 用官方样例验证请求签名、响应验签、回调验签和AES-GCM解密。
+- [x] 用官方样例验证请求签名、响应验签、回调验签和AES-GCM解密。（ADR [0002](../decisions/0002-wechat-pay-apiv3-crypto.md)）
 - [ ] 设计`WechatPayClient`最小公开接口，不在实验中建立完整支付模块。
 - [ ] 同一个官方通知重复处理两次，证明业务入口可以使用唯一ID实现幂等。
 
 ### 5.5 PostgreSQL备份恢复
 
-- [ ] 用Compose启动PostgreSQL测试实例并写入订单、支付事件和购买权限样例。
-- [ ] 使用`pg_dump -Fc`导出，在全新数据库执行恢复。
-- [ ] 验证三类记录和唯一约束完整恢复，并记录恢复命令与耗时。
+- [x] 用Compose启动PostgreSQL测试实例并写入订单、支付事件和购买权限样例。（ADR [0003](../decisions/0003-postgresql-backup-restore.md)）
+- [x] 使用`pg_dump -Fc`导出，在全新数据库执行恢复。
+- [x] 验证三类记录和唯一约束完整恢复，并记录恢复命令与耗时。
 
 **退出门禁：** 五项都有可重复命令、实际输出和明确通过/失败结论；失败项对应的架构调整已经获得确认。
 
