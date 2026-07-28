@@ -1,0 +1,28 @@
+{
+  "name": "@remember/pack-builder",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "remember-pack-builder": "./dist/cli.js"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "build": "tsc -p tsconfig.build.json",
+    "build:pack": "node dist/cli.js build --source source/remember-test-pack --output fixtures/remember-test-pack.zip && node dist/sync-mobile-asset.js",
+    "verify:fixture": "node dist/cli.js verify -- fixtures/remember-test-pack.zip"
+  },
+  "dependencies": {
+    "@noble/ed25519": "3.1.0",
+    "@noble/hashes": "2.2.0",
+    "@remember/contracts": "workspace:*",
+    "fflate": "0.8.2"
+  },
+  "devDependencies": {
+    "@remember/config": "workspace:*",
+    "@types/node": "26.1.1",
+    "typescript": "6.0.3",
+    "vitest": "4.1.10"
+  }
+}

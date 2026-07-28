@@ -1,0 +1,53 @@
+[
+  {
+    "kind": "word",
+    "sortOrder": 1,
+    "content": {
+      "prompt": {
+        "headword": "picture",
+        "primaryAudio": "assets/audio/picture.mp3",
+        "phonetic": {
+          "ipa": "/ˈpɪktʃər/",
+          "dialect": "us"
+        },
+        "primaryImage": "assets/images/picture.png"
+      },
+      "reveal": {
+        "definitions": [{ "text": "图片；照片", "pos": "n." }],
+        "examples": [
+          {
+            "en": "She drew a picture.",
+            "zh": "她画了一幅画。"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "pic 像「拍客」，picture 就是拍下来的图。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 2,
+    "content": {
+      "prompt": {
+        "headword": "take a picture",
+        "primaryAudio": "assets/audio/take-a-picture.mp3"
+      },
+      "reveal": {
+        "definitions": [{ "text": "拍照" }],
+        "examples": [
+          {
+            "en": "Can you take a picture of us?",
+            "zh": "你能给我们拍张照吗？"
+          },
+          {
+            "en": "He drew a picture after he took a photo.",
+            "zh": "拍完照后他又画了一幅画。"
+          }
+        ]
+      }
+    }
+  }
+]

@@ -1,0 +1,14 @@
+[
+  {
+    "surfaceForm": "picture",
+    "displayForm": "picture",
+    "definitions": [{ "text": "图片；照片", "pos": "n." }],
+    "ipa": "/ˈpɪktʃər/"
+  },
+  {
+    "surfaceForm": "drew",
+    "displayForm": "drew",
+    "definitions": [{ "text": "draw 的过去式", "pos": "v." }],
+    "formNote": "动词 draw 的过去式"
+  }
+]
