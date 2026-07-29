@@ -16,7 +16,7 @@ export function PrimaryButton(props: PrimaryButtonProps): ReactElement {
   return (
     <Pressable
       accessibilityRole="button"
-      disabled={props.disabled || props.loading}
+      disabled={(props.disabled ?? false) || (props.loading ?? false)}
       onPress={props.onPress}
       style={[
         styles.button,

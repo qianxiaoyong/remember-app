@@ -96,7 +96,7 @@ export function useStudyFlow(packId: string) {
   const openLexicon = useCallback(
     (token: string) => {
       const surfaceForm = normalizeSurfaceForm(token);
-      setLexiconSelectedSurfaceForm(surfaceForm || null);
+      setLexiconSelectedSurfaceForm(surfaceForm);
       const entry = lookupLexiconToken({ packId, token });
       setLexiconEntry(entry);
       setLexiconVisible(true);

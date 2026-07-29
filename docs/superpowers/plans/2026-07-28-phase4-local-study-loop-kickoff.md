@@ -15,7 +15,7 @@
 
 ```text
 阶段 0–3  ✅（pack 协议、验包、pack-builder、实机只读验收）
-阶段 4    ← 当前
+阶段 4    ✅（2026-07-29 收口；见 2026-07-29-phase4-local-study-loop-completion.md）
 阶段 5–8  ⏸
 ```
 

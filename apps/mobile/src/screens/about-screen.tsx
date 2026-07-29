@@ -11,7 +11,12 @@ export function AboutScreen(): ReactElement {
 
   return (
     <ScreenScaffold>
-      <AppHeader onBackPress={() => router.back()} variant="back" />
+      <AppHeader
+        onBackPress={() => {
+          router.back();
+        }}
+        variant="back"
+      />
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.title}>关于应用</Text>
         <Text style={styles.body}>记得 · 本地学习 MVP{'\n'}阶段 4 正式 UI 壳</Text>

@@ -20,7 +20,12 @@ export function FavoritesScreen(): ReactElement {
 
   return (
     <ScreenScaffold>
-      <AppHeader onBackPress={() => router.back()} variant="back" />
+      <AppHeader
+        onBackPress={() => {
+          router.back();
+        }}
+        variant="back"
+      />
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.title}>收藏本</Text>
         <Text style={styles.subtitle} onPress={refresh}>

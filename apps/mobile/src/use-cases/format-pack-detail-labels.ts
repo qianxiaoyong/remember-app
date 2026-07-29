@@ -8,7 +8,7 @@ export function formatPackUpdatedAt(isoDate: string): string {
   }
   const month = Number(match[2]);
   const day = Number(match[3]);
-  return `${month}月${day}日`;
+  return `${String(month)}月${String(day)}日`;
 }
 
 export function formatPackSizeLabel(sizeLabel: string): string {

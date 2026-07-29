@@ -15,7 +15,12 @@ export function DownloadsScreen(): ReactElement {
 
   return (
     <ScreenScaffold>
-      <AppHeader onBackPress={() => router.back()} variant="back" />
+      <AppHeader
+        onBackPress={() => {
+          router.back();
+        }}
+        variant="back"
+      />
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.title}>下载管理</Text>
         {installedPacks.length === 0 ? (

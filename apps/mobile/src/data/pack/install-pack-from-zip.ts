@@ -145,7 +145,7 @@ export async function uninstallPack(packId: string): Promise<void> {
     return;
   }
 
-  const packDir = `${existing.sqlitePath.slice(0, lastSlash + 1)}`;
+  const packDir = existing.sqlitePath.slice(0, lastSlash + 1);
   await deleteAsync(packDir, { idempotent: true });
 }
 

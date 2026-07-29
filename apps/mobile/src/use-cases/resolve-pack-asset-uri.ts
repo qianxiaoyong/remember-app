@@ -2,7 +2,7 @@ import { getInstalledPack } from '../data/repositories/installed-pack-repository
 
 export function resolvePackAssetUri(packId: string, relativePath: string): string | null {
   const installed = getInstalledPack(packId);
-  if (!installed || installed.installStatus !== 'installed') {
+  if (installed?.installStatus !== 'installed') {
     return null;
   }
 

@@ -9,10 +9,7 @@ interface HighlightedTextProps {
   text: string;
 }
 
-function splitByKeyword(
-  text: string,
-  keyword: string,
-): Array<{ highlight: boolean; text: string }> {
+function splitByKeyword(text: string, keyword: string): { highlight: boolean; text: string }[] {
   const normalizedKeyword = keyword.trim();
   if (!normalizedKeyword) {
     return [{ highlight: false, text }];
@@ -20,7 +17,7 @@ function splitByKeyword(
 
   const lowerText = text.toLowerCase();
   const lowerKeyword = normalizedKeyword.toLowerCase();
-  const parts: Array<{ highlight: boolean; text: string }> = [];
+  const parts: { highlight: boolean; text: string }[] = [];
   let start = 0;
   let index = lowerText.indexOf(lowerKeyword, start);
 
@@ -49,7 +46,10 @@ export function HighlightedText(props: HighlightedTextProps): ReactElement {
   return (
     <Text numberOfLines={props.numberOfLines} style={props.style}>
       {parts.map((part, index) => (
-        <Text key={`${part.text}-${index}`} style={part.highlight ? styles.highlight : undefined}>
+        <Text
+          key={`${part.text}-${String(index)}`}
+          style={part.highlight ? styles.highlight : undefined}
+        >
           {part.text}
         </Text>
       ))}

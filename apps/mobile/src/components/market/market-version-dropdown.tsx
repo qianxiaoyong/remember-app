@@ -23,7 +23,8 @@ export function MarketVersionDropdown(props: MarketVersionDropdownProps): ReactE
   };
 
   const openDropdown = (): void => {
-    triggerRef.current?.measureInWindow((left, top, width, height) => {
+    triggerRef.current?.measureInWindow((...measureArgs) => {
+      const [left, top, width, height] = measureArgs;
       setAnchor({
         left,
         top: top + height + spacing.xs,

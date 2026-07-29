@@ -1,6 +1,6 @@
-type ShellTabRouter = {
+interface ShellTabRouter {
   replace: (href: '/library' | '/market') => void;
-};
+}
 
 export type ShellTabTransition = 'slide_from_left' | 'slide_from_right';
 

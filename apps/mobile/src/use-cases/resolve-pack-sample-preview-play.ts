@@ -16,7 +16,7 @@ export async function resolvePackSamplePreviewPlay(input: {
   }
 
   const installed = getInstalledPack(input.packId);
-  if (!installed || installed.installStatus !== 'installed') {
+  if (installed?.installStatus !== 'installed') {
     return 'not-installed';
   }
 

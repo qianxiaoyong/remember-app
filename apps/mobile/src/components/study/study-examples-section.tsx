@@ -19,30 +19,33 @@ export function StudyExamplesSection(props: StudyExamplesSectionProps): ReactEle
     <View style={styles.root}>
       <StudySectionHeader title="例句" />
       <View style={styles.list}>
-        {props.content.reveal.examples.map((example, index) => (
-          <View key={`${example.en}-${String(index)}`} style={styles.row}>
-            <View style={styles.textBlock}>
-              <TokenizedSentence
-                highlightSurfaceForm={props.highlightSurfaceForm ?? null}
-                onTokenPress={props.onTokenPress}
-                sentence={example.en}
-              />
-              <Text style={styles.zh}>{example.zh}</Text>
+        {props.content.reveal.examples.map((example, index) => {
+          const exampleAudio = example.audio;
+          return (
+            <View key={`${example.en}-${String(index)}`} style={styles.row}>
+              <View style={styles.textBlock}>
+                <TokenizedSentence
+                  highlightSurfaceForm={props.highlightSurfaceForm ?? null}
+                  onTokenPress={props.onTokenPress}
+                  sentence={example.en}
+                />
+                <Text style={styles.zh}>{example.zh}</Text>
+              </View>
+              {exampleAudio ? (
+                <Pressable
+                  accessibilityLabel="播放例句"
+                  hitSlop={8}
+                  onPress={() => {
+                    props.onPlayExampleAudio(exampleAudio);
+                  }}
+                  style={styles.audioButton}
+                >
+                  <SpeakerIcon color={colors.accent} size="sm" />
+                </Pressable>
+              ) : null}
             </View>
-            {example.audio ? (
-              <Pressable
-                accessibilityLabel="播放例句"
-                hitSlop={8}
-                onPress={() => {
-                  props.onPlayExampleAudio(example.audio!);
-                }}
-                style={styles.audioButton}
-              >
-                <SpeakerIcon color={colors.accent} size="sm" />
-              </Pressable>
-            ) : null}
-          </View>
-        ))}
+          );
+        })}
       </View>
     </View>
   );

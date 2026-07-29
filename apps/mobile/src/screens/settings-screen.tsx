@@ -11,7 +11,12 @@ export function SettingsScreen(): ReactElement {
 
   return (
     <ScreenScaffold>
-      <AppHeader onBackPress={() => router.back()} variant="back" />
+      <AppHeader
+        onBackPress={() => {
+          router.back();
+        }}
+        variant="back"
+      />
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.title}>基础设置</Text>
         <Text style={styles.body}>阶段 4 smoke 页面。学习偏好与通知将在后续版本提供。</Text>
