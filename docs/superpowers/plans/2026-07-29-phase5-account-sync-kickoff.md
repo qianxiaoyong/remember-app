@@ -35,7 +35,7 @@
 
 | 顺序 | 文件（实施前创建） | 核心交付 |
 | --- | --- | --- |
-| 1 | `docs/superpowers/plans/<date>-phone-session-and-main-device.md` | Prisma 首迁；`users` / `sms_challenges` / `sessions`；短信登录；Keystore session；单主设备 |
+| 1 | `docs/superpowers/plans/2026-07-29-phone-session-and-main-device.md` | Prisma 首迁；`users` / `sms_challenges` / `sessions`；短信登录；Keystore session；单主设备 |
 | 2 | `docs/superpowers/plans/<date>-study-state-sync-and-restore.md` | 服务端 `learning_states`；`packages/contracts` sync 契约；outbox 上传；快照恢复；双机验收 |
 
 **推荐执行顺序：**
@@ -171,8 +171,9 @@
 
 ### 8.1 本地 API
 
-- `apps/api` + Prisma + PostgreSQL：**Docker Compose** 提供测试库（子计划 1 写入 runbook 片段或 `docs/runbooks/` 新文件）。
-- 移动端 dev 构建：`EXPO_PUBLIC_API_BASE_URL` 指向开发机局域网 IP（实机联调）。
+- `apps/api` + Prisma + PostgreSQL：**Docker Compose** 见 `infra/dev/` 与 **`docs/runbooks/local-api-docker-dev.md`**
+- 一键启动库：`pnpm dev:db`
+- 移动端 dev 构建：`EXPO_PUBLIC_API_BASE_URL` 指向开发机局域网 IP（实机联调）
 
 ### 8.2 集成测试
 
@@ -239,19 +240,9 @@ git checkout -b feat/account-sync main
 
 ---
 
-## 12. 新窗口起手 Prompt（确认 §11 后复制）
+## 12. 新窗口起手 Prompt（子计划 1）
 
-```text
-请阅读 docs/superpowers/plans/2026-07-29-phase5-account-sync-kickoff.md（含 §11 已确认选项）、
-docs/superpowers/plans/2026-07-27-stages-3-6-technical-acceptance-checklist.md §5、
-docs/superpowers/specs/2026-07-26-learning-app-mvp-architecture-design.md §8.4 与 §10。
-使用 $build-learning-app；编码前读 docs/ai-rules/（含 data-and-security、testing-and-review）。
-
-阶段 5：账号与同步。先用 writing-plans 写子计划 1
-（phone-session-and-main-device.md），再用 executing-plans 实施。
-遵守 kickoff §5 同步范围与 §7 mock/真做边界；子计划 1 完成前不接 sync 上传。
-不要订单/微信支付/改 pack 协议。修复 §5.3 outbox payload 留到子计划 2。
-```
+见 `docs/superpowers/plans/2026-07-29-phone-session-and-main-device.md` 文末 **「新窗口起手 Prompt」** 整段复制。
 
 ## 13. 完成后需回报
 

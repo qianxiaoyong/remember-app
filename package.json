@@ -19,6 +19,8 @@
     "check:deps": "depcruise --config dependency-cruiser.config.mjs apps packages tools",
     "check:secrets": "secretlint \"**/*\"",
     "check:source": "node tools/checks/check-source.mjs",
+    "dev:db": "docker compose --project-name remember-dev --env-file infra/dev/.env --file infra/dev/compose.yaml up -d",
+    "dev:db:down": "docker compose --project-name remember-dev --env-file infra/dev/.env --file infra/dev/compose.yaml down",
     "build": "pnpm -r --if-present build",
     "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm test:contract && pnpm check:deps && pnpm check:secrets && pnpm check:source && pnpm build"
   },
