@@ -5,13 +5,10 @@ import {
 } from '@remember/domain';
 import { createRecordId } from '../data/create-record-id';
 import { getInstalledPack } from '../data/repositories/installed-pack-repository';
-import {
-  buildLearningStateMap,
-  listLearningStatesForPack,
-} from '../data/repositories/learning-state-repository';
+import { buildLearningStateMap } from '../data/repositories/learning-state-repository';
+import { listLearningStatesForPackContent } from '../data/repositories/learning-state-for-pack-content';
 import { listPackCards } from '../data/repositories/pack-card-repository';
 import {
-  findActiveSessionForPack,
   insertQueueItems,
   insertStudySession,
   listPendingQueueItemsForSession,
@@ -21,6 +18,8 @@ import {
 } from '../data/repositories/study-session-repository';
 import { openUserDatabase } from '../data/user-db/open-user-database';
 import { buildActiveStudySession, type ActiveStudySession } from './study-session-types';
+import { resolveContentPackId } from './resolve-content-pack-id';
+import { findActiveStudySessionForInstalledPack } from './find-active-study-session';
 
 export function resumeOrStartStudySession(
   packId: string,
@@ -31,7 +30,8 @@ export function resumeOrStartStudySession(
     throw new Error(`pack not installed: ${packId}`);
   }
 
-  const activeSession = findActiveSessionForPack(packId);
+  const contentPackId = resolveContentPackId(packId);
+  const activeSession = findActiveStudySessionForInstalledPack(packId);
   if (activeSession) {
     const pendingItems = listPendingQueueItemsForSession(activeSession.sessionId);
     if (pendingItems.length > 0) {
@@ -47,7 +47,7 @@ export function resumeOrStartStudySession(
   }
 
   const cards = listPackCards(installedPack.sqlitePath);
-  const learningStates = listLearningStatesForPack(packId);
+  const learningStates = listLearningStatesForPackContent(installedPack.sqlitePath);
   const queuePlan = buildStudyQueuePlan({
     cardKnowledgeIds: cards.map((card) => card.knowledgeId),
     learningStatesById: buildLearningStateMap(learningStates),
@@ -69,7 +69,7 @@ export function resumeOrStartStudySession(
     insertStudySession(
       {
         sessionId,
-        packId,
+        packId: contentPackId,
         status: 'active',
         createdAt,
         updatedAt: createdAt,

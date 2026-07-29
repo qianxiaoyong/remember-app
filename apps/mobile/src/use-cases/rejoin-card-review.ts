@@ -6,12 +6,13 @@ import {
 } from '../data/repositories/learning-state-repository';
 import {
   appendQueueItem,
-  findActiveSessionForPack,
   getMaxQueueSortOrder,
   hasPendingQueueItemForKnowledge,
   touchSessionUpdatedAt,
 } from '../data/repositories/study-session-repository';
 import { openUserDatabase } from '../data/user-db/open-user-database';
+import { resolveContentPackId } from './resolve-content-pack-id';
+import { findActiveStudySessionForInstalledPack } from './find-active-study-session';
 
 export interface RejoinCardReviewResult {
   addedToQueue: boolean;
@@ -25,17 +26,19 @@ export function rejoinCardReview(input: {
 }): RejoinCardReviewResult {
   const now = input.now ?? new Date();
   const updatedAt = now.toISOString();
+  const contentPackId = resolveContentPackId(input.packId);
   const previous = getLearningState(input.knowledgeId);
 
   const learningRow: LearningStateRow = previous
     ? {
         ...previous,
+        packId: contentPackId,
         dueAt: updatedAt,
         updatedAt,
       }
     : {
         knowledgeId: input.knowledgeId,
-        packId: input.packId,
+        packId: contentPackId,
         easiness: 2.5,
         intervalDays: 0,
         repetitions: 1,
@@ -44,7 +47,7 @@ export function rejoinCardReview(input: {
         updatedAt,
       };
 
-  const activeSession = findActiveSessionForPack(input.packId);
+  const activeSession = findActiveStudySessionForInstalledPack(input.packId);
   if (!activeSession) {
     upsertLearningState(learningRow);
     return { addedToQueue: false, alreadyPending: false };

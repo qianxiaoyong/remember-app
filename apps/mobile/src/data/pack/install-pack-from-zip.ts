@@ -20,6 +20,7 @@ import {
 import { openUserDatabase } from '../user-db/open-user-database';
 import { createExpoSqliteReader } from './create-expo-sqlite-reader';
 import { getPackInstallPaths } from './pack-storage-paths';
+import { resolvePackDisplayName } from '../../catalog/resolve-pack-display-name';
 import { bytesToBase64, bytesToHex, readZipEntries } from './read-zip-entries';
 
 ed.hashes.sha512 = sha512;
@@ -94,7 +95,7 @@ export async function installPackFromZipBytes(zipBytes: Uint8Array): Promise<Ins
   const installedAt = new Date().toISOString();
   const row: InstalledPackRow = {
     packId: manifest.packId,
-    displayName: manifest.packId,
+    displayName: resolvePackDisplayName(manifest.packId),
     packVersion: manifest.packVersion,
     sqlitePath: paths.sqlitePath,
     assetsDir: paths.assetsDir,

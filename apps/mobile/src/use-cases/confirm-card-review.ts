@@ -6,7 +6,6 @@ import {
   type LearningStateRow,
 } from '../data/repositories/learning-state-repository';
 import {
-  findActiveSessionForPack,
   listPendingQueueItemsForSession,
   listQueueItemsForSession,
   markQueueItemDone,
@@ -16,6 +15,8 @@ import {
 import { insertSyncOutboxItem } from '../data/repositories/sync-outbox-repository';
 import { openUserDatabase } from '../data/user-db/open-user-database';
 import { buildActiveStudySession, type ActiveStudySession } from './study-session-types';
+import { resolveContentPackId } from './resolve-content-pack-id';
+import { findActiveStudySessionForInstalledPack } from './find-active-study-session';
 
 export interface ConfirmCardReviewInput {
   packId: string;
@@ -27,7 +28,8 @@ export interface ConfirmCardReviewInput {
 export function confirmCardReview(input: ConfirmCardReviewInput): ActiveStudySession {
   const now = input.now ?? new Date();
   const { packId, knowledgeId, rating } = input;
-  const activeSession = findActiveSessionForPack(packId);
+  const contentPackId = resolveContentPackId(packId);
+  const activeSession = findActiveStudySessionForInstalledPack(packId);
   if (!activeSession) {
     throw new Error('no active study session');
   }
@@ -53,7 +55,7 @@ export function confirmCardReview(input: ConfirmCardReviewInput): ActiveStudySes
 
   const learningRow: LearningStateRow = {
     knowledgeId,
-    packId,
+    packId: contentPackId,
     easiness: nextState.easiness,
     intervalDays: nextState.intervalDays,
     repetitions: nextState.repetitions,
@@ -65,7 +67,7 @@ export function confirmCardReview(input: ConfirmCardReviewInput): ActiveStudySes
   const eventId = createRecordId('sync');
   const payload = JSON.stringify({
     knowledgeId,
-    packId,
+    packId: contentPackId,
     rating,
     clientVersion: nextClientVersion,
     dueAt: nextState.dueAt,

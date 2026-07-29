@@ -22,6 +22,24 @@ export interface StudyQueueItemRow {
   status: QueueItemStatus;
 }
 
+export function findActiveSessionWithPendingItems(
+  db: SQLiteDatabase = openUserDatabase(),
+): StudySessionRow | null {
+  return (
+    db.getFirstSync<StudySessionRow>(
+      `SELECT s.sessionId, s.packId, s.status, s.createdAt, s.updatedAt
+       FROM study_sessions s
+       WHERE s.status = 'active'
+         AND EXISTS (
+           SELECT 1 FROM study_queue_items q
+           WHERE q.sessionId = s.sessionId AND q.status = 'pending'
+         )
+       ORDER BY s.updatedAt DESC
+       LIMIT 1`,
+    ) ?? null
+  );
+}
+
 export function findActiveSessionForPack(
   packId: string,
   db: SQLiteDatabase = openUserDatabase(),

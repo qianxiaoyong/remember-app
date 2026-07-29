@@ -9,6 +9,13 @@ import {
 describe('applyReview', () => {
   const now = new Date('2026-07-28T12:00:00.000Z');
 
+  it('首次模糊：1 天后巩固', () => {
+    const next = applyReview({ previous: null, rating: 'hard', now });
+    expect(next.repetitions).toBe(1);
+    expect(next.intervalDays).toBe(1);
+    expect(next.dueAt).toBe('2026-07-29T12:00:00.000Z');
+  });
+
   it('首次记得：间隔 1 天', () => {
     const next = applyReview({ previous: null, rating: 'good', now });
     expect(next.repetitions).toBe(1);
@@ -42,12 +49,12 @@ describe('applyReview', () => {
 });
 
 describe('previewReviewIntervals', () => {
-  it('三按钮均返回中文间隔文案', () => {
+  it('三按钮返回带语义的中文间隔文案', () => {
     const now = new Date('2026-07-28T12:00:00.000Z');
     const labels = previewReviewIntervals(null, now, DEFAULT_REVIEW_SCHEDULER_CONFIG);
-    expect(labels.forgot).toBe('10分钟后');
-    expect(labels.good).toBe('1天后');
-    expect(labels.hard).toMatch(/分钟|小时|天/);
+    expect(labels.forgot).toBe('约10分钟后 · 重学');
+    expect(labels.hard).toBe('明天 · 巩固');
+    expect(labels.good).toBe('明天 · 复习');
   });
 });
 
@@ -55,8 +62,9 @@ describe('formatReviewInterval', () => {
   const now = new Date('2026-07-28T12:00:00.000Z');
 
   it('格式化分钟、小时、天', () => {
-    expect(formatReviewInterval('2026-07-28T12:10:00.000Z', now)).toBe('10分钟后');
-    expect(formatReviewInterval('2026-07-28T18:00:00.000Z', now)).toBe('6小时后');
+    expect(formatReviewInterval('2026-07-28T12:10:00.000Z', now)).toBe('约10分钟后');
+    expect(formatReviewInterval('2026-07-28T18:00:00.000Z', now)).toBe('约6小时后');
+    expect(formatReviewInterval('2026-07-29T12:00:00.000Z', now)).toBe('明天');
     expect(formatReviewInterval('2026-07-30T12:00:00.000Z', now)).toBe('2天后');
   });
 });

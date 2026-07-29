@@ -1,34 +1,46 @@
 import type { ReactElement } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { tokenizeEnglishSentence } from '@remember/contracts';
+import { normalizeSurfaceForm, tokenizeEnglishSentence } from '@remember/contracts';
+import { colors } from '../theme/colors';
 
 interface TokenizedSentenceProps {
   sentence: string;
+  highlightSurfaceForm?: string | null;
   onTokenPress: (token: string) => void;
 }
 
 export function TokenizedSentence(props: TokenizedSentenceProps): ReactElement {
   const parts = splitSentence(props.sentence);
+  const highlightSurfaceForm = props.highlightSurfaceForm ?? null;
 
   return (
     <View style={styles.row}>
-      {parts.map((part, index) =>
-        part.kind === 'token' ? (
+      {parts.map((part, index) => {
+        if (part.kind !== 'token') {
+          return (
+            <Text key={`${part.text}-${String(index)}`} style={styles.text}>
+              {part.text}
+            </Text>
+          );
+        }
+
+        const isHighlighted =
+          highlightSurfaceForm !== null &&
+          normalizeSurfaceForm(part.text) === highlightSurfaceForm;
+
+        return (
           <Pressable
             accessibilityRole="button"
             key={`${part.text}-${String(index)}`}
             onPress={() => {
               props.onTokenPress(part.text);
             }}
+            style={isHighlighted ? styles.tokenHighlightWrap : undefined}
           >
-            <Text style={styles.token}>{part.text}</Text>
+            <Text style={[styles.token, isHighlighted && styles.tokenHighlighted]}>{part.text}</Text>
           </Pressable>
-        ) : (
-          <Text key={`${part.text}-${String(index)}`} style={styles.text}>
-            {part.text}
-          </Text>
-        ),
-      )}
+        );
+      })}
     </View>
   );
 }
@@ -67,15 +79,22 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   text: {
-    color: '#404040',
+    color: colors.textSecondary,
     fontSize: 16,
     lineHeight: 26,
   },
   token: {
-    color: '#2563EB',
+    color: colors.textSecondary,
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '400',
     lineHeight: 26,
-    textDecorationLine: 'underline',
+  },
+  tokenHighlightWrap: {
+    backgroundColor: colors.tokenHighlightBackground,
+    borderRadius: 4,
+  },
+  tokenHighlighted: {
+    color: colors.textPrimary,
+    fontWeight: '600',
   },
 });

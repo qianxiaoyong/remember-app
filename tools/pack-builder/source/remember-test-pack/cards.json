@@ -9,8 +9,7 @@
         "phonetic": {
           "ipa": "/ˈpɪktʃər/",
           "dialect": "us"
-        },
-        "primaryImage": "assets/images/picture.png"
+        }
       },
       "reveal": {
         "definitions": [{ "text": "图片；照片", "pos": "n." }],

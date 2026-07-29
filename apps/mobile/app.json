@@ -17,8 +17,16 @@
     },
     "plugins": [
       "expo-router",
-      ["expo-build-properties", { "android": { "minSdkVersion": 26 } }],
-      "./plugins/with-android-release-signing.js"
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "minSdkVersion": 26
+          }
+        }
+      ],
+      "./plugins/with-android-release-signing.js",
+      "expo-audio"
     ]
   }
 }

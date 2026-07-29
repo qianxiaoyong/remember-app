@@ -57,7 +57,7 @@ export function applyReview(input: ApplyReviewInput): StudyState {
   );
 
   if (repetitions === 0) {
-    intervalDays = rating === 'hard' ? 0 : 1;
+    intervalDays = 1;
   } else if (repetitions === 1) {
     intervalDays = rating === 'hard' ? 1 : 6;
   } else {
@@ -85,14 +85,38 @@ export function previewReviewIntervals(
   now: Date,
   config: ReviewSchedulerConfig = DEFAULT_REVIEW_SCHEDULER_CONFIG,
 ): Record<ReviewRating, string> {
-  return {
-    forgot: formatReviewInterval(
-      applyReview({ previous, rating: 'forgot', now, config }).dueAt,
-      now,
-    ),
-    hard: formatReviewInterval(applyReview({ previous, rating: 'hard', now, config }).dueAt, now),
-    good: formatReviewInterval(applyReview({ previous, rating: 'good', now, config }).dueAt, now),
+  const nextStates = {
+    forgot: applyReview({ previous, rating: 'forgot', now, config }),
+    hard: applyReview({ previous, rating: 'hard', now, config }),
+    good: applyReview({ previous, rating: 'good', now, config }),
   };
+
+  return {
+    forgot: formatReviewRatingLabel('forgot', nextStates.forgot, now),
+    hard: formatReviewRatingLabel('hard', nextStates.hard, now),
+    good: formatReviewRatingLabel('good', nextStates.good, now),
+  };
+}
+
+export function formatReviewRatingLabel(
+  rating: ReviewRating,
+  nextState: StudyState,
+  now: Date,
+): string {
+  const timeLabel = formatReviewInterval(nextState.dueAt, now);
+
+  if (rating === 'forgot') {
+    return `${timeLabel} · 重学`;
+  }
+
+  if (rating === 'hard') {
+    if (nextState.intervalDays <= 1 && nextState.repetitions <= 1) {
+      return `${timeLabel} · 巩固`;
+    }
+    return `${timeLabel} · 缩短间隔`;
+  }
+
+  return `${timeLabel} · 复习`;
 }
 
 export function formatReviewInterval(dueAtIso: string, now: Date): string {
@@ -104,15 +128,19 @@ export function formatReviewInterval(dueAtIso: string, now: Date): string {
 
   const minutes = Math.round(diffMs / 60_000);
   if (minutes < 60) {
-    return `${String(minutes)}分钟后`;
+    return `约${String(minutes)}分钟后`;
   }
 
   const hours = Math.round(minutes / 60);
   if (hours < 24) {
-    return `${String(hours)}小时后`;
+    return `约${String(hours)}小时后`;
   }
 
   const days = Math.round(hours / 24);
+  if (days === 1) {
+    return '明天';
+  }
+
   return `${String(days)}天后`;
 }
 
