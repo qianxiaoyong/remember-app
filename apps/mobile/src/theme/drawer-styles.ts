@@ -14,8 +14,7 @@ export const drawerAndroidStatusBarMin = 44;
 
 export function resolveDrawerTopInset(insetsTop: number): number {
   const bootInset = initialWindowMetrics?.insets.top ?? 0;
-  const statusBarHeight =
-    Platform.OS === 'android' ? StatusBar.currentHeight ?? 0 : 0;
+  const statusBarHeight = Platform.OS === 'android' ? (StatusBar.currentHeight ?? 0) : 0;
 
   return Math.max(insetsTop, bootInset, statusBarHeight, drawerAndroidStatusBarMin);
 }

@@ -1,12 +1,7 @@
 export type DrawerCommonFeatureId = 'guide' | 'question-bank' | 'redeem' | 'follow';
 
 export type DrawerMenuItemId =
-  | 'downloads'
-  | 'favorites'
-  | 'settings'
-  | 'about'
-  | 'contact'
-  | 'account';
+  'downloads' | 'favorites' | 'settings' | 'about' | 'contact' | 'account';
 
 export interface DrawerCommonFeatureItem {
   id: DrawerCommonFeatureId;

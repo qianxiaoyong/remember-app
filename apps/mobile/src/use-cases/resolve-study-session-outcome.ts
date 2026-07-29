@@ -3,7 +3,9 @@ import type { ActiveStudySession } from './study-session-types';
 
 export type StudySessionOutcome = 'completed' | 'empty' | null;
 
-export function resolveStudySessionOutcome(session: ActiveStudySession | null): StudySessionOutcome {
+export function resolveStudySessionOutcome(
+  session: ActiveStudySession | null,
+): StudySessionOutcome {
   if (!session) {
     return null;
   }

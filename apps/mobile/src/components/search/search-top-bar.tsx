@@ -40,7 +40,12 @@ export function SearchTopBar(props: SearchTopBarProps): ReactElement {
           </Pressable>
         ) : null}
       </View>
-      <Pressable accessibilityRole="button" hitSlop={8} onPress={props.onCancel} style={styles.cancel}>
+      <Pressable
+        accessibilityRole="button"
+        hitSlop={8}
+        onPress={props.onCancel}
+        style={styles.cancel}
+      >
         <Text style={styles.cancelLabel}>取消</Text>
       </Pressable>
     </View>

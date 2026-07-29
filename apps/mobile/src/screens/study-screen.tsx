@@ -56,10 +56,7 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
 
   const installedPacks = useMemo(() => listInstalledPacksUseCase(), []);
   const sessionOutcome = useMemo(() => resolveStudySessionOutcome(session), [session]);
-  const packDisplayName = useMemo(
-    () => resolveStudyPackDisplayName(props.packId),
-    [props.packId],
-  );
+  const packDisplayName = useMemo(() => resolveStudyPackDisplayName(props.packId), [props.packId]);
 
   useEffect(() => {
     if (props.autoStart !== false && session === null) {
@@ -97,11 +94,7 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
     <ScreenScaffold
       footer={
         showRatingBar ? (
-          <StudyRatingBar
-            disabled={isSubmitting}
-            labels={intervalLabels}
-            onRate={handleReview}
-          />
+          <StudyRatingBar disabled={isSubmitting} labels={intervalLabels} onRate={handleReview} />
         ) : null
       }
       safeAreaEdges={['left', 'right']}

@@ -1,11 +1,7 @@
 import { getInfoAsync } from 'expo-file-system/legacy';
 import { getInstalledPack } from '../data/repositories/installed-pack-repository';
 
-export type PackSamplePreviewPlayResult =
-  | 'not-installed'
-  | 'no-audio'
-  | 'missing-file'
-  | 'ready';
+export type PackSamplePreviewPlayResult = 'not-installed' | 'no-audio' | 'missing-file' | 'ready';
 
 export async function resolvePackSamplePreviewPlay(input: {
   packId: string;

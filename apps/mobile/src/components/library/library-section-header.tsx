@@ -8,7 +8,11 @@ export function LibrarySectionHeader(): ReactElement {
   return (
     <View style={styles.row}>
       <Text style={styles.title}>已安装资料</Text>
-      <View accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={styles.filterButton}>
+      <View
+        accessibilityElementsHidden
+        importantForAccessibility="no-hide-descendants"
+        style={styles.filterButton}
+      >
         <MenuIcon color={colors.accent} size="sm" />
       </View>
     </View>

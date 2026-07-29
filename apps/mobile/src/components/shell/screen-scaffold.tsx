@@ -16,12 +16,7 @@ export function ScreenScaffold(props: ScreenScaffoldProps): ReactElement {
 
   return (
     <SafeAreaView edges={edges} style={styles.safeArea}>
-      <View
-        style={[
-          styles.content,
-          props.withCapsulePadding ? styles.withCapsulePadding : null,
-        ]}
-      >
+      <View style={[styles.content, props.withCapsulePadding ? styles.withCapsulePadding : null]}>
         {props.children}
       </View>
       {props.footer}

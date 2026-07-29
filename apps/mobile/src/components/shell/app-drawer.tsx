@@ -13,10 +13,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import type { DrawerCommonFeatureItem, DrawerMenuItem } from '../../shell/drawer-menu-config';
-import {
-  drawerCommonFeatures,
-  drawerMenuItems,
-} from '../../shell/drawer-menu-config';
+import { drawerCommonFeatures, drawerMenuItems } from '../../shell/drawer-menu-config';
 import { DrawerAccountHeader } from './drawer-account-header';
 import { DrawerCommonFeaturesBlock } from './drawer-common-features-block';
 import { DrawerMenuListBlock } from './drawer-menu-list-block';
@@ -146,7 +143,10 @@ export function AppDrawer(props: AppDrawerProps): ReactElement | null {
         </View>
       </Animated.View>
 
-      <Animated.View pointerEvents="box-none" style={[styles.backdropWrap, { opacity: backdropAnim }]}>
+      <Animated.View
+        pointerEvents="box-none"
+        style={[styles.backdropWrap, { opacity: backdropAnim }]}
+      >
         <Pressable accessibilityRole="button" onPress={props.onClose} style={styles.backdrop} />
       </Animated.View>
     </View>

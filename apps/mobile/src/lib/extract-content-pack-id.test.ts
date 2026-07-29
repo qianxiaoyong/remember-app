@@ -3,9 +3,9 @@ import { extractContentPackIdFromKnowledgeId } from '../lib/extract-content-pack
 
 describe('extractContentPackIdFromKnowledgeId', () => {
   it('从 knowledgeId 提取 manifest packId', () => {
-    expect(
-      extractContentPackIdFromKnowledgeId('remember-test-pack:en:word:picture'),
-    ).toBe('remember-test-pack');
+    expect(extractContentPackIdFromKnowledgeId('remember-test-pack:en:word:picture')).toBe(
+      'remember-test-pack',
+    );
   });
 
   it('无冒号时返回 null', () => {

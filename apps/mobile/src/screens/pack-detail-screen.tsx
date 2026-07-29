@@ -90,33 +90,29 @@ export function PackDetailScreen(props: PackDetailScreenProps): ReactElement {
       return;
     }
 
-    Alert.alert(
-      '卸载知识库',
-      '将移除此包的本地文件；学习进度会保留，重新安装后可恢复。',
-      [
-        { text: '取消', style: 'cancel' },
-        {
-          text: '卸载',
-          style: 'destructive',
-          onPress: () => {
-            void (async () => {
-              setMessage(null);
-              setIsBusy(true);
-              try {
-                await uninstallInstalledPack(viewModel.packId);
-                markLibraryNeedsRefresh();
-                await refresh();
-                setMessage('已卸载');
-              } catch (error) {
-                setMessage(error instanceof Error ? error.message : '卸载失败');
-              } finally {
-                setIsBusy(false);
-              }
-            })();
-          },
+    Alert.alert('卸载知识库', '将移除此包的本地文件；学习进度会保留，重新安装后可恢复。', [
+      { text: '取消', style: 'cancel' },
+      {
+        text: '卸载',
+        style: 'destructive',
+        onPress: () => {
+          void (async () => {
+            setMessage(null);
+            setIsBusy(true);
+            try {
+              await uninstallInstalledPack(viewModel.packId);
+              markLibraryNeedsRefresh();
+              await refresh();
+              setMessage('已卸载');
+            } catch (error) {
+              setMessage(error instanceof Error ? error.message : '卸载失败');
+            } finally {
+              setIsBusy(false);
+            }
+          })();
         },
-      ],
-    );
+      },
+    ]);
   };
 
   const handlePlaySample = (sample: PackSamplePreview): void => {

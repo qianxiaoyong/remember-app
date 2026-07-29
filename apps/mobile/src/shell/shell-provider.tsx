@@ -17,10 +17,7 @@ export function ShellProvider(props: { children: ReactNode }): ReactElement {
   const closeDrawer = useCallback(() => {
     setIsDrawerOpen(false);
   }, []);
-  const actions = useMemo(
-    () => ({ closeDrawer, openDrawer }),
-    [closeDrawer, openDrawer],
-  );
+  const actions = useMemo(() => ({ closeDrawer, openDrawer }), [closeDrawer, openDrawer]);
 
   return (
     <ShellActionsContext.Provider value={actions}>

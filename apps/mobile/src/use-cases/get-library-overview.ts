@@ -44,11 +44,7 @@ export function getLibraryOverview(now: Date = new Date()): LibraryOverview {
   const packTodayTaskCounts = installedPacks.map((pack) => {
     const contentPackId = resolveContentPackId(pack.packId);
     const stats = aggregatePackStats(pack.sqlitePath, nowIso);
-    return getTodayTaskCountForContentPack(
-      contentPackId,
-      pack.sqlitePath,
-      stats.sm2DueCount,
-    );
+    return getTodayTaskCountForContentPack(contentPackId, pack.sqlitePath, stats.sm2DueCount);
   });
   const todayTaskCount = sumPackTodayTaskCounts(packTodayTaskCounts);
 

@@ -29,7 +29,11 @@ export function PackCardSearchResultRow(props: PackCardSearchResultRowProps): Re
             {definition}
           </Text>
         </View>
-        <Pressable accessibilityRole="button" onPress={props.onRejoinPress} style={styles.rejoinButton}>
+        <Pressable
+          accessibilityRole="button"
+          onPress={props.onRejoinPress}
+          style={styles.rejoinButton}
+        >
           <Text style={styles.rejoinLabel}>加入复习 ›</Text>
         </Pressable>
       </View>

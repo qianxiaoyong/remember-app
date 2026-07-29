@@ -1,6 +1,9 @@
 import { findCatalogItem } from '../catalog/catalog-seed';
 import type { PackSamplePreview } from '../catalog/pack-sample-preview';
-import { resolveCatalogCover, type CatalogCoverPresentation } from '../catalog/resolve-catalog-cover';
+import {
+  resolveCatalogCover,
+  type CatalogCoverPresentation,
+} from '../catalog/resolve-catalog-cover';
 import { isPackMockPurchased } from '../catalog/mock-purchase-store';
 import { getInstalledPack } from '../data/repositories/installed-pack-repository';
 import {
@@ -13,11 +16,7 @@ import {
 import { resolvePackSamplePreviews } from './resolve-pack-sample-previews';
 
 export type PackDetailActionKind =
-  | 'purchase'
-  | 'download'
-  | 'install'
-  | 'start_study'
-  | 'continue_study';
+  'purchase' | 'download' | 'install' | 'start_study' | 'continue_study';
 
 export interface PackDetailViewModel {
   packId: string;

@@ -25,8 +25,7 @@ export function TokenizedSentence(props: TokenizedSentenceProps): ReactElement {
         }
 
         const isHighlighted =
-          highlightSurfaceForm !== null &&
-          normalizeSurfaceForm(part.text) === highlightSurfaceForm;
+          highlightSurfaceForm !== null && normalizeSurfaceForm(part.text) === highlightSurfaceForm;
 
         return (
           <Pressable
@@ -37,7 +36,9 @@ export function TokenizedSentence(props: TokenizedSentenceProps): ReactElement {
             }}
             style={isHighlighted ? styles.tokenHighlightWrap : undefined}
           >
-            <Text style={[styles.token, isHighlighted && styles.tokenHighlighted]}>{part.text}</Text>
+            <Text style={[styles.token, isHighlighted && styles.tokenHighlighted]}>
+              {part.text}
+            </Text>
           </Pressable>
         );
       })}

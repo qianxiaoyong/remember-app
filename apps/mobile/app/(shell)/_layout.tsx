@@ -3,10 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { Stack, usePathname, useRouter } from 'expo-router';
 import { AppDrawer } from '../../src/components/shell/app-drawer';
 import { CapsuleBar, type CapsuleTab } from '../../src/components/shell/capsule-bar';
-import {
-  consumeShellTabTransition,
-  navigateShellTab,
-} from '../../src/shell/shell-tab-transition';
+import { consumeShellTabTransition, navigateShellTab } from '../../src/shell/shell-tab-transition';
 import { ShellProvider, useDrawerOpen, useShellActions } from '../../src/shell/shell-provider';
 import { colors } from '../../src/theme/colors';
 

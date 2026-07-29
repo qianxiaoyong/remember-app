@@ -28,9 +28,7 @@ export function StudySessionOutcomePanel(props: StudySessionOutcomePanelProps): 
         </View>
         <Text style={styles.title}>{isCompleted ? '本次学习完成' : '今日任务已完成'}</Text>
         <Text style={styles.subtitle}>
-          {isCompleted
-            ? `已完成 ${String(props.completedCount)} 张卡片`
-            : '当前没有待复习内容'}
+          {isCompleted ? `已完成 ${String(props.completedCount)} 张卡片` : '当前没有待复习内容'}
         </Text>
       </View>
 

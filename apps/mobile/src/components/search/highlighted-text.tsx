@@ -49,10 +49,7 @@ export function HighlightedText(props: HighlightedTextProps): ReactElement {
   return (
     <Text numberOfLines={props.numberOfLines} style={props.style}>
       {parts.map((part, index) => (
-        <Text
-          key={`${part.text}-${index}`}
-          style={part.highlight ? styles.highlight : undefined}
-        >
+        <Text key={`${part.text}-${index}`} style={part.highlight ? styles.highlight : undefined}>
           {part.text}
         </Text>
       ))}

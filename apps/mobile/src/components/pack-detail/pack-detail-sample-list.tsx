@@ -33,10 +33,7 @@ export function PackDetailSampleList(props: PackDetailSampleListProps): ReactEle
   );
 }
 
-function SampleRow(props: {
-  sample: PackSamplePreview;
-  onPlay: () => void;
-}): ReactElement {
+function SampleRow(props: { sample: PackSamplePreview; onPlay: () => void }): ReactElement {
   const initial = props.sample.initial ?? props.sample.headword.charAt(0).toUpperCase();
 
   return (
@@ -50,7 +47,12 @@ function SampleRow(props: {
           {props.sample.zh} · {props.sample.exampleEn}
         </Text>
       </View>
-      <Pressable accessibilityLabel="试听示例" hitSlop={8} onPress={props.onPlay} style={styles.playButton}>
+      <Pressable
+        accessibilityLabel="试听示例"
+        hitSlop={8}
+        onPress={props.onPlay}
+        style={styles.playButton}
+      >
         <MusicNoteIcon size="sm" />
       </Pressable>
     </View>

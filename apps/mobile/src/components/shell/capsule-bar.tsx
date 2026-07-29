@@ -21,7 +21,10 @@ export function CapsuleBar(props: CapsuleBarProps): ReactElement {
 
   return (
     <>
-      <View pointerEvents="box-none" style={[styles.wrapper, { bottom: insets.bottom + spacing.md }]}>
+      <View
+        pointerEvents="box-none"
+        style={[styles.wrapper, { bottom: insets.bottom + spacing.md }]}
+      >
         <View style={styles.capsule}>
           <TabItem
             isActive={props.activeTab === 'library'}

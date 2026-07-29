@@ -24,9 +24,24 @@ export function MenuIcon(props: MenuIconProps): ReactElement {
         },
       ]}
     >
-      <View style={[styles.menuLine, { backgroundColor: color, height: scale.line, width: scale.menuWidth }]} />
-      <View style={[styles.menuLine, { backgroundColor: color, height: scale.line, width: scale.menuWidth }]} />
-      <View style={[styles.menuLine, { backgroundColor: color, height: scale.line, width: scale.menuWidth }]} />
+      <View
+        style={[
+          styles.menuLine,
+          { backgroundColor: color, height: scale.line, width: scale.menuWidth },
+        ]}
+      />
+      <View
+        style={[
+          styles.menuLine,
+          { backgroundColor: color, height: scale.line, width: scale.menuWidth },
+        ]}
+      />
+      <View
+        style={[
+          styles.menuLine,
+          { backgroundColor: color, height: scale.line, width: scale.menuWidth },
+        ]}
+      />
     </View>
   );
 }

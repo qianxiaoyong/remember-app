@@ -37,7 +37,11 @@ export function InstalledPackRow(props: InstalledPackRowProps): ReactElement {
         </View>
       </Pressable>
       <View style={styles.footerRow}>
-        <Pressable accessibilityRole="button" onPress={props.onDetailPress} style={styles.statusPressable}>
+        <Pressable
+          accessibilityRole="button"
+          onPress={props.onDetailPress}
+          style={styles.statusPressable}
+        >
           <Text style={styles.statusHint}>{pack.statusHint}</Text>
         </Pressable>
         <Pressable accessibilityRole="button" onPress={props.onStudyPress}>

@@ -13,11 +13,7 @@ export function StudyRecallPanel(props: StudyRecallPanelProps): ReactElement {
   const [imageVisible, setImageVisible] = useState(Boolean(props.primaryImageUri));
 
   return (
-    <Pressable
-      accessibilityRole="button"
-      onPress={props.onReveal}
-      style={styles.root}
-    >
+    <Pressable accessibilityRole="button" onPress={props.onReveal} style={styles.root}>
       <View style={styles.content}>
         {props.primaryImageUri && imageVisible ? (
           <Image

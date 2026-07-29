@@ -1,9 +1,6 @@
 import type { SQLiteDatabase } from 'expo-sqlite';
 import { listPackCards } from './pack-card-repository';
-import {
-  getLearningState,
-  type LearningStateRow,
-} from './learning-state-repository';
+import { getLearningState, type LearningStateRow } from './learning-state-repository';
 
 /** 按包内 card knowledgeId 汇总进度，不受 installed_packs 别名 packId 影响。 */
 export function listLearningStatesForPackContent(

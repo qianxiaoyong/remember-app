@@ -31,8 +31,14 @@ export function MarketPrimaryTabs(props: MarketPrimaryTabsProps): ReactElement {
               }}
               style={styles.tab}
             >
-              <Text style={[styles.label, isActive ? styles.labelActive : null]}>{option.label}</Text>
-              {isActive ? <View style={styles.underline} /> : <View style={styles.underlinePlaceholder} />}
+              <Text style={[styles.label, isActive ? styles.labelActive : null]}>
+                {option.label}
+              </Text>
+              {isActive ? (
+                <View style={styles.underline} />
+              ) : (
+                <View style={styles.underlinePlaceholder} />
+              )}
             </Pressable>
           );
         })}

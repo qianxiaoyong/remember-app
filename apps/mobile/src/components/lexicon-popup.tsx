@@ -80,7 +80,11 @@ export function LexiconPopup(props: LexiconPopupProps): ReactElement {
                 </View>
               </ScrollView>
 
-              <Pressable accessibilityRole="button" onPress={onPlayAudio} style={styles.audioButton}>
+              <Pressable
+                accessibilityRole="button"
+                onPress={onPlayAudio}
+                style={styles.audioButton}
+              >
                 <SpeakerIcon color={colors.textPrimary} size="sm" />
                 <Text style={styles.audioLabel}>发音</Text>
               </Pressable>

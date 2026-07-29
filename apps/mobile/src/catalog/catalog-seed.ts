@@ -1,12 +1,7 @@
 /** 阶段 4 市场 mock 种子；非服务端目录真值。 */
 import type { PackSamplePreview } from './pack-sample-preview';
 
-export type CatalogPrimaryCategory =
-  | 'all'
-  | 'primary'
-  | 'junior'
-  | 'senior'
-  | 'postgraduate';
+export type CatalogPrimaryCategory = 'all' | 'primary' | 'junior' | 'senior' | 'postgraduate';
 
 export interface CatalogPackItem {
   packId: string;
@@ -126,8 +121,7 @@ export const catalogSeed: CatalogPackItem[] = [
     sizeLabel: '约 18 MB',
     updatedAt: '2026-07-15',
     mockPriceLabel: '¥19.9',
-    summary:
-      '覆盖教材核心词汇、常用释义和配套例句，支持主内容语音与例句点词查询。',
+    summary: '覆盖教材核心词汇、常用释义和配套例句，支持主内容语音与例句点词查询。',
     sampleHeadwords: ['apple', 'family'],
     samplePreviews: [
       {

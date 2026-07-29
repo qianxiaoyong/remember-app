@@ -1,7 +1,4 @@
-import {
-  listInstalledPackSummaries,
-  type InstalledPackSummary,
-} from './get-library-overview';
+import { listInstalledPackSummaries, type InstalledPackSummary } from './get-library-overview';
 
 export function searchInstalledPackSummaries(keyword: string): InstalledPackSummary[] {
   const normalized = keyword.trim().toLowerCase();
