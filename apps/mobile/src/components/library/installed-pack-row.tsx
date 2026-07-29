@@ -8,6 +8,7 @@ import { spacing } from '../../theme/spacing';
 
 interface InstalledPackRowProps {
   pack: InstalledPackSummary;
+  onDetailPress: () => void;
   onStudyPress: () => void;
 }
 
@@ -17,24 +18,28 @@ export function InstalledPackRow(props: InstalledPackRowProps): ReactElement {
 
   return (
     <SurfaceCard>
-      <View style={styles.topRow}>
-        <View style={[styles.cover, { backgroundColor: pack.coverColor }]}>
-          <Text numberOfLines={3} style={styles.coverText}>
-            {pack.displayName}
-          </Text>
+      <Pressable accessibilityRole="button" onPress={props.onDetailPress}>
+        <View style={styles.topRow}>
+          <View style={[styles.cover, { backgroundColor: pack.coverColor }]}>
+            <Text numberOfLines={3} style={styles.coverText}>
+              {pack.displayName}
+            </Text>
+          </View>
+          <View style={styles.content}>
+            <Text numberOfLines={2} style={styles.title}>
+              {pack.displayName}
+            </Text>
+            <Text style={styles.progressLabel}>
+              总学习进度 {pack.learnedCount} / {pack.totalCards}
+            </Text>
+            <ProgressBar color={pack.coverColor} progress={progress} />
+          </View>
         </View>
-        <View style={styles.content}>
-          <Text numberOfLines={2} style={styles.title}>
-            {pack.displayName}
-          </Text>
-          <Text style={styles.progressLabel}>
-            总学习进度 {pack.learnedCount} / {pack.totalCards}
-          </Text>
-          <ProgressBar color={pack.coverColor} progress={progress} />
-        </View>
-      </View>
+      </Pressable>
       <View style={styles.footerRow}>
-        <Text style={styles.statusHint}>{pack.statusHint}</Text>
+        <Pressable accessibilityRole="button" onPress={props.onDetailPress} style={styles.statusPressable}>
+          <Text style={styles.statusHint}>{pack.statusHint}</Text>
+        </Pressable>
         <Pressable accessibilityRole="button" onPress={props.onStudyPress}>
           <Text style={styles.actionLabel}>{pack.actionLabel} ›</Text>
         </Pressable>
@@ -83,6 +88,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: spacing.lg,
+  },
+  statusPressable: {
+    flex: 1,
+    marginRight: spacing.md,
   },
   statusHint: {
     color: colors.textSecondary,

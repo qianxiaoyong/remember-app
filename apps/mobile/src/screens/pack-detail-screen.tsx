@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
 import { useCallback, useEffect, useState } from 'react';
-import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import type { PackSamplePreview } from '../catalog/pack-sample-preview';
 import { markPackMockPurchased } from '../catalog/mock-purchase-store';
@@ -18,6 +18,7 @@ import {
 import { installBundledTestPack } from '../use-cases/install-bundled-test-pack';
 import { playPackAssetAudio } from '../use-cases/play-pack-asset-audio';
 import { resolvePackSamplePreviewPlay } from '../use-cases/resolve-pack-sample-preview-play';
+import { uninstallInstalledPack } from '../use-cases/uninstall-installed-pack';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 
@@ -82,6 +83,40 @@ export function PackDetailScreen(props: PackDetailScreenProps): ReactElement {
     } finally {
       setIsBusy(false);
     }
+  };
+
+  const handleUninstall = (): void => {
+    if (!viewModel?.isInstalled) {
+      return;
+    }
+
+    Alert.alert(
+      '卸载知识库',
+      '将移除此包的本地文件；学习进度会保留，重新安装后可恢复。',
+      [
+        { text: '取消', style: 'cancel' },
+        {
+          text: '卸载',
+          style: 'destructive',
+          onPress: () => {
+            void (async () => {
+              setMessage(null);
+              setIsBusy(true);
+              try {
+                await uninstallInstalledPack(viewModel.packId);
+                markLibraryNeedsRefresh();
+                await refresh();
+                setMessage('已卸载');
+              } catch (error) {
+                setMessage(error instanceof Error ? error.message : '卸载失败');
+              } finally {
+                setIsBusy(false);
+              }
+            })();
+          },
+        },
+      ],
+    );
   };
 
   const handlePlaySample = (sample: PackSamplePreview): void => {
@@ -170,6 +205,16 @@ export function PackDetailScreen(props: PackDetailScreenProps): ReactElement {
         />
         <PackDetailIncludedSection subtitle={viewModel.includedSubtitle} />
         <PackDetailSampleList onPlaySample={handlePlaySample} samples={viewModel.samplePreviews} />
+        {viewModel.isInstalled ? (
+          <Pressable
+            accessibilityRole="button"
+            disabled={isBusy}
+            onPress={handleUninstall}
+            style={styles.uninstallButton}
+          >
+            <Text style={styles.uninstallLabel}>卸载此知识库</Text>
+          </Pressable>
+        ) : null}
         {message ? <Text style={styles.message}>{message}</Text> : null}
       </ScrollView>
     </ScreenScaffold>
@@ -195,5 +240,15 @@ const styles = StyleSheet.create({
     color: colors.textSecondary,
     fontSize: 14,
     textAlign: 'center',
+  },
+  uninstallButton: {
+    alignItems: 'center',
+    marginTop: spacing.sm,
+    paddingVertical: spacing.md,
+  },
+  uninstallLabel: {
+    color: colors.studyRatingForgot,
+    fontSize: 14,
+    fontWeight: '500',
   },
 });

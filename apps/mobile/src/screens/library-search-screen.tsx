@@ -45,6 +45,9 @@ export function LibrarySearchScreen(): ReactElement {
                 {results.map((pack) => (
                   <InstalledPackRow
                     key={pack.packId}
+                    onDetailPress={() => {
+                      router.push(`/pack/${pack.packId}`);
+                    }}
                     onStudyPress={() => {
                       router.back();
                       router.push(`/study?packId=${pack.packId}`);

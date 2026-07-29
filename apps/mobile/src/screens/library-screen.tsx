@@ -63,6 +63,9 @@ export function LibraryScreen(): ReactElement {
               {installedPacks.map((pack) => (
                 <InstalledPackRow
                   key={pack.packId}
+                  onDetailPress={() => {
+                    router.push(`/pack/${pack.packId}`);
+                  }}
                   onStudyPress={() => {
                     router.push(`/study?packId=${pack.packId}`);
                   }}

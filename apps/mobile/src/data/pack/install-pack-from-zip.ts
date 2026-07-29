@@ -12,6 +12,7 @@ import {
 } from 'expo-file-system/legacy';
 import { backupDatabaseAsync, openDatabaseSync } from 'expo-sqlite';
 import {
+  countInstalledPacksWithSqlitePath,
   deleteInstalledPackRecord,
   getInstalledPack,
   type InstalledPackRow,
@@ -124,9 +125,6 @@ export async function uninstallPack(packId: string): Promise<void> {
     return;
   }
 
-  const paths = getPackInstallPaths(packId);
-  await deleteAsync(paths.packDir, { idempotent: true });
-
   const userDb = openUserDatabase();
   userDb.execSync('BEGIN IMMEDIATE');
   try {
@@ -136,6 +134,19 @@ export async function uninstallPack(packId: string): Promise<void> {
     userDb.execSync('ROLLBACK');
     throw error;
   }
+
+  const remainingReferences = countInstalledPacksWithSqlitePath(existing.sqlitePath, userDb);
+  if (remainingReferences > 0) {
+    return;
+  }
+
+  const lastSlash = existing.sqlitePath.lastIndexOf('/');
+  if (lastSlash <= 0) {
+    return;
+  }
+
+  const packDir = `${existing.sqlitePath.slice(0, lastSlash + 1)}`;
+  await deleteAsync(packDir, { idempotent: true });
 }
 
 export function assertDocumentDirectoryAvailable(): void {

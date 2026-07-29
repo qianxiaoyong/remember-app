@@ -100,3 +100,16 @@ export function deleteInstalledPackRecord(
 ): void {
   db.runSync('DELETE FROM installed_packs WHERE packId = ?', [packId]);
 }
+
+export function countInstalledPacksWithSqlitePath(
+  sqlitePath: string,
+  db: SQLiteDatabase = openUserDatabase(),
+): number {
+  const row = db.getFirstSync<{ count: number }>(
+    `SELECT COUNT(*) AS count
+     FROM installed_packs
+     WHERE installStatus = 'installed' AND sqlitePath = ?`,
+    [sqlitePath],
+  );
+  return row?.count ?? 0;
+}

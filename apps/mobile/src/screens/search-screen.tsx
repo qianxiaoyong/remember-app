@@ -1,10 +1,11 @@
 import type { ReactElement } from 'react';
 import { useMemo, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import { AppHeader } from '../components/shell/app-header';
-import { ScreenScaffold } from '../components/shell/screen-scaffold';
-import { SurfaceCard } from '../components/ui/surface-card';
+import { PackCardSearchResultRow } from '../components/search/pack-card-search-result-row';
+import { SearchPageScaffold } from '../components/search/search-page-scaffold';
+import { SearchResultCount } from '../components/search/search-result-count';
+import { SearchTopBar } from '../components/search/search-top-bar';
 import { rejoinCardReview } from '../use-cases/rejoin-card-review';
 import { searchPackCardsUseCase } from '../use-cases/search-pack-cards';
 import { colors } from '../theme/colors';
@@ -19,8 +20,9 @@ export function SearchScreen(props: SearchScreenProps): ReactElement {
   const [query, setQuery] = useState('');
   const [message, setMessage] = useState<string | null>(null);
 
+  const trimmedQuery = query.trim();
   const results = useMemo(() => {
-    if (!query.trim()) {
+    if (!trimmedQuery) {
       return [];
     }
     try {
@@ -28,7 +30,7 @@ export function SearchScreen(props: SearchScreenProps): ReactElement {
     } catch {
       return [];
     }
-  }, [props.packId, query]);
+  }, [props.packId, query, trimmedQuery]);
 
   const handleRejoin = (knowledgeId: string, headword: string): void => {
     try {
@@ -48,102 +50,82 @@ export function SearchScreen(props: SearchScreenProps): ReactElement {
   };
 
   return (
-    <ScreenScaffold>
-      <AppHeader onBackPress={() => router.back()} variant="back" />
-      <ScrollView contentContainerStyle={styles.content}>
-        <Text style={styles.title}>搜索当前知识库</Text>
-        <TextInput
-          onChangeText={setQuery}
+    <SearchPageScaffold
+      topBar={
+        <SearchTopBar
+          onCancel={() => {
+            if (router.canGoBack()) {
+              router.back();
+              return;
+            }
+            router.replace(`/study?packId=${props.packId}`);
+          }}
+          onChangeText={(value) => {
+            setMessage(null);
+            setQuery(value);
+          }}
           placeholder="输入单词或短语"
-          placeholderTextColor={colors.textSecondary}
-          style={styles.input}
           value={query}
         />
-        {results.map((card) => (
-          <SurfaceCard key={card.knowledgeId}>
-            <View style={styles.row}>
-              <View style={styles.rowText}>
-                <Text style={styles.headword}>{card.headword}</Text>
-                <Text style={styles.definition}>
-                  {card.content.reveal.definitions[0]?.text ?? ''}
-                </Text>
+      }
+    >
+      <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+        {trimmedQuery ? (
+          <>
+            <SearchResultCount count={results.length} label="当前知识库搜索结果" />
+            {results.length === 0 ? (
+              <Text style={styles.empty}>没有找到匹配内容</Text>
+            ) : (
+              <View style={styles.list}>
+                {results.map((card) => (
+                  <PackCardSearchResultRow
+                    card={card}
+                    key={card.knowledgeId}
+                    keyword={trimmedQuery}
+                    onRejoinPress={() => {
+                      handleRejoin(card.knowledgeId, card.headword);
+                    }}
+                  />
+                ))}
               </View>
-              <Pressable
-                accessibilityRole="button"
-                onPress={() => {
-                  handleRejoin(card.knowledgeId, card.headword);
-                }}
-                style={styles.rejoinButton}
-              >
-                <Text style={styles.rejoinLabel}>加入复习</Text>
-              </Pressable>
-            </View>
-          </SurfaceCard>
-        ))}
-        {query.trim() && results.length === 0 ? (
-          <Text style={styles.empty}>没有找到匹配内容</Text>
-        ) : null}
+            )}
+          </>
+        ) : (
+          <Text style={styles.hint}>输入单词或短语开始搜索</Text>
+        )}
         {message ? <Text style={styles.message}>{message}</Text> : null}
       </ScrollView>
-    </ScreenScaffold>
+    </SearchPageScaffold>
   );
 }
 
 const styles = StyleSheet.create({
   content: {
     gap: spacing.md,
-    padding: spacing.lg,
+    paddingBottom: spacing.xxl,
   },
-  title: {
-    color: colors.textPrimary,
-    fontSize: 18,
-    fontWeight: '600',
-  },
-  input: {
-    backgroundColor: colors.surface,
-    borderColor: colors.border,
-    borderRadius: 12,
-    borderWidth: 1,
-    color: colors.textPrimary,
-    fontSize: 16,
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.md,
-  },
-  row: {
-    alignItems: 'center',
-    flexDirection: 'row',
+  list: {
     gap: spacing.md,
-  },
-  rowText: {
-    flex: 1,
-  },
-  headword: {
-    color: colors.textPrimary,
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  definition: {
-    color: colors.textSecondary,
-    fontSize: 13,
-    marginTop: spacing.xs,
-  },
-  rejoinButton: {
-    backgroundColor: colors.accent,
-    borderRadius: 8,
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm,
-  },
-  rejoinLabel: {
-    color: colors.surface,
-    fontSize: 13,
-    fontWeight: '600',
+    paddingHorizontal: spacing.lg,
   },
   empty: {
     color: colors.textSecondary,
     fontSize: 14,
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.xl,
+    textAlign: 'center',
+  },
+  hint: {
+    color: colors.textMuted,
+    fontSize: 14,
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.xl,
+    textAlign: 'center',
   },
   message: {
     color: colors.textSecondary,
     fontSize: 14,
+    paddingHorizontal: spacing.lg,
+    textAlign: 'center',
   },
 });
