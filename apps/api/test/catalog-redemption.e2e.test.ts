@@ -105,7 +105,7 @@ describe('catalog and redemption integration', () => {
       .post('/api/v1/redemption/redeem')
       .send({ code: TEST_REDEMPTION_CODE })
       .expect(401);
-    expect(response.body).toMatchObject({ code: 'UNAUTHORIZED' });
+    expect(response.body).toMatchObject({ code: 'SESSION_MISSING' });
   });
 
   it('兑换成功写入 pack_access 且幂等', async () => {

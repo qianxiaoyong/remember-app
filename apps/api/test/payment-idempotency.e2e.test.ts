@@ -128,7 +128,7 @@ describe('payment idempotency integration', () => {
       .post('/api/v1/orders')
       .send({ packId: PAID_PACK_ID })
       .expect(401);
-    expect(response.body).toMatchObject({ code: 'UNAUTHORIZED' });
+    expect(response.body).toMatchObject({ code: 'SESSION_MISSING' });
   });
 
   it('建单 → mock 回调 → 订单 paid 且写入 pack_access', async () => {
