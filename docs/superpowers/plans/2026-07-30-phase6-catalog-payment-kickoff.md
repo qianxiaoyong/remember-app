@@ -1,8 +1,8 @@
 # 阶段 6 启动说明（目录、订单、支付、兑换码与购买权限）
 
 日期：2026-07-30  
-状态：**草稿 — 待审核确认**  
-基线：`main` @ `7abf733`（阶段 5 已收口）  
+状态：**已确认，可直接规划与实施**（§11 已全部勾选，2026-07-30）  
+基线：`main` @ `a4572bf`（ADR/kickoff 草稿）→ 确认 commit 后开 `feat/catalog-and-payment`  
 ADR：**`docs/decisions/0010-catalog-preview-redemption-and-media.md`**
 
 ## 1. 本阶段要做什么（一句话）
@@ -16,11 +16,11 @@ ADR：**`docs/decisions/0010-catalog-preview-redemption-and-media.md`**
 
 ```text
 阶段 0–5  ✅（见 2026-07-30-phase5-account-sync-completion.md）
-阶段 6    📝 本文草稿
+阶段 6    ✅ kickoff 已确认；子计划 1–3 待写/实施
 阶段 7–8  ⏸
 ```
 
-## 3. 已确认产品决策（2026-07-30，审核前冻结）
+## 3. 已确认产品决策（2026-07-30）
 
 | # | 决策 | 内容 |
 | --- | --- | --- |
@@ -129,16 +129,14 @@ ADR：**`docs/decisions/0010-catalog-preview-redemption-and-media.md`**
 git checkout -b feat/catalog-and-payment main
 ```
 
-## 11. 审核清单（请你逐项看）
+## 11. 审核清单（2026-07-30 已确认）
 
-- [ ] ADR 0010 三层媒体与「不做满减、做兑换码」是否 OK
-- [ ] 兑换码 **需登录** 是否 OK（未登录只能看目录/预览，不能兑）
-- [ ] 一码多人 + `maxRedemptions` 默认值（建议运营在后台配，无全局默认）
-- [ ] 预览页范围：仅展示+试听，无 SM-2
-- [ ] intro 视频阶段 6 只预留字段、可不实现播放器以外的转码流水线
-- [ ] 子计划 3 才做网络下载 UI（阶段 4 defer 项）
-
-确认后请将本文与 ADR 0010 **状态** 改为「已确认」，并可将 §11 勾选结果写在 commit message 或本文末尾。
+- [x] ADR 0010 三层媒体与「不做满减、做兑换码」
+- [x] 兑换码 **需登录**（未登录只能看目录/预览，不能兑）
+- [x] 一码多人 + `maxRedemptions`（运营在后台配，无全局默认）
+- [x] 预览页范围：仅展示+试听，无 SM-2
+- [x] intro 视频阶段 6 只预留字段、可不实现播放器以外的转码流水线
+- [x] 子计划 3 才做网络下载 UI（阶段 4 defer 项）
 
 ## 12. 新窗口起手 Prompt（审核通过后复制）
 
