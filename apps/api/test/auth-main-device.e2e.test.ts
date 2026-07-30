@@ -115,7 +115,7 @@ describe('auth main device integration', () => {
     expect(challenge?.consumedAt).not.toBeNull();
   });
 
-  it('设备 B 登录后，设备 A 的 token 调写保护路由失败', async () => {
+  it('设备 B 登录后，设备 A 的 token 因 session 撤销而失效', async () => {
     const server = app.getHttpServer() as Parameters<typeof request>[0];
     await sendSmsCode(server, TEST_PHONE);
     const deviceALogin = await verifySmsLogin(server, { phone: TEST_PHONE, deviceId: DEVICE_A });
@@ -126,16 +126,37 @@ describe('auth main device integration', () => {
     const writeResponse = await request(server)
       .post('/api/v1/auth/device/write-probe')
       .set('Authorization', `Bearer ${deviceALogin.token}`)
-      .expect(403);
+      .expect(401);
 
-    expect(writeResponse.body).toMatchObject({ code: 'NOT_MAIN_DEVICE' });
+    expect(writeResponse.body).toMatchObject({ code: 'SESSION_INVALID' });
 
     const meResponse = await request(server)
       .get('/api/v1/auth/me')
       .set('Authorization', `Bearer ${deviceALogin.token}`)
-      .expect(403);
+      .expect(401);
 
-    expect(meResponse.body).toMatchObject({ code: 'NOT_MAIN_DEVICE' });
+    expect(meResponse.body).toMatchObject({ code: 'SESSION_INVALID' });
+  });
+
+  it('同 deviceId 重复登录后，旧 token 失效', async () => {
+    const server = app.getHttpServer() as Parameters<typeof request>[0];
+    await sendSmsCode(server, TEST_PHONE);
+    const firstLogin = await verifySmsLogin(server, { phone: TEST_PHONE, deviceId: DEVICE_A });
+
+    await sendSmsCode(server, TEST_PHONE);
+    const secondLogin = await verifySmsLogin(server, { phone: TEST_PHONE, deviceId: DEVICE_A });
+
+    const staleMe = await request(server)
+      .get('/api/v1/auth/me')
+      .set('Authorization', `Bearer ${firstLogin.token}`)
+      .expect(401);
+
+    expect(staleMe.body).toMatchObject({ code: 'SESSION_INVALID' });
+
+    await request(server)
+      .post('/api/v1/auth/device/write-probe')
+      .set('Authorization', `Bearer ${secondLogin.token}`)
+      .expect(200);
   });
 
   it('后登录设备成为唯一主设备', async () => {
@@ -152,10 +173,8 @@ describe('auth main device integration', () => {
     const activeSessions = await prisma.session.findMany({
       where: { revokedAt: null, userId: deviceBLogin.userId },
     });
-    expect(activeSessions).toHaveLength(2);
-    expect(activeSessions.map((session) => session.deviceId).sort()).toEqual(
-      [DEVICE_A, DEVICE_B].sort(),
-    );
+    expect(activeSessions).toHaveLength(1);
+    expect(activeSessions[0]?.deviceId).toBe(DEVICE_B);
 
     await request(server)
       .post('/api/v1/auth/device/write-probe')

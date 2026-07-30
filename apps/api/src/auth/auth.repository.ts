@@ -114,6 +114,13 @@ export class AuthRepository {
         where: { id: input.userId },
         data: { mainDeviceId: input.deviceId },
       });
+      await tx.session.updateMany({
+        where: {
+          userId: input.userId,
+          revokedAt: null,
+        },
+        data: { revokedAt: input.lastActiveAt },
+      });
       return tx.session.create({
         data: {
           tokenHash: input.tokenHash,
