@@ -16,6 +16,7 @@ import {
   type PackDetailViewModel,
 } from '../use-cases/get-pack-detail-view-model';
 import { installBundledTestPack } from '../use-cases/install-bundled-test-pack';
+import { purchasePackWithMockPayment } from '../use-cases/purchase-pack-with-mock-payment';
 import { playSamplePreviewAudio } from '../use-cases/play-sample-preview-audio';
 import { uninstallInstalledPack } from '../use-cases/uninstall-installed-pack';
 import { colors } from '../theme/colors';
@@ -48,6 +49,12 @@ export function PackDetailScreen(props: PackDetailScreenProps): ReactElement {
     setIsBusy(true);
     try {
       if (viewModel.actionKind === 'purchase') {
+        if (__DEV__) {
+          const result = await purchasePackWithMockPayment(viewModel.packId);
+          await refresh();
+          setMessage(result === 'paid' ? '模拟支付成功，可点击安装' : '订单待支付');
+          return;
+        }
         Alert.alert('即将开放', '微信支付将在后续版本提供，您也可通过抽屉「兑换码」开通。');
         return;
       }
