@@ -26,6 +26,9 @@ export function LoginGuideScreen(): ReactElement {
         <Text style={styles.body}>
           你可以现在登录监护人账号，也可以稍后再说。跳过登录不影响本地学习。
         </Text>
+        <Text style={styles.body}>
+          登录后可将学习进度同步到云端；换机或重新安装时，只能恢复到最后一次成功同步到云端的学习进度。
+        </Text>
 
         <Pressable
           accessibilityRole="button"

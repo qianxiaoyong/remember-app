@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import type { SyncBatchItem, SyncBatchUploadResponse, SyncSnapshotItem } from '@remember/contracts';
+import type { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service.js';
 
 @Injectable()
@@ -46,34 +47,18 @@ export class SyncRepository {
           continue;
         }
 
-        await tx.learningState.upsert({
-          where: {
-            userId_knowledgeId: {
+        const applied = await applyLearningStateItem(tx, userId, item, existing);
+        if (applied === 'APPLIED') {
+          await tx.syncProcessedEvent.create({
+            data: {
+              eventId: item.eventId,
               userId,
               knowledgeId: item.knowledgeId,
             },
-          },
-          create: {
-            userId,
-            knowledgeId: item.knowledgeId,
-            packId: item.payload.packId,
-            easiness: item.payload.easiness,
-            intervalDays: item.payload.intervalDays,
-            repetitions: item.payload.repetitions,
-            dueAt: new Date(item.payload.dueAt),
-            clientVersion: item.clientVersion,
-            updatedAt: new Date(item.payload.updatedAt),
-          },
-          update: {
-            packId: item.payload.packId,
-            easiness: item.payload.easiness,
-            intervalDays: item.payload.intervalDays,
-            repetitions: item.payload.repetitions,
-            dueAt: new Date(item.payload.dueAt),
-            clientVersion: item.clientVersion,
-            updatedAt: new Date(item.payload.updatedAt),
-          },
-        });
+          });
+          acceptedEventIds.push(item.eventId);
+          continue;
+        }
 
         await tx.syncProcessedEvent.create({
           data: {
@@ -82,6 +67,7 @@ export class SyncRepository {
             knowledgeId: item.knowledgeId,
           },
         });
+        rejected.push({ eventId: item.eventId, reason: 'STALE_VERSION' });
         acceptedEventIds.push(item.eventId);
       }
 
@@ -106,4 +92,61 @@ export class SyncRepository {
       updatedAt: row.updatedAt.toISOString(),
     }));
   }
+}
+
+type ApplyResult = 'APPLIED' | 'STALE';
+
+async function applyLearningStateItem(
+  tx: Prisma.TransactionClient,
+  userId: string,
+  item: SyncBatchItem,
+  existing: {
+    clientVersion: number;
+  } | null,
+): Promise<ApplyResult> {
+  const data = {
+    packId: item.payload.packId,
+    easiness: item.payload.easiness,
+    intervalDays: item.payload.intervalDays,
+    repetitions: item.payload.repetitions,
+    dueAt: new Date(item.payload.dueAt),
+    clientVersion: item.clientVersion,
+    updatedAt: new Date(item.payload.updatedAt),
+  };
+
+  if (!existing) {
+    try {
+      await tx.learningState.create({
+        data: {
+          userId,
+          knowledgeId: item.knowledgeId,
+          ...data,
+        },
+      });
+      return 'APPLIED';
+    } catch {
+      const raced = await tx.learningState.findUnique({
+        where: {
+          userId_knowledgeId: {
+            userId,
+            knowledgeId: item.knowledgeId,
+          },
+        },
+      });
+      if (!raced || raced.clientVersion >= item.clientVersion) {
+        return 'STALE';
+      }
+    }
+  }
+
+  const updated = await tx.learningState.updateMany({
+    where: {
+      userId,
+      knowledgeId: item.knowledgeId,
+      clientVersion: { lt: item.clientVersion },
+    },
+    data,
+  });
+
+  return updated.count === 1 ? 'APPLIED' : 'STALE';
 }

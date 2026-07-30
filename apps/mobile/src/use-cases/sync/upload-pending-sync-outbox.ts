@@ -1,4 +1,4 @@
-import type { SyncBatchItem } from '@remember/contracts';
+import type { SyncBatchItem, SyncBatchUploadResponse } from '@remember/contracts';
 import { uploadLearningStatesBatch } from '../../data/api/sync-api';
 import { ApiNetworkError, ApiRequestError } from '../../data/api/api-client';
 import { getLearningState } from '../../data/repositories/learning-state-repository';
@@ -19,7 +19,22 @@ export interface UploadPendingSyncOutboxResult {
   errorMessage?: string;
 }
 
+let uploadInFlight: Promise<UploadPendingSyncOutboxResult> | null = null;
+
 export async function uploadPendingSyncOutbox(
+  sessionToken?: string | null,
+): Promise<UploadPendingSyncOutboxResult> {
+  if (uploadInFlight) {
+    return uploadInFlight;
+  }
+
+  uploadInFlight = runUploadPendingSyncOutbox(sessionToken).finally(() => {
+    uploadInFlight = null;
+  });
+  return uploadInFlight;
+}
+
+async function runUploadPendingSyncOutbox(
   sessionToken?: string | null,
 ): Promise<UploadPendingSyncOutboxResult> {
   const token = sessionToken ?? (await readSessionToken());
@@ -60,11 +75,7 @@ export async function uploadPendingSyncOutbox(
       }
 
       const response = await uploadLearningStatesBatch(items, token);
-      const removableEventIds = [
-        ...response.acceptedEventIds,
-        ...response.rejected.map((item) => item.eventId),
-      ];
-      deleteSyncOutboxItems(removableEventIds);
+      deleteSyncOutboxItems(collectRemovableOutboxEventIds(response));
       uploadedEventCount += response.acceptedEventIds.length;
 
       if (response.acceptedEventIds.length > 0) {
@@ -103,6 +114,12 @@ export async function uploadPendingSyncOutbox(
       errorMessage: error instanceof Error ? error.message : '同步失败',
     };
   }
+}
+
+function collectRemovableOutboxEventIds(response: SyncBatchUploadResponse): string[] {
+  return [
+    ...new Set([...response.acceptedEventIds, ...response.rejected.map((item) => item.eventId)]),
+  ];
 }
 
 function dedupeSyncOutboxByKnowledgeId(): void {

@@ -195,13 +195,58 @@ describe('sync learning states integration', () => {
     expect(row?.repetitions).toBe(2);
   });
 
+  it('并发 batch 上传时较高 clientVersion 胜出', async () => {
+    const server = app.getHttpServer() as Parameters<typeof request>[0];
+    await sendSmsCode(server, TEST_PHONE);
+    const login = await verifySmsLogin(server, { phone: TEST_PHONE, deviceId: DEVICE_A });
+
+    await Promise.all([
+      request(server)
+        .post('/api/v1/sync/learning-states/batch')
+        .set('Authorization', `Bearer ${login.token}`)
+        .send({
+          items: [
+            {
+              eventId: 'sync-event-concurrent-old',
+              knowledgeId: KNOWLEDGE_ID,
+              clientVersion: 2,
+              payload: { ...samplePayload, repetitions: 2 },
+            },
+          ],
+        }),
+      request(server)
+        .post('/api/v1/sync/learning-states/batch')
+        .set('Authorization', `Bearer ${login.token}`)
+        .send({
+          items: [
+            {
+              eventId: 'sync-event-concurrent-new',
+              knowledgeId: KNOWLEDGE_ID,
+              clientVersion: 3,
+              payload: { ...samplePayload, repetitions: 3 },
+            },
+          ],
+        }),
+    ]);
+
+    const row = await prisma.learningState.findUnique({
+      where: {
+        userId_knowledgeId: { userId: login.userId, knowledgeId: KNOWLEDGE_ID },
+      },
+    });
+    expect(row?.clientVersion).toBe(3);
+    expect(row?.repetitions).toBe(3);
+  });
+
   it('非主设备 batch 上传返回 403', async () => {
     const server = app.getHttpServer() as Parameters<typeof request>[0];
     await sendSmsCode(server, TEST_PHONE);
     const deviceALogin = await verifySmsLogin(server, { phone: TEST_PHONE, deviceId: DEVICE_A });
 
-    await sendSmsCode(server, TEST_PHONE);
-    await verifySmsLogin(server, { phone: TEST_PHONE, deviceId: DEVICE_B });
+    await prisma.user.update({
+      where: { id: deviceALogin.userId },
+      data: { mainDeviceId: DEVICE_B },
+    });
 
     const response = await request(server)
       .post('/api/v1/sync/learning-states/batch')

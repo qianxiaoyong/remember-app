@@ -157,40 +157,40 @@ pnpm --filter @remember/mobile build
 
 ### 5.1 服务端表与迁移
 
-- [ ] PostgreSQL 已迁移：`users`、`sms_challenges`、`sessions`、`learning_states`（服务端副本）。
-- [ ] 敏感字段：验证码 **哈希** 存储；session **token 哈希** 存储；日志无手机号/验证码/令牌明文。
-- [ ] Controller 不直接返回 Prisma 模型；API 响应经 Zod 契约。
+- [x] PostgreSQL 已迁移：`users`、`sms_challenges`、`sessions`、`learning_states`（服务端副本）。
+- [x] 敏感字段：验证码 **哈希** 存储；session **token 哈希** 存储；日志无手机号/验证码/令牌明文。
+- [x] Controller 不直接返回 Prisma 模型；API 响应经 Zod 契约。
 
 ### 5.2 短信登录
 
-- [ ] 腾讯云短信 SDK 3.0 适配器；频控、有效期、尝试次数上限生效。
-- [ ] 过期/错误验证码拒绝；成功登录后 challenge 标记 consumed 或等价防重放。
-- [ ] 登录 API 集成测试使用 **真实 PostgreSQL 测试实例**（非内存假库）。
+- [ ] 腾讯云短信 SDK 3.0 适配器；频控、有效期、尝试次数上限生效。（**defer**：dev/test 使用 mock `000000`）
+- [x] 过期/错误验证码拒绝；成功登录后 challenge 标记 consumed 或等价防重放。
+- [x] 登录 API 集成测试使用 **真实 PostgreSQL 测试实例**（非内存假库）。
 
 ### 5.3 会话与 Keystore
 
-- [ ] 服务端签发高熵 opaque session；客户端存入 **Android Keystore**。
-- [ ] 鉴权中间件从 session 解析 `userId`；**忽略** 请求体里的 userId。
-- [ ] 会话 90 天无活动失效策略可测（可缩短 TTL 的测试配置）。
+- [x] 服务端签发高熵 opaque session；客户端存入 **Android Keystore**。
+- [x] 鉴权中间件从 session 解析 `userId`；**忽略** 请求体里的 userId。
+- [x] 会话 90 天无活动失效策略可测（可缩短 TTL 的测试配置）。
 
 ### 5.4 单主设备
 
-- [ ] 新设备登录并在同一事务内：更新 `users.main_device_id`、撤销旧 `sessions`。
-- [ ] 旧设备在撤销后调用写接口 **401/403**；读接口行为符合产品设计。
-- [ ] 并发双机抢登录：最终只有 **一台** 能写服务器学习状态（集成测试或脚本验证）。
+- [x] 新设备登录并在同一事务内：更新 `users.main_device_id`、撤销旧 `sessions`。
+- [x] 旧设备在撤销后调用写接口 **401/403**；读接口行为符合产品设计。
+- [x] 并发双机抢登录：最终只有 **一台** 能写服务器学习状态（集成测试或脚本验证）。
 
 ### 5.5 增量同步
 
-- [ ] 手机 `sync_outbox` 批量上传；每项含稳定 `eventId`、`knowledgeId`、`clientVersion`。
-- [ ] 服务端对 `learning_states` 使用 **clientVersion 条件更新**；旧版本/重复 `eventId` 不覆盖新状态。
-- [ ] 服务端确认后，手机删除对应 outbox 项（同事务或等价可靠机制）。
-- [ ] **离线学习不被同步失败阻塞**：同步失败时本地学习仍可进行；恢复联网后继续传。
+- [x] 手机 `sync_outbox` 批量上传；每项含稳定 `eventId`、`knowledgeId`、`clientVersion`。
+- [x] 服务端对 `learning_states` 使用 **clientVersion 条件更新**；旧版本/重复 `eventId` 不覆盖新状态。
+- [x] 服务端确认后，手机删除对应 outbox 项（同事务或等价可靠机制）。
+- [x] **离线学习不被同步失败阻塞**：同步失败时本地学习仍可进行；恢复联网后继续传。
 
 ### 5.6 换机恢复
 
-- [ ] 新设备登录后可下载服务端 **当前快照**（非事件回放合并）。
-- [ ] UI **明确文案**：只能恢复到最后一次 **成功同步** 的状态。
-- [ ] 换机后本地 `learning_states` 与服务端快照一致（抽样对比 `knowledgeId` + 关键字段）。
+- [x] 新设备登录后可下载服务端 **当前快照**（非事件回放合并）。
+- [x] UI **明确文案**：只能恢复到最后一次 **成功同步** 的状态。
+- [x] 换机后本地 `learning_states` 与服务端快照一致（抽样对比 `knowledgeId` + 关键字段）。（集成测试 + 实机双机曾验证）
 
 ### 5.7 异常与边界测试（必检）
 
@@ -205,6 +205,8 @@ pnpm --filter @remember/mobile build
 ### 5.8 阶段 5 退出门禁（一句话）
 
 > 两台 release 实机：B 登录顶掉 A → A 不能写；B 换机恢复快照；重复/乱序/弱网测试全部符合上表。
+
+**状态（2026-07-30）：** 集成测试与单/双机实机核心路径已验证；**§5.8 正式双机 release 脚本验收** 留待 merge 后按 `docs/runbooks/account-sync-maintenance.md` §6 补跑并勾选。
 
 **必跑命令：**
 

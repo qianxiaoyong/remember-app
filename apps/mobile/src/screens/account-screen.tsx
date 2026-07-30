@@ -116,8 +116,15 @@ export function AccountScreen(): ReactElement {
             <Text style={styles.value}>
               {lastSyncedAt ? formatSyncedAt(lastSyncedAt) : '尚未同步到云端'}
             </Text>
-            <Text style={styles.label}>服务器</Text>
-            <Text style={styles.value}>{readApiBaseUrl()}</Text>
+            <Text style={styles.restoreHint}>
+              换机或重新登录时，只能恢复到最后一次成功同步到云端的学习进度。
+            </Text>
+            {__DEV__ ? (
+              <>
+                <Text style={styles.label}>服务器</Text>
+                <Text style={styles.value}>{readApiBaseUrl()}</Text>
+              </>
+            ) : null}
             <Text style={styles.label}>待上传</Text>
             <Text style={styles.value}>{`${String(pendingSyncCount)} 条`}</Text>
             {syncStatusHint ? <Text style={styles.hint}>{syncStatusHint}</Text> : null}
@@ -168,8 +175,9 @@ function formatSyncStatusHint(
     return '当前不是主设备，无法上传到云端。';
   }
   if (result.skippedReason === 'OFFLINE') {
-    const serverUrl = safeReadApiBaseUrl();
-    return `${result.errorMessage ?? '无法连接服务器'}。请确认电脑 API 已启动，且手机与电脑同一 Wi-Fi${serverUrl ? `（${serverUrl}）` : ''}。`;
+    const base = `${result.errorMessage ?? '无法连接服务器'}。请确认电脑 API 已启动，且手机与电脑同一 Wi-Fi`;
+    const serverUrl = __DEV__ ? safeReadApiBaseUrl() : null;
+    return serverUrl ? `${base}（${serverUrl}）。` : `${base}。`;
   }
   if (result.skippedReason === 'ERROR') {
     return result.errorMessage ?? '同步失败，请稍后重试。';
@@ -225,6 +233,12 @@ const styles = StyleSheet.create({
     color: colors.textPrimary,
     fontSize: 16,
     fontWeight: '500',
+  },
+  restoreHint: {
+    color: colors.textMuted,
+    fontSize: 12,
+    lineHeight: 18,
+    marginTop: spacing.xs,
   },
   hint: {
     color: colors.textMuted,

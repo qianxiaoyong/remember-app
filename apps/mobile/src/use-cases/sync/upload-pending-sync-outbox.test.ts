@@ -79,13 +79,12 @@ describe('uploadPendingSyncOutbox', () => {
     vi.mocked(readSessionToken).mockResolvedValue('token-1');
     vi.mocked(getLearningState).mockReturnValue({
       knowledgeId: outboxRow.knowledgeId,
+      packId: 'remember-test-pack',
       clientVersion: 3,
       easiness: 2.5,
       intervalDays: 1,
       repetitions: 1,
       dueAt: '2026-07-30T00:00:00.000Z',
-      lastReviewedAt: '2026-07-30T00:00:00.000Z',
-      status: 'learning',
       updatedAt: '2026-07-30T00:00:00.000Z',
     });
   });
@@ -104,9 +103,54 @@ describe('uploadPendingSyncOutbox', () => {
 
     const result = await uploadPendingSyncOutbox();
 
-    expect(deleteSyncOutboxItems).toHaveBeenCalledWith(['evt-1', 'evt-1']);
+    expect(deleteSyncOutboxItems).toHaveBeenCalledWith(['evt-1']);
     expect(result.remainingCount).toBe(0);
     expect(writeLastSyncedAt).toHaveBeenCalled();
+  });
+
+  it('INVALID_PAYLOAD 也会从 outbox 删除', async () => {
+    vi.mocked(listSyncOutboxItems)
+      .mockReturnValueOnce([outboxRow])
+      .mockReturnValueOnce([outboxRow])
+      .mockReturnValueOnce([])
+      .mockReturnValue([]);
+
+    vi.mocked(uploadLearningStatesBatch).mockResolvedValue({
+      acceptedEventIds: [],
+      rejected: [{ eventId: 'evt-1', reason: 'INVALID_PAYLOAD' }],
+    });
+
+    await uploadPendingSyncOutbox();
+
+    expect(deleteSyncOutboxItems).toHaveBeenCalledWith(['evt-1']);
+  });
+
+  it('并行调用共享同一次 upload', async () => {
+    vi.mocked(listSyncOutboxItems)
+      .mockReturnValueOnce([outboxRow])
+      .mockReturnValueOnce([outboxRow])
+      .mockReturnValueOnce([])
+      .mockReturnValue([]);
+
+    let resolveUpload:
+      ((value: Awaited<ReturnType<typeof uploadLearningStatesBatch>>) => void) | undefined;
+    vi.mocked(uploadLearningStatesBatch).mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          resolveUpload = resolve;
+        }),
+    );
+
+    const first = uploadPendingSyncOutbox();
+    const second = uploadPendingSyncOutbox();
+    await Promise.resolve();
+    resolveUpload?.({
+      acceptedEventIds: ['evt-1'],
+      rejected: [],
+    });
+
+    await Promise.all([first, second]);
+    expect(uploadLearningStatesBatch).toHaveBeenCalledTimes(1);
   });
 
   it('同一 knowledgeId 多条 outbox 时只保留最高 clientVersion', async () => {
