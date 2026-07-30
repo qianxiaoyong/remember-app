@@ -155,6 +155,8 @@ pnpm --filter @remember/mobile build
 
 **目标：** 监护人手机号登录；单主设备；学习状态可上传、可快照恢复；弱网与乱序不覆盖新状态。
 
+**状态：✅ 已通过**（2026-07-30；详见 `2026-07-30-phase5-account-sync-completion.md`）
+
 ### 5.1 服务端表与迁移
 
 - [x] PostgreSQL 已迁移：`users`、`sms_challenges`、`sessions`、`learning_states`（服务端副本）。
