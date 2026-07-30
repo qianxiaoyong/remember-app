@@ -1,22 +1,29 @@
 import type { ReactElement } from 'react';
 import { useCallback, useEffect, useState } from 'react';
-import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { Alert, AppState, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import type { SessionUser } from '@remember/contracts';
 import { AppHeader } from '../components/shell/app-header';
 import { ScreenScaffold } from '../components/shell/screen-scaffold';
-import { ApiRequestError } from '../data/api/api-client';
-import { readCachedSessionUser } from '../data/session/session-store';
+import { ApiRequestError, readApiBaseUrl } from '../data/api/api-client';
+import { countSyncOutboxItems } from '../data/repositories/sync-outbox-repository';
+import { readCachedSessionUser, readLastSyncedAt } from '../data/session/session-store';
 import { getCurrentSessionUser } from '../use-cases/auth/get-current-session-user';
 import { logout } from '../use-cases/auth/logout';
+import { uploadPendingSyncOutbox } from '../use-cases/sync/upload-pending-sync-outbox';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
+
+const LAST_SYNCED_POLL_MS = 3_000;
 
 export function AccountScreen(): ReactElement {
   const router = useRouter();
   const params = useLocalSearchParams<{ notMainDevice?: string }>();
   const [user, setUser] = useState<SessionUser | null>(null);
   const [notMainDevice, setNotMainDevice] = useState(params.notMainDevice === '1');
+  const [lastSyncedAt, setLastSyncedAt] = useState<string | null>(null);
+  const [pendingSyncCount, setPendingSyncCount] = useState(0);
+  const [syncStatusHint, setSyncStatusHint] = useState<string | null>(null);
 
   const loadUser = useCallback(async () => {
     try {
@@ -40,9 +47,42 @@ export function AccountScreen(): ReactElement {
     }
   }, [notMainDevice, router]);
 
+  const refreshSyncStatus = useCallback(async () => {
+    const result = await uploadPendingSyncOutbox();
+    setLastSyncedAt(await readLastSyncedAt());
+    setPendingSyncCount(result.remainingCount);
+    setSyncStatusHint(formatSyncStatusHint(result));
+  }, []);
+
+  const refreshSyncDisplay = useCallback(async () => {
+    setLastSyncedAt(await readLastSyncedAt());
+    setPendingSyncCount(countSyncOutboxItems());
+  }, []);
+
   useEffect(() => {
     void loadUser();
   }, [loadUser]);
+
+  useFocusEffect(
+    useCallback(() => {
+      void refreshSyncStatus();
+
+      const appStateSubscription = AppState.addEventListener('change', (nextState) => {
+        if (nextState === 'active') {
+          void refreshSyncStatus();
+        }
+      });
+
+      const pollTimer = setInterval(() => {
+        void refreshSyncDisplay();
+      }, LAST_SYNCED_POLL_MS);
+
+      return () => {
+        appStateSubscription.remove();
+        clearInterval(pollTimer);
+      };
+    }, [refreshSyncDisplay, refreshSyncStatus]),
+  );
 
   const handleLogout = useCallback(async () => {
     await logout();
@@ -72,7 +112,15 @@ export function AccountScreen(): ReactElement {
             <Text style={styles.value}>{user.displayName}</Text>
             <Text style={styles.label}>手机号</Text>
             <Text style={styles.value}>{user.maskedPhone}</Text>
-            <Text style={styles.hint}>最后同步时间将在进度上传功能上线后展示</Text>
+            <Text style={styles.label}>最后同步</Text>
+            <Text style={styles.value}>
+              {lastSyncedAt ? formatSyncedAt(lastSyncedAt) : '尚未同步到云端'}
+            </Text>
+            <Text style={styles.label}>服务器</Text>
+            <Text style={styles.value}>{readApiBaseUrl()}</Text>
+            <Text style={styles.label}>待上传</Text>
+            <Text style={styles.value}>{`${String(pendingSyncCount)} 条`}</Text>
+            {syncStatusHint ? <Text style={styles.hint}>{syncStatusHint}</Text> : null}
           </View>
         ) : null}
 
@@ -97,6 +145,47 @@ export function AccountScreen(): ReactElement {
       </ScrollView>
     </ScreenScaffold>
   );
+}
+
+function formatSyncedAt(isoTimestamp: string): string {
+  const date = new Date(isoTimestamp);
+  if (Number.isNaN(date.getTime())) {
+    return '尚未同步到云端';
+  }
+  return date.toLocaleString('zh-CN', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}
+
+function formatSyncStatusHint(
+  result: Awaited<ReturnType<typeof uploadPendingSyncOutbox>>,
+): string | null {
+  if (result.skippedReason === 'NOT_MAIN_DEVICE') {
+    return '当前不是主设备，无法上传到云端。';
+  }
+  if (result.skippedReason === 'OFFLINE') {
+    const serverUrl = safeReadApiBaseUrl();
+    return `${result.errorMessage ?? '无法连接服务器'}。请确认电脑 API 已启动，且手机与电脑同一 Wi-Fi${serverUrl ? `（${serverUrl}）` : ''}。`;
+  }
+  if (result.skippedReason === 'ERROR') {
+    return result.errorMessage ?? '同步失败，请稍后重试。';
+  }
+  if (result.remainingCount > 0) {
+    return '仍有进度待上传，请保持联网并稍等。';
+  }
+  return null;
+}
+
+function safeReadApiBaseUrl(): string | null {
+  try {
+    return readApiBaseUrl();
+  } catch {
+    return null;
+  }
 }
 
 const styles = StyleSheet.create({

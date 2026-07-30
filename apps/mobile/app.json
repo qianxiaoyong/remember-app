@@ -27,6 +27,7 @@
         }
       ],
       "./plugins/with-android-release-signing.js",
+      "./plugins/with-android-cleartext-release.js",
       "expo-audio",
       "expo-secure-store"
     ]

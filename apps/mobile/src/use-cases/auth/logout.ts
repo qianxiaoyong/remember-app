@@ -1,10 +1,5 @@
 import { logoutRequest } from '../../data/api/auth-api';
-import {
-  clearCachedSessionUser,
-  clearSessionKickAlertPending,
-  clearSessionToken,
-  readSessionToken,
-} from '../../data/session/session-store';
+import { clearCachedSessionUser, clearLastSyncedAt, clearSessionKickAlertPending, clearSessionToken, readSessionToken } from '../../data/session/session-store';
 
 export async function logout(): Promise<void> {
   const sessionToken = await readSessionToken();
@@ -18,4 +13,5 @@ export async function logout(): Promise<void> {
   await clearSessionToken();
   await clearCachedSessionUser();
   await clearSessionKickAlertPending();
+  await clearLastSyncedAt();
 }

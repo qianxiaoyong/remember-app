@@ -13,10 +13,12 @@ import {
   updateSessionStatus,
 } from '../data/repositories/study-session-repository';
 import { insertSyncOutboxItem } from '../data/repositories/sync-outbox-repository';
+import { buildSyncOutboxPayload } from '../data/sync/build-sync-outbox-payload';
 import { openUserDatabase } from '../data/user-db/open-user-database';
 import { buildActiveStudySession, type ActiveStudySession } from './study-session-types';
 import { resolveContentPackId } from './resolve-content-pack-id';
 import { findActiveStudySessionForInstalledPack } from './find-active-study-session';
+import { uploadPendingSyncOutbox } from './sync/upload-pending-sync-outbox';
 
 export interface ConfirmCardReviewInput {
   packId: string;
@@ -65,14 +67,7 @@ export function confirmCardReview(input: ConfirmCardReviewInput): ActiveStudySes
   };
 
   const eventId = createRecordId('sync');
-  const payload = JSON.stringify({
-    knowledgeId,
-    packId: contentPackId,
-    rating,
-    clientVersion: nextClientVersion,
-    dueAt: nextState.dueAt,
-    updatedAt,
-  });
+  const payload = buildSyncOutboxPayload({ row: learningRow, rating });
 
   const db = openUserDatabase();
   db.execSync('BEGIN IMMEDIATE');
@@ -108,5 +103,6 @@ export function confirmCardReview(input: ConfirmCardReviewInput): ActiveStudySes
   }
 
   const allItems = listQueueItemsForSession(activeSession.sessionId);
+  void uploadPendingSyncOutbox();
   return buildActiveStudySession(activeSession.sessionId, packId, allItems);
 }

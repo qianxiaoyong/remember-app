@@ -88,3 +88,4 @@ pnpm --filter @remember/api test:integration
 - **`POSTGRES_PASSWORD must be set`**：检查 `infra/dev/.env` 是否存在且已填密码
 - **端口 5432 占用**：改 `infra/dev/compose.yaml` 端口映射或停止本机其他 PostgreSQL
 - **手机连不上 API**：检查 Windows 防火墙是否放行 3000；API 需监听 `0.0.0.0` 而非仅 localhost
+- **登录/同步/outbox/换机恢复等深层问题**：见 [账号登录与云端同步维护手册](./account-sync-maintenance.md)

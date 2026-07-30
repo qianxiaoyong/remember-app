@@ -149,7 +149,9 @@ describe('auth main device integration', () => {
     const user = await prisma.user.findFirst();
     expect(user?.mainDeviceId).toBe(DEVICE_B);
 
-    const activeSessions = await prisma.session.findMany({ where: { revokedAt: null } });
+    const activeSessions = await prisma.session.findMany({
+      where: { revokedAt: null, userId: deviceBLogin.userId },
+    });
     expect(activeSessions).toHaveLength(2);
     expect(activeSessions.map((session) => session.deviceId).sort()).toEqual(
       [DEVICE_A, DEVICE_B].sort(),

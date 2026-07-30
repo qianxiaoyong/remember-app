@@ -4,6 +4,7 @@ import {
   clearCachedSessionUser,
   clearSessionToken,
   markSessionKickAlertPending,
+  readCachedSessionUser,
   readSessionToken,
   writeCachedSessionUser,
 } from '../../data/session/session-store';
@@ -21,7 +22,7 @@ export async function getCurrentSessionUser(): Promise<SessionUser | null> {
     return sessionUser;
   } catch (error) {
     if (error instanceof ApiNetworkError) {
-      return null;
+      return readCachedSessionUser();
     }
     if (error instanceof ApiRequestError && error.status === 401) {
       await clearSessionToken();

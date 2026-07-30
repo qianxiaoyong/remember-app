@@ -8,15 +8,17 @@ datasource db {
 }
 
 model User {
-  id           String    @id @default(uuid()) @db.Uuid
-  phoneHash    String    @unique @map("phone_hash")
-  maskedPhone  String    @map("masked_phone")
-  displayName  String?   @map("display_name")
-  mainDeviceId String?   @map("main_device_id")
-  status       String    @default("active")
-  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt    DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
-  sessions     Session[]
+  id                 String              @id @default(uuid()) @db.Uuid
+  phoneHash          String              @unique @map("phone_hash")
+  maskedPhone        String              @map("masked_phone")
+  displayName        String?             @map("display_name")
+  mainDeviceId       String?             @map("main_device_id")
+  status             String              @default("active")
+  createdAt          DateTime            @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt          DateTime            @updatedAt @map("updated_at") @db.Timestamptz(6)
+  sessions           Session[]
+  learningStates     LearningState[]
+  syncProcessedEvents SyncProcessedEvent[]
 
   @@map("users")
 }
@@ -46,4 +48,32 @@ model Session {
 
   @@index([userId])
   @@map("sessions")
+}
+
+model LearningState {
+  userId        String   @map("user_id") @db.Uuid
+  knowledgeId   String   @map("knowledge_id")
+  packId        String   @map("pack_id")
+  easiness      Float
+  intervalDays  Int      @map("interval_days")
+  repetitions   Int
+  dueAt         DateTime @map("due_at") @db.Timestamptz(6)
+  clientVersion Int      @map("client_version")
+  updatedAt     DateTime @map("updated_at") @db.Timestamptz(6)
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, knowledgeId])
+  @@index([userId])
+  @@map("learning_states")
+}
+
+model SyncProcessedEvent {
+  eventId     String   @id @map("event_id")
+  userId      String   @map("user_id") @db.Uuid
+  knowledgeId String   @map("knowledge_id")
+  processedAt DateTime @default(now()) @map("processed_at") @db.Timestamptz(6)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sync_processed_events")
 }

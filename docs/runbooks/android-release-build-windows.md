@@ -145,6 +145,12 @@ android.enableLongPaths=true
 
 ### 4.4 构建 release APK
 
+**打包前必查（实机 HTTP 联调）：** main manifest 须含 `android:usesCleartextTraffic="true"`。仅跑 `assembleRelease` 而不 `prebuild` 时，该属性可能被洗掉，表现为 **手机浏览器能打开 API，App 内同步/登录却「无法连接服务器」**。
+
+```powershell
+Select-String -Path "apps\mobile\android\app\src\main\AndroidManifest.xml" -Pattern "usesCleartextTraffic"
+```
+
 ```powershell
 cd D:\r\a\apps\mobile\android
 $env:REMEMBER_ANDROID_SIGNING_PROPERTIES = 'D:\AIcoder\remember-secrets\signing.properties'

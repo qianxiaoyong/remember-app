@@ -2,7 +2,7 @@ import Constants from 'expo-constants';
 
 const API_TIMEOUT_MS = 10_000;
 
-function readApiBaseUrl(): string {
+export function readApiBaseUrl(): string {
   const fromExtra = Constants.expoConfig?.extra?.apiBaseUrl;
   if (typeof fromExtra === 'string' && fromExtra.length > 0) {
     return fromExtra.replace(/\/$/, '');

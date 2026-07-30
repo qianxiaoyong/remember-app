@@ -78,7 +78,7 @@ export function LoginScreen(): ReactElement {
       let message = '登录失败，请稍后重试';
       if (error instanceof ApiRequestError) {
         message = error.message;
-      } else if (error instanceof Error && error.message.length > 0) {
+      } else if (error instanceof Error && error.message.length > 0 && !isTechnicalErrorMessage(error.message)) {
         message = error.message;
       }
       Alert.alert('登录失败', message);
@@ -149,6 +149,10 @@ export function LoginScreen(): ReactElement {
       </View>
     </ScreenScaffold>
   );
+}
+
+function isTechnicalErrorMessage(message: string): boolean {
+  return message.startsWith('[') || message.includes('invalid_type') || message.includes('ZodError');
 }
 
 const styles = StyleSheet.create({

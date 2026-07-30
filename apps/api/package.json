@@ -9,7 +9,7 @@
     "typecheck": "tsc --noEmit",
     "pretest": "pnpm --filter @remember/contracts build && prisma generate",
     "test": "vitest run src",
-    "test:integration": "vitest run --dir test",
+    "test:integration": "vitest run --dir test --maxWorkers=1",
     "prebuild": "pnpm --filter @remember/contracts build && prisma generate",
     "build": "nest build",
     "prisma:generate": "prisma generate",

@@ -5,6 +5,7 @@ import * as SecureStore from 'expo-secure-store';
 const SESSION_TOKEN_KEY = 'remember.sessionToken';
 const SESSION_USER_CACHE_KEY = 'remember.sessionUserCache';
 const SESSION_KICK_ALERT_PENDING_KEY = 'remember.sessionKickAlertPending';
+const LAST_SYNCED_AT_KEY = 'remember.lastSyncedAt';
 const LOGIN_GUIDE_DISMISSED_KEY = 'remember.loginGuideDismissed';
 
 export async function readSessionToken(): Promise<string | null> {
@@ -55,6 +56,18 @@ export async function consumeSessionKickAlertPending(): Promise<boolean> {
 
 export async function clearSessionKickAlertPending(): Promise<void> {
   await SecureStore.deleteItemAsync(SESSION_KICK_ALERT_PENDING_KEY);
+}
+
+export async function readLastSyncedAt(): Promise<string | null> {
+  return SecureStore.getItemAsync(LAST_SYNCED_AT_KEY);
+}
+
+export async function writeLastSyncedAt(isoTimestamp: string): Promise<void> {
+  await SecureStore.setItemAsync(LAST_SYNCED_AT_KEY, isoTimestamp);
+}
+
+export async function clearLastSyncedAt(): Promise<void> {
+  await SecureStore.deleteItemAsync(LAST_SYNCED_AT_KEY);
 }
 
 export async function isLoginGuideDismissed(): Promise<boolean> {
