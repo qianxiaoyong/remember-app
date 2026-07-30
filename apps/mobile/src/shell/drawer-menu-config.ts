@@ -6,7 +6,10 @@ export type DrawerMenuItemId =
 export interface DrawerCommonFeatureItem {
   id: DrawerCommonFeatureId;
   label: string;
-  reservedMessage: string;
+  route?: string;
+  /** 预留入口：可见但暂不跳转，点击提示 */
+  reserved?: boolean;
+  reservedMessage?: string;
 }
 
 export interface DrawerMenuItem {
@@ -27,21 +30,24 @@ export const drawerCommonFeatures: DrawerCommonFeatureItem[] = [
   {
     id: 'guide',
     label: '记得攻略',
+    reserved: true,
     reservedMessage: '学习攻略将在后续版本开放。',
   },
   {
     id: 'question-bank',
     label: '真题库',
+    reserved: true,
     reservedMessage: '真题库将在后续版本开放。',
   },
   {
     id: 'redeem',
     label: '兑换码',
-    reservedMessage: '兑换码功能将在后续版本开放。',
+    route: '/redeem',
   },
   {
     id: 'follow',
     label: '关注我',
+    reserved: true,
     reservedMessage: '关注与社群入口将在后续版本开放。',
   },
 ];

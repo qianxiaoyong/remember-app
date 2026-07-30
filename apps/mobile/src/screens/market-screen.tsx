@@ -1,8 +1,10 @@
 import type { ReactElement } from 'react';
-import { useCallback, useMemo, useRef, useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
+import { useCallback } from 'react';
 import type { CatalogPrimaryCategory } from '../catalog/catalog-seed';
+import type { CatalogPackItem } from '../catalog/catalog-seed';
 import { MarketListSectionHeader } from '../components/market/market-list-section-header';
 import { MarketPackCard } from '../components/market/market-pack-card';
 import { MarketPrimaryTabs } from '../components/market/market-primary-tabs';
@@ -17,7 +19,10 @@ import { ScreenScaffold } from '../components/shell/screen-scaffold';
 import { useMarketSidebarCollapsed } from '../hooks/use-market-sidebar-collapsed';
 import { consumeMarketSearchSelection } from '../shell/market-search-navigation';
 import { useShellActions } from '../shell/shell-provider';
-import { listMarketCatalog, listSecondaryCategories } from '../use-cases/list-market-catalog';
+import {
+  fetchMarketCatalog,
+  listSecondaryCategories,
+} from '../use-cases/fetch-market-catalog';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 
@@ -32,6 +37,9 @@ export function MarketScreen(): ReactElement {
   const [versionFilter, setVersionFilter] = useState<string>('全部版本');
   const [highlightPackId, setHighlightPackId] = useState<string | null>(null);
   const [versionDropdownOpen, setVersionDropdownOpen] = useState(false);
+  const [items, setItems] = useState<CatalogPackItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useFocusEffect(
     useCallback(() => {
@@ -53,16 +61,38 @@ export function MarketScreen(): ReactElement {
     [primaryCategory],
   );
 
-  const items = useMemo(
-    () =>
-      listMarketCatalog({
-        primaryCategory,
-        secondaryCategory,
-        versionFilter,
-        keyword: '',
-      }),
-    [primaryCategory, secondaryCategory, versionFilter],
-  );
+  useEffect(() => {
+    let cancelled = false;
+    setIsLoading(true);
+    setErrorMessage(null);
+
+    void (async () => {
+      try {
+        const nextItems = await fetchMarketCatalog({
+          primaryCategory,
+          secondaryCategory,
+          versionFilter,
+          keyword: '',
+        });
+        if (!cancelled) {
+          setItems(nextItems);
+        }
+      } catch (error) {
+        if (!cancelled) {
+          setErrorMessage(error instanceof Error ? error.message : '加载目录失败');
+          setItems([]);
+        }
+      } finally {
+        if (!cancelled) {
+          setIsLoading(false);
+        }
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [primaryCategory, secondaryCategory, versionFilter]);
 
   return (
     <ScreenScaffold withCapsulePadding>
@@ -117,7 +147,13 @@ export function MarketScreen(): ReactElement {
             showsVerticalScrollIndicator={false}
             style={styles.listScroll}
           >
-            {items.length === 0 ? (
+            {isLoading ? (
+              <View style={styles.center}>
+                <ActivityIndicator color={colors.accent} />
+              </View>
+            ) : errorMessage ? (
+              <Text style={styles.empty}>{errorMessage}</Text>
+            ) : items.length === 0 ? (
               <Text style={styles.empty}>当前筛选下暂无资料</Text>
             ) : (
               items.map((item) => (
@@ -182,6 +218,10 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
     padding: spacing.md,
     paddingBottom: spacing.xl,
+  },
+  center: {
+    alignItems: 'center',
+    paddingVertical: spacing.xl,
   },
   empty: {
     color: colors.textSecondary,

@@ -109,7 +109,20 @@ export function AppDrawer(props: AppDrawerProps): ReactElement | null {
 
   const handleCommonFeaturePress = (item: DrawerCommonFeatureItem): void => {
     props.onClose();
-    Alert.alert('敬请期待', item.reservedMessage);
+
+    if (item.reserved) {
+      Alert.alert('敬请期待', item.reservedMessage ?? '功能即将开放');
+      return;
+    }
+
+    if (item.id === 'redeem' && !user) {
+      router.push('/login');
+      return;
+    }
+
+    if (item.route) {
+      router.push(item.route);
+    }
   };
 
   const handleAccountPress = (): void => {

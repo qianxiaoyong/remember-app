@@ -1,0 +1,55 @@
+import type { CatalogPackDetail, CatalogPackSummary } from '@remember/contracts';
+import type { CatalogPackItem } from '../catalog/catalog-seed';
+import type { PackSamplePreview } from '../catalog/pack-sample-preview';
+
+export function formatPriceCents(priceCents: number): string {
+  if (priceCents <= 0) {
+    return '免费';
+  }
+  const yuan = priceCents / 100;
+  return Number.isInteger(yuan) ? `¥${yuan}` : `¥${yuan.toFixed(2)}`;
+}
+
+export function mapCatalogSummaryToItem(summary: CatalogPackSummary): CatalogPackItem {
+  return {
+    packId: summary.packId,
+    title: summary.title,
+    ...(summary.displayTitle ? { displayTitle: summary.displayTitle } : {}),
+    primaryCategory: summary.primaryCategory,
+    secondaryCategory: summary.secondaryCategory,
+    version: summary.versionLabel,
+    contentTags: summary.contentTags,
+    cardCount: summary.cardCount,
+    sizeLabel: summary.sizeLabel,
+    updatedAt: summary.updatedAt.slice(0, 10),
+    priceCents: summary.priceCents,
+    priceLabel: formatPriceCents(summary.priceCents),
+    summary: '',
+    sampleHeadwords: [],
+    ...(summary.coverUrl ? { coverUrl: summary.coverUrl } : {}),
+    ...(summary.coverBadge ? { coverBadge: summary.coverBadge } : {}),
+    ...(summary.coverLines ? { coverLines: summary.coverLines } : {}),
+    ...(summary.isBundledTestPack ? { isBundledTestPack: true } : { isBundledTestPack: false }),
+  };
+}
+
+function mapSamplePreview(sample: CatalogPackDetail['samplePreviews'][number]): PackSamplePreview {
+  return {
+    headword: sample.headword,
+    zh: sample.zh,
+    exampleEn: sample.exampleEn,
+    ...(sample.initial ? { initial: sample.initial } : {}),
+    ...(sample.previewAudioUrl ? { previewAudioUrl: sample.previewAudioUrl } : {}),
+  };
+}
+
+export function mapCatalogDetailToItem(detail: CatalogPackDetail): CatalogPackItem {
+  const base = mapCatalogSummaryToItem(detail);
+  return {
+    ...base,
+    summary: detail.summary,
+    sampleHeadwords: detail.samplePreviews.map((item) => item.headword),
+    samplePreviews: detail.samplePreviews.map(mapSamplePreview),
+    ...(detail.introMedia ? { introMedia: detail.introMedia } : {}),
+  };
+}

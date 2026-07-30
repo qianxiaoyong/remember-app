@@ -81,10 +81,14 @@ function resolveDefaultLines(item: CatalogPackItem): string[] {
 }
 
 export function resolveCatalogCover(item: CatalogPackItem): CatalogCoverPresentation {
+  const imageSource = item.coverUrl
+    ? { uri: item.coverUrl }
+    : (item.coverImage ?? resolveCatalogCoverImage(item.packId));
+
   return {
     badge: item.coverBadge ?? resolveDefaultBadge(item),
     lines: item.coverLines ?? resolveDefaultLines(item),
     color: resolveCoverColor(item.packId),
-    imageSource: item.coverImage ?? resolveCatalogCoverImage(item.packId),
+    imageSource,
   };
 }

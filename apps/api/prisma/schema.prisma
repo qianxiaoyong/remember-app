@@ -8,17 +8,20 @@ datasource db {
 }
 
 model User {
-  id                 String              @id @default(uuid()) @db.Uuid
-  phoneHash          String              @unique @map("phone_hash")
-  maskedPhone        String              @map("masked_phone")
-  displayName        String?             @map("display_name")
-  mainDeviceId       String?             @map("main_device_id")
-  status             String              @default("active")
-  createdAt          DateTime            @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt          DateTime            @updatedAt @map("updated_at") @db.Timestamptz(6)
-  sessions           Session[]
-  learningStates     LearningState[]
+  id                  String               @id @default(uuid()) @db.Uuid
+  phoneHash           String               @unique @map("phone_hash")
+  maskedPhone         String               @map("masked_phone")
+  displayName         String?              @map("display_name")
+  mainDeviceId        String?              @map("main_device_id")
+  status              String               @default("active")
+  createdAt           DateTime             @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt           DateTime             @updatedAt @map("updated_at") @db.Timestamptz(6)
+  sessions            Session[]
+  learningStates      LearningState[]
   syncProcessedEvents SyncProcessedEvent[]
+  orders              Order[]
+  packAccesses        PackAccess[]
+  redemptionEvents    RedemptionEvent[]
 
   @@map("users")
 }
@@ -76,4 +79,142 @@ model SyncProcessedEvent {
 
   @@index([userId])
   @@map("sync_processed_events")
+}
+
+model Pack {
+  packId            String        @id @map("pack_id")
+  title             String
+  displayTitle      String?       @map("display_title")
+  primaryCategory   String        @map("primary_category")
+  secondaryCategory String        @map("secondary_category")
+  versionLabel      String        @map("version_label")
+  contentTags       Json          @map("content_tags")
+  cardCount         Int           @map("card_count")
+  sizeLabel         String        @map("size_label")
+  summary           String
+  priceCents        Int           @map("price_cents")
+  coverUrl          String?       @map("cover_url")
+  coverBadge        String?       @map("cover_badge")
+  coverLines        Json?         @map("cover_lines")
+  samplePreviews    Json          @map("sample_previews")
+  introMedia        Json?         @map("intro_media")
+  isBundledTestPack Boolean       @default(false) @map("is_bundled_test_pack")
+  currentVersionId  String?       @map("current_version_id") @db.Uuid
+  status            String        @default("published")
+  updatedAt         DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
+  versions          PackVersion[]
+  orders            Order[]
+  packAccesses      PackAccess[]
+  redemptionCodes   RedemptionCode[]
+  redemptionEvents  RedemptionEvent[]
+
+  @@map("packs")
+}
+
+model PackVersion {
+  id                String   @id @default(uuid()) @db.Uuid
+  packId            String   @map("pack_id")
+  packVersion       String   @map("pack_version")
+  cosObjectKey      String   @map("cos_object_key")
+  sha256            String
+  sizeBytes         BigInt   @map("size_bytes")
+  keyId             String   @map("key_id")
+  manifestSignature String   @map("manifest_signature")
+  protocolVersion   Int      @map("protocol_version")
+  status            String   @default("published")
+  publishedAt       DateTime @map("published_at") @db.Timestamptz(6)
+  pack              Pack     @relation(fields: [packId], references: [packId])
+
+  @@unique([packId, packVersion])
+  @@map("pack_versions")
+}
+
+model Order {
+  id               String            @id @default(uuid()) @db.Uuid
+  userId           String            @map("user_id") @db.Uuid
+  packId           String            @map("pack_id")
+  amountCents      Int               @map("amount_cents")
+  status           String
+  channel          String?
+  sourceCode       String?           @map("source_code")
+  createdAt        DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt        DateTime          @updatedAt @map("updated_at") @db.Timestamptz(6)
+  user             User              @relation(fields: [userId], references: [id])
+  pack             Pack              @relation(fields: [packId], references: [packId])
+  paymentEvents    PaymentEvent[]
+  packAccesses     PackAccess[]
+  refunds          Refund[]
+  redemptionEvents RedemptionEvent[]
+
+  @@index([userId])
+  @@index([packId])
+  @@map("orders")
+}
+
+model PaymentEvent {
+  id             BigInt   @id @default(autoincrement())
+  notificationId String   @unique @map("notification_id")
+  transactionId  String   @unique @map("transaction_id")
+  orderId        String   @map("order_id") @db.Uuid
+  processedAt    DateTime @map("processed_at") @db.Timestamptz(6)
+  order          Order    @relation(fields: [orderId], references: [id])
+
+  @@map("payment_events")
+}
+
+model PackAccess {
+  id        BigInt   @id @default(autoincrement())
+  userId    String   @map("user_id") @db.Uuid
+  packId    String   @map("pack_id")
+  orderId   String?  @map("order_id") @db.Uuid
+  source    String
+  grantedAt DateTime @map("granted_at") @db.Timestamptz(6)
+  user      User     @relation(fields: [userId], references: [id])
+  pack      Pack     @relation(fields: [packId], references: [packId])
+  order     Order?   @relation(fields: [orderId], references: [id])
+
+  @@unique([userId, packId])
+  @@map("pack_access")
+}
+
+model Refund {
+  id        String   @id @default(uuid()) @db.Uuid
+  orderId   String   @map("order_id") @db.Uuid
+  status    String
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+  order     Order    @relation(fields: [orderId], references: [id])
+
+  @@map("refunds")
+}
+
+model RedemptionCode {
+  id             String            @id @default(uuid()) @db.Uuid
+  codeHash       String            @unique @map("code_hash")
+  packId         String            @map("pack_id")
+  maxRedemptions Int               @map("max_redemptions")
+  redeemedCount  Int               @default(0) @map("redeemed_count")
+  expiresAt      DateTime?         @map("expires_at") @db.Timestamptz(6)
+  status         String            @default("active")
+  createdAt      DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
+  pack           Pack              @relation(fields: [packId], references: [packId])
+  events         RedemptionEvent[]
+
+  @@map("redemption_codes")
+}
+
+model RedemptionEvent {
+  id               String         @id @default(uuid()) @db.Uuid
+  redemptionCodeId String         @map("redemption_code_id") @db.Uuid
+  userId           String         @map("user_id") @db.Uuid
+  packId           String         @map("pack_id")
+  orderId          String?        @map("order_id") @db.Uuid
+  redeemedAt       DateTime       @map("redeemed_at") @db.Timestamptz(6)
+  redemptionCode   RedemptionCode @relation(fields: [redemptionCodeId], references: [id])
+  user             User           @relation(fields: [userId], references: [id])
+  pack             Pack           @relation(fields: [packId], references: [packId])
+  order            Order?         @relation(fields: [orderId], references: [id])
+
+  @@index([userId])
+  @@map("redemption_events")
 }

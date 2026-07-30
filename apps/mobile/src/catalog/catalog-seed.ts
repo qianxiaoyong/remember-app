@@ -1,4 +1,5 @@
-/** 阶段 4 市场 mock 种子；非服务端目录真值。 */
+/** 阶段 4 市场 mock 种子；API 失败时 dev fallback。 */
+import type { IntroMediaItem } from '@remember/contracts';
 import type { PackSamplePreview } from './pack-sample-preview';
 
 export type CatalogPrimaryCategory = 'all' | 'primary' | 'junior' | 'senior' | 'postgraduate';
@@ -15,18 +16,21 @@ export interface CatalogPackItem {
   cardCount: number;
   sizeLabel: string;
   updatedAt: string;
-  /** mock 展示价，非订单真值 */
-  mockPriceLabel: string;
+  priceCents: number;
+  priceLabel: string;
   summary: string;
   sampleHeadwords: string[];
   /** 详情页内容示例；缺省由 sampleHeadwords 占位 */
   samplePreviews?: PackSamplePreview[];
+  introMedia?: IntroMediaItem[];
   isBundledTestPack: boolean;
   /** 封面角标，如 PEP 3A；后台目录可配置，App 直接展示 */
   coverBadge?: string;
   /** 封面主文案行（1～3 行）；后台目录可配置，App 直接展示 */
   coverLines?: string[];
-  /** 封面图 URL 或本地资源；后台下发 URL，mock 阶段可用 require */
+  /** 封面图 URL；后台下发 */
+  coverUrl?: string;
+  /** 封面图本地资源；mock 阶段可用 require */
   coverImage?: number;
 }
 
@@ -46,7 +50,8 @@ const bundledTestPackBase = {
   cardCount: 2,
   sizeLabel: '约 2 MB',
   updatedAt: '2026-07-28',
-  mockPriceLabel: '¥0.01',
+  priceCents: 1,
+  priceLabel: '¥0.01',
   summary: '阶段 4 验包与学习闭环用的固定测试知识库。',
   sampleHeadwords: ['picture', 'take a picture'],
   samplePreviews: [
@@ -104,7 +109,8 @@ export const catalogSeed: CatalogPackItem[] = [
     cardCount: 80,
     sizeLabel: '约 12 MB',
     updatedAt: '2026-07-22',
-    mockPriceLabel: '¥9.00',
+    priceCents: 900,
+    priceLabel: '¥9.00',
     summary: 'mock 目录项，阶段 6 前不可真实购买。',
     sampleHeadwords: ['hello', 'book'],
     isBundledTestPack: false,
@@ -120,7 +126,8 @@ export const catalogSeed: CatalogPackItem[] = [
     cardCount: 480,
     sizeLabel: '约 18 MB',
     updatedAt: '2026-07-15',
-    mockPriceLabel: '¥19.9',
+    priceCents: 1990,
+    priceLabel: '¥19.9',
     summary: '覆盖教材核心词汇、常用释义和配套例句，支持主内容语音与例句点词查询。',
     sampleHeadwords: ['apple', 'family'],
     samplePreviews: [
@@ -151,7 +158,8 @@ export const catalogSeed: CatalogPackItem[] = [
     cardCount: 160,
     sizeLabel: '约 22 MB',
     updatedAt: '2026-07-19',
-    mockPriceLabel: '¥14.00',
+    priceCents: 1400,
+    priceLabel: '¥14.00',
     summary: 'mock 目录项，用于市场 UI smoke。',
     sampleHeadwords: ['science', 'museum'],
     isBundledTestPack: false,
@@ -166,7 +174,8 @@ export const catalogSeed: CatalogPackItem[] = [
     cardCount: 240,
     sizeLabel: '约 32 MB',
     updatedAt: '2026-07-18',
-    mockPriceLabel: '¥18.00',
+    priceCents: 1800,
+    priceLabel: '¥18.00',
     summary: 'mock 目录项，用于市场 UI smoke。',
     sampleHeadwords: ['weather', 'library'],
     isBundledTestPack: false,
@@ -181,7 +190,8 @@ export const catalogSeed: CatalogPackItem[] = [
     cardCount: 260,
     sizeLabel: '约 34 MB',
     updatedAt: '2026-07-17',
-    mockPriceLabel: '¥19.00',
+    priceCents: 1900,
+    priceLabel: '¥19.00',
     summary: 'mock 目录项，用于市场 UI smoke。',
     sampleHeadwords: ['invention', 'wheel'],
     isBundledTestPack: false,
@@ -196,7 +206,8 @@ export const catalogSeed: CatalogPackItem[] = [
     cardCount: 320,
     sizeLabel: '约 40 MB',
     updatedAt: '2026-07-16',
-    mockPriceLabel: '¥22.00',
+    priceCents: 2200,
+    priceLabel: '¥22.00',
     summary: 'mock 目录项，用于市场 UI smoke。',
     sampleHeadwords: ['volunteer', 'decision'],
     isBundledTestPack: false,
@@ -211,7 +222,8 @@ export const catalogSeed: CatalogPackItem[] = [
     cardCount: 400,
     sizeLabel: '约 48 MB',
     updatedAt: '2026-07-15',
-    mockPriceLabel: '¥28.00',
+    priceCents: 2800,
+    priceLabel: '¥28.00',
     summary: 'mock 目录项，用于市场 UI smoke。',
     sampleHeadwords: ['exchange', 'schedule'],
     isBundledTestPack: false,
@@ -226,7 +238,8 @@ export const catalogSeed: CatalogPackItem[] = [
     cardCount: 380,
     sizeLabel: '约 45 MB',
     updatedAt: '2026-07-14',
-    mockPriceLabel: '¥26.00',
+    priceCents: 2600,
+    priceLabel: '¥26.00',
     summary: 'mock 目录项，用于市场 UI smoke。',
     sampleHeadwords: ['abstract', 'concept'],
     isBundledTestPack: false,
@@ -241,7 +254,8 @@ export const catalogSeed: CatalogPackItem[] = [
     cardCount: 550,
     sizeLabel: '约 62 MB',
     updatedAt: '2026-07-13',
-    mockPriceLabel: '¥39.00',
+    priceCents: 3900,
+    priceLabel: '¥39.00',
     summary: 'mock 目录项，用于市场 UI smoke。',
     sampleHeadwords: ['hypothesis', 'phenomenon'],
     isBundledTestPack: false,

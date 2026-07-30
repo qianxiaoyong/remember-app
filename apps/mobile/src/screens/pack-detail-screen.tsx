@@ -3,11 +3,11 @@ import { useCallback, useEffect, useState } from 'react';
 import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import type { PackSamplePreview } from '../catalog/pack-sample-preview';
-import { markPackMockPurchased } from '../catalog/mock-purchase-store';
 import { PackDetailActionBar } from '../components/pack-detail/pack-detail-action-bar';
 import { PackDetailHeader } from '../components/pack-detail/pack-detail-header';
 import { PackDetailHeroCard } from '../components/pack-detail/pack-detail-hero-card';
 import { PackDetailIncludedSection } from '../components/pack-detail/pack-detail-included-section';
+import { PackDetailIntroMedia } from '../components/pack-detail/pack-detail-intro-media';
 import { PackDetailSampleList } from '../components/pack-detail/pack-detail-sample-list';
 import { ScreenScaffold } from '../components/shell/screen-scaffold';
 import { markLibraryNeedsRefresh } from '../shell/library-refresh-signal';
@@ -16,8 +16,7 @@ import {
   type PackDetailViewModel,
 } from '../use-cases/get-pack-detail-view-model';
 import { installBundledTestPack } from '../use-cases/install-bundled-test-pack';
-import { playPackAssetAudio } from '../use-cases/play-pack-asset-audio';
-import { resolvePackSamplePreviewPlay } from '../use-cases/resolve-pack-sample-preview-play';
+import { playSamplePreviewAudio } from '../use-cases/play-sample-preview-audio';
 import { uninstallInstalledPack } from '../use-cases/uninstall-installed-pack';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
@@ -49,25 +48,13 @@ export function PackDetailScreen(props: PackDetailScreenProps): ReactElement {
     setIsBusy(true);
     try {
       if (viewModel.actionKind === 'purchase') {
-        Alert.alert('阶段 6 开放', '正式购买与微信支付将在后续版本提供。', [
-          { text: '取消', style: 'cancel' },
-          {
-            text: '模拟已购买',
-            onPress: () => {
-              void (async () => {
-                await markPackMockPurchased(viewModel.packId);
-                await refresh();
-                setMessage('已模拟购买，可进行安装测试');
-              })();
-            },
-          },
-        ]);
+        Alert.alert('即将开放', '微信支付将在后续版本提供，您也可通过抽屉「兑换码」开通。');
         return;
       }
 
       if (viewModel.actionKind === 'install') {
         if (!viewModel.isBundledTestPack) {
-          setMessage('当前仅支持安装内置测试包');
+          setMessage('网络下载安装将在后续版本提供');
           return;
         }
         await installBundledTestPack(viewModel.packId);
@@ -121,36 +108,33 @@ export function PackDetailScreen(props: PackDetailScreenProps): ReactElement {
     }
 
     void (async () => {
-      const result = await resolvePackSamplePreviewPlay({
+      const result = await playSamplePreviewAudio({
         packId: viewModel.packId,
         isInstalled: viewModel.isInstalled,
-        ...(sample.previewAudio ? { previewAudio: sample.previewAudio } : {}),
+        sample,
       });
 
-      if (result === 'not-installed') {
-        Alert.alert('安装后可试听示例');
-        return;
-      }
       if (result === 'no-audio') {
         Alert.alert('暂无示例发音');
         return;
       }
       if (result === 'missing-file') {
-        Alert.alert('示例发音文件缺失');
+        Alert.alert('安装后可试听此示例', '公开试听请进入预览页。');
         return;
       }
-      if (!sample.previewAudio) {
-        Alert.alert('暂无示例发音');
-        return;
-      }
-      const playResult = await playPackAssetAudio({
-        packId: viewModel.packId,
-        relativePath: sample.previewAudio,
-      });
-      if (playResult === 'failed') {
+      if (result === 'failed') {
         Alert.alert('示例发音播放失败');
       }
     })();
+  };
+
+  const handleOpenPreview = (sample: PackSamplePreview): void => {
+    if (!viewModel) {
+      return;
+    }
+    router.push(
+      `/pack-preview?packId=${encodeURIComponent(viewModel.packId)}&headword=${encodeURIComponent(sample.headword)}`,
+    );
   };
 
   if (!viewModel) {
@@ -175,7 +159,7 @@ export function PackDetailScreen(props: PackDetailScreenProps): ReactElement {
         <PackDetailActionBar
           actionLabel={viewModel.actionLabel}
           isBusy={isBusy}
-          mockPriceLabel={viewModel.mockPriceLabel}
+          priceLabel={viewModel.priceLabel}
           purchaseHint={viewModel.purchaseHint}
           onActionPress={() => {
             void handlePrimaryAction();
@@ -199,8 +183,13 @@ export function PackDetailScreen(props: PackDetailScreenProps): ReactElement {
           summary={viewModel.summary}
           title={viewModel.title}
         />
+        <PackDetailIntroMedia items={viewModel.introMedia} />
         <PackDetailIncludedSection subtitle={viewModel.includedSubtitle} />
-        <PackDetailSampleList onPlaySample={handlePlaySample} samples={viewModel.samplePreviews} />
+        <PackDetailSampleList
+          onOpenPreview={handleOpenPreview}
+          onPlaySample={handlePlaySample}
+          samples={viewModel.samplePreviews}
+        />
         {viewModel.isInstalled ? (
           <Pressable
             accessibilityRole="button"

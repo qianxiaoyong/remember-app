@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { VocabularyContent } from '@remember/contracts';
 import { CircleIconButton } from '../ui/circle-icon-button';
-import { HomeTabIcon, MoreVerticalIcon, SpeakerIcon } from '../ui/shell-icons';
+import { HomeTabIcon, MoreVerticalIcon, SpeakerIcon, BackChevronIcon } from '../ui/shell-icons';
 import { StudyDefinitionStrip } from './study-definition-strip';
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
@@ -14,12 +14,17 @@ interface StudyHeaderBandProps {
   onMorePress: () => void;
   onPlayAudio: () => void;
   revealed: boolean;
+  /** 预览页：左侧返回、隐藏更多 */
+  toolbarVariant?: 'study' | 'preview';
+  onBackPress?: () => void;
+  previewContextLabel?: string;
 }
 
 export function StudyHeaderBand(props: StudyHeaderBandProps): ReactElement {
   const insets = useSafeAreaInsets();
   const { prompt } = props.content;
   const dialectLabel = prompt.phonetic?.dialect === 'uk' ? '英' : '美';
+  const isPreview = props.toolbarVariant === 'preview';
 
   return (
     <View
@@ -30,12 +35,31 @@ export function StudyHeaderBand(props: StudyHeaderBandProps): ReactElement {
       ]}
     >
       <View style={styles.toolbar}>
-        <CircleIconButton accessibilityLabel="返回首页" onPress={props.onHomePress}>
-          <HomeTabIcon active size="sm" />
-        </CircleIconButton>
-        <CircleIconButton accessibilityLabel="更多" onPress={props.onMorePress}>
-          <MoreVerticalIcon size="sm" />
-        </CircleIconButton>
+        {isPreview ? (
+          <>
+            <CircleIconButton
+              accessibilityLabel="返回"
+              onPress={() => {
+                props.onBackPress?.();
+              }}
+            >
+              <BackChevronIcon size="sm" />
+            </CircleIconButton>
+            <Text numberOfLines={1} style={styles.previewContext}>
+              {props.previewContextLabel ?? '内容预览'}
+            </Text>
+            <View style={styles.toolbarSpacer} />
+          </>
+        ) : (
+          <>
+            <CircleIconButton accessibilityLabel="返回首页" onPress={props.onHomePress}>
+              <HomeTabIcon active size="sm" />
+            </CircleIconButton>
+            <CircleIconButton accessibilityLabel="更多" onPress={props.onMorePress}>
+              <MoreVerticalIcon size="sm" />
+            </CircleIconButton>
+          </>
+        )}
       </View>
 
       <Pressable
@@ -92,6 +116,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     minHeight: spacing.touchTarget,
     width: '100%',
+  },
+  toolbarSpacer: {
+    width: spacing.touchTarget,
+  },
+  previewContext: {
+    color: 'rgba(255, 255, 255, 0.88)',
+    flex: 1,
+    fontSize: 13,
+    marginHorizontal: spacing.sm,
+    textAlign: 'center',
   },
   headwordPressable: {
     alignItems: 'center',

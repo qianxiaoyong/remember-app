@@ -7,7 +7,7 @@ import { spacing } from '../../theme/spacing';
 interface PackDetailActionBarProps {
   actionLabel: string;
   isBusy: boolean;
-  mockPriceLabel: string;
+  priceLabel: string;
   purchaseHint: string;
   onActionPress: () => void;
 }
@@ -19,7 +19,7 @@ export function PackDetailActionBar(props: PackDetailActionBarProps): ReactEleme
     <View style={[styles.bar, { paddingBottom: Math.max(insets.bottom, spacing.md) }]}>
       <View style={styles.priceBlock}>
         <Text style={styles.purchaseHint}>{props.purchaseHint}</Text>
-        <Text style={styles.price}>{props.mockPriceLabel}</Text>
+        <Text style={styles.price}>{props.priceLabel}</Text>
       </View>
       <Pressable
         accessibilityRole="button"

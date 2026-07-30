@@ -1,7 +1,8 @@
 import type { ReactElement } from 'react';
-import { useMemo, useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
+import type { CatalogPackItem } from '../catalog/catalog-seed';
 import { MarketSearchResultCard } from '../components/search/market-search-result-card';
 import { SearchPageScaffold } from '../components/search/search-page-scaffold';
 import { SearchResultCount } from '../components/search/search-result-count';
@@ -14,9 +15,40 @@ import { spacing } from '../theme/spacing';
 export function MarketSearchScreen(): ReactElement {
   const router = useRouter();
   const [query, setQuery] = useState('');
-
-  const results = useMemo(() => searchMarketCatalog(query), [query]);
+  const [results, setResults] = useState<CatalogPackItem[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
   const trimmedQuery = query.trim();
+
+  useEffect(() => {
+    if (!trimmedQuery) {
+      setResults([]);
+      return;
+    }
+
+    let cancelled = false;
+    setIsSearching(true);
+
+    void (async () => {
+      try {
+        const items = await searchMarketCatalog(trimmedQuery);
+        if (!cancelled) {
+          setResults(items);
+        }
+      } catch {
+        if (!cancelled) {
+          setResults([]);
+        }
+      } finally {
+        if (!cancelled) {
+          setIsSearching(false);
+        }
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [trimmedQuery]);
 
   return (
     <SearchPageScaffold
@@ -39,7 +71,11 @@ export function MarketSearchScreen(): ReactElement {
         {trimmedQuery ? (
           <>
             <SearchResultCount count={results.length} label="资料搜索结果" />
-            {results.length === 0 ? (
+            {isSearching ? (
+              <View style={styles.center}>
+                <ActivityIndicator color={colors.accent} />
+              </View>
+            ) : results.length === 0 ? (
               <Text style={styles.empty}>没有找到匹配的资料</Text>
             ) : (
               <View style={styles.grid}>
@@ -78,21 +114,21 @@ const styles = StyleSheet.create({
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: spacing.sm,
-    justifyContent: 'space-between',
-    paddingHorizontal: spacing.lg,
+    gap: spacing.md,
+  },
+  center: {
+    alignItems: 'center',
+    paddingVertical: spacing.xl,
   },
   empty: {
     color: colors.textSecondary,
     fontSize: 14,
-    paddingHorizontal: spacing.lg,
-    paddingTop: spacing.xl,
+    paddingVertical: spacing.xl,
     textAlign: 'center',
   },
   hint: {
     color: colors.textMuted,
     fontSize: 14,
-    paddingHorizontal: spacing.lg,
     paddingTop: spacing.xl,
     textAlign: 'center',
   },

@@ -9,6 +9,7 @@ import { spacing } from '../../theme/spacing';
 interface PackDetailSampleListProps {
   samples: PackSamplePreview[];
   onPlaySample: (sample: PackSamplePreview) => void;
+  onOpenPreview: (sample: PackSamplePreview) => void;
 }
 
 export function PackDetailSampleList(props: PackDetailSampleListProps): ReactElement {
@@ -22,6 +23,9 @@ export function PackDetailSampleList(props: PackDetailSampleListProps): ReactEle
         {props.samples.map((sample) => (
           <SampleRow
             key={sample.headword}
+            onOpenPreview={() => {
+              props.onOpenPreview(sample);
+            }}
             onPlay={() => {
               props.onPlaySample(sample);
             }}
@@ -33,11 +37,19 @@ export function PackDetailSampleList(props: PackDetailSampleListProps): ReactEle
   );
 }
 
-function SampleRow(props: { sample: PackSamplePreview; onPlay: () => void }): ReactElement {
+function SampleRow(props: {
+  sample: PackSamplePreview;
+  onPlay: () => void;
+  onOpenPreview: () => void;
+}): ReactElement {
   const initial = props.sample.initial ?? props.sample.headword.charAt(0).toUpperCase();
 
   return (
-    <View style={styles.row}>
+    <Pressable
+      accessibilityRole="button"
+      onPress={props.onOpenPreview}
+      style={styles.row}
+    >
       <View style={styles.initialBadge}>
         <Text style={styles.initialText}>{initial}</Text>
       </View>
@@ -55,7 +67,7 @@ function SampleRow(props: { sample: PackSamplePreview; onPlay: () => void }): Re
       >
         <MusicNoteIcon size="sm" />
       </Pressable>
-    </View>
+      </Pressable>
   );
 }
 
