@@ -1,10 +1,12 @@
 import { PrismaClient } from '@prisma/client';
+import { resetCommerceTables } from './catalog-test-helper.js';
 
 export function createIntegrationPrismaClient(): PrismaClient {
   return new PrismaClient();
 }
 
 export async function resetAuthTables(prisma: PrismaClient): Promise<void> {
+  await resetCommerceTables(prisma);
   await prisma.syncProcessedEvent.deleteMany();
   await prisma.learningState.deleteMany();
   await prisma.session.deleteMany();

@@ -1,5 +1,11 @@
-/** 实机联调 mock 购买：bundle 内 __DEV__ 为 false，需单独开关。 */
+/** 实机联调 mock 购买：需显式开关，且非 release 正式包误开。 */
 export function isMockPaymentEnabled(): boolean {
   const flag = process.env.EXPO_PUBLIC_MOCK_PAYMENT_ENABLED?.trim().toLowerCase();
-  return flag === 'true' || flag === '1';
+  if (flag !== 'true' && flag !== '1') {
+    return false;
+  }
+  if (__DEV__) {
+    return true;
+  }
+  return process.env.EXPO_PUBLIC_APP_VARIANT?.trim().toLowerCase() === 'dev';
 }

@@ -14,8 +14,8 @@ import {
   resetAllIntegrationTables,
   seedCatalogFixtures,
   TEST_REDEMPTION_CODE,
-  TEST_REDEMPTION_PEPPER,
 } from './helpers/db-test-helper.js';
+import { applyIntegrationTestEnv } from './helpers/integration-env.js';
 
 const TEST_PHONE = '13800138300';
 const DEVICE_A = '88888888-8888-4888-8888-888888888888';
@@ -40,13 +40,7 @@ describe('pack download integration', () => {
     if (!process.env.DATABASE_URL?.trim()) {
       throw new Error('DATABASE_URL must be set for integration tests');
     }
-    process.env.AUTH_PHONE_PEPPER ??= 'integration-test-pepper';
-    process.env.PACK_DOWNLOAD_TOKEN_PEPPER ??= 'integration-download-pepper';
-    process.env.SMS_MOCK_ENABLED ??= 'true';
-    process.env.AUTH_SMS_RESEND_INTERVAL_MS ??= '0';
-    process.env.REDEMPTION_CODE_PEPPER = TEST_REDEMPTION_PEPPER;
-    process.env.PACK_DOWNLOAD_MOCK_ENABLED ??= 'true';
-    process.env.API_PUBLIC_BASE_URL ??= 'http://127.0.0.1:3000';
+    applyIntegrationTestEnv();
 
     prisma = createIntegrationPrismaClient();
     await prisma.$connect();

@@ -15,12 +15,13 @@ import {
   createIntegrationPrismaClient,
   resetAllIntegrationTables,
   seedCatalogFixtures,
-  TEST_REDEMPTION_PEPPER,
 } from './helpers/db-test-helper.js';
+import { applyIntegrationTestEnv } from './helpers/integration-env.js';
 
 const TEST_PHONE = '13800138002';
 const DEVICE_A = '44444444-4444-4444-8444-444444444444';
 const PAID_PACK_ID = 'demo-primary-grade3';
+const MOCK_NOTIFY_SECRET = 'integration-mock-notify-secret';
 
 function requireDatabaseUrl(): string {
   const databaseUrl = process.env.DATABASE_URL?.trim();
@@ -68,14 +69,26 @@ async function simulatePaymentNotify(
   server: Parameters<typeof request>[0],
   input: {
     orderId: string;
+    amountCents: number;
+    token?: string;
     notificationId?: string;
     transactionId?: string;
-    amountCents?: number;
   },
 ): Promise<{ processed: boolean; status: string }> {
-  const response = await request(server)
-    .post('/api/v1/payment/test/simulate-notify')
-    .send(input)
+  let req = request(server).post('/api/v1/payment/test/simulate-notify');
+  if (input.token) {
+    req = req.set('Authorization', `Bearer ${input.token}`);
+  } else {
+    req = req.set('X-Mock-Payment-Secret', MOCK_NOTIFY_SECRET);
+  }
+
+  const response = await req
+    .send({
+      orderId: input.orderId,
+      amountCents: input.amountCents,
+      notificationId: input.notificationId,
+      transactionId: input.transactionId,
+    })
     .expect(200);
 
   const body = simulatePaymentNotifyResponseSchema.parse(response.body);
@@ -88,11 +101,7 @@ describe('payment idempotency integration', () => {
 
   beforeAll(async () => {
     requireDatabaseUrl();
-    process.env.AUTH_PHONE_PEPPER ??= 'integration-test-pepper';
-    process.env.SMS_MOCK_ENABLED ??= 'true';
-    process.env.AUTH_SMS_RESEND_INTERVAL_MS ??= '0';
-    process.env.REDEMPTION_CODE_PEPPER ??= TEST_REDEMPTION_PEPPER;
-    process.env.WECHAT_PAY_MOCK_ENABLED ??= 'true';
+    applyIntegrationTestEnv();
 
     prisma = createIntegrationPrismaClient();
     await prisma.$connect();
@@ -129,6 +138,8 @@ describe('payment idempotency integration', () => {
     const order = await createPendingOrder(server, login.token, PAID_PACK_ID);
     const notify = await simulatePaymentNotify(server, {
       orderId: order.orderId,
+      amountCents: order.amountCents,
+      token: login.token,
       notificationId: 'notify-001',
       transactionId: 'txn-001',
     });
@@ -164,6 +175,8 @@ describe('payment idempotency integration', () => {
     const order = await createPendingOrder(server, login.token, PAID_PACK_ID);
     const first = await simulatePaymentNotify(server, {
       orderId: order.orderId,
+      amountCents: order.amountCents,
+      token: login.token,
       notificationId: 'notify-dup',
       transactionId: 'txn-dup',
     });
@@ -171,6 +184,8 @@ describe('payment idempotency integration', () => {
 
     const second = await simulatePaymentNotify(server, {
       orderId: order.orderId,
+      amountCents: order.amountCents,
+      token: login.token,
       notificationId: 'notify-dup',
       transactionId: 'txn-dup',
     });
@@ -197,6 +212,7 @@ describe('payment idempotency integration', () => {
 
     const response = await request(server)
       .post('/api/v1/payment/test/simulate-notify')
+      .set('Authorization', `Bearer ${login.token}`)
       .send({
         orderId: order.orderId,
         notificationId: 'notify-bad-amount',
@@ -215,18 +231,42 @@ describe('payment idempotency integration', () => {
     expect(accessCount).toBe(0);
   });
 
+  it('省略 amountCents 返回 400', async () => {
+    const server = app.getHttpServer() as Parameters<typeof request>[0];
+    await sendSmsCode(server, TEST_PHONE);
+    const login = await verifySmsLogin(server, TEST_PHONE, DEVICE_A);
+
+    const order = await createPendingOrder(server, login.token, PAID_PACK_ID);
+
+    const response = await request(server)
+      .post('/api/v1/payment/test/simulate-notify')
+      .set('Authorization', `Bearer ${login.token}`)
+      .send({
+        orderId: order.orderId,
+        notificationId: 'notify-missing-amount',
+        transactionId: 'txn-missing-amount',
+      })
+      .expect(400);
+    expect(response.body).toMatchObject({ code: 'PAYMENT_AMOUNT_MISSING' });
+
+    const stored = await prisma.order.findUnique({ where: { id: order.orderId } });
+    expect(stored?.status).toBe('pending');
+  });
+
   it('未知订单号拒绝', async () => {
     const server = app.getHttpServer() as Parameters<typeof request>[0];
 
     const response = await request(server)
       .post('/api/v1/payment/test/simulate-notify')
+      .set('X-Mock-Payment-Secret', MOCK_NOTIFY_SECRET)
       .send({
         orderId: '550e8400-e29b-41d4-a716-446655440000',
+        amountCents: 1990,
         notificationId: 'notify-unknown',
         transactionId: 'txn-unknown',
       })
-      .expect(404);
-    expect(response.body).toMatchObject({ code: 'PAYMENT_ORDER_NOT_FOUND' });
+      .expect(403);
+    expect(response.body).toMatchObject({ code: 'MOCK_PAYMENT_UNAUTHORIZED' });
   });
 
   it('相同 notification_id 不同 transaction_id 返回 409', async () => {
@@ -237,14 +277,18 @@ describe('payment idempotency integration', () => {
     const order = await createPendingOrder(server, login.token, PAID_PACK_ID);
     await simulatePaymentNotify(server, {
       orderId: order.orderId,
+      amountCents: order.amountCents,
+      token: login.token,
       notificationId: 'notify-conflict',
       transactionId: 'txn-a',
     });
 
     const response = await request(server)
       .post('/api/v1/payment/test/simulate-notify')
+      .set('Authorization', `Bearer ${login.token}`)
       .send({
         orderId: order.orderId,
+        amountCents: order.amountCents,
         notificationId: 'notify-conflict',
         transactionId: 'txn-b',
       })
@@ -260,6 +304,8 @@ describe('payment idempotency integration', () => {
     const order = await createPendingOrder(server, login.token, PAID_PACK_ID);
     await simulatePaymentNotify(server, {
       orderId: order.orderId,
+      amountCents: order.amountCents,
+      token: login.token,
       notificationId: 'notify-owned',
       transactionId: 'txn-owned',
     });

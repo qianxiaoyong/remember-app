@@ -16,8 +16,8 @@ import {
   resetAllIntegrationTables,
   seedCatalogFixtures,
   TEST_REDEMPTION_CODE,
-  TEST_REDEMPTION_PEPPER,
 } from './helpers/db-test-helper.js';
+import { applyIntegrationTestEnv } from './helpers/integration-env.js';
 
 const TEST_PHONE = '13800138001';
 const DEVICE_A = '33333333-3333-4333-8333-333333333333';
@@ -54,10 +54,7 @@ describe('catalog and redemption integration', () => {
 
   beforeAll(async () => {
     requireDatabaseUrl();
-    process.env.AUTH_PHONE_PEPPER ??= 'integration-test-pepper';
-    process.env.SMS_MOCK_ENABLED ??= 'true';
-    process.env.AUTH_SMS_RESEND_INTERVAL_MS ??= '0';
-    process.env.REDEMPTION_CODE_PEPPER ??= TEST_REDEMPTION_PEPPER;
+    applyIntegrationTestEnv();
 
     prisma = createIntegrationPrismaClient();
     await prisma.$connect();
@@ -169,5 +166,46 @@ describe('catalog and redemption integration', () => {
       .send({ code: 'INVALID-CODE' })
       .expect(404);
     expect(response.body).toMatchObject({ code: 'REDEMPTION_CODE_INVALID' });
+  });
+
+  it('兑换码达到上限后拒绝后续用户', async () => {
+    const server = app.getHttpServer() as Parameters<typeof request>[0];
+    const { hashRedemptionCode } = await import('../src/redemption/redemption-code-hash.js');
+    const { TEST_REDEMPTION_PEPPER } = await import('./helpers/catalog-test-helper.js');
+    const singleUseCode = 'TEST-SINGLE-USE-001';
+    await prisma.redemptionCode.create({
+      data: {
+        codeHash: hashRedemptionCode(singleUseCode, TEST_REDEMPTION_PEPPER),
+        packId: 'remember-test-pack',
+        maxRedemptions: 1,
+        redeemedCount: 0,
+        status: 'active',
+      },
+    });
+
+    await sendSmsCode(server, '13800138011');
+    const loginA = await verifySmsLogin(
+      server,
+      '13800138011',
+      '11111111-1111-4111-8111-111111111111',
+    );
+    await request(server)
+      .post('/api/v1/redemption/redeem')
+      .set('Authorization', `Bearer ${loginA.token}`)
+      .send({ code: singleUseCode })
+      .expect(200);
+
+    await sendSmsCode(server, '13800138012');
+    const loginB = await verifySmsLogin(
+      server,
+      '13800138012',
+      '22222222-2222-4222-8222-222222222222',
+    );
+    const response = await request(server)
+      .post('/api/v1/redemption/redeem')
+      .set('Authorization', `Bearer ${loginB.token}`)
+      .send({ code: singleUseCode })
+      .expect(400);
+    expect(response.body).toMatchObject({ code: 'REDEMPTION_CODE_EXHAUSTED' });
   });
 });

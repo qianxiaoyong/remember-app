@@ -22,6 +22,21 @@ function readBearerToken(authorizationHeader: string | undefined): string | null
   return token.length > 0 ? token : null;
 }
 
+async function tryReadAuthContext(
+  authService: AuthService,
+  request: RequestWithAuth,
+): Promise<AuthenticatedRequestContext | null> {
+  const token = readBearerToken(request.headers.authorization);
+  if (!token) {
+    return null;
+  }
+  try {
+    return await authService.resolveAuthenticatedContext(token);
+  } catch {
+    return null;
+  }
+}
+
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(private readonly authService: AuthService) {}
@@ -45,4 +60,4 @@ function requireAuthContext(request: RequestWithAuth): AuthenticatedRequestConte
   return request.auth;
 }
 
-export { requireAuthContext };
+export { requireAuthContext, tryReadAuthContext };

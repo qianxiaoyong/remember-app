@@ -50,6 +50,11 @@ export function PackDetailScreen(props: PackDetailScreenProps): ReactElement {
     setMessage(null);
     setIsBusy(true);
     try {
+      if (viewModel.actionKind === 'retry_access') {
+        await refresh();
+        return;
+      }
+
       if (viewModel.actionKind === 'purchase') {
         if (isMockPaymentEnabled()) {
           const result = await purchasePackWithMockPayment(viewModel.packId);

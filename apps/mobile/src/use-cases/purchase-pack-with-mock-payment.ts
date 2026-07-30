@@ -20,7 +20,7 @@ export async function purchasePackWithMockPayment(packId: string): Promise<'paid
 
   try {
     const order = await createOrderRequest(token, packId);
-    await simulateMockPaymentNotify(order.orderId);
+    await simulateMockPaymentNotify(token, order.orderId, order.amountCents);
 
     const detail = await fetchOrderDetail(token, order.orderId);
     return detail.status === 'paid' ? 'paid' : 'pending';

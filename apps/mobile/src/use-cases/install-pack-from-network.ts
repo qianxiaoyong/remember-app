@@ -33,10 +33,10 @@ export async function installPackFromNetwork(catalogPackId: string): Promise<Ins
   activeDownloadPackId = catalogPackId;
   try {
     const authorization = await requestPackDownloadAuthorization(token, catalogPackId);
-    await writeOfflineLicenseExpiry(catalogPackId, authorization.offlineLicenseExpiresAt);
 
     const zipBytes = await downloadPackZipBytes(authorization.downloadUrl);
     const installed = await installPackFromZipBytes(zipBytes);
+    await writeOfflineLicenseExpiry(catalogPackId, authorization.offlineLicenseExpiresAt);
 
     if (authorization.devContentPackId && authorization.devContentPackId !== catalogPackId) {
       return aliasInstalledPack(catalogPackId, installed);

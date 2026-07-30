@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 export interface WechatPayConfig {
   mockEnabled: boolean;
+  mockNotifySecret: string | null;
   appId: string;
   mchId: string;
 }
@@ -23,6 +24,7 @@ export class WechatPayConfigService {
 
     return {
       mockEnabled,
+      mockNotifySecret: process.env.WECHAT_PAY_MOCK_NOTIFY_SECRET?.trim() || null,
       appId: process.env.WECHAT_PAY_APP_ID?.trim() || 'wxmockappid',
       mchId: process.env.WECHAT_PAY_MCH_ID?.trim() || '1900000001',
     };

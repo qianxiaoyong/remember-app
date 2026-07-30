@@ -7,10 +7,9 @@ export interface DownloadTokenPayload {
 }
 
 function readPepper(): string {
-  const pepper =
-    process.env.PACK_DOWNLOAD_TOKEN_PEPPER?.trim() || process.env.AUTH_PHONE_PEPPER?.trim();
+  const pepper = process.env.PACK_DOWNLOAD_TOKEN_PEPPER?.trim();
   if (!pepper) {
-    throw new Error('Missing PACK_DOWNLOAD_TOKEN_PEPPER or AUTH_PHONE_PEPPER');
+    throw new Error('Missing PACK_DOWNLOAD_TOKEN_PEPPER');
   }
   return pepper;
 }

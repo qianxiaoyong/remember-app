@@ -29,10 +29,15 @@ export async function fetchOrderDetail(
   return orderDetailResponseSchema.parse(body);
 }
 
-export async function simulateMockPaymentNotify(orderId: string): Promise<void> {
+export async function simulateMockPaymentNotify(
+  sessionToken: string,
+  orderId: string,
+  amountCents: number,
+): Promise<void> {
   const body = await apiFetchJson<unknown>('/api/v1/payment/test/simulate-notify', {
     method: 'POST',
-    body: JSON.stringify({ orderId }),
+    sessionToken,
+    body: JSON.stringify({ orderId, amountCents }),
   });
   simulatePaymentNotifyResponseSchema.parse(body);
 }

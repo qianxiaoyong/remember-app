@@ -76,7 +76,21 @@ export class PaymentNotificationService {
         );
       }
 
-      if (input.amountCents !== undefined && order.amountCents !== input.amountCents) {
+      if (input.amountCents === undefined) {
+        throw new HttpException(
+          { code: 'PAYMENT_AMOUNT_MISSING', message: '支付金额缺失' },
+          400,
+        );
+      }
+
+      if (!Number.isInteger(input.amountCents) || input.amountCents <= 0) {
+        throw new HttpException(
+          { code: 'PAYMENT_AMOUNT_MISSING', message: '支付金额缺失' },
+          400,
+        );
+      }
+
+      if (order.amountCents !== input.amountCents) {
         throw new HttpException(
           { code: 'PAYMENT_AMOUNT_MISMATCH', message: '支付金额与订单不符' },
           400,

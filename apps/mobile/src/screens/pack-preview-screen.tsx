@@ -63,6 +63,10 @@ export function PackPreviewScreen(props: PackPreviewScreenProps): ReactElement {
         Alert.alert('暂无试听');
         return;
       }
+      if (result === 'missing-file') {
+        Alert.alert('暂无公开试听');
+        return;
+      }
       if (result === 'failed') {
         Alert.alert('播放失败');
       }
