@@ -224,7 +224,7 @@ pnpm test:integration
 
 **目标：** 测试商户环境完成真实支付与退款；客户端不能假解锁；资金与权限可追溯。
 
-**状态（2026-07-30）：** 子计划 1–3（**mock / dev 路径**）已落地；`pnpm test:integration` 与 dev 实机（兑换码、`EXPO_PUBLIC_MOCK_PAYMENT_ENABLED` mock 购买、网络下载安装）已通过。**§6.8 真实付/退、§6.6 退款链、COS 生产分发、OpenSDK 实机付** 待 Pause C/D 解除后补跑；**§6.9 正式退出门禁** 尚未通过。
+**状态（2026-07-31）：** mock/dev 主路径已 merge（PR #4）；**§6.8 真实付/退、§6.6 退款链、COS 生产分发、OpenSDK 实机付** 待 Pause C/D 解除后补跑；**§6.9 正式退出门禁** 尚未通过。收口摘要见 `2026-07-31-phase6-catalog-payment-completion.md`。
 
 ### 6.1 服务端表与迁移
 
@@ -335,3 +335,4 @@ powershell -NoProfile -ExecutionPolicy Bypass -File infra/technical-spikes/postg
 - [子计划 1：目录与兑换](2026-07-30-catalog-order-and-pack-access.md)
 - [子计划 2：订单与 mock 支付](2026-07-30-wechat-pay-and-refund.md)
 - [子计划 3：下载授权与网络安装](2026-07-30-offline-pack-access.md)
+- [阶段 6 收口摘要](2026-07-31-phase6-catalog-payment-completion.md)

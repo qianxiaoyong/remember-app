@@ -16,7 +16,7 @@ ADR：**`docs/decisions/0010-catalog-preview-redemption-and-media.md`**
 
 ```text
 阶段 0–5  ✅（见 2026-07-30-phase5-account-sync-completion.md）
-阶段 6    ✅ kickoff 已确认；子计划 1–3 待写/实施
+阶段 6    ✅ mock/dev 已收口（见 2026-07-31-phase6-catalog-payment-completion.md）；§6.9 真实付/退 defer
 阶段 7–8  ⏸
 ```
 
