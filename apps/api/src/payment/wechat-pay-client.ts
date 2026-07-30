@@ -16,7 +16,9 @@ export class WechatPayClient {
   createAppPrepay(input: CreateAppPrepayInput): WechatAppPrepayParams {
     const config = this.wechatPayConfigService.read();
     if (!config.mockEnabled) {
-      throw new Error('WechatPayClient 生产下单尚未在本环境启用，请设置 WECHAT_PAY_MOCK_ENABLED=true');
+      throw new Error(
+        'WechatPayClient 生产下单尚未在本环境启用，请设置 WECHAT_PAY_MOCK_ENABLED=true',
+      );
     }
 
     const nonceStr = randomBytes(8).toString('hex');

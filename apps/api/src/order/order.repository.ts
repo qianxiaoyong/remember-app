@@ -32,10 +32,7 @@ export class OrderRepository {
     return this.prisma.order.findUnique({ where: { id: orderId } });
   }
 
-  findByIdInTransaction(
-    tx: Prisma.TransactionClient,
-    orderId: string,
-  ): Promise<Order | null> {
+  findByIdInTransaction(tx: Prisma.TransactionClient, orderId: string): Promise<Order | null> {
     return tx.order.findUnique({ where: { id: orderId } });
   }
 }

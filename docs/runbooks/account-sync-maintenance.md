@@ -23,13 +23,13 @@
 
 ### 2.1 同步什么
 
-| 数据 | 是否同步 | 存储位置 |
-| --- | --- | --- |
-| `learning_states`（SM-2 进度） | ✅ | 本地 `user.sqlite` ↔ 服务端 PostgreSQL |
-| `study_sessions`（当前学习会话） | ❌ | 仅本地 |
-| 已安装 pack 列表 | ❌ | 仅本地 |
-| 点词收藏 | ❌ | 仅本地（阶段 4） |
-| pack 内容 | ❌ | 独立 zip 安装链 |
+| 数据                             | 是否同步 | 存储位置                               |
+| -------------------------------- | -------- | -------------------------------------- |
+| `learning_states`（SM-2 进度）   | ✅       | 本地 `user.sqlite` ↔ 服务端 PostgreSQL |
+| `study_sessions`（当前学习会话） | ❌       | 仅本地                                 |
+| 已安装 pack 列表                 | ❌       | 仅本地                                 |
+| 点词收藏                         | ❌       | 仅本地（阶段 4）                       |
+| pack 内容                        | ❌       | 独立 zip 安装链                        |
 
 ### 2.2 两条独立链路
 
@@ -59,22 +59,22 @@
 
 ## 3. 关键代码地图
 
-| 职责 | 路径 |
-| --- | --- |
-| 契约（Zod） | `packages/contracts/src/sync/` |
-| API 模块 | `apps/api/src/sync/` |
-| Prisma 表 | `learning_states`、`sync_processed_events` |
-| 集成测试 | `apps/api/test/sync-learning-states.e2e.test.ts` |
-| outbox 仓储 | `apps/mobile/src/data/repositories/sync-outbox-repository.ts` |
-| payload 解析（含 legacy 补全） | `apps/mobile/src/data/sync/resolve-sync-outbox-payload.ts` |
-| 上传用例 | `apps/mobile/src/use-cases/sync/upload-pending-sync-outbox.ts` |
-| 快照恢复 | `apps/mobile/src/use-cases/sync/restore-learning-states-from-snapshot.ts` |
-| 评分写 outbox | `apps/mobile/src/use-cases/confirm-card-review.ts` |
-| 登录后 sync | `apps/mobile/src/use-cases/auth/verify-sms-login.ts` |
-| 断网会话缓存 | `apps/mobile/src/use-cases/auth/get-current-session-user.ts` |
-| 后台 worker | `apps/mobile/src/hooks/use-sync-worker.ts` + `components/shell/shell-sync-host.tsx` |
-| 账号页状态 | `apps/mobile/src/screens/account-screen.tsx` |
-| Release HTTP 明文 | `apps/mobile/plugins/with-android-cleartext-release.js` |
+| 职责                           | 路径                                                                                |
+| ------------------------------ | ----------------------------------------------------------------------------------- |
+| 契约（Zod）                    | `packages/contracts/src/sync/`                                                      |
+| API 模块                       | `apps/api/src/sync/`                                                                |
+| Prisma 表                      | `learning_states`、`sync_processed_events`                                          |
+| 集成测试                       | `apps/api/test/sync-learning-states.e2e.test.ts`                                    |
+| outbox 仓储                    | `apps/mobile/src/data/repositories/sync-outbox-repository.ts`                       |
+| payload 解析（含 legacy 补全） | `apps/mobile/src/data/sync/resolve-sync-outbox-payload.ts`                          |
+| 上传用例                       | `apps/mobile/src/use-cases/sync/upload-pending-sync-outbox.ts`                      |
+| 快照恢复                       | `apps/mobile/src/use-cases/sync/restore-learning-states-from-snapshot.ts`           |
+| 评分写 outbox                  | `apps/mobile/src/use-cases/confirm-card-review.ts`                                  |
+| 登录后 sync                    | `apps/mobile/src/use-cases/auth/verify-sms-login.ts`                                |
+| 断网会话缓存                   | `apps/mobile/src/use-cases/auth/get-current-session-user.ts`                        |
+| 后台 worker                    | `apps/mobile/src/hooks/use-sync-worker.ts` + `components/shell/shell-sync-host.tsx` |
+| 账号页状态                     | `apps/mobile/src/screens/account-screen.tsx`                                        |
+| Release HTTP 明文              | `apps/mobile/plugins/with-android-cleartext-release.js`                             |
 
 ---
 
@@ -194,13 +194,13 @@ Mock 验证码：**`000000`**（仅 dev/test）
 
 ### 6.2 推荐验收场景
 
-| # | 场景 | 预期 |
-| --- | --- | --- |
-| 1 | A 机学习 → 账号页待上传归零 | 上传成功 |
-| 2 | B 机同号登录 | 进度与 A 一致（快照恢复） |
-| 3 | 非主设备尝试学习上传 | 403，outbox 保留 |
-| 4 | 主设备抢回后 | outbox  eventually 清空 |
-| 5 | 断网评分 1 张 → 联网 | 待上传 1 → 归零（可选抽检） |
+| #   | 场景                        | 预期                        |
+| --- | --------------------------- | --------------------------- |
+| 1   | A 机学习 → 账号页待上传归零 | 上传成功                    |
+| 2   | B 机同号登录                | 进度与 A 一致（快照恢复）   |
+| 3   | 非主设备尝试学习上传        | 403，outbox 保留            |
+| 4   | 主设备抢回后                | outbox eventually 清空      |
+| 5   | 断网评分 1 张 → 联网        | 待上传 1 → 归零（可选抽检） |
 
 集成测试（无需真机）：
 
@@ -272,43 +272,43 @@ pnpm --filter @remember/mobile typecheck
 
 ### 8.4 生产环境差异（未来）
 
-| 项 | 当前 dev/联调 | 生产目标 |
-| --- | --- | --- |
-| API URL | `http://局域网IP:3000` | HTTPS 备案域名 |
-| Cleartext | Release 插件放行 | 应关闭或仅 debug flavor |
-| 短信 | mock `000000` | 腾讯云 |
-| PostgreSQL | Docker 本地 | 服务器 Compose |
+| 项         | 当前 dev/联调          | 生产目标                |
+| ---------- | ---------------------- | ----------------------- |
+| API URL    | `http://局域网IP:3000` | HTTPS 备案域名          |
+| Cleartext  | Release 插件放行       | 应关闭或仅 debug flavor |
+| 短信       | mock `000000`          | 腾讯云                  |
+| PostgreSQL | Docker 本地            | 服务器 Compose          |
 
 上线前：**移除或按 flavor 禁用 cleartext**；`EXPO_PUBLIC_API_BASE_URL` 指向正式 HTTPS。
 
 ### 8.5 运维排查速查
 
-| 用户现象 | 优先检查 |
-| --- | --- |
-| 无法连接服务器 | cleartext manifest、防火墙 3000、API 是否 `0.0.0.0`、IP 是否变 |
-| 登录失败带 `[` 技术字 | outbox legacy payload、Zod 契约、是否误 await upload |
-| 待上传不归零 | 是否又引入 ensure/reconcile；查 `sync_outbox` 行数与重复 knowledgeId |
-| 换机无进度 | snapshot API、登录后是否调 restore；服务端 `learning_states` 是否有行 |
-| 非主设备无法同步 | 设计如此；抢主设备后再传 |
-| 删本地又有了 | snapshot 恢复正常行为 |
+| 用户现象              | 优先检查                                                              |
+| --------------------- | --------------------------------------------------------------------- |
+| 无法连接服务器        | cleartext manifest、防火墙 3000、API 是否 `0.0.0.0`、IP 是否变        |
+| 登录失败带 `[` 技术字 | outbox legacy payload、Zod 契约、是否误 await upload                  |
+| 待上传不归零          | 是否又引入 ensure/reconcile；查 `sync_outbox` 行数与重复 knowledgeId  |
+| 换机无进度            | snapshot API、登录后是否调 restore；服务端 `learning_states` 是否有行 |
+| 非主设备无法同步      | 设计如此；抢主设备后再传                                              |
+| 删本地又有了          | snapshot 恢复正常行为                                                 |
 
 ### 8.6 禁止再次引入的反模式
 
-1. **`ensureSyncOutboxCoversLearningStates`**：扫描全表 learning_states 写 outbox  
-2. **STALE 后 reconcile 补写同版本 outbox**  
-3. **登录主流程 await upload**（legacy outbox 一条坏数据拖死登录）  
-4. **断网返回 null session**（误显示未登录）  
-5. **账号页高频轮询里调用 upload**（与 worker 叠加、难排查）  
-6. **仅 assembleRelease 不 prebuild** 导致 cleartext 丢失  
+1. **`ensureSyncOutboxCoversLearningStates`**：扫描全表 learning_states 写 outbox
+2. **STALE 后 reconcile 补写同版本 outbox**
+3. **登录主流程 await upload**（legacy outbox 一条坏数据拖死登录）
+4. **断网返回 null session**（误显示未登录）
+5. **账号页高频轮询里调用 upload**（与 worker 叠加、难排查）
+6. **仅 assembleRelease 不 prebuild** 导致 cleartext 丢失
 
 ---
 
 ## 9. API 端点速查
 
-| 方法 | 路径 | 说明 |
-| --- | --- | --- |
-| POST | `/api/v1/sync/learning-states/batch` | 批量上传；需主设备 session |
-| GET | `/api/v1/sync/learning-states/snapshot` | 全量快照；登录后恢复用 |
+| 方法 | 路径                                    | 说明                       |
+| ---- | --------------------------------------- | -------------------------- |
+| POST | `/api/v1/sync/learning-states/batch`    | 批量上传；需主设备 session |
+| GET  | `/api/v1/sync/learning-states/snapshot` | 全量快照；登录后恢复用     |
 
 错误码（移动端 `ApiRequestError.code`）：
 
@@ -329,6 +329,6 @@ pnpm --filter @remember/mobile typecheck
 
 ## 11. 变更日志（维护者追加）
 
-| 日期 | 摘要 |
-| --- | --- |
+| 日期       | 摘要                                                                            |
+| ---------- | ------------------------------------------------------------------------------- |
 | 2026-07-30 | 初版：子计划 2 实机踩坑、outbox 死循环修复、cleartext、断网会话、验收与维护清单 |

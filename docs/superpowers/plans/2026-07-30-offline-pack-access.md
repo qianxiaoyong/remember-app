@@ -6,13 +6,13 @@
 
 ## 交付
 
-| 层 | 内容 |
-|---|---|
-| contracts | `packDownloadAuthorizationResponseSchema` |
-| API | `POST /packs/:packId/download-authorization`、`GET /packs/:packId/download?token=` |
-| dev | `PACK_DOWNLOAD_MOCK_ENABLED`、fixtures zip、`devContentPackId` 别名安装 |
-| mobile | `installPackFromNetwork`、详情页「安装」接真 |
-| seed | `pnpm seed:dev-pack-versions` |
+| 层        | 内容                                                                               |
+| --------- | ---------------------------------------------------------------------------------- |
+| contracts | `packDownloadAuthorizationResponseSchema`                                          |
+| API       | `POST /packs/:packId/download-authorization`、`GET /packs/:packId/download?token=` |
+| dev       | `PACK_DOWNLOAD_MOCK_ENABLED`、fixtures zip、`devContentPackId` 别名安装            |
+| mobile    | `installPackFromNetwork`、详情页「安装」接真                                       |
+| seed      | `pnpm seed:dev-pack-versions`                                                      |
 
 ## 未纳入
 

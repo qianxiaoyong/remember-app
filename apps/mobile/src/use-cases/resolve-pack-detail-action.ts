@@ -3,17 +3,10 @@ import { fetchMyPackAccess } from '../data/api/pack-access-api';
 import { ApiNetworkError, ApiRequestError } from '../data/api/api-client';
 
 export type PackAccessResolution =
-  | { status: 'granted' }
-  | { status: 'denied' }
-  | { status: 'unknown'; reason: 'network' | 'auth' };
+  { status: 'granted' } | { status: 'denied' } | { status: 'unknown'; reason: 'network' | 'auth' };
 
 export type PackDetailActionKind =
-  | 'purchase'
-  | 'download'
-  | 'install'
-  | 'start_study'
-  | 'continue_study'
-  | 'retry_access';
+  'purchase' | 'download' | 'install' | 'start_study' | 'continue_study' | 'retry_access';
 
 export interface ResolvedPackDetailAction {
   hasPackAccess: boolean;

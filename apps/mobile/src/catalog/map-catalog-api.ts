@@ -7,7 +7,7 @@ export function formatPriceCents(priceCents: number): string {
     return '免费';
   }
   const yuan = priceCents / 100;
-  return Number.isInteger(yuan) ? `¥${yuan}` : `¥${yuan.toFixed(2)}`;
+  return Number.isInteger(yuan) ? `¥${String(yuan)}` : `¥${yuan.toFixed(2)}`;
 }
 
 export function mapCatalogSummaryToItem(summary: CatalogPackSummary): CatalogPackItem {

@@ -76,12 +76,12 @@ pnpm --filter @remember/api test:integration
 
 ## 6. 与正式环境的区别
 
-| 项 | 本地 dev | 正式 |
-| --- | --- | --- |
-| PostgreSQL | Docker `remember-dev` | Compose + 不映射公网端口 |
-| 短信 | mock 固定码 | 腾讯云 SDK 3.0 |
-| HTTPS | 可 HTTP + IP | 备案域名 + Caddy |
-| 密钥 | `infra/dev/.env`、`apps/api/.env` | 服务器密钥管理 |
+| 项         | 本地 dev                          | 正式                     |
+| ---------- | --------------------------------- | ------------------------ |
+| PostgreSQL | Docker `remember-dev`             | Compose + 不映射公网端口 |
+| 短信       | mock 固定码                       | 腾讯云 SDK 3.0           |
+| HTTPS      | 可 HTTP + IP                      | 备案域名 + Caddy         |
+| 密钥       | `infra/dev/.env`、`apps/api/.env` | 服务器密钥管理           |
 
 ## 7. 故障排查
 

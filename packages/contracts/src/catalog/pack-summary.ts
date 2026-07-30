@@ -1,11 +1,6 @@
 import { z } from 'zod';
 
-export const catalogPrimaryCategorySchema = z.enum([
-  'primary',
-  'junior',
-  'senior',
-  'postgraduate',
-]);
+export const catalogPrimaryCategorySchema = z.enum(['primary', 'junior', 'senior', 'postgraduate']);
 
 export const catalogPackSummarySchema = z
   .object({
@@ -18,9 +13,9 @@ export const catalogPackSummarySchema = z
     contentTags: z.array(z.string()),
     cardCount: z.number().int().positive(),
     sizeLabel: z.string().min(1),
-    updatedAt: z.string().datetime(),
+    updatedAt: z.iso.datetime(),
     priceCents: z.number().int().nonnegative(),
-    coverUrl: z.string().url().optional(),
+    coverUrl: z.url().optional(),
     coverBadge: z.string().min(1).optional(),
     coverLines: z.array(z.string()).optional(),
     isBundledTestPack: z.boolean().optional(),

@@ -44,7 +44,7 @@ export class PackDownloadService {
     const version = await this.prisma.packVersion.findUnique({
       where: { id: pack.currentVersionId },
     });
-    if (!version || version.status !== 'published') {
+    if (version?.status !== 'published') {
       throw new NotFoundException({ code: 'PACK_VERSION_NOT_FOUND', message: '暂无可下载版本' });
     }
 

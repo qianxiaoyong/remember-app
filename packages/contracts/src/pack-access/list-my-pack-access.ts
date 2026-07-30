@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const packAccessItemSchema = z
   .object({
     packId: z.string().min(1),
-    grantedAt: z.string().datetime(),
+    grantedAt: z.iso.datetime(),
     source: z.enum(['purchase', 'redemption']),
   })
   .strict();

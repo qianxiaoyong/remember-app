@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "build": "tsc -p tsconfig.build.json",
-    "build:pack": "node dist/cli.js build --source source/remember-test-pack --output fixtures/remember-test-pack.zip && node dist/sync-mobile-asset.js",
+    "build:pack": "node scripts/ensure-test-pack-audio.mjs && node dist/cli.js build --source source/remember-test-pack --output fixtures/remember-test-pack.zip && node dist/sync-mobile-asset.js",
     "verify:fixture": "node dist/cli.js verify -- fixtures/remember-test-pack.zip"
   },
   "dependencies": {

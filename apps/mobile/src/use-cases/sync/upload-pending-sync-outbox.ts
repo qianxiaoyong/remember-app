@@ -34,6 +34,40 @@ export async function uploadPendingSyncOutbox(
   return uploadInFlight;
 }
 
+async function processOutboxBatch(
+  pending: SyncOutboxRow[],
+  token: string,
+): Promise<{ uploadedCount: number; shouldContinue: boolean }> {
+  const items: SyncBatchItem[] = [];
+  const orphanEventIds: string[] = [];
+  for (const row of pending) {
+    const item = buildUploadItem(row);
+    if (!item) {
+      orphanEventIds.push(row.eventId);
+      continue;
+    }
+    items.push(item);
+  }
+
+  if (orphanEventIds.length > 0) {
+    deleteSyncOutboxItems(orphanEventIds);
+  }
+  if (items.length === 0) {
+    return { uploadedCount: 0, shouldContinue: pending.length >= BATCH_SIZE };
+  }
+
+  const response = await uploadLearningStatesBatch(items, token);
+  deleteSyncOutboxItems(collectRemovableOutboxEventIds(response));
+  if (response.acceptedEventIds.length > 0) {
+    await writeLastSyncedAt(new Date().toISOString());
+  }
+
+  return {
+    uploadedCount: response.acceptedEventIds.length,
+    shouldContinue: pending.length >= BATCH_SIZE,
+  };
+}
+
 async function runUploadPendingSyncOutbox(
   sessionToken?: string | null,
 ): Promise<UploadPendingSyncOutboxResult> {
@@ -47,42 +81,15 @@ async function runUploadPendingSyncOutbox(
   let uploadedEventCount = 0;
 
   try {
-    while (true) {
+    for (;;) {
       const pending = listSyncOutboxItems(BATCH_SIZE);
       if (pending.length === 0) {
         break;
       }
 
-      const items: SyncBatchItem[] = [];
-      const orphanEventIds: string[] = [];
-      for (const row of pending) {
-        const item = buildUploadItem(row);
-        if (!item) {
-          orphanEventIds.push(row.eventId);
-          continue;
-        }
-        items.push(item);
-      }
-
-      if (orphanEventIds.length > 0) {
-        deleteSyncOutboxItems(orphanEventIds);
-      }
-      if (items.length === 0) {
-        if (pending.length < BATCH_SIZE) {
-          break;
-        }
-        continue;
-      }
-
-      const response = await uploadLearningStatesBatch(items, token);
-      deleteSyncOutboxItems(collectRemovableOutboxEventIds(response));
-      uploadedEventCount += response.acceptedEventIds.length;
-
-      if (response.acceptedEventIds.length > 0) {
-        await writeLastSyncedAt(new Date().toISOString());
-      }
-
-      if (pending.length < BATCH_SIZE) {
+      const batchResult = await processOutboxBatch(pending, token);
+      uploadedEventCount += batchResult.uploadedCount;
+      if (!batchResult.shouldContinue) {
         break;
       }
     }

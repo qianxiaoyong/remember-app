@@ -101,10 +101,11 @@ describe('catalog and redemption integration', () => {
 
   it('POST /redemption/redeem 未登录返回 401', async () => {
     const server = app.getHttpServer() as Parameters<typeof request>[0];
-    await request(server)
+    const response = await request(server)
       .post('/api/v1/redemption/redeem')
       .send({ code: TEST_REDEMPTION_CODE })
       .expect(401);
+    expect(response.body).toMatchObject({ code: 'UNAUTHORIZED' });
   });
 
   it('兑换成功写入 pack_access 且幂等', async () => {

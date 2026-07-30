@@ -1,5 +1,9 @@
 import { createHash } from 'node:crypto';
 import { PrismaClient } from '@prisma/client';
+import {
+  REMEMBER_TEST_PACK_SHA256,
+  REMEMBER_TEST_PACK_SIZE_BYTES,
+} from '../src/pack-download/test-pack-fixture.ts';
 
 function hashRedemptionCode(code: string, pepper: string): string {
   const normalized = code.trim().toUpperCase();
@@ -13,9 +17,79 @@ const DEV_CODES = [
   { code: 'TEST-REDEEM-GRADE3', packId: 'demo-primary-grade3' },
 ] as const;
 
-const REMEMBER_TEST_PACK_SHA256 =
-  '43006107439d77e9c31aa359fda4ca6424185768abe371598c58ba9cda4d978b';
-const REMEMBER_TEST_PACK_SIZE_BYTES = 2706;
+const REMEMBER_TEST_PACK_SAMPLES = [
+  {
+    headword: 'picture',
+    zh: '图片',
+    exampleEn: 'I take a picture.',
+    initial: 'P',
+  },
+  {
+    headword: 'take a picture',
+    zh: '拍照',
+    exampleEn: 'Let us take a picture.',
+    initial: 'T',
+  },
+] as const;
+
+async function upsertDevPacks(): Promise<void> {
+  await prisma.pack.upsert({
+    where: { packId: 'remember-test-pack' },
+    create: {
+      packId: 'remember-test-pack',
+      title: '记得测试包',
+      primaryCategory: 'junior',
+      secondaryCategory: '七年级',
+      versionLabel: '人教版',
+      contentTags: ['词汇', '上册'],
+      cardCount: 2,
+      sizeLabel: '约 2 MB',
+      summary: '阶段 4 验包与学习闭环用的固定测试知识库。',
+      priceCents: 1,
+      samplePreviews: [...REMEMBER_TEST_PACK_SAMPLES],
+      isBundledTestPack: true,
+      status: 'published',
+      updatedAt: new Date('2026-07-28T00:00:00.000Z'),
+    },
+    update: {
+      status: 'published',
+      isBundledTestPack: true,
+      samplePreviews: [...REMEMBER_TEST_PACK_SAMPLES],
+    },
+  });
+
+  await prisma.pack.upsert({
+    where: { packId: 'demo-primary-grade3' },
+    create: {
+      packId: 'demo-primary-grade3',
+      title: '三年级上册词汇',
+      displayTitle: '人教版三年级上册核心词汇',
+      primaryCategory: 'primary',
+      secondaryCategory: '三年级',
+      versionLabel: '人教版',
+      contentTags: ['英语词汇', '人教版', '上册'],
+      cardCount: 480,
+      sizeLabel: '约 18 MB',
+      summary: '覆盖教材核心词汇、常用释义和配套例句。',
+      priceCents: 1990,
+      coverBadge: 'PEP 3A',
+      coverLines: ['三年级上册', '核心词汇'],
+      samplePreviews: [
+        {
+          headword: 'apple',
+          zh: '苹果',
+          exampleEn: 'I have a red apple.',
+          initial: 'A',
+        },
+      ],
+      status: 'published',
+      updatedAt: new Date('2026-07-15T00:00:00.000Z'),
+    },
+    update: {
+      status: 'published',
+    },
+  });
+}
 
 async function upsertVersion(packId: string, packVersion: string): Promise<void> {
   const row = await prisma.packVersion.upsert({
@@ -50,20 +124,15 @@ async function main(): Promise<void> {
     throw new Error('REDEMPTION_CODE_PEPPER must be set');
   }
 
+  await upsertDevPacks();
+  console.log('ok dev catalog packs');
+
   for (const packId of ['remember-test-pack', 'demo-primary-grade3'] as const) {
-    const exists = await prisma.pack.findUnique({ where: { packId } });
-    if (exists) {
-      await upsertVersion(packId, '1.0.0');
-      console.log(`ok version ${packId} @ 1.0.0`);
-    }
+    await upsertVersion(packId, '1.0.0');
+    console.log(`ok version ${packId} @ 1.0.0`);
   }
 
   for (const entry of DEV_CODES) {
-    const pack = await prisma.pack.findUnique({ where: { packId: entry.packId } });
-    if (!pack) {
-      console.warn(`skip ${entry.code}: pack missing`);
-      continue;
-    }
     const codeHash = hashRedemptionCode(entry.code, pepper);
     await prisma.redemptionCode.upsert({
       where: { codeHash },

@@ -1,8 +1,8 @@
 import { PrismaClient } from '@prisma/client';
-
-const REMEMBER_TEST_PACK_SHA256 =
-  '43006107439d77e9c31aa359fda4ca6424185768abe371598c58ba9cda4d978b';
-const REMEMBER_TEST_PACK_SIZE_BYTES = 2706;
+import {
+  REMEMBER_TEST_PACK_SHA256,
+  REMEMBER_TEST_PACK_SIZE_BYTES,
+} from '../src/pack-download/test-pack-fixture.ts';
 
 const prisma = new PrismaClient();
 

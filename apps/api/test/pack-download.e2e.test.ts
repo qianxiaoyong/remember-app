@@ -90,18 +90,22 @@ describe('pack download integration', () => {
     expect(authBody.packId).toBe('remember-test-pack');
     expect(authBody.downloadUrl).toContain('/download?token=');
 
-    const downloadPath = new URL(authBody.downloadUrl).pathname + new URL(authBody.downloadUrl).search;
+    const downloadPath =
+      new URL(authBody.downloadUrl).pathname + new URL(authBody.downloadUrl).search;
     const downloadResponse = await request(server)
       .get(downloadPath)
       .buffer(true)
       .parse((res, callback) => {
         const chunks: Buffer[] = [];
         res.on('data', (chunk: Buffer) => chunks.push(chunk));
-        res.on('end', () => callback(null, Buffer.concat(chunks)));
+        res.on('end', () => {
+          callback(null, Buffer.concat(chunks));
+        });
       })
       .expect(200);
     expect(downloadResponse.headers['content-type']).toContain('application/zip');
-    expect(downloadResponse.body.byteLength).toBeGreaterThan(100);
+    const downloadBody = downloadResponse.body as Buffer;
+    expect(downloadBody.byteLength).toBeGreaterThan(100);
   });
 
   it('三年级兑换后授权含 devContentPackId', async () => {

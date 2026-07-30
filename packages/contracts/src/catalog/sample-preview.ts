@@ -6,7 +6,7 @@ export const packSamplePreviewSchema = z
     zh: z.string().min(1),
     exampleEn: z.string().min(1),
     initial: z.string().min(1).optional(),
-    previewAudioUrl: z.string().url().optional(),
+    previewAudioUrl: z.url().optional(),
   })
   .strict();
 

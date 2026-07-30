@@ -1,5 +1,5 @@
 import { getInfoAsync } from 'expo-file-system/legacy';
-import { getInstalledPack } from '../data/repositories/installed-pack-repository';
+import { resolvePackAssetUri } from './resolve-pack-asset-uri';
 
 export type PackSamplePreviewPlayResult = 'not-installed' | 'no-audio' | 'missing-file' | 'ready';
 
@@ -15,15 +15,11 @@ export async function resolvePackSamplePreviewPlay(input: {
     return 'no-audio';
   }
 
-  const installed = getInstalledPack(input.packId);
-  if (installed?.installStatus !== 'installed') {
+  const uri = resolvePackAssetUri(input.packId, input.previewAudio);
+  if (!uri) {
     return 'not-installed';
   }
 
-  const relativePath = input.previewAudio.startsWith('assets/')
-    ? input.previewAudio.slice('assets/'.length)
-    : input.previewAudio;
-  const fullPath = `${installed.assetsDir}${relativePath}`;
-  const info = await getInfoAsync(fullPath);
-  return info.exists ? 'ready' : 'missing-file';
+  const info = await getInfoAsync(uri);
+  return info.exists && info.size >= 128 ? 'ready' : 'missing-file';
 }

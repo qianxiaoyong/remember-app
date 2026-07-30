@@ -98,9 +98,7 @@ export function RedeemCodeScreen(): ReactElement {
               <Text style={styles.submitLabel}>确认兑换</Text>
             )}
           </Pressable>
-          {!user ? (
-            <Text style={styles.loginHint}>兑换前需先登录账号</Text>
-          ) : null}
+          {!user ? <Text style={styles.loginHint}>兑换前需先登录账号</Text> : null}
         </View>
       </KeyboardAvoidingView>
     </ScreenScaffold>

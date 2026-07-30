@@ -2,14 +2,14 @@ import * as SecureStore from 'expo-secure-store';
 import { formatUuidV4 } from './format-uuid-v4';
 
 const DEVICE_ID_KEY = 'remember.deviceId';
-const UUID_PATTERN =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 function fillRandomBytes(bytes: Uint8Array): void {
-  const cryptoObj = globalThis.crypto;
-  if (cryptoObj && typeof cryptoObj.getRandomValues === 'function') {
-    cryptoObj.getRandomValues(bytes);
+  try {
+    globalThis.crypto.getRandomValues(bytes as Uint8Array<ArrayBuffer>);
     return;
+  } catch {
+    // Hermes / 旧运行时可能缺少 Web Crypto，走 Math.random 兜底。
   }
 
   for (let index = 0; index < bytes.length; index += 1) {
@@ -18,14 +18,13 @@ function fillRandomBytes(bytes: Uint8Array): void {
 }
 
 function createDeviceId(): string {
-  const cryptoObj = globalThis.crypto;
-  if (cryptoObj && typeof cryptoObj.randomUUID === 'function') {
-    return cryptoObj.randomUUID();
+  try {
+    return globalThis.crypto.randomUUID();
+  } catch {
+    const bytes = new Uint8Array(16);
+    fillRandomBytes(bytes);
+    return formatUuidV4(bytes);
   }
-
-  const bytes = new Uint8Array(16);
-  fillRandomBytes(bytes);
-  return formatUuidV4(bytes);
 }
 
 function isValidDeviceId(value: string): boolean {

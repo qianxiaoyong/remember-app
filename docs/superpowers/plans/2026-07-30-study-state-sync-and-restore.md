@@ -47,10 +47,10 @@
 
 **Schema:**
 
-| 表 | 用途 |
-| --- | --- |
-| `learning_states` | `userId` + `knowledgeId` 唯一；SM-2 字段 + `clientVersion` + `updatedAt` |
-| `sync_processed_events` | `eventId` PK；幂等去重 |
+| 表                      | 用途                                                                     |
+| ----------------------- | ------------------------------------------------------------------------ |
+| `learning_states`       | `userId` + `knowledgeId` 唯一；SM-2 字段 + `clientVersion` + `updatedAt` |
+| `sync_processed_events` | `eventId` PK；幂等去重                                                   |
 
 **Verify:**
 
@@ -75,10 +75,10 @@ pnpm --filter @remember/api typecheck
 
 **Endpoints:**
 
-| 方法 | 路径 |
-| --- | --- |
-| POST | `/api/v1/sync/learning-states/batch` |
-| GET | `/api/v1/sync/learning-states/snapshot` |
+| 方法 | 路径                                    |
+| ---- | --------------------------------------- |
+| POST | `/api/v1/sync/learning-states/batch`    |
+| GET  | `/api/v1/sync/learning-states/snapshot` |
 
 **Verify:**
 

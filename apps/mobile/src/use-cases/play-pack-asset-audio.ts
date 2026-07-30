@@ -1,11 +1,10 @@
-import { createAudioPlayer, setAudioModeAsync } from 'expo-audio';
 import { getInfoAsync } from 'expo-file-system/legacy';
+import { playExpoAudioUri } from './play-expo-audio-uri';
 import { resolvePackAssetUri } from './resolve-pack-asset-uri';
 
 export type PlayPackAssetAudioResult = 'missing-pack' | 'missing-file' | 'played' | 'failed';
 
-let sharedPlayer: ReturnType<typeof createAudioPlayer> | null = null;
-let audioModeConfigured = false;
+const MIN_PLAYABLE_AUDIO_BYTES = 128;
 
 export async function playPackAssetAudio(input: {
   packId: string;
@@ -17,27 +16,10 @@ export async function playPackAssetAudio(input: {
   }
 
   const info = await getInfoAsync(uri);
-  if (!info.exists) {
+  if (!info.exists || info.size < MIN_PLAYABLE_AUDIO_BYTES) {
     return 'missing-file';
   }
 
-  try {
-    if (!audioModeConfigured) {
-      await setAudioModeAsync({ playsInSilentMode: true });
-      audioModeConfigured = true;
-    }
-
-    if (sharedPlayer) {
-      sharedPlayer.replace({ uri });
-      await sharedPlayer.seekTo(0);
-      sharedPlayer.play();
-    } else {
-      sharedPlayer = createAudioPlayer({ uri });
-      sharedPlayer.play();
-    }
-
-    return 'played';
-  } catch {
-    return 'failed';
-  }
+  const result = await playExpoAudioUri(uri);
+  return result === 'played' ? 'played' : 'failed';
 }

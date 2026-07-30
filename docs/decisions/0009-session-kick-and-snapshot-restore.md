@@ -12,10 +12,10 @@
 
 ### 1. 跨设备顶号（1a）：不 revoke 旧设备 session
 
-| 场景 | 服务端 | 旧设备 API | 旧设备 UX |
-| --- | --- | --- | --- |
-| B 登录顶 A | 仅更新 `users.main_device_id`；**不** revoke A 的 session 行 | **403** `NOT_MAIN_DEVICE` | 保留缓存用户 + Banner；本地可学；**不可**上传 |
-| 同 deviceId 再次登录 | revoke **该 deviceId** 上未撤销 session → create 新 session | 旧 token **401** `SESSION_INVALID` | 需重新登录 |
+| 场景                 | 服务端                                                       | 旧设备 API                         | 旧设备 UX                                     |
+| -------------------- | ------------------------------------------------------------ | ---------------------------------- | --------------------------------------------- |
+| B 登录顶 A           | 仅更新 `users.main_device_id`；**不** revoke A 的 session 行 | **403** `NOT_MAIN_DEVICE`          | 保留缓存用户 + Banner；本地可学；**不可**上传 |
+| 同 deviceId 再次登录 | revoke **该 deviceId** 上未撤销 session → create 新 session  | 旧 token **401** `SESSION_INVALID` | 需重新登录                                    |
 
 非主设备读写云端均拒绝（Q3:A）；「不能写云」由 `mainDeviceId` 判定，**不依赖** revoke 跨设备 session。
 

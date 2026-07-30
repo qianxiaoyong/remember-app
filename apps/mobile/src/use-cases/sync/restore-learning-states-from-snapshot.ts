@@ -1,4 +1,8 @@
-import { getLearningState, upsertLearningState, type LearningStateRow } from '../../data/repositories/learning-state-repository';
+import {
+  getLearningState,
+  upsertLearningState,
+  type LearningStateRow,
+} from '../../data/repositories/learning-state-repository';
 import { fetchLearningStatesSnapshot } from '../../data/api/sync-api';
 
 export async function restoreLearningStatesFromSnapshot(sessionToken: string): Promise<number> {

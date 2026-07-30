@@ -45,20 +45,18 @@ function SampleRow(props: {
   const initial = props.sample.initial ?? props.sample.headword.charAt(0).toUpperCase();
 
   return (
-    <Pressable
-      accessibilityRole="button"
-      onPress={props.onOpenPreview}
-      style={styles.row}
-    >
-      <View style={styles.initialBadge}>
-        <Text style={styles.initialText}>{initial}</Text>
-      </View>
-      <View style={styles.textBlock}>
-        <Text style={styles.headword}>{props.sample.headword}</Text>
-        <Text numberOfLines={2} style={styles.detail}>
-          {props.sample.zh} · {props.sample.exampleEn}
-        </Text>
-      </View>
+    <View style={styles.row}>
+      <Pressable accessibilityRole="button" onPress={props.onOpenPreview} style={styles.rowMain}>
+        <View style={styles.initialBadge}>
+          <Text style={styles.initialText}>{initial}</Text>
+        </View>
+        <View style={styles.textBlock}>
+          <Text style={styles.headword}>{props.sample.headword}</Text>
+          <Text numberOfLines={2} style={styles.detail}>
+            {props.sample.zh} · {props.sample.exampleEn}
+          </Text>
+        </View>
+      </Pressable>
       <Pressable
         accessibilityLabel="试听示例"
         hitSlop={8}
@@ -67,7 +65,7 @@ function SampleRow(props: {
       >
         <MusicNoteIcon size="sm" />
       </Pressable>
-      </Pressable>
+    </View>
   );
 }
 
@@ -92,6 +90,12 @@ const styles = StyleSheet.create({
   },
   row: {
     alignItems: 'center',
+    flexDirection: 'row',
+    gap: spacing.md,
+  },
+  rowMain: {
+    alignItems: 'center',
+    flex: 1,
     flexDirection: 'row',
     gap: spacing.md,
   },

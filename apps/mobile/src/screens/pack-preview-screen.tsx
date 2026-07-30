@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ActivityIndicator, Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 import type { PackSamplePreview } from '../catalog/pack-sample-preview';
 import { ScreenScaffold } from '../components/shell/screen-scaffold';
 import { StudyHeaderBand } from '../components/study/study-header-band';
@@ -44,6 +44,12 @@ export function PackPreviewScreen(props: PackPreviewScreenProps): ReactElement {
     void load();
   }, [load]);
 
+  useFocusEffect(
+    useCallback(() => {
+      void load();
+    }, [load]),
+  );
+
   const vocabularyContent = useMemo(
     () => (sample ? mapSamplePreviewToVocabularyContent(sample) : null),
     [sample],
@@ -54,21 +60,21 @@ export function PackPreviewScreen(props: PackPreviewScreenProps): ReactElement {
       return;
     }
     void (async () => {
-      const result = await playSamplePreviewAudio({
-        packId: props.packId,
-        isInstalled,
-        sample,
-      });
-      if (result === 'no-audio') {
-        Alert.alert('暂无试听');
-        return;
-      }
-      if (result === 'missing-file') {
-        Alert.alert('暂无公开试听');
-        return;
-      }
-      if (result === 'failed') {
-        Alert.alert('播放失败');
+      try {
+        const result = await playSamplePreviewAudio({
+          packId: props.packId,
+          isInstalled,
+          sample,
+        });
+        if (result === 'no-audio' || result === 'missing-file') {
+          Alert.alert('暂无公开试听');
+          return;
+        }
+        if (result === 'failed') {
+          Alert.alert('发音播放失败', '请重新安装该学习包后重试。');
+        }
+      } catch {
+        Alert.alert('发音播放失败', '请重新安装该学习包后重试。');
       }
     })();
   };
@@ -100,8 +106,8 @@ export function PackPreviewScreen(props: PackPreviewScreenProps): ReactElement {
         onBackPress={() => {
           router.back();
         }}
-        onHomePress={() => {}}
-        onMorePress={() => {}}
+        onHomePress={() => undefined}
+        onMorePress={() => undefined}
         onPlayAudio={handlePlayAudio}
         previewContextLabel={packTitle}
         revealed

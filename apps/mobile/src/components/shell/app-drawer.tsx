@@ -164,13 +164,7 @@ export function AppDrawer(props: AppDrawerProps): ReactElement | null {
           ) : (
             <DrawerAccountHeader
               displayName={user?.displayName ?? '监护人账号'}
-              hint={
-                user
-                  ? user.maskedPhone
-                  : isNotMainDevice
-                    ? '账号已在其他设备登录'
-                    : '点击登录'
-              }
+              hint={user ? user.maskedPhone : isNotMainDevice ? '账号已在其他设备登录' : '点击登录'}
               onPress={handleAccountPress}
             />
           )}

@@ -19,10 +19,7 @@ import { ScreenScaffold } from '../components/shell/screen-scaffold';
 import { useMarketSidebarCollapsed } from '../hooks/use-market-sidebar-collapsed';
 import { consumeMarketSearchSelection } from '../shell/market-search-navigation';
 import { useShellActions } from '../shell/shell-provider';
-import {
-  fetchMarketCatalog,
-  listSecondaryCategories,
-} from '../use-cases/fetch-market-catalog';
+import { fetchMarketCatalog, listSecondaryCategories } from '../use-cases/fetch-market-catalog';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 
@@ -62,7 +59,7 @@ export function MarketScreen(): ReactElement {
   );
 
   useEffect(() => {
-    let cancelled = false;
+    const cancelledRef = { current: false };
     setIsLoading(true);
     setErrorMessage(null);
 
@@ -74,23 +71,23 @@ export function MarketScreen(): ReactElement {
           versionFilter,
           keyword: '',
         });
-        if (!cancelled) {
+        if (!cancelledRef.current) {
           setItems(nextItems);
         }
       } catch (error) {
-        if (!cancelled) {
+        if (!cancelledRef.current) {
           setErrorMessage(error instanceof Error ? error.message : '加载目录失败');
           setItems([]);
         }
       } finally {
-        if (!cancelled) {
+        if (!cancelledRef.current) {
           setIsLoading(false);
         }
       }
     })();
 
     return () => {
-      cancelled = true;
+      cancelledRef.current = true;
     };
   }, [primaryCategory, secondaryCategory, versionFilter]);
 

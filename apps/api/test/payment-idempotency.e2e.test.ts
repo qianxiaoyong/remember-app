@@ -124,10 +124,11 @@ describe('payment idempotency integration', () => {
 
   it('POST /orders 未登录返回 401', async () => {
     const server = app.getHttpServer() as Parameters<typeof request>[0];
-    await request(server)
+    const response = await request(server)
       .post('/api/v1/orders')
       .send({ packId: PAID_PACK_ID })
       .expect(401);
+    expect(response.body).toMatchObject({ code: 'UNAUTHORIZED' });
   });
 
   it('建单 → mock 回调 → 订单 paid 且写入 pack_access', async () => {

@@ -12,4 +12,3 @@ import { WechatPayConfigService } from './wechat-pay-config.service.js';
   exports: [WechatPayConfigService, WechatPayClient, PaymentNotificationService],
 })
 export class PaymentModule {}
-

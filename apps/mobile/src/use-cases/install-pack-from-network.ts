@@ -49,7 +49,7 @@ export async function installPackFromNetwork(catalogPackId: string): Promise<Ins
     return installed;
   } catch (error) {
     if (error instanceof ApiRequestError) {
-      throw new Error(DOWNLOAD_ERROR_MESSAGES[error.code] ?? error.message);
+      throw new Error(DOWNLOAD_ERROR_MESSAGES[error.code] ?? error.message, { cause: error });
     }
     throw error;
   } finally {

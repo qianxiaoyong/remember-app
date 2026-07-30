@@ -5,6 +5,8 @@ node_modules/
 !.env.example
 coverage/
 dist/
+apps/api/.cache/
+apps/api/scripts/*.js
 .expo/
 apps/mobile/android/
 apps/mobile/ios/

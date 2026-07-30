@@ -2,6 +2,7 @@ import base from './packages/config/eslint/base.mjs';
 import node from './packages/config/eslint/node.mjs';
 import react from './packages/config/eslint/react.mjs';
 import vitest from '@vitest/eslint-plugin';
+import globals from 'globals';
 
 export default [
   {
@@ -13,6 +14,7 @@ export default [
       'android/**',
       'ios/**',
       'apps/mobile/plugins/**',
+      'apps/api/scripts/**',
     ],
   },
   ...base,
@@ -31,5 +33,15 @@ export default [
     languageOptions: {
       parserOptions: { tsconfigRootDir: import.meta.dirname },
     },
+  },
+  {
+    files: ['apps/api/src/**/*.ts'],
+    rules: {
+      'max-params': ['error', 4],
+    },
+  },
+  {
+    files: ['apps/mobile/app.config.js'],
+    languageOptions: { globals: globals.node },
   },
 ];

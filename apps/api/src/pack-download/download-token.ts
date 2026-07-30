@@ -25,7 +25,7 @@ export function createDownloadToken(input: {
 }): string {
   const pepper = readPepper();
   const expiresAtMs = Date.now() + (input.ttlSeconds ?? 900) * 1000;
-  const body = `${input.userId}|${input.packId}|${expiresAtMs}`;
+  const body = `${input.userId}|${input.packId}|${String(expiresAtMs)}`;
   const signature = signPayload(body, pepper);
   return `${Buffer.from(body, 'utf8').toString('base64url')}.${signature}`;
 }

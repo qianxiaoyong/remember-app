@@ -34,9 +34,7 @@ function mapPackSummary(pack: Pack): CatalogPackSummary {
     priceCents: pack.priceCents,
     ...(pack.coverUrl ? { coverUrl: pack.coverUrl } : {}),
     ...(pack.coverBadge ? { coverBadge: pack.coverBadge } : {}),
-    ...(parseStringArray(pack.coverLines)
-      ? { coverLines: parseStringArray(pack.coverLines) }
-      : {}),
+    ...(parseStringArray(pack.coverLines) ? { coverLines: parseStringArray(pack.coverLines) } : {}),
     ...(pack.isBundledTestPack ? { isBundledTestPack: true } : {}),
   });
 }

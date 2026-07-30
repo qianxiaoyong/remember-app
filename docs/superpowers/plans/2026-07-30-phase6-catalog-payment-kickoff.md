@@ -22,13 +22,13 @@ ADR：**`docs/decisions/0010-catalog-preview-redemption-and-media.md`**
 
 ## 3. 已确认产品决策（2026-07-30）
 
-| # | 决策 | 内容 |
-| --- | --- | --- |
-| D1 | **兑换码纳入 MVP** | 一码多人（`maxRedemptions`）；兑换后 **同一套** 下载/安装链；见 ADR 0010 §4 |
-| D2 | **免费示例** | 目录 API 下发 `samplePreviews`；**轻量预览页**（展示+试听，不学习） |
-| D3 | **示例媒体存储** | **公开小文件 URL**（CDN/COS 只读前缀）；全量 zip **私有 COS** |
-| D4 | **介绍图/视频** | `introMedia[]` 契约预留；**未登录、未购均可看**；阶段 6 可不填视频 |
-| D5 | **满减优惠券** | **仍不做**；兑换码 ≠ 优惠券（ADR 0010 修订表述） |
+| #   | 决策               | 内容                                                                        |
+| --- | ------------------ | --------------------------------------------------------------------------- |
+| D1  | **兑换码纳入 MVP** | 一码多人（`maxRedemptions`）；兑换后 **同一套** 下载/安装链；见 ADR 0010 §4 |
+| D2  | **免费示例**       | 目录 API 下发 `samplePreviews`；**轻量预览页**（展示+试听，不学习）         |
+| D3  | **示例媒体存储**   | **公开小文件 URL**（CDN/COS 只读前缀）；全量 zip **私有 COS**               |
+| D4  | **介绍图/视频**    | `introMedia[]` 契约预留；**未登录、未购均可看**；阶段 6 可不填视频          |
+| D5  | **满减优惠券**     | **仍不做**；兑换码 ≠ 优惠券（ADR 0010 修订表述）                            |
 
 ## 4. 三层内容边界（必读）
 
@@ -49,52 +49,52 @@ ADR：**`docs/decisions/0010-catalog-preview-redemption-and-media.md`**
 
 **需要。** 与 `development-order` §9 一致：
 
-| 顺序 | 文件（实施前创建） | 核心交付 |
-| --- | --- | --- |
-| 1 | `docs/superpowers/plans/2026-07-30-catalog-order-and-pack-access.md` | Prisma：`packs`、`pack_versions`、`orders`、`pack_access`、`redemption_*`；目录 API；兑换码；移动端真目录+预览页 |
-| 2 | `docs/superpowers/plans/2026-07-30-wechat-pay-and-refund.md` | `WechatPayClient` 生产化；下单/回调/查单；`payment_events`；幂等矩阵 |
-| 3 | `docs/superpowers/plans/2026-07-30-offline-pack-access.md` | 下载授权；30 天离线许可；网络下载 UI；详情页购买状态机接真 |
+| 顺序 | 文件（实施前创建）                                                   | 核心交付                                                                                                         |
+| ---- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| 1    | `docs/superpowers/plans/2026-07-30-catalog-order-and-pack-access.md` | Prisma：`packs`、`pack_versions`、`orders`、`pack_access`、`redemption_*`；目录 API；兑换码；移动端真目录+预览页 |
+| 2    | `docs/superpowers/plans/2026-07-30-wechat-pay-and-refund.md`         | `WechatPayClient` 生产化；下单/回调/查单；`payment_events`；幂等矩阵                                             |
+| 3    | `docs/superpowers/plans/2026-07-30-offline-pack-access.md`           | 下载授权；30 天离线许可；网络下载 UI；详情页购买状态机接真                                                       |
 
 **推荐顺序：** 1 → 2 → 3；子计划 2 可用 mock 回调测 1 的 `pack_access`，但 **§6.8 真实付/退** 必须 2 完成。
 
 ## 6. 并行暂停（不阻塞阶段 6 大部分开发）
 
-| 项 | 挡什么 | 不挡什么 |
-| --- | --- | --- |
+| 项                       | 挡什么                              | 不挡什么                                   |
+| ------------------------ | ----------------------------------- | ------------------------------------------ |
 | **Pause C/D** 微信 AppID | release OpenSDK 真拉起、§6.8 实机付 | 目录 API、订单、回调集成测试、mock 查单 UI |
-| **测试商户密钥** | 真实微信付/退 | 官方 Postman 向量、DB 幂等、脚本注入回调 |
-| **备案/正式域名** | 生产 HTTPS 回调 | 本地/IP 联调、脚本模拟回调 |
-| **COS 生产桶** | 正式包分发 | dev 固定测试 zip URL 或本地 COS 前缀 |
+| **测试商户密钥**         | 真实微信付/退                       | 官方 Postman 向量、DB 幂等、脚本注入回调   |
+| **备案/正式域名**        | 生产 HTTPS 回调                     | 本地/IP 联调、脚本模拟回调                 |
+| **COS 生产桶**           | 正式包分发                          | dev 固定测试 zip URL 或本地 COS 前缀       |
 
 ## 7. 服务端与契约（建议默认）
 
 ### 7.1 表（阶段 6 首迁子集）
 
-| 表 | 用途 |
-| --- | --- |
-| `packs` | 目录：标题、分类、summary、价格分、`cover`、`samplePreviews` JSON、`introMedia` JSON |
-| `pack_versions` | 不可变：zip COS key、hash、签名、协议版本、发布状态 |
-| `orders` | 用户、packId、金额快照、状态、可选 `source_code`/`channel` |
-| `payment_events` | 微信回调幂等 |
-| `pack_access` | user+pack 唯一权益 |
-| `refunds` | 退款状态机 |
-| `redemption_codes` | 码哈希、packId、maxRedemptions、redeemedCount、expiresAt |
-| `redemption_events` | 兑换审计 |
+| 表                  | 用途                                                                                 |
+| ------------------- | ------------------------------------------------------------------------------------ |
+| `packs`             | 目录：标题、分类、summary、价格分、`cover`、`samplePreviews` JSON、`introMedia` JSON |
+| `pack_versions`     | 不可变：zip COS key、hash、签名、协议版本、发布状态                                  |
+| `orders`            | 用户、packId、金额快照、状态、可选 `source_code`/`channel`                           |
+| `payment_events`    | 微信回调幂等                                                                         |
+| `pack_access`       | user+pack 唯一权益                                                                   |
+| `refunds`           | 退款状态机                                                                           |
+| `redemption_codes`  | 码哈希、packId、maxRedemptions、redeemedCount、expiresAt                             |
+| `redemption_events` | 兑换审计                                                                             |
 
 ### 7.2 目录 API（均 **无需登录**）
 
-| 方法 | 路径 | 说明 |
-| --- | --- | --- |
-| GET | `/api/v1/catalog/packs` | 列表（筛选同现 UI） |
-| GET | `/api/v1/catalog/packs/:packId` | 详情：含 cover、samplePreviews、introMedia、展示价 |
-| GET | `/api/v1/catalog/packs/:packId/price` | 可选：下单前刷新价（真值仍只在 create-order） |
+| 方法 | 路径                                  | 说明                                               |
+| ---- | ------------------------------------- | -------------------------------------------------- |
+| GET  | `/api/v1/catalog/packs`               | 列表（筛选同现 UI）                                |
+| GET  | `/api/v1/catalog/packs/:packId`       | 详情：含 cover、samplePreviews、introMedia、展示价 |
+| GET  | `/api/v1/catalog/packs/:packId/price` | 可选：下单前刷新价（真值仍只在 create-order）      |
 
 **展示价：** 列表/详情可显示 `priceCents`；**下单金额只来自 create-order 响应**。
 
 ### 7.3 兑换码 API（需登录）
 
-| 方法 | 路径 | 说明 |
-| --- | --- | --- |
+| 方法 | 路径                        | 说明                                                    |
+| ---- | --------------------------- | ------------------------------------------------------- |
 | POST | `/api/v1/redemption/redeem` | body: `{ code }` → 写 pack_access + event；已拥有则幂等 |
 
 ### 7.4 购买与下载（需登录 + pack_access）
@@ -103,18 +103,18 @@ ADR：**`docs/decisions/0010-catalog-preview-redemption-and-media.md`**
 
 ## 8. 移动端：mock / 必须真做
 
-| 元素 | 阶段 6 |
-| --- | --- |
-| 市场/搜索列表 | **真做**（服务端 catalog） |
-| 详情封面、summary、标签 | **真做** |
-| `introMedia` 图/视频 | **契约真做**；无数据则不展示区块 |
-| `samplePreviews` + **预览页** | **真做** |
-| 示例试听 | **真做**（公开 URL） |
-| 价格展示 | **真做**（服务端）；下单以 create-order 为准 |
-| 立即购买 | **真做** → 微信（Pause C/D 后实机） |
-| 兑换码抽屉入口 | **真做** |
-| mock `catalogSeed` / mock 购买 | **删除或仅 dev fallback** |
-| bundled 测试包 | 可保留 dev 安装路径；市场展示走 catalog |
+| 元素                           | 阶段 6                                       |
+| ------------------------------ | -------------------------------------------- |
+| 市场/搜索列表                  | **真做**（服务端 catalog）                   |
+| 详情封面、summary、标签        | **真做**                                     |
+| `introMedia` 图/视频           | **契约真做**；无数据则不展示区块             |
+| `samplePreviews` + **预览页**  | **真做**                                     |
+| 示例试听                       | **真做**（公开 URL）                         |
+| 价格展示                       | **真做**（服务端）；下单以 create-order 为准 |
+| 立即购买                       | **真做** → 微信（Pause C/D 后实机）          |
+| 兑换码抽屉入口                 | **真做**                                     |
+| mock `catalogSeed` / mock 购买 | **删除或仅 dev fallback**                    |
+| bundled 测试包                 | 可保留 dev 安装路径；市场展示走 catalog      |
 
 ## 9. 编码原则
 

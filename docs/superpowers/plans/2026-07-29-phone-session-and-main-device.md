@@ -68,11 +68,11 @@ docker compose --project-name remember-dev --file infra/dev/compose.yaml ps
 
 **Schema（业务含义）:**
 
-| 表 | 用途 |
-| --- | --- |
-| `users` | 账号：手机号哈希索引、脱敏展示号、可选昵称、当前主设备 ID、状态 |
-| `sms_challenges` | 验证码挑战：哈希、过期、尝试次数、是否已使用 |
-| `sessions` | 登录凭证哈希、用户、设备 ID、最后活动、撤销时间 |
+| 表               | 用途                                                            |
+| ---------------- | --------------------------------------------------------------- |
+| `users`          | 账号：手机号哈希索引、脱敏展示号、可选昵称、当前主设备 ID、状态 |
+| `sms_challenges` | 验证码挑战：哈希、过期、尝试次数、是否已使用                    |
+| `sessions`       | 登录凭证哈希、用户、设备 ID、最后活动、撤销时间                 |
 
 **Verify:**
 
@@ -96,12 +96,12 @@ pnpm --filter @remember/api typecheck
 
 **Endpoints（冻结路径）:**
 
-| 方法 | 路径 | 说明 |
-| --- | --- | --- |
-| POST | `/api/v1/auth/sms/send` | 发码（dev mock 不真发短信） |
+| 方法 | 路径                      | 说明                             |
+| ---- | ------------------------- | -------------------------------- |
+| POST | `/api/v1/auth/sms/send`   | 发码（dev mock 不真发短信）      |
 | POST | `/api/v1/auth/sms/verify` | 验码 + 签发 session + 主设备切换 |
-| POST | `/api/v1/auth/logout` | 撤销当前 session |
-| GET | `/api/v1/auth/me` | 当前用户展示信息 |
+| POST | `/api/v1/auth/logout`     | 撤销当前 session                 |
+| GET  | `/api/v1/auth/me`         | 当前用户展示信息                 |
 
 **Verify:**
 

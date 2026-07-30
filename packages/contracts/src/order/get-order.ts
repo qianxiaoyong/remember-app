@@ -3,11 +3,11 @@ import { orderStatusSchema } from './order-status.js';
 
 export const orderDetailResponseSchema = z
   .object({
-    orderId: z.string().uuid(),
+    orderId: z.uuid(),
     packId: z.string().min(1),
     amountCents: z.number().int().nonnegative(),
     status: orderStatusSchema,
-    paidAt: z.string().datetime().optional(),
+    paidAt: z.iso.datetime().optional(),
   })
   .strict();
 

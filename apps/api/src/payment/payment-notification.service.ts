@@ -28,10 +28,7 @@ export class PaymentNotificationService {
       });
 
       if (existing) {
-        if (
-          existing.transactionId !== input.transactionId ||
-          existing.orderId !== input.orderId
-        ) {
+        if (existing.transactionId !== input.transactionId || existing.orderId !== input.orderId) {
           throw new HttpException(
             { code: 'PAYMENT_NOTIFICATION_CONFLICT', message: '支付通知冲突' },
             409,
@@ -77,17 +74,11 @@ export class PaymentNotificationService {
       }
 
       if (input.amountCents === undefined) {
-        throw new HttpException(
-          { code: 'PAYMENT_AMOUNT_MISSING', message: '支付金额缺失' },
-          400,
-        );
+        throw new HttpException({ code: 'PAYMENT_AMOUNT_MISSING', message: '支付金额缺失' }, 400);
       }
 
       if (!Number.isInteger(input.amountCents) || input.amountCents <= 0) {
-        throw new HttpException(
-          { code: 'PAYMENT_AMOUNT_MISSING', message: '支付金额缺失' },
-          400,
-        );
+        throw new HttpException({ code: 'PAYMENT_AMOUNT_MISSING', message: '支付金额缺失' }, 400);
       }
 
       if (order.amountCents !== input.amountCents) {
@@ -111,22 +102,24 @@ export class PaymentNotificationService {
         data: { status: 'paid', updatedAt: input.processedAt },
       });
 
-      await tx.packAccess.create({
-        data: {
-          userId: order.userId,
-          packId: order.packId,
-          orderId: order.id,
-          source: 'purchase',
-          grantedAt: input.processedAt,
-        },
-      }).catch(async (error: unknown) => {
-        const existingAccess = await tx.packAccess.findUnique({
-          where: { userId_packId: { userId: order.userId, packId: order.packId } },
+      await tx.packAccess
+        .create({
+          data: {
+            userId: order.userId,
+            packId: order.packId,
+            orderId: order.id,
+            source: 'purchase',
+            grantedAt: input.processedAt,
+          },
+        })
+        .catch(async (error: unknown) => {
+          const existingAccess = await tx.packAccess.findUnique({
+            where: { userId_packId: { userId: order.userId, packId: order.packId } },
+          });
+          if (!existingAccess) {
+            throw error;
+          }
         });
-        if (!existingAccess) {
-          throw error;
-        }
-      });
 
       return { processed: true, orderId: order.id, status: 'paid' };
     });

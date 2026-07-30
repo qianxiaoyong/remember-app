@@ -34,10 +34,7 @@ export class RedemptionService {
 
     const now = new Date();
     if (code.expiresAt && code.expiresAt.getTime() < now.getTime()) {
-      throw new HttpException(
-        { code: 'REDEMPTION_CODE_EXPIRED', message: '兑换码已过期' },
-        400,
-      );
+      throw new HttpException({ code: 'REDEMPTION_CODE_EXPIRED', message: '兑换码已过期' }, 400);
     }
 
     const existingAccess = await this.packAccessRepository.findByUserAndPack(userId, code.packId);
@@ -50,14 +47,14 @@ export class RedemptionService {
 
     const result = await this.prisma.$transaction(async (tx) => {
       const lockedRows = await tx.$queryRaw<
-        Array<{
+        {
           id: string;
           pack_id: string;
           max_redemptions: number;
           redeemed_count: number;
           status: string;
           expires_at: Date | null;
-        }>
+        }[]
       >`
         SELECT id, pack_id, max_redemptions, redeemed_count, status, expires_at
         FROM redemption_codes
@@ -65,14 +62,11 @@ export class RedemptionService {
         FOR UPDATE
       `;
       const lockedCode = lockedRows[0];
-      if (!lockedCode || lockedCode.status !== 'active') {
+      if (lockedCode?.status !== 'active') {
         throw new NotFoundException({ code: 'REDEMPTION_CODE_INVALID', message: '兑换码无效' });
       }
       if (lockedCode.expires_at && lockedCode.expires_at.getTime() < now.getTime()) {
-        throw new HttpException(
-          { code: 'REDEMPTION_CODE_EXPIRED', message: '兑换码已过期' },
-          400,
-        );
+        throw new HttpException({ code: 'REDEMPTION_CODE_EXPIRED', message: '兑换码已过期' }, 400);
       }
 
       const existing = await tx.packAccess.findUnique({

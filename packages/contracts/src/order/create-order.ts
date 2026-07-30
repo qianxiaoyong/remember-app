@@ -10,7 +10,7 @@ export const createOrderRequestSchema = z
 
 export const createOrderResponseSchema = z
   .object({
-    orderId: z.string().uuid(),
+    orderId: z.uuid(),
     packId: z.string().min(1),
     amountCents: z.number().int().positive(),
     status: orderStatusSchema,

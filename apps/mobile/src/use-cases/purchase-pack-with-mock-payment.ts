@@ -26,7 +26,7 @@ export async function purchasePackWithMockPayment(packId: string): Promise<'paid
     return detail.status === 'paid' ? 'paid' : 'pending';
   } catch (error) {
     if (error instanceof ApiRequestError) {
-      throw new Error(PURCHASE_ERROR_MESSAGES[error.code] ?? error.message);
+      throw new Error(PURCHASE_ERROR_MESSAGES[error.code] ?? error.message, { cause: error });
     }
     throw error;
   }

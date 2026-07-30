@@ -6,14 +6,14 @@
 
 ## 交付物
 
-| 子计划 | 核心交付 | 状态 |
-| --- | --- | --- |
-| kickoff `2026-07-29-phase5-account-sync-kickoff.md` | Q1:B / Q2:A / Q3:A 已确认 | ✅ |
-| 1 `2026-07-29-phone-session-and-main-device.md` | Prisma auth 三表；短信登录（dev mock）；session + 主设备；登录/账号 UI | ✅ |
-| 2 `2026-07-30-study-state-sync-and-restore.md` | `learning_states` + `sync_processed_events`；outbox 上传；快照恢复；sync worker | ✅ |
-| ADR `0009-session-kick-and-snapshot-restore.md` | 跨设备顶号 1a、快照合并 2a、登录 await 恢复 | ✅ |
-| runbook `account-sync-maintenance.md` | 实机联调、双机验收、已知缺陷与维护要点 | ✅ |
-| infra `pnpm dev:db` + `local-api-docker-dev.md` | 本地 Docker PostgreSQL 一键启动 | ✅ |
+| 子计划                                              | 核心交付                                                                        | 状态 |
+| --------------------------------------------------- | ------------------------------------------------------------------------------- | ---- |
+| kickoff `2026-07-29-phase5-account-sync-kickoff.md` | Q1:B / Q2:A / Q3:A 已确认                                                       | ✅   |
+| 1 `2026-07-29-phone-session-and-main-device.md`     | Prisma auth 三表；短信登录（dev mock）；session + 主设备；登录/账号 UI          | ✅   |
+| 2 `2026-07-30-study-state-sync-and-restore.md`      | `learning_states` + `sync_processed_events`；outbox 上传；快照恢复；sync worker | ✅   |
+| ADR `0009-session-kick-and-snapshot-restore.md`     | 跨设备顶号 1a、快照合并 2a、登录 await 恢复                                     | ✅   |
+| runbook `account-sync-maintenance.md`               | 实机联调、双机验收、已知缺陷与维护要点                                          | ✅   |
+| infra `pnpm dev:db` + `local-api-docker-dev.md`     | 本地 Docker PostgreSQL 一键启动                                                 | ✅   |
 
 主要代码路径：
 
@@ -41,21 +41,21 @@
 
 ## 产品选项落地
 
-| 选项 | 落地 |
-| --- | --- |
-| Q1:B | 首次安装登录引导 +「稍后」；跳过后不反复强制 |
+| 选项 | 落地                                                         |
+| ---- | ------------------------------------------------------------ |
+| Q1:B | 首次安装登录引导 +「稍后」；跳过后不反复强制                 |
 | Q2:A | 快照/合并按 `clientVersion` 取更高；登录 await 恢复后 upload |
-| Q3:A | 被顶设备云端读写 **403**；保留本地进度与 cached 用户展示 |
+| Q3:A | 被顶设备云端读写 **403**；保留本地进度与 cached 用户展示     |
 
 ## 阶段 5 范围外（defer）
 
-| 项 | 说明 |
-| --- | --- |
-| 腾讯云 SMS SDK 3.0 真发码 | dev/test mock `000000`；`tencent-sms-sender` 为 stub |
-| 阶段 6 目录 / 订单 / 微信支付 / `pack_access` | 市场仍为 catalog seed |
-| 备案域名 + 正式 HTTPS API | 本地 IP + cleartext release 插件用于联调 |
-| 弱网/杀进程专项自动化 | 行为靠 outbox 保留 + worker 重试；无独立 E2E |
-| `pnpm check` 全绿 | `format:check` 在 main 上仍有历史 Prettier 告警（非本阶段引入） |
+| 项                                            | 说明                                                            |
+| --------------------------------------------- | --------------------------------------------------------------- |
+| 腾讯云 SMS SDK 3.0 真发码                     | dev/test mock `000000`；`tencent-sms-sender` 为 stub            |
+| 阶段 6 目录 / 订单 / 微信支付 / `pack_access` | 市场仍为 catalog seed                                           |
+| 备案域名 + 正式 HTTPS API                     | 本地 IP + cleartext release 插件用于联调                        |
+| 弱网/杀进程专项自动化                         | 行为靠 outbox 保留 + worker 重试；无独立 E2E                    |
+| `pnpm check` 全绿                             | `format:check` 在 main 上仍有历史 Prettier 告警（非本阶段引入） |
 
 ## 审查后修复（PR #3 追加 commit）
 
@@ -66,12 +66,12 @@
 
 ## Mock 与 dev 联调要点
 
-| 项 | 处理 |
-| --- | --- |
-| 验证码 | dev/test 固定 `000000` |
-| API 地址 | `EXPO_PUBLIC_API_BASE_URL` bake 进 release；内网 HTTP 需 cleartext 插件 |
-| 登录失败提示 | 区分未配置 URL / 网络 / 服务器错误（维护手册 §5） |
-| legacy outbox payload | `resolve-sync-outbox-payload` 从本地 `learning_states` 补全 SM-2 字段 |
+| 项                    | 处理                                                                    |
+| --------------------- | ----------------------------------------------------------------------- |
+| 验证码                | dev/test 固定 `000000`                                                  |
+| API 地址              | `EXPO_PUBLIC_API_BASE_URL` bake 进 release；内网 HTTP 需 cleartext 插件 |
+| 登录失败提示          | 区分未配置 URL / 网络 / 服务器错误（维护手册 §5）                       |
+| legacy outbox payload | `resolve-sync-outbox-payload` 从本地 `learning_states` 补全 SM-2 字段   |
 
 ## 下一阶段
 

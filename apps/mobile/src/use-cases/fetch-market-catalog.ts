@@ -1,53 +1,52 @@
-import type { CatalogPrimaryCategory } from '../catalog/catalog-seed';
-import { catalogSeed } from '../catalog/catalog-seed';
 import { mapCatalogSummaryToItem } from '../catalog/map-catalog-api';
 import { fetchCatalogPacks } from '../data/api/catalog-api';
-import { ApiNetworkError } from '../data/api/api-client';
-import type { CatalogPackItem } from '../catalog/catalog-seed';
+import { shouldUseOfflineCatalogFallback } from '../data/api/api-errors';
+import type { CatalogPackItem, CatalogPrimaryCategory } from '../catalog/catalog-seed';
+import {
+  readCatalogMemoryCache,
+  resolveOfflineCatalog,
+  writeCatalogMemoryCache,
+} from '../data/catalog/catalog-cache-store';
+import {
+  filterCatalogItems,
+  filterLocalCatalogSeed,
+  type MarketCatalogQuery,
+} from './filter-catalog-items';
 
-export interface MarketCatalogQuery {
-  primaryCategory: CatalogPrimaryCategory;
-  secondaryCategory: string;
-  versionFilter: string;
-  keyword: string;
-}
-
-function filterLocalCatalog(query: MarketCatalogQuery): CatalogPackItem[] {
-  const keyword = query.keyword.trim().toLowerCase();
-  return catalogSeed.filter((item) => {
-    if (query.primaryCategory !== 'all' && item.primaryCategory !== query.primaryCategory) {
-      return false;
-    }
-    if (query.secondaryCategory !== '全部' && item.secondaryCategory !== query.secondaryCategory) {
-      return false;
-    }
-    if (query.versionFilter !== '全部版本' && item.version !== query.versionFilter) {
-      return false;
-    }
-    if (keyword && !item.title.toLowerCase().includes(keyword)) {
-      return false;
-    }
-    return true;
-  });
-}
+export type { MarketCatalogQuery };
 
 export async function fetchMarketCatalog(query: MarketCatalogQuery): Promise<CatalogPackItem[]> {
   try {
     const summaries = await fetchCatalogPacks({
       ...(query.primaryCategory !== 'all' ? { primaryCategory: query.primaryCategory } : {}),
-      ...(query.secondaryCategory !== '全部'
-        ? { secondaryCategory: query.secondaryCategory }
-        : {}),
+      ...(query.secondaryCategory !== '全部' ? { secondaryCategory: query.secondaryCategory } : {}),
       ...(query.versionFilter !== '全部版本' ? { versionLabel: query.versionFilter } : {}),
       ...(query.keyword.trim() ? { keyword: query.keyword.trim() } : {}),
     });
-    return summaries.map(mapCatalogSummaryToItem);
+    const items = summaries.map(mapCatalogSummaryToItem);
+
+    const existing = readCatalogMemoryCache() ?? [];
+    const merged = mergeCatalogCache(existing, items);
+    writeCatalogMemoryCache(merged);
+
+    return filterCatalogItems(merged, query);
   } catch (error) {
-    if (__DEV__ && (error instanceof ApiNetworkError || error instanceof Error)) {
-      return filterLocalCatalog(query);
+    if (shouldUseOfflineCatalogFallback(error)) {
+      return resolveOfflineCatalog(query);
     }
     throw error;
   }
+}
+
+function mergeCatalogCache(
+  existing: CatalogPackItem[],
+  fresh: CatalogPackItem[],
+): CatalogPackItem[] {
+  const byId = new Map(existing.map((item) => [item.packId, item]));
+  for (const item of fresh) {
+    byId.set(item.packId, item);
+  }
+  return [...byId.values()];
 }
 
 export function listSecondaryCategories(primaryCategory: CatalogPrimaryCategory): string[] {
@@ -68,5 +67,5 @@ export function listSecondaryCategories(primaryCategory: CatalogPrimaryCategory)
 
 /** @deprecated 使用 fetchMarketCatalog */
 export function listMarketCatalog(query: MarketCatalogQuery): CatalogPackItem[] {
-  return filterLocalCatalog(query);
+  return filterLocalCatalogSeed(query);
 }

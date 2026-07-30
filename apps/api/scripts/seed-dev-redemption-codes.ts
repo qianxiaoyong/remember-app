@@ -22,7 +22,9 @@ async function main(): Promise<void> {
     for (const entry of DEV_CODES) {
       const pack = await prisma.pack.findUnique({ where: { packId: entry.packId } });
       if (!pack) {
-        console.warn(`skip ${entry.code}: pack ${entry.packId} not found — run catalog migration/seed first`);
+        console.warn(
+          `skip ${entry.code}: pack ${entry.packId} not found — run catalog migration/seed first`,
+        );
         continue;
       }
 

@@ -1,9 +1,13 @@
 import Constants from 'expo-constants';
+import { ApiNetworkError, ApiRequestError } from './api-errors';
+
+export { ApiNetworkError, ApiRequestError, shouldUseOfflineCatalogFallback } from './api-errors';
 
 const API_TIMEOUT_MS = 10_000;
 
 export function readApiBaseUrl(): string {
-  const fromExtra = Constants.expoConfig?.extra?.apiBaseUrl;
+  const extra = Constants.expoConfig?.extra as { apiBaseUrl?: unknown } | undefined;
+  const fromExtra = extra?.apiBaseUrl;
   if (typeof fromExtra === 'string' && fromExtra.length > 0) {
     return fromExtra.replace(/\/$/, '');
   }
@@ -17,24 +21,6 @@ export function readApiBaseUrl(): string {
   }
 
   throw new Error('EXPO_PUBLIC_API_BASE_URL is not configured');
-}
-
-export class ApiRequestError extends Error {
-  constructor(
-    readonly status: number,
-    readonly code: string,
-    message: string,
-  ) {
-    super(message);
-    this.name = 'ApiRequestError';
-  }
-}
-
-export class ApiNetworkError extends Error {
-  constructor(message = '无法连接服务器') {
-    super(message);
-    this.name = 'ApiNetworkError';
-  }
 }
 
 function toApiNetworkError(error: unknown): ApiNetworkError {

@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  ForbiddenException,
-  Headers,
-  HttpCode,
-  Post,
-  Req,
-} from '@nestjs/common';
+import { Body, Controller, ForbiddenException, Headers, HttpCode, Post, Req } from '@nestjs/common';
 import type { SimulatePaymentNotifyResponse } from '@remember/contracts';
 import {
   simulatePaymentNotifyRequestSchema,

@@ -1,6 +1,14 @@
 import type { ReactElement } from 'react';
 import { useCallback, useEffect, useState } from 'react';
-import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Alert,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import { useRouter } from 'expo-router';
 import type { PackSamplePreview } from '../catalog/pack-sample-preview';
 import { PackDetailActionBar } from '../components/pack-detail/pack-detail-action-bar';
@@ -11,8 +19,10 @@ import { PackDetailIntroMedia } from '../components/pack-detail/pack-detail-intr
 import { PackDetailSampleList } from '../components/pack-detail/pack-detail-sample-list';
 import { ScreenScaffold } from '../components/shell/screen-scaffold';
 import { markLibraryNeedsRefresh } from '../shell/library-refresh-signal';
+import { findCatalogItemOffline } from '../data/catalog/catalog-cache-store';
 import {
   getPackDetailViewModel,
+  getPackDetailViewModelFromCatalogItem,
   type PackDetailViewModel,
 } from '../use-cases/get-pack-detail-view-model';
 import { installBundledTestPack } from '../use-cases/install-bundled-test-pack';
@@ -31,12 +41,23 @@ interface PackDetailScreenProps {
 export function PackDetailScreen(props: PackDetailScreenProps): ReactElement {
   const router = useRouter();
   const [viewModel, setViewModel] = useState<PackDetailViewModel | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [message, setMessage] = useState<string | null>(null);
   const [isBusy, setIsBusy] = useState(false);
 
   const refresh = useCallback(async () => {
-    const next = await getPackDetailViewModel(props.packId);
-    setViewModel(next);
+    setIsLoading(true);
+    try {
+      const offlineItem = await findCatalogItemOffline(props.packId);
+      if (offlineItem) {
+        setViewModel(await getPackDetailViewModelFromCatalogItem(props.packId, offlineItem));
+      }
+
+      const next = await getPackDetailViewModel(props.packId);
+      setViewModel(next);
+    } finally {
+      setIsLoading(false);
+    }
   }, [props.packId]);
 
   useEffect(() => {
@@ -164,7 +185,14 @@ export function PackDetailScreen(props: PackDetailScreenProps): ReactElement {
           }}
         />
         <View style={styles.center}>
-          <Text style={styles.empty}>未找到该知识库</Text>
+          {isLoading ? (
+            <>
+              <ActivityIndicator color={colors.accent} size="large" />
+              <Text style={styles.loadingHint}>正在加载知识库…</Text>
+            </>
+          ) : (
+            <Text style={styles.empty}>未找到该知识库</Text>
+          )}
         </View>
       </ScreenScaffold>
     );
@@ -232,11 +260,16 @@ const styles = StyleSheet.create({
   center: {
     alignItems: 'center',
     flex: 1,
+    gap: spacing.md,
     justifyContent: 'center',
   },
   empty: {
     color: colors.textSecondary,
     fontSize: 15,
+  },
+  loadingHint: {
+    color: colors.textSecondary,
+    fontSize: 14,
   },
   message: {
     color: colors.textSecondary,

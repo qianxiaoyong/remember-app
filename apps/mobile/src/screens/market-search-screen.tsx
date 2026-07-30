@@ -25,28 +25,28 @@ export function MarketSearchScreen(): ReactElement {
       return;
     }
 
-    let cancelled = false;
+    const cancelledRef = { current: false };
     setIsSearching(true);
 
     void (async () => {
       try {
         const items = await searchMarketCatalog(trimmedQuery);
-        if (!cancelled) {
+        if (!cancelledRef.current) {
           setResults(items);
         }
       } catch {
-        if (!cancelled) {
+        if (!cancelledRef.current) {
           setResults([]);
         }
       } finally {
-        if (!cancelled) {
+        if (!cancelledRef.current) {
           setIsSearching(false);
         }
       }
     })();
 
     return () => {
-      cancelled = true;
+      cancelledRef.current = true;
     };
   }, [trimmedQuery]);
 

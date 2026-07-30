@@ -1,7 +1,11 @@
 import type { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import type { PrismaClient } from '@prisma/client';
-import { verifySmsCodeResponseSchema } from '@remember/contracts';
+import {
+  verifySmsCodeResponseSchema,
+  syncBatchUploadResponseSchema,
+  syncSnapshotResponseSchema,
+} from '@remember/contracts';
 import request from 'supertest';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { AppModule } from '../src/app.module.js';
@@ -97,7 +101,8 @@ describe('sync learning states integration', () => {
       })
       .expect(200);
 
-    expect(uploadResponse.body).toEqual({
+    const uploadBody = syncBatchUploadResponseSchema.parse(uploadResponse.body);
+    expect(uploadBody).toEqual({
       acceptedEventIds: ['sync-event-1'],
       rejected: [],
     });
@@ -107,8 +112,9 @@ describe('sync learning states integration', () => {
       .set('Authorization', `Bearer ${login.token}`)
       .expect(200);
 
-    expect(snapshotResponse.body.items).toHaveLength(1);
-    expect(snapshotResponse.body.items[0]).toMatchObject({
+    const snapshotBody = syncSnapshotResponseSchema.parse(snapshotResponse.body);
+    expect(snapshotBody.items).toHaveLength(1);
+    expect(snapshotBody.items[0]).toMatchObject({
       knowledgeId: KNOWLEDGE_ID,
       clientVersion: 1,
       packId: samplePayload.packId,
@@ -143,7 +149,8 @@ describe('sync learning states integration', () => {
       .send(body)
       .expect(200);
 
-    expect(second.body.acceptedEventIds).toEqual(['sync-event-dup']);
+    const secondBody = syncBatchUploadResponseSchema.parse(second.body);
+    expect(secondBody.acceptedEventIds).toEqual(['sync-event-dup']);
 
     const rows = await prisma.learningState.findMany({ where: { userId: login.userId } });
     expect(rows).toHaveLength(1);
@@ -184,7 +191,8 @@ describe('sync learning states integration', () => {
       })
       .expect(200);
 
-    expect(stale.body.rejected).toEqual([{ eventId: 'sync-event-old', reason: 'STALE_VERSION' }]);
+    const staleBody = syncBatchUploadResponseSchema.parse(stale.body);
+    expect(staleBody.rejected).toEqual([{ eventId: 'sync-event-old', reason: 'STALE_VERSION' }]);
 
     const row = await prisma.learningState.findUnique({
       where: {
@@ -266,8 +274,9 @@ describe('sync learning states integration', () => {
       .set('Authorization', `Bearer ${deviceBLogin.token}`)
       .expect(200);
 
-    expect(snapshotResponse.body.items).toHaveLength(1);
-    expect(snapshotResponse.body.items[0]).toMatchObject({
+    const snapshotBody = syncSnapshotResponseSchema.parse(snapshotResponse.body);
+    expect(snapshotBody.items).toHaveLength(1);
+    expect(snapshotBody.items[0]).toMatchObject({
       knowledgeId: KNOWLEDGE_ID,
       clientVersion: 4,
     });

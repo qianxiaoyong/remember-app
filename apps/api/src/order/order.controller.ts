@@ -11,7 +11,10 @@ export class OrderController {
   @Post()
   @HttpCode(200)
   @UseGuards(AuthGuard)
-  createOrder(@Req() request: RequestWithAuth, @Body() body: unknown): Promise<CreateOrderResponse> {
+  createOrder(
+    @Req() request: RequestWithAuth,
+    @Body() body: unknown,
+  ): Promise<CreateOrderResponse> {
     const auth = requireAuthContext(request);
     const input = createOrderRequestSchema.parse(body);
     return this.orderService.createOrder(auth.userId, input.packId);

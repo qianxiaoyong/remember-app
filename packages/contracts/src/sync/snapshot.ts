@@ -4,7 +4,7 @@ export const syncSnapshotItemSchema = z
   .object({
     knowledgeId: z.string().min(1),
     packId: z.string().min(1),
-    easiness: z.number().finite(),
+    easiness: z.number(),
     intervalDays: z.number().int().min(0),
     repetitions: z.number().int().min(0),
     dueAt: z.iso.datetime(),

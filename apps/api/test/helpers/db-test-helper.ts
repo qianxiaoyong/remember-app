@@ -14,5 +14,9 @@ export async function resetAuthTables(prisma: PrismaClient): Promise<void> {
   await prisma.user.deleteMany();
 }
 
-export { resetAllIntegrationTables, resetCommerceTables, seedCatalogFixtures } from './catalog-test-helper.js';
+export {
+  resetAllIntegrationTables,
+  resetCommerceTables,
+  seedCatalogFixtures,
+} from './catalog-test-helper.js';
 export { TEST_REDEMPTION_CODE, TEST_REDEMPTION_PEPPER } from './catalog-test-helper.js';

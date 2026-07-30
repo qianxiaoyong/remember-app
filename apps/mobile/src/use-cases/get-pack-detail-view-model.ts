@@ -1,7 +1,4 @@
-import { findCatalogItem } from '../catalog/catalog-seed';
-import { mapCatalogDetailToItem } from '../catalog/map-catalog-api';
-import { fetchCatalogPackDetail } from '../data/api/catalog-api';
-import { ApiNetworkError } from '../data/api/api-client';
+import type { CatalogPackItem } from '../catalog/catalog-seed';
 import type { PackSamplePreview } from '../catalog/pack-sample-preview';
 import {
   resolveCatalogCover,
@@ -16,7 +13,12 @@ import {
   resolvePackIncludedSubtitle,
 } from './format-pack-detail-labels';
 import { resolvePackSamplePreviews } from './resolve-pack-sample-previews';
-import { resolvePackAccess, resolveDetailAction, type PackDetailActionKind } from './resolve-pack-detail-action';
+import {
+  resolvePackAccess,
+  resolveDetailAction,
+  type PackDetailActionKind,
+} from './resolve-pack-detail-action';
+import { resolveCatalogItemForDetail } from './resolve-catalog-item-for-detail';
 import type { IntroMediaItem } from '@remember/contracts';
 
 export type { PackDetailActionKind };
@@ -44,25 +46,10 @@ export interface PackDetailViewModel {
   actionLabel: string;
 }
 
-export async function getPackDetailViewModel(packId: string): Promise<PackDetailViewModel | null> {
-  let catalogItem = null;
-  try {
-    const detail = await fetchCatalogPackDetail(packId);
-    catalogItem = mapCatalogDetailToItem(detail);
-  } catch (error) {
-    if (__DEV__ && error instanceof ApiNetworkError) {
-      catalogItem = findCatalogItem(packId);
-    } else if (error instanceof ApiNetworkError) {
-      return null;
-    } else {
-      throw error;
-    }
-  }
-
-  if (!catalogItem) {
-    return null;
-  }
-
+export async function getPackDetailViewModelFromCatalogItem(
+  packId: string,
+  catalogItem: CatalogPackItem,
+): Promise<PackDetailViewModel> {
   const installed = getInstalledPack(packId);
   const isInstalled = installed?.installStatus === 'installed';
   const packAccess = await resolvePackAccess(packId);
@@ -96,4 +83,13 @@ export async function getPackDetailViewModel(packId: string): Promise<PackDetail
     actionKind: action.actionKind,
     actionLabel: action.actionLabel,
   };
+}
+
+export async function getPackDetailViewModel(packId: string): Promise<PackDetailViewModel | null> {
+  const catalogItem = await resolveCatalogItemForDetail(packId);
+  if (!catalogItem) {
+    return null;
+  }
+
+  return getPackDetailViewModelFromCatalogItem(packId, catalogItem);
 }

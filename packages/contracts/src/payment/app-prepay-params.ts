@@ -16,7 +16,7 @@ export type WechatAppPrepayParams = z.infer<typeof wechatAppPrepayParamsSchema>;
 
 export const simulatePaymentNotifyRequestSchema = z
   .object({
-    orderId: z.string().uuid(),
+    orderId: z.uuid(),
     notificationId: z.string().min(1).optional(),
     transactionId: z.string().min(1).optional(),
     amountCents: z.number().int().positive().optional(),
@@ -28,7 +28,7 @@ export type SimulatePaymentNotifyRequest = z.infer<typeof simulatePaymentNotifyR
 export const simulatePaymentNotifyResponseSchema = z
   .object({
     processed: z.boolean(),
-    orderId: z.string().uuid(),
+    orderId: z.uuid(),
     status: z.enum(['pending', 'paid', 'refunding', 'refunded', 'closed']),
   })
   .strict();

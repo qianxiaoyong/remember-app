@@ -38,7 +38,10 @@ export class PackDownloadController {
     @Query('token') token: string | undefined,
   ): StreamableFile {
     if (!token?.trim()) {
-      throw new ForbiddenException({ code: 'PACK_DOWNLOAD_TOKEN_INVALID', message: '下载授权无效' });
+      throw new ForbiddenException({
+        code: 'PACK_DOWNLOAD_TOKEN_INVALID',
+        message: '下载授权无效',
+      });
     }
 
     let payload;
@@ -56,7 +59,10 @@ export class PackDownloadController {
     }
 
     if (payload.packId !== packId) {
-      throw new ForbiddenException({ code: 'PACK_DOWNLOAD_TOKEN_INVALID', message: '下载授权无效' });
+      throw new ForbiddenException({
+        code: 'PACK_DOWNLOAD_TOKEN_INVALID',
+        message: '下载授权无效',
+      });
     }
 
     try {

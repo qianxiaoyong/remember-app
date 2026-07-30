@@ -10,7 +10,10 @@ export class SyncController {
   @Post('batch')
   @HttpCode(200)
   @UseGuards(AuthGuard)
-  uploadBatch(@Req() request: RequestWithAuth, @Body() body: unknown): Promise<SyncBatchUploadResponse> {
+  uploadBatch(
+    @Req() request: RequestWithAuth,
+    @Body() body: unknown,
+  ): Promise<SyncBatchUploadResponse> {
     return this.syncService.uploadBatch(requireAuthContext(request), body);
   }
 
