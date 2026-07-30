@@ -8,7 +8,7 @@
 ## 通用门禁（阶段 3–6 每次结束都要过）
 
 - [x] 根目录 `pnpm check` 退出码为 0。（阶段 3 收口 commit 后验证）
-- [ ] 若有 API 或集成测试变更，额外运行 `pnpm test:integration` 且通过。（阶段 3 无 API 变更，不适用）
+- [x] 若有 API 或集成测试变更，额外运行 `pnpm test:integration` 且通过。（阶段 6：`catalog-redemption`、`payment-idempotency`、`pack-download` e2e 全绿）
 - [x] 本阶段改动的契约、迁移、支付、鉴权、同步或学习包验签代码，已完成 **独立上下文安全审查**（见 ADR 0008 附录「审查记录」）。
 - [x] 无假支付、假解锁、假同步成功、空页面或占位函数被标为完成。
 - [x] 工作区无密钥、keystore、`.env` 真实值或构建产物误提交。
@@ -88,7 +88,7 @@ pnpm --filter @remember/contracts test
 ### 4.2 安装、更新、卸载
 
 - [x] bundled 路径：临时解压 → 验签/验 hash → 只读试开 → `backupDatabaseAsync` 原子替换 → 更新 `installed_packs`。（`installPackFromZipBytes`）
-- [ ] ~~下载到临时路径~~ → **defer 阶段 6**：阶段 4 无网络下载 UI；安装链代码已就绪。
+- [x] 下载到临时路径 → 验签/验 hash → 只读试开 → 原子替换 → 更新 `installed_packs`。（阶段 6：`installPackFromNetwork` + mock/dev 下载授权）
 - [ ] 安装失败时 **旧包仍可用**，临时文件已清理。（未做实机负例；staging 验签失败即停）
 - [x] 卸载学习包：**删除包文件**（末引用时），`learning_states` 进度 **仍保留**。（包详情「卸载此知识库」）
 - [x] 重新安装同一包后，进度按 `knowledgeId` 恢复。（实机已验）
@@ -224,66 +224,72 @@ pnpm test:integration
 
 **目标：** 测试商户环境完成真实支付与退款；客户端不能假解锁；资金与权限可追溯。
 
+**状态（2026-07-30）：** 子计划 1–3（**mock / dev 路径**）已落地；`pnpm test:integration` 与 dev 实机（兑换码、`EXPO_PUBLIC_MOCK_PAYMENT_ENABLED` mock 购买、网络下载安装）已通过。**§6.8 真实付/退、§6.6 退款链、COS 生产分发、OpenSDK 实机付** 待 Pause C/D 解除后补跑；**§6.9 正式退出门禁** 尚未通过。
+
 ### 6.1 服务端表与迁移
 
-- [ ] PostgreSQL 已迁移：`packs`、`pack_versions`、`orders`、`payment_events`、`pack_access`、`refunds`。
-- [ ] 唯一约束落地：`payment_events.notification_id`、`payment_events.transaction_id`、`pack_access(user_id, pack_id)`。
-- [ ] 订单、支付、退款、`pack_access`、审计相关记录 **禁止物理删除**（见 `data-and-security.md`）。
+- [x] PostgreSQL 已迁移：`packs`、`pack_versions`、`orders`、`payment_events`、`pack_access`、`refunds`（另含 `redemption_codes` / `redemption_events`）。
+- [x] 唯一约束落地：`payment_events.notification_id`、`payment_events.transaction_id`、`pack_access(user_id, pack_id)`。
+- [x] 订单、支付、退款、`pack_access`、审计相关记录 **禁止物理删除**（迁移 `ON DELETE RESTRICT`；见 `data-and-security.md`）。
 
 ### 6.2 目录与定价
 
-- [ ] App 可拉取知识库目录与 **服务端价格**；客户端展示价 **不得** 作为下单金额真值。
-- [ ] `pack_versions` 指向 COS（或等价存储）对象；hash/签名与阶段 3 协议一致。
-- [ ] 未上架或不存在版本返回 typed 错误码（如 `PACK_NOT_FOUND`）。
+- [x] App 可拉取知识库目录与 **服务端价格**；客户端展示价 **不得** 作为下单金额真值（`GET /catalog/packs`；建单金额取自服务端 `price_cents`）。
+- [ ] `pack_versions` 指向 COS（或等价存储）对象；hash/签名与阶段 3 协议一致。（**defer 生产 COS**：dev 用 `PACK_DOWNLOAD_MOCK_ENABLED` + 固定测试 zip；`cos_object_key` 已入库）
+- [x] 未上架或不存在版本返回 typed 错误码（如 `PACK_NOT_FOUND` / HTTP 404）。
 
 ### 6.3 订单状态机
 
-- [ ] 仅服务端创建订单；状态单向推进（含合法退款转换）。
-- [ ] 订单快照金额、用户、包 ID 在创建时锁定。
-- [ ] 可选 `source_code`/`channel` 可空，不影响 MVP 主路径。
+- [x] 仅服务端创建订单；状态单向推进（含合法退款转换）。（**退款转换 defer §6.6**；`pending` → `paid` mock 路径已验）
+- [x] 订单快照金额、用户、包 ID 在创建时锁定。
+- [x] 可选 `source_code`/`channel` 可空，不影响 MVP 主路径。
 
 ### 6.4 微信支付（生产适配器）
 
-- [ ] 阶段 2 密码学收敛为 `WechatPayClient` 生产适配器；**无** 社区 Node 支付 SDK。
-- [ ] App 下单 → OpenSDK 拉起 → 返回后 **查服务端订单**，不以客户端回调为成功依据。
-- [ ] 回调：原始 body + 头验签 → 解密 → **事务内** 写 `payment_events`、推进 `orders`、写 `pack_access`。
-- [ ] 权益 `user_id`/`pack_id` **从锁定订单读取**，不信回调附加字段。
+- [ ] 阶段 2 密码学收敛为 `WechatPayClient` 生产适配器；**无** 社区 Node 支付 SDK。（**defer Pause C/D**：当前为 mock prepay + 受控 mock 回调）
+- [ ] App 下单 → OpenSDK 拉起 → 返回后 **查服务端订单**，不以客户端回调为成功依据。（**defer Pause C/D**；mock 购买走 `purchasePackWithMockPayment` + 服务端查单）
+- [x] 回调：原始 body + 头验签 → 解密 → **事务内** 写 `payment_events`、推进 `orders`、写 `pack_access`。（mock 回调路径 + `payment-idempotency.e2e`）
+- [x] 权益 `user_id`/`pack_id` **从锁定订单读取**，不信回调附加字段。
 
 ### 6.5 购买权限与离线许可
 
-- [ ] 每次包下载前检查 `pack_access`；无权限拒绝下载。
-- [ ] 服务端签发 **30 天离线许可**；App 在服务器短时故障时仍可学习已购内容（在许可内）。
-- [ ] 许可过期且无法刷新时，行为符合产品说明（阻塞新下载，不 silently 清空本地进度）。
+- [x] 每次包下载前检查 `pack_access`；无权限拒绝下载（`pack-download.e2e` 403）。
+- [x] 服务端签发 **30 天离线许可**；App 在服务器短时故障时仍可学习已购内容（在许可内）。（授权响应 `offlineLicenseExpiresAt`；安装后写入 SecureStore）
+- [ ] 许可过期且无法刷新时，行为符合产品说明（阻塞新下载，不 silently 清空本地进度）。（**defer**：`isOfflineLicenseValid` 已存根，尚未接入学习/下载门禁 UI）
 
 ### 6.6 退款
 
-- [ ] 最小后台或 API 支持人工发起退款（阶段 7 前可用受控测试入口，但须服务端授权）。
+- [ ] 最小后台或 API 支持人工发起退款（阶段 7 前可用受控测试入口，但须服务端授权）。（**defer Pause C/D / 阶段 7**；App 无退款入口，与 kickoff 一致）
 - [ ] 退款与 **迟到支付回调** 按合法状态机处理；无重复发权限、无负权限。
 - [ ] 退款记录可追溯到订单与支付事件。
 
 ### 6.7 安全与幂等测试矩阵（必检）
 
-| 场景                                          | 预期                              |
-| --------------------------------------------- | --------------------------------- |
-| 同一支付通知回调两次                          | 第二次幂等；`pack_access` 仍 1 条 |
-| 回调金额与订单不符                            | 拒绝；订单/权限不变               |
-| 回调商户号不符                                | 拒绝                              |
-| 未知订单号                                    | 拒绝                              |
-| 相同 `notification_id`、不同 `transaction_id` | 冲突失败；无脏写                  |
-| 支付处理中 App 强杀                           | 以服务端查单/回调为准；不本地解锁 |
-| 回调处理中事务失败                            | 整体回滚；可安全重试              |
-| 客户端伪造支付成功 UI                         | **不能** 解锁下载                 |
+| 场景                                          | 预期                              | mock 集成测试 |
+| --------------------------------------------- | --------------------------------- | ------------- |
+| 同一支付通知回调两次                          | 第二次幂等；`pack_access` 仍 1 条 | ✅            |
+| 回调金额与订单不符                            | 拒绝；订单/权限不变               | ✅            |
+| 回调商户号不符                                | 拒绝                              | ⏸ 待生产回调  |
+| 未知订单号                                    | 拒绝                              | ✅            |
+| 相同 `notification_id`、不同 `transaction_id` | 冲突失败；无脏写                  | ✅            |
+| 支付处理中 App 强杀                           | 以服务端查单/回调为准；不本地解锁 | 设计符合；未专测 |
+| 回调处理中事务失败                            | 整体回滚；可安全重试              | ⏸ 待补        |
+| 客户端伪造支付成功 UI                         | **不能** 解锁下载                 | ✅（无 `pack_access` 则 403） |
+| 已有 `pack_access` 重复建单                   | 拒绝；不重复权益                  | ✅ 409        |
+| 兑换码重复兑换（同用户）                      | 幂等；`pack_access` 仍 1 条       | ✅            |
 
 ### 6.8 真实联调（测试商户）
 
-- [ ] 测试商户环境完成 **至少 1 笔** 真实 APP 支付 → 下载 → 学习包可安装。
+- [ ] 测试商户环境完成 **至少 1 笔** 真实 APP 支付 → 下载 → 学习包可安装。（**defer Pause C/D**）
 - [ ] 同一笔支付在后台可查到：`orders` → `payment_events` → `pack_access` 链路完整。
 - [ ] 完成 **至少 1 笔** 真实退款 → 权限/订单状态符合规则。
-- [ ] 重复推送同一回调（或脚本模拟）不重复发权限。
+- [ ] 重复推送同一回调（或脚本模拟）不重复发权限。（mock 路径 ✅；真实微信回调 ⏸）
 
 ### 6.9 阶段 6 退出门禁（一句话）
 
 > 测试商户：**真实付 + 真实退**；DB 可完整追溯；客户端永远不能单独解锁；幂等矩阵全绿。
+
+**当前：** mock/dev 主路径（目录 → 兑换/mock 付 → 下载授权 → 安装）已通；**正式退出门禁** 待 §6.8。
 
 **必跑命令：**
 
@@ -303,7 +309,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File infra/technical-spikes/postg
 | **3** | 固定测试包 build/verify/实机只读全通 | 负例全拒绝 + release 实机   |
 | **4** | 断网实机完整学习闭环                 | 杀进程 + 跨天 + 卸载重装    |
 | **5** | 双机登录/换机/乱序同步               | 旧机不能写 + version 不倒退 |
-| **6** | 真实微信付退 + 幂等矩阵              | 测试商户联调 + DB 追溯      |
+| **6** | 真实微信付退 + 幂等矩阵              | 测试商户联调 + DB 追溯（mock 路径 ✅；§6.8 ⏸） |
 
 ---
 
@@ -325,3 +331,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File infra/technical-spikes/postg
 - [测试与审查规则](../../ai-rules/testing-and-review.md)
 - [PostgreSQL 备份恢复 ADR](../../decisions/0003-postgresql-backup-restore.md)
 - [Android 身份与签名 ADR](../../decisions/0004-android-app-identity-and-signing.md)
+- [阶段 6 kickoff](2026-07-30-phase6-catalog-payment-kickoff.md)
+- [子计划 1：目录与兑换](2026-07-30-catalog-order-and-pack-access.md)
+- [子计划 2：订单与 mock 支付](2026-07-30-wechat-pay-and-refund.md)
+- [子计划 3：下载授权与网络安装](2026-07-30-offline-pack-access.md)
