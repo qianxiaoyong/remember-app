@@ -4,19 +4,22 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "pnpm --filter @remember/contracts build && nest start --watch",
+    "dev": "pnpm --filter @remember/contracts build && prisma generate && nest start --watch",
     "start": "node dist/main.js",
     "typecheck": "tsc --noEmit",
-    "pretest": "pnpm --filter @remember/contracts build",
+    "pretest": "pnpm --filter @remember/contracts build && prisma generate",
     "test": "vitest run src",
     "test:integration": "vitest run --dir test",
-    "prebuild": "pnpm --filter @remember/contracts build",
-    "build": "nest build"
+    "prebuild": "pnpm --filter @remember/contracts build && prisma generate",
+    "build": "nest build",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev"
   },
   "dependencies": {
     "@nestjs/common": "11.1.28",
     "@nestjs/core": "11.1.28",
     "@nestjs/platform-express": "11.1.28",
+    "@prisma/client": "6.19.0",
     "@remember/contracts": "workspace:*",
     "reflect-metadata": "0.2.2",
     "rxjs": "7.8.2"
@@ -28,6 +31,7 @@
     "@remember/config": "workspace:*",
     "@types/node": "26.1.1",
     "@types/supertest": "7.2.1",
+    "prisma": "6.19.0",
     "supertest": "7.2.2",
     "typescript": "6.0.3",
     "vitest": "4.1.10"

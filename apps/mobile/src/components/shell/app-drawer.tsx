@@ -14,12 +14,14 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import type { DrawerCommonFeatureItem, DrawerMenuItem } from '../../shell/drawer-menu-config';
 import { drawerCommonFeatures, drawerMenuItems } from '../../shell/drawer-menu-config';
-import { DrawerAccountHeader } from './drawer-account-header';
+import { DrawerAccountHeader, DrawerAccountHeaderLoading } from './drawer-account-header';
 import { DrawerCommonFeaturesBlock } from './drawer-common-features-block';
 import { DrawerMenuListBlock } from './drawer-menu-list-block';
 import { drawerContentPaddingTop } from '../../theme/drawer-styles';
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
+import { useAuthSession } from '../../hooks/use-auth-session';
+import { useSessionKickAlert } from '../../hooks/use-session-kick-alert';
 
 const DRAWER_WIDTH_RATIO = 0.86;
 const SLIDE_DURATION_MS = 260;
@@ -31,12 +33,20 @@ interface AppDrawerProps {
 
 export function AppDrawer(props: AppDrawerProps): ReactElement | null {
   const router = useRouter();
+  const { user, isLoading, isNotMainDevice, refresh } = useAuthSession();
+  useSessionKickAlert(isNotMainDevice);
   const insets = useSafeAreaInsets();
   const contentPaddingTop = drawerContentPaddingTop(insets.top);
   const panelWidth = Dimensions.get('window').width * DRAWER_WIDTH_RATIO;
   const [renderOverlay, setRenderOverlay] = useState(props.visible);
   const slideAnim = useRef(new Animated.Value(-panelWidth)).current;
   const backdropAnim = useRef(new Animated.Value(0)).current;
+
+  useLayoutEffect(() => {
+    if (props.visible) {
+      void refresh();
+    }
+  }, [props.visible, refresh]);
 
   useLayoutEffect(() => {
     if (props.visible) {
@@ -102,6 +112,15 @@ export function AppDrawer(props: AppDrawerProps): ReactElement | null {
     Alert.alert('敬请期待', item.reservedMessage);
   };
 
+  const handleAccountPress = (): void => {
+    props.onClose();
+    if (user) {
+      router.push('/account');
+      return;
+    }
+    router.push('/login');
+  };
+
   if (!renderOverlay) {
     return null;
   }
@@ -127,7 +146,21 @@ export function AppDrawer(props: AppDrawerProps): ReactElement | null {
             },
           ]}
         >
-          <DrawerAccountHeader />
+          {isLoading ? (
+            <DrawerAccountHeaderLoading />
+          ) : (
+            <DrawerAccountHeader
+              displayName={user?.displayName ?? '监护人账号'}
+              hint={
+                user
+                  ? user.maskedPhone
+                  : isNotMainDevice
+                    ? '账号已在其他设备登录'
+                    : '点击登录'
+              }
+              onPress={handleAccountPress}
+            />
+          )}
 
           <ScrollView
             contentContainerStyle={styles.menuContent}

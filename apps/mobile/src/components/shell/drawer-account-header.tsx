@@ -1,17 +1,32 @@
 import type { ReactElement } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import logoImage from '../../../assets/images/icon_108x108.png';
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
 
-export function DrawerAccountHeader(): ReactElement {
+interface DrawerAccountHeaderProps {
+  displayName: string;
+  hint: string;
+  onPress: () => void;
+}
+
+export function DrawerAccountHeader(props: DrawerAccountHeaderProps): ReactElement {
+  return (
+    <Pressable accessibilityRole="button" onPress={props.onPress} style={styles.row}>
+      <Image accessibilityLabel="记得" source={logoImage} style={styles.logo} />
+      <View style={styles.textBlock}>
+        <Text style={styles.accountName}>{props.displayName}</Text>
+        <Text style={styles.accountHint}>{props.hint}</Text>
+      </View>
+    </Pressable>
+  );
+}
+
+export function DrawerAccountHeaderLoading(): ReactElement {
   return (
     <View style={styles.row}>
       <Image accessibilityLabel="记得" source={logoImage} style={styles.logo} />
-      <View style={styles.textBlock}>
-        <Text style={styles.accountName}>监护人账号</Text>
-        <Text style={styles.accountHint}>登录功能将在阶段 5 开放</Text>
-      </View>
+      <ActivityIndicator color={colors.accent} />
     </View>
   );
 }

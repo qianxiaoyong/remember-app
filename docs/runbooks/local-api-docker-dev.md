@@ -32,13 +32,16 @@ powershell -NoProfile -ExecutionPolicy Bypass -File infra\dev\start-dev-db.ps1
 pnpm dev:db:down
 ```
 
-启动成功后，本机连接串（写入 `apps/api/.env`，勿提交）：
+启动成功后，在 `apps/api/.env` 配置 `DATABASE_URL`（勿提交 Git）：
 
-```text
-DATABASE_URL=postgresql://remember:<POSTGRES_PASSWORD>@127.0.0.1:5432/remember_dev
-```
+- 协议：`postgresql`
+- 用户：`remember`
+- 密码：与 `infra/dev/.env` 中 `POSTGRES_PASSWORD` 相同
+- 主机：`127.0.0.1`
+- 端口：`5432`
+- 数据库：`remember_dev`
 
-## 3. 启动 API（子计划 1 实施后出现）
+## 3. 启动 API
 
 Prisma 与 auth 模块落地后，在 **第二个终端**：
 

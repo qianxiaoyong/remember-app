@@ -21,12 +21,14 @@
         "expo-build-properties",
         {
           "android": {
-            "minSdkVersion": 26
+            "minSdkVersion": 26,
+            "usesCleartextTraffic": true
           }
         }
       ],
       "./plugins/with-android-release-signing.js",
-      "expo-audio"
+      "expo-audio",
+      "expo-secure-store"
     ]
   }
 }

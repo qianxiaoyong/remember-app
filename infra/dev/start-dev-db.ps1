@@ -15,8 +15,7 @@ try {
   docker compose --project-name remember-dev --env-file $envFile --file $composeFile up -d
   docker compose --project-name remember-dev --env-file $envFile --file $composeFile ps
   Write-Host ''
-  Write-Host 'PostgreSQL 就绪后，DATABASE_URL 示例：'
-  Write-Host 'postgresql://remember:<你的密码>@127.0.0.1:5432/remember_dev'
+  Write-Host 'PostgreSQL 就绪。请在 apps/api/.env 配置 DATABASE_URL（用户 remember，库 remember_dev，端口 5432）。'
 } finally {
   Pop-Location
 }

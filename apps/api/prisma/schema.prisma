@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String    @id @default(uuid()) @db.Uuid
+  phoneHash    String    @unique @map("phone_hash")
+  maskedPhone  String    @map("masked_phone")
+  displayName  String?   @map("display_name")
+  mainDeviceId String?   @map("main_device_id")
+  status       String    @default("active")
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+  sessions     Session[]
+
+  @@map("users")
+}
+
+model SmsChallenge {
+  id           String    @id @default(uuid()) @db.Uuid
+  phoneHash    String    @map("phone_hash")
+  codeHash     String    @map("code_hash")
+  expiresAt    DateTime  @map("expires_at") @db.Timestamptz(6)
+  attemptCount Int       @default(0) @map("attempt_count")
+  consumedAt   DateTime? @map("consumed_at") @db.Timestamptz(6)
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([phoneHash, createdAt(sort: Desc)])
+  @@map("sms_challenges")
+}
+
+model Session {
+  id           String    @id @default(uuid()) @db.Uuid
+  tokenHash    String    @unique @map("token_hash")
+  userId       String    @map("user_id") @db.Uuid
+  deviceId     String    @map("device_id")
+  lastActiveAt DateTime  @map("last_active_at") @db.Timestamptz(6)
+  revokedAt    DateTime? @map("revoked_at") @db.Timestamptz(6)
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}
