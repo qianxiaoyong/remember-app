@@ -53,7 +53,7 @@
 
 - 仅 **主设备**（`users.main_device_id` 与当前 `deviceId` 一致）可调用 sync 写接口
 - 非主设备上传 → API **403** `NOT_MAIN_DEVICE`；本地 outbox **保留**，待抢回主设备后再传
-- 换机登录会更新主设备并踢掉旧 session（子计划 1）
+- **顶号与 session（ADR 0009 §1a）：** 跨设备登录只更新 `main_device_id`，**不 revoke** 旧设备 session；旧设备 API → **403**，本地保留缓存用户与 Banner。同 `deviceId` 再次登录才 revoke 本机旧 session（旧 token → **401**）
 
 ---
 

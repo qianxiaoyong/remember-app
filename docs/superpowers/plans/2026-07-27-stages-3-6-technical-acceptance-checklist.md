@@ -175,8 +175,8 @@ pnpm --filter @remember/mobile build
 
 ### 5.4 单主设备
 
-- [x] 新设备登录并在同一事务内：更新 `users.main_device_id`、撤销旧 `sessions`。
-- [x] 旧设备在撤销后调用写接口 **401/403**；读接口行为符合产品设计。
+- [x] 新设备登录并在同一事务内：更新 `users.main_device_id`；**同 deviceId** 再登录时 revoke 该设备旧 session（跨设备顶号 **不 revoke**，见 ADR 0009 §1a）。
+- [x] 被顶旧设备调用云端接口 **403** `NOT_MAIN_DEVICE`（读写均拒）；同 deviceId 旧 token **401**；本地仍可学习。
 - [x] 并发双机抢登录：最终只有 **一台** 能写服务器学习状态（集成测试或脚本验证）。
 
 ### 5.5 增量同步
