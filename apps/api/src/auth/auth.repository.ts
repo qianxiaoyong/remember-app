@@ -117,6 +117,7 @@ export class AuthRepository {
       await tx.session.updateMany({
         where: {
           userId: input.userId,
+          deviceId: input.deviceId,
           revokedAt: null,
         },
         data: { revokedAt: input.lastActiveAt },

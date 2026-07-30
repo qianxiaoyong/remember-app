@@ -86,6 +86,17 @@ describe('getCurrentSessionUser', () => {
     expect(clearCachedSessionUser).toHaveBeenCalled();
   });
 
+  it('403 NOT_MAIN_DEVICE 时保留缓存并抛出', async () => {
+    vi.mocked(readSessionToken).mockResolvedValue('token-1');
+    vi.mocked(fetchCurrentUser).mockRejectedValue(
+      new ApiRequestError(403, 'NOT_MAIN_DEVICE', '账号已在其他设备登录'),
+    );
+
+    await expect(getCurrentSessionUser()).rejects.toMatchObject({ code: 'NOT_MAIN_DEVICE' });
+    expect(clearSessionToken).not.toHaveBeenCalled();
+    expect(clearCachedSessionUser).not.toHaveBeenCalled();
+  });
+
   it('在线校验成功时刷新缓存', async () => {
     vi.mocked(readSessionToken).mockResolvedValue('token-1');
     vi.mocked(fetchCurrentUser).mockResolvedValue(cachedUser);

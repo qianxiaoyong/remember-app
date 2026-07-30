@@ -138,10 +138,13 @@ export function LoginScreen(): ReactElement {
           onPress={() => {
             void handleLogin();
           }}
-          style={styles.primaryButton}
+          style={[styles.primaryButton, isSubmitting ? styles.primaryButtonLoading : null]}
         >
           {isSubmitting ? (
-            <ActivityIndicator color={colors.surface} />
+            <View style={styles.primaryButtonLoadingRow}>
+              <ActivityIndicator color={colors.surface} />
+              <Text style={styles.primaryButtonText}>正在恢复进度…</Text>
+            </View>
           ) : (
             <Text style={styles.primaryButtonText}>登录</Text>
           )}
@@ -215,6 +218,14 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginTop: spacing.md,
     paddingVertical: spacing.md,
+  },
+  primaryButtonLoading: {
+    opacity: 0.9,
+  },
+  primaryButtonLoadingRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: spacing.sm,
   },
   primaryButtonText: {
     color: colors.surface,

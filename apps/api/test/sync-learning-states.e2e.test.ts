@@ -238,6 +238,41 @@ describe('sync learning states integration', () => {
     expect(row?.repetitions).toBe(3);
   });
 
+  it('A 上传后 B 登录可读取同一用户 snapshot', async () => {
+    const server = app.getHttpServer() as Parameters<typeof request>[0];
+    await sendSmsCode(server, TEST_PHONE);
+    const deviceALogin = await verifySmsLogin(server, { phone: TEST_PHONE, deviceId: DEVICE_A });
+
+    await request(server)
+      .post('/api/v1/sync/learning-states/batch')
+      .set('Authorization', `Bearer ${deviceALogin.token}`)
+      .send({
+        items: [
+          {
+            eventId: 'sync-event-device-a',
+            knowledgeId: KNOWLEDGE_ID,
+            clientVersion: 4,
+            payload: { ...samplePayload, repetitions: 4 },
+          },
+        ],
+      })
+      .expect(200);
+
+    await sendSmsCode(server, TEST_PHONE);
+    const deviceBLogin = await verifySmsLogin(server, { phone: TEST_PHONE, deviceId: DEVICE_B });
+
+    const snapshotResponse = await request(server)
+      .get('/api/v1/sync/learning-states/snapshot')
+      .set('Authorization', `Bearer ${deviceBLogin.token}`)
+      .expect(200);
+
+    expect(snapshotResponse.body.items).toHaveLength(1);
+    expect(snapshotResponse.body.items[0]).toMatchObject({
+      knowledgeId: KNOWLEDGE_ID,
+      clientVersion: 4,
+    });
+  });
+
   it('非主设备 batch 上传返回 403', async () => {
     const server = app.getHttpServer() as Parameters<typeof request>[0];
     await sendSmsCode(server, TEST_PHONE);

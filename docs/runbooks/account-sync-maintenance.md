@@ -147,6 +147,23 @@
 **原因：** 多 worker 并行写同一 PostgreSQL。  
 **修复：** `test:integration` 加 `--maxWorkers=1`；`resetAuthTables` 先清 sync 表。
 
+### 5.7 双机顶号后 A 像登出 / B 未拉云端进度
+
+**现象：** B 登录后 A 跳登录页；B 进度不如 A 云端全。  
+**原因：**
+
+1. **P1-1 误用「撤销全部 session」**：A 收到 401 而非 403，客户端清 token → 像登出（与 Q3:A 冲突）
+2. **登录后 `void runPostLoginSync`**：恢复快照失败被吞、或成功但首页未 `markLibraryNeedsRefresh`
+
+**冻结策略（ADR 0009）：**
+
+- **跨设备顶号（1a）**：只改 `mainDeviceId`，**不 revoke** A 的 session；A → **403** `NOT_MAIN_DEVICE` + Banner
+- **同 deviceId 再登录**：只 revoke **本 deviceId** 旧 session；旧 token → 401
+- **登录 await 快照** + `markLibraryNeedsRefresh()`；失败向用户报错
+- 合并仍 **Q2:A（2a）**；本地无该行时自动写入云端
+
+**回归测试：** `auth-main-device.e2e.test.ts`、`sync-learning-states.e2e.test.ts`（A 上传 → B snapshot）
+
 ---
 
 ## 6. 实机验收指南
