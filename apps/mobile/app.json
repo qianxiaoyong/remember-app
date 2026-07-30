@@ -28,6 +28,7 @@
       ],
       "./plugins/with-android-release-signing.js",
       "./plugins/with-android-cleartext-release.js",
+      "./plugins/with-android-bundle-in-debug.js",
       "expo-audio",
       "expo-secure-store"
     ]

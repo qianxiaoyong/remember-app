@@ -13,7 +13,11 @@
     "prebuild": "pnpm --filter @remember/contracts build && prisma generate",
     "build": "nest build",
     "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev"
+    "prisma:migrate": "prisma migrate dev",
+    "seed:dev-redemption": "node --experimental-strip-types scripts/seed-dev-redemption-codes.ts",
+    "dev:clear-pack-access": "node --experimental-strip-types scripts/clear-dev-pack-access.ts",
+    "seed:dev-pack-versions": "node --experimental-strip-types scripts/seed-dev-pack-versions.ts",
+    "seed:dev-bootstrap": "node --experimental-strip-types scripts/seed-dev-bootstrap.ts"
   },
   "dependencies": {
     "@nestjs/common": "11.1.28",

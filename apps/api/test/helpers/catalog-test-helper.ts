@@ -1,5 +1,9 @@
 import type { PrismaClient } from '@prisma/client';
 import { hashRedemptionCode } from '../../src/redemption/redemption-code-hash.js';
+import {
+  REMEMBER_TEST_PACK_SHA256,
+  REMEMBER_TEST_PACK_SIZE_BYTES,
+} from '../../src/pack-download/test-pack-fixture.js';
 
 export const TEST_REDEMPTION_PEPPER = 'integration-test-redemption-pepper';
 export const TEST_REDEMPTION_CODE = 'TEST-REDEEM-001';
@@ -66,8 +70,8 @@ export async function seedCatalogFixtures(prisma: PrismaClient): Promise<void> {
       packId: 'remember-test-pack',
       packVersion: '1.0.0',
       cosObjectKey: 'packs/remember-test-pack/1.0.0/pack.zip',
-      sha256: '0000000000000000000000000000000000000000000000000000000000000000',
-      sizeBytes: BigInt(2_000_000),
+      sha256: REMEMBER_TEST_PACK_SHA256,
+      sizeBytes: BigInt(REMEMBER_TEST_PACK_SIZE_BYTES),
       keyId: 'test-key-1',
       manifestSignature: 'test-signature',
       protocolVersion: 1,
@@ -109,10 +113,41 @@ export async function seedCatalogFixtures(prisma: PrismaClient): Promise<void> {
     },
   });
 
+  const grade3Version = await prisma.packVersion.create({
+    data: {
+      packId: 'demo-primary-grade3',
+      packVersion: '1.0.0',
+      cosObjectKey: 'packs/demo-primary-grade3/1.0.0/pack.zip',
+      sha256: REMEMBER_TEST_PACK_SHA256,
+      sizeBytes: BigInt(REMEMBER_TEST_PACK_SIZE_BYTES),
+      keyId: 'test-key-1',
+      manifestSignature: 'test-signature',
+      protocolVersion: 1,
+      status: 'published',
+      publishedAt: new Date('2026-07-15T00:00:00.000Z'),
+    },
+  });
+
+  await prisma.pack.update({
+    where: { packId: 'demo-primary-grade3' },
+    data: { currentVersionId: grade3Version.id },
+  });
+
   await prisma.redemptionCode.create({
     data: {
       codeHash,
       packId: 'remember-test-pack',
+      maxRedemptions: 100,
+      redeemedCount: 0,
+      status: 'active',
+    },
+  });
+
+  const grade3CodeHash = hashRedemptionCode('TEST-REDEEM-GRADE3', TEST_REDEMPTION_PEPPER);
+  await prisma.redemptionCode.create({
+    data: {
+      codeHash: grade3CodeHash,
+      packId: 'demo-primary-grade3',
       maxRedemptions: 100,
       redeemedCount: 0,
       status: 'active',

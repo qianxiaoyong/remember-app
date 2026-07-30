@@ -1,14 +1,12 @@
 import { Asset } from 'expo-asset';
 import testPackModule from '../../assets/packs/remember-test-pack.zip';
 import { findCatalogItem } from '../catalog/catalog-seed';
-import { resolvePackDisplayName } from '../catalog/resolve-pack-display-name';
 import { installPackFromZipBytes } from '../data/pack/install-pack-from-zip';
 import {
   getInstalledPack,
   type InstalledPackRow,
-  upsertInstalledPack,
 } from '../data/repositories/installed-pack-repository';
-import { openUserDatabase } from '../data/user-db/open-user-database';
+import { aliasInstalledPack } from './alias-installed-pack';
 
 const BASE_BUNDLED_PACK_ID = 'remember-test-pack';
 
@@ -26,27 +24,7 @@ export async function installBundledTestPack(
     throw new Error('not a bundled test pack catalog item');
   }
 
-  const aliasRow: InstalledPackRow = {
-    packId: catalogPackId,
-    displayName: resolvePackDisplayName(catalogPackId),
-    packVersion: baseRow.packVersion,
-    sqlitePath: baseRow.sqlitePath,
-    assetsDir: baseRow.assetsDir,
-    installStatus: 'installed',
-    installedAt: new Date().toISOString(),
-    lastOpenedAt: null,
-  };
-
-  const userDb = openUserDatabase();
-  userDb.execSync('BEGIN IMMEDIATE');
-  try {
-    upsertInstalledPack(aliasRow, userDb);
-    userDb.execSync('COMMIT');
-  } catch (error) {
-    userDb.execSync('ROLLBACK');
-    throw error;
-  }
-
+  const aliasRow = aliasInstalledPack(catalogPackId, baseRow);
   return aliasRow;
 }
 

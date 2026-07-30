@@ -4,6 +4,10 @@ export * from './catalog/index.js';
 export * from './order/index.js';
 export * from './pack/index.js';
 export * from './pack-access/index.js';
+export {
+  packDownloadAuthorizationResponseSchema,
+  type PackDownloadAuthorizationResponse,
+} from './pack-download/index.js';
 export * from './payment/index.js';
 export * from './redemption/index.js';
 export * from './sync/index.js';

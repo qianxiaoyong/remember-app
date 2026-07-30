@@ -16,7 +16,9 @@ import {
   type PackDetailViewModel,
 } from '../use-cases/get-pack-detail-view-model';
 import { installBundledTestPack } from '../use-cases/install-bundled-test-pack';
+import { installPackFromNetwork } from '../use-cases/install-pack-from-network';
 import { purchasePackWithMockPayment } from '../use-cases/purchase-pack-with-mock-payment';
+import { isMockPaymentEnabled } from '../config/mock-payment-enabled';
 import { playSamplePreviewAudio } from '../use-cases/play-sample-preview-audio';
 import { uninstallInstalledPack } from '../use-cases/uninstall-installed-pack';
 import { colors } from '../theme/colors';
@@ -49,7 +51,7 @@ export function PackDetailScreen(props: PackDetailScreenProps): ReactElement {
     setIsBusy(true);
     try {
       if (viewModel.actionKind === 'purchase') {
-        if (__DEV__) {
+        if (isMockPaymentEnabled()) {
           const result = await purchasePackWithMockPayment(viewModel.packId);
           await refresh();
           setMessage(result === 'paid' ? '模拟支付成功，可点击安装' : '订单待支付');
@@ -61,7 +63,10 @@ export function PackDetailScreen(props: PackDetailScreenProps): ReactElement {
 
       if (viewModel.actionKind === 'install') {
         if (!viewModel.isBundledTestPack) {
-          setMessage('网络下载安装将在后续版本提供');
+          await installPackFromNetwork(viewModel.packId);
+          markLibraryNeedsRefresh();
+          await refresh();
+          setMessage('安装成功');
           return;
         }
         await installBundledTestPack(viewModel.packId);
