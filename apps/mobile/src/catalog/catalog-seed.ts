@@ -1,4 +1,4 @@
-/** 阶段 4 市场 mock 种子；API 失败时 dev fallback。 */
+import type { CatalogPackTaxonomy } from '@remember/contracts';
 import type { IntroMediaItem } from '@remember/contracts';
 import type { PackSamplePreview } from './pack-sample-preview';
 
@@ -32,6 +32,8 @@ export interface CatalogPackItem {
   coverUrl?: string;
   /** 封面图本地资源；mock 阶段可用 require */
   coverImage?: number;
+  /** 后台 taxonomy 挂载；有则优先用于展示 label */
+  taxonomy?: CatalogPackTaxonomy;
 }
 
 export const CATALOG_PRIMARY_OPTIONS: { id: CatalogPrimaryCategory; label: string }[] = [
@@ -43,6 +45,22 @@ export const CATALOG_PRIMARY_OPTIONS: { id: CatalogPrimaryCategory; label: strin
 ];
 
 export const CATALOG_VERSION_OPTIONS = ['全部版本', '人教版', '外研版', '译林版'] as const;
+
+export function listSecondaryCategories(primaryCategory: CatalogPrimaryCategory): string[] {
+  if (primaryCategory === 'primary') {
+    return ['全部', '一年级', '二年级', '三年级', '四年级', '五年级', '六年级'];
+  }
+  if (primaryCategory === 'junior') {
+    return ['全部', '七年级', '八年级', '九年级'];
+  }
+  if (primaryCategory === 'senior') {
+    return ['全部', '高一', '高二', '高三'];
+  }
+  if (primaryCategory === 'postgraduate') {
+    return ['全部', '考研英语'];
+  }
+  return ['全部'];
+}
 
 const bundledTestPackBase = {
   title: '记得测试包',

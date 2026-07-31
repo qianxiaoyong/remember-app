@@ -17,6 +17,9 @@ export async function resetCommerceTables(prisma: PrismaClient): Promise<void> {
   await prisma.order.deleteMany();
   await prisma.packVersion.deleteMany();
   await prisma.pack.deleteMany();
+  await prisma.catalogSecondaryNode.deleteMany();
+  await prisma.catalogVersionNode.deleteMany();
+  await prisma.catalogPrimaryNode.deleteMany();
 }
 
 export async function resetAllIntegrationTables(prisma: PrismaClient): Promise<void> {
@@ -28,7 +31,40 @@ export async function resetAllIntegrationTables(prisma: PrismaClient): Promise<v
   await prisma.user.deleteMany();
 }
 
+async function seedCatalogTaxonomyWithIds(prisma: PrismaClient) {
+  const primaryJunior = await prisma.catalogPrimaryNode.create({
+    data: { slug: 'junior', label: '初中英语', sortOrder: 2, status: 'active' },
+  });
+  const primaryPrimary = await prisma.catalogPrimaryNode.create({
+    data: { slug: 'primary', label: '小学英语', sortOrder: 1, status: 'active' },
+  });
+  const versionPep = await prisma.catalogVersionNode.create({
+    data: { slug: 'pep', label: '人教版', sortOrder: 1, status: 'active' },
+  });
+  const secondaryGrade7 = await prisma.catalogSecondaryNode.create({
+    data: {
+      primaryId: primaryJunior.id,
+      slug: 'grade7',
+      label: '七年级',
+      sortOrder: 1,
+      status: 'active',
+    },
+  });
+  const secondaryGrade3 = await prisma.catalogSecondaryNode.create({
+    data: {
+      primaryId: primaryPrimary.id,
+      slug: 'grade3',
+      label: '三年级',
+      sortOrder: 3,
+      status: 'active',
+    },
+  });
+
+  return { primaryJunior, primaryPrimary, versionPep, secondaryGrade7, secondaryGrade3 };
+}
+
 export async function seedCatalogFixtures(prisma: PrismaClient): Promise<void> {
+  const taxonomy = await seedCatalogTaxonomyWithIds(prisma);
   const codeHash = hashRedemptionCode(TEST_REDEMPTION_CODE, TEST_REDEMPTION_PEPPER);
 
   await prisma.pack.create({
@@ -38,6 +74,9 @@ export async function seedCatalogFixtures(prisma: PrismaClient): Promise<void> {
       primaryCategory: 'junior',
       secondaryCategory: '七年级',
       versionLabel: '人教版',
+      primaryNodeId: taxonomy.primaryJunior.id,
+      secondaryNodeId: taxonomy.secondaryGrade7.id,
+      versionNodeId: taxonomy.versionPep.id,
       contentTags: ['词汇', '上册'],
       cardCount: 2,
       sizeLabel: '约 2 MB',
@@ -93,6 +132,9 @@ export async function seedCatalogFixtures(prisma: PrismaClient): Promise<void> {
       primaryCategory: 'primary',
       secondaryCategory: '三年级',
       versionLabel: '人教版',
+      primaryNodeId: taxonomy.primaryPrimary.id,
+      secondaryNodeId: taxonomy.secondaryGrade3.id,
+      versionNodeId: taxonomy.versionPep.id,
       contentTags: ['英语词汇', '人教版', '上册'],
       cardCount: 480,
       sizeLabel: '约 18 MB',

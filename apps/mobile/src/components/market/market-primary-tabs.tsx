@@ -8,9 +8,11 @@ import { spacing } from '../../theme/spacing';
 interface MarketPrimaryTabsProps {
   value: CatalogPrimaryCategory;
   onChange: (value: CatalogPrimaryCategory) => void;
+  options?: { id: CatalogPrimaryCategory; label: string }[];
 }
 
 export function MarketPrimaryTabs(props: MarketPrimaryTabsProps): ReactElement {
+  const tabOptions = props.options ?? CATALOG_PRIMARY_OPTIONS;
   return (
     <View style={styles.wrap}>
       <ScrollView
@@ -19,7 +21,7 @@ export function MarketPrimaryTabs(props: MarketPrimaryTabsProps): ReactElement {
         showsHorizontalScrollIndicator={false}
         style={styles.scroll}
       >
-        {CATALOG_PRIMARY_OPTIONS.map((option) => {
+        {tabOptions.map((option) => {
           const isActive = props.value === option.id;
           return (
             <Pressable

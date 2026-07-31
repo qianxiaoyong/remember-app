@@ -81,6 +81,49 @@ model SyncProcessedEvent {
   @@map("sync_processed_events")
 }
 
+model CatalogPrimaryNode {
+  id        String   @id @default(uuid()) @db.Uuid
+  slug      String   @unique
+  label     String
+  sortOrder Int      @map("sort_order")
+  status    String   @default("active")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+  children  CatalogSecondaryNode[]
+  packs     Pack[]
+
+  @@map("catalog_primary_nodes")
+}
+
+model CatalogSecondaryNode {
+  id        String   @id @default(uuid()) @db.Uuid
+  primaryId String   @map("primary_id") @db.Uuid
+  slug      String
+  label     String
+  sortOrder Int      @map("sort_order")
+  status    String   @default("active")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+  primary   CatalogPrimaryNode @relation(fields: [primaryId], references: [id])
+  packs     Pack[]
+
+  @@unique([primaryId, slug])
+  @@map("catalog_secondary_nodes")
+}
+
+model CatalogVersionNode {
+  id        String   @id @default(uuid()) @db.Uuid
+  slug      String   @unique
+  label     String
+  sortOrder Int      @map("sort_order")
+  status    String   @default("active")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+  packs     Pack[]
+
+  @@map("catalog_version_nodes")
+}
+
 model Pack {
   packId            String        @id @map("pack_id")
   title             String
@@ -88,6 +131,9 @@ model Pack {
   primaryCategory   String        @map("primary_category")
   secondaryCategory String        @map("secondary_category")
   versionLabel      String        @map("version_label")
+  primaryNodeId     String?       @map("primary_node_id") @db.Uuid
+  secondaryNodeId   String?       @map("secondary_node_id") @db.Uuid
+  versionNodeId     String?       @map("version_node_id") @db.Uuid
   contentTags       Json          @map("content_tags")
   cardCount         Int           @map("card_count")
   sizeLabel         String        @map("size_label")
@@ -102,6 +148,9 @@ model Pack {
   currentVersionId  String?       @map("current_version_id") @db.Uuid
   status            String        @default("published")
   updatedAt         DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
+  primaryNode       CatalogPrimaryNode?   @relation(fields: [primaryNodeId], references: [id])
+  secondaryNode     CatalogSecondaryNode? @relation(fields: [secondaryNodeId], references: [id])
+  versionNode       CatalogVersionNode?   @relation(fields: [versionNodeId], references: [id])
   versions          PackVersion[]
   orders            Order[]
   packAccesses      PackAccess[]

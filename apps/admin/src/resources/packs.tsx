@@ -23,6 +23,7 @@ import { formatMoney } from '../components/format-money.js';
 import { MonoText } from '../components/mono-text.js';
 import { PackStatusChip } from '../components/pack-status-chip.js';
 import { PackEditSummary } from './pack-edit-summary.js';
+import { PackTaxonomyFields } from './pack-taxonomy-fields.js';
 import { PackVersionsPanel } from './pack-versions-panel.js';
 import { PackRedemptionCodesPanel } from './pack-redemption-codes-panel.js';
 
@@ -79,9 +80,7 @@ function PackEditTabs() {
             <Grid size={{ xs: 12, md: 6 }}>
               <TextInput source="title" label="标题" validate={required()} fullWidth />
               <TextInput source="displayTitle" label="展示标题" fullWidth />
-              <SelectInput source="primaryCategory" label="大类" choices={packChoices} fullWidth />
-              <TextInput source="secondaryCategory" label="小类" fullWidth />
-              <TextInput source="versionLabel" label="版本标签（展示用）" fullWidth />
+              <PackTaxonomyFields />
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>
               <NumberInput
@@ -160,15 +159,7 @@ export function PackCreate() {
       <SimpleForm>
         <TextInput source="packId" label="知识库 ID" validate={required()} fullWidth />
         <TextInput source="title" label="标题" validate={required()} fullWidth />
-        <SelectInput
-          source="primaryCategory"
-          label="大类"
-          choices={packChoices}
-          defaultValue="junior"
-          fullWidth
-        />
-        <TextInput source="secondaryCategory" label="小类" defaultValue="七年级" fullWidth />
-        <TextInput source="versionLabel" label="版本标签" defaultValue="人教版" fullWidth />
+        <PackTaxonomyFields />
         <NumberInput
           source="priceCents"
           label="售价（分）"

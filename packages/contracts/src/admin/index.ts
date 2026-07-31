@@ -96,6 +96,9 @@ export {
   type AdminUpdatePrimaryTaxonomyNodeRequest,
   type AdminUpdateSecondaryTaxonomyNodeRequest,
   type AdminUpdateVersionTaxonomyNodeRequest,
+  type AdminPrimaryTaxonomyNodeResponse,
+  type AdminSecondaryTaxonomyNodeResponse,
+  type AdminVersionTaxonomyNodeResponse,
 } from './catalog-taxonomy.js';
 export {
   adminAuditLogListResponseSchema,

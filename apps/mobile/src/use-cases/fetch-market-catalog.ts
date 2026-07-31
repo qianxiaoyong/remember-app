@@ -1,7 +1,8 @@
 import { mapCatalogSummaryToItem } from '../catalog/map-catalog-api';
-import { fetchCatalogPacks } from '../data/api/catalog-api';
+import { fetchCatalogPacks, fetchCatalogTaxonomy } from '../data/api/catalog-api';
 import { shouldUseOfflineCatalogFallback } from '../data/api/api-errors';
-import type { CatalogPackItem, CatalogPrimaryCategory } from '../catalog/catalog-seed';
+import { writeCachedCatalogTaxonomy } from '../data/catalog/catalog-taxonomy-store';
+import type { CatalogPackItem } from '../catalog/catalog-seed';
 import {
   readCatalogDiskCache,
   readCatalogMemoryCache,
@@ -37,17 +38,25 @@ export async function readCachedMarketCatalog(
 /** App 启动时后台拉全量目录写入缓存；失败静默。 */
 export async function warmCatalogCacheFromNetwork(): Promise<boolean> {
   try {
-    await fetchMarketCatalog(FULL_CATALOG_QUERY);
+    await Promise.all([fetchMarketCatalog(FULL_CATALOG_QUERY), refreshCatalogTaxonomyFromNetwork()]);
     return true;
   } catch {
     return false;
   }
 }
 
+export async function refreshCatalogTaxonomyFromNetwork(): Promise<void> {
+  const taxonomy = await fetchCatalogTaxonomy();
+  writeCachedCatalogTaxonomy(taxonomy);
+}
+
 export async function fetchMarketCatalog(query: MarketCatalogQuery): Promise<CatalogPackItem[]> {
   try {
     // 始终拉全量目录再本地筛选，避免带筛选请求污染/截断缓存。
-    const summaries = await fetchCatalogPacks({});
+    const [summaries] = await Promise.all([
+      fetchCatalogPacks({}),
+      refreshCatalogTaxonomyFromNetwork().catch(() => undefined),
+    ]);
     const items = summaries.map(mapCatalogSummaryToItem);
 
     const existing = readCatalogMemoryCache() ?? [];
@@ -74,21 +83,7 @@ function mergeCatalogCache(
   return [...byId.values()];
 }
 
-export function listSecondaryCategories(primaryCategory: CatalogPrimaryCategory): string[] {
-  if (primaryCategory === 'primary') {
-    return ['全部', '一年级', '二年级', '三年级', '四年级', '五年级', '六年级'];
-  }
-  if (primaryCategory === 'junior') {
-    return ['全部', '七年级', '八年级', '九年级'];
-  }
-  if (primaryCategory === 'senior') {
-    return ['全部', '高一', '高二', '高三'];
-  }
-  if (primaryCategory === 'postgraduate') {
-    return ['全部', '考研英语'];
-  }
-  return ['全部'];
-}
+export { listSecondaryCategories } from '../catalog/catalog-seed';
 
 /** @deprecated 使用 fetchMarketCatalog */
 export function listMarketCatalog(query: MarketCatalogQuery): CatalogPackItem[] {

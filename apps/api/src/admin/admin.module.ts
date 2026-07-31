@@ -6,6 +6,9 @@ import { PaymentModule } from '../payment/payment.module.js';
 import { RedemptionModule } from '../redemption/redemption.module.js';
 import { AdminAuditLogsController } from './audit-logs/admin-audit-logs.controller.js';
 import { AdminAuditLogsService } from './audit-logs/admin-audit-logs.service.js';
+import { AdminCatalogTaxonomyController } from './catalog-taxonomy/admin-catalog-taxonomy.controller.js';
+import { AdminCatalogTaxonomyRepository } from './catalog-taxonomy/admin-catalog-taxonomy.repository.js';
+import { AdminCatalogTaxonomyService } from './catalog-taxonomy/admin-catalog-taxonomy.service.js';
 import { AdminDashboardController } from './dashboard/admin-dashboard.controller.js';
 import { AdminDashboardRepository } from './dashboard/admin-dashboard.repository.js';
 import { AdminDashboardService } from './dashboard/admin-dashboard.service.js';
@@ -29,6 +32,7 @@ import { AdminRefundsService } from './refunds/admin-refunds.service.js';
     AdminOrdersController,
     AdminPackAccessController,
     AdminPacksController,
+    AdminCatalogTaxonomyController,
     AdminRefundsController,
     AdminRedemptionController,
     AdminAuditLogsController,
@@ -42,6 +46,8 @@ import { AdminRefundsService } from './refunds/admin-refunds.service.js';
     AdminPackAccessService,
     AdminPacksRepository,
     AdminPacksService,
+    AdminCatalogTaxonomyRepository,
+    AdminCatalogTaxonomyService,
     AdminRefundsService,
     AdminRedemptionService,
     AdminAuditLogsService,

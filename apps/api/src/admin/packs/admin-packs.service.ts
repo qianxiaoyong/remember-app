@@ -15,6 +15,7 @@ import {
   readSamplePreviewsFromZip,
 } from '@remember/pack-builder/catalog-metadata';
 import type { VerifiedPackArchive } from '@remember/pack-builder/verify';
+import { resolvePackTaxonomy, resolvePackTaxonomyUpdate } from '../../catalog/resolve-pack-taxonomy.js';
 import { AuditService } from '../../audit/audit.service.js';
 import { readAdminPackConfig } from '../../config/read-admin-pack-config.js';
 import { PackVerifyService } from '../../pack-verify/pack-verify.service.js';
@@ -96,6 +97,9 @@ export class AdminPacksService {
       primaryCategory: pack.primaryCategory,
       secondaryCategory: pack.secondaryCategory,
       versionLabel: pack.versionLabel,
+      ...(pack.primaryNodeId ? { primaryNodeId: pack.primaryNodeId } : {}),
+      ...(pack.secondaryNodeId ? { secondaryNodeId: pack.secondaryNodeId } : {}),
+      ...(pack.versionNodeId ? { versionNodeId: pack.versionNodeId } : {}),
       contentTags: Array.isArray(pack.contentTags)
         ? pack.contentTags.filter((item): item is string => typeof item === 'string')
         : [],
@@ -164,14 +168,19 @@ export class AdminPacksService {
       throw new ConflictException({ code: 'PACK_ALREADY_EXISTS', message: '知识库已存在' });
     }
 
+    const taxonomy = await resolvePackTaxonomy(this.prisma, input);
+
     await this.prisma.pack.create({
       data: {
         packId: input.packId,
         title: input.title,
         ...(input.displayTitle !== undefined ? { displayTitle: input.displayTitle } : {}),
-        primaryCategory: input.primaryCategory,
-        secondaryCategory: input.secondaryCategory,
-        versionLabel: input.versionLabel,
+        primaryCategory: taxonomy.primaryCategory,
+        secondaryCategory: taxonomy.secondaryCategory,
+        versionLabel: taxonomy.versionLabel,
+        primaryNodeId: taxonomy.primaryNodeId,
+        secondaryNodeId: taxonomy.secondaryNodeId,
+        versionNodeId: taxonomy.versionNodeId,
         contentTags: input.contentTags,
         cardCount: input.cardCount,
         sizeLabel: input.sizeLabel,
@@ -192,16 +201,31 @@ export class AdminPacksService {
       throw new NotFoundException({ code: 'PACK_NOT_FOUND', message: '知识库不存在' });
     }
 
+    const taxonomy = await resolvePackTaxonomyUpdate(this.prisma, pack, input);
+
     await this.prisma.pack.update({
       where: { packId },
       data: {
         ...(input.title !== undefined ? { title: input.title } : {}),
         ...(input.displayTitle !== undefined ? { displayTitle: input.displayTitle } : {}),
-        ...(input.primaryCategory !== undefined ? { primaryCategory: input.primaryCategory } : {}),
-        ...(input.secondaryCategory !== undefined
-          ? { secondaryCategory: input.secondaryCategory }
-          : {}),
-        ...(input.versionLabel !== undefined ? { versionLabel: input.versionLabel } : {}),
+        ...(taxonomy
+          ? {
+              primaryCategory: taxonomy.primaryCategory,
+              secondaryCategory: taxonomy.secondaryCategory,
+              versionLabel: taxonomy.versionLabel,
+              primaryNodeId: taxonomy.primaryNodeId,
+              secondaryNodeId: taxonomy.secondaryNodeId,
+              versionNodeId: taxonomy.versionNodeId,
+            }
+          : {
+              ...(input.primaryCategory !== undefined
+                ? { primaryCategory: input.primaryCategory }
+                : {}),
+              ...(input.secondaryCategory !== undefined
+                ? { secondaryCategory: input.secondaryCategory }
+                : {}),
+              ...(input.versionLabel !== undefined ? { versionLabel: input.versionLabel } : {}),
+            }),
         ...(input.contentTags !== undefined ? { contentTags: input.contentTags } : {}),
         ...(input.cardCount !== undefined ? { cardCount: input.cardCount } : {}),
         ...(input.sizeLabel !== undefined ? { sizeLabel: input.sizeLabel } : {}),

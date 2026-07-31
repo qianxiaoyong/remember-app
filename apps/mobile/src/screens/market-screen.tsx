@@ -22,9 +22,15 @@ import { readApiBaseUrl } from '../data/api/api-client';
 import { ApiNetworkError } from '../data/api/api-errors';
 import {
   fetchMarketCatalog,
-  listSecondaryCategories,
   readCachedMarketCatalog,
+  refreshCatalogTaxonomyFromNetwork,
 } from '../use-cases/fetch-market-catalog';
+import {
+  getPrimaryTabOptions,
+  getSecondaryCategoryOptions,
+  getVersionFilterOptions,
+  readCachedCatalogTaxonomy,
+} from '../data/catalog/catalog-taxonomy-store';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 
@@ -44,6 +50,14 @@ export function MarketScreen(): ReactElement {
   const [isPullRefreshing, setIsPullRefreshing] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isFromCache, setIsFromCache] = useState(false);
+  const [taxonomyRevision, setTaxonomyRevision] = useState(0);
+
+  const cachedTaxonomy = useMemo(() => readCachedCatalogTaxonomy(), [taxonomyRevision]);
+  const primaryTabOptions = useMemo(
+    () => getPrimaryTabOptions(cachedTaxonomy),
+    [cachedTaxonomy],
+  );
+  const versionOptions = useMemo(() => getVersionFilterOptions(cachedTaxonomy), [cachedTaxonomy]);
 
   const catalogQuery = useMemo(
     () => ({
@@ -74,6 +88,8 @@ export function MarketScreen(): ReactElement {
       }
 
       try {
+        await refreshCatalogTaxonomyFromNetwork().catch(() => undefined);
+        setTaxonomyRevision((value) => value + 1);
         const nextItems = await fetchMarketCatalog(catalogQuery);
         setItems(nextItems);
         setIsFromCache(false);
@@ -114,8 +130,8 @@ export function MarketScreen(): ReactElement {
   );
 
   const secondaryOptions = useMemo(
-    () => listSecondaryCategories(primaryCategory),
-    [primaryCategory],
+    () => getSecondaryCategoryOptions(cachedTaxonomy, primaryCategory),
+    [cachedTaxonomy, primaryCategory],
   );
 
   return (
@@ -135,6 +151,7 @@ export function MarketScreen(): ReactElement {
               setPrimaryCategory(value);
               setSecondaryCategory('全部');
             }}
+            options={primaryTabOptions}
             value={primaryCategory}
           />
         </View>
@@ -159,6 +176,7 @@ export function MarketScreen(): ReactElement {
               <MarketVersionDropdown
                 onChange={setVersionFilter}
                 onOpenChange={setVersionDropdownOpen}
+                options={versionOptions}
                 value={versionFilter}
               />
             </View>

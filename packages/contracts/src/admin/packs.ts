@@ -19,6 +19,9 @@ export const adminPackSummarySchema = z
     primaryCategory: catalogPrimaryCategorySchema,
     secondaryCategory: z.string().min(1),
     versionLabel: z.string().min(1),
+    primaryNodeId: z.uuid().optional(),
+    secondaryNodeId: z.uuid().optional(),
+    versionNodeId: z.uuid().optional(),
     contentTags: z.array(z.string()),
     cardCount: z.number().int().nonnegative(),
     sizeLabel: z.string().min(1),
@@ -38,14 +41,17 @@ export const adminPackListResponseSchema = z
   })
   .strict();
 
-export const adminCreatePackRequestSchema = z
+const adminPackWriteFieldsSchema = z
   .object({
     packId: z.string().min(1).max(64),
     title: z.string().min(1),
     displayTitle: optionalNonEmptyStringSchema,
-    primaryCategory: catalogPrimaryCategorySchema,
-    secondaryCategory: z.string().min(1),
-    versionLabel: z.string().min(1),
+    primaryCategory: catalogPrimaryCategorySchema.optional(),
+    secondaryCategory: z.string().min(1).optional(),
+    versionLabel: z.string().min(1).optional(),
+    primaryNodeId: z.uuid().optional(),
+    secondaryNodeId: z.uuid().optional(),
+    versionNodeId: z.uuid().optional(),
     contentTags: z.array(z.string()).default([]),
     cardCount: z.number().int().nonnegative().default(0),
     sizeLabel: z.string().min(1).default('未知'),
@@ -57,8 +63,26 @@ export const adminCreatePackRequestSchema = z
   })
   .strict();
 
+function hasCompletePackTaxonomy(value: {
+  primaryNodeId?: string | undefined;
+  secondaryNodeId?: string | undefined;
+  versionNodeId?: string | undefined;
+  primaryCategory?: string | undefined;
+  secondaryCategory?: string | undefined;
+  versionLabel?: string | undefined;
+}): boolean {
+  return Boolean(
+    (value.primaryNodeId && value.secondaryNodeId && value.versionNodeId) ||
+      (value.primaryCategory && value.secondaryCategory && value.versionLabel),
+  );
+}
+
+export const adminCreatePackRequestSchema = adminPackWriteFieldsSchema.refine(hasCompletePackTaxonomy, {
+  message: '请提供完整三级分类',
+});
+
 /** PATCH 允许 React Admin 附带 id / updatedAt 等只读字段；未知键 strip 丢弃。 */
-export const adminUpdatePackRequestSchema = adminCreatePackRequestSchema
+export const adminUpdatePackRequestSchema = adminPackWriteFieldsSchema
   .omit({ packId: true })
   .partial()
   .strip();

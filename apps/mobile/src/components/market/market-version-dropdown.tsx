@@ -10,9 +10,11 @@ interface MarketVersionDropdownProps {
   value: string;
   onChange: (value: string) => void;
   onOpenChange?: (open: boolean) => void;
+  options?: readonly string[];
 }
 
 export function MarketVersionDropdown(props: MarketVersionDropdownProps): ReactElement {
+  const versionOptions = props.options ?? CATALOG_VERSION_OPTIONS;
   const triggerRef = useRef<View>(null);
   const [open, setOpen] = useState(false);
   const [anchor, setAnchor] = useState({ left: 0, top: 0, width: 0 });
@@ -78,7 +80,7 @@ export function MarketVersionDropdown(props: MarketVersionDropdownProps): ReactE
             },
           ]}
         >
-          {CATALOG_VERSION_OPTIONS.map((option) => {
+          {versionOptions.map((option) => {
             const isActive = props.value === option;
             return (
               <Pressable

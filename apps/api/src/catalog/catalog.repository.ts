@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import type { Pack, Prisma } from '@prisma/client';
+import type { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service.js';
 
 export interface ListPublishedPacksQuery {
@@ -9,11 +9,19 @@ export interface ListPublishedPacksQuery {
   keyword?: string;
 }
 
+const packTaxonomyInclude = {
+  primaryNode: true,
+  secondaryNode: true,
+  versionNode: true,
+} as const;
+
+export type PackWithTaxonomy = Prisma.PackGetPayload<{ include: typeof packTaxonomyInclude }>;
+
 @Injectable()
 export class CatalogRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  listPublishedPacks(query: ListPublishedPacksQuery): Promise<Pack[]> {
+  listPublishedPacks(query: ListPublishedPacksQuery): Promise<PackWithTaxonomy[]> {
     const where: Prisma.PackWhereInput = {
       status: 'published',
     };
@@ -35,12 +43,14 @@ export class CatalogRepository {
     return this.prisma.pack.findMany({
       where,
       orderBy: { updatedAt: 'desc' },
+      include: packTaxonomyInclude,
     });
   }
 
-  findPublishedPackById(packId: string): Promise<Pack | null> {
+  findPublishedPackById(packId: string): Promise<PackWithTaxonomy | null> {
     return this.prisma.pack.findFirst({
       where: { packId, status: 'published' },
+      include: packTaxonomyInclude,
     });
   }
 }

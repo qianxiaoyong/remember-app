@@ -1,11 +1,13 @@
-import { Admin, Resource } from 'react-admin';
+import { Admin, CustomRoutes, Resource } from 'react-admin';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 import HistoryIcon from '@mui/icons-material/History';
 import ReplayIcon from '@mui/icons-material/Replay';
+import { Route } from 'react-router-dom';
 import { AdminLoginPage } from './auth/admin-login-page.js';
+import { CatalogTaxonomyPage } from './resources/catalog-taxonomy.js';
 import { authProvider } from './auth/auth-provider.js';
 import { dataProvider } from './data/data-provider.js';
 import { Dashboard } from './dashboard/Dashboard.js';
@@ -31,6 +33,9 @@ export function AdminApp() {
       i18nProvider={adminI18nProvider}
       requireAuth
     >
+      <CustomRoutes>
+        <Route path="/catalog-taxonomy" element={<CatalogTaxonomyPage />} />
+      </CustomRoutes>
       <Resource
         name="packs"
         list={PackList}

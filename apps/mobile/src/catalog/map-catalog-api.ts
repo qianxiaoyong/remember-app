@@ -30,6 +30,7 @@ export function mapCatalogSummaryToItem(summary: CatalogPackSummary): CatalogPac
     ...(summary.coverBadge ? { coverBadge: summary.coverBadge } : {}),
     ...(summary.coverLines ? { coverLines: summary.coverLines } : {}),
     ...(summary.isBundledTestPack ? { isBundledTestPack: true } : { isBundledTestPack: false }),
+    ...(summary.taxonomy ? { taxonomy: summary.taxonomy } : {}),
   };
 }
 

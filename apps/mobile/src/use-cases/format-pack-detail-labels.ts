@@ -16,6 +16,10 @@ export function formatPackSizeLabel(sizeLabel: string): string {
 }
 
 export function resolvePackCategoryContext(item: CatalogPackItem): string {
+  if (item.taxonomy) {
+    return `${item.taxonomy.primaryLabel} · ${item.taxonomy.secondaryLabel}`;
+  }
+
   const primaryLabel =
     CATALOG_PRIMARY_OPTIONS.find((option) => option.id === item.primaryCategory)?.label ??
     item.primaryCategory;

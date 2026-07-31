@@ -53,6 +53,16 @@ export const adminSecondaryTaxonomyNodeResponseSchema = catalogSecondaryTaxonomy
 
 export const adminVersionTaxonomyNodeResponseSchema = catalogVersionTaxonomyNodeSchema;
 
+export type AdminPrimaryTaxonomyNodeResponse = z.infer<
+  typeof adminPrimaryTaxonomyNodeResponseSchema
+>;
+export type AdminSecondaryTaxonomyNodeResponse = z.infer<
+  typeof adminSecondaryTaxonomyNodeResponseSchema
+>;
+export type AdminVersionTaxonomyNodeResponse = z.infer<
+  typeof adminVersionTaxonomyNodeResponseSchema
+>;
+
 export type AdminCatalogTaxonomyResponse = z.infer<typeof adminCatalogTaxonomyResponseSchema>;
 export type AdminCreatePrimaryTaxonomyNodeRequest = z.infer<
   typeof adminCreatePrimaryTaxonomyNodeRequestSchema

@@ -1,11 +1,13 @@
 import type {
   CatalogPackDetail,
   CatalogPackSummary,
+  CatalogTaxonomyResponse,
   ListCatalogPacksQuery,
 } from '@remember/contracts';
 import {
   catalogPackDetailSchema,
   catalogPackPriceResponseSchema,
+  catalogTaxonomyResponseSchema,
   listCatalogPacksResponseSchema,
 } from '@remember/contracts';
 import { apiFetchJson, CATALOG_API_TIMEOUT_MS } from './api-client';
@@ -26,6 +28,14 @@ function buildCatalogQuery(params: ListCatalogPacksQuery): string {
   }
   const query = search.toString();
   return query ? `?${query}` : '';
+}
+
+export async function fetchCatalogTaxonomy(): Promise<CatalogTaxonomyResponse> {
+  const body = await apiFetchJson<unknown>('/api/v1/catalog/taxonomy', {
+    method: 'GET',
+    timeoutMs: CATALOG_API_TIMEOUT_MS,
+  });
+  return catalogTaxonomyResponseSchema.parse(body);
 }
 
 export async function fetchCatalogPacks(

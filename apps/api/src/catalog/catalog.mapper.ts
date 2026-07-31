@@ -1,12 +1,13 @@
-import type { Pack } from '@prisma/client';
 import {
   catalogPackDetailSchema,
   catalogPackSummarySchema,
+  catalogPackTaxonomySchema,
   introMediaItemSchema,
   packSamplePreviewSchema,
   type CatalogPackDetail,
   type CatalogPackSummary,
 } from '@remember/contracts';
+import type { PackWithTaxonomy } from './catalog.repository.js';
 
 function toIsoString(value: Date): string {
   return value.toISOString();
@@ -19,7 +20,24 @@ function parseStringArray(value: unknown): string[] | undefined {
   return value.filter((item): item is string => typeof item === 'string');
 }
 
-function mapPackSummary(pack: Pack): CatalogPackSummary {
+function mapPackTaxonomy(pack: PackWithTaxonomy) {
+  if (!pack.primaryNode || !pack.secondaryNode || !pack.versionNode) {
+    return undefined;
+  }
+
+  return catalogPackTaxonomySchema.parse({
+    primaryNodeId: pack.primaryNode.id,
+    secondaryNodeId: pack.secondaryNode.id,
+    versionNodeId: pack.versionNode.id,
+    primaryLabel: pack.primaryNode.label,
+    secondaryLabel: pack.secondaryNode.label,
+    versionLabel: pack.versionNode.label,
+    primarySlug: pack.primaryNode.slug,
+  });
+}
+
+function mapPackSummary(pack: PackWithTaxonomy): CatalogPackSummary {
+  const taxonomy = mapPackTaxonomy(pack);
   return catalogPackSummarySchema.parse({
     packId: pack.packId,
     title: pack.title,
@@ -37,10 +55,11 @@ function mapPackSummary(pack: Pack): CatalogPackSummary {
     ...(pack.coverBadge ? { coverBadge: pack.coverBadge } : {}),
     ...(parseStringArray(pack.coverLines) ? { coverLines: parseStringArray(pack.coverLines) } : {}),
     ...(pack.isBundledTestPack ? { isBundledTestPack: true } : {}),
+    ...(taxonomy ? { taxonomy } : {}),
   });
 }
 
-export function mapPackDetail(pack: Pack): CatalogPackDetail {
+export function mapPackDetail(pack: PackWithTaxonomy): CatalogPackDetail {
   const samplePreviewsRaw = Array.isArray(pack.samplePreviews) ? pack.samplePreviews : [];
   const samplePreviews = samplePreviewsRaw.map((item) => packSamplePreviewSchema.parse(item));
   const introMediaRaw = Array.isArray(pack.introMedia) ? pack.introMedia : undefined;
@@ -54,6 +73,6 @@ export function mapPackDetail(pack: Pack): CatalogPackDetail {
   });
 }
 
-export function mapPackSummaries(packs: Pack[]): CatalogPackSummary[] {
+export function mapPackSummaries(packs: PackWithTaxonomy[]): CatalogPackSummary[] {
   return packs.map((pack) => mapPackSummary(pack));
 }
