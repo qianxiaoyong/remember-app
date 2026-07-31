@@ -12,7 +12,7 @@ export const adminTheme = createTheme({
       main: adminColors.price,
     },
     background: {
-      default: adminColors.background,
+      default: adminColors.shellCanvas,
       paper: adminColors.surface,
     },
     text: {
@@ -36,14 +36,18 @@ export const adminTheme = createTheme({
       '"Noto Sans SC"',
       'sans-serif',
     ].join(','),
-    h5: { fontWeight: 600, color: adminColors.textPrimary },
-    h6: { fontWeight: 600, color: adminColors.textPrimary },
+    h5: { fontSize: 18, fontWeight: 700, color: adminColors.textPrimary },
+    h6: { fontSize: 16, fontWeight: 600, color: adminColors.textPrimary },
+    subtitle1: { fontSize: 14, fontWeight: 600, color: adminColors.textPrimary },
+    subtitle2: { fontSize: 14, fontWeight: 600, color: adminColors.textPrimary },
+    body2: { fontSize: 13 },
+    caption: { fontSize: 12, color: adminColors.textTertiary },
   },
   components: {
     MuiCssBaseline: {
       styleOverrides: {
         body: {
-          backgroundColor: adminColors.background,
+          backgroundColor: adminColors.shellCanvas,
         },
       },
     },
@@ -53,7 +57,7 @@ export const adminTheme = createTheme({
           backgroundColor: adminColors.surface,
           color: adminColors.textPrimary,
           boxShadow: 'none',
-          borderBottom: `1px solid ${adminColors.border}`,
+          borderBottom: `1px solid ${adminColors.borderStrong}`,
         },
       },
       defaultProps: {
@@ -63,8 +67,8 @@ export const adminTheme = createTheme({
     MuiDrawer: {
       styleOverrides: {
         paper: {
-          backgroundColor: adminColors.surface,
-          borderRight: `1px solid ${adminColors.border}`,
+          backgroundColor: adminColors.shellSidebar,
+          borderRight: `1px solid ${adminColors.borderStrong}`,
         },
       },
     },
@@ -74,6 +78,7 @@ export const adminTheme = createTheme({
           borderRadius: 8,
           textTransform: 'none',
           fontWeight: 500,
+          fontSize: '0.875rem',
         },
         contained: {
           boxShadow: 'none',
@@ -92,6 +97,7 @@ export const adminTheme = createTheme({
           borderRadius: 12,
           boxShadow: 'none',
           borderColor: adminColors.border,
+          backgroundColor: adminColors.surface,
         },
       },
     },
@@ -105,12 +111,15 @@ export const adminTheme = createTheme({
     MuiListSubheader: {
       styleOverrides: {
         root: {
-          backgroundColor: adminColors.surface,
-          color: adminColors.textMuted,
-          fontSize: 12,
-          fontWeight: 600,
-          lineHeight: '32px',
-          letterSpacing: '0.04em',
+          backgroundColor: adminColors.menuGroupTint,
+          color: adminColors.textSecondary,
+          fontSize: 11,
+          fontWeight: 700,
+          lineHeight: '28px',
+          letterSpacing: '0.06em',
+          textTransform: 'uppercase',
+          paddingLeft: 16,
+          paddingRight: 16,
         },
       },
     },
@@ -119,14 +128,31 @@ export const adminTheme = createTheme({
         head: {
           color: adminColors.textSecondary,
           fontWeight: 600,
+          backgroundColor: adminColors.surfaceSunken,
+          fontSize: '0.8125rem',
+        },
+        root: {
+          borderColor: adminColors.border,
         },
       },
     },
     RaLayout: {
       styleOverrides: {
         root: {
+          '& .RaLayout-appFrame': {
+            backgroundColor: adminColors.shellCanvas,
+          },
           '& .RaLayout-content': {
-            backgroundColor: adminColors.background,
+            backgroundColor: adminColors.shellCanvas,
+          },
+        },
+      },
+    },
+    RaSidebar: {
+      styleOverrides: {
+        root: {
+          '& .RaSidebar-fixed': {
+            backgroundColor: adminColors.shellSidebar,
           },
         },
       },
@@ -137,10 +163,20 @@ export const adminTheme = createTheme({
           borderRadius: 8,
           marginInline: 8,
           marginBlock: 2,
+          fontSize: '0.875rem',
+          color: adminColors.textPrimary,
+          '& .MuiListItemIcon-root': {
+            minWidth: 36,
+            color: adminColors.textSecondary,
+          },
           '&.RaMenuItemLink-active': {
-            backgroundColor: adminColors.accentSoft,
+            backgroundColor: adminColors.menuActiveBackground,
             borderLeft: `3px solid ${adminColors.accent}`,
             paddingLeft: 13,
+            fontWeight: 600,
+            '& .MuiListItemIcon-root': {
+              color: adminColors.accent,
+            },
           },
         },
       },

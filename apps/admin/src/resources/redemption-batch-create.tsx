@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Box, Button, Stack, TextField } from '@mui/material';
 import { Create, NumberInput, SimpleForm, TextInput, required, useNotify, useRedirect } from 'react-admin';
 import type { AdminCreateRedemptionBatchRequest } from '@remember/contracts';
+import { AdminPageHeader } from '../components/admin-page-header.js';
 import { createRedemptionBatch } from '../api/redemption-api.js';
 import { AdminApiError } from '../api/admin-api-client.js';
 import { RedemptionBatchResultDialog } from './redemption-code-row-actions.js';
@@ -14,36 +15,42 @@ export function RedemptionBatchCreate() {
 
   return (
     <>
-      <Create>
-        <SimpleForm
-          onSubmit={async (values: Record<string, unknown>) => {
-            try {
-              const response = await createRedemptionBatch({
-                packId: String(values.packId),
-                count: Number(values.count),
-                maxRedemptions: Number(values.maxRedemptions),
-                prefix: String(values.prefix ?? 'REDEEM'),
-              } satisfies AdminCreateRedemptionBatchRequest);
-              const codes = response.items.map((item: { code: string }) => item.code);
-              setResultCodes(codes);
-              setResultOpen(true);
-              notify(`已生成 ${String(codes.length)} 个兑换码`, { type: 'success' });
-            } catch (error) {
-              const message =
-                error instanceof AdminApiError
-                  ? error.message
-                  : error instanceof Error
+      <Create title={false} component="div">
+        <AdminPageHeader
+          title="批量生成兑换码"
+          meta="为指定知识库一次性生成多条兑换码，生成后可复制导出"
+        />
+        <Box sx={{ maxWidth: 560 }}>
+          <SimpleForm
+            onSubmit={async (values: Record<string, unknown>) => {
+              try {
+                const response = await createRedemptionBatch({
+                  packId: String(values.packId),
+                  count: Number(values.count),
+                  maxRedemptions: Number(values.maxRedemptions),
+                  prefix: String(values.prefix ?? 'REDEEM'),
+                } satisfies AdminCreateRedemptionBatchRequest);
+                const codes = response.items.map((item: { code: string }) => item.code);
+                setResultCodes(codes);
+                setResultOpen(true);
+                notify(`已生成 ${String(codes.length)} 个兑换码`, { type: 'success' });
+              } catch (error) {
+                const message =
+                  error instanceof AdminApiError
                     ? error.message
-                    : '生成失败';
-              notify(message, { type: 'error' });
-            }
-          }}
-        >
-          <TextInput source="packId" label="知识库 ID" validate={required()} fullWidth />
-          <NumberInput source="count" label="生成数量" defaultValue={10} validate={required()} fullWidth />
-          <NumberInput source="maxRedemptions" label="每码可兑次数" defaultValue={1} fullWidth />
-          <TextInput source="prefix" label="码前缀" defaultValue="REDEEM" fullWidth />
-        </SimpleForm>
+                    : error instanceof Error
+                      ? error.message
+                      : '生成失败';
+                notify(message, { type: 'error' });
+              }
+            }}
+          >
+            <TextInput source="packId" label="知识库 ID" validate={required()} fullWidth />
+            <NumberInput source="count" label="生成数量" defaultValue={10} validate={required()} fullWidth />
+            <NumberInput source="maxRedemptions" label="每码可兑次数" defaultValue={1} fullWidth />
+            <TextInput source="prefix" label="码前缀" defaultValue="REDEEM" fullWidth />
+          </SimpleForm>
+        </Box>
       </Create>
       <RedemptionBatchResultDialog
         codes={resultCodes}

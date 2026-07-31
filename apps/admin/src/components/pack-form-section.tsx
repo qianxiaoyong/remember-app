@@ -7,11 +7,11 @@ interface PackFormSectionProps {
   children: ReactNode;
 }
 
-/** 紧凑分区：仅小标题 + 内容，无 Card 嵌套。 */
+/** 表单区块：仅小标题 + 内容，无 Card 嵌套。 */
 export function PackFormSection(props: PackFormSectionProps) {
   return (
     <Box sx={{ mb: 1 }}>
-      <Typography variant="subtitle2" sx={{ fontWeight: 600, color: adminColors.textPrimary, mb: 0.5 }}>
+      <Typography sx={{ fontSize: 14, fontWeight: 600, color: adminColors.textPrimary, mb: 0.5 }}>
         {props.title}
       </Typography>
       {props.children}
@@ -31,4 +31,35 @@ export const packFormDensitySx = {
   },
   '& .RaSimpleFormIterator-add': { my: 0.5 },
   '& .RaSimpleFormIterator-form': { minWidth: 0 },
+} as const;
+
+/** Array 行紧凑：inline 表格风格。 */
+export const compactIteratorSx = {
+  '& .RaSimpleFormIterator-line': {
+    border: 'none',
+    mb: 0.25,
+    mt: 0,
+    p: 0,
+    alignItems: 'center',
+  },
+  '& .RaSimpleFormIterator-form': {
+    display: 'flex',
+    flex: 1,
+    gap: 1,
+    minWidth: 0,
+    alignItems: 'center',
+  },
+  '& .RaSimpleFormIterator-action': {
+    mt: 0,
+    alignSelf: 'center',
+    flexShrink: 0,
+  },
+  '& .RaSimpleFormIterator-add': { my: 0.5 },
+  '& .RaSimpleFormIterator-index': { display: 'none' },
+} as const;
+
+/** SimpleForm 去 Card 内边距。 */
+export const packEditFormSx = {
+  padding: 0,
+  '& .MuiCardContent-root': { p: 0, '&:last-child': { pb: 0 } },
 } as const;

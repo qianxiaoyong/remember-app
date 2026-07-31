@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { Box, Card, CardContent, Typography } from '@mui/material';
+import { AdminPanel } from './admin-panel.js';
 import { adminColors } from '../theme/admin-colors.js';
 
 interface KpiStatCardProps {
@@ -15,11 +16,11 @@ export function KpiStatCard({ label, value, accent, hint }: KpiStatCardProps) {
       variant="outlined"
       sx={{
         height: '100%',
-        bgcolor: adminColors.statTileBackground,
+        bgcolor: adminColors.surfaceSunken,
         borderColor: adminColors.border,
       }}
     >
-      <CardContent sx={{ py: 2, '&:last-child': { pb: 2 } }}>
+      <CardContent sx={{ py: 1.5, '&:last-child': { pb: 1.5 } }}>
         <Box sx={{ display: 'flex', gap: 1.5 }}>
           <Box
             sx={{
@@ -37,11 +38,7 @@ export function KpiStatCard({ label, value, accent, hint }: KpiStatCardProps) {
               {value}
             </Typography>
             {hint ? (
-              <Typography
-                variant="caption"
-                color="text.secondary"
-                sx={{ mt: 0.5, display: 'block' }}
-              >
+              <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block' }}>
                 {hint}
               </Typography>
             ) : null}
@@ -66,31 +63,13 @@ export function DashboardSectionCard({
   children,
 }: DashboardSectionCardProps) {
   return (
-    <Card variant="outlined" sx={{ height: '100%' }}>
-      <CardContent>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'flex-start',
-            gap: 2,
-            mb: 2,
-          }}
-        >
-          <Box>
-            <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-              {title}
-            </Typography>
-            {subtitle ? (
-              <Typography variant="body2" color="text.secondary">
-                {subtitle}
-              </Typography>
-            ) : null}
-          </Box>
-          {action}
-        </Box>
-        {children}
-      </CardContent>
-    </Card>
+    <AdminPanel
+      title={title}
+      {...(subtitle ? { subtitle } : {})}
+      {...(action ? { actions: action } : {})}
+      sx={{ height: '100%' }}
+    >
+      {children}
+    </AdminPanel>
   );
 }

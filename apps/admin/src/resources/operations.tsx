@@ -12,7 +12,8 @@ import {
   TextInput,
   required,
 } from 'react-admin';
-import { Alert, Box, Typography } from '@mui/material';
+import { Alert, Box } from '@mui/material';
+import { AdminPageHeader } from '../components/admin-page-header.js';
 import { MonoText } from '../components/mono-text.js';
 import { RedemptionStatusChip } from '../components/admin-status-chips.js';
 import { ListCreateActions } from '../components/list-toolbar.js';
@@ -21,11 +22,12 @@ import { RedemptionCodeRowActions } from './redemption-code-row-actions.js';
 
 export function RefundCreate() {
   return (
-    <Create>
-      <Box sx={{ maxWidth: 560, mx: 'auto', width: '100%', p: 2 }}>
-        <Typography variant="h6" sx={{ fontWeight: 700, mb: 1 }}>
-          发起退款
-        </Typography>
+    <Create title={false} component="div">
+      <AdminPageHeader
+        title="发起退款"
+        meta="提交后将进入 dev/mock 退款流程；生产环境需接入真实微信支付"
+      />
+      <Box sx={{ maxWidth: 560 }}>
         <Alert severity="warning" sx={{ mb: 2 }}>
           当前仅支持 dev/mock 退款链路；生产环境需接入真实微信支付后再使用。
         </Alert>
@@ -62,12 +64,15 @@ const redemptionFilters = [
 
 export function RedemptionCodeList() {
   return (
-    <List
-      filters={redemptionFilters}
-      actions={<ListCreateActions label="批量生成" />}
-      sort={{ field: 'createdAt', order: 'DESC' }}
-      perPage={20}
-    >
+    <>
+      <AdminPageHeader title="兑换码" meta="批量生成与管理知识库兑换码" />
+      <List
+        title={false}
+        filters={redemptionFilters}
+        actions={<ListCreateActions label="批量生成" />}
+        sort={{ field: 'createdAt', order: 'DESC' }}
+        perPage={20}
+      >
       <Datagrid bulkActionButtons={false}>
         <FunctionField
           label="知识库 ID"
@@ -105,6 +110,7 @@ export function RedemptionCodeList() {
         />
       </Datagrid>
     </List>
+    </>
   );
 }
 

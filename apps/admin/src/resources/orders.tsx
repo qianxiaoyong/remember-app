@@ -7,6 +7,7 @@ import {
   TextField,
   TextInput,
 } from 'react-admin';
+import { AdminPageHeader } from '../components/admin-page-header.js';
 import { formatMoney } from '../components/format-money.js';
 import { MonoText } from '../components/mono-text.js';
 import { OrderStatusChip } from '../components/admin-status-chips.js';
@@ -30,12 +31,15 @@ const orderFilters = [
 
 export function OrderList() {
   return (
-    <List
-      filters={orderFilters}
-      actions={<EmptyListActions />}
-      sort={{ field: 'createdAt', order: 'DESC' }}
-      perPage={20}
-    >
+    <>
+      <AdminPageHeader title="订单" meta="支付、退款与订单状态查询" />
+      <List
+        title={false}
+        filters={orderFilters}
+        actions={<EmptyListActions />}
+        sort={{ field: 'createdAt', order: 'DESC' }}
+        perPage={20}
+      >
       <Datagrid rowClick="show" bulkActionButtons={false}>
         <FunctionField
           label="订单号"
@@ -58,5 +62,6 @@ export function OrderList() {
         <DateField source="createdAt" label="创建时间" showTime locales="zh-CN" />
       </Datagrid>
     </List>
+    </>
   );
 }

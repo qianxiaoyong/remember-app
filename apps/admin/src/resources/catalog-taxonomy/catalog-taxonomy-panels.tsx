@@ -20,33 +20,11 @@ import type {
   AdminSecondaryTaxonomyNodeResponse,
   AdminVersionTaxonomyNodeResponse,
 } from '@remember/contracts';
+import { AdminPanel, adminPanelTableSx } from '../../components/admin-panel.js';
 import { MonoText } from '../../components/mono-text.js';
 import { adminColors } from '../../theme/admin-colors.js';
 
 type PrimaryTaxonomyNode = AdminCatalogTaxonomyResponse['primaries'][number];
-
-const panelShellSx = {
-  border: `1px solid ${adminColors.border}`,
-  borderRadius: 1.5,
-  bgcolor: adminColors.surface,
-  display: 'flex',
-  flexDirection: 'column',
-  height: '100%',
-  minHeight: 0,
-  overflow: 'hidden',
-} as const;
-
-const compactTableSx = {
-  '& .MuiTableCell-root': { py: 0.35, px: 1, fontSize: '0.8125rem', whiteSpace: 'nowrap' },
-  '& .MuiTableCell-head': { py: 0.5, fontWeight: 600, bgcolor: adminColors.statTileBackground },
-} as const;
-
-const panelHeaderSx = {
-  px: 1.25,
-  py: 0.75,
-  borderBottom: `1px solid ${adminColors.border}`,
-  flexShrink: 0,
-} as const;
 
 function StatusChip({ status }: { status: string }) {
   const active = status === 'active';
@@ -72,16 +50,17 @@ interface PrimarySidebarProps {
 
 export function PrimarySidebar(props: PrimarySidebarProps) {
   return (
-    <Box sx={panelShellSx}>
-      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={panelHeaderSx}>
-        <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-          一级
-        </Typography>
+    <AdminPanel
+      title="一级"
+      padded={false}
+      sx={{ height: '100%' }}
+      actions={
         <Button size="small" variant="outlined" onClick={props.onCreateClick} sx={{ minWidth: 0, px: 1 }}>
           +
         </Button>
-      </Stack>
-      <List dense disablePadding sx={{ flex: 1, overflow: 'auto' }}>
+      }
+    >
+      <List dense disablePadding sx={{ flex: 1, overflow: 'auto', minHeight: 0 }}>
         {props.primaries.map((primary) => {
           const selected = primary.id === props.selectedPrimaryId;
           return (
@@ -111,7 +90,7 @@ export function PrimarySidebar(props: PrimarySidebarProps) {
           );
         })}
       </List>
-    </Box>
+    </AdminPanel>
   );
 }
 
@@ -129,20 +108,18 @@ interface SecondaryPanelProps {
 export function SecondaryPanel(props: SecondaryPanelProps) {
   if (!props.primary) {
     return (
-      <Box sx={{ ...panelShellSx, alignItems: 'center', justifyContent: 'center' }}>
+      <AdminPanel title="二级" sx={{ height: '100%' }}>
         <Typography variant="body2" color="text.secondary">
           请选择一级分类
         </Typography>
-      </Box>
+      </AdminPanel>
     );
   }
 
   return (
-    <Box sx={panelShellSx}>
-      <Box sx={panelHeaderSx}>
-        <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 0.75 }}>
-          二级 · {props.primary.label}
-        </Typography>
+    <AdminPanel title={`二级 · ${props.primary.label}`} padded={false} sx={{ height: '100%' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>
+      <Box sx={{ px: 1.25, py: 0.75, borderBottom: `1px solid ${adminColors.border}`, flexShrink: 0 }}>
         <Stack direction="row" spacing={0.75}>
           <TextField
             size="small"
@@ -169,7 +146,7 @@ export function SecondaryPanel(props: SecondaryPanelProps) {
           </Button>
         </Stack>
       </Box>
-      <Box sx={{ flex: 1, overflow: 'auto', ...compactTableSx }}>
+      <Box sx={{ flex: 1, overflow: 'auto', ...adminPanelTableSx }}>
         <Table size="small" stickyHeader>
           <TableHead>
             <TableRow>
@@ -202,7 +179,8 @@ export function SecondaryPanel(props: SecondaryPanelProps) {
           </TableBody>
         </Table>
       </Box>
-    </Box>
+      </Box>
+    </AdminPanel>
   );
 }
 
@@ -219,11 +197,9 @@ interface VersionsPanelProps {
 
 export function VersionsPanel(props: VersionsPanelProps) {
   return (
-    <Box sx={panelShellSx}>
-      <Box sx={panelHeaderSx}>
-        <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 0.75 }}>
-          教材版本
-        </Typography>
+    <AdminPanel title="教材版本" padded={false} sx={{ height: '100%' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>
+      <Box sx={{ px: 1.25, py: 0.75, borderBottom: `1px solid ${adminColors.border}`, flexShrink: 0 }}>
         <Stack direction="row" spacing={0.75}>
           <TextField
             size="small"
@@ -250,7 +226,7 @@ export function VersionsPanel(props: VersionsPanelProps) {
           </Button>
         </Stack>
       </Box>
-      <Box sx={{ flex: 1, overflow: 'auto', ...compactTableSx }}>
+      <Box sx={{ flex: 1, overflow: 'auto', ...adminPanelTableSx }}>
         <Table size="small" stickyHeader>
           <TableHead>
             <TableRow>
@@ -287,6 +263,7 @@ export function VersionsPanel(props: VersionsPanelProps) {
           </TableBody>
         </Table>
       </Box>
-    </Box>
+      </Box>
+    </AdminPanel>
   );
 }

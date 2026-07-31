@@ -196,7 +196,17 @@ export const dataProvider = {
     if (resource !== 'packs') {
       throw new Error(`不支持更新: ${resource}`);
     }
-    const patchData = adminUpdatePackRequestSchema.parse(params.data);
+    const data = { ...params.data } as Record<string, unknown>;
+    if (Array.isArray(data.coverLines)) {
+      const line0 = String(data.coverLines[0] ?? '').trim();
+      const line1 = String(data.coverLines[1] ?? '').trim();
+      if (line0 || line1) {
+        data.coverLines = [line0, line1];
+      } else {
+        delete data.coverLines;
+      }
+    }
+    const patchData = adminUpdatePackRequestSchema.parse(data);
     await adminFetchJson(`/admin/packs/${String(params.id)}`, {
       method: 'PATCH',
       body: JSON.stringify(patchData),

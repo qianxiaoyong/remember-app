@@ -1,10 +1,15 @@
 /** 与 apps/mobile/src/theme/colors.ts 及 UI 规范 §4.1 对齐 */
 export const adminColors = {
   background: '#F5F6FA',
+  shellSidebar: '#ECEEF4',
+  shellCanvas: '#F5F6FA',
   surface: '#FFFFFF',
+  surfaceRaised: '#FFFFFF',
+  surfaceSunken: '#EEF0F5',
   textPrimary: '#202228',
   textSecondary: '#6F737D',
   textMuted: '#A0A4AE',
+  textTertiary: '#A0A4AE',
   border: '#E9EAF0',
   borderStrong: '#E2E5EC',
   accent: '#6D70E8',
@@ -14,4 +19,6 @@ export const adminColors = {
   warning: '#F0A04B',
   error: '#E86B5C',
   accentSoft: 'rgba(109, 112, 232, 0.12)',
+  menuActiveBackground: 'rgba(109, 112, 232, 0.16)',
+  menuGroupTint: 'rgba(32, 34, 40, 0.04)',
 } as const;

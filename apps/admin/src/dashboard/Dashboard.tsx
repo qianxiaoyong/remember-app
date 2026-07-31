@@ -33,6 +33,7 @@ import {
 } from 'recharts';
 import type { TooltipProps } from 'recharts';
 import { useRedirect } from 'react-admin';
+import { AdminPageHeader } from '../components/admin-page-header.js';
 import { formatMoney } from '../components/format-money.js';
 import { DashboardSectionCard, KpiStatCard } from '../components/dashboard-cards.js';
 import { adminColors } from '../theme/admin-colors.js';
@@ -210,36 +211,30 @@ export function Dashboard() {
   }, [range]);
 
   return (
-    <Box p={{ xs: 1.5, sm: 2 }}>
-      <Stack
-        direction={{ xs: 'column', sm: 'row' }}
-        justifyContent="space-between"
-        alignItems={{ xs: 'flex-start', sm: 'center' }}
-        spacing={1.5}
-        mb={2}
-      >
-        <Box>
-          <Typography variant="h5" sx={{ fontWeight: 700 }}>
-            运营驾驶舱
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
+    <Box>
+      <AdminPageHeader
+        title="运营驾驶舱"
+        meta={
+          <>
             统计范围：{dashboardRangeLabels[range]}
             {loading ? ' · 加载中…' : null}
-          </Typography>
-        </Box>
-        <Select
-          size="small"
-          value={range}
-          onChange={(event) => {
-            setRange(event.target.value as AdminDashboardRange);
-          }}
-          sx={{ minWidth: 120, bgcolor: adminColors.surface }}
-        >
-          <MenuItem value="1d">今日</MenuItem>
-          <MenuItem value="7d">近 7 天</MenuItem>
-          <MenuItem value="30d">近 30 天</MenuItem>
-        </Select>
-      </Stack>
+          </>
+        }
+        actions={
+          <Select
+            size="small"
+            value={range}
+            onChange={(event) => {
+              setRange(event.target.value as AdminDashboardRange);
+            }}
+            sx={{ minWidth: 120, bgcolor: adminColors.surface }}
+          >
+            <MenuItem value="1d">今日</MenuItem>
+            <MenuItem value="7d">近 7 天</MenuItem>
+            <MenuItem value="30d">近 30 天</MenuItem>
+          </Select>
+        }
+      />
 
       {error ? (
         <Alert severity="error" sx={{ mb: 2 }}>

@@ -1,4 +1,5 @@
 import { Datagrid, DateField, FunctionField, List, TextField, TextInput } from 'react-admin';
+import { AdminPageHeader } from '../components/admin-page-header.js';
 import { MonoText } from '../components/mono-text.js';
 import { AuditResultChip, formatAuditAction } from '../components/admin-status-chips.js';
 import { EmptyListActions } from '../components/list-toolbar.js';
@@ -10,12 +11,15 @@ const auditFilters = [
 
 export function AuditLogList() {
   return (
-    <List
-      filters={auditFilters}
-      actions={<EmptyListActions />}
-      sort={{ field: 'createdAt', order: 'DESC' }}
-      perPage={30}
-    >
+    <>
+      <AdminPageHeader title="审计日志" meta="后台操作记录与结果追踪" />
+      <List
+        title={false}
+        filters={auditFilters}
+        actions={<EmptyListActions />}
+        sort={{ field: 'createdAt', order: 'DESC' }}
+        perPage={30}
+      >
       <Datagrid bulkActionButtons={false}>
         <DateField source="createdAt" label="时间" showTime locales="zh-CN" />
         <TextField source="actorLoginName" label="操作者" />
@@ -38,5 +42,6 @@ export function AuditLogList() {
         />
       </Datagrid>
     </List>
+    </>
   );
 }

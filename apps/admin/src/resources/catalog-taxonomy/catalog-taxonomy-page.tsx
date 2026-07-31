@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import { Title } from 'react-admin';
+import { AdminPageHeader } from '../../components/admin-page-header.js';
 import type {
   AdminCatalogTaxonomyResponse,
   AdminSecondaryTaxonomyNodeResponse,
@@ -130,14 +131,18 @@ export function CatalogTaxonomyPage() {
   return (
     <>
       <Title title="分类管理" />
-      <Box sx={{ px: 1.5, py: 1, height: 'calc(100vh - 96px)', display: 'flex', flexDirection: 'column' }}>
+      <AdminPageHeader
+        title="分类管理"
+        meta="维护一级 / 二级分类与教材版本，供知识库挂载"
+      />
+      <Box sx={{ height: 'calc(100vh - 180px)', display: 'flex', flexDirection: 'column' }}>
         {errorMessage ? (
           <Typography color="error" sx={{ mb: 1, fontSize: '0.875rem' }}>
             {errorMessage}
           </Typography>
         ) : null}
 
-        <Grid container spacing={1} sx={{ flex: 1, minHeight: 0 }}>
+        <Grid container spacing={1.5} sx={{ flex: 1, minHeight: 0 }}>
           <Grid size={{ xs: 12, lg: 2.5 }} sx={{ height: '100%', minHeight: 0 }}>
             <PrimarySidebar
               primaries={taxonomy?.primaries ?? []}
