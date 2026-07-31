@@ -16,6 +16,7 @@ describe('catalog contracts', () => {
           sizeLabel: '约 2 MB',
           updatedAt: '2026-07-28T00:00:00.000Z',
           priceCents: 1,
+          summary: '阶段 4 验包用的固定测试知识库。',
           isBundledTestPack: true,
         },
       ],

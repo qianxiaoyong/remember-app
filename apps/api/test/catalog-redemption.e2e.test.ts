@@ -81,6 +81,8 @@ describe('catalog and redemption integration', () => {
     const body = listCatalogPacksResponseSchema.parse(response.body);
     expect(body.items.length).toBeGreaterThanOrEqual(1);
     expect(body.items.some((item) => item.packId === 'remember-test-pack')).toBe(true);
+    const testPack = body.items.find((item) => item.packId === 'remember-test-pack');
+    expect(testPack?.summary).toContain('测试');
   });
 
   it('GET /catalog/packs/:packId 含 samplePreviews', async () => {

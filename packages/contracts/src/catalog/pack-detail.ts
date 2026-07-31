@@ -5,7 +5,6 @@ import { packSamplePreviewSchema } from './sample-preview.js';
 
 export const catalogPackDetailSchema = catalogPackSummarySchema
   .extend({
-    summary: z.string().min(1),
     samplePreviews: z.array(packSamplePreviewSchema).min(1),
     introMedia: z.array(introMediaItemSchema).optional(),
   })

@@ -6,6 +6,7 @@ import {
 } from './login.js';
 import { adminSessionUserSchema } from './session-admin.js';
 import { auditLogEntrySchema, auditLogWriteInputSchema } from './audit-log-entry.js';
+import { adminUpdatePackRequestSchema } from './packs.js';
 
 describe('admin contracts', () => {
   it('adminLogin round-trip', () => {
@@ -78,5 +79,30 @@ describe('admin contracts', () => {
   it('adminLogoutResponse 仅接受 ok:true', () => {
     expect(adminLogoutResponseSchema.parse({ ok: true })).toEqual({ ok: true });
     expect(() => adminLogoutResponseSchema.parse({ ok: false })).toThrow();
+  });
+
+  it('adminUpdatePackRequest 忽略 React Admin 只读字段与空 displayTitle', () => {
+    const parsed = adminUpdatePackRequestSchema.parse({
+      id: 'en-grade3-v1-rj',
+      packId: 'en-grade3-v1-rj',
+      title: '三年级上册人教版单词表',
+      displayTitle: '',
+      primaryCategory: 'primary',
+      secondaryCategory: '三年级',
+      versionLabel: '人教版',
+      priceCents: 100,
+      status: 'published',
+      summary: '测试',
+      contentTags: [],
+      cardCount: 0,
+      sizeLabel: '未知',
+      updatedAt: '2026-07-31T06:12:09.000Z',
+      currentPackVersion: '1.0.0',
+      protocolVersion: 1,
+    });
+    expect(parsed.status).toBe('published');
+    expect(parsed.displayTitle).toBeUndefined();
+    expect('id' in parsed).toBe(false);
+    expect('updatedAt' in parsed).toBe(false);
   });
 });

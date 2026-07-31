@@ -14,6 +14,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  TextField,
   Typography,
 } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -22,6 +23,7 @@ import { useNotify, useRecordContext, useRefresh } from 'react-admin';
 import {
   fetchPackDetail,
   publishPackVersion,
+  updatePackVersionNote,
   uploadPackVersionZip,
 } from '../api/pack-versions-api.js';
 import { AdminApiError } from '../api/admin-api-client.js';
@@ -54,6 +56,69 @@ function formatAdminError(error: unknown, packId: string): string {
     return error.message;
   }
   return error instanceof Error ? error.message : '请求失败';
+}
+
+function VersionNoteCell({
+  packId,
+  versionId,
+  initialNote,
+  onSaved,
+}: {
+  packId: string;
+  versionId: string;
+  initialNote?: string;
+  onSaved: () => void;
+}) {
+  const notify = useNotify();
+  const [value, setValue] = useState(initialNote ?? '');
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    setValue(initialNote ?? '');
+  }, [initialNote, versionId]);
+
+  const save = async () => {
+    const trimmed = value.trim();
+    const normalized = trimmed.length > 0 ? trimmed : null;
+    const previous = initialNote?.trim() || null;
+    if (normalized === previous) {
+      return;
+    }
+
+    setSaving(true);
+    try {
+      await updatePackVersionNote(packId, versionId, normalized);
+      onSaved();
+    } catch (saveError) {
+      notify(saveError instanceof Error ? saveError.message : '备注保存失败', { type: 'error' });
+      setValue(initialNote ?? '');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <TextField
+      size="small"
+      fullWidth
+      placeholder="内部备注"
+      value={value}
+      disabled={saving}
+      onChange={(event) => {
+        setValue(event.target.value);
+      }}
+      onBlur={() => {
+        void save();
+      }}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter') {
+          event.currentTarget.blur();
+        }
+      }}
+      slotProps={{ htmlInput: { maxLength: 500 } }}
+      sx={{ minWidth: 160 }}
+    />
+  );
 }
 
 export function PackVersionsPanel({ embedded = false }: { embedded?: boolean }) {
@@ -224,6 +289,7 @@ export function PackVersionsPanel({ embedded = false }: { embedded?: boolean }) 
               <TableCell>大小</TableCell>
               <TableCell>SHA256</TableCell>
               <TableCell>上传时间</TableCell>
+              <TableCell>备注</TableCell>
               <TableCell align="right">操作</TableCell>
             </TableRow>
           </TableHead>
@@ -242,6 +308,16 @@ export function PackVersionsPanel({ embedded = false }: { embedded?: boolean }) 
                   <TableCell>{formatBytes(version.sizeBytes)}</TableCell>
                   <TableCell>{`${version.sha256.slice(0, 8)}…`}</TableCell>
                   <TableCell>{formatDateTime(version.publishedAt)}</TableCell>
+                  <TableCell>
+                    <VersionNoteCell
+                      packId={packId}
+                      versionId={version.id}
+                      {...(version.note !== undefined ? { initialNote: version.note } : {})}
+                      onSaved={() => {
+                        void loadVersions();
+                      }}
+                    />
+                  </TableCell>
                   <TableCell align="right">
                     {!version.isCurrent ? (
                       <Button
@@ -270,7 +346,7 @@ export function PackVersionsPanel({ embedded = false }: { embedded?: boolean }) 
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={7}>
+                <TableCell colSpan={8}>
                   <Typography color="text.secondary">暂无版本，请先上传 zip</Typography>
                 </TableCell>
               </TableRow>

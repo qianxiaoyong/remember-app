@@ -55,7 +55,10 @@ export class PackDownloadService {
       });
     }
 
-    const mockFile = this.packDownloadConfigService.resolveMockPackFile();
+    const mockFile = await this.packDownloadConfigService.resolvePackDownloadFile(
+      packId,
+      version.packVersion,
+    );
     const token = createDownloadToken({ userId, packId });
     const baseUrl = this.packDownloadConfigService.readPublicBaseUrl();
     const downloadUrl = `${baseUrl}/api/v1/packs/${encodeURIComponent(packId)}/download?token=${encodeURIComponent(token)}`;
@@ -78,7 +81,21 @@ export class PackDownloadService {
     });
   }
 
-  resolveMockZipPath(): string {
-    return this.packDownloadConfigService.resolveMockPackFile().absolutePath;
+  async resolvePackZipPath(packId: string): Promise<string> {
+    const pack = await this.catalogRepository.findPublishedPackById(packId);
+    if (!pack?.currentVersionId) {
+      return this.packDownloadConfigService.resolveMockPackFile().absolutePath;
+    }
+    const version = await this.prisma.packVersion.findUnique({
+      where: { id: pack.currentVersionId },
+    });
+    if (!version) {
+      return this.packDownloadConfigService.resolveMockPackFile().absolutePath;
+    }
+    const file = await this.packDownloadConfigService.resolvePackDownloadFile(
+      packId,
+      version.packVersion,
+    );
+    return file.absolutePath;
   }
 }

@@ -33,6 +33,7 @@ async function main(): Promise<void> {
         where: { codeHash },
         create: {
           codeHash,
+          code: entry.code,
           packId: entry.packId,
           maxRedemptions: 100,
           redeemedCount: 0,
@@ -40,6 +41,7 @@ async function main(): Promise<void> {
         },
         update: {
           packId: entry.packId,
+          code: entry.code,
           status: 'active',
           maxRedemptions: 100,
         },

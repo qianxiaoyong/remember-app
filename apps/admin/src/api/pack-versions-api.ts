@@ -1,5 +1,6 @@
 import {
   adminPackDetailResponseSchema,
+  adminPackVersionSchema,
   adminPublishPackVersionResponseSchema,
   adminUploadPackVersionResponseSchema,
 } from '@remember/contracts';
@@ -35,6 +36,20 @@ export async function publishPackVersion(packId: string, versionId: string) {
   return adminPublishPackVersionResponseSchema.parse(
     await adminFetchJson(`/admin/packs/${packId}/versions/${versionId}/publish`, {
       method: 'POST',
+    }),
+  );
+}
+
+export async function updatePackVersionNote(
+  packId: string,
+  versionId: string,
+  note: string | null,
+) {
+  return adminPackVersionSchema.parse(
+    await adminFetchJson(`/admin/packs/${packId}/versions/${versionId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ note }),
     }),
   );
 }

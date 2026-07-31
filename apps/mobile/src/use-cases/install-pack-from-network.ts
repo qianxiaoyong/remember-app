@@ -4,6 +4,8 @@ import {
   requestPackDownloadAuthorization,
 } from '../data/api/pack-download-api';
 import { ApiRequestError } from '../data/api/api-client';
+import { fetchCatalogPackDetail } from '../data/api/catalog-api';
+import { findCatalogItemSync } from '../data/catalog/catalog-cache-store';
 import { installPackFromZipBytes } from '../data/pack/install-pack-from-zip';
 import type { InstalledPackRow } from '../data/repositories/installed-pack-repository';
 import { writeOfflineLicenseExpiry } from '../data/offline-license/offline-license-store';
@@ -35,7 +37,8 @@ export async function installPackFromNetwork(catalogPackId: string): Promise<Ins
     const authorization = await requestPackDownloadAuthorization(token, catalogPackId);
 
     const zipBytes = await downloadPackZipBytes(authorization.downloadUrl);
-    const installed = await installPackFromZipBytes(zipBytes);
+    const displayName = await resolveInstallDisplayName(catalogPackId);
+    const installed = await installPackFromZipBytes(zipBytes, displayName);
     await writeOfflineLicenseExpiry(catalogPackId, authorization.offlineLicenseExpiresAt);
 
     if (authorization.devContentPackId && authorization.devContentPackId !== catalogPackId) {
@@ -54,5 +57,22 @@ export async function installPackFromNetwork(catalogPackId: string): Promise<Ins
     throw error;
   } finally {
     activeDownloadPackId = null;
+  }
+}
+
+async function resolveInstallDisplayName(catalogPackId: string): Promise<string | undefined> {
+  const cachedTitle = findCatalogItemSync(catalogPackId)?.title;
+  if (cachedTitle) {
+    return cachedTitle;
+  }
+
+  try {
+    const detail = await fetchCatalogPackDetail(catalogPackId);
+    return detail.title;
+  } catch (error) {
+    if (error instanceof ApiRequestError && error.code === 'PACK_NOT_FOUND') {
+      return undefined;
+    }
+    return undefined;
   }
 }

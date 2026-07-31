@@ -122,6 +122,7 @@ model PackVersion {
   manifestSignature String   @map("manifest_signature")
   protocolVersion   Int      @map("protocol_version")
   status            String   @default("published")
+  note              String?  @map("note")
   publishedAt       DateTime @map("published_at") @db.Timestamptz(6)
   pack              Pack     @relation(fields: [packId], references: [packId])
 
@@ -191,12 +192,16 @@ model Refund {
 model RedemptionCode {
   id             String            @id @default(uuid()) @db.Uuid
   codeHash       String            @unique @map("code_hash")
+  code           String?           @map("code")
   packId         String            @map("pack_id")
   maxRedemptions Int               @map("max_redemptions")
   redeemedCount  Int               @default(0) @map("redeemed_count")
   expiresAt      DateTime?         @map("expires_at") @db.Timestamptz(6)
   status         String            @default("active")
+  note           String?           @map("note")
+  deletedAt      DateTime?         @map("deleted_at") @db.Timestamptz(6)
   createdAt      DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt      DateTime          @updatedAt @map("updated_at") @db.Timestamptz(6)
   pack           Pack              @relation(fields: [packId], references: [packId])
   events         RedemptionEvent[]
 

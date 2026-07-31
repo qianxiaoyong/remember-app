@@ -8,7 +8,7 @@ import {
   catalogPackPriceResponseSchema,
   listCatalogPacksResponseSchema,
 } from '@remember/contracts';
-import { apiFetchJson } from './api-client';
+import { apiFetchJson, CATALOG_API_TIMEOUT_MS } from './api-client';
 
 function buildCatalogQuery(params: ListCatalogPacksQuery): string {
   const search = new URLSearchParams();
@@ -33,6 +33,7 @@ export async function fetchCatalogPacks(
 ): Promise<CatalogPackSummary[]> {
   const body = await apiFetchJson<unknown>(`/api/v1/catalog/packs${buildCatalogQuery(query)}`, {
     method: 'GET',
+    timeoutMs: CATALOG_API_TIMEOUT_MS,
   });
   return listCatalogPacksResponseSchema.parse(body).items;
 }
@@ -40,6 +41,7 @@ export async function fetchCatalogPacks(
 export async function fetchCatalogPackDetail(packId: string): Promise<CatalogPackDetail> {
   const body = await apiFetchJson<unknown>(`/api/v1/catalog/packs/${encodeURIComponent(packId)}`, {
     method: 'GET',
+    timeoutMs: CATALOG_API_TIMEOUT_MS,
   });
   return catalogPackDetailSchema.parse(body);
 }
@@ -49,7 +51,7 @@ export async function fetchCatalogPackPrice(
 ): Promise<{ packId: string; priceCents: number }> {
   const body = await apiFetchJson<unknown>(
     `/api/v1/catalog/packs/${encodeURIComponent(packId)}/price`,
-    { method: 'GET' },
+    { method: 'GET', timeoutMs: CATALOG_API_TIMEOUT_MS },
   );
   return catalogPackPriceResponseSchema.parse(body);
 }

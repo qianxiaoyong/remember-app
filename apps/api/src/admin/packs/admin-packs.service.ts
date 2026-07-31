@@ -1,4 +1,4 @@
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import type { AdminCreatePackRequest, AdminUpdatePackRequest } from '@remember/contracts';
@@ -6,9 +6,15 @@ import {
   adminPackDetailResponseSchema,
   adminPackListResponseSchema,
   adminPackSummarySchema,
+  adminPackVersionSchema,
   adminPublishPackVersionResponseSchema,
   adminUploadPackVersionResponseSchema,
 } from '@remember/contracts';
+import {
+  formatPackSizeLabel,
+  readSamplePreviewsFromZip,
+} from '@remember/pack-builder/catalog-metadata';
+import type { VerifiedPackArchive } from '@remember/pack-builder/verify';
 import { AuditService } from '../../audit/audit.service.js';
 import { readAdminPackConfig } from '../../config/read-admin-pack-config.js';
 import { PackVerifyService } from '../../pack-verify/pack-verify.service.js';
@@ -75,18 +81,7 @@ export class AdminPacksService {
 
     return adminPackDetailResponseSchema.parse({
       pack: this.toPackSummary(pack, current),
-      versions: pack.versions.map((version) => ({
-        id: version.id,
-        packId: version.packId,
-        packVersion: version.packVersion,
-        sha256: version.sha256,
-        sizeBytes: Number(version.sizeBytes),
-        keyId: version.keyId,
-        protocolVersion: version.protocolVersion,
-        status: version.status,
-        publishedAt: version.publishedAt.toISOString(),
-        isCurrent: pack.currentVersionId === version.id,
-      })),
+      versions: pack.versions.map((version) => this.toAdminPackVersion(version, pack.currentVersionId === version.id)),
     });
   }
 
@@ -114,6 +109,53 @@ export class AdminPacksService {
       ...(current ? { protocolVersion: current.protocolVersion } : {}),
       updatedAt: pack.updatedAt.toISOString(),
     });
+  }
+
+  private toAdminPackVersion(
+    version: {
+      id: string;
+      packId: string;
+      packVersion: string;
+      sha256: string;
+      sizeBytes: bigint;
+      keyId: string;
+      protocolVersion: number;
+      status: string;
+      publishedAt: Date;
+      note: string | null;
+    },
+    isCurrent: boolean,
+  ) {
+    return {
+      id: version.id,
+      packId: version.packId,
+      packVersion: version.packVersion,
+      sha256: version.sha256,
+      sizeBytes: Number(version.sizeBytes),
+      keyId: version.keyId,
+      protocolVersion: version.protocolVersion,
+      status: version.status,
+      publishedAt: version.publishedAt.toISOString(),
+      isCurrent,
+      ...(version.note ? { note: version.note } : {}),
+    };
+  }
+
+  async updateVersionNote(packId: string, versionId: string, note: string | null) {
+    const version = await this.repository.findVersionById(versionId);
+    if (version?.packId !== packId) {
+      throw new NotFoundException({ code: 'PACK_VERSION_NOT_FOUND', message: '版本不存在' });
+    }
+
+    const updated = await this.prisma.packVersion.update({
+      where: { id: versionId },
+      data: { note },
+    });
+
+    const pack = await this.repository.findPackById(packId);
+    return adminPackVersionSchema.parse(
+      this.toAdminPackVersion(updated, pack?.currentVersionId === updated.id),
+    );
   }
 
   async createPack(input: AdminCreatePackRequest) {
@@ -246,19 +288,10 @@ export class AdminPacksService {
       return created;
     });
 
+    await this.syncPackCatalogMetadata(packId, zipBytes, verified);
+
     return adminUploadPackVersionResponseSchema.parse({
-      version: {
-        id: version.id,
-        packId: version.packId,
-        packVersion: version.packVersion,
-        sha256: version.sha256,
-        sizeBytes: Number(version.sizeBytes),
-        keyId: version.keyId,
-        protocolVersion: version.protocolVersion,
-        status: version.status,
-        publishedAt: version.publishedAt.toISOString(),
-        isCurrent: pack.currentVersionId === version.id,
-      },
+      version: this.toAdminPackVersion(version, pack.currentVersionId === version.id),
       manifestSummary: {
         packId: verified.manifest.packId,
         packVersion: verified.manifest.packVersion,
@@ -281,6 +314,11 @@ export class AdminPacksService {
     if (version?.packId !== packId) {
       throw new NotFoundException({ code: 'PACK_VERSION_NOT_FOUND', message: '版本不存在' });
     }
+
+    const zipPath = this.resolveStoredZipPath(packId, version.packVersion);
+    const zipBytes = new Uint8Array(await readFile(zipPath));
+    const verified = await this.packVerifyService.verifyUploadedZip(zipBytes);
+    await this.syncPackCatalogMetadata(packId, zipBytes, verified);
 
     await this.prisma.$transaction(async (tx) => {
       await tx.packVersion.update({
@@ -308,6 +346,36 @@ export class AdminPacksService {
       packId,
       currentVersionId: versionId,
       packVersion: version.packVersion,
+    });
+  }
+
+  private resolveStoredZipPath(packId: string, packVersion: string): string {
+    return join(this.packConfig.storageDir, packId, packVersion, 'pack.zip');
+  }
+
+  private async syncPackCatalogMetadata(
+    packId: string,
+    zipBytes: Uint8Array,
+    verified: VerifiedPackArchive,
+  ): Promise<void> {
+    const pack = await this.repository.findPackById(packId);
+    if (!pack) {
+      return;
+    }
+
+    const existingPreviews = Array.isArray(pack.samplePreviews) ? pack.samplePreviews : [];
+    const samplePreviews =
+      existingPreviews.length > 0 ? existingPreviews : readSamplePreviewsFromZip(zipBytes);
+
+    await this.prisma.pack.update({
+      where: { packId },
+      data: {
+        cardCount: verified.cardCount,
+        sizeLabel: formatPackSizeLabel(verified.sizeBytes),
+        ...(samplePreviews.length > 0
+          ? { samplePreviews: JSON.parse(JSON.stringify(samplePreviews)) }
+          : {}),
+      },
     });
   }
 }

@@ -1,5 +1,5 @@
-import { findCatalogItem } from './catalog-seed';
+import { findCatalogItemSync } from '../data/catalog/catalog-cache-store';
 
 export function resolvePackDisplayName(packId: string): string {
-  return findCatalogItem(packId)?.title ?? packId;
+  return findCatalogItemSync(packId)?.title ?? packId;
 }

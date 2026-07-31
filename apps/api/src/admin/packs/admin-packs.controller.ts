@@ -14,7 +14,7 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { MAX_PACK_ZIP_BYTES } from '@remember/contracts';
-import { adminCreatePackRequestSchema, adminUpdatePackRequestSchema } from '@remember/contracts';
+import { adminCreatePackRequestSchema, adminUpdatePackRequestSchema, adminUpdatePackVersionNoteRequestSchema } from '@remember/contracts';
 import {
   AdminAuthGuard,
   requireAdminAuthContext,
@@ -74,5 +74,15 @@ export class AdminPacksController {
   ) {
     const admin = requireAdminAuthContext(request);
     return this.service.publishVersion(admin.adminUserId, packId, versionId);
+  }
+
+  @Patch(':packId/versions/:versionId')
+  updateVersionNote(
+    @Param('packId') packId: string,
+    @Param('versionId') versionId: string,
+    @Body() body: unknown,
+  ) {
+    const input = adminUpdatePackVersionNoteRequestSchema.parse(body);
+    return this.service.updateVersionNote(packId, versionId, input.note);
   }
 }

@@ -1,11 +1,15 @@
 import type { DataProvider, RaRecord } from 'react-admin';
+import { adminUpdatePackRequestSchema } from '@remember/contracts';
 import { adminFetchJson } from '../api/admin-api-client.js';
 
 function filterValueToQueryString(value: unknown): string | undefined {
   if (value === undefined || value === null || value === '') {
     return undefined;
   }
-  if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
+  if (typeof value === 'boolean') {
+    return value ? 'true' : 'false';
+  }
+  if (typeof value === 'string' || typeof value === 'number') {
     return String(value);
   }
   return undefined;
@@ -192,12 +196,12 @@ export const dataProvider = {
     if (resource !== 'packs') {
       throw new Error(`不支持更新: ${resource}`);
     }
-    const patchData = params.data as Record<string, unknown>;
+    const patchData = adminUpdatePackRequestSchema.parse(params.data);
     await adminFetchJson(`/admin/packs/${String(params.id)}`, {
       method: 'PATCH',
       body: JSON.stringify(patchData),
     });
-    return { data: { ...patchData, id: String(params.id) } as RaRecord };
+    return { data: { ...params.data, ...patchData, id: String(params.id) } as RaRecord };
   },
 
   updateMany: () => Promise.resolve({ data: [] }),

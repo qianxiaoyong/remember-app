@@ -23,6 +23,10 @@
     "./verify": {
       "types": "./dist/verify-pack-buffer.d.ts",
       "default": "./dist/verify-pack-buffer.js"
+    },
+    "./catalog-metadata": {
+      "types": "./dist/read-pack-sample-previews.d.ts",
+      "default": "./dist/read-pack-sample-previews.js"
     }
   },
   "devDependencies": {

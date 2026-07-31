@@ -49,9 +49,21 @@ export function OrderStatusChip({ status }: { status: string }) {
 
 const redemptionStatusConfig: Record<string, StatusChipStyle> = {
   active: { label: '可用', color: adminColors.success, background: 'rgba(92, 184, 138, 0.14)' },
+  disabled: { label: '已停用', color: adminColors.warning, background: 'rgba(240, 160, 75, 0.14)' },
+  deleted: { label: '已删除', color: adminColors.textMuted, background: adminColors.statTileBackground },
+  exhausted: { label: '已耗尽', color: adminColors.textSecondary, background: adminColors.statTileBackground },
 };
 
-export function RedemptionStatusChip({ status }: { status: string }) {
+export function RedemptionStatusChip({
+  status,
+  isExhausted,
+}: {
+  status: string;
+  isExhausted?: boolean;
+}) {
+  if (isExhausted && status === 'active') {
+    return <StatusChip config={redemptionStatusConfig.exhausted!} />;
+  }
   return <StatusChip config={resolveStatusConfig(status, redemptionStatusConfig)} />;
 }
 
@@ -87,6 +99,10 @@ const auditActionLabels: Record<string, string> = {
   'pack_version.publish': '发布知识库版本',
   'pack_access.grant': '补发用户权益',
   'refund.create': '发起退款',
+  'redemption_code.batch_create': '批量生成兑换码',
+  'redemption_code.update': '更新兑换码',
+  'redemption_code.delete': '删除兑换码',
+  'redemption_code.restore': '恢复兑换码',
 };
 
 export function formatAuditAction(action: string): string {

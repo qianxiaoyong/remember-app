@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
-import { useCallback, useMemo, useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { InstalledPackRow } from '../components/library/installed-pack-row';
 import { LibraryOverviewCard } from '../components/library/library-overview-card';
@@ -10,8 +10,13 @@ import { ScreenScaffold } from '../components/shell/screen-scaffold';
 import { PrimaryButton } from '../components/ui/primary-button';
 import { useShellActions } from '../shell/shell-provider';
 import { consumeLibraryNeedsRefresh } from '../shell/library-refresh-signal';
+import {
+  readCatalogDiskCache,
+  subscribeCatalogCacheUpdates,
+} from '../data/catalog/catalog-cache-store';
 import { navigateShellTab } from '../shell/shell-tab-transition';
 import { getLibraryOverview, listInstalledPackSummaries } from '../use-cases/get-library-overview';
+import { warmCatalogCacheFromNetwork } from '../use-cases/fetch-market-catalog';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 
@@ -19,14 +24,37 @@ export function LibraryScreen(): ReactElement {
   const router = useRouter();
   const { openDrawer } = useShellActions();
   const [refreshKey, setRefreshKey] = useState(0);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const bumpRefresh = useCallback(() => {
+    setRefreshKey((value) => value + 1);
+  }, []);
+
+  useEffect(() => {
+    return subscribeCatalogCacheUpdates(bumpRefresh);
+  }, [bumpRefresh]);
 
   useFocusEffect(
     useCallback(() => {
+      void readCatalogDiskCache().then(() => {
+        bumpRefresh();
+      });
       if (consumeLibraryNeedsRefresh()) {
-        setRefreshKey((value) => value + 1);
+        bumpRefresh();
       }
-    }, []),
+    }, [bumpRefresh]),
   );
+
+  const handleRefresh = useCallback(async () => {
+    setIsRefreshing(true);
+    try {
+      await readCatalogDiskCache();
+      await warmCatalogCacheFromNetwork();
+      bumpRefresh();
+    } finally {
+      setIsRefreshing(false);
+    }
+  }, [bumpRefresh]);
 
   const overview = useMemo(() => getLibraryOverview(), [refreshKey]);
   const installedPacks = useMemo(() => listInstalledPackSummaries(), [refreshKey]);
@@ -40,7 +68,19 @@ export function LibraryScreen(): ReactElement {
         }}
         variant="shell"
       />
-      <ScrollView contentContainerStyle={styles.content}>
+      <ScrollView
+        contentContainerStyle={styles.content}
+        refreshControl={
+          <RefreshControl
+            colors={[colors.accent]}
+            onRefresh={() => {
+              void handleRefresh();
+            }}
+            refreshing={isRefreshing}
+            tintColor={colors.accent}
+          />
+        }
+      >
         <LibraryOverviewCard overview={overview} />
 
         {installedPacks.length === 0 ? (

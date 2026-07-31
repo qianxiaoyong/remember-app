@@ -136,6 +136,7 @@ export async function seedCatalogFixtures(prisma: PrismaClient): Promise<void> {
   await prisma.redemptionCode.create({
     data: {
       codeHash,
+      code: TEST_REDEMPTION_CODE,
       packId: 'remember-test-pack',
       maxRedemptions: 100,
       redeemedCount: 0,
@@ -147,6 +148,7 @@ export async function seedCatalogFixtures(prisma: PrismaClient): Promise<void> {
   await prisma.redemptionCode.create({
     data: {
       codeHash: grade3CodeHash,
+      code: 'TEST-REDEEM-GRADE3',
       packId: 'demo-primary-grade3',
       maxRedemptions: 100,
       redeemedCount: 0,

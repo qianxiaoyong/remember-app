@@ -168,12 +168,13 @@ async function main(): Promise<void> {
       where: { codeHash },
       create: {
         codeHash,
+        code: entry.code,
         packId: entry.packId,
         maxRedemptions: 100,
         redeemedCount: 0,
         status: 'active',
       },
-      update: { packId: entry.packId, status: 'active', maxRedemptions: 100 },
+      update: { packId: entry.packId, code: entry.code, status: 'active', maxRedemptions: 100 },
     });
     console.log(`ok code ${entry.code}`);
   }

@@ -33,10 +33,10 @@ export class PackDownloadController {
   }
 
   @Get(':packId/download')
-  downloadPack(
+  async downloadPack(
     @Param('packId') packId: string,
     @Query('token') token: string | undefined,
-  ): StreamableFile {
+  ): Promise<StreamableFile> {
     if (!token?.trim()) {
       throw new ForbiddenException({
         code: 'PACK_DOWNLOAD_TOKEN_INVALID',
@@ -66,7 +66,7 @@ export class PackDownloadController {
     }
 
     try {
-      const zipPath = this.packDownloadService.resolveMockZipPath();
+      const zipPath = await this.packDownloadService.resolvePackZipPath(packId);
       return new StreamableFile(createReadStream(zipPath), {
         type: 'application/zip',
       });

@@ -24,6 +24,7 @@ import { MonoText } from '../components/mono-text.js';
 import { PackStatusChip } from '../components/pack-status-chip.js';
 import { PackEditSummary } from './pack-edit-summary.js';
 import { PackVersionsPanel } from './pack-versions-panel.js';
+import { PackRedemptionCodesPanel } from './pack-redemption-codes-panel.js';
 
 const packChoices = [
   { id: 'primary', name: '小学' },
@@ -69,6 +70,7 @@ function PackEditTabs() {
         >
           <Tab label="基本信息" />
           <Tab label="版本与发布" />
+          <Tab label="兑换码" />
         </Tabs>
       </Box>
       <Box sx={{ display: tab === 0 ? 'block' : 'none' }}>
@@ -101,6 +103,9 @@ function PackEditTabs() {
       </Box>
       <Box sx={{ display: tab === 1 ? 'block' : 'none' }}>
         <PackVersionsPanel embedded />
+      </Box>
+      <Box sx={{ display: tab === 2 ? 'block' : 'none' }}>
+        <PackRedemptionCodesPanel />
       </Box>
     </>
   );

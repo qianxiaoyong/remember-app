@@ -15,6 +15,7 @@ export const catalogPackSummarySchema = z
     sizeLabel: z.string().min(1),
     updatedAt: z.iso.datetime(),
     priceCents: z.number().int().nonnegative(),
+    summary: z.string().min(1),
     coverUrl: z.url().optional(),
     coverBadge: z.string().min(1).optional(),
     coverLines: z.array(z.string()).optional(),

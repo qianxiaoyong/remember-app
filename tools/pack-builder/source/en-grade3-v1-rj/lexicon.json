@@ -1,0 +1,1962 @@
+[
+  {
+    "surfaceForm": "a",
+    "displayForm": "a",
+    "definitions": [
+      {
+        "text": "一个；一",
+        "pos": "det."
+      }
+    ],
+    "ipa": "/ə/"
+  },
+  {
+    "surfaceForm": "air",
+    "displayForm": "air",
+    "definitions": [
+      {
+        "text": "空气",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/er/"
+  },
+  {
+    "surfaceForm": "am",
+    "displayForm": "am",
+    "definitions": [
+      {
+        "text": "是",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/æm/"
+  },
+  {
+    "surfaceForm": "an",
+    "displayForm": "an",
+    "definitions": [
+      {
+        "text": "一个；一",
+        "pos": "det."
+      }
+    ],
+    "ipa": "/ən/"
+  },
+  {
+    "surfaceForm": "and",
+    "displayForm": "and",
+    "definitions": [
+      {
+        "text": "和；与",
+        "pos": "conj."
+      }
+    ],
+    "ipa": "/ænd/"
+  },
+  {
+    "surfaceForm": "animal",
+    "displayForm": "animal",
+    "definitions": [
+      {
+        "text": "动物",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈænəməl/"
+  },
+  {
+    "surfaceForm": "animals",
+    "displayForm": "animals",
+    "definitions": [
+      {
+        "text": "动物",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈænəməl/",
+    "formNote": "复数或第三人称单数形式，原形为 animal"
+  },
+  {
+    "surfaceForm": "apple",
+    "displayForm": "apple",
+    "definitions": [
+      {
+        "text": "苹果",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈæpəl/"
+  },
+  {
+    "surfaceForm": "apples",
+    "displayForm": "apples",
+    "definitions": [
+      {
+        "text": "苹果",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈæpəl/",
+    "formNote": "复数或第三人称单数形式，原形为 apple"
+  },
+  {
+    "surfaceForm": "are",
+    "displayForm": "are",
+    "definitions": [
+      {
+        "text": "是",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/ɑr/"
+  },
+  {
+    "surfaceForm": "arm",
+    "displayForm": "arm",
+    "definitions": [
+      {
+        "text": "胳膊",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ɑrm/"
+  },
+  {
+    "surfaceForm": "at",
+    "displayForm": "at",
+    "definitions": [
+      {
+        "text": "在",
+        "pos": "prep."
+      }
+    ],
+    "ipa": "/æt/"
+  },
+  {
+    "surfaceForm": "aunt",
+    "displayForm": "aunt",
+    "definitions": [
+      {
+        "text": "伯母；婶母；舅母；姑母；姨母",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ænt/"
+  },
+  {
+    "surfaceForm": "baby",
+    "displayForm": "baby",
+    "definitions": [
+      {
+        "text": "婴儿",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈbeɪbi/"
+  },
+  {
+    "surfaceForm": "banana",
+    "displayForm": "banana",
+    "definitions": [
+      {
+        "text": "香蕉",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/bəˈnænə/"
+  },
+  {
+    "surfaceForm": "bear",
+    "displayForm": "bear",
+    "definitions": [
+      {
+        "text": "熊",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ber/"
+  },
+  {
+    "surfaceForm": "beautiful",
+    "displayForm": "beautiful",
+    "definitions": [
+      {
+        "text": "漂亮的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/ˈbjuːtəfəl/"
+  },
+  {
+    "surfaceForm": "big",
+    "displayForm": "big",
+    "definitions": [
+      {
+        "text": "大的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/bɪɡ/"
+  },
+  {
+    "surfaceForm": "bird",
+    "displayForm": "bird",
+    "definitions": [
+      {
+        "text": "鸟",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/bɜrd/"
+  },
+  {
+    "surfaceForm": "birds",
+    "displayForm": "birds",
+    "definitions": [
+      {
+        "text": "鸟",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/bɜrd/",
+    "formNote": "复数或第三人称单数形式，原形为 bird"
+  },
+  {
+    "surfaceForm": "black",
+    "displayForm": "black",
+    "definitions": [
+      {
+        "text": "黑色；黑色的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/blæk/"
+  },
+  {
+    "surfaceForm": "blue",
+    "displayForm": "blue",
+    "definitions": [
+      {
+        "text": "蓝色；蓝色的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/bluː/"
+  },
+  {
+    "surfaceForm": "book",
+    "displayForm": "book",
+    "definitions": [
+      {
+        "text": "书",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/bʊk/"
+  },
+  {
+    "surfaceForm": "books",
+    "displayForm": "books",
+    "definitions": [
+      {
+        "text": "书（复数）",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/bʊks/"
+  },
+  {
+    "surfaceForm": "brother",
+    "displayForm": "brother",
+    "definitions": [
+      {
+        "text": "哥；弟",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈbrʌðər/"
+  },
+  {
+    "surfaceForm": "brown",
+    "displayForm": "brown",
+    "definitions": [
+      {
+        "text": "棕色；棕色的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/braʊn/"
+  },
+  {
+    "surfaceForm": "cake",
+    "displayForm": "cake",
+    "definitions": [
+      {
+        "text": "蛋糕",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/keɪk/"
+  },
+  {
+    "surfaceForm": "can",
+    "displayForm": "can",
+    "definitions": [
+      {
+        "text": "可以",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/kæn/"
+  },
+  {
+    "surfaceForm": "cat",
+    "displayForm": "cat",
+    "definitions": [
+      {
+        "text": "猫",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/kæt/"
+  },
+  {
+    "surfaceForm": "cloud",
+    "displayForm": "cloud",
+    "definitions": [
+      {
+        "text": "云",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/klaʊd/"
+  },
+  {
+    "surfaceForm": "colour",
+    "displayForm": "colour",
+    "definitions": [
+      {
+        "text": "颜色",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈkʌlər/"
+  },
+  {
+    "surfaceForm": "colours",
+    "displayForm": "colours",
+    "definitions": [
+      {
+        "text": "颜色",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈkʌlər/",
+    "formNote": "复数或第三人称单数形式，原形为 colour"
+  },
+  {
+    "surfaceForm": "count",
+    "displayForm": "count",
+    "definitions": [
+      {
+        "text": "数数",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/kaʊnt/"
+  },
+  {
+    "surfaceForm": "cousin",
+    "displayForm": "cousin",
+    "definitions": [
+      {
+        "text": "堂（表）兄弟；堂（表）姐妹",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈkʌzən/"
+  },
+  {
+    "surfaceForm": "cut",
+    "displayForm": "cut",
+    "definitions": [
+      {
+        "text": "切块",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/kʌt/"
+  },
+  {
+    "surfaceForm": "cute",
+    "displayForm": "cute",
+    "definitions": [
+      {
+        "text": "可爱的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/kjuːt/"
+  },
+  {
+    "surfaceForm": "dad",
+    "displayForm": "dad",
+    "definitions": [
+      {
+        "text": "爸爸；爹爹",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/dæd/"
+  },
+  {
+    "surfaceForm": "dog",
+    "displayForm": "dog",
+    "definitions": [
+      {
+        "text": "狗",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/dɔɡ/"
+  },
+  {
+    "surfaceForm": "draw",
+    "displayForm": "draw",
+    "definitions": [
+      {
+        "text": "画",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/drɔ/"
+  },
+  {
+    "surfaceForm": "duck",
+    "displayForm": "duck",
+    "definitions": [
+      {
+        "text": "鸭",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/dʌk/"
+  },
+  {
+    "surfaceForm": "ducks",
+    "displayForm": "ducks",
+    "definitions": [
+      {
+        "text": "鸭",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/dʌk/",
+    "formNote": "复数或第三人称单数形式，原形为 duck"
+  },
+  {
+    "surfaceForm": "ear",
+    "displayForm": "ear",
+    "definitions": [
+      {
+        "text": "耳朵",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ɪr/"
+  },
+  {
+    "surfaceForm": "eat",
+    "displayForm": "eat",
+    "definitions": [
+      {
+        "text": "吃",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/iːt/"
+  },
+  {
+    "surfaceForm": "eight",
+    "displayForm": "eight",
+    "definitions": [
+      {
+        "text": "八",
+        "pos": "num."
+      }
+    ],
+    "ipa": "/eɪt/"
+  },
+  {
+    "surfaceForm": "elephant",
+    "displayForm": "elephant",
+    "definitions": [
+      {
+        "text": "大象",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈeləfənt/"
+  },
+  {
+    "surfaceForm": "eye",
+    "displayForm": "eye",
+    "definitions": [
+      {
+        "text": "眼睛",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/aɪ/"
+  },
+  {
+    "surfaceForm": "eyes",
+    "displayForm": "eyes",
+    "definitions": [
+      {
+        "text": "眼睛",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/aɪ/",
+    "formNote": "复数或第三人称单数形式，原形为 eye"
+  },
+  {
+    "surfaceForm": "family",
+    "displayForm": "family",
+    "definitions": [
+      {
+        "text": "家；家庭",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈfæməli/"
+  },
+  {
+    "surfaceForm": "farm",
+    "displayForm": "farm",
+    "definitions": [
+      {
+        "text": "农场",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/fɑrm/"
+  },
+  {
+    "surfaceForm": "fast",
+    "displayForm": "fast",
+    "definitions": [
+      {
+        "text": "快的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/fæst/"
+  },
+  {
+    "surfaceForm": "father",
+    "displayForm": "father",
+    "definitions": [
+      {
+        "text": "父亲；爸爸",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈfɑðər/"
+  },
+  {
+    "surfaceForm": "feelings",
+    "displayForm": "feelings",
+    "definitions": [
+      {
+        "text": "感受",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈfiːlɪŋz/"
+  },
+  {
+    "surfaceForm": "fish",
+    "displayForm": "fish",
+    "definitions": [
+      {
+        "text": "鱼；鱼肉",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/fɪʃ/"
+  },
+  {
+    "surfaceForm": "five",
+    "displayForm": "five",
+    "definitions": [
+      {
+        "text": "五",
+        "pos": "num."
+      }
+    ],
+    "ipa": "/faɪv/"
+  },
+  {
+    "surfaceForm": "flower",
+    "displayForm": "flower",
+    "definitions": [
+      {
+        "text": "花；花朵",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈflaʊər/"
+  },
+  {
+    "surfaceForm": "flowers",
+    "displayForm": "flowers",
+    "definitions": [
+      {
+        "text": "花；花朵",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈflaʊər/",
+    "formNote": "复数或第三人称单数形式，原形为 flower"
+  },
+  {
+    "surfaceForm": "fly",
+    "displayForm": "fly",
+    "definitions": [
+      {
+        "text": "飞",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/flaɪ/"
+  },
+  {
+    "surfaceForm": "four",
+    "displayForm": "four",
+    "definitions": [
+      {
+        "text": "四",
+        "pos": "num."
+      }
+    ],
+    "ipa": "/fɔr/"
+  },
+  {
+    "surfaceForm": "fox",
+    "displayForm": "fox",
+    "definitions": [
+      {
+        "text": "狐狸",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/fɑks/"
+  },
+  {
+    "surfaceForm": "friend",
+    "displayForm": "friend",
+    "definitions": [
+      {
+        "text": "朋友",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/frend/"
+  },
+  {
+    "surfaceForm": "friends",
+    "displayForm": "friends",
+    "definitions": [
+      {
+        "text": "朋友",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/frend/",
+    "formNote": "复数或第三人称单数形式，原形为 friend"
+  },
+  {
+    "surfaceForm": "from",
+    "displayForm": "from",
+    "definitions": [
+      {
+        "text": "从；来自",
+        "pos": "prep."
+      }
+    ],
+    "ipa": "/frəm/"
+  },
+  {
+    "surfaceForm": "game",
+    "displayForm": "game",
+    "definitions": [
+      {
+        "text": "游戏",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ɡeɪm/"
+  },
+  {
+    "surfaceForm": "garden",
+    "displayForm": "garden",
+    "definitions": [
+      {
+        "text": "花园",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈɡɑrdən/"
+  },
+  {
+    "surfaceForm": "giraffe",
+    "displayForm": "giraffe",
+    "definitions": [
+      {
+        "text": "长颈鹿",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/dʒəˈræf/"
+  },
+  {
+    "surfaceForm": "give",
+    "displayForm": "give",
+    "definitions": [
+      {
+        "text": "给",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/ɡɪv/"
+  },
+  {
+    "surfaceForm": "go",
+    "displayForm": "go",
+    "definitions": [
+      {
+        "text": "去；走",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/ɡoʊ/"
+  },
+  {
+    "surfaceForm": "good",
+    "displayForm": "good",
+    "definitions": [
+      {
+        "text": "好的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/ɡʊd/"
+  },
+  {
+    "surfaceForm": "grandfather",
+    "displayForm": "grandfather",
+    "definitions": [
+      {
+        "text": "祖父；爷爷；姥爷；外公",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈɡrænˌfɑðər/"
+  },
+  {
+    "surfaceForm": "grandma",
+    "displayForm": "grandma",
+    "definitions": [
+      {
+        "text": "奶奶；姥姥",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈɡrænˌmɑ/"
+  },
+  {
+    "surfaceForm": "grandmother",
+    "displayForm": "grandmother",
+    "definitions": [
+      {
+        "text": "祖母；奶奶；姥姥；外婆",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈɡrænˌmʌðər/"
+  },
+  {
+    "surfaceForm": "grandpa",
+    "displayForm": "grandpa",
+    "definitions": [
+      {
+        "text": "爷爷；姥爷",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈɡrænˌpɑ/"
+  },
+  {
+    "surfaceForm": "grape",
+    "displayForm": "grape",
+    "definitions": [
+      {
+        "text": "葡萄",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ɡreɪp/"
+  },
+  {
+    "surfaceForm": "grapes",
+    "displayForm": "grapes",
+    "definitions": [
+      {
+        "text": "葡萄",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ɡreɪp/",
+    "formNote": "复数或第三人称单数形式，原形为 grape"
+  },
+  {
+    "surfaceForm": "grass",
+    "displayForm": "grass",
+    "definitions": [
+      {
+        "text": "草；草地",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ɡræs/"
+  },
+  {
+    "surfaceForm": "green",
+    "displayForm": "green",
+    "definitions": [
+      {
+        "text": "绿色；绿色的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/ɡriːn/"
+  },
+  {
+    "surfaceForm": "grow",
+    "displayForm": "grow",
+    "definitions": [
+      {
+        "text": "生长",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/ɡroʊ/"
+  },
+  {
+    "surfaceForm": "hand",
+    "displayForm": "hand",
+    "definitions": [
+      {
+        "text": "手",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/hænd/"
+  },
+  {
+    "surfaceForm": "happy",
+    "displayForm": "happy",
+    "definitions": [
+      {
+        "text": "开心的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/ˈhæpi/"
+  },
+  {
+    "surfaceForm": "have",
+    "displayForm": "have",
+    "definitions": [
+      {
+        "text": "有",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/hæv/"
+  },
+  {
+    "surfaceForm": "hello",
+    "displayForm": "hello",
+    "definitions": [
+      {
+        "text": "你好",
+        "pos": "interj."
+      }
+    ],
+    "ipa": "/həˈloʊ/"
+  },
+  {
+    "surfaceForm": "help",
+    "displayForm": "help",
+    "definitions": [
+      {
+        "text": "帮助",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/help/"
+  },
+  {
+    "surfaceForm": "here",
+    "displayForm": "here",
+    "definitions": [
+      {
+        "text": "这里",
+        "pos": "adv."
+      }
+    ],
+    "ipa": "/hɪr/"
+  },
+  {
+    "surfaceForm": "how",
+    "displayForm": "how",
+    "definitions": [
+      {
+        "text": "怎样；多么",
+        "pos": "adv."
+      }
+    ],
+    "ipa": "/haʊ/"
+  },
+  {
+    "surfaceForm": "i",
+    "displayForm": "i",
+    "definitions": [
+      {
+        "text": "我",
+        "pos": "pron."
+      }
+    ],
+    "ipa": "/aɪ/"
+  },
+  {
+    "surfaceForm": "into",
+    "displayForm": "into",
+    "definitions": [
+      {
+        "text": "进入；到……里面",
+        "pos": "prep."
+      }
+    ],
+    "ipa": "/ˈɪntuː/"
+  },
+  {
+    "surfaceForm": "is",
+    "displayForm": "is",
+    "definitions": [
+      {
+        "text": "是",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/ɪz/"
+  },
+  {
+    "surfaceForm": "it",
+    "displayForm": "it",
+    "definitions": [
+      {
+        "text": "它",
+        "pos": "pron."
+      }
+    ],
+    "ipa": "/ɪt/"
+  },
+  {
+    "surfaceForm": "jump",
+    "displayForm": "jump",
+    "definitions": [
+      {
+        "text": "跳",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/dʒʌmp/"
+  },
+  {
+    "surfaceForm": "kind",
+    "displayForm": "kind",
+    "definitions": [
+      {
+        "text": "友善的；和蔼的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/kaɪnd/"
+  },
+  {
+    "surfaceForm": "know",
+    "displayForm": "know",
+    "definitions": [
+      {
+        "text": "知道",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/noʊ/"
+  },
+  {
+    "surfaceForm": "let",
+    "displayForm": "let",
+    "definitions": [
+      {
+        "text": "让",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/let/"
+  },
+  {
+    "surfaceForm": "let's",
+    "displayForm": "let's",
+    "definitions": [
+      {
+        "text": "让我们",
+        "pos": "phr."
+      }
+    ],
+    "ipa": "/lets/"
+  },
+  {
+    "surfaceForm": "like",
+    "displayForm": "like",
+    "definitions": [
+      {
+        "text": "喜欢",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/laɪk/"
+  },
+  {
+    "surfaceForm": "lion",
+    "displayForm": "lion",
+    "definitions": [
+      {
+        "text": "狮子",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈlaɪən/"
+  },
+  {
+    "surfaceForm": "listen",
+    "displayForm": "listen",
+    "definitions": [
+      {
+        "text": "听；倾听",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/ˈlɪsən/"
+  },
+  {
+    "surfaceForm": "look",
+    "displayForm": "look",
+    "definitions": [
+      {
+        "text": "看",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/lʊk/"
+  },
+  {
+    "surfaceForm": "love",
+    "displayForm": "love",
+    "definitions": [
+      {
+        "text": "爱",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/lʌv/"
+  },
+  {
+    "surfaceForm": "make",
+    "displayForm": "make",
+    "definitions": [
+      {
+        "text": "使出现；做",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/meɪk/"
+  },
+  {
+    "surfaceForm": "me",
+    "displayForm": "me",
+    "definitions": [
+      {
+        "text": "我",
+        "pos": "pron."
+      }
+    ],
+    "ipa": "/miː/"
+  },
+  {
+    "surfaceForm": "meet",
+    "displayForm": "meet",
+    "definitions": [
+      {
+        "text": "遇见；见面",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/miːt/"
+  },
+  {
+    "surfaceForm": "meow",
+    "displayForm": "meow",
+    "definitions": [
+      {
+        "text": "喵喵（猫叫声）",
+        "pos": "interj."
+      }
+    ],
+    "ipa": "/miˈaʊ/"
+  },
+  {
+    "surfaceForm": "miss",
+    "displayForm": "miss",
+    "definitions": [
+      {
+        "text": "对女教师的称呼；老师；女士",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/mɪs/"
+  },
+  {
+    "surfaceForm": "monkey",
+    "displayForm": "monkey",
+    "definitions": [
+      {
+        "text": "猴子",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈmʌŋki/"
+  },
+  {
+    "surfaceForm": "mother",
+    "displayForm": "mother",
+    "definitions": [
+      {
+        "text": "母亲；妈妈",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈmʌðər/"
+  },
+  {
+    "surfaceForm": "mouth",
+    "displayForm": "mouth",
+    "definitions": [
+      {
+        "text": "嘴",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/maʊθ/"
+  },
+  {
+    "surfaceForm": "mum",
+    "displayForm": "mum",
+    "definitions": [
+      {
+        "text": "妈妈",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/mʌm/"
+  },
+  {
+    "surfaceForm": "my",
+    "displayForm": "my",
+    "definitions": [
+      {
+        "text": "我的",
+        "pos": "det."
+      }
+    ],
+    "ipa": "/maɪ/"
+  },
+  {
+    "surfaceForm": "name",
+    "displayForm": "name",
+    "definitions": [
+      {
+        "text": "名字",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/neɪm/"
+  },
+  {
+    "surfaceForm": "need",
+    "displayForm": "need",
+    "definitions": [
+      {
+        "text": "需要",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/niːd/"
+  },
+  {
+    "surfaceForm": "new",
+    "displayForm": "new",
+    "definitions": [
+      {
+        "text": "新的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/nuː/"
+  },
+  {
+    "surfaceForm": "nice",
+    "displayForm": "nice",
+    "definitions": [
+      {
+        "text": "令人愉快的；友好的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/naɪs/"
+  },
+  {
+    "surfaceForm": "nine",
+    "displayForm": "nine",
+    "definitions": [
+      {
+        "text": "九",
+        "pos": "num."
+      }
+    ],
+    "ipa": "/naɪn/"
+  },
+  {
+    "surfaceForm": "o'clock",
+    "displayForm": "o'clock",
+    "definitions": [
+      {
+        "text": "（表示整点）……点钟",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/əˈklɑk/"
+  },
+  {
+    "surfaceForm": "old",
+    "displayForm": "old",
+    "definitions": [
+      {
+        "text": "多少岁；年纪；旧的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/oʊld/"
+  },
+  {
+    "surfaceForm": "one",
+    "displayForm": "one",
+    "definitions": [
+      {
+        "text": "一",
+        "pos": "num."
+      }
+    ],
+    "ipa": "/wʌn/"
+  },
+  {
+    "surfaceForm": "orange",
+    "displayForm": "orange",
+    "definitions": [
+      {
+        "text": "橙子；柑橘",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈɔrɪndʒ/"
+  },
+  {
+    "surfaceForm": "our",
+    "displayForm": "our",
+    "definitions": [
+      {
+        "text": "我们的",
+        "pos": "det."
+      }
+    ],
+    "ipa": "/aʊr/"
+  },
+  {
+    "surfaceForm": "panda",
+    "displayForm": "panda",
+    "definitions": [
+      {
+        "text": "大熊猫",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈpændə/"
+  },
+  {
+    "surfaceForm": "pet",
+    "displayForm": "pet",
+    "definitions": [
+      {
+        "text": "宠物",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/pet/"
+  },
+  {
+    "surfaceForm": "pink",
+    "displayForm": "pink",
+    "definitions": [
+      {
+        "text": "粉色；粉色的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/pɪŋk/"
+  },
+  {
+    "surfaceForm": "plant",
+    "displayForm": "plant",
+    "definitions": [
+      {
+        "text": "种植；植物",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/plænt/"
+  },
+  {
+    "surfaceForm": "plants",
+    "displayForm": "plants",
+    "definitions": [
+      {
+        "text": "种植；植物",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/plænt/",
+    "formNote": "复数或第三人称单数形式，原形为 plant"
+  },
+  {
+    "surfaceForm": "play",
+    "displayForm": "play",
+    "definitions": [
+      {
+        "text": "玩",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/pleɪ/"
+  },
+  {
+    "surfaceForm": "please",
+    "displayForm": "please",
+    "definitions": [
+      {
+        "text": "请",
+        "pos": "adv."
+      }
+    ],
+    "ipa": "/pliːz/"
+  },
+  {
+    "surfaceForm": "point",
+    "displayForm": "point",
+    "definitions": [
+      {
+        "text": "指；指向",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/pɔɪnt/"
+  },
+  {
+    "surfaceForm": "purple",
+    "displayForm": "purple",
+    "definitions": [
+      {
+        "text": "紫色；紫色的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/ˈpɜrpəl/"
+  },
+  {
+    "surfaceForm": "rabbit",
+    "displayForm": "rabbit",
+    "definitions": [
+      {
+        "text": "兔",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈræbɪt/"
+  },
+  {
+    "surfaceForm": "rainbow",
+    "displayForm": "rainbow",
+    "definitions": [
+      {
+        "text": "彩虹",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈreɪnboʊ/"
+  },
+  {
+    "surfaceForm": "red",
+    "displayForm": "red",
+    "definitions": [
+      {
+        "text": "红色；红色的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/red/"
+  },
+  {
+    "surfaceForm": "say",
+    "displayForm": "say",
+    "definitions": [
+      {
+        "text": "说；讲",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/seɪ/"
+  },
+  {
+    "surfaceForm": "says",
+    "displayForm": "says",
+    "definitions": [
+      {
+        "text": "说（say 的第三人称单数）",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/seɪ/",
+    "formNote": "复数或第三人称单数形式，原形为 say"
+  },
+  {
+    "surfaceForm": "school",
+    "displayForm": "school",
+    "definitions": [
+      {
+        "text": "学校",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/skuːl/"
+  },
+  {
+    "surfaceForm": "sea",
+    "displayForm": "sea",
+    "definitions": [
+      {
+        "text": "海；海洋",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/siː/"
+  },
+  {
+    "surfaceForm": "see",
+    "displayForm": "see",
+    "definitions": [
+      {
+        "text": "看见",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/siː/"
+  },
+  {
+    "surfaceForm": "seven",
+    "displayForm": "seven",
+    "definitions": [
+      {
+        "text": "七",
+        "pos": "num."
+      }
+    ],
+    "ipa": "/ˈsevən/"
+  },
+  {
+    "surfaceForm": "share",
+    "displayForm": "share",
+    "definitions": [
+      {
+        "text": "分享",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/ʃer/"
+  },
+  {
+    "surfaceForm": "she",
+    "displayForm": "she",
+    "definitions": [
+      {
+        "text": "她",
+        "pos": "pron."
+      }
+    ],
+    "ipa": "/ʃiː/"
+  },
+  {
+    "surfaceForm": "show",
+    "displayForm": "show",
+    "definitions": [
+      {
+        "text": "展示；给……看",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/ʃoʊ/"
+  },
+  {
+    "surfaceForm": "sister",
+    "displayForm": "sister",
+    "definitions": [
+      {
+        "text": "姐；妹",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈsɪstər/"
+  },
+  {
+    "surfaceForm": "six",
+    "displayForm": "six",
+    "definitions": [
+      {
+        "text": "六",
+        "pos": "num."
+      }
+    ],
+    "ipa": "/sɪks/"
+  },
+  {
+    "surfaceForm": "sky",
+    "displayForm": "sky",
+    "definitions": [
+      {
+        "text": "天空",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/skaɪ/"
+  },
+  {
+    "surfaceForm": "small",
+    "displayForm": "small",
+    "definitions": [
+      {
+        "text": "小的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/smɔl/"
+  },
+  {
+    "surfaceForm": "smile",
+    "displayForm": "smile",
+    "definitions": [
+      {
+        "text": "微笑；笑",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/smaɪl/"
+  },
+  {
+    "surfaceForm": "some",
+    "displayForm": "some",
+    "definitions": [
+      {
+        "text": "一些",
+        "pos": "det."
+      }
+    ],
+    "ipa": "/sʌm/"
+  },
+  {
+    "surfaceForm": "strong",
+    "displayForm": "strong",
+    "definitions": [
+      {
+        "text": "强壮的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/strɔŋ/"
+  },
+  {
+    "surfaceForm": "sun",
+    "displayForm": "sun",
+    "definitions": [
+      {
+        "text": "阳光；太阳",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/sʌn/"
+  },
+  {
+    "surfaceForm": "swim",
+    "displayForm": "swim",
+    "definitions": [
+      {
+        "text": "游泳",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/swɪm/"
+  },
+  {
+    "surfaceForm": "tall",
+    "displayForm": "tall",
+    "definitions": [
+      {
+        "text": "高的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/tɔl/"
+  },
+  {
+    "surfaceForm": "ten",
+    "displayForm": "ten",
+    "definitions": [
+      {
+        "text": "十",
+        "pos": "num."
+      }
+    ],
+    "ipa": "/ten/"
+  },
+  {
+    "surfaceForm": "the",
+    "displayForm": "the",
+    "definitions": [
+      {
+        "text": "这；那（定冠词）",
+        "pos": "det."
+      }
+    ],
+    "ipa": "/ðə/"
+  },
+  {
+    "surfaceForm": "them",
+    "displayForm": "them",
+    "definitions": [
+      {
+        "text": "它们；他们；她们",
+        "pos": "pron."
+      }
+    ],
+    "ipa": "/ðəm/"
+  },
+  {
+    "surfaceForm": "this",
+    "displayForm": "this",
+    "definitions": [
+      {
+        "text": "这；这个",
+        "pos": "pron."
+      }
+    ],
+    "ipa": "/ðɪs/"
+  },
+  {
+    "surfaceForm": "three",
+    "displayForm": "three",
+    "definitions": [
+      {
+        "text": "三",
+        "pos": "num."
+      }
+    ],
+    "ipa": "/θriː/"
+  },
+  {
+    "surfaceForm": "tiger",
+    "displayForm": "tiger",
+    "definitions": [
+      {
+        "text": "老虎",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈtaɪɡər/"
+  },
+  {
+    "surfaceForm": "to",
+    "displayForm": "to",
+    "definitions": [
+      {
+        "text": "向；到",
+        "pos": "prep."
+      }
+    ],
+    "ipa": "/tuː/"
+  },
+  {
+    "surfaceForm": "touch",
+    "displayForm": "touch",
+    "definitions": [
+      {
+        "text": "触摸",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/tʌtʃ/"
+  },
+  {
+    "surfaceForm": "toys",
+    "displayForm": "toys",
+    "definitions": [
+      {
+        "text": "玩具（复数）",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/tɔɪz/"
+  },
+  {
+    "surfaceForm": "tree",
+    "displayForm": "tree",
+    "definitions": [
+      {
+        "text": "树",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/triː/"
+  },
+  {
+    "surfaceForm": "trees",
+    "displayForm": "trees",
+    "definitions": [
+      {
+        "text": "树",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/triː/",
+    "formNote": "复数或第三人称单数形式，原形为 tree"
+  },
+  {
+    "surfaceForm": "two",
+    "displayForm": "two",
+    "definitions": [
+      {
+        "text": "二",
+        "pos": "num."
+      }
+    ],
+    "ipa": "/tuː/"
+  },
+  {
+    "surfaceForm": "uncle",
+    "displayForm": "uncle",
+    "definitions": [
+      {
+        "text": "伯父；叔父；舅父；姑父",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈʌŋkəl/"
+  },
+  {
+    "surfaceForm": "up",
+    "displayForm": "up",
+    "definitions": [
+      {
+        "text": "向上",
+        "pos": "adv."
+      }
+    ],
+    "ipa": "/ʌp/"
+  },
+  {
+    "surfaceForm": "us",
+    "displayForm": "us",
+    "definitions": [
+      {
+        "text": "我们（宾格）",
+        "pos": "pron."
+      }
+    ],
+    "ipa": "/ʌs/"
+  },
+  {
+    "surfaceForm": "water",
+    "displayForm": "water",
+    "definitions": [
+      {
+        "text": "给……浇水；水",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/ˈwɔtər/"
+  },
+  {
+    "surfaceForm": "wave",
+    "displayForm": "wave",
+    "definitions": [
+      {
+        "text": "挥动",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/weɪv/"
+  },
+  {
+    "surfaceForm": "we",
+    "displayForm": "we",
+    "definitions": [
+      {
+        "text": "我们",
+        "pos": "pron."
+      }
+    ],
+    "ipa": "/wiː/"
+  },
+  {
+    "surfaceForm": "what",
+    "displayForm": "what",
+    "definitions": [
+      {
+        "text": "什么",
+        "pos": "pron."
+      }
+    ],
+    "ipa": "/wʌt/"
+  },
+  {
+    "surfaceForm": "what's",
+    "displayForm": "what's",
+    "definitions": [
+      {
+        "text": "是什么；叫什么",
+        "pos": "phr."
+      }
+    ],
+    "ipa": "/wʌts/"
+  },
+  {
+    "surfaceForm": "white",
+    "displayForm": "white",
+    "definitions": [
+      {
+        "text": "白色；白色的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/waɪt/"
+  },
+  {
+    "surfaceForm": "woof",
+    "displayForm": "woof",
+    "definitions": [
+      {
+        "text": "汪汪（狗叫声）",
+        "pos": "interj."
+      }
+    ],
+    "ipa": "/wʊf/"
+  },
+  {
+    "surfaceForm": "year",
+    "displayForm": "year",
+    "definitions": [
+      {
+        "text": "年纪；年",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/jɪr/"
+  },
+  {
+    "surfaceForm": "years",
+    "displayForm": "years",
+    "definitions": [
+      {
+        "text": "年纪；年",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/jɪr/",
+    "formNote": "复数或第三人称单数形式，原形为 year"
+  },
+  {
+    "surfaceForm": "yellow",
+    "displayForm": "yellow",
+    "definitions": [
+      {
+        "text": "黄色；黄色的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/ˈjeloʊ/"
+  },
+  {
+    "surfaceForm": "you",
+    "displayForm": "you",
+    "definitions": [
+      {
+        "text": "你；你们",
+        "pos": "pron."
+      }
+    ],
+    "ipa": "/juː/"
+  },
+  {
+    "surfaceForm": "your",
+    "displayForm": "your",
+    "definitions": [
+      {
+        "text": "你的；你们的",
+        "pos": "det."
+      }
+    ],
+    "ipa": "/jʊr/"
+  },
+  {
+    "surfaceForm": "zoo",
+    "displayForm": "zoo",
+    "definitions": [
+      {
+        "text": "动物园",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/zuː/"
+  }
+]

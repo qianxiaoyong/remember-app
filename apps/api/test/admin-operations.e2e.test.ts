@@ -153,6 +153,91 @@ describe('admin operations integration', () => {
 
     expect(response.body.items).toHaveLength(2);
     expect(response.body.items[0]?.code).toMatch(/^REDEEM-/);
+
+    const listResponse = await request(server)
+      .get('/api/v1/admin/redemption-codes')
+      .set('Authorization', `Bearer ${admin.token}`)
+      .query({ packId: 'remember-test-pack', page: 1, pageSize: 20 })
+      .expect(200);
+
+    const listedCodes = listResponse.body.items
+      .map((item: { code?: string }) => item.code)
+      .filter(Boolean);
+    expect(listedCodes).toContain(response.body.items[0]?.code);
+  });
+
+  it('兑换码可更新、软删除、恢复，删除后用户不可兑换', async () => {
+    const server = app.getHttpServer() as Parameters<typeof request>[0];
+    const admin = await adminLogin(server);
+
+    const batch = await request(server)
+      .post('/api/v1/admin/redemption-codes/batch')
+      .set('Authorization', `Bearer ${admin.token}`)
+      .send({ packId: 'remember-test-pack', count: 1, maxRedemptions: 3, prefix: 'OPS' })
+      .expect(200);
+
+    const codeId = batch.body.items[0]?.id as string;
+    const plaintextCode = batch.body.items[0]?.code as string;
+
+    await request(server)
+      .patch(`/api/v1/admin/redemption-codes/${codeId}`)
+      .set('Authorization', `Bearer ${admin.token}`)
+      .send({ maxRedemptions: 5, note: 'integration test', status: 'disabled' })
+      .expect(200);
+
+    await request(server)
+      .patch(`/api/v1/admin/redemption-codes/${codeId}`)
+      .set('Authorization', `Bearer ${admin.token}`)
+      .send({ status: 'active' })
+      .expect(200);
+
+    await request(server).post('/api/v1/auth/sms/send').send({ phone: TEST_PHONE }).expect(200);
+    const login = await request(server)
+      .post('/api/v1/auth/sms/verify')
+      .send({ phone: TEST_PHONE, code: '000000', deviceId: DEVICE_A })
+      .expect(200);
+    const userToken = login.body.token as string;
+
+    await request(server)
+      .post('/api/v1/admin/redemption-codes/batch')
+      .set('Authorization', `Bearer ${admin.token}`)
+      .send({ packId: 'remember-test-pack', count: 1, maxRedemptions: 1, prefix: 'DEL' })
+      .expect(200);
+    const deleteTarget = await request(server)
+      .get('/api/v1/admin/redemption-codes')
+      .set('Authorization', `Bearer ${admin.token}`)
+      .query({ packId: 'remember-test-pack', keyword: 'DEL', page: 1, pageSize: 5 })
+      .expect(200);
+    const deleteId = deleteTarget.body.items[0]?.id as string;
+    const deleteCode = deleteTarget.body.items[0]?.code as string;
+
+    await request(server)
+      .post(`/api/v1/admin/redemption-codes/${deleteId}/delete`)
+      .set('Authorization', `Bearer ${admin.token}`)
+      .expect(200);
+
+    await request(server)
+      .post('/api/v1/redemption/redeem')
+      .set('Authorization', `Bearer ${userToken}`)
+      .send({ code: deleteCode })
+      .expect(404);
+
+    await request(server)
+      .post('/api/v1/redemption/redeem')
+      .set('Authorization', `Bearer ${userToken}`)
+      .send({ code: plaintextCode })
+      .expect(200);
+
+    await request(server)
+      .post(`/api/v1/admin/redemption-codes/${deleteId}/restore`)
+      .set('Authorization', `Bearer ${admin.token}`)
+      .expect(200);
+
+    const audits = await prisma.auditLog.findMany({
+      where: { action: { startsWith: 'redemption_code.' } },
+    });
+    expect(audits.some((row) => row.action === 'redemption_code.delete')).toBe(true);
+    expect(audits.some((row) => row.action === 'redemption_code.restore')).toBe(true);
   });
 
   it('上传合法 zip 创建 draft 版本', async () => {
@@ -183,6 +268,24 @@ describe('admin operations integration', () => {
 
     const audits = await prisma.auditLog.findMany({ where: { action: 'pack_version.upload' } });
     expect(audits).toHaveLength(1);
+
+    const versionId = response.body.version.id as string;
+    const noteResponse = await request(server)
+      .patch(`/api/v1/admin/packs/remember-test-pack/versions/${versionId}`)
+      .set('Authorization', `Bearer ${admin.token}`)
+      .send({ note: '修复例句音频' })
+      .expect(200);
+
+    expect(noteResponse.body.note).toBe('修复例句音频');
+
+    const detail = await request(server)
+      .get('/api/v1/admin/packs/remember-test-pack')
+      .set('Authorization', `Bearer ${admin.token}`)
+      .expect(200);
+
+    expect(
+      detail.body.versions.find((row: { id: string }) => row.id === versionId)?.note,
+    ).toBe('修复例句音频');
   });
 
   it('App session 无法访问 admin dashboard', async () => {

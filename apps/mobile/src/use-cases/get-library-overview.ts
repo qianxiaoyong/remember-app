@@ -85,7 +85,13 @@ export function listInstalledPackSummaries(now: Date = new Date()): InstalledPac
       stats.sm2DueCount,
     );
     const learnedCount = stats.learnedCount;
-    const displayName = resolvePackDisplayName(pack.packId) || pack.displayName;
+    const catalogTitle = resolvePackDisplayName(pack.packId);
+    const displayName =
+      catalogTitle !== pack.packId
+        ? catalogTitle
+        : pack.displayName !== pack.packId
+          ? pack.displayName
+          : pack.packId;
 
     return {
       packId: pack.packId,

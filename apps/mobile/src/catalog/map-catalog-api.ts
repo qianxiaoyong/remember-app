@@ -24,7 +24,7 @@ export function mapCatalogSummaryToItem(summary: CatalogPackSummary): CatalogPac
     updatedAt: summary.updatedAt.slice(0, 10),
     priceCents: summary.priceCents,
     priceLabel: formatPriceCents(summary.priceCents),
-    summary: '',
+    summary: summary.summary,
     sampleHeadwords: [],
     ...(summary.coverUrl ? { coverUrl: summary.coverUrl } : {}),
     ...(summary.coverBadge ? { coverBadge: summary.coverBadge } : {}),
@@ -47,7 +47,6 @@ export function mapCatalogDetailToItem(detail: CatalogPackDetail): CatalogPackIt
   const base = mapCatalogSummaryToItem(detail);
   return {
     ...base,
-    summary: detail.summary,
     sampleHeadwords: detail.samplePreviews.map((item) => item.headword),
     samplePreviews: detail.samplePreviews.map(mapSamplePreview),
     ...(detail.introMedia ? { introMedia: detail.introMedia } : {}),

@@ -27,7 +27,10 @@ import { bytesToBase64, bytesToHex, readZipEntries } from './read-zip-entries';
 ed.hashes.sha512 = sha512;
 ed.hashes.sha512Async = (message: Uint8Array) => Promise.resolve(sha512(message));
 
-export async function installPackFromZipBytes(zipBytes: Uint8Array): Promise<InstalledPackRow> {
+export async function installPackFromZipBytes(
+  zipBytes: Uint8Array,
+  displayNameOverride?: string,
+): Promise<InstalledPackRow> {
   const filesByPath = readZipEntries(zipBytes);
   const manifestBytes = filesByPath.get('packManifest.json');
   const sqliteBytes = filesByPath.get('pack.sqlite');
@@ -96,7 +99,7 @@ export async function installPackFromZipBytes(zipBytes: Uint8Array): Promise<Ins
   const installedAt = new Date().toISOString();
   const row: InstalledPackRow = {
     packId: manifest.packId,
-    displayName: resolvePackDisplayName(manifest.packId),
+    displayName: displayNameOverride ?? resolvePackDisplayName(manifest.packId),
     packVersion: manifest.packVersion,
     sqlitePath: paths.sqlitePath,
     assetsDir: paths.assetsDir,

@@ -1,0 +1,17 @@
+【任务参数】
+- packId: demo-primary-grade3          ← 填运营后台「知识库 ID」，整本书一包则固定同一个
+- packVersion: 1.0.0
+- keyId: test-v1
+- 本批范围: 七年级上册 Unit 1（若整书太长，按 Unit/Chapter 分批）
+- sortOrder 起始: 1                    ← 第二批改为「续接，从 51 开始」
+- 抽词策略: 以单元词汇表为主，正文补充；包含单词和短语
+
+【教材正文】
+（在这里粘贴 PDF/OCR/Word 提取的课文、词汇表、练习原文。可以很长。）
+
+---
+
+请完成：
+1. 从上方正文中识别本批应学习的单词与短语；
+2. 按 system prompt 中的 JSON Schema 生成 meta.json、cards.json、lexicon.json；
+3. 输出三个 ```json 代码块，不要其他内容。

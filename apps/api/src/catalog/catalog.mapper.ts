@@ -32,6 +32,7 @@ function mapPackSummary(pack: Pack): CatalogPackSummary {
     sizeLabel: pack.sizeLabel,
     updatedAt: toIsoString(pack.updatedAt),
     priceCents: pack.priceCents,
+    summary: pack.summary,
     ...(pack.coverUrl ? { coverUrl: pack.coverUrl } : {}),
     ...(pack.coverBadge ? { coverBadge: pack.coverBadge } : {}),
     ...(parseStringArray(pack.coverLines) ? { coverLines: parseStringArray(pack.coverLines) } : {}),

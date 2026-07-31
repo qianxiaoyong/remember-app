@@ -4,6 +4,7 @@ import { ApiNetworkError, ApiRequestError } from './api-errors';
 export { ApiNetworkError, ApiRequestError, shouldUseOfflineCatalogFallback } from './api-errors';
 
 const API_TIMEOUT_MS = 10_000;
+export const CATALOG_API_TIMEOUT_MS = 4_000;
 
 export function readApiBaseUrl(): string {
   const extra = Constants.expoConfig?.extra as { apiBaseUrl?: unknown } | undefined;
@@ -40,7 +41,7 @@ function toApiNetworkError(error: unknown): ApiNetworkError {
 
 export async function apiFetch(
   path: string,
-  init: RequestInit & { sessionToken?: string | null } = {},
+  init: RequestInit & { sessionToken?: string | null; timeoutMs?: number } = {},
 ): Promise<Response> {
   const headers = new Headers(init.headers);
   if (!headers.has('Content-Type') && init.body) {
@@ -50,10 +51,11 @@ export async function apiFetch(
     headers.set('Authorization', `Bearer ${init.sessionToken}`);
   }
 
+  const timeoutMs = init.timeoutMs ?? API_TIMEOUT_MS;
   const controller = new AbortController();
   const timeoutId = setTimeout(() => {
     controller.abort();
-  }, API_TIMEOUT_MS);
+  }, timeoutMs);
 
   try {
     const response = await fetch(`${readApiBaseUrl()}${path}`, {
@@ -71,7 +73,7 @@ export async function apiFetch(
 
 export async function apiFetchJson<T>(
   path: string,
-  init: RequestInit & { sessionToken?: string | null } = {},
+  init: RequestInit & { sessionToken?: string | null; timeoutMs?: number } = {},
 ): Promise<T> {
   const response = await apiFetch(path, init);
   const payload = (await response.json().catch(() => ({}))) as {

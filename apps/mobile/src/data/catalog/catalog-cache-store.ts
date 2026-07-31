@@ -2,17 +2,46 @@ import * as SecureStore from 'expo-secure-store';
 import { findCatalogItem, type CatalogPackItem } from '../../catalog/catalog-seed';
 import type { MarketCatalogQuery } from '../../use-cases/filter-catalog-items';
 import { filterCatalogItems, filterLocalCatalogSeed } from '../../use-cases/filter-catalog-items';
+import { syncInstalledPackDisplayNamesFromCatalog } from '../../use-cases/sync-installed-pack-display-names';
 
 const CACHE_KEY = 'remember.catalogCache.v1';
 
 let memoryCache: CatalogPackItem[] | null = null;
+const cacheUpdateListeners = new Set<() => void>();
+
+export function subscribeCatalogCacheUpdates(listener: () => void): () => void {
+  cacheUpdateListeners.add(listener);
+  return () => {
+    cacheUpdateListeners.delete(listener);
+  };
+}
+
+function notifyCatalogCacheUpdated(): void {
+  for (const listener of cacheUpdateListeners) {
+    listener();
+  }
+}
+
+function applyCatalogCache(items: CatalogPackItem[]): void {
+  memoryCache = items;
+  syncInstalledPackDisplayNamesFromCatalog(items);
+  notifyCatalogCacheUpdated();
+}
 
 export function readCatalogMemoryCache(): CatalogPackItem[] | null {
   return memoryCache;
 }
 
+export function findCatalogItemSync(packId: string): CatalogPackItem | null {
+  const fromMemory = memoryCache?.find((item) => item.packId === packId) ?? null;
+  if (fromMemory) {
+    return fromMemory;
+  }
+  return findCatalogItem(packId);
+}
+
 export function writeCatalogMemoryCache(items: CatalogPackItem[]): void {
-  memoryCache = items;
+  applyCatalogCache(items);
   void SecureStore.setItemAsync(CACHE_KEY, JSON.stringify(items));
 }
 
@@ -23,7 +52,7 @@ export async function readCatalogDiskCache(): Promise<CatalogPackItem[] | null> 
   }
   try {
     const parsed = JSON.parse(raw) as CatalogPackItem[];
-    memoryCache = parsed;
+    applyCatalogCache(parsed);
     return parsed;
   } catch {
     return memoryCache;
@@ -44,5 +73,5 @@ export async function findCatalogItemOffline(packId: string): Promise<CatalogPac
   if (fromCache) {
     return fromCache;
   }
-  return findCatalogItem(packId);
+  return findCatalogItemSync(packId);
 }
