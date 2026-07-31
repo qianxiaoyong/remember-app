@@ -3,7 +3,7 @@ import { ApiNetworkError, ApiRequestError } from './api-errors';
 
 export { ApiNetworkError, ApiRequestError, shouldUseOfflineCatalogFallback } from './api-errors';
 
-const API_TIMEOUT_MS = 10_000;
+export const API_TIMEOUT_MS = 10_000;
 export const CATALOG_API_TIMEOUT_MS = 4_000;
 
 export function readApiBaseUrl(): string {

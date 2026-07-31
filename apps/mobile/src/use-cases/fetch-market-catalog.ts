@@ -38,25 +38,29 @@ export async function readCachedMarketCatalog(
 /** App 启动时后台拉全量目录写入缓存；失败静默。 */
 export async function warmCatalogCacheFromNetwork(): Promise<boolean> {
   try {
-    await Promise.all([fetchMarketCatalog(FULL_CATALOG_QUERY), refreshCatalogTaxonomyFromNetwork()]);
+    await refreshCatalogTaxonomyFromNetwork();
+    await fetchMarketCatalog(FULL_CATALOG_QUERY);
     return true;
   } catch {
     return false;
   }
 }
 
-export async function refreshCatalogTaxonomyFromNetwork(): Promise<void> {
-  const taxonomy = await fetchCatalogTaxonomy();
-  writeCachedCatalogTaxonomy(taxonomy);
+/** @returns 是否成功写入 taxonomy 缓存 */
+export async function refreshCatalogTaxonomyFromNetwork(): Promise<boolean> {
+  try {
+    const taxonomy = await fetchCatalogTaxonomy();
+    writeCachedCatalogTaxonomy(taxonomy);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 export async function fetchMarketCatalog(query: MarketCatalogQuery): Promise<CatalogPackItem[]> {
   try {
     // 始终拉全量目录再本地筛选，避免带筛选请求污染/截断缓存。
-    const [summaries] = await Promise.all([
-      fetchCatalogPacks({}),
-      refreshCatalogTaxonomyFromNetwork().catch(() => undefined),
-    ]);
+    const summaries = await fetchCatalogPacks({});
     const items = summaries.map(mapCatalogSummaryToItem);
 
     const existing = readCatalogMemoryCache() ?? [];

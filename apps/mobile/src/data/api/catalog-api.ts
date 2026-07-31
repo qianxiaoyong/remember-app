@@ -10,7 +10,7 @@ import {
   catalogTaxonomyResponseSchema,
   listCatalogPacksResponseSchema,
 } from '@remember/contracts';
-import { apiFetchJson, CATALOG_API_TIMEOUT_MS } from './api-client';
+import { apiFetchJson, API_TIMEOUT_MS, CATALOG_API_TIMEOUT_MS } from './api-client';
 
 function buildCatalogQuery(params: ListCatalogPacksQuery): string {
   const search = new URLSearchParams();
@@ -33,7 +33,7 @@ function buildCatalogQuery(params: ListCatalogPacksQuery): string {
 export async function fetchCatalogTaxonomy(): Promise<CatalogTaxonomyResponse> {
   const body = await apiFetchJson<unknown>('/api/v1/catalog/taxonomy', {
     method: 'GET',
-    timeoutMs: CATALOG_API_TIMEOUT_MS,
+    timeoutMs: API_TIMEOUT_MS,
   });
   return catalogTaxonomyResponseSchema.parse(body);
 }

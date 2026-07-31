@@ -25,93 +25,20 @@ const VERSION_NODES = [
 ];
 
 const SECONDARY_NODES = [
+  { primarySlug: 'primary', slug: 'grade1', label: '一年级', sortOrder: 1 },
+  { primarySlug: 'primary', slug: 'grade2', label: '二年级', sortOrder: 2 },
+  { primarySlug: 'primary', slug: 'grade3', label: '三年级', sortOrder: 3 },
+  { primarySlug: 'primary', slug: 'grade4', label: '四年级', sortOrder: 4 },
+  { primarySlug: 'primary', slug: 'grade5', label: '五年级', sortOrder: 5 },
+  { primarySlug: 'primary', slug: 'grade6', label: '六年级', sortOrder: 6 },
+  { primarySlug: 'junior', slug: 'grade7', label: '七年级', sortOrder: 1 },
+  { primarySlug: 'junior', slug: 'grade8', label: '八年级', sortOrder: 2 },
+  { primarySlug: 'junior', slug: 'grade9', label: '九年级', sortOrder: 3 },
+  { primarySlug: 'senior', slug: 'grade10', label: '高一', sortOrder: 1 },
+  { primarySlug: 'senior', slug: 'grade11', label: '高二', sortOrder: 2 },
+  { primarySlug: 'senior', slug: 'grade12', label: '高三', sortOrder: 3 },
   {
-    id: 'c3000001-0000-4000-8000-000000000101',
-    primaryId: 'a1000001-0000-4000-8000-000000000001',
-    slug: 'grade1',
-    label: '一年级',
-    sortOrder: 1,
-  },
-  {
-    id: 'c3000001-0000-4000-8000-000000000102',
-    primaryId: 'a1000001-0000-4000-8000-000000000001',
-    slug: 'grade2',
-    label: '二年级',
-    sortOrder: 2,
-  },
-  {
-    id: 'c3000001-0000-4000-8000-000000000103',
-    primaryId: 'a1000001-0000-4000-8000-000000000001',
-    slug: 'grade3',
-    label: '三年级',
-    sortOrder: 3,
-  },
-  {
-    id: 'c3000001-0000-4000-8000-000000000104',
-    primaryId: 'a1000001-0000-4000-8000-000000000001',
-    slug: 'grade4',
-    label: '四年级',
-    sortOrder: 4,
-  },
-  {
-    id: 'c3000001-0000-4000-8000-000000000105',
-    primaryId: 'a1000001-0000-4000-8000-000000000001',
-    slug: 'grade5',
-    label: '五年级',
-    sortOrder: 5,
-  },
-  {
-    id: 'c3000001-0000-4000-8000-000000000106',
-    primaryId: 'a1000001-0000-4000-8000-000000000001',
-    slug: 'grade6',
-    label: '六年级',
-    sortOrder: 6,
-  },
-  {
-    id: 'c3000001-0000-4000-8000-000000000201',
-    primaryId: 'a1000001-0000-4000-8000-000000000002',
-    slug: 'grade7',
-    label: '七年级',
-    sortOrder: 1,
-  },
-  {
-    id: 'c3000001-0000-4000-8000-000000000202',
-    primaryId: 'a1000001-0000-4000-8000-000000000002',
-    slug: 'grade8',
-    label: '八年级',
-    sortOrder: 2,
-  },
-  {
-    id: 'c3000001-0000-4000-8000-000000000203',
-    primaryId: 'a1000001-0000-4000-8000-000000000002',
-    slug: 'grade9',
-    label: '九年级',
-    sortOrder: 3,
-  },
-  {
-    id: 'c3000001-0000-4000-8000-000000000301',
-    primaryId: 'a1000001-0000-4000-8000-000000000003',
-    slug: 'grade10',
-    label: '高一',
-    sortOrder: 1,
-  },
-  {
-    id: 'c3000001-0000-4000-8000-000000000302',
-    primaryId: 'a1000001-0000-4000-8000-000000000003',
-    slug: 'grade11',
-    label: '高二',
-    sortOrder: 2,
-  },
-  {
-    id: 'c3000001-0000-4000-8000-000000000303',
-    primaryId: 'a1000001-0000-4000-8000-000000000003',
-    slug: 'grade12',
-    label: '高三',
-    sortOrder: 3,
-  },
-  {
-    id: 'c3000001-0000-4000-8000-000000000401',
-    primaryId: 'a1000001-0000-4000-8000-000000000004',
+    primarySlug: 'postgraduate',
     slug: 'postgraduate-en',
     label: '考研英语',
     sortOrder: 1,
@@ -119,31 +46,50 @@ const SECONDARY_NODES = [
 ];
 
 async function upsertNodes() {
+  const primaryIdBySlug = new Map();
+
   for (const node of PRIMARY_NODES) {
-    await prisma.catalogPrimaryNode.upsert({
-      where: { id: node.id },
-      create: { ...node, status: 'active' },
+    const saved = await prisma.catalogPrimaryNode.upsert({
+      where: { slug: node.slug },
+      create: { id: node.id, slug: node.slug, label: node.label, sortOrder: node.sortOrder, status: 'active' },
       update: { label: node.label, sortOrder: node.sortOrder, status: 'active' },
     });
+    primaryIdBySlug.set(node.slug, saved.id);
   }
 
   for (const node of VERSION_NODES) {
     await prisma.catalogVersionNode.upsert({
-      where: { id: node.id },
-      create: { ...node, status: 'active' },
+      where: { slug: node.slug },
+      create: { id: node.id, slug: node.slug, label: node.label, sortOrder: node.sortOrder, status: 'active' },
       update: { label: node.label, sortOrder: node.sortOrder, status: 'active' },
     });
   }
 
   for (const node of SECONDARY_NODES) {
-    await prisma.catalogSecondaryNode.upsert({
-      where: { id: node.id },
-      create: { ...node, status: 'active' },
-      update: {
+    const primaryId = primaryIdBySlug.get(node.primarySlug);
+    if (!primaryId) {
+      throw new Error(`缺少一级分类: ${node.primarySlug}`);
+    }
+
+    const existing = await prisma.catalogSecondaryNode.findUnique({
+      where: { primaryId_slug: { primaryId, slug: node.slug } },
+    });
+
+    if (existing) {
+      await prisma.catalogSecondaryNode.update({
+        where: { id: existing.id },
+        data: { label: node.label, sortOrder: node.sortOrder, status: 'active' },
+      });
+      continue;
+    }
+
+    await prisma.catalogSecondaryNode.create({
+      data: {
+        primaryId,
+        slug: node.slug,
         label: node.label,
         sortOrder: node.sortOrder,
         status: 'active',
-        primaryId: node.primaryId,
       },
     });
   }

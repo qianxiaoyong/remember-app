@@ -1,10 +1,12 @@
-import type { CatalogTaxonomyResponse } from '@remember/contracts';
+import { catalogTaxonomyResponseSchema, type CatalogTaxonomyResponse } from '@remember/contracts';
+import * as SecureStore from 'expo-secure-store';
 import type { CatalogPrimaryCategory } from '../../catalog/catalog-seed';
 import {
   CATALOG_PRIMARY_OPTIONS,
-  CATALOG_VERSION_OPTIONS,
   listSecondaryCategories,
 } from '../../catalog/catalog-seed';
+
+const TAXONOMY_CACHE_KEY = 'remember.catalogTaxonomy.v1';
 
 let memoryTaxonomy: CatalogTaxonomyResponse | null = null;
 
@@ -14,6 +16,23 @@ export function readCachedCatalogTaxonomy(): CatalogTaxonomyResponse | null {
 
 export function writeCachedCatalogTaxonomy(taxonomy: CatalogTaxonomyResponse): void {
   memoryTaxonomy = taxonomy;
+  void SecureStore.setItemAsync(TAXONOMY_CACHE_KEY, JSON.stringify(taxonomy));
+}
+
+/** 启动时读磁盘缓存，避免 taxonomy 仅内存导致回退写死分类。 */
+export async function readCatalogTaxonomyDiskCache(): Promise<CatalogTaxonomyResponse | null> {
+  const raw = await SecureStore.getItemAsync(TAXONOMY_CACHE_KEY);
+  if (!raw) {
+    return memoryTaxonomy;
+  }
+
+  try {
+    const parsed = catalogTaxonomyResponseSchema.parse(JSON.parse(raw));
+    memoryTaxonomy = parsed;
+    return parsed;
+  } catch {
+    return memoryTaxonomy;
+  }
 }
 
 export function getPrimaryTabOptions(
@@ -53,9 +72,10 @@ export function getSecondaryCategoryOptions(
 }
 
 export function getVersionFilterOptions(taxonomy: CatalogTaxonomyResponse | null): string[] {
-  if (!taxonomy || taxonomy.versions.length === 0) {
-    return [...CATALOG_VERSION_OPTIONS];
+  if (taxonomy && taxonomy.versions.length > 0) {
+    return ['全部版本', ...taxonomy.versions.map((version) => version.label)];
   }
 
-  return ['全部版本', ...taxonomy.versions.map((version) => version.label)];
+  // 无 API taxonomy 时不臆造版本列表，避免后台新增项被写死 fallback 遮挡。
+  return ['全部版本'];
 }

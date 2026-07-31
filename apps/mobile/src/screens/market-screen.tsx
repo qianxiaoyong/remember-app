@@ -30,6 +30,7 @@ import {
   getSecondaryCategoryOptions,
   getVersionFilterOptions,
   readCachedCatalogTaxonomy,
+  readCatalogTaxonomyDiskCache,
 } from '../data/catalog/catalog-taxonomy-store';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
@@ -51,6 +52,7 @@ export function MarketScreen(): ReactElement {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isFromCache, setIsFromCache] = useState(false);
   const [taxonomyRevision, setTaxonomyRevision] = useState(0);
+  const [taxonomyError, setTaxonomyError] = useState<string | null>(null);
 
   const cachedTaxonomy = useMemo(() => readCachedCatalogTaxonomy(), [taxonomyRevision]);
   const primaryTabOptions = useMemo(
@@ -78,6 +80,7 @@ export function MarketScreen(): ReactElement {
         setIsLoading(true);
       }
       setErrorMessage(null);
+      setTaxonomyError(null);
 
       const cachedItems = await readCachedMarketCatalog(catalogQuery);
       if (cachedItems && cachedItems.length > 0) {
@@ -88,8 +91,15 @@ export function MarketScreen(): ReactElement {
       }
 
       try {
-        await refreshCatalogTaxonomyFromNetwork().catch(() => undefined);
-        setTaxonomyRevision((value) => value + 1);
+        const taxonomyUpdated = await refreshCatalogTaxonomyFromNetwork();
+        if (taxonomyUpdated) {
+          setTaxonomyRevision((value) => value + 1);
+        } else if (!readCachedCatalogTaxonomy()) {
+          setTaxonomyError(`分类加载失败，请确认服务器可访问（${readApiBaseUrl()}）`);
+        } else {
+          setTaxonomyError('分类更新失败，版本列表可能不是最新');
+        }
+
         const nextItems = await fetchMarketCatalog(catalogQuery);
         setItems(nextItems);
         setIsFromCache(false);
@@ -111,11 +121,24 @@ export function MarketScreen(): ReactElement {
   );
 
   useEffect(() => {
+    void readCatalogTaxonomyDiskCache().then(() => {
+      setTaxonomyRevision((value) => value + 1);
+    });
+  }, []);
+
+  useEffect(() => {
     void loadCatalog();
   }, [loadCatalog]);
 
   useFocusEffect(
     useCallback(() => {
+      void refreshCatalogTaxonomyFromNetwork().then((updated) => {
+        if (updated) {
+          setTaxonomyRevision((value) => value + 1);
+          setTaxonomyError(null);
+        }
+      });
+
       const selection = consumeMarketSearchSelection();
       if (!selection) {
         return;
@@ -209,6 +232,7 @@ export function MarketScreen(): ReactElement {
               <Text style={styles.empty}>当前筛选下暂无资料</Text>
             ) : (
               <>
+                {taxonomyError ? <Text style={styles.cacheHint}>{taxonomyError}</Text> : null}
                 {errorMessage ? <Text style={styles.cacheHint}>{errorMessage}</Text> : null}
                 {isFromCache && isLoading ? (
                   <Text style={styles.cacheHint}>正在更新目录…</Text>
