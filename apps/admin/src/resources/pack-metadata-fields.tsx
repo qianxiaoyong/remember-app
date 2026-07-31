@@ -1,9 +1,6 @@
 import {
   ArrayInput,
-  AutocompleteArrayInput,
   Button,
-  DateField,
-  Labeled,
   NumberInput,
   SelectInput,
   SimpleFormIterator,
@@ -11,23 +8,52 @@ import {
   useNotify,
   useRecordContext,
 } from 'react-admin';
-import { useFormContext } from 'react-hook-form';
-import { Box, Divider, Stack, Typography } from '@mui/material';
+import { useFormContext, useWatch } from 'react-hook-form';
+import Grid from '@mui/material/Grid2';
+import { Box } from '@mui/material';
 import { useState } from 'react';
 import { extractSamplePreviews } from '../api/packs-api.js';
+import { PackFormSection, packFormDensitySx } from '../components/pack-form-section.js';
 import { adminColors } from '../theme/admin-colors.js';
-
-const CONTENT_TAG_CHOICES = [
-  { id: '词汇', name: '词汇' },
-  { id: '上册', name: '上册' },
-  { id: '下册', name: '下册' },
-  { id: '全册', name: '全册' },
-];
 
 const INTRO_MEDIA_TYPE_CHOICES = [
   { id: 'image', name: '图片' },
   { id: 'video', name: '视频' },
 ];
+
+function CoverPreview() {
+  const coverUrl = useWatch<{ coverUrl?: string }>({ name: 'coverUrl' });
+  const url = typeof coverUrl === 'string' ? coverUrl.trim() : '';
+
+  return (
+    <Box
+      sx={{
+        alignItems: 'center',
+        bgcolor: adminColors.statTileBackground,
+        border: `1px solid ${adminColors.border}`,
+        borderRadius: 1,
+        display: 'flex',
+        flexShrink: 0,
+        height: 72,
+        justifyContent: 'center',
+        overflow: 'hidden',
+        width: 54,
+      }}
+    >
+      {url ? (
+        <Box
+          alt=""
+          component="img"
+          src={url}
+          sx={{ height: '100%', objectFit: 'cover', width: '100%' }}
+          onError={(event) => {
+            (event.currentTarget as HTMLImageElement).style.display = 'none';
+          }}
+        />
+      ) : null}
+    </Box>
+  );
+}
 
 function ExtractSamplePreviewsButton() {
   const { setValue } = useFormContext();
@@ -37,7 +63,8 @@ function ExtractSamplePreviewsButton() {
 
   return (
     <Button
-      label="从当前发布版本抽取"
+      label="从发布版本抽取"
+      size="small"
       disabled={loading || !record?.currentPackVersion}
       onClick={() => {
         void (async () => {
@@ -50,133 +77,94 @@ function ExtractSamplePreviewsButton() {
             setValue('samplePreviews', result.samplePreviews, { shouldDirty: true });
             notify('已从当前发布版本抽取示例', { type: 'success' });
           } catch (error) {
-            const message = error instanceof Error ? error.message : '抽取失败';
-            notify(message, { type: 'error' });
+            notify(error instanceof Error ? error.message : '抽取失败', { type: 'error' });
           } finally {
             setLoading(false);
           }
         })();
       }}
-      sx={{ mb: 1 }}
     />
-  );
-}
-
-function PackReadonlyStats() {
-  const record = useRecordContext<{
-    cardCount?: number;
-    sizeLabel?: string;
-    updatedAt?: string;
-    currentPackVersion?: string;
-  }>();
-
-  if (!record) {
-    return null;
-  }
-
-  return (
-    <Box
-      sx={{
-        mt: 1,
-        p: 2,
-        borderRadius: 2,
-        border: `1px solid ${adminColors.border}`,
-        bgcolor: adminColors.statTileBackground,
-      }}
-    >
-      <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>
-        发布统计（只读）
-      </Typography>
-      <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1.5 }}>
-        词条数、体积与更新时间由发布版本自动更新，此处不可编辑。
-      </Typography>
-      <Stack spacing={1}>
-        <Labeled label="词条数">
-          <Typography variant="body2">{record.cardCount ?? '—'}</Typography>
-        </Labeled>
-        <Labeled label="体积">
-          <Typography variant="body2">{record.sizeLabel ?? '—'}</Typography>
-        </Labeled>
-        <Labeled label="当前版本">
-          <Typography variant="body2">{record.currentPackVersion ?? '尚未发布'}</Typography>
-        </Labeled>
-        <Labeled label="更新时间">
-          {record.updatedAt ? (
-            <DateField source="updatedAt" record={record} showTime locales="zh-CN" />
-          ) : (
-            <Typography variant="body2">—</Typography>
-          )}
-        </Labeled>
-      </Stack>
-    </Box>
   );
 }
 
 export function PackMetadataFields() {
   return (
-    <>
-      <Divider sx={{ my: 2, width: '100%' }} />
+    <Box sx={packFormDensitySx}>
+      <Grid container spacing={1.5}>
+        <Grid size={{ xs: 12, lg: 6 }}>
+          <PackFormSection title="封面">
+            <Box sx={{ display: 'flex', gap: 1, alignItems: 'flex-start' }}>
+              <CoverPreview />
+              <Box sx={{ flex: 1, minWidth: 0 }}>
+                <TextInput source="coverUrl" label="封面 URL" fullWidth size="small" />
+                <Grid container spacing={1}>
+                  <Grid size={{ xs: 12, sm: 5 }}>
+                    <TextInput source="coverBadge" label="角标" fullWidth size="small" />
+                  </Grid>
+                  <Grid size={{ xs: 12, sm: 7 }}>
+                    <ArrayInput source="coverLines" label="文案行">
+                      <SimpleFormIterator inline disableReordering>
+                        <TextInput source="" label="文案" helperText={false} size="small" />
+                      </SimpleFormIterator>
+                    </ArrayInput>
+                  </Grid>
+                </Grid>
+              </Box>
+            </Box>
+          </PackFormSection>
 
-      <Typography variant="subtitle1" sx={{ fontWeight: 600, width: '100%' }}>
-        运营展示字段
-      </Typography>
+          <PackFormSection title="包含内容">
+            <ArrayInput source="includedHighlights" label="">
+              <SimpleFormIterator inline disableReordering>
+                <TextInput source="title" label="标题" helperText={false} size="small" />
+                <TextInput source="description" label="说明" helperText={false} size="small" />
+              </SimpleFormIterator>
+            </ArrayInput>
+          </PackFormSection>
+        </Grid>
 
-      <AutocompleteArrayInput
-        source="contentTags"
-        label="内容标签"
-        choices={CONTENT_TAG_CHOICES}
-        fullWidth
-        sx={{ width: '100%' }}
-      />
+        <Grid size={{ xs: 12, lg: 6 }}>
+          <PackFormSection title="内容介绍">
+            <ArrayInput source="introMedia" label="">
+              <SimpleFormIterator inline disableReordering>
+                <SelectInput
+                  source="type"
+                  label="类型"
+                  choices={INTRO_MEDIA_TYPE_CHOICES}
+                  helperText={false}
+                  size="small"
+                />
+                <NumberInput source="sortOrder" label="序" helperText={false} size="small" />
+                <TextInput source="url" label="URL" helperText={false} size="small" />
+              </SimpleFormIterator>
+            </ArrayInput>
+          </PackFormSection>
 
-      <Typography variant="subtitle2" sx={{ fontWeight: 600, width: '100%', mt: 1 }}>
-        封面
-      </Typography>
-      <TextInput source="coverUrl" label="封面图 URL" fullWidth />
-      <TextInput source="coverBadge" label="封面角标" fullWidth helperText="如 PEP 3A" />
-      <ArrayInput source="coverLines" label="封面文案行">
-        <SimpleFormIterator inline>
-          <TextInput source="" label="文案" helperText={false} />
-        </SimpleFormIterator>
-      </ArrayInput>
-
-      <Typography variant="subtitle2" sx={{ fontWeight: 600, width: '100%', mt: 1 }}>
-        包含内容
-      </Typography>
-      <ArrayInput source="includedHighlights" label="包含内容亮点（1～4 条）">
-        <SimpleFormIterator inline>
-          <TextInput source="title" label="标题" helperText={false} />
-          <TextInput source="description" label="说明" multiline helperText={false} />
-        </SimpleFormIterator>
-      </ArrayInput>
-
-      <Typography variant="subtitle2" sx={{ fontWeight: 600, width: '100%', mt: 1 }}>
-        内容介绍
-      </Typography>
-      <ArrayInput source="introMedia" label="介绍媒体">
-        <SimpleFormIterator inline>
-          <SelectInput source="type" label="类型" choices={INTRO_MEDIA_TYPE_CHOICES} helperText={false} />
-          <TextInput source="url" label="URL" helperText={false} />
-          <TextInput source="posterUrl" label="封面图 URL（视频可选）" helperText={false} />
-          <NumberInput source="sortOrder" label="排序" helperText={false} />
-        </SimpleFormIterator>
-      </ArrayInput>
-
-      <Typography variant="subtitle2" sx={{ fontWeight: 600, width: '100%', mt: 1 }}>
-        内容示例
-      </Typography>
-      <ExtractSamplePreviewsButton />
-      <ArrayInput source="samplePreviews" label="示例词条">
-        <SimpleFormIterator inline>
-          <TextInput source="headword" label="单词" helperText={false} />
-          <TextInput source="zh" label="释义" helperText={false} />
-          <TextInput source="exampleEn" label="例句" helperText={false} />
-          <TextInput source="previewAudioUrl" label="音频 URL" helperText={false} />
-          <TextInput source="initial" label="首字母" helperText={false} />
-        </SimpleFormIterator>
-      </ArrayInput>
-
-      <PackReadonlyStats />
-    </>
+          <PackFormSection title="内容示例">
+            <Box sx={{ mb: 0.5 }}>
+              <ExtractSamplePreviewsButton />
+            </Box>
+            <ArrayInput source="samplePreviews" label="">
+              <SimpleFormIterator disableReordering>
+                <Grid container spacing={1} sx={{ width: '100%' }}>
+                  <Grid size={{ xs: 6, sm: 3 }}>
+                    <TextInput source="headword" label="单词" fullWidth helperText={false} size="small" />
+                  </Grid>
+                  <Grid size={{ xs: 6, sm: 2 }}>
+                    <TextInput source="initial" label="首字母" fullWidth helperText={false} size="small" />
+                  </Grid>
+                  <Grid size={{ xs: 12, sm: 3 }}>
+                    <TextInput source="zh" label="释义" fullWidth helperText={false} size="small" />
+                  </Grid>
+                  <Grid size={{ xs: 12, sm: 4 }}>
+                    <TextInput source="exampleEn" label="例句" fullWidth helperText={false} size="small" />
+                  </Grid>
+                </Grid>
+              </SimpleFormIterator>
+            </ArrayInput>
+          </PackFormSection>
+        </Grid>
+      </Grid>
+    </Box>
   );
 }

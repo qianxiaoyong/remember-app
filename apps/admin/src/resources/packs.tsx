@@ -17,15 +17,16 @@ import {
   useRecordContext,
 } from 'react-admin';
 import { Box, Tab, Tabs } from '@mui/material';
-import Grid from '@mui/material/Grid2';
 import { useState } from 'react';
 import { formatMoney } from '../components/format-money.js';
 import { MonoText } from '../components/mono-text.js';
 import { PackStatusChip } from '../components/pack-status-chip.js';
+import { PackBasicInfoFields } from './pack-basic-info-fields.js';
 import { PackEditSummary } from './pack-edit-summary.js';
+import { PackFormToolbar } from './pack-form-toolbar.js';
+import { PackMetadataFields } from './pack-metadata-fields.js';
 import { PackTaxonomyFields } from './pack-taxonomy-fields.js';
 import { PackVersionsPanel } from './pack-versions-panel.js';
-import { PackMetadataFields } from './pack-metadata-fields.js';
 import { PackRedemptionCodesPanel } from './pack-redemption-codes-panel.js';
 
 const packChoices = [
@@ -69,43 +70,37 @@ function PackEditTabs() {
           onChange={(_event, nextTab: number) => {
             setTab(nextTab);
           }}
+          sx={{ minHeight: 40, '& .MuiTab-root': { minHeight: 40, py: 0.5, fontSize: '0.875rem' } }}
         >
-          <Tab label="基本信息" />
+          <Tab label="基础信息" />
+          <Tab label="展示与营销" />
           <Tab label="版本与发布" />
           <Tab label="兑换码" />
         </Tabs>
       </Box>
-      <Box sx={{ display: tab === 0 ? 'block' : 'none' }}>
-        <SimpleForm>
-          <Grid container spacing={2} sx={{ width: '100%' }}>
-            <Grid size={{ xs: 12, md: 6 }}>
-              <TextInput source="title" label="标题" validate={required()} fullWidth />
-              <TextInput source="displayTitle" label="展示标题" fullWidth />
-              <PackTaxonomyFields />
-            </Grid>
-            <Grid size={{ xs: 12, md: 6 }}>
-              <NumberInput
-                source="priceCents"
-                label="售价（分）"
-                helperText="例如 1990 = ¥19.90"
-                fullWidth
-              />
-              <SelectInput
-                source="status"
-                label="上架状态"
-                choices={packStatusFilterChoices}
-                fullWidth
-              />
-              <TextInput source="summary" label="简介" multiline fullWidth minRows={4} />
-              <PackMetadataFields />
-            </Grid>
-          </Grid>
+
+      <Box
+        sx={{
+          display: tab === 0 || tab === 1 ? 'block' : 'none',
+          px: 1.5,
+          pt: 1,
+          pb: 0,
+        }}
+      >
+        <SimpleForm toolbar={tab === 0 || tab === 1 ? <PackFormToolbar /> : false}>
+          <Box sx={{ display: tab === 0 ? 'block' : 'none', width: '100%' }}>
+            <PackBasicInfoFields />
+          </Box>
+          <Box sx={{ display: tab === 1 ? 'block' : 'none', width: '100%' }}>
+            <PackMetadataFields />
+          </Box>
         </SimpleForm>
       </Box>
-      <Box sx={{ display: tab === 1 ? 'block' : 'none' }}>
+
+      <Box sx={{ display: tab === 2 ? 'block' : 'none' }}>
         <PackVersionsPanel embedded />
       </Box>
-      <Box sx={{ display: tab === 2 ? 'block' : 'none' }}>
+      <Box sx={{ display: tab === 3 ? 'block' : 'none' }}>
         <PackRedemptionCodesPanel />
       </Box>
     </>

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { SelectInput, useInput } from 'react-admin';
+import Grid from '@mui/material/Grid2';
 import type { AdminCatalogTaxonomyResponse } from '@remember/contracts';
 import { fetchAdminCatalogTaxonomy } from '../api/catalog-taxonomy-api.js';
 
@@ -15,7 +16,11 @@ function useTaxonomyChoices() {
   return taxonomy;
 }
 
-export function PackTaxonomyFields() {
+interface PackTaxonomyFieldsProps {
+  compact?: boolean;
+}
+
+export function PackTaxonomyFields({ compact = false }: PackTaxonomyFieldsProps) {
   const taxonomy = useTaxonomyChoices();
   const { field: primaryNodeIdField } = useInput({ source: 'primaryNodeId' });
   const { field: secondaryNodeIdField } = useInput({ source: 'secondaryNodeId' });
@@ -36,31 +41,58 @@ export function PackTaxonomyFields() {
     [taxonomy],
   );
 
+  const inputSize = compact ? 'small' : 'medium';
+
+  const primarySelect = (
+    <SelectInput
+      source="primaryNodeId"
+      label="一级分类"
+      choices={primaryChoices}
+      fullWidth
+      size={inputSize}
+      onChange={(event) => {
+        primaryNodeIdField.onChange(event);
+        secondaryNodeIdField.onChange('');
+      }}
+    />
+  );
+
+  const secondarySelect = (
+    <SelectInput
+      source="secondaryNodeId"
+      label="二级分类"
+      choices={secondaryChoices}
+      disabled={secondaryChoices.length === 0}
+      fullWidth
+      size={inputSize}
+    />
+  );
+
+  const versionSelect = (
+    <SelectInput
+      source="versionNodeId"
+      label="教材版本"
+      choices={versionChoices}
+      fullWidth
+      size={inputSize}
+    />
+  );
+
+  if (!compact) {
+    return (
+      <>
+        {primarySelect}
+        {secondarySelect}
+        {versionSelect}
+      </>
+    );
+  }
+
   return (
-    <>
-      <SelectInput
-        source="primaryNodeId"
-        label="一级分类"
-        choices={primaryChoices}
-        fullWidth
-        onChange={(event) => {
-          primaryNodeIdField.onChange(event);
-          secondaryNodeIdField.onChange('');
-        }}
-      />
-      <SelectInput
-        source="secondaryNodeId"
-        label="二级分类"
-        choices={secondaryChoices}
-        disabled={secondaryChoices.length === 0}
-        fullWidth
-      />
-      <SelectInput
-        source="versionNodeId"
-        label="教材版本"
-        choices={versionChoices}
-        fullWidth
-      />
-    </>
+    <Grid container spacing={1.5} sx={{ width: '100%' }}>
+      <Grid size={{ xs: 12, md: 4 }}>{primarySelect}</Grid>
+      <Grid size={{ xs: 12, md: 4 }}>{secondarySelect}</Grid>
+      <Grid size={{ xs: 12, md: 4 }}>{versionSelect}</Grid>
+    </Grid>
   );
 }
