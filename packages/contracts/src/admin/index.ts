@@ -79,6 +79,25 @@ export {
   type AdminPackDetailResponse,
 } from './packs.js';
 export {
+  adminCatalogTaxonomyResponseSchema,
+  adminCreatePrimaryTaxonomyNodeRequestSchema,
+  adminCreateSecondaryTaxonomyNodeRequestSchema,
+  adminCreateVersionTaxonomyNodeRequestSchema,
+  adminPrimaryTaxonomyNodeResponseSchema,
+  adminSecondaryTaxonomyNodeResponseSchema,
+  adminUpdatePrimaryTaxonomyNodeRequestSchema,
+  adminUpdateSecondaryTaxonomyNodeRequestSchema,
+  adminUpdateVersionTaxonomyNodeRequestSchema,
+  adminVersionTaxonomyNodeResponseSchema,
+  type AdminCatalogTaxonomyResponse,
+  type AdminCreatePrimaryTaxonomyNodeRequest,
+  type AdminCreateSecondaryTaxonomyNodeRequest,
+  type AdminCreateVersionTaxonomyNodeRequest,
+  type AdminUpdatePrimaryTaxonomyNodeRequest,
+  type AdminUpdateSecondaryTaxonomyNodeRequest,
+  type AdminUpdateVersionTaxonomyNodeRequest,
+} from './catalog-taxonomy.js';
+export {
   adminAuditLogListResponseSchema,
   adminListAuditLogsQuerySchema,
   type AdminListAuditLogsQuery,

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { catalogPackTaxonomySchema } from './taxonomy.js';
 
 export const catalogPrimaryCategorySchema = z.enum(['primary', 'junior', 'senior', 'postgraduate']);
 
@@ -20,6 +21,7 @@ export const catalogPackSummarySchema = z
     coverBadge: z.string().min(1).optional(),
     coverLines: z.array(z.string()).optional(),
     isBundledTestPack: z.boolean().optional(),
+    taxonomy: catalogPackTaxonomySchema.optional(),
   })
   .strict();
 

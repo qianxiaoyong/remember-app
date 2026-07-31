@@ -5,6 +5,15 @@ export {
 } from './pack-summary.js';
 export { catalogPackDetailSchema, type CatalogPackDetail } from './pack-detail.js';
 export {
+  catalogTaxonomyResponseSchema,
+  catalogPackTaxonomySchema,
+  catalogPrimaryTaxonomyNodeSchema,
+  catalogSecondaryTaxonomyNodeSchema,
+  catalogVersionTaxonomyNodeSchema,
+  type CatalogTaxonomyResponse,
+  type CatalogPackTaxonomy,
+} from './taxonomy.js';
+export {
   listCatalogPacksQuerySchema,
   listCatalogPacksResponseSchema,
   type ListCatalogPacksQuery,

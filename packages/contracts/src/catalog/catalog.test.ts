@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { catalogPackDetailSchema, listCatalogPacksResponseSchema } from './index.js';
+import {
+  catalogPackDetailSchema,
+  catalogTaxonomyResponseSchema,
+  listCatalogPacksResponseSchema,
+} from './index.js';
 
 describe('catalog contracts', () => {
   it('listCatalogPacks round-trip', () => {
@@ -74,5 +78,38 @@ describe('catalog contracts', () => {
         extra: true,
       }),
     ).toThrow();
+  });
+
+  it('catalogTaxonomyResponse round-trip', () => {
+    const taxonomy = catalogTaxonomyResponseSchema.parse({
+      primaries: [
+        {
+          id: '11111111-1111-4111-8111-111111111101',
+          slug: 'primary',
+          label: '小学英语',
+          sortOrder: 1,
+          status: 'active',
+          children: [
+            {
+              id: '22222222-2222-4222-8222-222222222201',
+              slug: 'grade3',
+              label: '三年级',
+              sortOrder: 3,
+              status: 'active',
+            },
+          ],
+        },
+      ],
+      versions: [
+        {
+          id: '33333333-3333-4333-8333-333333333301',
+          slug: 'pep',
+          label: '人教版',
+          sortOrder: 1,
+          status: 'active',
+        },
+      ],
+    });
+    expect(taxonomy.primaries[0]?.children[0]?.label).toBe('三年级');
   });
 });
