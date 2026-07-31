@@ -89,5 +89,5 @@
 
 ## 下一阶段
 
-阶段 7：最小管理后台（兑换码批次、intro 上传、订单/退款运营）。  
-并行：Pause C/D 解除后补 §6.8 真实付退；备案/COS 生产。
+阶段 7：最小管理后台（见 `2026-07-31-phase7-minimum-admin-kickoff.md`、spec `2026-07-31-admin-dashboard-and-content-extensibility-design.md`）。  
+并行：Pause C/D 解除后补 §6.8 真实付/退；备案/COS 生产。
