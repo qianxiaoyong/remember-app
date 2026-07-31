@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { catalogPrimaryCategorySchema } from '../catalog/pack-summary.js';
+import { includedHighlightSchema } from '../catalog/included-highlight.js';
 import { introMediaItemSchema } from '../catalog/intro-media.js';
 import { packSamplePreviewSchema } from '../catalog/sample-preview.js';
 
@@ -9,6 +10,11 @@ export const adminPackStatusSchema = z.enum(['draft', 'published']);
 const optionalNonEmptyStringSchema = z.preprocess(
   (value) => (typeof value === 'string' && value.trim() === '' ? undefined : value),
   z.string().min(1).optional(),
+);
+
+const optionalUrlSchema = z.preprocess(
+  (value) => (typeof value === 'string' && value.trim() === '' ? undefined : value),
+  z.url().optional(),
 );
 
 export const adminPackSummarySchema = z
@@ -27,6 +33,12 @@ export const adminPackSummarySchema = z
     sizeLabel: z.string().min(1),
     summary: z.string().min(1),
     priceCents: z.number().int().nonnegative(),
+    coverUrl: z.url().optional(),
+    coverBadge: z.string().min(1).optional(),
+    coverLines: z.array(z.string()).optional(),
+    includedHighlights: z.array(includedHighlightSchema).max(4).optional(),
+    samplePreviews: z.array(packSamplePreviewSchema).optional(),
+    introMedia: z.array(introMediaItemSchema).optional(),
     status: adminPackStatusSchema,
     currentVersionId: z.uuid().optional(),
     currentPackVersion: z.string().min(1).optional(),
@@ -57,6 +69,10 @@ const adminPackWriteFieldsSchema = z
     sizeLabel: z.string().min(1).default('未知'),
     summary: z.string().min(1),
     priceCents: z.number().int().nonnegative(),
+    coverUrl: optionalUrlSchema,
+    coverBadge: optionalNonEmptyStringSchema,
+    coverLines: z.array(z.string()).optional(),
+    includedHighlights: z.array(includedHighlightSchema).max(4).default([]),
     samplePreviews: z.array(packSamplePreviewSchema).default([]),
     introMedia: z.array(introMediaItemSchema).optional(),
     status: adminPackStatusSchema.default('draft'),
@@ -135,6 +151,12 @@ export const adminPublishPackVersionResponseSchema = z
     packId: z.string().min(1),
     currentVersionId: z.uuid(),
     packVersion: z.string().min(1),
+  })
+  .strict();
+
+export const adminExtractSamplePreviewsResponseSchema = z
+  .object({
+    samplePreviews: z.array(packSamplePreviewSchema),
   })
   .strict();
 

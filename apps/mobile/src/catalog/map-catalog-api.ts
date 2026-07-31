@@ -29,6 +29,7 @@ export function mapCatalogSummaryToItem(summary: CatalogPackSummary): CatalogPac
     ...(summary.coverUrl ? { coverUrl: summary.coverUrl } : {}),
     ...(summary.coverBadge ? { coverBadge: summary.coverBadge } : {}),
     ...(summary.coverLines ? { coverLines: summary.coverLines } : {}),
+    ...(summary.includedHighlights ? { includedHighlights: summary.includedHighlights } : {}),
     ...(summary.isBundledTestPack ? { isBundledTestPack: true } : { isBundledTestPack: false }),
     ...(summary.taxonomy ? { taxonomy: summary.taxonomy } : {}),
   };
@@ -51,5 +52,6 @@ export function mapCatalogDetailToItem(detail: CatalogPackDetail): CatalogPackIt
     sampleHeadwords: detail.samplePreviews.map((item) => item.headword),
     samplePreviews: detail.samplePreviews.map(mapSamplePreview),
     ...(detail.introMedia ? { introMedia: detail.introMedia } : {}),
+    ...(detail.includedHighlights ? { includedHighlights: detail.includedHighlights } : {}),
   };
 }

@@ -25,6 +25,7 @@ import { PackStatusChip } from '../components/pack-status-chip.js';
 import { PackEditSummary } from './pack-edit-summary.js';
 import { PackTaxonomyFields } from './pack-taxonomy-fields.js';
 import { PackVersionsPanel } from './pack-versions-panel.js';
+import { PackMetadataFields } from './pack-metadata-fields.js';
 import { PackRedemptionCodesPanel } from './pack-redemption-codes-panel.js';
 
 const packChoices = [
@@ -96,6 +97,7 @@ function PackEditTabs() {
                 fullWidth
               />
               <TextInput source="summary" label="简介" multiline fullWidth minRows={4} />
+              <PackMetadataFields />
             </Grid>
           </Grid>
         </SimpleForm>

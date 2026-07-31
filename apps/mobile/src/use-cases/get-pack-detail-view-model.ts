@@ -19,7 +19,7 @@ import {
   type PackDetailActionKind,
 } from './resolve-pack-detail-action';
 import { resolveCatalogItemForDetail } from './resolve-catalog-item-for-detail';
-import type { IntroMediaItem } from '@remember/contracts';
+import type { IntroMediaItem, IncludedHighlight } from '@remember/contracts';
 
 export type { PackDetailActionKind };
 
@@ -36,6 +36,7 @@ export interface PackDetailViewModel {
   sizeLabel: string;
   formattedUpdatedAt: string;
   contentTags: string[];
+  includedHighlights: IncludedHighlight[];
   samplePreviews: PackSamplePreview[];
   introMedia: IntroMediaItem[];
   isInstalled: boolean;
@@ -74,6 +75,7 @@ export async function getPackDetailViewModelFromCatalogItem(
     sizeLabel: formatPackSizeLabel(catalogItem.sizeLabel),
     formattedUpdatedAt: formatPackUpdatedAt(catalogItem.updatedAt),
     contentTags: catalogItem.contentTags,
+    includedHighlights: catalogItem.includedHighlights ?? [],
     samplePreviews: resolvePackSamplePreviews(catalogItem),
     introMedia: catalogItem.introMedia ?? [],
     isInstalled,

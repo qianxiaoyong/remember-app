@@ -85,4 +85,10 @@ export class AdminPacksController {
     const input = adminUpdatePackVersionNoteRequestSchema.parse(body);
     return this.service.updateVersionNote(packId, versionId, input.note);
   }
+
+  @Post(':packId/extract-sample-previews')
+  @HttpCode(200)
+  extractSamplePreviews(@Param('packId') packId: string) {
+    return this.service.extractSamplePreviewsFromCurrentVersion(packId);
+  }
 }

@@ -301,4 +301,37 @@ describe('admin operations integration', () => {
       .set('Authorization', `Bearer ${login.body.token as string}`)
       .expect(401);
   });
+
+  it('PATCH pack 元数据字段 round-trip', async () => {
+    const server = app.getHttpServer() as Parameters<typeof request>[0];
+    const admin = await adminLogin(server);
+
+    await request(server)
+      .patch('/api/v1/admin/packs/remember-test-pack')
+      .set('Authorization', `Bearer ${admin.token}`)
+      .send({
+        contentTags: ['词汇', '上册'],
+        coverUrl: 'https://cdn.example.com/cover.jpg',
+        coverBadge: 'TEST',
+        coverLines: ['测试包', '第一册'],
+        includedHighlights: [{ title: '核心词汇', description: '单词与释义' }],
+      })
+      .expect(200);
+
+    const detail = await request(server)
+      .get('/api/v1/admin/packs/remember-test-pack')
+      .set('Authorization', `Bearer ${admin.token}`)
+      .expect(200);
+
+    expect(detail.body.pack.contentTags).toEqual(['词汇', '上册']);
+    expect(detail.body.pack.coverBadge).toBe('TEST');
+    expect(detail.body.pack.includedHighlights).toHaveLength(1);
+
+    const catalogDetail = await request(server)
+      .get('/api/v1/catalog/packs/remember-test-pack')
+      .expect(200);
+
+    expect(catalogDetail.body.includedHighlights?.[0]?.title).toBe('核心词汇');
+    expect(catalogDetail.body.contentTags).toEqual(['词汇', '上册']);
+  });
 });

@@ -28,7 +28,7 @@ describe('catalog contracts', () => {
     expect(response.items[0]?.packId).toBe('remember-test-pack');
   });
 
-  it('catalogPackDetail 含 samplePreviews', () => {
+  it('catalogPackDetail 含 samplePreviews 与 includedHighlights', () => {
     const detail = catalogPackDetailSchema.parse({
       packId: 'demo-primary-grade3',
       title: '三年级上册词汇',
@@ -41,6 +41,9 @@ describe('catalog contracts', () => {
       updatedAt: '2026-07-15T00:00:00.000Z',
       priceCents: 1990,
       summary: '覆盖教材核心词汇。',
+      includedHighlights: [
+        { title: '核心词汇', description: '教材单词与释义' },
+      ],
       samplePreviews: [
         {
           headword: 'apple',
@@ -58,6 +61,7 @@ describe('catalog contracts', () => {
       ],
     });
     expect(detail.samplePreviews[0]?.headword).toBe('apple');
+    expect(detail.includedHighlights?.[0]?.title).toBe('核心词汇');
   });
 
   it('拒绝未知字段', () => {

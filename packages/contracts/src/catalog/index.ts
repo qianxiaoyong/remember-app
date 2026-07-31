@@ -22,3 +22,4 @@ export {
 export { catalogPackPriceResponseSchema, type CatalogPackPriceResponse } from './pack-price.js';
 export { packSamplePreviewSchema, type PackSamplePreview } from './sample-preview.js';
 export { introMediaItemSchema, type IntroMediaItem } from './intro-media.js';
+export { includedHighlightSchema, type IncludedHighlight } from './included-highlight.js';

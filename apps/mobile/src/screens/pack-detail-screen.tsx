@@ -229,7 +229,10 @@ export function PackDetailScreen(props: PackDetailScreenProps): ReactElement {
           title={viewModel.title}
         />
         <PackDetailIntroMedia items={viewModel.introMedia} />
-        <PackDetailIncludedSection subtitle={viewModel.includedSubtitle} />
+        <PackDetailIncludedSection
+          highlights={viewModel.includedHighlights}
+          subtitle={viewModel.includedSubtitle}
+        />
         <PackDetailSampleList
           onOpenPreview={handleOpenPreview}
           onPlaySample={handlePlaySample}

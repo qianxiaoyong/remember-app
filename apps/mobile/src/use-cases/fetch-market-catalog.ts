@@ -76,13 +76,29 @@ export async function fetchMarketCatalog(query: MarketCatalogQuery): Promise<Cat
   }
 }
 
+function mergeCatalogItem(
+  previous: CatalogPackItem | undefined,
+  fresh: CatalogPackItem,
+): CatalogPackItem {
+  if (!previous) {
+    return fresh;
+  }
+  return {
+    ...previous,
+    ...fresh,
+    samplePreviews: fresh.samplePreviews ?? previous.samplePreviews,
+    introMedia: fresh.introMedia ?? previous.introMedia,
+    includedHighlights: fresh.includedHighlights ?? previous.includedHighlights,
+  };
+}
+
 function mergeCatalogCache(
   existing: CatalogPackItem[],
   fresh: CatalogPackItem[],
 ): CatalogPackItem[] {
   const byId = new Map(existing.map((item) => [item.packId, item]));
   for (const item of fresh) {
-    byId.set(item.packId, item);
+    byId.set(item.packId, mergeCatalogItem(byId.get(item.packId), item));
   }
   return [...byId.values()];
 }

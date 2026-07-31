@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { includedHighlightSchema } from './included-highlight.js';
 import { catalogPackTaxonomySchema } from './taxonomy.js';
 
 export const catalogPrimaryCategorySchema = z.enum(['primary', 'junior', 'senior', 'postgraduate']);
@@ -20,6 +21,7 @@ export const catalogPackSummarySchema = z
     coverUrl: z.url().optional(),
     coverBadge: z.string().min(1).optional(),
     coverLines: z.array(z.string()).optional(),
+    includedHighlights: z.array(includedHighlightSchema).max(4).optional(),
     isBundledTestPack: z.boolean().optional(),
     taxonomy: catalogPackTaxonomySchema.optional(),
   })

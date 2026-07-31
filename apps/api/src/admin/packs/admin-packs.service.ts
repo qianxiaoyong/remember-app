@@ -3,12 +3,14 @@ import { dirname, join } from 'node:path';
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import type { AdminCreatePackRequest, AdminUpdatePackRequest } from '@remember/contracts';
 import {
+  adminExtractSamplePreviewsResponseSchema,
   adminPackDetailResponseSchema,
   adminPackListResponseSchema,
   adminPackSummarySchema,
   adminPackVersionSchema,
   adminPublishPackVersionResponseSchema,
   adminUploadPackVersionResponseSchema,
+  includedHighlightSchema,
 } from '@remember/contracts';
 import {
   formatPackSizeLabel,
@@ -20,6 +22,20 @@ import { AuditService } from '../../audit/audit.service.js';
 import { readAdminPackConfig } from '../../config/read-admin-pack-config.js';
 import { PackVerifyService } from '../../pack-verify/pack-verify.service.js';
 import { PrismaService } from '../../prisma/prisma.service.js';
+
+function parseStringArray(value: unknown): string[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+  return value.filter((item): item is string => typeof item === 'string');
+}
+
+function parseIncludedHighlights(value: unknown) {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+  return value.map((item) => includedHighlightSchema.parse(item));
+}
 
 @Injectable()
 export class AdminPacksRepository {
@@ -90,6 +106,11 @@ export class AdminPacksService {
     pack: Awaited<ReturnType<AdminPacksRepository['listPacks']>>[number],
     current?: { packVersion: string; protocolVersion: number },
   ) {
+    const includedHighlights = parseIncludedHighlights(pack.includedHighlights);
+    const coverLines = parseStringArray(pack.coverLines);
+    const samplePreviewsRaw = Array.isArray(pack.samplePreviews) ? pack.samplePreviews : [];
+    const introMediaRaw = Array.isArray(pack.introMedia) ? pack.introMedia : undefined;
+
     return adminPackSummarySchema.parse({
       packId: pack.packId,
       title: pack.title,
@@ -100,13 +121,17 @@ export class AdminPacksService {
       ...(pack.primaryNodeId ? { primaryNodeId: pack.primaryNodeId } : {}),
       ...(pack.secondaryNodeId ? { secondaryNodeId: pack.secondaryNodeId } : {}),
       ...(pack.versionNodeId ? { versionNodeId: pack.versionNodeId } : {}),
-      contentTags: Array.isArray(pack.contentTags)
-        ? pack.contentTags.filter((item): item is string => typeof item === 'string')
-        : [],
+      contentTags: parseStringArray(pack.contentTags),
       cardCount: pack.cardCount,
       sizeLabel: pack.sizeLabel,
       summary: pack.summary,
       priceCents: pack.priceCents,
+      ...(pack.coverUrl ? { coverUrl: pack.coverUrl } : {}),
+      ...(pack.coverBadge ? { coverBadge: pack.coverBadge } : {}),
+      ...(coverLines.length > 0 ? { coverLines } : {}),
+      ...(includedHighlights.length > 0 ? { includedHighlights } : {}),
+      ...(samplePreviewsRaw.length > 0 ? { samplePreviews: samplePreviewsRaw } : {}),
+      ...(introMediaRaw && introMediaRaw.length > 0 ? { introMedia: introMediaRaw } : {}),
       status: pack.status,
       ...(pack.currentVersionId ? { currentVersionId: pack.currentVersionId } : {}),
       ...(current ? { currentPackVersion: current.packVersion } : {}),
@@ -186,6 +211,10 @@ export class AdminPacksService {
         sizeLabel: input.sizeLabel,
         summary: input.summary,
         priceCents: input.priceCents,
+        ...(input.coverUrl !== undefined ? { coverUrl: input.coverUrl } : {}),
+        ...(input.coverBadge !== undefined ? { coverBadge: input.coverBadge } : {}),
+        ...(input.coverLines !== undefined ? { coverLines: input.coverLines } : {}),
+        includedHighlights: input.includedHighlights,
         samplePreviews: input.samplePreviews,
         ...(input.introMedia !== undefined ? { introMedia: input.introMedia } : {}),
         status: input.status,
@@ -231,6 +260,12 @@ export class AdminPacksService {
         ...(input.sizeLabel !== undefined ? { sizeLabel: input.sizeLabel } : {}),
         ...(input.summary !== undefined ? { summary: input.summary } : {}),
         ...(input.priceCents !== undefined ? { priceCents: input.priceCents } : {}),
+        ...(input.coverUrl !== undefined ? { coverUrl: input.coverUrl } : {}),
+        ...(input.coverBadge !== undefined ? { coverBadge: input.coverBadge } : {}),
+        ...(input.coverLines !== undefined ? { coverLines: input.coverLines } : {}),
+        ...(input.includedHighlights !== undefined
+          ? { includedHighlights: input.includedHighlights }
+          : {}),
         ...(input.samplePreviews !== undefined ? { samplePreviews: input.samplePreviews } : {}),
         ...(input.introMedia !== undefined ? { introMedia: input.introMedia } : {}),
         ...(input.status !== undefined ? { status: input.status } : {}),
@@ -371,6 +406,24 @@ export class AdminPacksService {
       currentVersionId: versionId,
       packVersion: version.packVersion,
     });
+  }
+
+  async extractSamplePreviewsFromCurrentVersion(packId: string) {
+    const pack = await this.repository.findPackById(packId);
+    if (!pack?.currentVersionId) {
+      throw new NotFoundException({ code: 'PACK_VERSION_NOT_FOUND', message: '暂无发布版本' });
+    }
+
+    const current = pack.versions.find((version) => version.id === pack.currentVersionId);
+    if (!current) {
+      throw new NotFoundException({ code: 'PACK_VERSION_NOT_FOUND', message: '暂无发布版本' });
+    }
+
+    const zipPath = this.resolveStoredZipPath(packId, current.packVersion);
+    const zipBytes = new Uint8Array(await readFile(zipPath));
+    const samplePreviews = readSamplePreviewsFromZip(zipBytes);
+
+    return adminExtractSamplePreviewsResponseSchema.parse({ samplePreviews });
   }
 
   private resolveStoredZipPath(packId: string, packVersion: string): string {

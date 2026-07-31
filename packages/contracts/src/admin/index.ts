@@ -69,6 +69,7 @@ export {
   adminPackSummarySchema,
   adminPackVersionSchema,
   adminPublishPackVersionResponseSchema,
+  adminExtractSamplePreviewsResponseSchema,
   adminPackDetailResponseSchema,
   adminUpdatePackRequestSchema,
   adminUpdatePackVersionNoteRequestSchema,

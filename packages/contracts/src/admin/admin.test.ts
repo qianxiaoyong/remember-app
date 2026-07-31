@@ -81,6 +81,18 @@ describe('admin contracts', () => {
     expect(() => adminLogoutResponseSchema.parse({ ok: false })).toThrow();
   });
 
+  it('adminUpdatePackRequest 接受封面与包含内容字段', () => {
+    const parsed = adminUpdatePackRequestSchema.parse({
+      coverUrl: 'https://cdn.example.com/cover.jpg',
+      coverBadge: 'PEP 3A',
+      coverLines: ['三年级', '上册'],
+      includedHighlights: [{ title: '核心词汇', description: '单词与释义' }],
+      contentTags: ['词汇', '上册'],
+    });
+    expect(parsed.coverBadge).toBe('PEP 3A');
+    expect(parsed.includedHighlights).toHaveLength(1);
+  });
+
   it('adminUpdatePackRequest 忽略 React Admin 只读字段与空 displayTitle', () => {
     const parsed = adminUpdatePackRequestSchema.parse({
       id: 'en-grade3-v1-rj',

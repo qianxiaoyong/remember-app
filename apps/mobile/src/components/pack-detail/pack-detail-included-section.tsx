@@ -1,14 +1,16 @@
 import type { ReactElement } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import type { IncludedHighlight } from '@remember/contracts';
 import { SurfaceCard } from '../ui/surface-card';
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
 
 interface PackDetailIncludedSectionProps {
   subtitle: string;
+  highlights: IncludedHighlight[];
 }
 
-const INCLUDED_ITEMS = [
+const DEFAULT_INCLUDED_ITEMS: IncludedHighlight[] = [
   {
     title: '核心词汇',
     description: '教材单词、音标、释义和真人语音',
@@ -17,9 +19,12 @@ const INCLUDED_ITEMS = [
     title: '配套例句',
     description: '短句理解、任意英文单词点词解析',
   },
-] as const;
+];
 
 export function PackDetailIncludedSection(props: PackDetailIncludedSectionProps): ReactElement {
+  const items =
+    props.highlights.length > 0 ? props.highlights : DEFAULT_INCLUDED_ITEMS;
+
   return (
     <SurfaceCard>
       <View style={styles.header}>
@@ -29,7 +34,7 @@ export function PackDetailIncludedSection(props: PackDetailIncludedSectionProps)
         </Text>
       </View>
       <View style={styles.grid}>
-        {INCLUDED_ITEMS.map((item) => (
+        {items.map((item) => (
           <View key={item.title} style={styles.itemCard}>
             <Text style={styles.itemTitle}>{item.title}</Text>
             <Text style={styles.itemDescription}>{item.description}</Text>

@@ -1,4 +1,4 @@
-import type { CatalogPackTaxonomy } from '@remember/contracts';
+import type { CatalogPackTaxonomy, IncludedHighlight } from '@remember/contracts';
 import type { IntroMediaItem } from '@remember/contracts';
 import type { PackSamplePreview } from './pack-sample-preview';
 
@@ -34,6 +34,8 @@ export interface CatalogPackItem {
   coverImage?: number;
   /** 后台 taxonomy 挂载；有则优先用于展示 label */
   taxonomy?: CatalogPackTaxonomy;
+  /** 详情「包含内容」；后台可配置 1～4 条 */
+  includedHighlights?: IncludedHighlight[];
 }
 
 export const CATALOG_PRIMARY_OPTIONS: { id: CatalogPrimaryCategory; label: string }[] = [

@@ -12,7 +12,11 @@ const readCatalogMemoryCache = vi.fn<() => CatalogPackItem[] | null>();
 const writeCatalogMemoryCache = vi.fn<(items: CatalogPackItem[]) => void>();
 
 vi.mock('../data/api/catalog-api', () => ({
-  fetchCatalogPacks: () => fetchCatalogPacks(),
+  fetchCatalogPacks: (...args: unknown[]) => fetchCatalogPacks(...args),
+}));
+
+vi.mock('../data/catalog/catalog-taxonomy-store', () => ({
+  writeCachedCatalogTaxonomy: vi.fn(),
 }));
 
 vi.mock('../data/catalog/catalog-cache-store', () => ({
@@ -90,5 +94,42 @@ describe('fetchMarketCatalog', () => {
 
     expect(cached).toHaveLength(1);
     expect(cached?.[0]?.packId).toBe('en-grade3-v1-rj');
+  });
+
+  it('merges list refresh without dropping detail-only fields from cache', async () => {
+    readCatalogMemoryCache.mockReturnValue([
+      {
+        packId: 'en-grade3-v1-rj',
+        title: '三年级上册人教版单词表',
+        primaryCategory: 'primary',
+        secondaryCategory: '三年级',
+        version: '人教版',
+        contentTags: ['词汇'],
+        cardCount: 112,
+        sizeLabel: '约 1.1 MB',
+        updatedAt: '2026-07-31',
+        priceCents: 100,
+        priceLabel: '¥1',
+        summary: '详情摘要',
+        sampleHeadwords: ['apple'],
+        samplePreviews: [{ headword: 'apple', zh: '苹果', exampleEn: 'An apple.' }],
+        introMedia: [{ type: 'image', url: 'https://cdn.example.com/intro.jpg', sortOrder: 0 }],
+        includedHighlights: [{ title: '核心词汇', description: '单词与释义' }],
+        isBundledTestPack: false,
+      },
+    ]);
+    fetchCatalogPacks.mockResolvedValue([{ ...grade3Pack, summary: '列表摘要' }]);
+
+    const items = await fetchMarketCatalog({
+      primaryCategory: 'all',
+      secondaryCategory: '全部',
+      versionFilter: '全部版本',
+      keyword: '',
+    });
+
+    expect(items[0]?.summary).toBe('列表摘要');
+    expect(items[0]?.samplePreviews).toHaveLength(1);
+    expect(items[0]?.introMedia).toHaveLength(1);
+    expect(items[0]?.includedHighlights).toHaveLength(1);
   });
 });

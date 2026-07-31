@@ -2,6 +2,7 @@ import {
   catalogPackDetailSchema,
   catalogPackSummarySchema,
   catalogPackTaxonomySchema,
+  includedHighlightSchema,
   introMediaItemSchema,
   packSamplePreviewSchema,
   type CatalogPackDetail,
@@ -36,6 +37,14 @@ function mapPackTaxonomy(pack: PackWithTaxonomy) {
   });
 }
 
+function parseIncludedHighlights(value: unknown) {
+  if (!Array.isArray(value)) {
+    return undefined;
+  }
+  const items = value.map((item) => includedHighlightSchema.parse(item));
+  return items.length > 0 ? items : undefined;
+}
+
 function mapPackSummary(pack: PackWithTaxonomy): CatalogPackSummary {
   const taxonomy = mapPackTaxonomy(pack);
   return catalogPackSummarySchema.parse({
@@ -54,6 +63,10 @@ function mapPackSummary(pack: PackWithTaxonomy): CatalogPackSummary {
     ...(pack.coverUrl ? { coverUrl: pack.coverUrl } : {}),
     ...(pack.coverBadge ? { coverBadge: pack.coverBadge } : {}),
     ...(parseStringArray(pack.coverLines) ? { coverLines: parseStringArray(pack.coverLines) } : {}),
+    ...(() => {
+      const highlights = parseIncludedHighlights(pack.includedHighlights);
+      return highlights ? { includedHighlights: highlights } : {};
+    })(),
     ...(pack.isBundledTestPack ? { isBundledTestPack: true } : {}),
     ...(taxonomy ? { taxonomy } : {}),
   });

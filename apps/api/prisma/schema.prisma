@@ -142,6 +142,7 @@ model Pack {
   coverUrl          String?       @map("cover_url")
   coverBadge        String?       @map("cover_badge")
   coverLines        Json?         @map("cover_lines")
+  includedHighlights Json?        @map("included_highlights")
   samplePreviews    Json          @map("sample_previews")
   introMedia        Json?         @map("intro_media")
   isBundledTestPack Boolean       @default(false) @map("is_bundled_test_pack")
