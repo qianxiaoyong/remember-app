@@ -19,6 +19,12 @@ export default {
       to: { path: '^apps/(mobile|admin)' },
     },
     {
+      name: 'admin-does-not-read-other-apps',
+      severity: 'error',
+      from: { path: '^apps/admin' },
+      to: { path: '^apps/(api|mobile)' },
+    },
+    {
       name: 'packages-do-not-read-apps',
       severity: 'error',
       from: { path: '^packages' },

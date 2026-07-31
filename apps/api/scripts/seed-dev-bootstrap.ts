@@ -1,5 +1,10 @@
 import { createHash } from 'node:crypto';
 import { PrismaClient } from '@prisma/client';
+import { hashAdminPassword } from '../src/admin-auth/admin-password.ts';
+import {
+  readAdminAuthConfig,
+  readAdminBootstrapPassword,
+} from '../src/config/read-admin-auth-config.ts';
 import {
   REMEMBER_TEST_PACK_SHA256,
   REMEMBER_TEST_PACK_SIZE_BYTES,
@@ -118,6 +123,29 @@ async function upsertVersion(packId: string, packVersion: string): Promise<void>
   });
 }
 
+async function upsertDevAdminUser(): Promise<void> {
+  const bootstrapPassword = readAdminBootstrapPassword();
+  if (!bootstrapPassword) {
+    console.log('skip admin user (ADMIN_BOOTSTRAP_PASSWORD not set)');
+    return;
+  }
+
+  const { bootstrapLoginName } = readAdminAuthConfig();
+  const passwordHash = await hashAdminPassword(bootstrapPassword);
+  await prisma.adminUser.upsert({
+    where: { loginName: bootstrapLoginName },
+    create: {
+      loginName: bootstrapLoginName,
+      passwordHash,
+    },
+    update: {
+      passwordHash,
+      status: 'active',
+    },
+  });
+  console.log(`ok admin user ${bootstrapLoginName}`);
+}
+
 async function main(): Promise<void> {
   const pepper = process.env.REDEMPTION_CODE_PEPPER?.trim();
   if (!pepper) {
@@ -126,6 +154,8 @@ async function main(): Promise<void> {
 
   await upsertDevPacks();
   console.log('ok dev catalog packs');
+
+  await upsertDevAdminUser();
 
   for (const packId of ['remember-test-pack', 'demo-primary-grade3'] as const) {
     await upsertVersion(packId, '1.0.0');

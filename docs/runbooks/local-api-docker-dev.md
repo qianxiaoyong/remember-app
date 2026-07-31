@@ -53,6 +53,21 @@ pnpm --filter @remember/api dev
 
 健康检查：`http://127.0.0.1:3000/api/v1/health`（端口以 API 配置为准）
 
+## 3.1 启动管理后台（阶段 7）
+
+在 **第三个终端**（API 与 Docker PG 已运行）：
+
+```powershell
+cd D:\AIcoder\remember-app
+pnpm --filter @remember/admin dev
+```
+
+浏览器打开：`http://127.0.0.1:5173`
+
+- 默认通过 Vite 代理访问 API（`vite.config.ts` → `127.0.0.1:3000`）
+- 登录账号见 `apps/api/.env` 的 `ADMIN_BOOTSTRAP_*`（seed 后可用）
+- 若需直连 API，在 `apps/admin/.env` 设置 `VITE_API_BASE_URL=http://127.0.0.1:3000`（需 API 开启 CORS 或仍用代理）
+
 ## 4. 手机实机联调
 
 1. 电脑与手机同一 Wi‑Fi

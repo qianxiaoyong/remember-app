@@ -6,12 +6,19 @@ export function createIntegrationPrismaClient(): PrismaClient {
 }
 
 export async function resetAuthTables(prisma: PrismaClient): Promise<void> {
+  await resetAdminTables(prisma);
   await resetCommerceTables(prisma);
   await prisma.syncProcessedEvent.deleteMany();
   await prisma.learningState.deleteMany();
   await prisma.session.deleteMany();
   await prisma.smsChallenge.deleteMany();
   await prisma.user.deleteMany();
+}
+
+export async function resetAdminTables(prisma: PrismaClient): Promise<void> {
+  await prisma.auditLog.deleteMany();
+  await prisma.adminSession.deleteMany();
+  await prisma.adminUser.deleteMany();
 }
 
 export {

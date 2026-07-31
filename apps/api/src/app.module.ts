@@ -1,4 +1,7 @@
 import { Module } from '@nestjs/common';
+import { AdminAuthModule } from './admin-auth/admin-auth.module.js';
+import { AdminModule } from './admin/admin.module.js';
+import { AuditModule } from './audit/audit.module.js';
 import { AuthModule } from './auth/auth.module.js';
 import { CatalogModule } from './catalog/catalog.module.js';
 import { HealthController } from './health/health.controller.js';
@@ -14,6 +17,9 @@ import { SyncModule } from './sync/sync.module.js';
   imports: [
     PrismaModule,
     AuthModule,
+    AdminAuthModule,
+    AdminModule,
+    AuditModule,
     SyncModule,
     CatalogModule,
     PackAccessModule,

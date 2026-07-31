@@ -19,6 +19,12 @@
     "@remember/contracts": "workspace:*",
     "fflate": "0.8.2"
   },
+  "exports": {
+    "./verify": {
+      "types": "./dist/verify-pack-buffer.d.ts",
+      "default": "./dist/verify-pack-buffer.js"
+    }
+  },
   "devDependencies": {
     "@remember/config": "workspace:*",
     "@types/node": "26.1.1",

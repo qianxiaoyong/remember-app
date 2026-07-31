@@ -10,5 +10,6 @@ import { RedemptionService } from './redemption.service.js';
   imports: [AuthModule, PackAccessModule],
   controllers: [RedemptionController],
   providers: [RedemptionConfigService, RedemptionRepository, RedemptionService],
+  exports: [RedemptionConfigService],
 })
 export class RedemptionModule {}

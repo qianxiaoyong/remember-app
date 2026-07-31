@@ -218,3 +218,48 @@ model RedemptionEvent {
   @@index([userId])
   @@map("redemption_events")
 }
+
+model AdminUser {
+  id           String         @id @default(uuid()) @db.Uuid
+  loginName    String         @unique @map("login_name")
+  passwordHash String         @map("password_hash")
+  role         String         @default("super_admin")
+  status       String         @default("active")
+  totpSecret   String?        @map("totp_secret")
+  createdAt    DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime       @updatedAt @map("updated_at") @db.Timestamptz(6)
+  sessions     AdminSession[]
+  auditLogs    AuditLog[]
+
+  @@map("admin_users")
+}
+
+model AdminSession {
+  id           String    @id @default(uuid()) @db.Uuid
+  tokenHash    String    @unique @map("token_hash")
+  adminUserId  String    @map("admin_user_id") @db.Uuid
+  lastActiveAt DateTime  @map("last_active_at") @db.Timestamptz(6)
+  revokedAt    DateTime? @map("revoked_at") @db.Timestamptz(6)
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  adminUser    AdminUser @relation(fields: [adminUserId], references: [id], onDelete: Cascade)
+
+  @@index([adminUserId])
+  @@map("admin_sessions")
+}
+
+model AuditLog {
+  id                String    @id @default(uuid()) @db.Uuid
+  actorAdminUserId  String    @map("actor_admin_user_id") @db.Uuid
+  action            String
+  targetType        String    @map("target_type")
+  targetId          String    @map("target_id")
+  payloadSummary    Json      @map("payload_summary")
+  result            String
+  errorCode         String?   @map("error_code")
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  actorAdminUser    AdminUser @relation(fields: [actorAdminUserId], references: [id])
+
+  @@index([createdAt(sort: Desc)])
+  @@index([action])
+  @@map("audit_logs")
+}
