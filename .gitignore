@@ -5,6 +5,7 @@ node_modules/
 !.env.example
 coverage/
 dist/
+tools/pack-builder/output/
 apps/api/.cache/
 apps/api/scripts/*.js
 .expo/

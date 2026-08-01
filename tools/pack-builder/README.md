@@ -25,7 +25,17 @@ pnpm --filter @remember/pack-builder test
 | [`docs/user-message-book-template.txt`](docs/user-message-book-template.txt) + 书本正文 | 大模型 **User**（每批任务）            |
 | [`docs/llm-system-prompt.md`](docs/llm-system-prompt.md)                                | 给人看的使用说明，**不要整篇发给模型** |
 
-工作流：AI 输出 JSON → 放入 `source/<packId>/` → 补音频 → `build:pack`
+工作流：AI 输出 JSON → 放入 `source/<packId>/` → 补音频 → **pack-editor 改错** → bump 版本 → `build:pack` → Admin 上传
+
+## Pack Editor（本地改内容）
+
+```powershell
+pnpm --filter @remember/pack-builder build
+pnpm dev:pack-editor
+```
+
+浏览器打开 http://127.0.0.1:5174 。详见 [`docs/runbooks/pack-editor-local.md`](../../docs/runbooks/pack-editor-local.md)。
+
 
 ## 签名私钥
 
