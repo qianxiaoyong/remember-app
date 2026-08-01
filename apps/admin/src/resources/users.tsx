@@ -105,7 +105,9 @@ function UserShowActions() {
         size="small"
         variant="outlined"
         onClick={() => {
-          redirect('list', 'orders', undefined, { userId: record.userId });
+          redirect('list', 'orders', undefined, {
+            filter: { userId: record.userId },
+          });
         }}
       >
         查看订单
@@ -114,7 +116,9 @@ function UserShowActions() {
         size="small"
         variant="outlined"
         onClick={() => {
-          redirect('list', 'pack-access', undefined, { userId: record.userId });
+          redirect('list', 'pack-access', undefined, {
+            filter: { userId: record.userId },
+          });
         }}
       >
         查看权益

@@ -291,7 +291,7 @@ export function Dashboard() {
             hint="点击查看用户列表"
             onClick={() => {
               redirect('list', 'users', undefined, {
-                registeredSince: resolveRegisteredSince(range),
+                filter: { registeredSince: resolveRegisteredSince(range) },
               });
             }}
           />
