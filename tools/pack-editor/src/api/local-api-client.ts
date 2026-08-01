@@ -75,5 +75,8 @@ export function suggestNextPatchVersion(version: string): string {
   if (!match) {
     return version;
   }
-  return `${match[1]}.${match[2]}.${String(Number(match[3]) + 1)}`;
+  const major = match[1] ?? '0';
+  const minor = match[2] ?? '0';
+  const patch = match[3] ?? '0';
+  return `${major}.${minor}.${String(Number(patch) + 1)}`;
 }

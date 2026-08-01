@@ -15,20 +15,30 @@ export function App(): ReactElement {
   return (
     <main style={{ padding: '1rem', fontFamily: 'system-ui, sans-serif', maxWidth: '960px' }}>
       {route.page === 'picker' && (
-        <PackPickerPage onSelectPack={(packId) => setRoute({ page: 'list', packId })} />
+        <PackPickerPage
+          onSelectPack={(packId) => {
+            setRoute({ page: 'list', packId });
+          }}
+        />
       )}
       {route.page === 'list' && (
         <CardListPage
           packId={route.packId}
-          onBack={() => setRoute({ page: 'picker' })}
-          onEditCard={(sortOrder) => setRoute({ page: 'edit', packId: route.packId, sortOrder })}
+          onBack={() => {
+            setRoute({ page: 'picker' });
+          }}
+          onEditCard={(sortOrder) => {
+            setRoute({ page: 'edit', packId: route.packId, sortOrder });
+          }}
         />
       )}
       {route.page === 'edit' && (
         <CardEditPage
           packId={route.packId}
           sortOrder={route.sortOrder}
-          onBack={() => setRoute({ page: 'list', packId: route.packId })}
+          onBack={() => {
+            setRoute({ page: 'list', packId: route.packId });
+          }}
         />
       )}
     </main>

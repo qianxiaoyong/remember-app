@@ -86,7 +86,9 @@ export function CardEditPage({ packId, sortOrder, onBack }: CardEditPageProps): 
           await saveCard(packId, nextCard);
           setCard(nextCard);
           setToast('已保存');
-          window.setTimeout(() => setToast(null), 2000);
+          window.setTimeout(() => {
+            setToast(null);
+          }, 2000);
         }}
       />
     </section>

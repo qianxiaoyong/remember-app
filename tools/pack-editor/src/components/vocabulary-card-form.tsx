@@ -1,6 +1,6 @@
 import { vocabularyContentSchema, type VocabularyContent } from '@remember/contracts';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { useFieldArray, useForm, type FieldPath } from 'react-hook-form';
 import type { CSSProperties, ReactElement } from 'react';
 
 interface VocabularyCardFormProps {
@@ -26,12 +26,12 @@ function labelForPath(path: string): string {
 
 function normalizeVocabularyContent(values: VocabularyContent): VocabularyContent {
   const prompt = { ...values.prompt };
-  if (!prompt.phonetic?.ipa?.trim()) {
+  const ipa = prompt.phonetic?.ipa.trim() ?? '';
+  if (!ipa) {
     delete prompt.phonetic;
-  } else if (prompt.phonetic) {
-    if (!prompt.phonetic.dialect) {
-      delete prompt.phonetic.dialect;
-    }
+  } else {
+    const dialect = prompt.phonetic?.dialect;
+    prompt.phonetic = dialect ? { ipa, dialect } : { ipa };
   }
   if (!prompt.primaryImage?.trim()) {
     delete prompt.primaryImage;
@@ -48,8 +48,9 @@ function normalizeVocabularyContent(values: VocabularyContent): VocabularyConten
       })),
   };
 
-  if (values.reveal.mnemonic?.text?.trim()) {
-    reveal.mnemonic = { kind: 'association', text: values.reveal.mnemonic.text.trim() };
+  const mnemonicText = values.reveal.mnemonic?.text.trim() ?? '';
+  if (mnemonicText) {
+    reveal.mnemonic = { kind: 'association', text: mnemonicText };
   } else {
     delete reveal.mnemonic;
   }
@@ -130,14 +131,14 @@ export function VocabularyCardForm({
             <div key={field.id} style={{ display: 'grid', gap: '0.5rem', marginTop: '0.5rem' }}>
               <input
                 {...register(
-                  `reveal.definitions.${index}.text` as `reveal.definitions.${number}.text`,
+                  `reveal.definitions.${String(index)}.text` as FieldPath<VocabularyContent>,
                 )}
                 placeholder="释义"
                 style={inputStyle}
               />
               <input
                 {...register(
-                  `reveal.definitions.${index}.pos` as `reveal.definitions.${number}.pos`,
+                  `reveal.definitions.${String(index)}.pos` as FieldPath<VocabularyContent>,
                 )}
                 placeholder="词性（可选）"
                 style={inputStyle}
@@ -146,7 +147,9 @@ export function VocabularyCardForm({
           ))}
           <button
             type="button"
-            onClick={() => definitions.append({ text: '' })}
+            onClick={() => {
+              definitions.append({ text: '' });
+            }}
             style={{ marginTop: '0.5rem' }}
           >
             添加释义
@@ -158,17 +161,19 @@ export function VocabularyCardForm({
           {examples.fields.map((field, index) => (
             <div key={field.id} style={{ display: 'grid', gap: '0.5rem', marginTop: '0.5rem' }}>
               <input
-                {...register(`reveal.examples.${index}.en` as `reveal.examples.${number}.en`)}
+                {...register(`reveal.examples.${String(index)}.en` as FieldPath<VocabularyContent>)}
                 placeholder="英文例句"
                 style={inputStyle}
               />
               <input
-                {...register(`reveal.examples.${index}.zh` as `reveal.examples.${number}.zh`)}
+                {...register(`reveal.examples.${String(index)}.zh` as FieldPath<VocabularyContent>)}
                 placeholder="中文例句"
                 style={inputStyle}
               />
               <input
-                {...register(`reveal.examples.${index}.audio` as `reveal.examples.${number}.audio`)}
+                {...register(
+                  `reveal.examples.${String(index)}.audio` as FieldPath<VocabularyContent>,
+                )}
                 placeholder="例句音频（可选）"
                 style={inputStyle}
               />
@@ -176,7 +181,9 @@ export function VocabularyCardForm({
           ))}
           <button
             type="button"
-            onClick={() => examples.append({ en: '', zh: '' })}
+            onClick={() => {
+              examples.append({ en: '', zh: '' });
+            }}
             style={{ marginTop: '0.5rem' }}
             disabled={examples.fields.length >= 5}
           >

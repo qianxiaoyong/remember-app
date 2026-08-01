@@ -146,7 +146,9 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
           <input
             type="search"
             value={search}
-            onChange={(event) => setSearch(event.target.value)}
+            onChange={(event) => {
+              setSearch(event.target.value);
+            }}
             style={{ marginLeft: '0.5rem', minWidth: '16rem' }}
           />
         </label>
@@ -202,7 +204,9 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
           {filteredCards.map((card) => (
             <tr
               key={card.sortOrder}
-              onClick={() => onEditCard(card.sortOrder)}
+              onClick={() => {
+                onEditCard(card.sortOrder);
+              }}
               style={{ cursor: 'pointer' }}
             >
               <td style={cellStyle}>{card.sortOrder}</td>
@@ -233,12 +237,19 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
               <input
                 type="text"
                 value={nextVersion}
-                onChange={(event) => setNextVersion(event.target.value)}
+                onChange={(event) => {
+                  setNextVersion(event.target.value);
+                }}
                 style={{ display: 'block', width: '100%', marginTop: '0.25rem' }}
               />
             </label>
             <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
-              <button type="button" onClick={() => setShowBuildDialog(false)}>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowBuildDialog(false);
+                }}
+              >
                 取消
               </button>
               <button

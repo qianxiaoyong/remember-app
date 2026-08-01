@@ -61,7 +61,12 @@ export function PackPickerPage({ onSelectPack }: PackPickerPageProps): ReactElem
               <td style={cellStyle}>{item.packVersion}</td>
               <td style={cellStyle}>{item.cardCount}</td>
               <td style={cellStyle}>
-                <button type="button" onClick={() => onSelectPack(item.packId)}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    onSelectPack(item.packId);
+                  }}
+                >
                   打开
                 </button>
               </td>

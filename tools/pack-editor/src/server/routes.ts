@@ -30,7 +30,13 @@ function sendJson(res: ServerResponse, status: number, body: unknown): void {
 async function readJsonBody<T>(req: IncomingMessage): Promise<T> {
   const chunks: Buffer[] = [];
   for await (const chunk of req) {
-    chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk);
+    if (Buffer.isBuffer(chunk)) {
+      chunks.push(chunk);
+      continue;
+    }
+    if (typeof chunk === 'string') {
+      chunks.push(Buffer.from(chunk));
+    }
   }
   const text = Buffer.concat(chunks).toString('utf8');
   if (!text.trim()) {
@@ -129,7 +135,7 @@ function runPackBuild(
   });
 }
 
-async function handleListPacks(res: ServerResponse): Promise<void> {
+function handleListPacks(res: ServerResponse): void {
   const packBuilderRoot = getPackBuilderRoot();
   const packIds = listPackSourceDirs(packBuilderRoot);
   const items = packIds.map((packId) => {
@@ -147,7 +153,7 @@ async function handleListPacks(res: ServerResponse): Promise<void> {
   sendJson(res, 200, { items });
 }
 
-async function handleGetSource(packId: string, res: ServerResponse): Promise<void> {
+function handleGetSource(packId: string, res: ServerResponse): void {
   const resolved = resolveSourceDir(packId);
   if (!resolved.ok) {
     sendJson(res, resolved.status, { error: resolved.message });
@@ -156,12 +162,15 @@ async function handleGetSource(packId: string, res: ServerResponse): Promise<voi
   sendJson(res, 200, readPackSource(resolved.path));
 }
 
-async function handleSaveCard(
-  packId: string,
-  sortOrderText: string,
-  req: IncomingMessage,
-  res: ServerResponse,
-): Promise<void> {
+interface SaveCardInput {
+  packId: string;
+  sortOrderText: string;
+  req: IncomingMessage;
+  res: ServerResponse;
+}
+
+async function handleSaveCard(input: SaveCardInput): Promise<void> {
+  const { packId, sortOrderText, req, res } = input;
   const resolved = resolveSourceDir(packId);
   if (!resolved.ok) {
     sendJson(res, resolved.status, { error: resolved.message });
@@ -204,7 +213,7 @@ async function handleSaveCard(
   sendJson(res, 200, { ok: true });
 }
 
-async function handleValidate(packId: string, res: ServerResponse): Promise<void> {
+function handleValidate(packId: string, res: ServerResponse): void {
   const resolved = resolveSourceDir(packId);
   if (!resolved.ok) {
     sendJson(res, resolved.status, { error: resolved.message });
@@ -256,7 +265,7 @@ async function handleLocalApi(
 
   if (segments.length === 2 && segments[0] === 'local-api' && segments[1] === 'packs') {
     if (req.method === 'GET') {
-      await handleListPacks(res);
+      handleListPacks(res);
       return;
     }
   }
@@ -268,7 +277,7 @@ async function handleLocalApi(
     segments[3] === 'source'
   ) {
     if (req.method === 'GET') {
-      await handleGetSource(segments[2] ?? '', res);
+      handleGetSource(segments[2] ?? '', res);
       return;
     }
   }
@@ -280,7 +289,12 @@ async function handleLocalApi(
     segments[3] === 'cards'
   ) {
     if (req.method === 'PUT') {
-      await handleSaveCard(segments[2] ?? '', segments[4] ?? '', req, res);
+      await handleSaveCard({
+        packId: segments[2] ?? '',
+        sortOrderText: segments[4] ?? '',
+        req,
+        res,
+      });
       return;
     }
   }
@@ -292,7 +306,7 @@ async function handleLocalApi(
     segments[3] === 'validate'
   ) {
     if (req.method === 'POST') {
-      await handleValidate(segments[2] ?? '', res);
+      handleValidate(segments[2] ?? '', res);
       return;
     }
   }
