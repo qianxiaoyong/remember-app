@@ -74,7 +74,10 @@ function validatePackSource(sourceDir: string): ValidationIssue[] {
       }
     }
 
-    if (card.content.prompt.primaryImage && !existsSync(join(sourceDir, card.content.prompt.primaryImage))) {
+    if (
+      card.content.prompt.primaryImage &&
+      !existsSync(join(sourceDir, card.content.prompt.primaryImage))
+    ) {
       issues.push({
         sortOrder: card.sortOrder,
         path: 'prompt.primaryImage',
@@ -86,7 +89,10 @@ function validatePackSource(sourceDir: string): ValidationIssue[] {
   return issues;
 }
 
-function runPackBuild(packId: string, outputPath: string): Promise<{ stdout: string; stderr: string }> {
+function runPackBuild(
+  packId: string,
+  outputPath: string,
+): Promise<{ stdout: string; stderr: string }> {
   const packBuilderRoot = getPackBuilderRoot();
   return new Promise((resolve, reject) => {
     const child = spawn(

@@ -241,7 +241,11 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
               <button type="button" onClick={() => setShowBuildDialog(false)}>
                 取消
               </button>
-              <button type="button" onClick={() => void handleBuild()} disabled={busyAction === 'build'}>
+              <button
+                type="button"
+                onClick={() => void handleBuild()}
+                disabled={busyAction === 'build'}
+              >
                 {busyAction === 'build' ? '打包中…' : '确认打包'}
               </button>
             </div>

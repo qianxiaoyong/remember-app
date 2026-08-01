@@ -13,16 +13,14 @@ function isPathInside(parent: string, child: string): boolean {
   const normalizedParent = resolve(parent);
   const normalizedChild = resolve(child);
   return (
-    normalizedChild === normalizedParent ||
-    normalizedChild.startsWith(`${normalizedParent}${sep}`)
+    normalizedChild === normalizedParent || normalizedChild.startsWith(`${normalizedParent}${sep}`)
   );
 }
 
 const packIdPattern = /^[a-z0-9][a-z0-9-]*$/;
 
 export type ResolveSourceDirResult =
-  | { ok: true; path: string }
-  | { ok: false; status: 403; message: string };
+  { ok: true; path: string } | { ok: false; status: 403; message: string };
 
 export function resolveSourceDir(packId: string): ResolveSourceDirResult {
   if (!packIdPattern.test(packId) || packId.includes('..')) {

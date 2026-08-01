@@ -43,14 +43,11 @@ export async function loadPackSource(packId: string): Promise<PackSource> {
 
 export async function saveCard(packId: string, card: PackSourceCard): Promise<void> {
   await readJson<{ ok: true }>(
-    await fetch(
-      `/local-api/packs/${encodeURIComponent(packId)}/cards/${String(card.sortOrder)}`,
-      {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(card),
-      },
-    ),
+    await fetch(`/local-api/packs/${encodeURIComponent(packId)}/cards/${String(card.sortOrder)}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(card),
+    }),
   );
 }
 

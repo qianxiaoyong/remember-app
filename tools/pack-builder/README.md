@@ -36,7 +36,6 @@ pnpm dev:pack-editor
 
 浏览器打开 http://127.0.0.1:5174 。详见 [`docs/runbooks/pack-editor-local.md`](../../docs/runbooks/pack-editor-local.md)。
 
-
 ## 签名私钥
 
 测试包默认使用 RFC 8032 测试向量私钥。生产签名设置环境变量 `REMEMBER_PACK_SIGNING_PRIVATE_KEY_HEX`（不进 Git）。

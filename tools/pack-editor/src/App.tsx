@@ -21,9 +21,7 @@ export function App(): ReactElement {
         <CardListPage
           packId={route.packId}
           onBack={() => setRoute({ page: 'picker' })}
-          onEditCard={(sortOrder) =>
-            setRoute({ page: 'edit', packId: route.packId, sortOrder })
-          }
+          onEditCard={(sortOrder) => setRoute({ page: 'edit', packId: route.packId, sortOrder })}
         />
       )}
       {route.page === 'edit' && (

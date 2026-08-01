@@ -129,12 +129,16 @@ export function VocabularyCardForm({
           {definitions.fields.map((field, index) => (
             <div key={field.id} style={{ display: 'grid', gap: '0.5rem', marginTop: '0.5rem' }}>
               <input
-                {...register(`reveal.definitions.${index}.text` as `reveal.definitions.${number}.text`)}
+                {...register(
+                  `reveal.definitions.${index}.text` as `reveal.definitions.${number}.text`,
+                )}
                 placeholder="释义"
                 style={inputStyle}
               />
               <input
-                {...register(`reveal.definitions.${index}.pos` as `reveal.definitions.${number}.pos`)}
+                {...register(
+                  `reveal.definitions.${index}.pos` as `reveal.definitions.${number}.pos`,
+                )}
                 placeholder="词性（可选）"
                 style={inputStyle}
               />
