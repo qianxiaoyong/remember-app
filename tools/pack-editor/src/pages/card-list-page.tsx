@@ -306,10 +306,7 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
             onClick: () => {
               onEditCard(card.sortOrder, card.headword);
             },
-            cells: [
-              card.sortOrder,
-              card.headword,
-            ],
+            cells: [card.sortOrder, card.headword],
             action: (
               <button
                 type="button"

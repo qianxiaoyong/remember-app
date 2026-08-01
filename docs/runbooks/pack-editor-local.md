@@ -30,15 +30,15 @@ pnpm dev:pack-editor
 
 ## 本地 API（Vite 中间件）
 
-| 方法 | 路径                                        | 说明                                    |
-| ---- | ------------------------------------------- | --------------------------------------- |
-| GET  | `/local-api/packs`                          | 列出 source 下所有包                    |
-| GET  | `/local-api/packs/:packId/source`           | 完整 PackSource                         |
+| 方法   | 路径                                        | 说明                                    |
+| ------ | ------------------------------------------- | --------------------------------------- |
+| GET    | `/local-api/packs`                          | 列出 source 下所有包                    |
+| GET    | `/local-api/packs/:packId/source`           | 完整 PackSource                         |
 | PUT    | `/local-api/packs/:packId/cards/:sortOrder` | 保存单卡                                |
 | POST   | `/local-api/packs/:packId/cards`            | 新增单词（append 到 cards.json 末尾）   |
 | DELETE | `/local-api/packs/:packId/cards/:sortOrder` | 删除单词                                |
 | POST   | `/local-api/packs/:packId/validate`         | Zod + 资源路径检查                      |
-| POST | `/local-api/packs/:packId/build`            | 可选 bump 版本并 spawn pack-builder CLI |
+| POST   | `/local-api/packs/:packId/build`            | 可选 bump 版本并 spawn pack-builder CLI |
 
 路径仅允许 `tools/pack-builder/source/*` 下合法 `packId`；含 `..` 等逃逸请求返回 403。
 

@@ -59,7 +59,10 @@ export function DataTable({
               }}
             >
               {row.cells.map((cell, index) => (
-                <td key={`${String(row.id)}-${String(index)}`} className={columns[index]?.className}>
+                <td
+                  key={`${String(row.id)}-${String(index)}`}
+                  className={columns[index]?.className}
+                >
                   {cell}
                 </td>
               ))}
