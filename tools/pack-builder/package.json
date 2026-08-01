@@ -20,6 +20,10 @@
     "fflate": "0.8.2"
   },
   "exports": {
+    "./pack-source": {
+      "types": "./dist/pack-source.d.ts",
+      "default": "./dist/pack-source.js"
+    },
     "./verify": {
       "types": "./dist/verify-pack-buffer.d.ts",
       "default": "./dist/verify-pack-buffer.js"
