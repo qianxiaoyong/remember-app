@@ -1,0 +1,30 @@
+{
+  "name": "@remember/pack-editor",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "3.10.0",
+    "@remember/contracts": "workspace:*",
+    "@remember/pack-builder": "workspace:*",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-hook-form": "7.83.0",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@remember/config": "workspace:*",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "4.7.0",
+    "typescript": "6.0.3",
+    "vite": "6.4.1",
+    "vitest": "4.1.10"
+  }
+}
