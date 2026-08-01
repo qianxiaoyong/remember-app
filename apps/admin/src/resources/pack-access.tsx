@@ -32,22 +32,24 @@ export function PackAccessList() {
         sort={{ field: 'grantedAt', order: 'DESC' }}
         perPage={20}
       >
-      <Datagrid bulkActionButtons={false}>
-        <TextField source="maskedPhone" label="用户" />
-        <TextField source="packTitle" label="知识库" />
-        <FunctionField
-          label="知识库 ID"
-          render={(record: { packId?: string }) => <MonoText variant="caption">{record.packId ?? '—'}</MonoText>}
-        />
-        <FunctionField
-          label="来源"
-          render={(record: { source?: string }) =>
-            record.source ? <PackAccessSourceChip source={record.source} /> : '—'
-          }
-        />
-        <DateField source="grantedAt" label="发放时间" showTime locales="zh-CN" />
-      </Datagrid>
-    </List>
+        <Datagrid bulkActionButtons={false}>
+          <TextField source="maskedPhone" label="用户" />
+          <TextField source="packTitle" label="知识库" />
+          <FunctionField
+            label="知识库 ID"
+            render={(record: { packId?: string }) => (
+              <MonoText variant="caption">{record.packId ?? '—'}</MonoText>
+            )}
+          />
+          <FunctionField
+            label="来源"
+            render={(record: { source?: string }) =>
+              record.source ? <PackAccessSourceChip source={record.source} /> : '—'
+            }
+          />
+          <DateField source="grantedAt" label="发放时间" showTime locales="zh-CN" />
+        </Datagrid>
+      </List>
     </>
   );
 }
@@ -58,10 +60,7 @@ export function PackAccessGrantCreate() {
 
   return (
     <Create title={false} component="div">
-      <AdminPageHeader
-        title="补发权益"
-        meta="手动为用户开通知识库访问权限，操作将写入审计日志"
-      />
+      <AdminPageHeader title="补发权益" meta="手动为用户开通知识库访问权限，操作将写入审计日志" />
       <Box sx={{ maxWidth: 560 }}>
         <SimpleForm defaultValues={{ userId: prefilledUserId }}>
           <TextInput source="userId" label="用户 UUID" validate={required()} fullWidth />

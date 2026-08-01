@@ -39,8 +39,16 @@ const orderStatusConfig: Record<string, StatusChipStyle> = {
   pending: { label: '待支付', color: adminColors.warning, background: 'rgba(240, 160, 75, 0.14)' },
   paid: { label: '已支付', color: adminColors.success, background: 'rgba(92, 184, 138, 0.14)' },
   refunding: { label: '退款中', color: adminColors.price, background: 'rgba(239, 112, 88, 0.14)' },
-  refunded: { label: '已退款', color: adminColors.textSecondary, background: adminColors.statTileBackground },
-  closed: { label: '已关闭', color: adminColors.textMuted, background: adminColors.statTileBackground },
+  refunded: {
+    label: '已退款',
+    color: adminColors.textSecondary,
+    background: adminColors.statTileBackground,
+  },
+  closed: {
+    label: '已关闭',
+    color: adminColors.textMuted,
+    background: adminColors.statTileBackground,
+  },
 };
 
 export function OrderStatusChip({ status }: { status: string }) {
@@ -50,8 +58,16 @@ export function OrderStatusChip({ status }: { status: string }) {
 const redemptionStatusConfig: Record<string, StatusChipStyle> = {
   active: { label: '可用', color: adminColors.success, background: 'rgba(92, 184, 138, 0.14)' },
   disabled: { label: '已停用', color: adminColors.warning, background: 'rgba(240, 160, 75, 0.14)' },
-  deleted: { label: '已删除', color: adminColors.textMuted, background: adminColors.statTileBackground },
-  exhausted: { label: '已耗尽', color: adminColors.textSecondary, background: adminColors.statTileBackground },
+  deleted: {
+    label: '已删除',
+    color: adminColors.textMuted,
+    background: adminColors.statTileBackground,
+  },
+  exhausted: {
+    label: '已耗尽',
+    color: adminColors.textSecondary,
+    background: adminColors.statTileBackground,
+  },
 };
 
 export function RedemptionStatusChip({
@@ -62,7 +78,10 @@ export function RedemptionStatusChip({
   isExhausted?: boolean;
 }) {
   if (isExhausted && status === 'active') {
-    return <StatusChip config={redemptionStatusConfig.exhausted!} />;
+    const exhaustedStyle = redemptionStatusConfig.exhausted;
+    if (exhaustedStyle) {
+      return <StatusChip config={exhaustedStyle} />;
+    }
   }
   return <StatusChip config={resolveStatusConfig(status, redemptionStatusConfig)} />;
 }

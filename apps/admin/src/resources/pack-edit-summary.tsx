@@ -40,7 +40,8 @@ export function PackEditSummaryMeta() {
         <Chip label="未发布" size="small" variant="outlined" sx={{ height: 22 }} />
       )}
       <Typography component="span" variant="caption" color="text.secondary">
-        {record.cardCount ?? '—'} 词 · {record.sizeLabel ?? '—'} · 更新 {formatUpdatedAt(record.updatedAt)}
+        {record.cardCount ?? '—'} 词 · {record.sizeLabel ?? '—'} · 更新{' '}
+        {formatUpdatedAt(record.updatedAt)}
       </Typography>
     </Stack>
   );

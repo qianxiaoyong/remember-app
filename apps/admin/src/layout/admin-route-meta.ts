@@ -18,7 +18,7 @@ const actionLabels = {
   edit: '编辑',
 } as const;
 
-export type AdminRouteInfo = {
+export interface AdminRouteInfo {
   group?: string;
   resource?: string;
   resourceLabel?: string;
@@ -26,7 +26,7 @@ export type AdminRouteInfo = {
   actionLabel?: string;
   /** 面包屑展示段（不含品牌） */
   breadcrumbSegments: string[];
-};
+}
 
 export function resolveResourceLabel(
   resource: string,

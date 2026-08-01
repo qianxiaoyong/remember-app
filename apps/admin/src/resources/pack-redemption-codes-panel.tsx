@@ -65,7 +65,10 @@ export function PackRedemptionCodesPanel() {
         <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
           本知识库兑换码
         </Typography>
-        <MuiLink component={Link} to={`/redemption-codes?filter=${encodeURIComponent(JSON.stringify({ packId }))}`}>
+        <MuiLink
+          component={Link}
+          to={`/redemption-codes?filter=${encodeURIComponent(JSON.stringify({ packId }))}`}
+        >
           在兑换码管理页查看 →
         </MuiLink>
       </Stack>
@@ -99,10 +102,7 @@ export function PackRedemptionCodesPanel() {
                   <MonoText variant="caption">{item.code ?? item.codePreview ?? '—'}</MonoText>
                 </TableCell>
                 <TableCell>
-                  <RedemptionStatusChip
-                    isExhausted={item.isExhausted === true}
-                    status={item.status}
-                  />
+                  <RedemptionStatusChip isExhausted={item.isExhausted} status={item.status} />
                 </TableCell>
                 <TableCell align="right">
                   {item.redeemedCount}/{item.maxRedemptions}

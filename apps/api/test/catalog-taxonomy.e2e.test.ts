@@ -45,7 +45,8 @@ describe('catalog taxonomy API', () => {
   });
 
   it('GET /catalog/taxonomy returns active taxonomy tree', async () => {
-    const response = await request(app.getHttpServer()).get('/api/v1/catalog/taxonomy').expect(200);
+    const server = app.getHttpServer() as Parameters<typeof request>[0];
+    const response = await request(server).get('/api/v1/catalog/taxonomy').expect(200);
     const body = catalogTaxonomyResponseSchema.parse(response.body);
     expect(body.primaries.length).toBeGreaterThan(0);
     expect(body.versions.some((version) => version.label === '人教版')).toBe(true);

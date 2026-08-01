@@ -311,27 +311,10 @@
       "cake",
       "I like animals."
     ],
-    "know": [
-      "name"
-    ],
-    "your": [
-      "name",
-      "ear",
-      "hand",
-      "mouth",
-      "arm",
-      "What's your name?"
-    ],
-    "name": [
-      "name",
-      "What's your name?"
-    ],
-    "nice": [
-      "name",
-      "nice",
-      "friend",
-      "Nice to meet you."
-    ],
+    "know": ["name"],
+    "your": ["name", "ear", "hand", "mouth", "arm", "What's your name?"],
+    "name": ["name", "What's your name?"],
+    "nice": ["name", "nice", "friend", "Nice to meet you."],
     "to": [
       "name",
       "mouth",
@@ -343,11 +326,7 @@
       "ten",
       "Nice to meet you."
     ],
-    "meet": [
-      "name",
-      "friend",
-      "Nice to meet you."
-    ],
+    "meet": ["name", "friend", "Nice to meet you."],
     "you": [
       "name",
       "nice",
@@ -478,13 +457,7 @@
       "cake",
       "Let's play a game."
     ],
-    "are": [
-      "nice",
-      "good",
-      "family",
-      "old",
-      "How old are you?"
-    ],
+    "are": ["nice", "good", "family", "old", "How old are you?"],
     "it": [
       "nice",
       "good",
@@ -562,26 +535,12 @@
       "o'clock",
       "This is my family."
     ],
-    "touch": [
-      "ear"
-    ],
-    "ear": [
-      "ear"
-    ],
-    "wave": [
-      "hand",
-      "arm"
-    ],
-    "hand": [
-      "hand"
-    ],
-    "look": [
-      "eye",
-      "me"
-    ],
-    "into": [
-      "eye"
-    ],
+    "touch": ["ear"],
+    "ear": ["ear"],
+    "wave": ["hand", "arm"],
+    "hand": ["hand"],
+    "look": ["eye", "me"],
+    "into": ["eye"],
     "my": [
       "eye",
       "friend",
@@ -607,18 +566,10 @@
       "old",
       "This is my family."
     ],
-    "eyes": [
-      "eye"
-    ],
-    "point": [
-      "mouth"
-    ],
-    "mouth": [
-      "mouth"
-    ],
-    "arm": [
-      "arm"
-    ],
+    "eyes": ["eye"],
+    "point": ["mouth"],
+    "mouth": ["mouth"],
+    "arm": ["arm"],
     "can": [
       "can",
       "share",
@@ -645,62 +596,21 @@
       "cut",
       "eat"
     ],
-    "help": [
-      "can",
-      "help",
-      "plant",
-      "them"
-    ],
-    "me": [
-      "can",
-      "listen",
-      "me",
-      "plant"
-    ],
-    "listen": [
-      "can",
-      "listen"
-    ],
-    "we": [
-      "share",
-      "zoo"
-    ],
-    "share": [
-      "share"
-    ],
-    "our": [
-      "share"
-    ],
-    "toys": [
-      "share"
-    ],
-    "please": [
-      "smile"
-    ],
-    "smile": [
-      "smile"
-    ],
-    "say": [
-      "say"
-    ],
-    "hello": [
-      "say"
-    ],
-    "she": [
-      "friend"
-    ],
-    "friend": [
-      "friend",
-      "good",
-      "old"
-    ],
-    "new": [
-      "friend",
-      "new"
-    ],
-    "good": [
-      "good"
-    ],
+    "help": ["can", "help", "plant", "them"],
+    "me": ["can", "listen", "me", "plant"],
+    "listen": ["can", "listen"],
+    "we": ["share", "zoo"],
+    "share": ["share"],
+    "our": ["share"],
+    "toys": ["share"],
+    "please": ["smile"],
+    "smile": ["smile"],
+    "say": ["say"],
+    "hello": ["say"],
+    "she": ["friend"],
+    "friend": ["friend", "good", "old"],
+    "new": ["friend", "new"],
+    "good": ["good"],
     "this": [
       "mum",
       "dad",
@@ -716,86 +626,27 @@
       "new",
       "This is my family."
     ],
-    "mum": [
-      "mum"
-    ],
-    "dad": [
-      "dad"
-    ],
-    "grandma": [
-      "grandma"
-    ],
-    "kind": [
-      "grandma",
-      "grandpa",
-      "Miss"
-    ],
-    "grandpa": [
-      "grandpa"
-    ],
-    "grandfather": [
-      "grandfather"
-    ],
-    "here": [
-      "grandfather",
-      "grandmother",
-      "cousin"
-    ],
-    "grandmother": [
-      "grandmother"
-    ],
-    "mother": [
-      "mother"
-    ],
-    "father": [
-      "father"
-    ],
-    "at": [
-      "me"
-    ],
-    "sister": [
-      "sister"
-    ],
-    "love": [
-      "family"
-    ],
-    "family": [
-      "family",
-      "have",
-      "big",
-      "This is my family."
-    ],
-    "and": [
-      "family",
-      "red"
-    ],
-    "happy": [
-      "family"
-    ],
-    "have": [
-      "have",
-      "some",
-      "one",
-      "two"
-    ],
-    "book": [
-      "have",
-      "new",
-      "one"
-    ],
-    "big": [
-      "have",
-      "big",
-      "tiger",
-      "elephant",
-      "bear"
-    ],
-    "cousin": [
-      "cousin"
-    ],
-    "brother": [
-      "brother"
-    ],
+    "mum": ["mum"],
+    "dad": ["dad"],
+    "grandma": ["grandma"],
+    "kind": ["grandma", "grandpa", "Miss"],
+    "grandpa": ["grandpa"],
+    "grandfather": ["grandfather"],
+    "here": ["grandfather", "grandmother", "cousin"],
+    "grandmother": ["grandmother"],
+    "mother": ["mother"],
+    "father": ["father"],
+    "at": ["me"],
+    "sister": ["sister"],
+    "love": ["family"],
+    "family": ["family", "have", "big", "This is my family."],
+    "and": ["family", "red"],
+    "happy": ["family"],
+    "have": ["have", "some", "one", "two"],
+    "book": ["have", "new", "one"],
+    "big": ["have", "big", "tiger", "elephant", "bear"],
+    "cousin": ["cousin"],
+    "brother": ["brother"],
     "the": [
       "baby",
       "small",
@@ -834,311 +685,86 @@
       "black",
       "cut"
     ],
-    "baby": [
-      "baby",
-      "small"
-    ],
-    "small": [
-      "baby",
-      "small"
-    ],
-    "uncle": [
-      "uncle"
-    ],
-    "aunt": [
-      "aunt"
-    ],
-    "like": [
-      "like",
-      "dog",
-      "banana",
-      "air",
-      "grape",
-      "grass",
-      "sea",
-      "cake",
-      "I like animals."
-    ],
-    "pet": [
-      "like",
-      "pet"
-    ],
-    "animal": [
-      "like",
-      "animal"
-    ],
-    "friends": [
-      "like"
-    ],
-    "dog": [
-      "dog",
-      "animal"
-    ],
-    "says": [
-      "dog",
-      "cat"
-    ],
-    "woof": [
-      "dog"
-    ],
-    "cat": [
-      "cat",
-      "black"
-    ],
-    "cute": [
-      "cat",
-      "rabbit",
-      "panda",
-      "cute"
-    ],
-    "meow": [
-      "cat"
-    ],
-    "fish": [
-      "fish",
-      "four"
-    ],
-    "two": [
-      "fish",
-      "two"
-    ],
-    "bird": [
-      "bird"
-    ],
-    "fly": [
-      "bird"
-    ],
-    "rabbit": [
-      "rabbit"
-    ],
-    "let": [
-      "go"
-    ],
-    "us": [
-      "go",
-      "air",
-      "give"
-    ],
-    "go": [
-      "go",
-      "zoo",
-      "school"
-    ],
-    "zoo": [
-      "zoo"
-    ],
-    "let's": [
-      "zoo",
-      "Let's play a game."
-    ],
-    "fox": [
-      "fox",
-      "fast"
-    ],
-    "fast": [
-      "fox",
-      "fast"
-    ],
-    "miss": [
-      "Miss"
-    ],
-    "white": [
-      "Miss",
-      "white"
-    ],
-    "panda": [
-      "panda",
-      "red panda"
-    ],
-    "red": [
-      "panda",
-      "red panda",
-      "red"
-    ],
-    "monkey": [
-      "cute",
-      "monkey"
-    ],
-    "jump": [
-      "monkey"
-    ],
-    "tiger": [
-      "tiger"
-    ],
-    "elephant": [
-      "elephant"
-    ],
-    "lion": [
-      "lion"
-    ],
-    "strong": [
-      "lion"
-    ],
-    "an": [
-      "animal",
-      "apple",
-      "orange"
-    ],
-    "giraffe": [
-      "giraffe",
-      "tall"
-    ],
-    "tall": [
-      "giraffe",
-      "tall",
-      "tree"
-    ],
-    "eat": [
-      "apple",
-      "orange",
-      "eat"
-    ],
-    "apple": [
-      "apple",
-      "red"
-    ],
-    "banana": [
-      "banana"
-    ],
-    "farm": [
-      "farm"
-    ],
-    "plants": [
-      "air",
-      "need",
-      "water",
-      "plant",
-      "sun",
-      "give"
-    ],
-    "give": [
-      "air",
-      "give"
-    ],
-    "air": [
-      "air",
-      "give"
-    ],
-    "orange": [
-      "orange"
-    ],
-    "grapes": [
-      "grape"
-    ],
-    "grape": [
-      "grape"
-    ],
-    "school": [
-      "school"
-    ],
-    "garden": [
-      "garden"
-    ],
-    "need": [
-      "need",
-      "water",
-      "sun"
-    ],
-    "water": [
-      "need",
-      "water",
-      "plant"
-    ],
-    "plant": [
-      "water",
-      "plant"
-    ],
-    "flower": [
-      "flower",
-      "purple",
-      "pink"
-    ],
-    "beautiful": [
-      "flower"
-    ],
-    "grass": [
-      "grass",
-      "green"
-    ],
-    "green": [
-      "grass",
-      "green",
-      "red"
-    ],
-    "grow": [
-      "plant"
-    ],
-    "tree": [
-      "tree",
-      "draw"
-    ],
-    "sun": [
-      "sun",
-      "yellow"
-    ],
-    "them": [
-      "them"
-    ],
-    "what": [
-      "colour"
-    ],
-    "colour": [
-      "colour"
-    ],
-    "colours": [
-      "colour",
-      "make"
-    ],
-    "from": [
-      "colour",
-      "five"
-    ],
-    "rainbow": [
-      "colour",
-      "make"
-    ],
-    "show": [
-      "colour"
-    ],
-    "feelings": [
-      "colour"
-    ],
-    "yellow": [
-      "red",
-      "yellow"
-    ],
-    "make": [
-      "red",
-      "make"
-    ],
-    "sky": [
-      "blue"
-    ],
-    "blue": [
-      "blue"
-    ],
-    "purple": [
-      "purple"
-    ],
-    "bear": [
-      "brown",
-      "bear"
-    ],
-    "brown": [
-      "brown"
-    ],
-    "duck": [
-      "duck"
-    ],
-    "swim": [
-      "duck"
-    ],
-    "sea": [
-      "sea"
-    ],
-    "some": [
-      "some"
-    ],
+    "baby": ["baby", "small"],
+    "small": ["baby", "small"],
+    "uncle": ["uncle"],
+    "aunt": ["aunt"],
+    "like": ["like", "dog", "banana", "air", "grape", "grass", "sea", "cake", "I like animals."],
+    "pet": ["like", "pet"],
+    "animal": ["like", "animal"],
+    "friends": ["like"],
+    "dog": ["dog", "animal"],
+    "says": ["dog", "cat"],
+    "woof": ["dog"],
+    "cat": ["cat", "black"],
+    "cute": ["cat", "rabbit", "panda", "cute"],
+    "meow": ["cat"],
+    "fish": ["fish", "four"],
+    "two": ["fish", "two"],
+    "bird": ["bird"],
+    "fly": ["bird"],
+    "rabbit": ["rabbit"],
+    "let": ["go"],
+    "us": ["go", "air", "give"],
+    "go": ["go", "zoo", "school"],
+    "zoo": ["zoo"],
+    "let's": ["zoo", "Let's play a game."],
+    "fox": ["fox", "fast"],
+    "fast": ["fox", "fast"],
+    "miss": ["Miss"],
+    "white": ["Miss", "white"],
+    "panda": ["panda", "red panda"],
+    "red": ["panda", "red panda", "red"],
+    "monkey": ["cute", "monkey"],
+    "jump": ["monkey"],
+    "tiger": ["tiger"],
+    "elephant": ["elephant"],
+    "lion": ["lion"],
+    "strong": ["lion"],
+    "an": ["animal", "apple", "orange"],
+    "giraffe": ["giraffe", "tall"],
+    "tall": ["giraffe", "tall", "tree"],
+    "eat": ["apple", "orange", "eat"],
+    "apple": ["apple", "red"],
+    "banana": ["banana"],
+    "farm": ["farm"],
+    "plants": ["air", "need", "water", "plant", "sun", "give"],
+    "give": ["air", "give"],
+    "air": ["air", "give"],
+    "orange": ["orange"],
+    "grapes": ["grape"],
+    "grape": ["grape"],
+    "school": ["school"],
+    "garden": ["garden"],
+    "need": ["need", "water", "sun"],
+    "water": ["need", "water", "plant"],
+    "plant": ["water", "plant"],
+    "flower": ["flower", "purple", "pink"],
+    "beautiful": ["flower"],
+    "grass": ["grass", "green"],
+    "green": ["grass", "green", "red"],
+    "grow": ["plant"],
+    "tree": ["tree", "draw"],
+    "sun": ["sun", "yellow"],
+    "them": ["them"],
+    "what": ["colour"],
+    "colour": ["colour"],
+    "colours": ["colour", "make"],
+    "from": ["colour", "five"],
+    "rainbow": ["colour", "make"],
+    "show": ["colour"],
+    "feelings": ["colour"],
+    "yellow": ["red", "yellow"],
+    "make": ["red", "make"],
+    "sky": ["blue"],
+    "blue": ["blue"],
+    "purple": ["purple"],
+    "bear": ["brown", "bear"],
+    "brown": ["brown"],
+    "duck": ["duck"],
+    "swim": ["duck"],
+    "sea": ["sea"],
+    "some": ["some"],
     "apples": [
       "some",
       "five",
@@ -1152,111 +778,36 @@
       "eight",
       "nine"
     ],
-    "pink": [
-      "pink"
-    ],
-    "draw": [
-      "draw"
-    ],
-    "cloud": [
-      "white"
-    ],
-    "black": [
-      "black"
-    ],
-    "how": [
-      "old",
-      "How old are you?"
-    ],
-    "old": [
-      "old",
-      "five",
-      "year",
-      "How old are you?"
-    ],
-    "am": [
-      "five",
-      "year"
-    ],
-    "five": [
-      "five",
-      "year"
-    ],
-    "years": [
-      "five",
-      "year"
-    ],
-    "count": [
-      "five",
-      "ten"
-    ],
-    "up": [
-      "five"
-    ],
-    "one": [
-      "five",
-      "one"
-    ],
-    "ten": [
-      "five",
-      "ten"
-    ],
-    "books": [
-      "two"
-    ],
-    "three": [
-      "three",
-      "o'clock"
-    ],
-    "birds": [
-      "three"
-    ],
-    "four": [
-      "four"
-    ],
-    "six": [
-      "six"
-    ],
-    "seven": [
-      "seven"
-    ],
-    "ducks": [
-      "seven"
-    ],
-    "eight": [
-      "eight"
-    ],
-    "flowers": [
-      "eight"
-    ],
-    "nine": [
-      "nine"
-    ],
-    "trees": [
-      "nine"
-    ],
-    "o'clock": [
-      "o'clock"
-    ],
-    "cut": [
-      "cut"
-    ],
-    "cake": [
-      "cut",
-      "eat",
-      "cake"
-    ],
-    "what's": [
-      "What's your name?"
-    ],
-    "play": [
-      "Let's play a game."
-    ],
-    "game": [
-      "Let's play a game."
-    ],
-    "animals": [
-      "I like animals."
-    ]
+    "pink": ["pink"],
+    "draw": ["draw"],
+    "cloud": ["white"],
+    "black": ["black"],
+    "how": ["old", "How old are you?"],
+    "old": ["old", "five", "year", "How old are you?"],
+    "am": ["five", "year"],
+    "five": ["five", "year"],
+    "years": ["five", "year"],
+    "count": ["five", "ten"],
+    "up": ["five"],
+    "one": ["five", "one"],
+    "ten": ["five", "ten"],
+    "books": ["two"],
+    "three": ["three", "o'clock"],
+    "birds": ["three"],
+    "four": ["four"],
+    "six": ["six"],
+    "seven": ["seven"],
+    "ducks": ["seven"],
+    "eight": ["eight"],
+    "flowers": ["eight"],
+    "nine": ["nine"],
+    "trees": ["nine"],
+    "o'clock": ["o'clock"],
+    "cut": ["cut"],
+    "cake": ["cut", "eat", "cake"],
+    "what's": ["What's your name?"],
+    "play": ["Let's play a game."],
+    "game": ["Let's play a game."],
+    "animals": ["I like animals."]
   }
 }

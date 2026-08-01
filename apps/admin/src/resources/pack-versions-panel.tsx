@@ -80,7 +80,7 @@ function VersionNoteCell({
   const save = async () => {
     const trimmed = value.trim();
     const normalized = trimmed.length > 0 ? trimmed : null;
-    const previous = initialNote?.trim() || null;
+    const previous = initialNote?.trim() ? initialNote.trim() : null;
     if (normalized === previous) {
       return;
     }

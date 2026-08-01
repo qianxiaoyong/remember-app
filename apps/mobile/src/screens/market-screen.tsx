@@ -1,6 +1,13 @@
 import type { ReactElement } from 'react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  ActivityIndicator,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
 import type { CatalogPrimaryCategory } from '../catalog/catalog-seed';
 import type { CatalogPackItem } from '../catalog/catalog-seed';
@@ -55,10 +62,7 @@ export function MarketScreen(): ReactElement {
   const [taxonomyError, setTaxonomyError] = useState<string | null>(null);
 
   const cachedTaxonomy = useMemo(() => readCachedCatalogTaxonomy(), [taxonomyRevision]);
-  const primaryTabOptions = useMemo(
-    () => getPrimaryTabOptions(cachedTaxonomy),
-    [cachedTaxonomy],
-  );
+  const primaryTabOptions = useMemo(() => getPrimaryTabOptions(cachedTaxonomy), [cachedTaxonomy]);
   const versionOptions = useMemo(() => getVersionFilterOptions(cachedTaxonomy), [cachedTaxonomy]);
 
   const catalogQuery = useMemo(

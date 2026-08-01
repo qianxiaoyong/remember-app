@@ -26,9 +26,7 @@ import { formatMoney } from '../components/format-money.js';
 import { ListCreateActions } from '../components/list-toolbar.js';
 import { MonoText } from '../components/mono-text.js';
 import { PackStatusChip } from '../components/pack-status-chip.js';
-import {
-  PackCatalogDetailFields,
-} from './pack-catalog-detail-fields.js';
+import { PackCatalogDetailFields } from './pack-catalog-detail-fields.js';
 import { PackEditSummaryMeta } from './pack-edit-summary.js';
 import { PackSaveButton } from './pack-save-button.js';
 import { PackTaxonomyFields } from './pack-taxonomy-fields.js';
@@ -56,7 +54,13 @@ const packStatusFilterChoices = [
 
 const packListFilters = [
   <TextInput key="q" source="q" label="搜索标题 / 知识库 ID" alwaysOn resettable />,
-  <SelectInput key="status" source="status" label="状态" choices={packStatusFilterChoices} alwaysOn />,
+  <SelectInput
+    key="status"
+    source="status"
+    label="状态"
+    choices={packStatusFilterChoices}
+    alwaysOn
+  />,
   <SelectInput key="primaryCategory" source="primaryCategory" label="大类" choices={packChoices} />,
 ];
 

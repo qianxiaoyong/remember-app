@@ -29,7 +29,12 @@ export function AdminAppBar() {
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, minWidth: 0, flexShrink: 0 }}>
         <Typography
           variant="h6"
-          sx={{ fontWeight: 700, color: adminColors.textPrimary, whiteSpace: 'nowrap', fontSize: '1rem' }}
+          sx={{
+            fontWeight: 700,
+            color: adminColors.textPrimary,
+            whiteSpace: 'nowrap',
+            fontSize: '1rem',
+          }}
         >
           记得
         </Typography>
@@ -56,7 +61,9 @@ export function AdminAppBar() {
           />
         ) : null}
       </Box>
-      <AdminBreadcrumb sx={{ flex: 1, ml: { xs: 1, md: 2 }, display: { xs: 'none', sm: 'flex' } }} />
+      <AdminBreadcrumb
+        sx={{ flex: 1, ml: { xs: 1, md: 2 }, display: { xs: 'none', sm: 'flex' } }}
+      />
     </AppBar>
   );
 }

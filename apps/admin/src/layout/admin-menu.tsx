@@ -1,3 +1,4 @@
+import type { SxProps, Theme } from '@mui/material/styles';
 import type { MenuProps } from 'react-admin';
 import { Menu, MenuItemLink } from 'react-admin';
 import DashboardIcon from '@mui/icons-material/SpaceDashboardOutlined';
@@ -23,15 +24,11 @@ function MenuGroupTitle({ children }: { children: string }) {
 
 export function AdminMenu(props: MenuProps) {
   return (
-    <Menu {...props} sx={{ pt: 0.5, ...props.sx }}>
+    <Menu {...props} sx={[{ pt: 0.5 }, props.sx] as SxProps<Theme>}>
       <Menu.DashboardItem primaryText="驾驶舱" leftIcon={<DashboardIcon />} />
       <MenuGroupTitle>内容</MenuGroupTitle>
       <Menu.ResourceItem name="packs" />
-      <MenuItemLink
-        to="/catalog-taxonomy"
-        primaryText="分类管理"
-        leftIcon={<CategoryIcon />}
-      />
+      <MenuItemLink to="/catalog-taxonomy" primaryText="分类管理" leftIcon={<CategoryIcon />} />
       <Menu.ResourceItem name="redemption-codes" />
       <MenuGroupTitle>交易</MenuGroupTitle>
       <MenuItemLink to="/users" primaryText="App 用户" leftIcon={<PeopleIcon />} />

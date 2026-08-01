@@ -50,7 +50,11 @@ export function KpiStatCard({ label, value, accent, hint, onClick }: KpiStatCard
               {value}
             </Typography>
             {hint ? (
-              <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block' }}>
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                sx={{ mt: 0.5, display: 'block' }}
+              >
                 {hint}
               </Typography>
             ) : null}

@@ -19,18 +19,20 @@ export function AdminPanel(props: AdminPanelProps) {
 
   return (
     <Box
-      sx={[
-        {
-          border: `1px solid ${adminColors.border}`,
-          borderRadius: 1.5,
-          bgcolor: adminColors.surface,
-          display: 'flex',
-          flexDirection: 'column',
-          overflow: 'hidden',
-          minHeight: 0,
-        },
-        ...(Array.isArray(props.sx) ? props.sx : props.sx ? [props.sx] : []),
-      ]}
+      sx={
+        [
+          {
+            border: `1px solid ${adminColors.border}`,
+            borderRadius: 1.5,
+            bgcolor: adminColors.surface,
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden',
+            minHeight: 0,
+          },
+          props.sx,
+        ] as SxProps<Theme>
+      }
     >
       <Stack
         direction="row"

@@ -7,9 +7,9 @@ import {
 
 describe('admin redemption contracts', () => {
   it('parses includeDeleted query flag', () => {
-    expect(adminListRedemptionCodesQuerySchema.parse({ includeDeleted: 'true' }).includeDeleted).toBe(
-      true,
-    );
+    expect(
+      adminListRedemptionCodesQuerySchema.parse({ includeDeleted: 'true' }).includeDeleted,
+    ).toBe(true);
     expect(
       adminListRedemptionCodesQuerySchema.parse({ includeDeleted: 'false' }).includeDeleted,
     ).toBe(false);

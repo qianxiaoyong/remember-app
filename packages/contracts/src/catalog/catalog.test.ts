@@ -41,9 +41,7 @@ describe('catalog contracts', () => {
       updatedAt: '2026-07-15T00:00:00.000Z',
       priceCents: 1990,
       summary: '覆盖教材核心词汇。',
-      includedHighlights: [
-        { title: '核心词汇', description: '教材单词与释义' },
-      ],
+      includedHighlights: [{ title: '核心词汇', description: '教材单词与释义' }],
       samplePreviews: [
         {
           headword: 'apple',

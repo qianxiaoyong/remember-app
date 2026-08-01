@@ -19,7 +19,9 @@ import { AdminPackAccessController } from './pack-access/admin-pack-access.contr
 import { AdminPackAccessRepository } from './pack-access/admin-pack-access.repository.js';
 import { AdminPackAccessService } from './pack-access/admin-pack-access.service.js';
 import { AdminPacksController } from './packs/admin-packs.controller.js';
-import { AdminPacksRepository, AdminPacksService } from './packs/admin-packs.service.js';
+import { AdminPackVersionsService } from './packs/admin-pack-versions.service.js';
+import { AdminPacksRepository } from './packs/admin-packs.repository.js';
+import { AdminPacksService } from './packs/admin-packs.service.js';
 import { AdminRedemptionController } from './redemption/admin-redemption.controller.js';
 import { AdminRedemptionService } from './redemption/admin-redemption.service.js';
 import { AdminRefundsController } from './refunds/admin-refunds.controller.js';
@@ -50,6 +52,7 @@ import { AdminUsersService } from './users/admin-users.service.js';
     AdminPackAccessService,
     AdminPacksRepository,
     AdminPacksService,
+    AdminPackVersionsService,
     AdminCatalogTaxonomyRepository,
     AdminCatalogTaxonomyService,
     AdminRefundsService,

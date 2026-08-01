@@ -84,12 +84,15 @@ export class PackDownloadService {
   async resolvePackZipPath(packId: string): Promise<string> {
     const pack = await this.catalogRepository.findPublishedPackById(packId);
     if (!pack?.currentVersionId) {
+      // dev 回退：无已发布版本时使用测试夹具 zip
+      // eslint-disable-next-line @typescript-eslint/no-deprecated -- mock 路径 intentional fallback
       return this.packDownloadConfigService.resolveMockPackFile().absolutePath;
     }
     const version = await this.prisma.packVersion.findUnique({
       where: { id: pack.currentVersionId },
     });
     if (!version) {
+      // eslint-disable-next-line @typescript-eslint/no-deprecated -- mock 路径 intentional fallback
       return this.packDownloadConfigService.resolveMockPackFile().absolutePath;
     }
     const file = await this.packDownloadConfigService.resolvePackDownloadFile(

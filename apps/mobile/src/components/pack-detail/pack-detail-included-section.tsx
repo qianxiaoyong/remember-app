@@ -22,8 +22,7 @@ const DEFAULT_INCLUDED_ITEMS: IncludedHighlight[] = [
 ];
 
 export function PackDetailIncludedSection(props: PackDetailIncludedSectionProps): ReactElement {
-  const items =
-    props.highlights.length > 0 ? props.highlights : DEFAULT_INCLUDED_ITEMS;
+  const items = props.highlights.length > 0 ? props.highlights : DEFAULT_INCLUDED_ITEMS;
 
   return (
     <SurfaceCard>

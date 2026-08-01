@@ -79,7 +79,7 @@ function CoverPreview() {
           src={url}
           sx={{ height: '100%', objectFit: 'cover', width: '100%' }}
           onError={(event) => {
-            (event.currentTarget as HTMLImageElement).style.display = 'none';
+            event.currentTarget.style.display = 'none';
           }}
         />
       ) : null}
@@ -99,10 +99,24 @@ function CoverLinesInline() {
   return (
     <Box sx={{ display: 'flex', gap: 1, flex: 1, minWidth: 0 }}>
       <AdminLabeledField label="文案 1">
-        <MuiTextField size="small" fullWidth value={line0} onChange={(e) => setLine(0, e.target.value)} />
+        <MuiTextField
+          size="small"
+          fullWidth
+          value={line0}
+          onChange={(e) => {
+            setLine(0, e.target.value);
+          }}
+        />
       </AdminLabeledField>
       <AdminLabeledField label="文案 2">
-        <MuiTextField size="small" fullWidth value={line1} onChange={(e) => setLine(1, e.target.value)} />
+        <MuiTextField
+          size="small"
+          fullWidth
+          value={line1}
+          onChange={(e) => {
+            setLine(1, e.target.value);
+          }}
+        />
       </AdminLabeledField>
     </Box>
   );
@@ -156,7 +170,13 @@ function BasicInfoSection() {
       <Grid container spacing={1}>
         <Grid size={{ xs: 12, md: 6 }}>
           <AdminLabeledField label="标题" requiredMark>
-            <TextInput source="title" label={hiddenLabel} validate={required()} fullWidth size="small" />
+            <TextInput
+              source="title"
+              label={hiddenLabel}
+              validate={required()}
+              fullWidth
+              size="small"
+            />
           </AdminLabeledField>
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
@@ -188,7 +208,14 @@ function BasicInfoSection() {
 function CoverStripSection() {
   return (
     <AdminFormSection title="封面">
-      <Box sx={{ display: 'flex', gap: 1, alignItems: 'flex-start', flexWrap: { xs: 'wrap', md: 'nowrap' } }}>
+      <Box
+        sx={{
+          display: 'flex',
+          gap: 1,
+          alignItems: 'flex-start',
+          flexWrap: { xs: 'wrap', md: 'nowrap' },
+        }}
+      >
         <CoverPreview />
         <Box sx={{ flex: 1, minWidth: 200 }}>
           <AdminLabeledField label="封面 URL">
@@ -215,8 +242,20 @@ function AppDisplaySection() {
         defaultItem={{ title: '', description: '' }}
       >
         <SimpleFormIterator inline disableReordering sx={compactIteratorSx}>
-          <TextInput source="title" label="标题" helperText={false} size="small" sx={{ width: '36%', minWidth: 96 }} />
-          <TextInput source="description" label="说明" helperText={false} size="small" sx={{ flex: 1, minWidth: 120 }} />
+          <TextInput
+            source="title"
+            label="标题"
+            helperText={false}
+            size="small"
+            sx={{ width: '36%', minWidth: 96 }}
+          />
+          <TextInput
+            source="description"
+            label="说明"
+            helperText={false}
+            size="small"
+            sx={{ flex: 1, minWidth: 120 }}
+          />
         </SimpleFormIterator>
       </CompactArrayBlock>
 
@@ -235,8 +274,20 @@ function AppDisplaySection() {
               size="small"
               sx={{ width: 80 }}
             />
-            <NumberInput source="sortOrder" label="序" helperText={false} size="small" sx={{ width: 56 }} />
-            <TextInput source="url" label="URL" helperText={false} size="small" sx={{ flex: 1, minWidth: 120 }} />
+            <NumberInput
+              source="sortOrder"
+              label="序"
+              helperText={false}
+              size="small"
+              sx={{ width: 56 }}
+            />
+            <TextInput
+              source="url"
+              label="URL"
+              helperText={false}
+              size="small"
+              sx={{ flex: 1, minWidth: 120 }}
+            />
           </SimpleFormIterator>
         </Box>
       </CompactArrayBlock>
@@ -251,16 +302,34 @@ function AppDisplaySection() {
           <SimpleFormIterator disableReordering sx={compactIteratorSx}>
             <Grid container spacing={1} sx={{ width: '100%' }}>
               <Grid size={{ xs: 6, sm: 3 }}>
-                <TextInput source="headword" label="单词" fullWidth helperText={false} size="small" />
+                <TextInput
+                  source="headword"
+                  label="单词"
+                  fullWidth
+                  helperText={false}
+                  size="small"
+                />
               </Grid>
               <Grid size={{ xs: 6, sm: 2 }}>
-                <TextInput source="initial" label="首字母" fullWidth helperText={false} size="small" />
+                <TextInput
+                  source="initial"
+                  label="首字母"
+                  fullWidth
+                  helperText={false}
+                  size="small"
+                />
               </Grid>
               <Grid size={{ xs: 12, sm: 3 }}>
                 <TextInput source="zh" label="释义" fullWidth helperText={false} size="small" />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
-                <TextInput source="exampleEn" label="例句" fullWidth helperText={false} size="small" />
+                <TextInput
+                  source="exampleEn"
+                  label="例句"
+                  fullWidth
+                  helperText={false}
+                  size="small"
+                />
               </Grid>
             </Grid>
           </SimpleFormIterator>
@@ -274,7 +343,13 @@ function PublishSidebar() {
   return (
     <AdminFormSection title="发布" divider={false}>
       <AdminLabeledField label="上架状态">
-        <SelectInput source="status" label={hiddenLabel} choices={packStatusChoices} fullWidth size="small" />
+        <SelectInput
+          source="status"
+          label={hiddenLabel}
+          choices={packStatusChoices}
+          fullWidth
+          size="small"
+        />
       </AdminLabeledField>
       <AdminLabeledField label="售价（分）">
         <NumberInput source="priceCents" label={hiddenLabel} fullWidth size="small" />

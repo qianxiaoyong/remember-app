@@ -20,24 +20,33 @@ export function AdminBreadcrumb(props: AdminBreadcrumbProps) {
 
   return (
     <Box
-      sx={[
-        {
-          display: 'flex',
-          alignItems: 'center',
-          flexWrap: 'nowrap',
-          gap: 0.75,
-          minWidth: 0,
-          overflow: 'hidden',
-        },
-        ...(Array.isArray(props.sx) ? props.sx : props.sx ? [props.sx] : []),
-      ]}
+      sx={
+        [
+          {
+            display: 'flex',
+            alignItems: 'center',
+            flexWrap: 'nowrap',
+            gap: 0.75,
+            minWidth: 0,
+            overflow: 'hidden',
+          },
+          props.sx,
+        ] as SxProps<Theme>
+      }
     >
       {route.breadcrumbSegments.map((segment, index) => {
         const isLast = index === route.breadcrumbSegments.length - 1;
         return (
-          <Box key={`${segment}-${String(index)}`} sx={{ display: 'flex', alignItems: 'center', gap: 0.75, minWidth: 0 }}>
+          <Box
+            key={`${segment}-${String(index)}`}
+            sx={{ display: 'flex', alignItems: 'center', gap: 0.75, minWidth: 0 }}
+          >
             {index > 0 ? (
-              <Typography component="span" variant="body2" sx={{ color: adminColors.textTertiary, flexShrink: 0 }}>
+              <Typography
+                component="span"
+                variant="body2"
+                sx={{ color: adminColors.textTertiary, flexShrink: 0 }}
+              >
                 /
               </Typography>
             ) : null}

@@ -109,7 +109,14 @@ function buildCatalogDraft(packId, flags, catalogJson, verified, samplePreviews)
   const status = catalogJson?.status ?? flags.status ?? 'published';
   const contentTags = Array.isArray(catalogJson?.contentTags) ? catalogJson.contentTags : [];
 
-  if (!title || !primaryCategory || !secondaryCategory || !versionLabel || priceCents === undefined || !summary) {
+  if (
+    !title ||
+    !primaryCategory ||
+    !secondaryCategory ||
+    !versionLabel ||
+    priceCents === undefined ||
+    !summary
+  ) {
     throw new Error(
       '目录行不存在：请提供 --catalog catalog.json，或补齐 --title/--primary-category/--secondary-category/--version-label/--price-cents/--summary',
     );
@@ -162,9 +169,7 @@ async function main() {
   const verified = await verifyPackZipBuffer(zipBytes);
 
   if (verified.manifest.packId !== packId) {
-    throw new Error(
-      `packId mismatch: arg=${packId} manifest=${verified.manifest.packId}`,
-    );
+    throw new Error(`packId mismatch: arg=${packId} manifest=${verified.manifest.packId}`);
   }
   if (verified.manifest.packVersion !== packVersion) {
     throw new Error(
@@ -217,7 +222,9 @@ async function main() {
 
     console.log('verify ok');
     console.log(`  zip: ${zipPath}`);
-    console.log(`  cards: ${String(verified.cardCount)} lexicon: ${String(verified.lexiconEntryCount)}`);
+    console.log(
+      `  cards: ${String(verified.cardCount)} lexicon: ${String(verified.lexiconEntryCount)}`,
+    );
     console.log(`  pack row: ${existingPack ? 'update metadata' : 'create'}`);
     console.log(`  version row: ${existingVersion ? 'update + publish' : 'create + publish'}`);
 

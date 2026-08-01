@@ -79,6 +79,22 @@ const adminPackWriteFieldsSchema = z
   })
   .strict();
 
+function hasTaxonomyNodeIds(value: {
+  primaryNodeId?: string | undefined;
+  secondaryNodeId?: string | undefined;
+  versionNodeId?: string | undefined;
+}): boolean {
+  return Boolean(value.primaryNodeId && value.secondaryNodeId && value.versionNodeId);
+}
+
+function hasLegacyTaxonomyLabels(value: {
+  primaryCategory?: string | undefined;
+  secondaryCategory?: string | undefined;
+  versionLabel?: string | undefined;
+}): boolean {
+  return Boolean(value.primaryCategory && value.secondaryCategory && value.versionLabel);
+}
+
 function hasCompletePackTaxonomy(value: {
   primaryNodeId?: string | undefined;
   secondaryNodeId?: string | undefined;
@@ -87,15 +103,15 @@ function hasCompletePackTaxonomy(value: {
   secondaryCategory?: string | undefined;
   versionLabel?: string | undefined;
 }): boolean {
-  return Boolean(
-    (value.primaryNodeId && value.secondaryNodeId && value.versionNodeId) ||
-      (value.primaryCategory && value.secondaryCategory && value.versionLabel),
-  );
+  return hasTaxonomyNodeIds(value) || hasLegacyTaxonomyLabels(value);
 }
 
-export const adminCreatePackRequestSchema = adminPackWriteFieldsSchema.refine(hasCompletePackTaxonomy, {
-  message: '请提供完整三级分类',
-});
+export const adminCreatePackRequestSchema = adminPackWriteFieldsSchema.refine(
+  hasCompletePackTaxonomy,
+  {
+    message: '请提供完整三级分类',
+  },
+);
 
 /** PATCH 专用：不含 Zod default，避免未传字段被解析成 draft/0/[] 覆盖库内值。 */
 export const adminUpdatePackRequestSchema = z

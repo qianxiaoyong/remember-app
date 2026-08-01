@@ -21,8 +21,8 @@ function buildQuery(query: AdminListRedemptionCodesQuery): string {
   if (query.includeDeleted) {
     search.set('includeDeleted', 'true');
   }
-  search.set('page', String(query.page ?? 1));
-  search.set('pageSize', String(query.pageSize ?? 20));
+  search.set('page', String(query.page));
+  search.set('pageSize', String(query.pageSize));
   const serialized = search.toString();
   return serialized.length > 0 ? `?${serialized}` : '';
 }

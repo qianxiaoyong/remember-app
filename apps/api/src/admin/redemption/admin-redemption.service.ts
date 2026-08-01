@@ -190,11 +190,7 @@ export class AdminRedemptionService {
     });
   }
 
-  async updateCode(
-    actorAdminUserId: string,
-    id: string,
-    input: AdminUpdateRedemptionCodeRequest,
-  ) {
+  async updateCode(actorAdminUserId: string, id: string, input: AdminUpdateRedemptionCodeRequest) {
     const row = await this.requireEditableCode(id);
     const data: Prisma.RedemptionCodeUpdateInput = {};
 

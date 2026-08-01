@@ -50,7 +50,11 @@ export function RedemptionCodeRowActions(props: RedemptionCodeRowActionsProps) {
       handleChanged();
     } catch (error) {
       const message =
-        error instanceof AdminApiError ? error.message : error instanceof Error ? error.message : '操作失败';
+        error instanceof AdminApiError
+          ? error.message
+          : error instanceof Error
+            ? error.message
+            : '操作失败';
       notify(message, { type: 'error' });
     } finally {
       setBusy(false);
@@ -71,7 +75,11 @@ export function RedemptionCodeRowActions(props: RedemptionCodeRowActionsProps) {
       handleChanged();
     } catch (error) {
       const message =
-        error instanceof AdminApiError ? error.message : error instanceof Error ? error.message : '删除失败';
+        error instanceof AdminApiError
+          ? error.message
+          : error instanceof Error
+            ? error.message
+            : '删除失败';
       notify(message, { type: 'error' });
     } finally {
       setBusy(false);
@@ -86,7 +94,11 @@ export function RedemptionCodeRowActions(props: RedemptionCodeRowActionsProps) {
       handleChanged();
     } catch (error) {
       const message =
-        error instanceof AdminApiError ? error.message : error instanceof Error ? error.message : '恢复失败';
+        error instanceof AdminApiError
+          ? error.message
+          : error instanceof Error
+            ? error.message
+            : '恢复失败';
       notify(message, { type: 'error' });
     } finally {
       setBusy(false);
@@ -98,7 +110,13 @@ export function RedemptionCodeRowActions(props: RedemptionCodeRowActionsProps) {
       <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
         {props.record.canEdit ? (
           <>
-            <Button disabled={busy} onClick={() => setEditOpen(true)} size="small">
+            <Button
+              disabled={busy}
+              onClick={() => {
+                setEditOpen(true);
+              }}
+              size="small"
+            >
               编辑
             </Button>
             <Button disabled={busy} onClick={() => void handleDisableToggle()} size="small">
@@ -116,7 +134,9 @@ export function RedemptionCodeRowActions(props: RedemptionCodeRowActionsProps) {
         ) : null}
       </Stack>
       <RedemptionCodeEditDialog
-        onClose={() => setEditOpen(false)}
+        onClose={() => {
+          setEditOpen(false);
+        }}
         onSaved={handleChanged}
         open={editOpen}
         record={props.record}

@@ -19,11 +19,11 @@ pnpm --filter @remember/pack-builder test
 
 ## AI 生成内容
 
-| 你要复制哪个 | 发到哪里 |
-|--------------|----------|
-| [`docs/system-prompt.txt`](docs/system-prompt.txt) | 大模型 **System**（只配一次） |
-| [`docs/user-message-book-template.txt`](docs/user-message-book-template.txt) + 书本正文 | 大模型 **User**（每批任务） |
-| [`docs/llm-system-prompt.md`](docs/llm-system-prompt.md) | 给人看的使用说明，**不要整篇发给模型** |
+| 你要复制哪个                                                                            | 发到哪里                               |
+| --------------------------------------------------------------------------------------- | -------------------------------------- |
+| [`docs/system-prompt.txt`](docs/system-prompt.txt)                                      | 大模型 **System**（只配一次）          |
+| [`docs/user-message-book-template.txt`](docs/user-message-book-template.txt) + 书本正文 | 大模型 **User**（每批任务）            |
+| [`docs/llm-system-prompt.md`](docs/llm-system-prompt.md)                                | 给人看的使用说明，**不要整篇发给模型** |
 
 工作流：AI 输出 JSON → 放入 `source/<packId>/` → 补音频 → `build:pack`
 

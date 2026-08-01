@@ -48,7 +48,12 @@ export function AdminPageHeader(props: AdminPageHeaderProps) {
         {props.actions ? <Box sx={{ flexShrink: 0 }}>{props.actions}</Box> : null}
       </Stack>
       {props.tabs ? (
-        <Box sx={{ px: { xs: 1, sm: 2 }, borderTop: props.meta || props.actions ? `1px solid ${adminColors.border}` : undefined }}>
+        <Box
+          sx={{
+            px: { xs: 1, sm: 2 },
+            borderTop: props.meta || props.actions ? `1px solid ${adminColors.border}` : undefined,
+          }}
+        >
           {props.tabs}
         </Box>
       ) : null}

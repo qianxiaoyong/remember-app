@@ -54,7 +54,7 @@ export function formatPackSizeLabel(sizeBytes: number): string {
     return `${String(sizeBytes)} B`;
   }
   if (sizeBytes < 1024 * 1024) {
-    return `约 ${Math.round(sizeBytes / 1024)} KB`;
+    return `约 ${String(Math.round(sizeBytes / 1024))} KB`;
   }
   return `约 ${(sizeBytes / (1024 * 1024)).toFixed(1)} MB`;
 }

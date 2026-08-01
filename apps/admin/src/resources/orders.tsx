@@ -41,28 +41,28 @@ export function OrderList() {
         sort={{ field: 'createdAt', order: 'DESC' }}
         perPage={20}
       >
-      <Datagrid rowClick="show" bulkActionButtons={false}>
-        <FunctionField
-          label="订单号"
-          render={(record: { orderId?: string }) => (
-            <MonoText variant="caption">{record.orderId?.slice(0, 8) ?? '—'}…</MonoText>
-          )}
-        />
-        <TextField source="maskedPhone" label="用户" />
-        <TextField source="packTitle" label="知识库" />
-        <FunctionField
-          label="金额"
-          render={(record: { amountCents?: number }) => formatMoney(record.amountCents ?? 0)}
-        />
-        <FunctionField
-          label="状态"
-          render={(record: { status?: string }) =>
-            record.status ? <OrderStatusChip status={record.status} /> : '—'
-          }
-        />
-        <DateField source="createdAt" label="创建时间" showTime locales="zh-CN" />
-      </Datagrid>
-    </List>
+        <Datagrid rowClick="show" bulkActionButtons={false}>
+          <FunctionField
+            label="订单号"
+            render={(record: { orderId?: string }) => (
+              <MonoText variant="caption">{record.orderId?.slice(0, 8) ?? '—'}…</MonoText>
+            )}
+          />
+          <TextField source="maskedPhone" label="用户" />
+          <TextField source="packTitle" label="知识库" />
+          <FunctionField
+            label="金额"
+            render={(record: { amountCents?: number }) => formatMoney(record.amountCents ?? 0)}
+          />
+          <FunctionField
+            label="状态"
+            render={(record: { status?: string }) =>
+              record.status ? <OrderStatusChip status={record.status} /> : '—'
+            }
+          />
+          <DateField source="createdAt" label="创建时间" showTime locales="zh-CN" />
+        </Datagrid>
+      </List>
     </>
   );
 }

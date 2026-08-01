@@ -1,12 +1,14 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { CatalogPackItem } from '../catalog/catalog-seed';
+import type { InstalledPackRow } from '../data/repositories/installed-pack-repository';
 
-const listInstalledPacks = vi.fn();
-const upsertInstalledPack = vi.fn();
+const listInstalledPacks = vi.fn<() => InstalledPackRow[]>();
+const upsertInstalledPack = vi.fn<(row: InstalledPackRow, db?: unknown) => InstalledPackRow>();
 
 vi.mock('../data/repositories/installed-pack-repository', () => ({
-  listInstalledPacks: () => listInstalledPacks(),
-  upsertInstalledPack: (...args: unknown[]) => upsertInstalledPack(...args),
+  listInstalledPacks: (): InstalledPackRow[] => listInstalledPacks(),
+  upsertInstalledPack: (row: InstalledPackRow, db?: unknown): InstalledPackRow =>
+    upsertInstalledPack(row, db),
 }));
 
 import { syncInstalledPackDisplayNamesFromCatalog } from './sync-installed-pack-display-names';

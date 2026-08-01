@@ -68,7 +68,11 @@ export function RedemptionCodeEditDialog(props: RedemptionCodeEditDialogProps) {
       props.onClose();
     } catch (error) {
       const message =
-        error instanceof AdminApiError ? error.message : error instanceof Error ? error.message : '更新失败';
+        error instanceof AdminApiError
+          ? error.message
+          : error instanceof Error
+            ? error.message
+            : '更新失败';
       notify(message, { type: 'error' });
     } finally {
       setBusy(false);
@@ -76,14 +80,20 @@ export function RedemptionCodeEditDialog(props: RedemptionCodeEditDialogProps) {
   };
 
   return (
-    <Dialog fullWidth maxWidth="sm" onClose={props.onClose} open={props.open} TransitionProps={{ onEnter: handleEnter }}>
+    <Dialog
+      fullWidth
+      maxWidth="sm"
+      onClose={props.onClose}
+      open={props.open}
+      slotProps={{ transition: { onEnter: handleEnter } }}
+    >
       <DialogTitle>编辑兑换码</DialogTitle>
       <DialogContent>
         <Stack spacing={2} sx={{ mt: 1 }}>
           <TextField
             label="兑换码"
             value={props.record?.code ?? props.record?.codePreview ?? '—'}
-            InputProps={{ readOnly: true }}
+            slotProps={{ input: { readOnly: true } }}
             fullWidth
           />
           <TextField
@@ -119,7 +129,7 @@ export function RedemptionCodeEditDialog(props: RedemptionCodeEditDialogProps) {
             onChange={(event) => {
               setExpiresAt(event.target.value);
             }}
-            InputLabelProps={{ shrink: true }}
+            slotProps={{ inputLabel: { shrink: true } }}
             helperText="留空表示永不过期"
             fullWidth
           />

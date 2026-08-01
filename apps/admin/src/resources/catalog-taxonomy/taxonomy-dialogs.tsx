@@ -35,7 +35,9 @@ export function TaxonomyLabelDialog(props: TaxonomyLabelDialogProps) {
           label="展示名"
           margin="dense"
           value={value}
-          onChange={(event) => setValue(event.target.value)}
+          onChange={(event) => {
+            setValue(event.target.value);
+          }}
         />
       </DialogContent>
       <DialogActions>
@@ -85,14 +87,18 @@ export function TaxonomyCreateDialog(props: TaxonomyCreateDialogProps) {
           label={props.slugLabel ?? 'slug'}
           {...(props.slugPlaceholder ? { placeholder: props.slugPlaceholder } : {})}
           value={slug}
-          onChange={(event) => setSlug(event.target.value)}
+          onChange={(event) => {
+            setSlug(event.target.value);
+          }}
           helperText="内部标识，创建后慎改"
         />
         <TextField
           label="展示名"
           {...(props.labelPlaceholder ? { placeholder: props.labelPlaceholder } : {})}
           value={label}
-          onChange={(event) => setLabel(event.target.value)}
+          onChange={(event) => {
+            setLabel(event.target.value);
+          }}
         />
       </DialogContent>
       <DialogActions>
@@ -123,9 +129,7 @@ export function TaxonomyDeleteDialog(props: TaxonomyDeleteDialogProps) {
   return (
     <Dialog open={props.open} onClose={props.onClose} fullWidth maxWidth="xs">
       <DialogTitle>{props.title}</DialogTitle>
-      <DialogContent>
-        {props.description}
-      </DialogContent>
+      <DialogContent>{props.description}</DialogContent>
       <DialogActions>
         <Button onClick={props.onClose}>取消</Button>
         <Button color="error" variant="contained" onClick={props.onConfirm}>

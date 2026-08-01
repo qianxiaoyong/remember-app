@@ -108,6 +108,4 @@ export type AdminCreateRedemptionBatchRequest = z.infer<
 export type AdminCreateRedemptionBatchResponse = z.infer<
   typeof adminCreateRedemptionBatchResponseSchema
 >;
-export type AdminRedemptionCodeListResponse = z.infer<
-  typeof adminRedemptionCodeListResponseSchema
->;
+export type AdminRedemptionCodeListResponse = z.infer<typeof adminRedemptionCodeListResponseSchema>;

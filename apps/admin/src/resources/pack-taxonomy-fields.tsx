@@ -10,7 +10,9 @@ function useTaxonomyChoices() {
   useEffect(() => {
     void fetchAdminCatalogTaxonomy()
       .then(setTaxonomy)
-      .catch(() => setTaxonomy(null));
+      .catch(() => {
+        setTaxonomy(null);
+      });
   }, []);
 
   return taxonomy;

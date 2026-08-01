@@ -1,10 +1,7 @@
 import { catalogTaxonomyResponseSchema, type CatalogTaxonomyResponse } from '@remember/contracts';
 import * as SecureStore from 'expo-secure-store';
 import type { CatalogPrimaryCategory } from '../../catalog/catalog-seed';
-import {
-  CATALOG_PRIMARY_OPTIONS,
-  listSecondaryCategories,
-} from '../../catalog/catalog-seed';
+import { CATALOG_PRIMARY_OPTIONS, listSecondaryCategories } from '../../catalog/catalog-seed';
 
 const TAXONOMY_CACHE_KEY = 'remember.catalogTaxonomy.v1';
 

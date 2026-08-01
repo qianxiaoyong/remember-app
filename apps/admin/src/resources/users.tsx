@@ -73,7 +73,13 @@ export function UserList() {
             render={(record: { paidOrderCount?: number }) => String(record.paidOrderCount ?? 0)}
           />
           <DateField source="createdAt" label="注册时间" showTime locales="zh-CN" />
-          <DateField source="lastActiveAt" label="最近活跃" showTime locales="zh-CN" emptyText="—" />
+          <DateField
+            source="lastActiveAt"
+            label="最近活跃"
+            showTime
+            locales="zh-CN"
+            emptyText="—"
+          />
         </Datagrid>
       </List>
     </>

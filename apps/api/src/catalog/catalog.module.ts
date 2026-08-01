@@ -8,12 +8,7 @@ import { CatalogService } from './catalog.service.js';
 
 @Module({
   controllers: [CatalogController, CatalogTaxonomyController],
-  providers: [
-    CatalogRepository,
-    CatalogService,
-    CatalogTaxonomyRepository,
-    CatalogTaxonomyService,
-  ],
+  providers: [CatalogRepository, CatalogService, CatalogTaxonomyRepository, CatalogTaxonomyService],
   exports: [CatalogService, CatalogRepository, CatalogTaxonomyService],
 })
 export class CatalogModule {}

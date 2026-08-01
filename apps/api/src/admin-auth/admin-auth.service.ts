@@ -29,7 +29,7 @@ export class AdminAuthService {
 
   async login(input: AdminLoginRequest): Promise<AdminLoginResponse> {
     const adminUser = await this.adminAuthRepository.findAdminUserByLoginName(input.loginName);
-    if (!adminUser || adminUser.status !== 'active') {
+    if (adminUser?.status !== 'active') {
       throw new UnauthorizedException({
         code: 'ADMIN_CREDENTIALS_INVALID',
         message: '账号或密码错误',
@@ -66,7 +66,7 @@ export class AdminAuthService {
 
   async getCurrentAdmin(context: AuthenticatedAdminContext): Promise<AdminSessionUser> {
     const adminUser = await this.adminAuthRepository.findAdminUserById(context.adminUserId);
-    if (!adminUser || adminUser.status !== 'active') {
+    if (adminUser?.status !== 'active') {
       throw new UnauthorizedException({ code: 'ADMIN_SESSION_INVALID', message: '会话无效' });
     }
     return this.toSessionUser(adminUser);

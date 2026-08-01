@@ -20,28 +20,28 @@ export function AuditLogList() {
         sort={{ field: 'createdAt', order: 'DESC' }}
         perPage={30}
       >
-      <Datagrid bulkActionButtons={false}>
-        <DateField source="createdAt" label="时间" showTime locales="zh-CN" />
-        <TextField source="actorLoginName" label="操作者" />
-        <FunctionField
-          label="动作"
-          render={(record: { action?: string }) => formatAuditAction(record.action ?? '')}
-        />
-        <TextField source="targetType" label="对象类型" />
-        <FunctionField
-          label="对象 ID"
-          render={(record: { targetId?: string }) => (
-            <MonoText variant="caption">{record.targetId ?? '—'}</MonoText>
-          )}
-        />
-        <FunctionField
-          label="结果"
-          render={(record: { result?: string }) =>
-            record.result ? <AuditResultChip result={record.result} /> : '—'
-          }
-        />
-      </Datagrid>
-    </List>
+        <Datagrid bulkActionButtons={false}>
+          <DateField source="createdAt" label="时间" showTime locales="zh-CN" />
+          <TextField source="actorLoginName" label="操作者" />
+          <FunctionField
+            label="动作"
+            render={(record: { action?: string }) => formatAuditAction(record.action ?? '')}
+          />
+          <TextField source="targetType" label="对象类型" />
+          <FunctionField
+            label="对象 ID"
+            render={(record: { targetId?: string }) => (
+              <MonoText variant="caption">{record.targetId ?? '—'}</MonoText>
+            )}
+          />
+          <FunctionField
+            label="结果"
+            render={(record: { result?: string }) =>
+              record.result ? <AuditResultChip result={record.result} /> : '—'
+            }
+          />
+        </Datagrid>
+      </List>
     </>
   );
 }

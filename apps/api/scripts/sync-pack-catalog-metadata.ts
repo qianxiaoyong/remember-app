@@ -36,7 +36,9 @@ async function main(): Promise<void> {
     data: {
       cardCount: verified.cardCount,
       sizeLabel: formatPackSizeLabel(verified.sizeBytes),
-      ...(samplePreviews.length > 0 ? { samplePreviews: JSON.parse(JSON.stringify(samplePreviews)) } : {}),
+      ...(samplePreviews.length > 0
+        ? { samplePreviews: JSON.parse(JSON.stringify(samplePreviews)) }
+        : {}),
     },
   });
 

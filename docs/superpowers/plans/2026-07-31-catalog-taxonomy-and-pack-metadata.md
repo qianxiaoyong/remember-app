@@ -35,25 +35,25 @@
 
 ### 手机资料页三层分类（当前 App 写死）
 
-| 层级 | 手机 UI | 写死位置 | Pack 字段（旧） |
-| --- | --- | --- | --- |
-| 一级 | 顶栏 Tab（小学英语…） | `CATALOG_PRIMARY_OPTIONS` | `primaryCategory` enum |
-| 二级 | 左侧栏（三年级…） | `listSecondaryCategories()` | `secondaryCategory` 自由文本 |
-| 三级 | 版本下拉（人教版…） | `CATALOG_VERSION_OPTIONS` | `versionLabel` 自由文本 |
+| 层级 | 手机 UI               | 写死位置                    | Pack 字段（旧）              |
+| ---- | --------------------- | --------------------------- | ---------------------------- |
+| 一级 | 顶栏 Tab（小学英语…） | `CATALOG_PRIMARY_OPTIONS`   | `primaryCategory` enum       |
+| 二级 | 左侧栏（三年级…）     | `listSecondaryCategories()` | `secondaryCategory` 自由文本 |
+| 三级 | 版本下拉（人教版…）   | `CATALOG_VERSION_OPTIONS`   | `versionLabel` 自由文本      |
 
 运营在后台改小类/版本字符串时，若 App 侧栏无对应项，**筛选不到**；新增一级/版本需发版。
 
 ### 包元数据（后台表单 vs 手机）
 
-| 手机展示 | 后台基本信息 Tab | 说明 |
-| --- | --- | --- |
-| 资料页/详情封面 | ❌ | DB 有 `coverUrl/coverBadge/coverLines`，Admin 未暴露 |
-| 内容标签 | ❌ | DB 有 `contentTags`，无表单 |
-| 详情简介 | ✅ `summary` | 已可编辑 |
-| 详情「包含内容」卡片 | ❌ | App 写死两条 |
-| 详情「内容介绍」 | ❌ | DB/API 有 `introMedia`，无表单 |
-| 详情「内容示例」 | ❌ | 仅 zip 首次上传可自动写入 |
-| 详情条数/大小/更新 | （只读） | **手机已有**；zip 同步，后台可选只读展示 |
+| 手机展示             | 后台基本信息 Tab | 说明                                                 |
+| -------------------- | ---------------- | ---------------------------------------------------- |
+| 资料页/详情封面      | ❌               | DB 有 `coverUrl/coverBadge/coverLines`，Admin 未暴露 |
+| 内容标签             | ❌               | DB 有 `contentTags`，无表单                          |
+| 详情简介             | ✅ `summary`     | 已可编辑                                             |
+| 详情「包含内容」卡片 | ❌               | App 写死两条                                         |
+| 详情「内容介绍」     | ❌               | DB/API 有 `introMedia`，无表单                       |
+| 详情「内容示例」     | ❌               | 仅 zip 首次上传可自动写入                            |
+| 详情条数/大小/更新   | （只读）         | **手机已有**；zip 同步，后台可选只读展示             |
 
 ---
 
@@ -106,18 +106,18 @@ packs 表新增（或迁移替换旧列）：
 
 ### 公开（Mobile）
 
-| 方法 | 路径 | 说明 |
-| --- | --- | --- |
-| GET | `/api/v1/catalog/taxonomy` | 返回 `{ primaries: [{ id, slug, label, children: [...] }], versions: [...] }`；仅 `active` 节点 |
-| GET | `/api/v1/catalog/packs` | 列表项含 `primaryNodeId/secondaryNodeId/versionNodeId` 及展示 label（或嵌套节点摘要） |
-| GET | `/api/v1/catalog/packs/:packId` | 详情不变 + taxonomy label；`summary` 已在列表下发（已实现） |
+| 方法 | 路径                            | 说明                                                                                            |
+| ---- | ------------------------------- | ----------------------------------------------------------------------------------------------- |
+| GET  | `/api/v1/catalog/taxonomy`      | 返回 `{ primaries: [{ id, slug, label, children: [...] }], versions: [...] }`；仅 `active` 节点 |
+| GET  | `/api/v1/catalog/packs`         | 列表项含 `primaryNodeId/secondaryNodeId/versionNodeId` 及展示 label（或嵌套节点摘要）           |
+| GET  | `/api/v1/catalog/packs/:packId` | 详情不变 + taxonomy label；`summary` 已在列表下发（已实现）                                     |
 
 ### Admin
 
-| 方法 | 路径 | 说明 |
-| --- | --- | --- |
-| GET/POST/PATCH/DELETE | `/api/v1/admin/catalog/taxonomy/...` | 一级/二级/版本 CRUD + 排序 |
-| PATCH | `/api/v1/admin/packs/:packId` | 分类改为 node FK 三联；校验父子关系 |
+| 方法                  | 路径                                 | 说明                                |
+| --------------------- | ------------------------------------ | ----------------------------------- |
+| GET/POST/PATCH/DELETE | `/api/v1/admin/catalog/taxonomy/...` | 一级/二级/版本 CRUD + 排序          |
+| PATCH                 | `/api/v1/admin/packs/:packId`        | 分类改为 node FK 三联；校验父子关系 |
 
 **删除规则：** 节点下仍有 pack 或（二级）仍有子节点时 **409**，需先迁移 pack 或归档。
 
@@ -213,7 +213,7 @@ packs 表新增（或迁移替换旧列）：
 
 - 资料页三级筛选选项来自 API
 - 切换一级重置二级为「全部」
-- 搜索定位仍可用（更新 navigation  payload 为 node id/slug）
+- 搜索定位仍可用（更新 navigation payload 为 node id/slug）
 - `pnpm --filter @remember/mobile typecheck` + 相关单测
 
 ---
@@ -275,14 +275,14 @@ packs 表新增（或迁移替换旧列）：
 
 **区块：**
 
-| 区块 | 字段 | 控件 |
-| --- | --- | --- |
-| 内容标签 | `contentTags` | 多选 + 自定义（预设：词汇、上册、下册、全册） |
-| 封面 | `coverUrl`、`coverBadge`、`coverLines[]` | URL + 角标 + 动态行 |
-| 包含内容 | `includedHighlights[]` | 1～4 行，title + description |
-| 内容介绍 | `introMedia[]` | type/url/poster/sortOrder |
-| 内容示例 | `samplePreviews[]` | 列表编辑 + **「从当前发布版本抽取」** 按钮 |
-| 只读统计 | `cardCount`、`sizeLabel`、`updatedAt`、`currentPackVersion` | 展示，附「由发布版本自动更新」说明 |
+| 区块     | 字段                                                        | 控件                                          |
+| -------- | ----------------------------------------------------------- | --------------------------------------------- |
+| 内容标签 | `contentTags`                                               | 多选 + 自定义（预设：词汇、上册、下册、全册） |
+| 封面     | `coverUrl`、`coverBadge`、`coverLines[]`                    | URL + 角标 + 动态行                           |
+| 包含内容 | `includedHighlights[]`                                      | 1～4 行，title + description                  |
+| 内容介绍 | `introMedia[]`                                              | type/url/poster/sortOrder                     |
+| 内容示例 | `samplePreviews[]`                                          | 列表编辑 + **「从当前发布版本抽取」** 按钮    |
+| 只读统计 | `cardCount`、`sizeLabel`、`updatedAt`、`currentPackVersion` | 展示，附「由发布版本自动更新」说明            |
 
 **Verify:** 保存后在 catalog detail API 可见
 
@@ -334,12 +334,12 @@ packs 表新增（或迁移替换旧列）：
 
 ## PR 拆分建议
 
-| PR | 范围 |
-| --- | --- |
-| PR-1 | ADR 0011 + contracts + Prisma + seed/migrate |
-| PR-2 | API taxonomy + Admin CRUD + e2e |
-| PR-3 | Admin 分类管理 UI + pack 分类联动 |
-| PR-4 | Mobile taxonomy 筛选 + 详情 label |
+| PR   | 范围                                            |
+| ---- | ----------------------------------------------- |
+| PR-1 | ADR 0011 + contracts + Prisma + seed/migrate    |
+| PR-2 | API taxonomy + Admin CRUD + e2e                 |
+| PR-3 | Admin 分类管理 UI + pack 分类联动               |
+| PR-4 | Mobile taxonomy 筛选 + 详情 label               |
 | PR-5 | P1 admin pack 字段 + mobile included/cover/tags |
 
 ---
@@ -367,9 +367,9 @@ packs 表新增（或迁移替换旧列）：
 
 ## 风险与缓解
 
-| 风险 | 缓解 |
-| --- | --- |
-| 旧 App 只认 enum slug | 发版同步；API 过渡期可同时返回旧 `primaryCategory` 字符串（只读冗余） |
-| taxonomy 缓存过期 | 资料页下拉刷新；App 启动 warm taxonomy + catalog |
-| 二级/版本字符串历史数据不一致 | 一次性迁移脚本 + 无法映射清单人工处理 |
-| `includedHighlights` 空 | App 默认两条，与现网一致 |
+| 风险                          | 缓解                                                                  |
+| ----------------------------- | --------------------------------------------------------------------- |
+| 旧 App 只认 enum slug         | 发版同步；API 过渡期可同时返回旧 `primaryCategory` 字符串（只读冗余） |
+| taxonomy 缓存过期             | 资料页下拉刷新；App 启动 warm taxonomy + catalog                      |
+| 二级/版本字符串历史数据不一致 | 一次性迁移脚本 + 无法映射清单人工处理                                 |
+| `includedHighlights` 空       | App 默认两条，与现网一致                                              |

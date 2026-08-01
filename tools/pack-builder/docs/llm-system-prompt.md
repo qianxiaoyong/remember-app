@@ -7,17 +7,17 @@
 
 ## 你要发什么（就两条）
 
-| 发到哪里 | 发什么文件 | 说明 |
-|----------|------------|------|
-| **System / 项目说明 / 自定义指令**（只配一次） | [`system-prompt.txt`](system-prompt.txt) | **整文件复制粘贴**，原样发，不要改 |
-| **User / 对话 / 每条任务** | 任务参数 + **书本正文** | 用 [`user-message-book-template.txt`](user-message-book-template.txt) 作模板 |
+| 发到哪里                                       | 发什么文件                               | 说明                                                                         |
+| ---------------------------------------------- | ---------------------------------------- | ---------------------------------------------------------------------------- |
+| **System / 项目说明 / 自定义指令**（只配一次） | [`system-prompt.txt`](system-prompt.txt) | **整文件复制粘贴**，原样发，不要改                                           |
+| **User / 对话 / 每条任务**                     | 任务参数 + **书本正文**                  | 用 [`user-message-book-template.txt`](user-message-book-template.txt) 作模板 |
 
 ### 各产品怎么填
 
-| 产品 | System 放哪 | User 放哪 |
-|------|-------------|-----------|
-| **ChatGPT** | 项目 → Instructions，或 Custom GPT → Instructions | 对话输入框 |
-| **Claude** | Project → Custom Instructions | 对话输入框 |
+| 产品                   | System 放哪                                                             | User 放哪      |
+| ---------------------- | ----------------------------------------------------------------------- | -------------- |
+| **ChatGPT**            | 项目 → Instructions，或 Custom GPT → Instructions                       | 对话输入框     |
+| **Claude**             | Project → Custom Instructions                                           | 对话输入框     |
 | **没有 System 的界面** | 把 `system-prompt.txt` 贴在**第一条消息最前面**，空一行后再贴 User 内容 | 同一条或第二条 |
 
 ### 你的流程（一本书 → JSON）
@@ -62,11 +62,11 @@ Words: name, nice, meet, too, your, his, her, yes, she, he...
 
 ## 模型返回后你要做什么
 
-| 模型输出 | 你保存为 |
-|----------|----------|
+| 模型输出          | 你保存为                                       |
+| ----------------- | ---------------------------------------------- |
 | 第 1 个 JSON 对象 | `tools/pack-builder/source/<packId>/meta.json` |
-| 第 2 个 JSON 数组 | `.../cards.json` |
-| 第 3 个 JSON 数组 | `.../lexicon.json` |
+| 第 2 个 JSON 数组 | `.../cards.json`                               |
+| 第 3 个 JSON 数组 | `.../lexicon.json`                             |
 
 然后：**审校** → **TTS 补 mp3** → **build:pack** → **后台上传**。
 
@@ -76,11 +76,11 @@ Words: name, nice, meet, too, your, his, her, yes, she, he...
 
 ## 文件索引
 
-| 文件 | 用途 |
-|------|------|
-| [`system-prompt.txt`](system-prompt.txt) | **复制到 System**（含协议 + JSON Schema） |
-| [`user-message-book-template.txt`](user-message-book-template.txt) | **每批任务** User 消息模板 |
-| 本文「系统 Prompt（完整版）」 | 与 system-prompt.txt 同源，供查阅，**不必整篇发给模型** |
+| 文件                                                               | 用途                                                    |
+| ------------------------------------------------------------------ | ------------------------------------------------------- |
+| [`system-prompt.txt`](system-prompt.txt)                           | **复制到 System**（含协议 + JSON Schema）               |
+| [`user-message-book-template.txt`](user-message-book-template.txt) | **每批任务** User 消息模板                              |
+| 本文「系统 Prompt（完整版）」                                      | 与 system-prompt.txt 同源，供查阅，**不必整篇发给模型** |
 
 ---
 
@@ -96,12 +96,12 @@ Words: name, nice, meet, too, your, his, her, yes, she, he...
 
 ## 构建后会发生什么（供人工复核）
 
-| 源文件 | 构建器动作 |
-|--------|------------|
-| `cards.json` | 每行 → `pack.sqlite` 的 `cards` 表；自动算 `knowledgeId`；`cardType=vocabulary` |
-| `lexicon.json` + 例句扫描 | → `lexicon_entries` 表 |
-| `assets/**` | 原样打进 zip，路径写入 `packManifest.files[]` |
-| — | 生成 `packManifest.json` + Ed25519 签名 → 输出 `.zip` |
+| 源文件                    | 构建器动作                                                                      |
+| ------------------------- | ------------------------------------------------------------------------------- |
+| `cards.json`              | 每行 → `pack.sqlite` 的 `cards` 表；自动算 `knowledgeId`；`cardType=vocabulary` |
+| `lexicon.json` + 例句扫描 | → `lexicon_entries` 表                                                          |
+| `assets/**`               | 原样打进 zip，路径写入 `packManifest.files[]`                                   |
+| —                         | 生成 `packManifest.json` + Ed25519 签名 → 输出 `.zip`                           |
 
 ---
 

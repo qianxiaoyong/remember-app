@@ -12,11 +12,11 @@
 
 ### 1. 全局 Taxonomy 三表
 
-| 表 | 含义 | 父子关系 |
-| --- | --- | --- |
-| `catalog_primary_nodes` | 一级（如「小学英语」） | 根 |
-| `catalog_secondary_nodes` | 二级（如「三年级」） | FK → primary |
-| `catalog_version_nodes` | 版本（如「人教版」） | 全局列表，不挂 primary |
+| 表                        | 含义                   | 父子关系               |
+| ------------------------- | ---------------------- | ---------------------- |
+| `catalog_primary_nodes`   | 一级（如「小学英语」） | 根                     |
+| `catalog_secondary_nodes` | 二级（如「三年级」）   | FK → primary           |
+| `catalog_version_nodes`   | 版本（如「人教版」）   | 全局列表，不挂 primary |
 
 每节点：`id`（UUID）、`slug`（稳定键）、`label`（展示文案）、`sort_order`、`status`（`active` \| `archived`）。
 

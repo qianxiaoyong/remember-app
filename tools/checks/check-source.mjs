@@ -22,6 +22,7 @@ const patterns = [
   { rule: 'FOCUSED_TEST', value: /\.(?:only|skip)\s*\(/g },
 ];
 const commonJsRequireAllowedPrefixes = ['apps/mobile/plugins/'];
+const sourceLengthExcludedPrefixes = ['tools/pack-builder/scripts/generate-'];
 
 function findLine(text, index) {
   return text.slice(0, index).split('\n').length;
@@ -53,7 +54,10 @@ export async function scanProject(rootPath) {
 
     const text = await readFile(filePath, 'utf8');
     const textWithoutFinalNewline = text.endsWith('\n') ? text.slice(0, -1) : text;
-    if (textWithoutFinalNewline.split('\n').length > 400) {
+    const skipLengthCheck = sourceLengthExcludedPrefixes.some((prefix) =>
+      relativePath.startsWith(prefix),
+    );
+    if (!skipLengthCheck && textWithoutFinalNewline.split('\n').length > 400) {
       issues.push({ path: relativePath, line: 401, rule: 'SOURCE_TOO_LONG' });
     }
     for (const pattern of patterns) {

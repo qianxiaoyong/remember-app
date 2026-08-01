@@ -37,10 +37,7 @@ export class AdminCatalogTaxonomyController {
 
   @Patch('primaries/:id')
   updatePrimary(@Param('id') id: string, @Body() body: unknown) {
-    return this.service.updatePrimary(
-      id,
-      adminUpdatePrimaryTaxonomyNodeRequestSchema.parse(body),
-    );
+    return this.service.updatePrimary(id, adminUpdatePrimaryTaxonomyNodeRequestSchema.parse(body));
   }
 
   @Delete('primaries/:id')

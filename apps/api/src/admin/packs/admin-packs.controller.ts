@@ -14,18 +14,26 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { MAX_PACK_ZIP_BYTES } from '@remember/contracts';
-import { adminCreatePackRequestSchema, adminUpdatePackRequestSchema, adminUpdatePackVersionNoteRequestSchema } from '@remember/contracts';
+import {
+  adminCreatePackRequestSchema,
+  adminUpdatePackRequestSchema,
+  adminUpdatePackVersionNoteRequestSchema,
+} from '@remember/contracts';
 import {
   AdminAuthGuard,
   requireAdminAuthContext,
   type RequestWithAdminAuth,
 } from '../../admin-auth/admin-auth.guard.js';
 import { AdminPacksService } from './admin-packs.service.js';
+import { AdminPackVersionsService } from './admin-pack-versions.service.js';
 
 @Controller('admin/packs')
 @UseGuards(AdminAuthGuard)
 export class AdminPacksController {
-  constructor(private readonly service: AdminPacksService) {}
+  constructor(
+    private readonly service: AdminPacksService,
+    private readonly versionsService: AdminPackVersionsService,
+  ) {}
 
   @Get()
   listPacks() {
@@ -63,7 +71,11 @@ export class AdminPacksController {
     if (!file || file.buffer.byteLength === 0) {
       throw new BadRequestException({ code: 'PACK_FILE_MISSING', message: '请上传 zip 文件' });
     }
-    return this.service.uploadVersion(admin.adminUserId, packId, new Uint8Array(file.buffer));
+    return this.versionsService.uploadVersion(
+      admin.adminUserId,
+      packId,
+      new Uint8Array(file.buffer),
+    );
   }
 
   @Post(':packId/versions/:versionId/publish')
@@ -73,7 +85,7 @@ export class AdminPacksController {
     @Param('versionId') versionId: string,
   ) {
     const admin = requireAdminAuthContext(request);
-    return this.service.publishVersion(admin.adminUserId, packId, versionId);
+    return this.versionsService.publishVersion(admin.adminUserId, packId, versionId);
   }
 
   @Patch(':packId/versions/:versionId')
@@ -83,12 +95,12 @@ export class AdminPacksController {
     @Body() body: unknown,
   ) {
     const input = adminUpdatePackVersionNoteRequestSchema.parse(body);
-    return this.service.updateVersionNote(packId, versionId, input.note);
+    return this.versionsService.updateVersionNote(packId, versionId, input.note);
   }
 
   @Post(':packId/extract-sample-previews')
   @HttpCode(200)
   extractSamplePreviews(@Param('packId') packId: string) {
-    return this.service.extractSamplePreviewsFromCurrentVersion(packId);
+    return this.versionsService.extractSamplePreviewsFromCurrentVersion(packId);
   }
 }

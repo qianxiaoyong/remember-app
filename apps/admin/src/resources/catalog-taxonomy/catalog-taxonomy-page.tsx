@@ -21,11 +21,7 @@ import {
   updateVersionTaxonomyNode,
 } from '../../api/catalog-taxonomy-api.js';
 import { AdminApiError } from '../../api/admin-api-client.js';
-import {
-  PrimarySidebar,
-  SecondaryPanel,
-  VersionsPanel,
-} from './catalog-taxonomy-panels.js';
+import { PrimarySidebar, SecondaryPanel, VersionsPanel } from './catalog-taxonomy-panels.js';
 import {
   TaxonomyCreateDialog,
   TaxonomyDeleteDialog,
@@ -89,7 +85,11 @@ export function CatalogTaxonomyPage() {
       await reload();
     } catch (error) {
       setErrorMessage(
-        error instanceof AdminApiError ? error.message : error instanceof Error ? error.message : '操作失败',
+        error instanceof AdminApiError
+          ? error.message
+          : error instanceof Error
+            ? error.message
+            : '操作失败',
       );
     }
   }
@@ -131,10 +131,7 @@ export function CatalogTaxonomyPage() {
   return (
     <>
       <Title title="分类管理" />
-      <AdminPageHeader
-        title="分类管理"
-        meta="维护一级 / 二级分类与教材版本，供知识库挂载"
-      />
+      <AdminPageHeader title="分类管理" meta="维护一级 / 二级分类与教材版本，供知识库挂载" />
       <Box sx={{ height: 'calc(100vh - 180px)', display: 'flex', flexDirection: 'column' }}>
         {errorMessage ? (
           <Typography color="error" sx={{ mb: 1, fontSize: '0.875rem' }}>
@@ -148,9 +145,15 @@ export function CatalogTaxonomyPage() {
               primaries={taxonomy?.primaries ?? []}
               selectedPrimaryId={selectedPrimaryId}
               onSelect={setSelectedPrimaryId}
-              onCreateClick={() => setCreatePrimaryOpen(true)}
-              onRename={(node) => setEditTarget({ kind: 'primary', node })}
-              onDelete={(node) => setDeleteTarget({ kind: 'primary', node })}
+              onCreateClick={() => {
+                setCreatePrimaryOpen(true);
+              }}
+              onRename={(node) => {
+                setEditTarget({ kind: 'primary', node });
+              }}
+              onDelete={(node) => {
+                setDeleteTarget({ kind: 'primary', node });
+              }}
             />
           </Grid>
           <Grid size={{ xs: 12, lg: 5.5 }} sx={{ height: '100%', minHeight: 0 }}>
@@ -173,8 +176,12 @@ export function CatalogTaxonomyPage() {
                   setSecondaryLabel('');
                 });
               }}
-              onRename={(node) => setEditTarget({ kind: 'secondary', node })}
-              onDelete={(node) => setDeleteTarget({ kind: 'secondary', node })}
+              onRename={(node) => {
+                setEditTarget({ kind: 'secondary', node });
+              }}
+              onDelete={(node) => {
+                setDeleteTarget({ kind: 'secondary', node });
+              }}
             />
           </Grid>
           <Grid size={{ xs: 12, lg: 4 }} sx={{ height: '100%', minHeight: 0 }}>
@@ -194,8 +201,12 @@ export function CatalogTaxonomyPage() {
                   setVersionLabel('');
                 });
               }}
-              onRename={(node) => setEditTarget({ kind: 'version', node })}
-              onDelete={(node) => setDeleteTarget({ kind: 'version', node })}
+              onRename={(node) => {
+                setEditTarget({ kind: 'version', node });
+              }}
+              onDelete={(node) => {
+                setDeleteTarget({ kind: 'version', node });
+              }}
             />
           </Grid>
         </Grid>
@@ -206,7 +217,9 @@ export function CatalogTaxonomyPage() {
         title="新增一级分类"
         slugPlaceholder="primary"
         labelPlaceholder="小学英语"
-        onClose={() => setCreatePrimaryOpen(false)}
+        onClose={() => {
+          setCreatePrimaryOpen(false);
+        }}
         onConfirm={(input) => {
           setCreatePrimaryOpen(false);
           void runAction(async () => {
@@ -225,7 +238,9 @@ export function CatalogTaxonomyPage() {
               : '修改版本展示名'
         }
         label={editTarget?.node.label ?? ''}
-        onClose={() => setEditTarget(null)}
+        onClose={() => {
+          setEditTarget(null);
+        }}
         onConfirm={(label) => {
           void handleRename(label);
         }}
@@ -235,11 +250,11 @@ export function CatalogTaxonomyPage() {
         open={deleteTarget !== null}
         title="确认删除"
         description={
-          deleteTarget
-            ? `确定删除「${deleteTarget.node.label}」？若仍有知识库挂载将无法删除。`
-            : ''
+          deleteTarget ? `确定删除「${deleteTarget.node.label}」？若仍有知识库挂载将无法删除。` : ''
         }
-        onClose={() => setDeleteTarget(null)}
+        onClose={() => {
+          setDeleteTarget(null);
+        }}
         onConfirm={() => {
           void handleDelete();
         }}

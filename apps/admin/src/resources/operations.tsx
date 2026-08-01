@@ -19,6 +19,7 @@ import { RedemptionStatusChip } from '../components/admin-status-chips.js';
 import { ListCreateActions } from '../components/list-toolbar.js';
 import { RedemptionBatchCreate } from './redemption-batch-create.js';
 import { RedemptionCodeRowActions } from './redemption-code-row-actions.js';
+import type { RedemptionCodeListItem } from '../api/redemption-api.js';
 
 export function RefundCreate() {
   return (
@@ -73,43 +74,45 @@ export function RedemptionCodeList() {
         sort={{ field: 'createdAt', order: 'DESC' }}
         perPage={20}
       >
-      <Datagrid bulkActionButtons={false}>
-        <FunctionField
-          label="知识库 ID"
-          render={(record: { packId?: string }) => (
-            <MonoText variant="caption">{record.packId ?? '—'}</MonoText>
-          )}
-        />
-        <FunctionField
-          label="兑换码"
-          render={(record: { code?: string; codePreview?: string }) => (
-            <MonoText variant="caption">{record.code ?? record.codePreview ?? '—'}</MonoText>
-          )}
-        />
-        <FunctionField
-          label="状态"
-          render={(record: { status?: string; isExhausted?: boolean }) =>
-            record.status ? (
-              <RedemptionStatusChip
-                isExhausted={record.isExhausted === true}
-                status={record.status}
-              />
-            ) : (
-              '—'
-            )
-          }
-        />
-        <NumberField source="redeemedCount" label="已兑换" />
-        <NumberField source="maxRedemptions" label="上限" />
-        <DateField source="expiresAt" label="过期时间" showTime locales="zh-CN" emptyText="—" />
-        <TextField source="note" label="备注" emptyText="—" />
-        <DateField source="createdAt" label="创建时间" showTime locales="zh-CN" />
-        <FunctionField
-          label="操作"
-          render={(record) => <RedemptionCodeRowActions record={record} />}
-        />
-      </Datagrid>
-    </List>
+        <Datagrid bulkActionButtons={false}>
+          <FunctionField
+            label="知识库 ID"
+            render={(record: { packId?: string }) => (
+              <MonoText variant="caption">{record.packId ?? '—'}</MonoText>
+            )}
+          />
+          <FunctionField
+            label="兑换码"
+            render={(record: { code?: string; codePreview?: string }) => (
+              <MonoText variant="caption">{record.code ?? record.codePreview ?? '—'}</MonoText>
+            )}
+          />
+          <FunctionField
+            label="状态"
+            render={(record: { status?: string; isExhausted?: boolean }) =>
+              record.status ? (
+                <RedemptionStatusChip
+                  isExhausted={record.isExhausted === true}
+                  status={record.status}
+                />
+              ) : (
+                '—'
+              )
+            }
+          />
+          <NumberField source="redeemedCount" label="已兑换" />
+          <NumberField source="maxRedemptions" label="上限" />
+          <DateField source="expiresAt" label="过期时间" showTime locales="zh-CN" emptyText="—" />
+          <TextField source="note" label="备注" emptyText="—" />
+          <DateField source="createdAt" label="创建时间" showTime locales="zh-CN" />
+          <FunctionField
+            label="操作"
+            render={(record: RedemptionCodeListItem) => (
+              <RedemptionCodeRowActions record={record} />
+            )}
+          />
+        </Datagrid>
+      </List>
     </>
   );
 }

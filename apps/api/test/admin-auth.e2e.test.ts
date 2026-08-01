@@ -1,7 +1,7 @@
 import type { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import type { PrismaClient } from '@prisma/client';
-import { adminLoginResponseSchema } from '@remember/contracts';
+import { adminLoginResponseSchema, verifySmsCodeResponseSchema } from '@remember/contracts';
 import request from 'supertest';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { hashAdminPassword } from '../src/admin-auth/admin-password.js';
@@ -62,7 +62,7 @@ async function appUserLogin(server: Parameters<typeof request>[0]): Promise<stri
     .post('/api/v1/auth/sms/verify')
     .send({ phone: TEST_PHONE, code: '000000', deviceId: DEVICE_A })
     .expect(200);
-  return response.body.token as string;
+  return verifySmsCodeResponseSchema.parse(response.body).token;
 }
 
 describe('admin auth integration', () => {

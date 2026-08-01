@@ -1,10 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { CatalogPackSummary } from '@remember/contracts';
 import type { CatalogPackItem } from '../catalog/catalog-seed';
-import {
-  fetchMarketCatalog,
-  readCachedMarketCatalog,
-} from './fetch-market-catalog';
+import { fetchMarketCatalog, readCachedMarketCatalog } from './fetch-market-catalog';
 
 const fetchCatalogPacks = vi.fn<() => Promise<CatalogPackSummary[]>>();
 const readCatalogDiskCache = vi.fn<() => Promise<CatalogPackItem[] | null>>();
@@ -22,8 +19,10 @@ vi.mock('../data/catalog/catalog-taxonomy-store', () => ({
 vi.mock('../data/catalog/catalog-cache-store', () => ({
   readCatalogDiskCache: () => readCatalogDiskCache(),
   readCatalogMemoryCache: () => readCatalogMemoryCache(),
-  writeCatalogMemoryCache: (items: CatalogPackItem[]) => writeCatalogMemoryCache(items),
-  resolveOfflineCatalog: vi.fn(async () => []),
+  writeCatalogMemoryCache: (items: CatalogPackItem[]) => {
+    writeCatalogMemoryCache(items);
+  },
+  resolveOfflineCatalog: vi.fn(() => Promise.resolve([])),
 }));
 
 const grade3Pack: CatalogPackSummary = {
@@ -60,7 +59,7 @@ describe('fetchMarketCatalog', () => {
       keyword: '',
     });
 
-    expect(fetchCatalogPacks).toHaveBeenCalledWith({});
+    expect(fetchCatalogPacks).toHaveBeenCalledTimes(1);
     expect(items).toHaveLength(1);
     expect(items[0]?.packId).toBe('en-grade3-v1-rj');
   });

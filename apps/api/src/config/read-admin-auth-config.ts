@@ -18,10 +18,9 @@ export function readAdminAuthConfig(): AdminAuthConfig {
     throw new Error('ADMIN_SESSION_TTL_DAYS must be a positive number');
   }
 
-  const bootstrapLoginName = process.env.ADMIN_BOOTSTRAP_LOGIN_NAME?.trim() || 'admin';
-  if (bootstrapLoginName.length === 0) {
-    throw new Error('ADMIN_BOOTSTRAP_LOGIN_NAME must not be empty');
-  }
+  const bootstrapLoginNameRaw = process.env.ADMIN_BOOTSTRAP_LOGIN_NAME?.trim();
+  const bootstrapLoginName =
+    bootstrapLoginNameRaw && bootstrapLoginNameRaw.length > 0 ? bootstrapLoginNameRaw : 'admin';
 
   return {
     sessionTtlDays,

@@ -21,14 +21,14 @@ MVP 第七项能力为 **最小管理后台**：发布知识库、查订单、�
 
 ### 2.1 目标（阶段 7 MVP）
 
-| # | 目标 |
-| --- | --- |
-| G1 | 管理员在 **Windows 浏览器** 登录独立后台，完成架构定义的 **五类运营操作** |
-| G2 | **轻量驾驶舱 A**：交易、兑换、告警、知识库状态（无学习行为曲线） |
-| G3 | **发布已 build 的 signed zip**（dev 可本地/mock 存储；校验与 App 同链） |
-| G4 | **兑换码批次**生成与查询（替代仅 CLI seed） |
-| G5 | 退款、补发、发布写 **不可变 audit_logs**；App session **不能**访问 admin API |
-| G6 | 为 **cardType / protocolVersion 扩展** 留注册位，不在 MVP 实现新 UI 或 LLM 编排 |
+| #   | 目标                                                                            |
+| --- | ------------------------------------------------------------------------------- |
+| G1  | 管理员在 **Windows 浏览器** 登录独立后台，完成架构定义的 **五类运营操作**       |
+| G2  | **轻量驾驶舱 A**：交易、兑换、告警、知识库状态（无学习行为曲线）                |
+| G3  | **发布已 build 的 signed zip**（dev 可本地/mock 存储；校验与 App 同链）         |
+| G4  | **兑换码批次**生成与查询（替代仅 CLI seed）                                     |
+| G5  | 退款、补发、发布写 **不可变 audit_logs**；App session **不能**访问 admin API    |
+| G6  | 为 **cardType / protocolVersion 扩展** 留注册位，不在 MVP 实现新 UI 或 LLM 编排 |
 
 ### 2.2 非目标（阶段 7）
 
@@ -40,14 +40,14 @@ MVP 第七项能力为 **最小管理后台**：发布知识库、查订单、�
 
 ## 3. 技术选型（沿用架构）
 
-| 层 | 选型 |
-| --- | --- |
-| 前端 | `apps/admin`：React + Vite + **React-admin 开源核心**（MIT） |
-| 数据 | 原生 `fetch` **dataProvider** + session **authProvider** |
-| 图表 | MUI + **Recharts**（仅驾驶舱少量折线/柱图） |
-| API | NestJS 模块化单体新增 **Admin 模块**；路由前缀 `/api/v1/admin/` |
-| 鉴权 | `admin_users` + `admin_sessions`（opaque token 哈希）；与 App `sessions` **完全隔离** |
-| 密码 | 成熟慢哈希（如 argon2/bcrypt）；**TOTP 字段预留**，MVP 可先密码登录 |
+| 层     | 选型                                                                                         |
+| ------ | -------------------------------------------------------------------------------------------- |
+| 前端   | `apps/admin`：React + Vite + **React-admin 开源核心**（MIT）                                 |
+| 数据   | 原生 `fetch` **dataProvider** + session **authProvider**                                     |
+| 图表   | MUI + **Recharts**（仅驾驶舱少量折线/柱图）                                                  |
+| API    | NestJS 模块化单体新增 **Admin 模块**；路由前缀 `/api/v1/admin/`                              |
+| 鉴权   | `admin_users` + `admin_sessions`（opaque token 哈希）；与 App `sessions` **完全隔离**        |
+| 密码   | 成熟慢哈希（如 argon2/bcrypt）；**TOTP 字段预留**，MVP 可先密码登录                          |
 | 开发库 | **Docker PostgreSQL**（`pnpm dev:db`）+ 本机 API；见 `docs/runbooks/local-api-docker-dev.md` |
 
 ## 4. 运营驾驶舱 A（大屏）
@@ -71,39 +71,39 @@ MVP 第七项能力为 **最小管理后台**：发布知识库、查订单、�
 
 ### 4.2 指标与隐私
 
-| 模块 | 指标 | 数据源 | 阶段 |
-| --- | --- | --- | --- |
-| 交易 | GMV、订单数、客单价、退款额 | `orders` / `refunds` / `payment_events` | 7 |
-| 权益 | 新增 pack_access、补发次数 | `pack_access` + `audit_logs` | 7 |
-| 兑换 | 兑换次数、码耗尽 | `redemption_events` | 7 |
-| 用户 | 新注册、活跃登录（**计数**，无手机号明文） | `users` / `sessions` | 7 |
-| 知识库 | 上架数、各包 paid 订单数、最新版本 | `packs` / `pack_versions` / `orders` | 7 |
-| 告警 | 已付无权益、退款 pending、下载失败激增（阈值） | 聚合查询 | 7 |
-| 学习行为 | DAU、留存、人均学习量 | 需匿名日聚合表 | **7.5+ defer** |
+| 模块     | 指标                                           | 数据源                                  | 阶段           |
+| -------- | ---------------------------------------------- | --------------------------------------- | -------------- |
+| 交易     | GMV、订单数、客单价、退款额                    | `orders` / `refunds` / `payment_events` | 7              |
+| 权益     | 新增 pack_access、补发次数                     | `pack_access` + `audit_logs`            | 7              |
+| 兑换     | 兑换次数、码耗尽                               | `redemption_events`                     | 7              |
+| 用户     | 新注册、活跃登录（**计数**，无手机号明文）     | `users` / `sessions`                    | 7              |
+| 知识库   | 上架数、各包 paid 订单数、最新版本             | `packs` / `pack_versions` / `orders`    | 7              |
+| 告警     | 已付无权益、退款 pending、下载失败激增（阈值） | 聚合查询                                | 7              |
+| 学习行为 | DAU、留存、人均学习量                          | 需匿名日聚合表                          | **7.5+ defer** |
 
 **禁止：** 展示学习正文、搜索词、具体掌握情况；驾驶舱 API 不得返回监护人手机号明文。
 
 ### 4.3 Admin Dashboard API（只读）
 
-| 方法 | 路径 | 说明 |
-| --- | --- | --- |
-| GET | `/api/v1/admin/dashboard/summary` | KPI 卡片；query: `range=1d\|7d\|30d` |
-| GET | `/api/v1/admin/dashboard/revenue-series` | 按日 GMV 序列 |
-| GET | `/api/v1/admin/dashboard/top-packs` | 销量 Top N |
-| GET | `/api/v1/admin/dashboard/alerts` | 待处理告警列表 |
+| 方法 | 路径                                     | 说明                                 |
+| ---- | ---------------------------------------- | ------------------------------------ |
+| GET  | `/api/v1/admin/dashboard/summary`        | KPI 卡片；query: `range=1d\|7d\|30d` |
+| GET  | `/api/v1/admin/dashboard/revenue-series` | 按日 GMV 序列                        |
+| GET  | `/api/v1/admin/dashboard/top-packs`      | 销量 Top N                           |
+| GET  | `/api/v1/admin/dashboard/alerts`         | 待处理告警列表                       |
 
 实现：PostgreSQL 聚合；可加 5 分钟内存缓存；**不**引入 ClickHouse/Redis（MVP）。
 
 ## 5. 五类运营操作 + 兑换码
 
-| 操作 | 管理员做什么 | Admin API / UI |
-| --- | --- | --- |
-| **1. 知识库与发版** | 编辑目录元数据；上传 **已签名 zip**；发布/下架版本 | `packs` CRUD；`pack_versions` 创建 + publish |
-| **2. 订单查询** | 按用户/包/状态/时间筛选；看 payment_events | `orders` 只读列表/详情 |
-| **3. 权益查询与补发** | 查 pack_access；核实后补发 | 只读 + `POST .../pack-access/grant`（写 audit） |
-| **4. 退款** | 人工发起退款（客服流程） | `POST .../refunds`；调 WechatPayClient（mock/真） |
-| **5. 审计** | 查谁何时做了什么 | `audit_logs` 只读列表 |
-| **+ 兑换码** | 创建批次、上限、过期；查看 redeemed | `redemption_codes` 批次 API |
+| 操作                  | 管理员做什么                                       | Admin API / UI                                    |
+| --------------------- | -------------------------------------------------- | ------------------------------------------------- |
+| **1. 知识库与发版**   | 编辑目录元数据；上传 **已签名 zip**；发布/下架版本 | `packs` CRUD；`pack_versions` 创建 + publish      |
+| **2. 订单查询**       | 按用户/包/状态/时间筛选；看 payment_events         | `orders` 只读列表/详情                            |
+| **3. 权益查询与补发** | 查 pack_access；核实后补发                         | 只读 + `POST .../pack-access/grant`（写 audit）   |
+| **4. 退款**           | 人工发起退款（客服流程）                           | `POST .../refunds`；调 WechatPayClient（mock/真） |
+| **5. 审计**           | 查谁何时做了什么                                   | `audit_logs` 只读列表                             |
+| **+ 兑换码**          | 创建批次、上限、过期；查看 redeemed                | `redemption_codes` 批次 API                       |
 
 所有写操作：**事务 + audit_logs**；与支付回调并发时依赖现有 `pack_access(user,pack)` 唯一约束。
 
@@ -153,11 +153,11 @@ L3 App 层（mobile）
 
 ### 7.2 第二期产品倾向（2026-07-31 对齐）
 
-| 内容 | 倾向 |
-| --- | --- |
-| 普通短句 | 继续 `cardType: vocabulary`，现有 A/B 卡 UI |
+| 内容         | 倾向                                                               |
+| ------------ | ------------------------------------------------------------------ |
+| 普通短句     | 继续 `cardType: vocabulary`，现有 A/B 卡 UI                        |
 | 情景短句练习 | **新交互未定**；预留新 cardType + 渲染器；**协议字段定稿后再 ADR** |
-| SM-2 三按钮 | 默认共用；若新产品排除复习，另 ADR |
+| SM-2 三按钮  | 默认共用；若新产品排除复习，另 ADR                                 |
 
 ### 7.3 阶段 7 禁止锁死
 
@@ -185,14 +185,14 @@ MVP 不建 `content_jobs` 表；运营继续使用 **外部 AI + 本地 build**�
 
 ## 10. 开发环境
 
-| 项 | 配置 |
-| --- | --- |
-| PostgreSQL | `pnpm dev:db` → Docker `remember_dev` @ `127.0.0.1:5432` |
-| API | `pnpm --filter @remember/api dev` → `0.0.0.0:3000` |
-| Admin | `pnpm --filter @remember/admin dev` → Vite 默认端口 |
-| Admin 调 API | `VITE_API_BASE_URL=http://127.0.0.1:3000` |
-| 种子 | `pnpm --filter @remember/api seed:dev-bootstrap` |
-| 外网/mock | 短信/微信/下载同阶段 6 mock |
+| 项           | 配置                                                     |
+| ------------ | -------------------------------------------------------- |
+| PostgreSQL   | `pnpm dev:db` → Docker `remember_dev` @ `127.0.0.1:5432` |
+| API          | `pnpm --filter @remember/api dev` → `0.0.0.0:3000`       |
+| Admin        | `pnpm --filter @remember/admin dev` → Vite 默认端口      |
+| Admin 调 API | `VITE_API_BASE_URL=http://127.0.0.1:3000`                |
+| 种子         | `pnpm --filter @remember/api seed:dev-bootstrap`         |
+| 外网/mock    | 短信/微信/下载同阶段 6 mock                              |
 
 ## 11. 验收要点（阶段 7 退出门禁）
 

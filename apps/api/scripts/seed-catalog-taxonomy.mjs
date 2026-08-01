@@ -51,7 +51,13 @@ async function upsertNodes() {
   for (const node of PRIMARY_NODES) {
     const saved = await prisma.catalogPrimaryNode.upsert({
       where: { slug: node.slug },
-      create: { id: node.id, slug: node.slug, label: node.label, sortOrder: node.sortOrder, status: 'active' },
+      create: {
+        id: node.id,
+        slug: node.slug,
+        label: node.label,
+        sortOrder: node.sortOrder,
+        status: 'active',
+      },
       update: { label: node.label, sortOrder: node.sortOrder, status: 'active' },
     });
     primaryIdBySlug.set(node.slug, saved.id);
@@ -60,7 +66,13 @@ async function upsertNodes() {
   for (const node of VERSION_NODES) {
     await prisma.catalogVersionNode.upsert({
       where: { slug: node.slug },
-      create: { id: node.id, slug: node.slug, label: node.label, sortOrder: node.sortOrder, status: 'active' },
+      create: {
+        id: node.id,
+        slug: node.slug,
+        label: node.label,
+        sortOrder: node.sortOrder,
+        status: 'active',
+      },
       update: { label: node.label, sortOrder: node.sortOrder, status: 'active' },
     });
   }
