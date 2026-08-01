@@ -4,6 +4,10 @@
 
 ## 启动
 
+**一键（Windows）：** 双击 [`tools/pack-editor/start.bat`](../../tools/pack-editor/start.bat)（会自动编译 pack-builder、启动服务并打开浏览器）。
+
+或手动：
+
 ```powershell
 pnpm --filter @remember/pack-builder build
 pnpm dev:pack-editor
