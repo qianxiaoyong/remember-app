@@ -1,16 +1,24 @@
-import { useEffect, useMemo, useState, type CSSProperties, type ReactElement } from 'react';
+import { useCallback, useEffect, useMemo, useState, type ReactElement } from 'react';
 import {
   buildPack,
+  createCard,
+  deleteCard,
   loadPackSource,
   suggestNextPatchVersion,
   validatePack,
   type ValidationIssue,
 } from '../api/local-api-client.js';
+import { ConfirmDialog } from '../components/confirm-dialog.js';
+import { DataTable } from '../components/data-table.js';
+import { LoadingState } from '../components/loading-state.js';
+import { PageHeader } from '../components/page-header.js';
+import { SearchInput } from '../components/search-input.js';
+import { StatusBanner } from '../components/status-banner.js';
 
 interface CardListPageProps {
   packId: string;
   onBack: () => void;
-  onEditCard: (sortOrder: number) => void;
+  onEditCard: (sortOrder: number, headword: string) => void;
 }
 
 export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps): ReactElement {
@@ -21,30 +29,37 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
   const [loading, setLoading] = useState(true);
   const [validationIssues, setValidationIssues] = useState<ValidationIssue[] | null>(null);
   const [buildMessage, setBuildMessage] = useState<string | null>(null);
+  const [buildOutputPath, setBuildOutputPath] = useState<string | null>(null);
   const [showBuildDialog, setShowBuildDialog] = useState(false);
   const [nextVersion, setNextVersion] = useState('');
-  const [busyAction, setBusyAction] = useState<'validate' | 'build' | null>(null);
+  const [busyAction, setBusyAction] = useState<'validate' | 'build' | 'create' | 'delete' | null>(
+    null,
+  );
+  const [copyHint, setCopyHint] = useState<string | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<{
+    sortOrder: number;
+    headword: string;
+  } | null>(null);
+
+  const reloadCards = useCallback(async (): Promise<void> => {
+    const source = await loadPackSource(packId);
+    setPackVersion(source.meta.packVersion);
+    setNextVersion(suggestNextPatchVersion(source.meta.packVersion));
+    setCards(
+      [...source.cards]
+        .sort((left, right) => left.sortOrder - right.sortOrder)
+        .map((card) => ({
+          sortOrder: card.sortOrder,
+          headword: card.content.prompt.headword,
+        })),
+    );
+  }, [packId]);
 
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
     setError(null);
-    void loadPackSource(packId)
-      .then((source) => {
-        if (cancelled) {
-          return;
-        }
-        setPackVersion(source.meta.packVersion);
-        setNextVersion(suggestNextPatchVersion(source.meta.packVersion));
-        setCards(
-          [...source.cards]
-            .sort((left, right) => left.sortOrder - right.sortOrder)
-            .map((card) => ({
-              sortOrder: card.sortOrder,
-              headword: card.content.prompt.headword,
-            })),
-        );
-      })
+    void reloadCards()
       .catch((loadError: unknown) => {
         if (!cancelled) {
           setError(loadError instanceof Error ? loadError.message : String(loadError));
@@ -58,7 +73,7 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
     return () => {
       cancelled = true;
     };
-  }, [packId]);
+  }, [reloadCards]);
 
   const filteredCards = useMemo(() => {
     const keyword = search.trim().toLowerCase();
@@ -72,6 +87,7 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
     setBusyAction('validate');
     setValidationIssues(null);
     setBuildMessage(null);
+    setBuildOutputPath(null);
     try {
       const result = await validatePack(packId);
       setValidationIssues(result.issues);
@@ -85,11 +101,13 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
   const handleBuild = async (): Promise<void> => {
     setBusyAction('build');
     setBuildMessage(null);
+    setBuildOutputPath(null);
     try {
       const result = await buildPack(packId, nextVersion.trim() || undefined);
       if (result.ok && result.outputPath) {
         setPackVersion(nextVersion.trim() || packVersion);
-        setBuildMessage(`已生成：${result.outputPath}\n请到 Admin 上传发布。`);
+        setBuildOutputPath(result.outputPath);
+        setBuildMessage('打包成功，请到 Admin 上传发布。');
         setShowBuildDialog(false);
       } else {
         setBuildMessage(result.error ?? '打包失败');
@@ -101,174 +119,253 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
     }
   };
 
+  const handleCopyPath = async (): Promise<void> => {
+    if (!buildOutputPath) {
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(buildOutputPath);
+      setCopyHint('已复制路径');
+      window.setTimeout(() => {
+        setCopyHint(null);
+      }, 2000);
+    } catch {
+      setCopyHint('复制失败，请手动复制');
+    }
+  };
+
+  const handleCreate = async (): Promise<void> => {
+    setBusyAction('create');
+    setError(null);
+    try {
+      const card = await createCard(packId);
+      onEditCard(card.sortOrder, card.content.prompt.headword);
+    } catch (createError: unknown) {
+      setError(createError instanceof Error ? createError.message : String(createError));
+    } finally {
+      setBusyAction(null);
+    }
+  };
+
+  const handleDeleteConfirm = async (): Promise<void> => {
+    if (!deleteTarget) {
+      return;
+    }
+    setBusyAction('delete');
+    setError(null);
+    try {
+      await deleteCard(packId, deleteTarget.sortOrder);
+      await reloadCards();
+      setDeleteTarget(null);
+    } catch (deleteError: unknown) {
+      setError(deleteError instanceof Error ? deleteError.message : String(deleteError));
+    } finally {
+      setBusyAction(null);
+    }
+  };
+
   if (loading) {
-    return <p>加载中…</p>;
+    return (
+      <>
+        <PageHeader title={packId} description="加载卡片列表…" />
+        <LoadingState rows={8} />
+      </>
+    );
   }
 
   if (error) {
     return (
-      <section>
-        <button type="button" onClick={onBack}>
-          返回
-        </button>
-        <p role="alert">加载失败：{error}</p>
-      </section>
+      <>
+        <PageHeader
+          title={packId}
+          actions={
+            <button type="button" className="btn btn-secondary" onClick={onBack}>
+              返回
+            </button>
+          }
+        />
+        <StatusBanner variant="error" title="加载失败">
+          <p>{error}</p>
+        </StatusBanner>
+      </>
     );
   }
 
   return (
-    <section>
-      <header style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
-        <button type="button" onClick={onBack}>
-          返回
-        </button>
-        <h1 style={{ margin: 0, flex: 1 }}>
-          {packId} <small style={{ fontWeight: 400 }}>v{packVersion}</small>
-        </h1>
-        <button type="button" onClick={() => void handleValidate()} disabled={busyAction !== null}>
-          {busyAction === 'validate' ? '校验中…' : '校验'}
-        </button>
-        <button
-          type="button"
-          onClick={() => {
-            setNextVersion(suggestNextPatchVersion(packVersion));
-            setShowBuildDialog(true);
-          }}
-          disabled={busyAction !== null}
-        >
-          打包
-        </button>
-      </header>
-
-      <div style={{ margin: '1rem 0' }}>
-        <label>
-          搜索 headword：
-          <input
-            type="search"
-            value={search}
-            onChange={(event) => {
-              setSearch(event.target.value);
-            }}
-            style={{ marginLeft: '0.5rem', minWidth: '16rem' }}
-          />
-        </label>
-        <span style={{ marginLeft: '1rem', color: '#666' }}>
-          显示 {filteredCards.length} / {cards.length} 条
-        </span>
-      </div>
+    <>
+      <PageHeader
+        title={packId}
+        description={`当前版本 v${packVersion} · 共 ${String(cards.length)} 张卡片`}
+        actions={
+          <>
+            <button type="button" className="btn btn-secondary" onClick={onBack}>
+              返回
+            </button>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={() => void handleValidate()}
+              disabled={busyAction !== null}
+            >
+              {busyAction === 'validate' && <span className="btn-spinner" aria-hidden="true" />}
+              {busyAction === 'validate' ? '校验中…' : '校验'}
+            </button>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => {
+                setNextVersion(suggestNextPatchVersion(packVersion));
+                setShowBuildDialog(true);
+              }}
+              disabled={busyAction !== null}
+            >
+              打包
+            </button>
+          </>
+        }
+      />
 
       {validationIssues !== null && (
-        <div
-          role="status"
-          style={{
-            marginBottom: '1rem',
-            padding: '0.75rem',
-            background: validationIssues.length === 0 ? '#e8f5e9' : '#fff3e0',
+        <StatusBanner
+          variant={validationIssues.length === 0 ? 'success' : 'warning'}
+          title={
+            validationIssues.length === 0
+              ? '校验通过'
+              : `校验发现 ${String(validationIssues.length)} 个问题`
+          }
+          onDismiss={() => {
+            setValidationIssues(null);
           }}
         >
-          {validationIssues.length === 0 ? (
-            <strong>校验通过</strong>
-          ) : (
-            <>
-              <strong>校验发现 {validationIssues.length} 个问题</strong>
-              <ul>
-                {validationIssues.map((issue, index) => (
-                  <li key={`${issue.path}-${String(index)}`}>
-                    {issue.sortOrder !== undefined ? `#${String(issue.sortOrder)} ` : ''}
-                    {issue.path}: {issue.message}
-                  </li>
-                ))}
-              </ul>
-            </>
+          {validationIssues.length > 0 && (
+            <ul className="status-issue-list">
+              {validationIssues.map((issue, index) => (
+                <li key={`${issue.path}-${String(index)}`}>
+                  {issue.sortOrder !== undefined ? `#${String(issue.sortOrder)} ` : ''}
+                  {issue.path}: {issue.message}
+                </li>
+              ))}
+            </ul>
           )}
-        </div>
+        </StatusBanner>
       )}
 
       {buildMessage && (
-        <pre
-          role="status"
-          style={{ whiteSpace: 'pre-wrap', background: '#f5f5f5', padding: '0.75rem' }}
-        >
-          {buildMessage}
-        </pre>
-      )}
-
-      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-        <thead>
-          <tr>
-            <th style={cellStyle}>sortOrder</th>
-            <th style={cellStyle}>headword</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredCards.map((card) => (
-            <tr
-              key={card.sortOrder}
-              onClick={() => {
-                onEditCard(card.sortOrder);
-              }}
-              style={{ cursor: 'pointer' }}
-            >
-              <td style={cellStyle}>{card.sortOrder}</td>
-              <td style={cellStyle}>{card.headword}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      {showBuildDialog && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          style={{
-            position: 'fixed',
-            inset: 0,
-            background: 'rgba(0,0,0,0.35)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+        <StatusBanner
+          variant={buildOutputPath ? 'success' : 'error'}
+          title={buildMessage}
+          onDismiss={() => {
+            setBuildMessage(null);
+            setBuildOutputPath(null);
           }}
         >
-          <div style={{ background: '#fff', padding: '1rem', minWidth: '20rem' }}>
-            <h2 style={{ marginTop: 0 }}>打包确认</h2>
-            <p>将 bump meta.packVersion 并执行 build:pack。</p>
-            <label style={{ display: 'block', marginBottom: '1rem' }}>
-              packVersion
-              <input
-                type="text"
-                value={nextVersion}
-                onChange={(event) => {
-                  setNextVersion(event.target.value);
-                }}
-                style={{ display: 'block', width: '100%', marginTop: '0.25rem' }}
-              />
-            </label>
-            <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
-              <button
-                type="button"
-                onClick={() => {
-                  setShowBuildDialog(false);
-                }}
-              >
-                取消
-              </button>
-              <button
-                type="button"
-                onClick={() => void handleBuild()}
-                disabled={busyAction === 'build'}
-              >
-                {busyAction === 'build' ? '打包中…' : '确认打包'}
-              </button>
+          {buildOutputPath && (
+            <div style={{ marginTop: 'var(--space-2)' }}>
+              <code style={{ fontSize: '12px', wordBreak: 'break-all' }}>{buildOutputPath}</code>
+              <div style={{ marginTop: 'var(--space-2)', display: 'flex', gap: 'var(--space-2)' }}>
+                <button
+                  type="button"
+                  className="btn btn-secondary btn-sm"
+                  onClick={() => void handleCopyPath()}
+                >
+                  复制路径
+                </button>
+                {copyHint && <span style={{ fontSize: '12px' }}>{copyHint}</span>}
+              </div>
             </div>
-          </div>
-        </div>
+          )}
+        </StatusBanner>
       )}
-    </section>
+
+      <div className="card-panel">
+        <div className="toolbar">
+          <SearchInput value={search} onChange={setSearch} placeholder="搜索 headword…" />
+          <span className="toolbar-meta">
+            显示 {filteredCards.length} / {cards.length} 条
+          </span>
+          <div className="toolbar-spacer" />
+          <button
+            type="button"
+            className="btn btn-primary btn-sm"
+            onClick={() => void handleCreate()}
+            disabled={busyAction !== null}
+          >
+            {busyAction === 'create' && <span className="btn-spinner" aria-hidden="true" />}+
+            新增单词
+          </button>
+        </div>
+
+        <DataTable
+          showActions
+          columns={[
+            { key: 'sortOrder', label: '#', className: 'data-table-col-index' },
+            { key: 'headword', label: 'headword' },
+          ]}
+          rows={filteredCards.map((card) => ({
+            id: card.sortOrder,
+            onClick: () => {
+              onEditCard(card.sortOrder, card.headword);
+            },
+            cells: [
+              card.sortOrder,
+              card.headword,
+            ],
+            action: (
+              <button
+                type="button"
+                className="btn btn-ghost btn-sm btn-row-delete"
+                title={`删除 ${card.headword}`}
+                onClick={() => {
+                  setDeleteTarget({ sortOrder: card.sortOrder, headword: card.headword });
+                }}
+              >
+                删除
+              </button>
+            ),
+          }))}
+          emptyMessage={search ? '没有匹配的 headword' : '暂无卡片'}
+        />
+      </div>
+
+      <ConfirmDialog
+        open={deleteTarget !== null}
+        title="删除单词"
+        description={
+          deleteTarget
+            ? `确定删除 #${String(deleteTarget.sortOrder)}「${deleteTarget.headword}」？此操作不可撤销。`
+            : ''
+        }
+        confirmLabel="确认删除"
+        busy={busyAction === 'delete'}
+        onCancel={() => {
+          setDeleteTarget(null);
+        }}
+        onConfirm={() => void handleDeleteConfirm()}
+      />
+
+      <ConfirmDialog
+        open={showBuildDialog}
+        title="打包确认"
+        description={`将把 meta.packVersion 从 v${packVersion} bump 为 v${nextVersion}（默认 patch +1，可修改），然后执行 build:pack。`}
+        confirmLabel="确认打包"
+        busy={busyAction === 'build'}
+        onCancel={() => {
+          setShowBuildDialog(false);
+        }}
+        onConfirm={() => void handleBuild()}
+      >
+        <label className="field-label">
+          packVersion（建议 {suggestNextPatchVersion(packVersion)}）
+          <input
+            className="input"
+            type="text"
+            value={nextVersion}
+            onChange={(event) => {
+              setNextVersion(event.target.value);
+            }}
+          />
+        </label>
+      </ConfirmDialog>
+    </>
   );
 }
-
-const cellStyle: CSSProperties = {
-  border: '1px solid #ddd',
-  padding: '0.5rem',
-  textAlign: 'left',
-};

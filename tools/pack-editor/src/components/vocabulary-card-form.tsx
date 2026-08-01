@@ -1,27 +1,13 @@
 import { vocabularyContentSchema, type VocabularyContent } from '@remember/contracts';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm, type FieldPath } from 'react-hook-form';
-import type { CSSProperties, ReactElement } from 'react';
+import type { ReactElement } from 'react';
+
+export const VOCABULARY_CARD_FORM_ID = 'vocabulary-card-form';
 
 interface VocabularyCardFormProps {
   defaultValues: VocabularyContent;
   onSubmit: (content: VocabularyContent) => Promise<void>;
-}
-
-const fieldLabels: Record<string, string> = {
-  'prompt.headword': '单词/短语',
-  'prompt.primaryAudio': '主音频路径',
-  'prompt.phonetic.ipa': '音标 IPA',
-  'prompt.phonetic.dialect': '口音',
-  'prompt.primaryImage': '主图路径',
-  'reveal.definitions': '释义',
-  'reveal.examples': '例句',
-  'reveal.mnemonic.text': '助记',
-  'reveal.inflectionNote': '词形说明',
-};
-
-function labelForPath(path: string): string {
-  return fieldLabels[path] ?? path;
 }
 
 function normalizeVocabularyContent(values: VocabularyContent): VocabularyContent {
@@ -70,7 +56,7 @@ export function VocabularyCardForm({
     register,
     control,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<VocabularyContent>({
     resolver: zodResolver(vocabularyContentSchema),
     defaultValues,
@@ -81,129 +67,177 @@ export function VocabularyCardForm({
 
   return (
     <form
+      id={VOCABULARY_CARD_FORM_ID}
+      className="card-panel edit-form"
       onSubmit={(event) => {
         void handleSubmit(async (values) => {
           await onSubmit(normalizeVocabularyContent(values));
         })(event);
       }}
-      style={{ display: 'grid', gap: '1rem' }}
     >
-      <fieldset>
-        <legend>Prompt（阶段 A）</legend>
-        <label style={fieldBlockStyle}>
-          {labelForPath('prompt.headword')}
-          <input {...register('prompt.headword')} style={inputStyle} />
+      <div className="edit-prompt-band">
+        <div className="edit-phase-label">Prompt · 阶段 A</div>
+        <label className="field-label edit-headword-field">
+          单词 / 短语
+          <input {...register('prompt.headword')} className="input input-headword-inline" />
           {errors.prompt?.headword && <ErrorText message={errors.prompt.headword.message} />}
         </label>
-        <label style={fieldBlockStyle}>
-          {labelForPath('prompt.primaryAudio')}
-          <input {...register('prompt.primaryAudio')} style={inputStyle} />
-          {errors.prompt?.primaryAudio && (
-            <ErrorText message={errors.prompt.primaryAudio.message} />
-          )}
-        </label>
-        <label style={fieldBlockStyle}>
-          {labelForPath('prompt.phonetic.ipa')}
-          <input {...register('prompt.phonetic.ipa')} style={inputStyle} />
-          {errors.prompt?.phonetic?.ipa && (
-            <ErrorText message={errors.prompt.phonetic.ipa.message} />
-          )}
-        </label>
-        <label style={fieldBlockStyle}>
-          {labelForPath('prompt.phonetic.dialect')}
-          <select {...register('prompt.phonetic.dialect')} style={inputStyle} defaultValue="">
-            <option value="">默认 (us)</option>
-            <option value="us">us</option>
-            <option value="uk">uk</option>
-          </select>
-        </label>
-        <label style={fieldBlockStyle}>
-          {labelForPath('prompt.primaryImage')}
-          <input {...register('prompt.primaryImage')} style={inputStyle} />
-        </label>
-      </fieldset>
+        <div className="edit-prompt-grid">
+          <label className="field-label">
+            主音频
+            <span className="field-helper">assets/audio/…</span>
+            <input {...register('prompt.primaryAudio')} className="input input-sm" />
+            {errors.prompt?.primaryAudio && (
+              <ErrorText message={errors.prompt.primaryAudio.message} />
+            )}
+          </label>
+          <label className="field-label">
+            音标 IPA
+            <input
+              {...register('prompt.phonetic.ipa')}
+              className="input input-sm"
+              placeholder="/…/"
+            />
+          </label>
+          <label className="field-label">
+            口音
+            <select
+              {...register('prompt.phonetic.dialect')}
+              className="select input-sm"
+              defaultValue=""
+            >
+              <option value="">us</option>
+              <option value="us">us</option>
+              <option value="uk">uk</option>
+            </select>
+          </label>
+          <label className="field-label">
+            主图
+            <span className="field-helper">可选</span>
+            <input {...register('prompt.primaryImage')} className="input input-sm" />
+          </label>
+        </div>
+      </div>
 
-      <fieldset>
-        <legend>Reveal（阶段 B）</legend>
-        <div>
-          <strong>{labelForPath('reveal.definitions')}</strong>
-          {definitions.fields.map((field, index) => (
-            <div key={field.id} style={{ display: 'grid', gap: '0.5rem', marginTop: '0.5rem' }}>
-              <input
-                {...register(
-                  `reveal.definitions.${String(index)}.text` as FieldPath<VocabularyContent>,
+      <div className="edit-reveal-body">
+        <div className="edit-phase-label">Reveal · 阶段 B</div>
+
+        <div className="edit-subsection">
+          <div className="edit-subsection-head">
+            <span className="edit-subsection-title">释义</span>
+            <button
+              type="button"
+              className="btn btn-ghost btn-sm"
+              onClick={() => {
+                definitions.append({ text: '' });
+              }}
+            >
+              + 添加
+            </button>
+          </div>
+          <div className="edit-definition-list">
+            {definitions.fields.map((field, index) => (
+              <div key={field.id} className="edit-inline-row">
+                <input
+                  {...register(
+                    `reveal.definitions.${String(index)}.text` as FieldPath<VocabularyContent>,
+                  )}
+                  className="input input-sm"
+                  placeholder="释义"
+                />
+                <input
+                  {...register(
+                    `reveal.definitions.${String(index)}.pos` as FieldPath<VocabularyContent>,
+                  )}
+                  className="input input-sm edit-pos-input"
+                  placeholder="词性"
+                />
+                {definitions.fields.length > 1 && (
+                  <button
+                    type="button"
+                    className="btn btn-ghost btn-sm"
+                    onClick={() => {
+                      definitions.remove(index);
+                    }}
+                  >
+                    删
+                  </button>
                 )}
-                placeholder="释义"
-                style={inputStyle}
-              />
-              <input
-                {...register(
-                  `reveal.definitions.${String(index)}.pos` as FieldPath<VocabularyContent>,
-                )}
-                placeholder="词性（可选）"
-                style={inputStyle}
-              />
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={() => {
-              definitions.append({ text: '' });
-            }}
-            style={{ marginTop: '0.5rem' }}
-          >
-            添加释义
-          </button>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div style={{ marginTop: '1rem' }}>
-          <strong>{labelForPath('reveal.examples')}</strong>
-          {examples.fields.map((field, index) => (
-            <div key={field.id} style={{ display: 'grid', gap: '0.5rem', marginTop: '0.5rem' }}>
-              <input
-                {...register(`reveal.examples.${String(index)}.en` as FieldPath<VocabularyContent>)}
-                placeholder="英文例句"
-                style={inputStyle}
-              />
-              <input
-                {...register(`reveal.examples.${String(index)}.zh` as FieldPath<VocabularyContent>)}
-                placeholder="中文例句"
-                style={inputStyle}
-              />
-              <input
-                {...register(
-                  `reveal.examples.${String(index)}.audio` as FieldPath<VocabularyContent>,
-                )}
-                placeholder="例句音频（可选）"
-                style={inputStyle}
-              />
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={() => {
-              examples.append({ en: '', zh: '' });
-            }}
-            style={{ marginTop: '0.5rem' }}
-            disabled={examples.fields.length >= 5}
-          >
-            添加例句
-          </button>
+        <div className="edit-subsection">
+          <div className="edit-subsection-head">
+            <span className="edit-subsection-title">例句</span>
+            <button
+              type="button"
+              className="btn btn-ghost btn-sm"
+              onClick={() => {
+                examples.append({ en: '', zh: '' });
+              }}
+              disabled={examples.fields.length >= 5}
+            >
+              + 添加
+            </button>
+          </div>
+          <div className="edit-example-list">
+            {examples.fields.map((field, index) => (
+              <div key={field.id} className="edit-example-item">
+                <div className="edit-example-item-head">
+                  <span>例句 {index + 1}</span>
+                  {examples.fields.length > 1 && (
+                    <button
+                      type="button"
+                      className="btn btn-ghost btn-sm"
+                      onClick={() => {
+                        examples.remove(index);
+                      }}
+                    >
+                      删除
+                    </button>
+                  )}
+                </div>
+                <div className="edit-example-en-zh">
+                  <input
+                    {...register(
+                      `reveal.examples.${String(index)}.en` as FieldPath<VocabularyContent>,
+                    )}
+                    className="input input-sm"
+                    placeholder="英文"
+                  />
+                  <input
+                    {...register(
+                      `reveal.examples.${String(index)}.zh` as FieldPath<VocabularyContent>,
+                    )}
+                    className="input input-sm"
+                    placeholder="中文"
+                  />
+                </div>
+                <input
+                  {...register(
+                    `reveal.examples.${String(index)}.audio` as FieldPath<VocabularyContent>,
+                  )}
+                  className="input input-sm"
+                  placeholder="例句音频（可选）"
+                />
+              </div>
+            ))}
+          </div>
         </div>
 
-        <label style={{ ...fieldBlockStyle, marginTop: '1rem' }}>
-          {labelForPath('reveal.mnemonic.text')}
-          <input {...register('reveal.mnemonic.text')} style={inputStyle} />
-        </label>
-        <label style={fieldBlockStyle}>
-          {labelForPath('reveal.inflectionNote')}
-          <input {...register('reveal.inflectionNote')} style={inputStyle} />
-        </label>
-      </fieldset>
-
-      <button type="submit" disabled={isSubmitting}>
-        {isSubmitting ? '保存中…' : '保存'}
-      </button>
+        <div className="edit-optional-row">
+          <label className="field-label">
+            助记
+            <input {...register('reveal.mnemonic.text')} className="input input-sm" />
+          </label>
+          <label className="field-label">
+            词形说明
+            <input {...register('reveal.inflectionNote')} className="input input-sm" />
+          </label>
+        </div>
+      </div>
     </form>
   );
 }
@@ -212,16 +246,5 @@ function ErrorText({ message }: { message: string | undefined }): ReactElement |
   if (!message) {
     return null;
   }
-  return <span style={{ color: '#c62828', fontSize: '0.875rem' }}>{message}</span>;
+  return <span className="field-error">{message}</span>;
 }
-
-const fieldBlockStyle: CSSProperties = {
-  display: 'grid',
-  gap: '0.25rem',
-  marginTop: '0.5rem',
-};
-
-const inputStyle: CSSProperties = {
-  width: '100%',
-  padding: '0.4rem',
-};

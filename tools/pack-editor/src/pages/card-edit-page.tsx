@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react';
-import type { ReactElement } from 'react';
+import { useEffect, useState, type ReactElement } from 'react';
 import type { PackSourceCard } from '@remember/pack-builder/pack-source';
 import { loadPackSource, saveCard } from '../api/local-api-client.js';
-import { VocabularyCardForm } from '../components/vocabulary-card-form.js';
+import { VOCABULARY_CARD_FORM_ID, VocabularyCardForm } from '../components/vocabulary-card-form.js';
+import { LoadingState } from '../components/loading-state.js';
+import { StatusBanner } from '../components/status-banner.js';
+import { Toast } from '../components/toast.js';
 
 interface CardEditPageProps {
   packId: string;
@@ -15,6 +17,7 @@ export function CardEditPage({ packId, sortOrder, onBack }: CardEditPageProps): 
   const [error, setError] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -48,49 +51,64 @@ export function CardEditPage({ packId, sortOrder, onBack }: CardEditPageProps): 
   }, [packId, sortOrder]);
 
   if (loading) {
-    return <p>加载中…</p>;
+    return <LoadingState rows={4} />;
   }
 
   if (error || !card) {
     return (
-      <section>
-        <button type="button" onClick={onBack}>
+      <>
+        <StatusBanner variant="error" title={error ?? '卡片不存在'} />
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={onBack}
+          style={{ marginTop: 'var(--space-3)' }}
+        >
           返回列表
         </button>
-        <p role="alert">{error ?? '卡片不存在'}</p>
-      </section>
+      </>
     );
   }
 
   return (
-    <section>
-      <header style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-        <button type="button" onClick={onBack}>
-          返回列表
-        </button>
-        <h1 style={{ margin: 0 }}>
-          编辑 #{String(sortOrder)} · {card.content.prompt.headword}
-        </h1>
-      </header>
-
-      {toast && (
-        <p role="status" style={{ color: '#2e7d32' }}>
-          {toast}
-        </p>
-      )}
+    <>
+      {toast && <Toast message={toast} />}
 
       <VocabularyCardForm
         defaultValues={card.content}
         onSubmit={async (content) => {
-          const nextCard: PackSourceCard = { ...card, content };
-          await saveCard(packId, nextCard);
-          setCard(nextCard);
-          setToast('已保存');
-          window.setTimeout(() => {
-            setToast(null);
-          }, 2000);
+          setSaving(true);
+          try {
+            const nextCard: PackSourceCard = { ...card, content };
+            await saveCard(packId, nextCard);
+            setCard(nextCard);
+            setToast('已保存');
+            window.setTimeout(() => {
+              setToast(null);
+            }, 2000);
+          } finally {
+            setSaving(false);
+          }
         }}
       />
-    </section>
+
+      <div className="sticky-form-footer">
+        <button type="button" className="btn btn-secondary" onClick={onBack}>
+          返回列表
+        </button>
+        <div className="sticky-form-footer-meta">
+          <strong>#{String(sortOrder)}</strong> · {card.content.prompt.headword}
+        </div>
+        <button
+          type="submit"
+          form={VOCABULARY_CARD_FORM_ID}
+          className="btn btn-primary"
+          disabled={saving}
+        >
+          {saving && <span className="btn-spinner" aria-hidden="true" />}
+          {saving ? '保存中…' : '保存'}
+        </button>
+      </div>
+    </>
   );
 }

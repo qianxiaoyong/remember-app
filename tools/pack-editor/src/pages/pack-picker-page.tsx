@@ -1,5 +1,10 @@
-import { useEffect, useState, type CSSProperties, type ReactElement } from 'react';
+import { useEffect, useState, type ReactElement } from 'react';
 import { listPacks, type PackSummary } from '../api/local-api-client.js';
+import { DataTable } from '../components/data-table.js';
+import { EmptyState } from '../components/empty-state.js';
+import { LoadingState } from '../components/loading-state.js';
+import { PageHeader } from '../components/page-header.js';
+import { StatusBanner } from '../components/status-banner.js';
 
 interface PackPickerPageProps {
   onSelectPack: (packId: string) => void;
@@ -34,52 +39,55 @@ export function PackPickerPage({ onSelectPack }: PackPickerPageProps): ReactElem
   }, []);
 
   if (loading) {
-    return <p>加载中…</p>;
+    return (
+      <>
+        <PageHeader title="选择学习包" description="内容目录：tools/pack-builder/source/" />
+        <LoadingState rows={4} />
+      </>
+    );
   }
 
   if (error) {
-    return <p role="alert">加载失败：{error}</p>;
+    return (
+      <>
+        <PageHeader title="选择学习包" />
+        <StatusBanner variant="error" title="加载失败">
+          <p>{error}</p>
+        </StatusBanner>
+      </>
+    );
   }
 
   return (
-    <section>
-      <h1>选择学习包</h1>
-      <p>内容目录：tools/pack-builder/source/</p>
-      <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '1rem' }}>
-        <thead>
-          <tr>
-            <th style={cellStyle}>packId</th>
-            <th style={cellStyle}>版本</th>
-            <th style={cellStyle}>卡片数</th>
-            <th style={cellStyle}>操作</th>
-          </tr>
-        </thead>
-        <tbody>
-          {items.map((item) => (
-            <tr key={item.packId}>
-              <td style={cellStyle}>{item.packId}</td>
-              <td style={cellStyle}>{item.packVersion}</td>
-              <td style={cellStyle}>{item.cardCount}</td>
-              <td style={cellStyle}>
-                <button
-                  type="button"
-                  onClick={() => {
-                    onSelectPack(item.packId);
-                  }}
-                >
-                  打开
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </section>
+    <>
+      <PageHeader title="选择学习包" description="内容目录：tools/pack-builder/source/" />
+      <div className="card-panel">
+        {items.length === 0 ? (
+          <EmptyState
+            title="暂无学习包"
+            description="请在 tools/pack-builder/source/ 下创建含 meta.json 的目录"
+          />
+        ) : (
+          <DataTable
+            columns={[
+              { key: 'packId', label: 'packId', className: 'data-table-col-main' },
+              { key: 'version', label: '版本' },
+              { key: 'count', label: '卡片数', className: 'data-table-col-narrow' },
+            ]}
+            rows={items.map((item) => ({
+              id: item.packId,
+              onClick: () => {
+                onSelectPack(item.packId);
+              },
+              cells: [
+                <span className="data-table-col-main">{item.packId}</span>,
+                <span className="badge">v{item.packVersion}</span>,
+                <span className="data-table-col-narrow">{item.cardCount}</span>,
+              ],
+            }))}
+          />
+        )}
+      </div>
+    </>
   );
 }
-
-const cellStyle: CSSProperties = {
-  border: '1px solid #ddd',
-  padding: '0.5rem',
-  textAlign: 'left',
-};

@@ -213,6 +213,70 @@ async function handleSaveCard(input: SaveCardInput): Promise<void> {
   sendJson(res, 200, { ok: true });
 }
 
+interface CreateCardBody {
+  kind?: 'word' | 'phrase';
+}
+
+async function handleCreateCard(
+  packId: string,
+  req: IncomingMessage,
+  res: ServerResponse,
+): Promise<void> {
+  const resolved = resolveSourceDir(packId);
+  if (!resolved.ok) {
+    sendJson(res, resolved.status, { error: resolved.message });
+    return;
+  }
+
+  const body = await readJsonBody<CreateCardBody>(req);
+  const kind = body.kind === 'phrase' ? 'phrase' : 'word';
+  const source = readPackSource(resolved.path);
+  const maxSortOrder = source.cards.reduce((max, card) => Math.max(max, card.sortOrder), 0);
+  const newCard: PackSourceCard = {
+    kind,
+    sortOrder: maxSortOrder + 1,
+    content: {
+      prompt: {
+        headword: 'new-word',
+        primaryAudio: 'assets/audio/new-word.mp3',
+      },
+      reveal: {
+        definitions: [{ text: '待填写' }],
+        examples: [{ en: 'Example sentence.', zh: '例句。' }],
+      },
+    },
+  };
+
+  source.cards.push(newCard);
+  writePackSource(resolved.path, source);
+  sendJson(res, 201, { card: newCard });
+}
+
+function handleDeleteCard(packId: string, sortOrderText: string, res: ServerResponse): void {
+  const resolved = resolveSourceDir(packId);
+  if (!resolved.ok) {
+    sendJson(res, resolved.status, { error: resolved.message });
+    return;
+  }
+
+  const sortOrder = Number.parseInt(sortOrderText, 10);
+  if (Number.isNaN(sortOrder)) {
+    sendJson(res, 400, { error: 'invalid sortOrder' });
+    return;
+  }
+
+  const source = readPackSource(resolved.path);
+  const index = source.cards.findIndex((item) => item.sortOrder === sortOrder);
+  if (index < 0) {
+    sendJson(res, 404, { error: 'card not found' });
+    return;
+  }
+
+  source.cards.splice(index, 1);
+  writePackSource(resolved.path, source);
+  sendJson(res, 200, { ok: true });
+}
+
 function handleValidate(packId: string, res: ServerResponse): void {
   const resolved = resolveSourceDir(packId);
   if (!resolved.ok) {
@@ -295,6 +359,22 @@ async function handleLocalApi(
         req,
         res,
       });
+      return;
+    }
+    if (req.method === 'DELETE') {
+      handleDeleteCard(segments[2] ?? '', segments[4] ?? '', res);
+      return;
+    }
+  }
+
+  if (
+    segments.length === 4 &&
+    segments[0] === 'local-api' &&
+    segments[1] === 'packs' &&
+    segments[3] === 'cards'
+  ) {
+    if (req.method === 'POST') {
+      await handleCreateCard(segments[2] ?? '', req, res);
       return;
     }
   }

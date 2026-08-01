@@ -51,6 +51,28 @@ export async function saveCard(packId: string, card: PackSourceCard): Promise<vo
   );
 }
 
+export async function createCard(
+  packId: string,
+  kind: 'word' | 'phrase' = 'word',
+): Promise<PackSourceCard> {
+  const data = await readJson<{ card: PackSourceCard }>(
+    await fetch(`/local-api/packs/${encodeURIComponent(packId)}/cards`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ kind }),
+    }),
+  );
+  return data.card;
+}
+
+export async function deleteCard(packId: string, sortOrder: number): Promise<void> {
+  await readJson<{ ok: true }>(
+    await fetch(`/local-api/packs/${encodeURIComponent(packId)}/cards/${String(sortOrder)}`, {
+      method: 'DELETE',
+    }),
+  );
+}
+
 export async function validatePack(packId: string): Promise<ValidateResult> {
   return readJson<ValidateResult>(
     await fetch(`/local-api/packs/${encodeURIComponent(packId)}/validate`, { method: 'POST' }),

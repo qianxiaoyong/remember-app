@@ -34,7 +34,7 @@ pnpm --filter @remember/pack-builder build
 pnpm dev:pack-editor
 ```
 
-浏览器打开 http://127.0.0.1:5174 。详见 [`docs/runbooks/pack-editor-local.md`](../../docs/runbooks/pack-editor-local.md)。
+浏览器打开 http://127.0.0.1:5174 。界面含顶栏面包屑、卡片列表搜索、编辑页双栏表单与 sticky 保存栏。详见 [`docs/runbooks/pack-editor-local.md`](../../docs/runbooks/pack-editor-local.md)。
 
 ## 签名私钥
 
