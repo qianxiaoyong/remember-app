@@ -75,7 +75,7 @@ const adminPackWriteFieldsSchema = z
     includedHighlights: z.array(includedHighlightSchema).max(4).default([]),
     samplePreviews: z.array(packSamplePreviewSchema).default([]),
     introMedia: z.array(introMediaItemSchema).optional(),
-    status: adminPackStatusSchema.default('draft'),
+    status: adminPackStatusSchema.optional(),
   })
   .strict();
 
@@ -97,10 +97,30 @@ export const adminCreatePackRequestSchema = adminPackWriteFieldsSchema.refine(ha
   message: '请提供完整三级分类',
 });
 
-/** PATCH 允许 React Admin 附带 id / updatedAt 等只读字段；未知键 strip 丢弃。 */
-export const adminUpdatePackRequestSchema = adminPackWriteFieldsSchema
-  .omit({ packId: true })
-  .partial()
+/** PATCH 专用：不含 Zod default，避免未传字段被解析成 draft/0/[] 覆盖库内值。 */
+export const adminUpdatePackRequestSchema = z
+  .object({
+    title: z.string().min(1).optional(),
+    displayTitle: optionalNonEmptyStringSchema,
+    primaryCategory: catalogPrimaryCategorySchema.optional(),
+    secondaryCategory: z.string().min(1).optional(),
+    versionLabel: z.string().min(1).optional(),
+    primaryNodeId: z.uuid().optional(),
+    secondaryNodeId: z.uuid().optional(),
+    versionNodeId: z.uuid().optional(),
+    contentTags: z.array(z.string()).optional(),
+    cardCount: z.number().int().nonnegative().optional(),
+    sizeLabel: z.string().min(1).optional(),
+    summary: z.string().min(1).optional(),
+    priceCents: z.number().int().nonnegative().optional(),
+    coverUrl: optionalUrlSchema,
+    coverBadge: optionalNonEmptyStringSchema,
+    coverLines: z.array(z.string()).optional(),
+    includedHighlights: z.array(includedHighlightSchema).max(4).optional(),
+    samplePreviews: z.array(packSamplePreviewSchema).optional(),
+    introMedia: z.array(introMediaItemSchema).optional(),
+    status: adminPackStatusSchema.optional(),
+  })
   .strip();
 
 export const adminPackVersionSchema = z

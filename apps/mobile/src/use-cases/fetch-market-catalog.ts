@@ -83,12 +83,15 @@ function mergeCatalogItem(
   if (!previous) {
     return fresh;
   }
+  const samplePreviews = fresh.samplePreviews ?? previous.samplePreviews;
+  const introMedia = fresh.introMedia ?? previous.introMedia;
+  const includedHighlights = fresh.includedHighlights ?? previous.includedHighlights;
   return {
     ...previous,
     ...fresh,
-    samplePreviews: fresh.samplePreviews ?? previous.samplePreviews,
-    introMedia: fresh.introMedia ?? previous.introMedia,
-    includedHighlights: fresh.includedHighlights ?? previous.includedHighlights,
+    ...(samplePreviews !== undefined ? { samplePreviews } : {}),
+    ...(introMedia !== undefined ? { introMedia } : {}),
+    ...(includedHighlights !== undefined ? { includedHighlights } : {}),
   };
 }
 

@@ -217,7 +217,7 @@ export class AdminPacksService {
         includedHighlights: input.includedHighlights,
         samplePreviews: input.samplePreviews,
         ...(input.introMedia !== undefined ? { introMedia: input.introMedia } : {}),
-        status: input.status,
+        status: input.status ?? 'draft',
       },
     });
 

@@ -1,7 +1,7 @@
 # 阶段 7 启动说明（最小管理后台与运营驾驶舱）
 
 日期：2026-07-31  
-状态：**已确认，可直接规划与实施**（2026-07-31 产品对齐）  
+状态：**阶段 7 已交付**（2026-08-01；分支 `feat/minimum-admin`）  
 基线：`main` @ `dd713ed`（阶段 6 mock 路径已 merge）  
 Spec：**`docs/superpowers/specs/2026-07-31-admin-dashboard-and-content-extensibility-design.md`**
 
@@ -16,22 +16,35 @@ Spec：**`docs/superpowers/specs/2026-07-31-admin-dashboard-and-content-extensib
 
 ```text
 阶段 0–6  ✅（阶段 6 见 2026-07-31-phase6-catalog-payment-completion.md）
-阶段 7    📝 本文 + spec 已确认；子计划 1–3 待写/实施
+阶段 7    ✅ 子计划 1–3 已完成（auth/audit、运营 API、React-admin UI + 驾驶舱 A）
+          ✅ 增量：目录 taxonomy、知识库运营元数据 P1、App 用户 MVP-A（只读）
 阶段 8    ⏸
 ```
+
+**子计划对照：**
+
+| 子计划 | 文档                                     | 状态 |
+| ------ | ---------------------------------------- | ---- |
+| 1      | `2026-07-31-admin-auth-and-audit-api.md` | ✅   |
+| 2      | `2026-07-31-admin-operations-api.md`     | ✅   |
+| 3      | `2026-07-31-admin-ui-and-dashboard.md`   | ✅   |
+
+**退出门禁（spec §11）：** 五类运营 + 兑换码 + 驾驶舱 KPI；非法 zip 拒装；补发/退款/发布写 audit；App session 访问 admin → 401；admin 集成测试通过。
+
+**未纳入本阶段（可后续 7.x）：** in-admin LLM、MVP-B 完整手机号、驾驶舱 protocolVersion 分布 widget、生产 COS/真实微信退款。
 
 **本地 dev 环境：** 已配置 Docker PG + API seed（见 `docs/runbooks/local-api-docker-dev.md`）。
 
 ## 3. 已确认产品决策（2026-07-31）
 
-| # | 决策 | 内容 |
-| --- | --- | --- |
-| D1 | **驾驶舱** | **选 A**：阶段 7 首版轻量 KPI（交易/兑换/告警/包状态）；不做学习行为曲线 |
-| D2 | **制包** | 外部 AI → source JSON → **现有 pack-builder build:pack** → 后台上传发布 |
-| D3 | **AI in-admin** | **阶段 7 不做**；后期单独 ADR（content_jobs） |
-| D4 | **第二期 UI** | 情景类交互未定；普通短句可继续 vocabulary；预留 cardType 注册，不提前定 schema |
-| D5 | **后台形态** | React-admin + 独立 admin 会话；**浏览器访问**，非 Windows 桌面程序 |
-| D6 | **开发数据** | **Docker PG** 模拟服务端数据；微信/COS/SMS 继续 mock |
+| #   | 决策            | 内容                                                                           |
+| --- | --------------- | ------------------------------------------------------------------------------ |
+| D1  | **驾驶舱**      | **选 A**：阶段 7 首版轻量 KPI（交易/兑换/告警/包状态）；不做学习行为曲线       |
+| D2  | **制包**        | 外部 AI → source JSON → **现有 pack-builder build:pack** → 后台上传发布        |
+| D3  | **AI in-admin** | **阶段 7 不做**；后期单独 ADR（content_jobs）                                  |
+| D4  | **第二期 UI**   | 情景类交互未定；普通短句可继续 vocabulary；预留 cardType 注册，不提前定 schema |
+| D5  | **后台形态**    | React-admin + 独立 admin 会话；**浏览器访问**，非 Windows 桌面程序             |
+| D6  | **开发数据**    | **Docker PG** 模拟服务端数据；微信/COS/SMS 继续 mock                           |
 
 ## 4. 管理员菜单（目标 IA）
 
@@ -52,32 +65,32 @@ Spec：**`docs/superpowers/specs/2026-07-31-admin-dashboard-and-content-extensib
 
 **需要。** 推荐顺序：
 
-| 顺序 | 文件（实施前创建） | 核心交付 |
-| --- | --- | --- |
-| 1 | `docs/superpowers/plans/2026-07-31-admin-auth-and-audit-api.md` | Prisma：`admin_users`、`admin_sessions`、`audit_logs`；Admin 登录/登出；`AdminAuthGuard`；审计写入 helper |
-| 2 | `docs/superpowers/plans/2026-07-31-admin-operations-api.md` | 发版/upload+verify、订单只读、pack_access 补发、退款、兑换码批次；admin 契约 Zod |
-| 3 | `docs/superpowers/plans/2026-07-31-admin-ui-and-dashboard.md` | `apps/admin` React-admin；dataProvider/authProvider；Resource 页 + **Dashboard A** |
+| 顺序 | 文件（实施前创建）                                              | 核心交付                                                                                                  |
+| ---- | --------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| 1    | `docs/superpowers/plans/2026-07-31-admin-auth-and-audit-api.md` | Prisma：`admin_users`、`admin_sessions`、`audit_logs`；Admin 登录/登出；`AdminAuthGuard`；审计写入 helper |
+| 2    | `docs/superpowers/plans/2026-07-31-admin-operations-api.md`     | 发版/upload+verify、订单只读、pack_access 补发、退款、兑换码批次；admin 契约 Zod                          |
+| 3    | `docs/superpowers/plans/2026-07-31-admin-ui-and-dashboard.md`   | `apps/admin` React-admin；dataProvider/authProvider；Resource 页 + **Dashboard A**                        |
 
 **依赖：** 1 → 2 → 3（UI 可 mock 2 的 API 并行度有限，建议严格顺序）。
 
 ## 6. 并行暂停（不阻塞阶段 7 大部分开发）
 
-| 项 | 挡什么 | 不挡什么 |
-| --- | --- | --- |
-| **Pause C/D** | 真实微信退款 API、OpenSDK | mock 退款状态机、订单/audit 联调 |
-| **COS 生产桶** | 正式 zip 公有/CDN 分发 | dev 本地/mock 存储 + 现有 mock 下载 |
-| **备案/HTTPS** | 公网 admin 域名 | `localhost` / 局域网 Vite 联调 |
-| **TOTP** | 管理员双因素 | MVP 密码登录；表字段可预留 |
+| 项             | 挡什么                    | 不挡什么                            |
+| -------------- | ------------------------- | ----------------------------------- |
+| **Pause C/D**  | 真实微信退款 API、OpenSDK | mock 退款状态机、订单/audit 联调    |
+| **COS 生产桶** | 正式 zip 公有/CDN 分发    | dev 本地/mock 存储 + 现有 mock 下载 |
+| **备案/HTTPS** | 公网 admin 域名           | `localhost` / 局域网 Vite 联调      |
+| **TOTP**       | 管理员双因素              | MVP 密码登录；表字段可预留          |
 
 ## 7. 服务端与契约（建议默认）
 
 ### 7.1 新增表（子计划 1 迁移）
 
-| 表 | 用途 |
-| --- | --- |
-| `admin_users` | 登录名、密码摘要、状态；可选 `totp_secret` 预留 |
-| `admin_sessions` | token 哈希、过期、撤销 |
-| `audit_logs` | actor、action、target、payload 摘要、结果；**不可删** |
+| 表               | 用途                                                  |
+| ---------------- | ----------------------------------------------------- |
+| `admin_users`    | 登录名、密码摘要、状态；可选 `totp_secret` 预留       |
+| `admin_sessions` | token 哈希、过期、撤销                                |
+| `audit_logs`     | actor、action、target、payload 摘要、结果；**不可删** |
 
 ### 7.2 Admin API 前缀
 
@@ -85,21 +98,21 @@ Spec：**`docs/superpowers/specs/2026-07-31-admin-dashboard-and-content-extensib
 
 **示例（子计划 2 细化）：**
 
-| 方法 | 路径 | 说明 |
-| --- | --- | --- |
-| POST | `/admin/auth/login` | 管理员登录 |
-| POST | `/admin/auth/logout` | 登出 |
-| GET | `/admin/dashboard/summary` | 驾驶舱 KPI |
-| GET | `/admin/dashboard/alerts` | 告警 |
-| GET/POST/PATCH | `/admin/packs` … | 目录 CRUD |
-| POST | `/admin/packs/:packId/versions` | 上传 zip + verify + 创建版本 |
-| POST | `/admin/packs/:packId/versions/:id/publish` | 设为 currentVersion |
-| GET | `/admin/orders` … | 订单列表/详情 |
-| GET | `/admin/pack-access` … | 权益查询 |
-| POST | `/admin/pack-access/grant` | 补发（audit） |
-| POST | `/admin/refunds` | 发起退款（audit） |
-| POST | `/admin/redemption-codes/batch` | 批次生成 |
-| GET | `/admin/audit-logs` | 审计列表 |
+| 方法           | 路径                                        | 说明                         |
+| -------------- | ------------------------------------------- | ---------------------------- |
+| POST           | `/admin/auth/login`                         | 管理员登录                   |
+| POST           | `/admin/auth/logout`                        | 登出                         |
+| GET            | `/admin/dashboard/summary`                  | 驾驶舱 KPI                   |
+| GET            | `/admin/dashboard/alerts`                   | 告警                         |
+| GET/POST/PATCH | `/admin/packs` …                            | 目录 CRUD                    |
+| POST           | `/admin/packs/:packId/versions`             | 上传 zip + verify + 创建版本 |
+| POST           | `/admin/packs/:packId/versions/:id/publish` | 设为 currentVersion          |
+| GET            | `/admin/orders` …                           | 订单列表/详情                |
+| GET            | `/admin/pack-access` …                      | 权益查询                     |
+| POST           | `/admin/pack-access/grant`                  | 补发（audit）                |
+| POST           | `/admin/refunds`                            | 发起退款（audit）            |
+| POST           | `/admin/redemption-codes/batch`             | 批次生成                     |
+| GET            | `/admin/audit-logs`                         | 审计列表                     |
 
 契约落盘：`packages/contracts/src/admin/`（新建）。
 
@@ -111,14 +124,14 @@ Spec：**`docs/superpowers/specs/2026-07-31-admin-dashboard-and-content-extensib
 
 ## 8. 前端（React-admin）
 
-| 项 | 决定 |
-| --- | --- |
-| 脚手架 | Vite + React + TypeScript；pnpm workspace `apps/admin` |
-| 框架 | React-admin 开源核心；**不用** Enterprise |
-| dataProvider | 原生 `fetch` → admin API；统一错误码 |
+| 项           | 决定                                                           |
+| ------------ | -------------------------------------------------------------- |
+| 脚手架       | Vite + React + TypeScript；pnpm workspace `apps/admin`         |
+| 框架         | React-admin 开源核心；**不用** Enterprise                      |
+| dataProvider | 原生 `fetch` → admin API；统一错误码                           |
 | authProvider | session（httpOnly cookie 或 Bearer；实现时二选一并写 runbook） |
-| Dashboard | 自定义 `<Admin dashboard={Dashboard}>` + Recharts |
-| 风格 | 简洁运营风；不复制 demo 电商皮肤 |
+| Dashboard    | 自定义 `<Admin dashboard={Dashboard}>` + Recharts              |
+| 风格         | 简洁运营风；不复制 demo 电商皮肤                               |
 
 ## 9. 编码原则
 

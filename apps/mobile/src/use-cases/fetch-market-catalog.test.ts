@@ -12,7 +12,7 @@ const readCatalogMemoryCache = vi.fn<() => CatalogPackItem[] | null>();
 const writeCatalogMemoryCache = vi.fn<(items: CatalogPackItem[]) => void>();
 
 vi.mock('../data/api/catalog-api', () => ({
-  fetchCatalogPacks: (...args: unknown[]) => fetchCatalogPacks(...args),
+  fetchCatalogPacks: () => fetchCatalogPacks(),
 }));
 
 vi.mock('../data/catalog/catalog-taxonomy-store', () => ({

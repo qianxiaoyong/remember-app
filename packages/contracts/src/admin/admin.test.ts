@@ -98,6 +98,16 @@ describe('admin contracts', () => {
     expect(parsed.includedHighlights).toHaveLength(1);
   });
 
+  it('adminUpdatePackRequest 未传 status 时不默认 draft', () => {
+    const parsed = adminUpdatePackRequestSchema.parse({
+      contentTags: ['词汇'],
+      summary: '测试',
+      priceCents: 100,
+    });
+    expect(parsed.status).toBeUndefined();
+    expect(parsed.cardCount).toBeUndefined();
+  });
+
   it('adminUpdatePackRequest 忽略 React Admin 只读字段与空 displayTitle', () => {
     const parsed = adminUpdatePackRequestSchema.parse({
       id: 'en-grade3-v1-rj',
