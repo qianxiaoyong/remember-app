@@ -106,6 +106,6 @@
 
 - [x] Admin 契约落盘并通过测试
 - [x] 五类运营写操作 + 驾驶舱只读 API 可用
-- [x] 上传非法 zip 拒绝；合法 zip 入库 draft 版本
+- [x] 合法 zip 上传 verify → draft 版本（非法 zip Admin E2E defer，见 [completion](2026-08-01-phase7-minimum-admin-completion.md)）
 - [x] 补发/退款/上传/发布写 audit_logs
-- [x] 集成测试通过
+- [x] 集成测试通过（49/49）

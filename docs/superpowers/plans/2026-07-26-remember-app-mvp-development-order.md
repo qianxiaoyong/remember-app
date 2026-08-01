@@ -228,17 +228,17 @@ tsconfig.json
 
 ## 10. 阶段7：最小管理后台
 
-**计划创建：** `docs/superpowers/plans/<date>-minimum-admin.md`
+**计划：** [`2026-07-31-phase7-minimum-admin-kickoff.md`](2026-07-31-phase7-minimum-admin-kickoff.md)、[`2026-08-01-phase7-minimum-admin-completion.md`](2026-08-01-phase7-minimum-admin-completion.md)
 
 **执行顺序：**
 
-- [ ] 迁移`admin_users`、`admin_sessions`和`audit_logs`，管理员密码使用成熟哈希。
-- [ ] 安装React-admin开源核心，写原生`fetch` data provider和session auth provider。
-- [ ] 实现知识库及版本发布、订单查询、购买权限查询/补发、退款操作和审计列表。
-- [ ] 每个后台API同时校验后台会话和操作权限；前端隐藏按钮不代替服务端授权。
-- [ ] 退款、补发和发布写不可变审计日志；不实现仪表盘、图表、插件或通用低代码配置。
+- [x] 迁移`admin_users`、`admin_sessions`和`audit_logs`，管理员密码使用成熟哈希。
+- [x] 安装React-admin开源核心，写原生`fetch` data provider和session auth provider。
+- [x] 实现知识库及版本发布、订单查询、购买权限查询/补发、退款操作和审计列表。
+- [x] 每个后台API同时校验后台会话和操作权限；前端隐藏按钮不代替服务端授权。
+- [x] 退款、补发和发布写不可变审计日志；**轻量驾驶舱 A**（KPI/折线/告警）已纳入；不实现插件或通用低代码配置。
 
-**退出门禁：** 管理员能够完成MVP运营所需的五类操作；普通App会话不能访问后台接口；所有资金和权限变更都有操作者、时间、对象和结果记录。
+**退出门禁：** 管理员能够完成MVP运营所需的五类操作；普通App会话不能访问后台接口；所有资金和权限变更都有操作者、时间、对象和结果记录。（mock/dev 路径见 completion 摘要；非法 zip Admin E2E 与 format 全量 defer。）
 
 ## 11. 阶段8：更新、部署与发布验收
 
@@ -296,4 +296,5 @@ AI写代码速度不是主要瓶颈；真实瓶颈是协议决策、Android原�
 
 ## 14. 下一项工作
 
-正式编码前先执行阶段1的项目基础计划；学习包字段仍未确认，因此阶段3开始前必须单独完成“学习包协议”引导式对齐。阶段1和阶段2不得凭空发明卡片答案字段。
+阶段 8：包/App 更新、Caddy+Compose 生产部署、COS、备份恢复演练、RC 验收（见 §11）。  
+实施前先写 kickoff：`docs/superpowers/plans/2026-08-01-phase8-release-kickoff.md`（建议文件名，实施前创建）。

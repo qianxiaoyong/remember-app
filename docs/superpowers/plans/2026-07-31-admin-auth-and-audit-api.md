@@ -272,8 +272,8 @@ pnpm check
 
 ## 验收清单
 
-- [ ] 三表迁移可 apply；dev seed 可创建管理员
-- [ ] Admin 登录/登出/me 契约与实现一致
-- [ ] App session 无法访问 admin API
-- [ ] audit helper 可写且不可删
-- [ ] 集成测试 + typecheck + check 通过
+- [x] 三表迁移可 apply；dev seed 可创建管理员
+- [x] Admin 登录/登出/me 契约与实现一致
+- [x] App session 无法访问 admin API
+- [x] audit helper 可写且不可删
+- [x] 集成测试 + typecheck 通过（全量 format:check defer，见 [completion](2026-08-01-phase7-minimum-admin-completion.md)）

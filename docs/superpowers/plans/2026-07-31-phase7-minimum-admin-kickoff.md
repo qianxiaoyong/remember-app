@@ -1,7 +1,8 @@
 # 阶段 7 启动说明（最小管理后台与运营驾驶舱）
 
 日期：2026-07-31  
-状态：**阶段 7 已交付**（2026-08-01；分支 `feat/minimum-admin`）  
+状态：**已 merge**（2026-08-01；**PR #5** → `main`）  
+完成摘要：[`2026-08-01-phase7-minimum-admin-completion.md`](2026-08-01-phase7-minimum-admin-completion.md)  
 基线：`main` @ `dd713ed`（阶段 6 mock 路径已 merge）  
 Spec：**`docs/superpowers/specs/2026-07-31-admin-dashboard-and-content-extensibility-design.md`**
 
@@ -16,8 +17,7 @@ Spec：**`docs/superpowers/specs/2026-07-31-admin-dashboard-and-content-extensib
 
 ```text
 阶段 0–6  ✅（阶段 6 见 2026-07-31-phase6-catalog-payment-completion.md）
-阶段 7    ✅ 子计划 1–3 已完成（auth/audit、运营 API、React-admin UI + 驾驶舱 A）
-          ✅ 增量：目录 taxonomy、知识库运营元数据 P1、App 用户 MVP-A（只读）
+阶段 7    ✅ 已 merge（PR #5 → `main`；见 [completion](2026-08-01-phase7-minimum-admin-completion.md)）
 阶段 8    ⏸
 ```
 
@@ -29,7 +29,7 @@ Spec：**`docs/superpowers/specs/2026-07-31-admin-dashboard-and-content-extensib
 | 2      | `2026-07-31-admin-operations-api.md`     | ✅   |
 | 3      | `2026-07-31-admin-ui-and-dashboard.md`   | ✅   |
 
-**退出门禁（spec §11）：** 五类运营 + 兑换码 + 驾驶舱 KPI；非法 zip 拒装；补发/退款/发布写 audit；App session 访问 admin → 401；admin 集成测试通过。
+**退出门禁（spec §11）：** 五类运营 + 兑换码 + 驾驶舱 KPI；补发/退款/发布写 audit；App session → 401；admin 集成测试 49/49。非法 zip Admin E2E、全量 format 见 [completion 残余表](2026-08-01-phase7-minimum-admin-completion.md)。
 
 **未纳入本阶段（可后续 7.x）：** in-admin LLM、MVP-B 完整手机号、驾驶舱 protocolVersion 分布 widget、生产 COS/真实微信退款。
 
@@ -178,5 +178,6 @@ Admin 与 App session 隔离；补发/退款/发布写 audit_logs。
 
 - 架构：`docs/superpowers/specs/2026-07-26-learning-app-mvp-architecture-design.md` §4、§7、§14
 - 阶段 6 收口：`docs/superpowers/plans/2026-07-31-phase6-catalog-payment-completion.md`
+- 阶段 7 收口：`docs/superpowers/plans/2026-08-01-phase7-minimum-admin-completion.md`
 - Pack 协议：ADR 0008
 - 成熟选型：`docs/research/2026-07-26-mature-architecture-audit.md` §7

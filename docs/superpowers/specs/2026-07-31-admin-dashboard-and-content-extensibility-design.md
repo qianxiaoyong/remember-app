@@ -196,15 +196,16 @@ MVP 不建 `content_jobs` 表；运营继续使用 **外部 AI + 本地 build**�
 
 ## 11. 验收要点（阶段 7 退出门禁）
 
-- [ ] 管理员完成五类操作 + 兑换码批次 + 驾驶舱 A 可见 KPI
-- [ ] 上传非法 zip 被拒绝；合法 zip 发布后可被 App mock 下载安装
-- [ ] 补发/退款/发布均有 audit_logs
-- [ ] App session 访问 `/api/v1/admin/*` → 401/403
-- [ ] `pnpm check` + admin 相关集成测试通过
+- [x] 管理员完成五类操作 + 兑换码批次 + 驾驶舱 A 可见 KPI
+- [ ] 上传非法 zip 被拒绝；合法 zip 发布后可被 App mock 下载安装 — **合法路径 ✅**；非法 zip **Admin E2E defer**（单人自用 + 上传重构后补测，见 [completion](../plans/2026-08-01-phase7-minimum-admin-completion.md)）
+- [x] 补发/退款/发布均有 audit_logs
+- [x] App session 访问 `/api/v1/admin/*` → 401/403
+- [ ] `pnpm check` + admin 相关集成测试通过 — **集成测试 49/49 ✅**；全量 `format:check` defer（单独 PR）
 
 ## 12. 相关文档
 
 - Kickoff：`docs/superpowers/plans/2026-07-31-phase7-minimum-admin-kickoff.md`
+- 阶段 7 收口：`docs/superpowers/plans/2026-08-01-phase7-minimum-admin-completion.md`
 - 阶段 6 收口：`docs/superpowers/plans/2026-07-31-phase6-catalog-payment-completion.md`
 - 本地环境：`docs/runbooks/local-api-docker-dev.md`
 - Pack 协议：ADR 0008

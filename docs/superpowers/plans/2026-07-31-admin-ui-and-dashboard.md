@@ -22,5 +22,5 @@
 
 - [x] 登录/登出可用
 - [x] 驾驶舱 KPI + 折线/柱图 + 告警
-- [x] 知识库/订单/权益/退款/兑换码/审计 Resource
+- [x] 知识库/订单/权益/退款/兑换码/审计/App 用户 Resource
 - [x] `pnpm --filter @remember/admin typecheck` + `build`
