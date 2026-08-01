@@ -8,16 +8,28 @@ interface KpiStatCardProps {
   value: string;
   accent: string;
   hint?: string;
+  onClick?: () => void;
 }
 
-export function KpiStatCard({ label, value, accent, hint }: KpiStatCardProps) {
+export function KpiStatCard({ label, value, accent, hint, onClick }: KpiStatCardProps) {
   return (
     <Card
       variant="outlined"
+      onClick={onClick}
       sx={{
         height: '100%',
         bgcolor: adminColors.surfaceSunken,
         borderColor: adminColors.border,
+        ...(onClick
+          ? {
+              cursor: 'pointer',
+              transition: 'border-color 0.15s ease, box-shadow 0.15s ease',
+              '&:hover': {
+                borderColor: accent,
+                boxShadow: `0 0 0 1px ${accent}`,
+              },
+            }
+          : {}),
       }}
     >
       <CardContent sx={{ py: 1.5, '&:last-child': { pb: 1.5 } }}>

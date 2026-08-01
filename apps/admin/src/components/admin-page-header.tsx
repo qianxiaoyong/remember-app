@@ -7,6 +7,8 @@ interface AdminPageHeaderProps {
   meta?: ReactNode;
   actions?: ReactNode;
   tabs?: ReactNode;
+  /** 嵌入表单白底容器时：去掉外边距，仅保留下分隔线 */
+  embedded?: boolean;
 }
 
 /** L1 页头：标题 + 元信息 + 操作；Tab 贴在 header 下沿。 */
@@ -14,9 +16,10 @@ export function AdminPageHeader(props: AdminPageHeaderProps) {
   return (
     <Box
       sx={{
+        width: '100%',
         bgcolor: adminColors.surface,
         borderBottom: `1px solid ${adminColors.border}`,
-        mb: 2,
+        mb: props.embedded ? 0 : 2,
       }}
     >
       <Stack

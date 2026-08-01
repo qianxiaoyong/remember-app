@@ -26,6 +26,7 @@ const orderStatusChoices = [
 
 const orderFilters = [
   <TextInput key="packId" source="packId" label="知识库 ID" alwaysOn resettable />,
+  <TextInput key="userId" source="userId" label="用户 UUID" resettable />,
   <SelectInput key="status" source="status" label="状态" choices={orderStatusChoices} alwaysOn />,
 ];
 

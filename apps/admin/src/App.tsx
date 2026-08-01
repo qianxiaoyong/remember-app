@@ -17,6 +17,8 @@ import { OrderList, OrderShow } from './resources/orders.js';
 import { RedemptionBatchCreate, RedemptionCodeList, RefundCreate } from './resources/operations.js';
 import { PackAccessGrantCreate, PackAccessList } from './resources/pack-access.js';
 import { PackCreate, PackEdit, PackList } from './resources/packs.js';
+import PeopleIcon from '@mui/icons-material/People';
+import { UserList, UserShow } from './resources/users.js';
 import { adminTheme } from './theme/admin-theme.js';
 import { adminI18nProvider } from './i18n/admin-i18n.js';
 
@@ -36,6 +38,13 @@ export function AdminApp() {
       <CustomRoutes>
         <Route path="/catalog-taxonomy" element={<CatalogTaxonomyPage />} />
       </CustomRoutes>
+      <Resource
+        name="users"
+        list={UserList}
+        show={UserShow}
+        options={{ label: 'App 用户' }}
+        icon={PeopleIcon}
+      />
       <Resource
         name="packs"
         list={PackList}

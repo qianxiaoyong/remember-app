@@ -51,6 +51,7 @@ function resourcePath(resource: string, suffix = ''): string {
     'audit-logs': '/admin/audit-logs',
     'redemption-codes': '/admin/redemption-codes',
     refunds: '/admin/refunds',
+    users: '/admin/users',
   };
   const base = map[resource];
   if (!base) {
@@ -116,6 +117,9 @@ export const dataProvider = {
       if (resource === 'pack-access') {
         return { ...item, id: item.id ?? `${String(item.userId)}-${String(item.packId)}` };
       }
+      if (resource === 'users') {
+        return { ...item, id: item.userId };
+      }
       return { ...item, id: item.id };
     });
 
@@ -145,7 +149,13 @@ export const dataProvider = {
       `${resourcePath(resource)}/${String(params.id)}`,
     );
     const id =
-      resource === 'orders' ? json.orderId : resource === 'pack-access' ? json.id : json.id;
+      resource === 'orders'
+        ? json.orderId
+        : resource === 'pack-access'
+          ? json.id
+          : resource === 'users'
+            ? json.userId
+            : json.id;
     return { data: { ...json, id } as RaRecord };
   },
 

@@ -2,6 +2,7 @@ import type { MenuProps } from 'react-admin';
 import { Menu, MenuItemLink } from 'react-admin';
 import DashboardIcon from '@mui/icons-material/SpaceDashboardOutlined';
 import CategoryIcon from '@mui/icons-material/Category';
+import PeopleIcon from '@mui/icons-material/People';
 import { ListSubheader } from '@mui/material';
 import { adminColors } from '../theme/admin-colors.js';
 
@@ -30,13 +31,10 @@ export function AdminMenu(props: MenuProps) {
         to="/catalog-taxonomy"
         primaryText="分类管理"
         leftIcon={<CategoryIcon />}
-        sx={{
-          pl: 3.5,
-          '& .MuiListItemText-primary': { fontSize: '0.8125rem' },
-        }}
       />
       <Menu.ResourceItem name="redemption-codes" />
       <MenuGroupTitle>交易</MenuGroupTitle>
+      <MenuItemLink to="/users" primaryText="App 用户" leftIcon={<PeopleIcon />} />
       <Menu.ResourceItem name="orders" />
       <Menu.ResourceItem name="pack-access" />
       <Menu.ResourceItem name="refunds" />

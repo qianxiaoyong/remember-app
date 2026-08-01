@@ -10,6 +10,7 @@ import {
   required,
 } from 'react-admin';
 import { Box } from '@mui/material';
+import { useSearchParams } from 'react-router-dom';
 import { AdminPageHeader } from '../components/admin-page-header.js';
 import { MonoText } from '../components/mono-text.js';
 import { PackAccessSourceChip } from '../components/admin-status-chips.js';
@@ -52,6 +53,9 @@ export function PackAccessList() {
 }
 
 export function PackAccessGrantCreate() {
+  const [searchParams] = useSearchParams();
+  const prefilledUserId = searchParams.get('userId') ?? '';
+
   return (
     <Create title={false} component="div">
       <AdminPageHeader
@@ -59,7 +63,7 @@ export function PackAccessGrantCreate() {
         meta="手动为用户开通知识库访问权限，操作将写入审计日志"
       />
       <Box sx={{ maxWidth: 560 }}>
-        <SimpleForm>
+        <SimpleForm defaultValues={{ userId: prefilledUserId }}>
           <TextInput source="userId" label="用户 UUID" validate={required()} fullWidth />
           <TextInput source="packId" label="知识库 ID" validate={required()} fullWidth />
           <TextInput source="note" label="备注（写入审计）" fullWidth multiline minRows={2} />

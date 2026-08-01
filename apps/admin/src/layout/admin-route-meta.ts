@@ -1,6 +1,7 @@
 export const adminResourceGroups: Record<string, string> = {
   packs: '内容',
   'redemption-codes': '内容',
+  users: '交易',
   orders: '交易',
   'pack-access': '交易',
   refunds: '交易',

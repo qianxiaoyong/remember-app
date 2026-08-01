@@ -46,14 +46,25 @@ export const adminTheme = createTheme({
   components: {
     MuiCssBaseline: {
       styleOverrides: {
+        html: {
+          height: '100%',
+          overflow: 'hidden',
+        },
         body: {
+          height: '100%',
+          overflow: 'hidden',
           backgroundColor: adminColors.shellCanvas,
+        },
+        '#root': {
+          height: '100%',
+          overflow: 'hidden',
         },
       },
     },
     MuiAppBar: {
       styleOverrides: {
         root: {
+          position: 'fixed',
           backgroundColor: adminColors.surface,
           color: adminColors.textPrimary,
           boxShadow: 'none',
@@ -139,6 +150,8 @@ export const adminTheme = createTheme({
     RaLayout: {
       styleOverrides: {
         root: {
+          height: '100vh',
+          overflow: 'hidden',
           '& .RaLayout-appFrame': {
             backgroundColor: adminColors.shellCanvas,
           },

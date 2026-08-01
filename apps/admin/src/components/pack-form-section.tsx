@@ -58,8 +58,13 @@ export const compactIteratorSx = {
   '& .RaSimpleFormIterator-index': { display: 'none' },
 } as const;
 
-/** SimpleForm 去 Card 内边距。 */
+/** SimpleForm 去 Card 内边距；Stack 子项撑满宽（默认 flex-start 会导致页头变窄）。 */
 export const packEditFormSx = {
   padding: 0,
+  width: '100%',
+  '& > .MuiStack-root': {
+    width: '100%',
+    alignItems: 'stretch',
+  },
   '& .MuiCardContent-root': { p: 0, '&:last-child': { pb: 0 } },
 } as const;

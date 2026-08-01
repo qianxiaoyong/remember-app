@@ -288,6 +288,58 @@ describe('admin operations integration', () => {
     ).toBe('修复例句音频');
   });
 
+  it('Admin users 列表与详情不返回 phoneHash', async () => {
+    const server = app.getHttpServer() as Parameters<typeof request>[0];
+    const admin = await adminLogin(server);
+
+    await request(server).post('/api/v1/auth/sms/send').send({ phone: TEST_PHONE }).expect(200);
+    const login = await request(server)
+      .post('/api/v1/auth/sms/verify')
+      .send({ phone: TEST_PHONE, code: '000000', deviceId: DEVICE_A })
+      .expect(200);
+    const userId = login.body.user.userId as string;
+
+    await prisma.order.create({
+      data: {
+        userId,
+        packId: 'remember-test-pack',
+        amountCents: 100,
+        status: 'paid',
+        channel: 'wechat',
+      },
+    });
+
+    await request(server)
+      .post('/api/v1/admin/pack-access/grant')
+      .set('Authorization', `Bearer ${admin.token}`)
+      .send({ userId, packId: 'remember-test-pack', note: 'users list test' })
+      .expect(200);
+
+    const listResponse = await request(server)
+      .get('/api/v1/admin/users')
+      .set('Authorization', `Bearer ${admin.token}`)
+      .query({ page: 1, pageSize: 20 })
+      .expect(200);
+
+    expect(listResponse.body.items.some((row: { userId: string }) => row.userId === userId)).toBe(
+      true,
+    );
+    const item = listResponse.body.items.find((row: { userId: string }) => row.userId === userId);
+    expect(item.maskedPhone).toMatch(/\*\*\*\*/);
+    expect(item.paidOrderCount).toBeGreaterThanOrEqual(1);
+    expect(item.packAccessCount).toBeGreaterThanOrEqual(1);
+    expect(item.phoneHash).toBeUndefined();
+
+    const detailResponse = await request(server)
+      .get(`/api/v1/admin/users/${userId}`)
+      .set('Authorization', `Bearer ${admin.token}`)
+      .expect(200);
+
+    expect(detailResponse.body.userId).toBe(userId);
+    expect(detailResponse.body.phoneHash).toBeUndefined();
+    expect(detailResponse.body.mainDeviceId).toBe(DEVICE_A);
+  });
+
   it('App session 无法访问 admin dashboard', async () => {
     const server = app.getHttpServer() as Parameters<typeof request>[0];
     await request(server).post('/api/v1/auth/sms/send').send({ phone: TEST_PHONE }).expect(200);

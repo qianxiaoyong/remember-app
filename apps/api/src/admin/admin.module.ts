@@ -24,6 +24,9 @@ import { AdminRedemptionController } from './redemption/admin-redemption.control
 import { AdminRedemptionService } from './redemption/admin-redemption.service.js';
 import { AdminRefundsController } from './refunds/admin-refunds.controller.js';
 import { AdminRefundsService } from './refunds/admin-refunds.service.js';
+import { AdminUsersController } from './users/admin-users.controller.js';
+import { AdminUsersRepository } from './users/admin-users.repository.js';
+import { AdminUsersService } from './users/admin-users.service.js';
 
 @Module({
   imports: [AdminAuthModule, AuditModule, PackVerifyModule, PaymentModule, RedemptionModule],
@@ -36,6 +39,7 @@ import { AdminRefundsService } from './refunds/admin-refunds.service.js';
     AdminRefundsController,
     AdminRedemptionController,
     AdminAuditLogsController,
+    AdminUsersController,
   ],
   providers: [
     AdminDashboardRepository,
@@ -51,6 +55,8 @@ import { AdminRefundsService } from './refunds/admin-refunds.service.js';
     AdminRefundsService,
     AdminRedemptionService,
     AdminAuditLogsService,
+    AdminUsersRepository,
+    AdminUsersService,
   ],
 })
 export class AdminModule {}

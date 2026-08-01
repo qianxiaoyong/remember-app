@@ -7,6 +7,11 @@ import {
 import { adminSessionUserSchema } from './session-admin.js';
 import { auditLogEntrySchema, auditLogWriteInputSchema } from './audit-log-entry.js';
 import { adminUpdatePackRequestSchema } from './packs.js';
+import {
+  adminListUsersQuerySchema,
+  adminUserDetailSchema,
+  adminUserListResponseSchema,
+} from './users.js';
 
 describe('admin contracts', () => {
   it('adminLogin round-trip', () => {
@@ -116,5 +121,66 @@ describe('admin contracts', () => {
     expect(parsed.displayTitle).toBeUndefined();
     expect('id' in parsed).toBe(false);
     expect('updatedAt' in parsed).toBe(false);
+  });
+
+  it('adminUserListResponse 不含 phoneHash', () => {
+    const response = adminUserListResponseSchema.parse({
+      items: [
+        {
+          userId: '550e8400-e29b-41d4-a716-446655440010',
+          maskedPhone: '138****8000',
+          status: 'active',
+          createdAt: '2026-07-31T02:00:00.000Z',
+          updatedAt: '2026-07-31T02:00:00.000Z',
+          packAccessCount: 0,
+          paidOrderCount: 1,
+        },
+      ],
+      total: 1,
+      page: 1,
+      pageSize: 20,
+    });
+    expect(response.items[0]?.maskedPhone).toBe('138****8000');
+    expect(() =>
+      adminUserListResponseSchema.parse({
+        items: [
+          {
+            userId: '550e8400-e29b-41d4-a716-446655440010',
+            maskedPhone: '138****8000',
+            phoneHash: 'secret',
+            status: 'active',
+            createdAt: '2026-07-31T02:00:00.000Z',
+            updatedAt: '2026-07-31T02:00:00.000Z',
+            packAccessCount: 0,
+            paidOrderCount: 0,
+          },
+        ],
+        total: 1,
+        page: 1,
+        pageSize: 20,
+      }),
+    ).toThrow();
+  });
+
+  it('adminListUsersQuery 接受注册时间筛选', () => {
+    const query = adminListUsersQuerySchema.parse({
+      registeredSince: '2026-07-24T00:00:00.000Z',
+      page: 1,
+    });
+    expect(query.registeredSince).toBe('2026-07-24T00:00:00.000Z');
+  });
+
+  it('adminUserDetail 可含 mainDeviceId', () => {
+    const detail = adminUserDetailSchema.parse({
+      userId: '550e8400-e29b-41d4-a716-446655440010',
+      maskedPhone: '138****8000',
+      status: 'active',
+      createdAt: '2026-07-31T02:00:00.000Z',
+      updatedAt: '2026-07-31T02:00:00.000Z',
+      mainDeviceId: '11111111-1111-4111-8111-111111111111',
+      packAccessCount: 2,
+      paidOrderCount: 1,
+    });
+    expect(detail.mainDeviceId).toBe('11111111-1111-4111-8111-111111111111');
   });
 });

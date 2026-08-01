@@ -146,6 +146,18 @@ function PackStatTile({ label, value, accent }: { label: string; value: number; 
   );
 }
 
+function resolveRegisteredSince(range: AdminDashboardRange): string {
+  const start = new Date();
+  if (range === '1d') {
+    start.setDate(start.getDate() - 1);
+  } else if (range === '7d') {
+    start.setDate(start.getDate() - 7);
+  } else {
+    start.setDate(start.getDate() - 30);
+  }
+  return start.toISOString();
+}
+
 export function Dashboard() {
   const redirect = useRedirect();
   const [range, setRange] = useState<AdminDashboardRange>('7d');
@@ -276,6 +288,12 @@ export function Dashboard() {
             label="新注册"
             value={String(summary.newUserCount)}
             accent={dashboardKpiAccents.users}
+            hint="点击查看用户列表"
+            onClick={() => {
+              redirect('list', 'users', undefined, {
+                registeredSince: resolveRegisteredSince(range),
+              });
+            }}
           />
         </Grid>
         <Grid size={{ xs: 12, sm: 6, md: 4, lg: 2 }}>

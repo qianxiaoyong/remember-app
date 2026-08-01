@@ -1,5 +1,4 @@
 import {
-  ArrayInput,
   AutocompleteArrayInput,
   Button,
   NumberInput,
@@ -16,10 +15,18 @@ import Grid from '@mui/material/Grid2';
 import { Box, TextField as MuiTextField, Typography } from '@mui/material';
 import { useState } from 'react';
 import { extractSamplePreviews } from '../api/packs-api.js';
-import { AdminPanel, adminPanelTableSx } from '../components/admin-panel.js';
+import { CompactArrayBlock } from '../components/admin-compact-array.js';
+import {
+  AdminFormSection,
+  AdminLabeledField,
+  packCatalogFormSurfaceSx,
+  packCatalogMainColumnSx,
+  packCatalogSidebarSx,
+} from '../components/admin-form-section.js';
 import { formatMoney } from '../components/format-money.js';
 import { compactIteratorSx, packFormDensitySx } from '../components/pack-form-section.js';
 import { adminColors } from '../theme/admin-colors.js';
+import { adminPanelTableSx } from '../components/admin-panel.js';
 import { PackTaxonomyFields } from './pack-taxonomy-fields.js';
 
 const CONTENT_TAG_CHOICES = [
@@ -39,6 +46,8 @@ const INTRO_MEDIA_TYPE_CHOICES = [
   { id: 'video', name: '视频' },
 ];
 
+const hiddenLabel = false as unknown as string;
+
 function normalizeCoverLines(value: unknown): [string, string] {
   const raw = Array.isArray(value) ? value.map((item) => String(item ?? '')) : [];
   return [raw[0] ?? '', raw[1] ?? ''];
@@ -57,10 +66,10 @@ function CoverPreview() {
         borderRadius: 1,
         display: 'flex',
         flexShrink: 0,
-        height: 64,
+        height: 56,
         justifyContent: 'center',
         overflow: 'hidden',
-        width: 48,
+        width: 42,
       }}
     >
       {url ? (
@@ -78,7 +87,7 @@ function CoverPreview() {
   );
 }
 
-function CoverLinesTwoInputs() {
+function CoverLinesInline() {
   const { field } = useInput({ source: 'coverLines' });
   const [line0, line1] = normalizeCoverLines(field.value);
 
@@ -88,26 +97,14 @@ function CoverLinesTwoInputs() {
   };
 
   return (
-    <Grid container spacing={1} sx={{ width: '100%', mt: 0.5 }}>
-      <Grid size={{ xs: 12, sm: 6 }}>
-        <MuiTextField
-          label="文案行 1"
-          size="small"
-          fullWidth
-          value={line0}
-          onChange={(event) => setLine(0, event.target.value)}
-        />
-      </Grid>
-      <Grid size={{ xs: 12, sm: 6 }}>
-        <MuiTextField
-          label="文案行 2"
-          size="small"
-          fullWidth
-          value={line1}
-          onChange={(event) => setLine(1, event.target.value)}
-        />
-      </Grid>
-    </Grid>
+    <Box sx={{ display: 'flex', gap: 1, flex: 1, minWidth: 0 }}>
+      <AdminLabeledField label="文案 1">
+        <MuiTextField size="small" fullWidth value={line0} onChange={(e) => setLine(0, e.target.value)} />
+      </AdminLabeledField>
+      <AdminLabeledField label="文案 2">
+        <MuiTextField size="small" fullWidth value={line1} onChange={(e) => setLine(1, e.target.value)} />
+      </AdminLabeledField>
+    </Box>
   );
 }
 
@@ -115,8 +112,8 @@ function PricePreview() {
   const priceCents = useWatch<{ priceCents?: number }>({ name: 'priceCents' });
   const cents = typeof priceCents === 'number' ? priceCents : Number(priceCents) || 0;
   return (
-    <Typography variant="caption" color="text.secondary" sx={{ lineHeight: 1.2, whiteSpace: 'nowrap' }}>
-      = {formatMoney(cents)}
+    <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block' }}>
+      约合 {formatMoney(cents)}
     </Typography>
   );
 }
@@ -153,164 +150,171 @@ function ExtractSamplePreviewsButton() {
   );
 }
 
-/** 目录与详情：基础 + 营销字段单页双栏布局。 */
-export function PackCatalogDetailFields() {
+function BasicInfoSection() {
   return (
-    <Box sx={packFormDensitySx}>
-      <Grid container spacing={1.5}>
-        <Grid size={{ xs: 12, lg: 7 }}>
-          <AdminPanel title="目录与定价">
-            <Grid container spacing={1}>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <TextInput source="title" label="标题" validate={required()} fullWidth size="small" />
-              </Grid>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <TextInput source="displayTitle" label="展示标题" fullWidth size="small" />
-              </Grid>
-              <Grid size={{ xs: 12 }}>
-                <PackTaxonomyFields compact />
-              </Grid>
-              <Grid size={{ xs: 12, md: 4 }}>
-                <AutocompleteArrayInput
-                  source="contentTags"
-                  label="内容标签"
-                  choices={CONTENT_TAG_CHOICES}
-                  fullWidth
-                  size="small"
-                />
-              </Grid>
-              <Grid size={{ xs: 12, md: 4 }}>
-                <Box sx={{ display: 'flex', alignItems: 'flex-end', gap: 1 }}>
-                  <Box sx={{ flex: 1 }}>
-                    <NumberInput source="priceCents" label="售价（分）" fullWidth size="small" />
-                  </Box>
-                  <PricePreview />
-                </Box>
-              </Grid>
-              <Grid size={{ xs: 12, md: 4 }}>
-                <SelectInput
-                  source="status"
-                  label="上架状态"
-                  choices={packStatusChoices}
-                  fullWidth
-                  size="small"
-                />
-              </Grid>
-              <Grid size={{ xs: 12 }}>
-                <TextInput
-                  source="summary"
-                  label="简介"
-                  multiline
-                  fullWidth
-                  minRows={2}
-                  maxRows={3}
-                  size="small"
-                />
-              </Grid>
-            </Grid>
-          </AdminPanel>
+    <AdminFormSection title="基本信息">
+      <Grid container spacing={1}>
+        <Grid size={{ xs: 12, md: 6 }}>
+          <AdminLabeledField label="标题" requiredMark>
+            <TextInput source="title" label={hiddenLabel} validate={required()} fullWidth size="small" />
+          </AdminLabeledField>
         </Grid>
-
-        <Grid size={{ xs: 12, lg: 5 }}>
-          <StackedRightPanels />
+        <Grid size={{ xs: 12, md: 6 }}>
+          <AdminLabeledField label="展示标题">
+            <TextInput source="displayTitle" label={hiddenLabel} fullWidth size="small" />
+          </AdminLabeledField>
         </Grid>
-
-        <Grid size={{ xs: 12, lg: 6 }}>
-          <AdminPanel title="内容介绍" padded={false}>
-            <Box sx={adminPanelTableSx}>
-              <ArrayInput source="introMedia" label="">
-                <SimpleFormIterator inline disableReordering sx={compactIteratorSx}>
-                  <SelectInput
-                    source="type"
-                    label="类型"
-                    choices={INTRO_MEDIA_TYPE_CHOICES}
-                    helperText={false}
-                    size="small"
-                    sx={{ width: 88 }}
-                  />
-                  <NumberInput source="sortOrder" label="序" helperText={false} size="small" sx={{ width: 64 }} />
-                  <TextInput source="url" label="URL" helperText={false} size="small" sx={{ flex: 1, minWidth: 120 }} />
-                </SimpleFormIterator>
-              </ArrayInput>
-            </Box>
-          </AdminPanel>
+        <Grid size={{ xs: 12 }}>
+          <PackTaxonomyFields compact />
         </Grid>
-
-        <Grid size={{ xs: 12, lg: 6 }}>
-          <AdminPanel
-            title="内容示例"
-            padded={false}
-            actions={<ExtractSamplePreviewsButton />}
-          >
-            <Box sx={adminPanelTableSx}>
-              <ArrayInput source="samplePreviews" label="">
-                <SimpleFormIterator disableReordering sx={compactIteratorSx}>
-                  <Grid container spacing={1} sx={{ width: '100%' }}>
-                    <Grid size={{ xs: 6, sm: 3 }}>
-                      <TextInput source="headword" label="单词" fullWidth helperText={false} size="small" />
-                    </Grid>
-                    <Grid size={{ xs: 6, sm: 2 }}>
-                      <TextInput source="initial" label="首字母" fullWidth helperText={false} size="small" />
-                    </Grid>
-                    <Grid size={{ xs: 12, sm: 3 }}>
-                      <TextInput source="zh" label="释义" fullWidth helperText={false} size="small" />
-                    </Grid>
-                    <Grid size={{ xs: 12, sm: 4 }}>
-                      <TextInput source="exampleEn" label="例句" fullWidth helperText={false} size="small" />
-                    </Grid>
-                  </Grid>
-                </SimpleFormIterator>
-              </ArrayInput>
-            </Box>
-          </AdminPanel>
+        <Grid size={{ xs: 12 }}>
+          <AdminLabeledField label="简介">
+            <TextInput
+              source="summary"
+              label={hiddenLabel}
+              multiline
+              fullWidth
+              minRows={2}
+              maxRows={3}
+              size="small"
+            />
+          </AdminLabeledField>
         </Grid>
       </Grid>
-    </Box>
+    </AdminFormSection>
   );
 }
 
-function StackedRightPanels() {
+function CoverStripSection() {
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, height: '100%' }}>
-      <AdminPanel title="封面与角标">
-        <Box sx={{ display: 'flex', gap: 1, alignItems: 'flex-start' }}>
-          <CoverPreview />
-          <Box sx={{ flex: 1, minWidth: 0 }}>
-            <TextInput source="coverUrl" label="封面 URL" fullWidth size="small" />
-            <Grid container spacing={1} sx={{ mt: 0.5 }}>
-              <Grid size={{ xs: 12, sm: 4 }}>
-                <TextInput source="coverBadge" label="角标" fullWidth size="small" />
+    <AdminFormSection title="封面">
+      <Box sx={{ display: 'flex', gap: 1, alignItems: 'flex-start', flexWrap: { xs: 'wrap', md: 'nowrap' } }}>
+        <CoverPreview />
+        <Box sx={{ flex: 1, minWidth: 200 }}>
+          <AdminLabeledField label="封面 URL">
+            <TextInput source="coverUrl" label={hiddenLabel} fullWidth size="small" />
+          </AdminLabeledField>
+        </Box>
+        <Box sx={{ width: { xs: '100%', md: 88 }, flexShrink: 0 }}>
+          <AdminLabeledField label="角标">
+            <TextInput source="coverBadge" label={hiddenLabel} fullWidth size="small" />
+          </AdminLabeledField>
+        </Box>
+        <CoverLinesInline />
+      </Box>
+    </AdminFormSection>
+  );
+}
+
+function AppDisplaySection() {
+  return (
+    <AdminFormSection title="App 详情页展示" divider={false}>
+      <CompactArrayBlock
+        source="includedHighlights"
+        title="包含内容"
+        defaultItem={{ title: '', description: '' }}
+      >
+        <SimpleFormIterator inline disableReordering sx={compactIteratorSx}>
+          <TextInput source="title" label="标题" helperText={false} size="small" sx={{ width: '36%', minWidth: 96 }} />
+          <TextInput source="description" label="说明" helperText={false} size="small" sx={{ flex: 1, minWidth: 120 }} />
+        </SimpleFormIterator>
+      </CompactArrayBlock>
+
+      <CompactArrayBlock
+        source="introMedia"
+        title="内容介绍"
+        defaultItem={{ type: 'image', sortOrder: 0, url: '' }}
+      >
+        <Box sx={adminPanelTableSx}>
+          <SimpleFormIterator inline disableReordering sx={compactIteratorSx}>
+            <SelectInput
+              source="type"
+              label="类型"
+              choices={INTRO_MEDIA_TYPE_CHOICES}
+              helperText={false}
+              size="small"
+              sx={{ width: 80 }}
+            />
+            <NumberInput source="sortOrder" label="序" helperText={false} size="small" sx={{ width: 56 }} />
+            <TextInput source="url" label="URL" helperText={false} size="small" sx={{ flex: 1, minWidth: 120 }} />
+          </SimpleFormIterator>
+        </Box>
+      </CompactArrayBlock>
+
+      <CompactArrayBlock
+        source="samplePreviews"
+        title="内容示例"
+        defaultItem={{ headword: '', initial: '', zh: '', exampleEn: '' }}
+        headerAction={<ExtractSamplePreviewsButton />}
+      >
+        <Box sx={adminPanelTableSx}>
+          <SimpleFormIterator disableReordering sx={compactIteratorSx}>
+            <Grid container spacing={1} sx={{ width: '100%' }}>
+              <Grid size={{ xs: 6, sm: 3 }}>
+                <TextInput source="headword" label="单词" fullWidth helperText={false} size="small" />
               </Grid>
-              <Grid size={{ xs: 12, sm: 8 }}>
-                <CoverLinesTwoInputs />
+              <Grid size={{ xs: 6, sm: 2 }}>
+                <TextInput source="initial" label="首字母" fullWidth helperText={false} size="small" />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 3 }}>
+                <TextInput source="zh" label="释义" fullWidth helperText={false} size="small" />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 4 }}>
+                <TextInput source="exampleEn" label="例句" fullWidth helperText={false} size="small" />
               </Grid>
             </Grid>
-          </Box>
+          </SimpleFormIterator>
         </Box>
-      </AdminPanel>
+      </CompactArrayBlock>
+    </AdminFormSection>
+  );
+}
 
-      <AdminPanel title="包含内容" padded={false}>
-        <Box sx={adminPanelTableSx}>
-          <ArrayInput source="includedHighlights" label="">
-            <SimpleFormIterator inline disableReordering sx={compactIteratorSx}>
-              <TextInput
-                source="title"
-                label="标题"
-                helperText={false}
-                size="small"
-                sx={{ width: '38%', minWidth: 100 }}
-              />
-              <TextInput
-                source="description"
-                label="说明"
-                helperText={false}
-                size="small"
-                sx={{ flex: 1, minWidth: 120 }}
-              />
-            </SimpleFormIterator>
-          </ArrayInput>
-        </Box>
-      </AdminPanel>
+function PublishSidebar() {
+  return (
+    <AdminFormSection title="发布" divider={false}>
+      <AdminLabeledField label="上架状态">
+        <SelectInput source="status" label={hiddenLabel} choices={packStatusChoices} fullWidth size="small" />
+      </AdminLabeledField>
+      <AdminLabeledField label="售价（分）">
+        <NumberInput source="priceCents" label={hiddenLabel} fullWidth size="small" />
+        <PricePreview />
+      </AdminLabeledField>
+      <AdminLabeledField label="内容标签">
+        <AutocompleteArrayInput
+          source="contentTags"
+          label={hiddenLabel}
+          choices={CONTENT_TAG_CHOICES}
+          fullWidth
+          size="small"
+        />
+      </AdminLabeledField>
+    </AdminFormSection>
+  );
+}
+
+/** 目录与详情：Shopify 式单表单 + sticky 发布侧栏。 */
+export function PackCatalogDetailFields(props: { embedded?: boolean }) {
+  const embedded = props.embedded ?? false;
+
+  return (
+    <Box
+      sx={{
+        ...packFormDensitySx,
+        width: '100%',
+        ...(embedded ? {} : packCatalogFormSurfaceSx),
+      }}
+    >
+      <Grid container>
+        <Grid size={{ xs: 12, lg: 8 }} sx={packCatalogMainColumnSx}>
+          <BasicInfoSection />
+          <CoverStripSection />
+          <AppDisplaySection />
+        </Grid>
+        <Grid size={{ xs: 12, lg: 4 }} sx={packCatalogSidebarSx}>
+          <PublishSidebar />
+        </Grid>
+      </Grid>
     </Box>
   );
 }

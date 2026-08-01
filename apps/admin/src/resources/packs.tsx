@@ -7,7 +7,6 @@ import {
   List,
   NumberField,
   NumberInput,
-  SaveButton,
   SelectInput,
   Show,
   SimpleForm,
@@ -20,6 +19,7 @@ import {
 import { Box, Tab, Tabs } from '@mui/material';
 import { useState } from 'react';
 import { AdminPageHeader } from '../components/admin-page-header.js';
+import { packCatalogFormSurfaceSx } from '../components/admin-form-section.js';
 import { AdminPanel } from '../components/admin-panel.js';
 import { packEditFormSx } from '../components/pack-form-section.js';
 import { formatMoney } from '../components/format-money.js';
@@ -30,6 +30,7 @@ import {
   PackCatalogDetailFields,
 } from './pack-catalog-detail-fields.js';
 import { PackEditSummaryMeta } from './pack-edit-summary.js';
+import { PackSaveButton } from './pack-save-button.js';
 import { PackTaxonomyFields } from './pack-taxonomy-fields.js';
 import { PackVersionsPanel } from './pack-versions-panel.js';
 import { PackRedemptionCodesPanel } from './pack-redemption-codes-panel.js';
@@ -83,17 +84,17 @@ function PackEditTabs() {
 
   if (tab === 0) {
     return (
-      <SimpleForm
-        toolbar={false}
-        sx={packEditFormSx}
-      >
-        <AdminPageHeader
-          title={<PackEditTitleRecord />}
-          meta={<PackEditSummaryMeta />}
-          actions={<SaveButton />}
-          tabs={tabs}
-        />
-        <PackCatalogDetailFields />
+      <SimpleForm toolbar={false} sx={packEditFormSx}>
+        <Box sx={{ width: '100%', ...packCatalogFormSurfaceSx, overflow: 'hidden' }}>
+          <AdminPageHeader
+            embedded
+            title={<PackEditTitleRecord />}
+            meta={<PackEditSummaryMeta />}
+            actions={<PackSaveButton />}
+            tabs={tabs}
+          />
+          <PackCatalogDetailFields embedded />
+        </Box>
       </SimpleForm>
     );
   }
