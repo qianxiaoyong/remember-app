@@ -4,6 +4,10 @@ vi.mock('./vocabulary/parse-content.js', () => ({
   VocabularyCardRenderer: () => null,
 }));
 
+vi.mock('./story-reading/parse-content.js', () => ({
+  StoryReadingCardRenderer: () => null,
+}));
+
 import { resolveCardTypeDefinition } from './registry.js';
 
 describe('cardTypeRegistry', () => {
@@ -12,7 +16,12 @@ describe('cardTypeRegistry', () => {
     expect(def?.reviewMode).toBe('sm2');
   });
 
+  it('story_reading 已注册且 reviewMode 为 lesson_complete', () => {
+    const def = resolveCardTypeDefinition('story_reading');
+    expect(def?.reviewMode).toBe('lesson_complete');
+  });
+
   it('未知 type 返回 null', () => {
-    expect(resolveCardTypeDefinition('story_reading')).toBeNull();
+    expect(resolveCardTypeDefinition('choice')).toBeNull();
   });
 });
