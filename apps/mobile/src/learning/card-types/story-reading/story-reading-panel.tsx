@@ -5,19 +5,21 @@ import type { LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { StoryReadingContent, StorySidebarEntry } from '@remember/contracts';
+import { SurfaceCard } from '../../../components/ui/surface-card';
 import { CircleIconButton } from '../../../components/ui/circle-icon-button';
-import { HomeTabIcon, MoreVerticalIcon, SpeakerIcon } from '../../../components/ui/shell-icons';
+import { BackChevronIcon, MoreVerticalIcon, SpeakerIcon } from '../../../components/ui/shell-icons';
 import { resolvePackAssetUri } from '../../../use-cases/resolve-pack-asset-uri';
 import { colors } from '../../../theme/colors';
 import { spacing } from '../../../theme/spacing';
-import { countSidebarWords, countTierStats, formatTierLegend } from './count-tier-stats';
+import { countSidebarWords, countTierStats } from './count-tier-stats';
 import {
   isScrollAtBottom,
   isScrollContentFullyVisible,
   SCROLL_BOTTOM_THRESHOLD,
 } from './scroll-reach-bottom';
 import { StoryVocabSheet } from './story-vocab-sheet';
-import { tierBackgroundColors } from './tier-colors';
+import { TierLegendChips } from './tier-legend-chips';
+import { tierAccentColor, tierBackgroundColors } from './tier-colors';
 
 export interface StoryReadingPanelProps {
   packId: string;
@@ -98,9 +100,10 @@ export function StoryReadingPanel(props: StoryReadingPanelProps): ReactElement {
   return (
     <View style={styles.root}>
       <View style={[styles.toolbar, { paddingTop: insets.top + spacing.sm }]}>
-        <CircleIconButton accessibilityLabel="返回首页" onPress={props.onHomePress}>
-          <HomeTabIcon active size="sm" />
+        <CircleIconButton accessibilityLabel="返回书库" onPress={props.onHomePress}>
+          <BackChevronIcon size="sm" />
         </CircleIconButton>
+        <Text style={styles.toolbarTitle}>{props.content.lesson.code}</Text>
         <CircleIconButton accessibilityLabel="更多" onPress={props.onMorePress}>
           <MoreVerticalIcon size="sm" />
         </CircleIconButton>
@@ -115,59 +118,83 @@ export function StoryReadingPanel(props: StoryReadingPanelProps): ReactElement {
         showsVerticalScrollIndicator={false}
         style={styles.scroll}
       >
-        {coverUri ? (
-          <Image accessibilityLabel="课文封面" source={{ uri: coverUri }} style={styles.cover} />
-        ) : (
-          <View style={[styles.cover, styles.coverPlaceholder]} />
-        )}
+        <SurfaceCard>
+          <View style={styles.lessonHeaderRow}>
+            {coverUri ? (
+              <Image
+                accessibilityLabel="课文插图"
+                source={{ uri: coverUri }}
+                style={styles.coverThumb}
+              />
+            ) : (
+              <View style={[styles.coverThumb, styles.coverPlaceholder]} />
+            )}
+            <View style={styles.lessonTitles}>
+              <Text numberOfLines={2} style={styles.titleEn}>
+                {props.content.lesson.titleEn}
+              </Text>
+              <Text numberOfLines={1} style={styles.titleZh}>
+                {props.content.lesson.titleZh}
+              </Text>
+            </View>
+          </View>
 
-        <Text style={styles.lessonCode}>{props.content.lesson.code}</Text>
-        <Text style={styles.titleEn}>{props.content.lesson.titleEn}</Text>
-        <Text style={styles.titleZh}>{props.content.lesson.titleZh}</Text>
+          <View style={styles.actionRow}>
+            <Pressable
+              accessibilityRole="button"
+              onPress={props.onPlayPrimaryAudio}
+              style={styles.playButton}
+            >
+              <SpeakerIcon size="sm" />
+              <Text style={styles.playLabel}>播放</Text>
+            </Pressable>
+            <Pressable accessibilityRole="button" onPress={openVocabList} style={styles.vocabLink}>
+              <Text style={styles.vocabLinkText}>本课 {wordCount} 词 ›</Text>
+            </Pressable>
+          </View>
 
-        <View style={styles.actionRow}>
-          <Pressable
-            accessibilityRole="button"
-            onPress={props.onPlayPrimaryAudio}
-            style={styles.playButton}
-          >
-            <SpeakerIcon size="sm" />
-            <Text style={styles.playLabel}>播放</Text>
-          </Pressable>
-          <Pressable accessibilityRole="button" onPress={openVocabList} style={styles.vocabLink}>
-            <Text style={styles.vocabLinkText}>本课 {wordCount} 词 ›</Text>
-          </Pressable>
-        </View>
+          <View style={styles.legendWrap}>
+            <TierLegendChips stats={tierStats} />
+          </View>
+        </SurfaceCard>
 
-        <View style={styles.legendRow}>
-          <Text style={styles.legendItem}>{formatTierLegend(tierStats, 'high')}</Text>
-          <Text style={styles.legendItem}>{formatTierLegend(tierStats, 'mid')}</Text>
-          <Text style={styles.legendItem}>{formatTierLegend(tierStats, 'low')}</Text>
-        </View>
-
-        <View style={styles.body}>
-          {props.content.story.paragraphs.map((paragraph, paragraphIndex) => (
-            <Text key={`p-${String(paragraphIndex)}`} style={styles.paragraph}>
-              {paragraph.runs.map((run, runIndex) => {
-                if (run.kind === 'text') {
-                  return (
-                    <Text key={`t-${String(paragraphIndex)}-${String(runIndex)}`}>{run.text}</Text>
-                  );
-                }
-                return (
-                  <Text
-                    key={`w-${String(paragraphIndex)}-${String(runIndex)}`}
-                    onPress={() => {
-                      openVocabSheet(run.vocabId);
-                    }}
-                    style={[styles.wordRun, { backgroundColor: tierBackgroundColors[run.tier] }]}
-                  >
-                    {run.surface}（{run.glossZh}）
-                  </Text>
-                );
-              })}
-            </Text>
-          ))}
+        <View style={styles.bodyCardWrap}>
+          <SurfaceCard>
+            <View style={styles.body}>
+              {props.content.story.paragraphs.map((paragraph, paragraphIndex) => (
+                <Text key={`p-${String(paragraphIndex)}`} style={styles.paragraph}>
+                  {paragraph.runs.map((run, runIndex) => {
+                    if (run.kind === 'text') {
+                      return (
+                        <Text key={`t-${String(paragraphIndex)}-${String(runIndex)}`}>
+                          {run.text}
+                        </Text>
+                      );
+                    }
+                    return (
+                      <Text key={`w-${String(paragraphIndex)}-${String(runIndex)}`}>
+                        <Text
+                          onPress={() => {
+                            openVocabSheet(run.vocabId);
+                          }}
+                          style={[
+                            styles.wordSurface,
+                            {
+                              backgroundColor: tierBackgroundColors[run.tier],
+                              borderBottomColor: tierAccentColor(run.tier),
+                            },
+                          ]}
+                        >
+                          {run.surface}
+                        </Text>
+                        <Text style={styles.wordGloss}>（{run.glossZh}）</Text>
+                      </Text>
+                    );
+                  })}
+                </Text>
+              ))}
+            </View>
+          </SurfaceCard>
         </View>
       </ScrollView>
 
@@ -183,50 +210,63 @@ export function StoryReadingPanel(props: StoryReadingPanelProps): ReactElement {
   );
 }
 
+const COVER_THUMB_WIDTH = 88;
+
 const styles = StyleSheet.create({
   root: {
     backgroundColor: colors.background,
     flex: 1,
   },
   toolbar: {
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: spacing.lg,
+    paddingBottom: spacing.sm,
+  },
+  toolbarTitle: {
+    color: colors.textSecondary,
+    fontSize: 15,
+    fontWeight: '600',
   },
   scroll: {
     flex: 1,
   },
   scrollContent: {
-    paddingBottom: spacing.xl,
+    gap: spacing.md,
+    paddingBottom: spacing.xxl,
     paddingHorizontal: spacing.lg,
+    paddingTop: spacing.xs,
   },
-  cover: {
-    aspectRatio: 16 / 9,
+  lessonHeaderRow: {
+    flexDirection: 'row',
+    gap: spacing.md,
+  },
+  coverThumb: {
+    aspectRatio: 4 / 3,
     backgroundColor: colors.statTileBackground,
     borderRadius: 12,
-    marginTop: spacing.sm,
-    width: '100%',
+    width: COVER_THUMB_WIDTH,
   },
   coverPlaceholder: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    opacity: 0.6,
   },
-  lessonCode: {
-    color: colors.textMuted,
-    fontSize: 13,
-    fontWeight: '600',
-    marginTop: spacing.md,
+  lessonTitles: {
+    flex: 1,
+    gap: spacing.xs,
+    justifyContent: 'center',
+    minHeight: COVER_THUMB_WIDTH * 0.75,
   },
   titleEn: {
     color: colors.textPrimary,
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '700',
-    marginTop: spacing.xs,
+    lineHeight: 24,
   },
   titleZh: {
     color: colors.textSecondary,
-    fontSize: 16,
-    marginTop: spacing.xs,
+    fontSize: 14,
+    lineHeight: 20,
   },
   actionRow: {
     alignItems: 'center',
@@ -236,7 +276,7 @@ const styles = StyleSheet.create({
   },
   playButton: {
     alignItems: 'center',
-    backgroundColor: colors.surface,
+    backgroundColor: colors.background,
     borderColor: colors.border,
     borderRadius: 999,
     borderWidth: 1,
@@ -251,6 +291,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   vocabLink: {
+    flex: 1,
     paddingVertical: spacing.sm,
   },
   vocabLinkText: {
@@ -258,26 +299,29 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
   },
-  legendRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: spacing.sm,
-    marginTop: spacing.sm,
+  legendWrap: {
+    marginTop: spacing.md,
   },
-  legendItem: {
-    color: colors.textSecondary,
-    fontSize: 12,
+  bodyCardWrap: {
+    marginTop: spacing.xs,
   },
   body: {
-    marginTop: spacing.lg,
+    gap: spacing.md,
   },
   paragraph: {
     color: colors.textPrimary,
-    fontSize: 17,
-    lineHeight: 28,
-    marginBottom: spacing.md,
+    fontSize: 18,
+    lineHeight: 32,
   },
-  wordRun: {
-    borderRadius: 4,
+  wordSurface: {
+    borderBottomWidth: 2,
+    fontSize: 18,
+    lineHeight: 32,
+  },
+  wordGloss: {
+    color: colors.textMuted,
+    fontSize: 15,
+    fontWeight: '400',
+    lineHeight: 32,
   },
 });

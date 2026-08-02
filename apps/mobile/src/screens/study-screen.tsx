@@ -107,7 +107,12 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
         showRatingBar ? (
           <StudyRatingBar disabled={isSubmitting} labels={intervalLabels} onRate={handleReview} />
         ) : showLessonCompleteBar ? (
-          <View style={styles.lessonCompleteFooter}>
+          <View
+            style={[
+              styles.lessonCompleteFooter,
+              { paddingBottom: Math.max(insets.bottom, spacing.md) },
+            ]}
+          >
             <PrimaryButton
               disabled={!reachedBottom || isSubmitting}
               label="我读完了"
@@ -213,6 +218,10 @@ const styles = StyleSheet.create({
     padding: spacing.lg,
   },
   lessonCompleteFooter: {
-    padding: spacing.lg,
+    backgroundColor: colors.surface,
+    borderTopColor: colors.border,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.md,
   },
 });

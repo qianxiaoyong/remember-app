@@ -14,7 +14,10 @@
         "paragraphs": [
           {
             "runs": [
-              { "kind": "text", "text": "The prince is " },
+              {
+                "kind": "text",
+                "text": "The prince is "
+              },
               {
                 "kind": "word",
                 "surface": "not",
@@ -22,28 +25,676 @@
                 "tier": "mid",
                 "vocabId": "not"
               },
-              { "kind": "text", "text": " " },
+              {
+                "kind": "text",
+                "text": " "
+              },
               {
                 "kind": "word",
                 "surface": "happy",
-                "glossZh": "快乐的",
+                "glossZh": "高兴",
                 "tier": "high",
                 "vocabId": "happy"
               },
-              { "kind": "text", "text": ". He wants a " },
+              {
+                "kind": "text",
+                "text": ". He wants to "
+              },
               {
                 "kind": "word",
-                "surface": "real",
-                "glossZh": "真正的",
+                "surface": "marry",
+                "glossZh": "娶",
                 "tier": "low",
-                "vocabId": "real"
+                "vocabId": "marry"
               },
-              { "kind": "text", "text": " princess." }
+              {
+                "kind": "text",
+                "text": " a princess."
+              }
+            ]
+          },
+          {
+            "runs": [
+              {
+                "kind": "text",
+                "text": "He "
+              },
+              {
+                "kind": "word",
+                "surface": "looks",
+                "glossZh": "寻找",
+                "tier": "high",
+                "vocabId": "look"
+              },
+              {
+                "kind": "text",
+                "text": " everywhere. He cannot "
+              },
+              {
+                "kind": "word",
+                "surface": "find",
+                "glossZh": "找到",
+                "tier": "high",
+                "vocabId": "find"
+              },
+              {
+                "kind": "text",
+                "text": " a princess."
+              }
+            ]
+          },
+          {
+            "runs": [
+              {
+                "kind": "text",
+                "text": "He "
+              },
+              {
+                "kind": "word",
+                "surface": "meets",
+                "glossZh": "遇见",
+                "tier": "mid",
+                "vocabId": "meet"
+              },
+              {
+                "kind": "text",
+                "text": " "
+              },
+              {
+                "kind": "word",
+                "surface": "many",
+                "glossZh": "许多",
+                "tier": "high",
+                "vocabId": "many"
+              },
+              {
+                "kind": "text",
+                "text": " princesses. Some are too "
+              },
+              {
+                "kind": "word",
+                "surface": "old",
+                "glossZh": "老",
+                "tier": "high",
+                "vocabId": "old"
+              },
+              {
+                "kind": "text",
+                "text": ". Some are too "
+              },
+              {
+                "kind": "word",
+                "surface": "small",
+                "glossZh": "小",
+                "tier": "high",
+                "vocabId": "small"
+              },
+              {
+                "kind": "text",
+                "text": " or too "
+              },
+              {
+                "kind": "word",
+                "surface": "big",
+                "glossZh": "大",
+                "tier": "high",
+                "vocabId": "big"
+              },
+              {
+                "kind": "text",
+                "text": ". Some are "
+              },
+              {
+                "kind": "word",
+                "surface": "not",
+                "glossZh": "不",
+                "tier": "mid",
+                "vocabId": "not"
+              },
+              {
+                "kind": "text",
+                "text": " "
+              },
+              {
+                "kind": "word",
+                "surface": "beautiful",
+                "glossZh": "漂亮",
+                "tier": "mid",
+                "vocabId": "beautiful"
+              },
+              {
+                "kind": "text",
+                "text": "."
+              }
+            ]
+          },
+          {
+            "runs": [
+              {
+                "kind": "text",
+                "text": "One day, a "
+              },
+              {
+                "kind": "word",
+                "surface": "girl",
+                "glossZh": "女孩",
+                "tier": "mid",
+                "vocabId": "girl"
+              },
+              {
+                "kind": "text",
+                "text": " "
+              },
+              {
+                "kind": "word",
+                "surface": "comes",
+                "glossZh": "来到",
+                "tier": "high",
+                "vocabId": "come"
+              },
+              {
+                "kind": "text",
+                "text": " to his castle. It is "
+              },
+              {
+                "kind": "word",
+                "surface": "raining",
+                "glossZh": "下雨",
+                "tier": "mid",
+                "vocabId": "rain"
+              },
+              {
+                "kind": "text",
+                "text": "."
+              }
+            ]
+          },
+          {
+            "runs": [
+              {
+                "kind": "text",
+                "text": "'I'm a princess,' she "
+              },
+              {
+                "kind": "word",
+                "surface": "says",
+                "glossZh": "说",
+                "tier": "high",
+                "vocabId": "say"
+              },
+              {
+                "kind": "text",
+                "text": ". 'I "
+              },
+              {
+                "kind": "word",
+                "surface": "need",
+                "glossZh": "需要",
+                "tier": "low",
+                "vocabId": "need"
+              },
+              {
+                "kind": "text",
+                "text": " a "
+              },
+              {
+                "kind": "word",
+                "surface": "bed",
+                "glossZh": "床",
+                "tier": "mid",
+                "vocabId": "bed"
+              },
+              {
+                "kind": "text",
+                "text": ".'"
+              }
+            ]
+          },
+          {
+            "runs": [
+              {
+                "kind": "text",
+                "text": "The prince "
+              },
+              {
+                "kind": "word",
+                "surface": "likes",
+                "glossZh": "喜欢",
+                "tier": "high",
+                "vocabId": "like"
+              },
+              {
+                "kind": "text",
+                "text": " the "
+              },
+              {
+                "kind": "word",
+                "surface": "girl",
+                "glossZh": "女孩",
+                "tier": "mid",
+                "vocabId": "girl"
+              },
+              {
+                "kind": "text",
+                "text": ". But he does not "
+              },
+              {
+                "kind": "word",
+                "surface": "think",
+                "glossZh": "认为",
+                "tier": "high",
+                "vocabId": "think"
+              },
+              {
+                "kind": "text",
+                "text": " she is a princess."
+              }
+            ]
+          },
+          {
+            "runs": [
+              {
+                "kind": "text",
+                "text": "He "
+              },
+              {
+                "kind": "word",
+                "surface": "has",
+                "glossZh": "有",
+                "tier": "high",
+                "vocabId": "have"
+              },
+              {
+                "kind": "text",
+                "text": " an "
+              },
+              {
+                "kind": "word",
+                "surface": "idea",
+                "glossZh": "主意",
+                "tier": "low",
+                "vocabId": "idea"
+              },
+              {
+                "kind": "text",
+                "text": ". The prince "
+              },
+              {
+                "kind": "word",
+                "surface": "makes",
+                "glossZh": "做",
+                "tier": "high",
+                "vocabId": "make"
+              },
+              {
+                "kind": "text",
+                "text": " a "
+              },
+              {
+                "kind": "word",
+                "surface": "bed",
+                "glossZh": "床",
+                "tier": "mid",
+                "vocabId": "bed"
+              },
+              {
+                "kind": "text",
+                "text": " for her. He "
+              },
+              {
+                "kind": "word",
+                "surface": "puts",
+                "glossZh": "放",
+                "tier": "high",
+                "vocabId": "put"
+              },
+              {
+                "kind": "text",
+                "text": " a pea under 23 mattresses!"
+              }
+            ]
+          },
+          {
+            "runs": [
+              {
+                "kind": "text",
+                "text": "The next morning, the prince "
+              },
+              {
+                "kind": "word",
+                "surface": "talks",
+                "glossZh": "说话",
+                "tier": "mid",
+                "vocabId": "talk"
+              },
+              {
+                "kind": "text",
+                "text": " to the "
+              },
+              {
+                "kind": "word",
+                "surface": "girl",
+                "glossZh": "女孩",
+                "tier": "mid",
+                "vocabId": "girl"
+              },
+              {
+                "kind": "text",
+                "text": "."
+              }
+            ]
+          },
+          {
+            "runs": [
+              {
+                "kind": "text",
+                "text": "'I am black and blue,' she "
+              },
+              {
+                "kind": "word",
+                "surface": "says",
+                "glossZh": "说",
+                "tier": "high",
+                "vocabId": "say"
+              },
+              {
+                "kind": "text",
+                "text": ". 'Your bed is so "
+              },
+              {
+                "kind": "word",
+                "surface": "hard",
+                "glossZh": "硬",
+                "tier": "mid",
+                "vocabId": "hard"
+              },
+              {
+                "kind": "text",
+                "text": ".'"
+              }
+            ]
+          },
+          {
+            "runs": [
+              {
+                "kind": "text",
+                "text": "The prince "
+              },
+              {
+                "kind": "word",
+                "surface": "thinks",
+                "glossZh": "想",
+                "tier": "high",
+                "vocabId": "think"
+              },
+              {
+                "kind": "text",
+                "text": ", '"
+              },
+              {
+                "kind": "word",
+                "surface": "Only",
+                "glossZh": "只有",
+                "tier": "high",
+                "vocabId": "only"
+              },
+              {
+                "kind": "text",
+                "text": " a princess can "
+              },
+              {
+                "kind": "word",
+                "surface": "feel",
+                "glossZh": "感觉",
+                "tier": "mid",
+                "vocabId": "feel"
+              },
+              {
+                "kind": "text",
+                "text": " the pea under those mattresses!'"
+              }
+            ]
+          },
+          {
+            "runs": [
+              {
+                "kind": "text",
+                "text": "'"
+              },
+              {
+                "kind": "word",
+                "surface": "Only",
+                "glossZh": "只有",
+                "tier": "high",
+                "vocabId": "only"
+              },
+              {
+                "kind": "text",
+                "text": " a princess is so "
+              },
+              {
+                "kind": "word",
+                "surface": "soft",
+                "glossZh": "柔软",
+                "tier": "low",
+                "vocabId": "soft"
+              },
+              {
+                "kind": "text",
+                "text": ".' He "
+              },
+              {
+                "kind": "word",
+                "surface": "asks",
+                "glossZh": "问",
+                "tier": "high",
+                "vocabId": "ask"
+              },
+              {
+                "kind": "text",
+                "text": ", 'Will you "
+              },
+              {
+                "kind": "word",
+                "surface": "marry",
+                "glossZh": "娶",
+                "tier": "low",
+                "vocabId": "marry"
+              },
+              {
+                "kind": "text",
+                "text": " me?'"
+              }
+            ]
+          },
+          {
+            "runs": [
+              {
+                "kind": "text",
+                "text": "The prince and his princess "
+              },
+              {
+                "kind": "word",
+                "surface": "take",
+                "glossZh": "带",
+                "tier": "high",
+                "vocabId": "take"
+              },
+              {
+                "kind": "text",
+                "text": " the pea to a "
+              },
+              {
+                "kind": "word",
+                "surface": "museum",
+                "glossZh": "博物馆",
+                "tier": "low",
+                "vocabId": "museum"
+              },
+              {
+                "kind": "text",
+                "text": ". "
+              },
+              {
+                "kind": "word",
+                "surface": "Now",
+                "glossZh": "现在",
+                "tier": "high",
+                "vocabId": "now"
+              },
+              {
+                "kind": "text",
+                "text": " everyone can see it."
+              }
             ]
           }
         ]
       },
       "sidebar": [
+        {
+          "vocabId": "happy",
+          "headword": "happy",
+          "ipa": "/ˈhæpi/",
+          "pos": "adj.",
+          "definitionZh": "高兴的；快乐的",
+          "tier": "high"
+        },
+        {
+          "vocabId": "look",
+          "headword": "look",
+          "ipa": "/lʊk/",
+          "pos": "v.",
+          "definitionZh": "看；寻找",
+          "tier": "high"
+        },
+        {
+          "vocabId": "find",
+          "headword": "find",
+          "ipa": "/faɪnd/",
+          "pos": "v.",
+          "definitionZh": "找到",
+          "tier": "high"
+        },
+        {
+          "vocabId": "many",
+          "headword": "many",
+          "ipa": "/ˈmeni/",
+          "pos": "adj.",
+          "definitionZh": "许多",
+          "tier": "high"
+        },
+        {
+          "vocabId": "old",
+          "headword": "old",
+          "ipa": "/əʊld/",
+          "pos": "adj.",
+          "definitionZh": "老的",
+          "tier": "high"
+        },
+        {
+          "vocabId": "small",
+          "headword": "small",
+          "ipa": "/smɔːl/",
+          "pos": "adj.",
+          "definitionZh": "小的",
+          "tier": "high"
+        },
+        {
+          "vocabId": "big",
+          "headword": "big",
+          "ipa": "/bɪɡ/",
+          "pos": "adj.",
+          "definitionZh": "大的",
+          "tier": "high"
+        },
+        {
+          "vocabId": "come",
+          "headword": "come",
+          "ipa": "/kʌm/",
+          "pos": "v.",
+          "definitionZh": "来；来到",
+          "tier": "high"
+        },
+        {
+          "vocabId": "say",
+          "headword": "say",
+          "ipa": "/seɪ/",
+          "pos": "v.",
+          "definitionZh": "说",
+          "tier": "high"
+        },
+        {
+          "vocabId": "like",
+          "headword": "like",
+          "ipa": "/laɪk/",
+          "pos": "v.",
+          "definitionZh": "喜欢",
+          "tier": "high"
+        },
+        {
+          "vocabId": "think",
+          "headword": "think",
+          "ipa": "/θɪŋk/",
+          "pos": "v.",
+          "definitionZh": "想；认为",
+          "tier": "high"
+        },
+        {
+          "vocabId": "have",
+          "headword": "have",
+          "ipa": "/hæv/",
+          "pos": "v.",
+          "definitionZh": "有",
+          "tier": "high"
+        },
+        {
+          "vocabId": "make",
+          "headword": "make",
+          "ipa": "/meɪk/",
+          "pos": "v.",
+          "definitionZh": "做；制作",
+          "tier": "high"
+        },
+        {
+          "vocabId": "put",
+          "headword": "put",
+          "ipa": "/pʊt/",
+          "pos": "v.",
+          "definitionZh": "放",
+          "tier": "high"
+        },
+        {
+          "vocabId": "only",
+          "headword": "only",
+          "ipa": "/ˈəʊnli/",
+          "pos": "adv.",
+          "definitionZh": "只有；仅仅",
+          "tier": "high"
+        },
+        {
+          "vocabId": "ask",
+          "headword": "ask",
+          "ipa": "/ɑːsk/",
+          "pos": "v.",
+          "definitionZh": "问",
+          "tier": "high"
+        },
+        {
+          "vocabId": "take",
+          "headword": "take",
+          "ipa": "/teɪk/",
+          "pos": "v.",
+          "definitionZh": "带；拿",
+          "tier": "high"
+        },
+        {
+          "vocabId": "now",
+          "headword": "now",
+          "ipa": "/naʊ/",
+          "pos": "adv.",
+          "definitionZh": "现在",
+          "tier": "high"
+        },
         {
           "vocabId": "not",
           "headword": "not",
@@ -53,19 +704,107 @@
           "tier": "mid"
         },
         {
-          "vocabId": "happy",
-          "headword": "happy",
-          "ipa": "/ˈhæpi/",
-          "pos": "adj.",
-          "definitionZh": "快乐的",
-          "tier": "high"
+          "vocabId": "meet",
+          "headword": "meet",
+          "ipa": "/miːt/",
+          "pos": "v.",
+          "definitionZh": "遇见",
+          "tier": "mid"
         },
         {
-          "vocabId": "real",
-          "headword": "real",
-          "ipa": "/rɪəl/",
+          "vocabId": "beautiful",
+          "headword": "beautiful",
+          "ipa": "/ˈbjuːtɪfl/",
           "pos": "adj.",
-          "definitionZh": "真正的",
+          "definitionZh": "漂亮的",
+          "tier": "mid"
+        },
+        {
+          "vocabId": "girl",
+          "headword": "girl",
+          "ipa": "/ɡɜːl/",
+          "pos": "n.",
+          "definitionZh": "女孩",
+          "tier": "mid"
+        },
+        {
+          "vocabId": "rain",
+          "headword": "rain",
+          "ipa": "/reɪn/",
+          "pos": "v.",
+          "definitionZh": "下雨",
+          "tier": "mid"
+        },
+        {
+          "vocabId": "bed",
+          "headword": "bed",
+          "ipa": "/bed/",
+          "pos": "n.",
+          "definitionZh": "床",
+          "tier": "mid"
+        },
+        {
+          "vocabId": "talk",
+          "headword": "talk",
+          "ipa": "/tɔːk/",
+          "pos": "v.",
+          "definitionZh": "说话",
+          "tier": "mid"
+        },
+        {
+          "vocabId": "hard",
+          "headword": "hard",
+          "ipa": "/hɑːd/",
+          "pos": "adj.",
+          "definitionZh": "硬的",
+          "tier": "mid"
+        },
+        {
+          "vocabId": "feel",
+          "headword": "feel",
+          "ipa": "/fiːl/",
+          "pos": "v.",
+          "definitionZh": "感觉",
+          "tier": "mid"
+        },
+        {
+          "vocabId": "marry",
+          "headword": "marry",
+          "ipa": "/ˈmæri/",
+          "pos": "v.",
+          "definitionZh": "娶；嫁",
+          "tier": "low"
+        },
+        {
+          "vocabId": "need",
+          "headword": "need",
+          "ipa": "/niːd/",
+          "pos": "v.",
+          "definitionZh": "需要",
+          "tier": "low"
+        },
+        {
+          "vocabId": "idea",
+          "headword": "idea",
+          "ipa": "/aɪˈdɪə/",
+          "pos": "n.",
+          "definitionZh": "主意",
+          "tier": "low"
+        },
+        {
+          "vocabId": "soft",
+          "headword": "soft",
+          "ipa": "/sɒft/",
+          "pos": "adj.",
+          "definitionZh": "柔软的",
+          "tier": "low"
+        },
+        {
+          "vocabId": "museum",
+          "headword": "museum",
+          "ipa": "/mjuːˈziːəm/",
+          "pos": "n.",
+          "definitionZh": "博物馆",
           "tier": "low"
         }
       ]
