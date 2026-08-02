@@ -11,6 +11,10 @@ import { spacing } from '../../../theme/spacing';
 import { listStoryLessonSummaries } from '../../../use-cases/resolve-story-reader-entry';
 import { resolvePackAssetUri } from '../../../use-cases/resolve-pack-asset-uri';
 import { countSidebarWords } from './count-tier-stats';
+import {
+  canJumpParagraph,
+  resolveParagraphJumpMs,
+} from './story-follow-along';
 import { StoryAudioBar } from './story-audio-bar';
 import { StoryLessonTabs, type StoryLessonTabId } from './story-lesson-tabs';
 import { StoryReadTab } from './story-read-tab';
@@ -84,6 +88,18 @@ export function StoryLessonShell(props: StoryLessonShellProps): ReactElement {
     props.onNavigateLesson?.(knowledgeId);
   };
 
+  const paragraphs = props.content.story.paragraphs;
+  const canPreviousParagraph = canJumpParagraph(paragraphs, audioPlayer.positionMs, 'prev');
+  const canNextParagraph = canJumpParagraph(paragraphs, audioPlayer.positionMs, 'next');
+
+  const jumpParagraph = (direction: 'prev' | 'next'): void => {
+    const targetMs = resolveParagraphJumpMs(paragraphs, audioPlayer.positionMs, direction);
+    if (targetMs === null) {
+      return;
+    }
+    audioPlayer.seek(targetMs);
+  };
+
   return (
     <View style={styles.root}>
       <View
@@ -126,6 +142,7 @@ export function StoryLessonShell(props: StoryLessonShellProps): ReactElement {
             content={props.content}
             knowledgeId={props.knowledgeId}
             packId={props.packId}
+            playing={audioPlayer.playing}
             positionMs={audioPlayer.positionMs}
           />
         ) : null}
@@ -135,15 +152,23 @@ export function StoryLessonShell(props: StoryLessonShellProps): ReactElement {
       {activeTab === 'read' ? (
         <View style={{ paddingBottom: Math.max(insets.bottom, spacing.sm) }}>
           <StoryAudioBar
+            canNextParagraph={canNextParagraph}
+            canPreviousParagraph={canPreviousParagraph}
             disabled={!audioPlayer.isReady}
             durationMs={audioPlayer.durationMs}
             onNextLesson={() => {
               navigateLesson(adjacentLessonIds.next);
             }}
+            onNextParagraph={() => {
+              jumpParagraph('next');
+            }}
             onPause={audioPlayer.pause}
             onPlay={audioPlayer.play}
             onPreviousLesson={() => {
               navigateLesson(adjacentLessonIds.previous);
+            }}
+            onPreviousParagraph={() => {
+              jumpParagraph('prev');
             }}
             onSeek={audioPlayer.seek}
             playing={audioPlayer.playing}

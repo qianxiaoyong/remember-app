@@ -43,3 +43,38 @@ export function getLastParagraphEndMs(paragraphs: StoryParagraph[]): number | nu
   const lastParagraph = paragraphs[paragraphs.length - 1];
   return lastParagraph?.audioEndMs ?? null;
 }
+
+export function resolveParagraphJumpMs(
+  paragraphs: StoryParagraph[],
+  positionMs: number,
+  direction: 'prev' | 'next',
+): number | null {
+  if (!hasParagraphTimeline(paragraphs)) {
+    return null;
+  }
+
+  const currentIndex = findActiveParagraphIndex(paragraphs, positionMs) ?? 0;
+
+  if (direction === 'prev') {
+    const targetIndex = Math.max(0, currentIndex - 1);
+    return paragraphs[targetIndex]?.audioStartMs ?? null;
+  }
+
+  const targetIndex = Math.min(paragraphs.length - 1, currentIndex + 1);
+  return paragraphs[targetIndex]?.audioStartMs ?? null;
+}
+
+export function canJumpParagraph(
+  paragraphs: StoryParagraph[],
+  positionMs: number,
+  direction: 'prev' | 'next',
+): boolean {
+  if (!hasParagraphTimeline(paragraphs)) {
+    return false;
+  }
+  const currentIndex = findActiveParagraphIndex(paragraphs, positionMs) ?? 0;
+  if (direction === 'prev') {
+    return currentIndex > 0;
+  }
+  return currentIndex < paragraphs.length - 1;
+}

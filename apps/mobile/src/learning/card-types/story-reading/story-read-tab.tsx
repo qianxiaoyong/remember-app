@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { StoryReadingContent, StorySidebarEntry } from '@remember/contracts';
 import { colors } from '../../../theme/colors';
@@ -24,12 +24,18 @@ interface StoryReadTabProps {
   knowledgeId: string;
   content: StoryReadingContent;
   positionMs: number;
+  playing: boolean;
 }
+
+const AUTO_SCROLL_TOP_INSET = spacing.xl;
 
 export function StoryReadTab(props: StoryReadTabProps): ReactElement {
   const [selectedEntry, setSelectedEntry] = useState<StorySidebarEntry | null>(null);
   const [sheetVisible, setSheetVisible] = useState(false);
   const [showTranslation, setShowTranslation] = useState(false);
+  const scrollRef = useRef<ScrollView>(null);
+  const paragraphOffsetsRef = useRef<Map<number, number>>(new Map());
+  const lastAutoScrolledIndexRef = useRef<number | null>(null);
   const tierStats = useMemo(() => countTierStats(props.content), [props.content]);
   const activeParagraphIndex = useMemo(
     () => findActiveParagraphIndex(props.content.story.paragraphs, props.positionMs),
@@ -46,7 +52,27 @@ export function StoryReadTab(props: StoryReadTabProps): ReactElement {
 
   useEffect(() => {
     setShowTranslation(false);
+    paragraphOffsetsRef.current.clear();
+    lastAutoScrolledIndexRef.current = null;
   }, [props.knowledgeId]);
+
+  useEffect(() => {
+    if (!props.playing || activeParagraphIndex === null) {
+      return;
+    }
+    if (lastAutoScrolledIndexRef.current === activeParagraphIndex) {
+      return;
+    }
+    const offsetY = paragraphOffsetsRef.current.get(activeParagraphIndex);
+    if (offsetY === undefined) {
+      return;
+    }
+    lastAutoScrolledIndexRef.current = activeParagraphIndex;
+    scrollRef.current?.scrollTo({
+      y: Math.max(0, offsetY - AUTO_SCROLL_TOP_INSET),
+      animated: true,
+    });
+  }, [activeParagraphIndex, props.playing]);
 
   const openVocabSheet = (vocabId: string): void => {
     const entry = sidebarById.get(vocabId) ?? null;
@@ -86,6 +112,7 @@ export function StoryReadTab(props: StoryReadTabProps): ReactElement {
       </View>
 
       <ScrollView
+        ref={scrollRef}
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
         style={styles.scroll}
@@ -94,7 +121,13 @@ export function StoryReadTab(props: StoryReadTabProps): ReactElement {
           {props.content.story.paragraphs.map((paragraph, paragraphIndex) => {
             const isFollowAlong = activeParagraphIndex === paragraphIndex;
             return (
-              <View key={`p-${String(paragraphIndex)}`} style={styles.paragraphBlock}>
+              <View
+                key={`p-${String(paragraphIndex)}`}
+                onLayout={(event) => {
+                  paragraphOffsetsRef.current.set(paragraphIndex, event.nativeEvent.layout.y);
+                }}
+                style={styles.paragraphBlock}
+              >
                 <Text
                   style={[
                     styles.paragraph,

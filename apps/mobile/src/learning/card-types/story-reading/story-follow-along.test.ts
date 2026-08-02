@@ -1,8 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import {
+  canJumpParagraph,
   findActiveParagraphIndex,
   getLastParagraphEndMs,
   hasParagraphTimeline,
+  resolveParagraphJumpMs,
 } from './story-follow-along.js';
 
 const paragraphsWithTimeline = [
@@ -30,5 +32,17 @@ describe('story-follow-along', () => {
   it('getLastParagraphEndMs 返回最后 audioEndMs', () => {
     expect(getLastParagraphEndMs(paragraphsWithTimeline)).toBe(4000);
     expect(getLastParagraphEndMs([{ runs: [{ kind: 'text', text: 'A' }] }])).toBeNull();
+  });
+
+  it('resolveParagraphJumpMs 跳到相邻段起点', () => {
+    expect(resolveParagraphJumpMs(paragraphsWithTimeline, 500, 'next')).toBe(1000);
+    expect(resolveParagraphJumpMs(paragraphsWithTimeline, 1500, 'prev')).toBe(0);
+    expect(resolveParagraphJumpMs(paragraphsWithTimeline, 3000, 'next')).toBe(2500);
+  });
+
+  it('canJumpParagraph 在首尾段边界禁用', () => {
+    expect(canJumpParagraph(paragraphsWithTimeline, 500, 'prev')).toBe(false);
+    expect(canJumpParagraph(paragraphsWithTimeline, 3000, 'next')).toBe(false);
+    expect(canJumpParagraph(paragraphsWithTimeline, 1500, 'next')).toBe(true);
   });
 });
