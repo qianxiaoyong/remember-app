@@ -8,6 +8,7 @@ export const packErrorCodes = [
   'PACK_SIZE_EXCEEDED',
   'PACK_SCHEMA_INVALID',
   'PACK_CONTENT_INVALID',
+  'PACK_UNSUPPORTED_CARD_TYPE',
 ] as const;
 
 export type PackErrorCode = (typeof packErrorCodes)[number];

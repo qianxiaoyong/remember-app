@@ -40,6 +40,12 @@ export {
   type VocabularyContent,
 } from './vocabulary-content.js';
 export { packCardRowSchema, parseCardContentJson, type PackCardRow } from './card.js';
+export {
+  isSupportedCardType,
+  parsePackCardContent,
+  type CardType,
+  type ParsedPackCardContent,
+} from './card-type-registry.js';
 export { lexiconEntrySchema, parseLexiconDefinitionsJson, type LexiconEntry } from './lexicon.js';
 export {
   CREATE_PACK_SQLITE_SQL,
