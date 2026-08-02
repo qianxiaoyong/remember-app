@@ -1,5 +1,6 @@
 export { packErrorCodes, PackVerificationError, type PackErrorCode } from './errors.js';
 export {
+  CARD_TYPE_STORY_READING,
   CARD_TYPE_VOCABULARY,
   MANIFEST_VERSION,
   MAX_PACK_FILE_BYTES,
@@ -14,9 +15,12 @@ export {
 export { canonicalJson, manifestBytesForSigning } from './canonical-json.js';
 export {
   buildKnowledgeId,
+  buildStoryKnowledgeId,
   isValidKnowledgeIdFormat,
   knowledgeIdMatchesHeadword,
+  knowledgeIdMatchesLessonCode,
   slugFromHeadword,
+  slugFromLessonCode,
 } from './knowledge-id.js';
 export { normalizeSurfaceForm, tokenizeEnglishSentence } from './normalize.js';
 export { assertAllowedPackPath, isAllowedPackPath, normalizeZipEntryPath } from './paths.js';
@@ -39,6 +43,16 @@ export {
   vocabularyRevealSchema,
   type VocabularyContent,
 } from './vocabulary-content.js';
+export {
+  storyReadingContentSchema,
+  storySidebarEntrySchema,
+  storyTierSchema,
+  parseStoryReadingContentJson,
+  type StoryReadingContent,
+  type StorySidebarEntry,
+  type StoryTier,
+  type StoryWordRun,
+} from './story-reading-content.js';
 export { packCardRowSchema, parseCardContentJson, type PackCardRow } from './card.js';
 export {
   isSupportedCardType,
@@ -77,6 +91,7 @@ export {
   bytesToBase64,
   type Ed25519Verifier,
 } from './verify-signature.js';
+export { validateStoryReadingCard, type StoryPackCardRow } from './validate-story-reading-card.js';
 export {
   validateLexiconEntries,
   validatePackCards,

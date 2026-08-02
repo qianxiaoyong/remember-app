@@ -1,5 +1,6 @@
 const SLUG_PATTERN = /^[a-z0-9-]+$/;
-const KNOWLEDGE_ID_PATTERN = /^[^:]+:en:(word|phrase):[a-z0-9-]+$/;
+const VOCABULARY_KNOWLEDGE_ID_PATTERN = /^[^:]+:en:(word|phrase):[a-z0-9-]+$/;
+const STORY_KNOWLEDGE_ID_PATTERN = /^[^:]+:story:[a-z0-9-]+$/;
 
 export function slugFromHeadword(headword: string): string {
   return headword
@@ -9,6 +10,10 @@ export function slugFromHeadword(headword: string): string {
     .replace(/[^a-z0-9-]/g, '')
     .replace(/-+/g, '-')
     .replace(/^-|-$/g, '');
+}
+
+export function slugFromLessonCode(lessonCode: string): string {
+  return slugFromHeadword(lessonCode);
 }
 
 export function buildKnowledgeId(
@@ -23,8 +28,19 @@ export function buildKnowledgeId(
   return `${packId}:en:${kind}:${slug}`;
 }
 
+export function buildStoryKnowledgeId(packId: string, lessonCode: string): string {
+  const slug = slugFromLessonCode(lessonCode);
+  if (!slug || !SLUG_PATTERN.test(slug)) {
+    throw new Error(`invalid lesson code slug: ${lessonCode}`);
+  }
+  return `${packId}:story:${slug}`;
+}
+
 export function isValidKnowledgeIdFormat(knowledgeId: string): boolean {
-  return KNOWLEDGE_ID_PATTERN.test(knowledgeId);
+  return (
+    VOCABULARY_KNOWLEDGE_ID_PATTERN.test(knowledgeId) ||
+    STORY_KNOWLEDGE_ID_PATTERN.test(knowledgeId)
+  );
 }
 
 export function knowledgeIdMatchesHeadword(input: {
@@ -34,4 +50,12 @@ export function knowledgeIdMatchesHeadword(input: {
   kind: 'word' | 'phrase';
 }): boolean {
   return input.knowledgeId === buildKnowledgeId(input.packId, input.headword, input.kind);
+}
+
+export function knowledgeIdMatchesLessonCode(input: {
+  knowledgeId: string;
+  packId: string;
+  lessonCode: string;
+}): boolean {
+  return input.knowledgeId === buildStoryKnowledgeId(input.packId, input.lessonCode);
 }

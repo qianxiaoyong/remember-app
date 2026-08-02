@@ -43,7 +43,7 @@ function makeLexicon(overrides: Partial<PackLexiconRecord> = {}): PackLexiconRec
 }
 
 describe('validatePackCards', () => {
-  it('拒绝非 vocabulary 的 cardType', () => {
+  it('拒绝未知 cardType', () => {
     expect(() =>
       validatePackCards('remember-test-pack', [makeCard({ cardType: 'choice' })], manifestPaths),
     ).toThrow(
@@ -58,6 +58,57 @@ describe('validatePackCards', () => {
     const rows = validatePackCards('remember-test-pack', cards, manifestPaths);
     expect(rows).toHaveLength(cards.length);
     expect(rows[0]?.cardType).toBe('vocabulary');
+  });
+
+  it('接受 story_reading 行', () => {
+    const storyContent = JSON.stringify({
+      lesson: {
+        code: 'C1',
+        titleEn: 'Test',
+        titleZh: '测试',
+        coverImage: 'assets/images/c1.png',
+        primaryAudio: 'assets/audio/c1.mp3',
+      },
+      story: {
+        paragraphs: [
+          {
+            runs: [
+              {
+                kind: 'word',
+                surface: 'hi',
+                glossZh: '嗨',
+                tier: 'high',
+                vocabId: 'hi',
+              },
+            ],
+          },
+        ],
+      },
+      sidebar: [
+        {
+          vocabId: 'hi',
+          headword: 'hi',
+          ipa: '/haɪ/',
+          pos: 'int.',
+          definitionZh: '嗨',
+          tier: 'high',
+        },
+      ],
+    });
+    const storyManifest = new Set(['assets/images/c1.png', 'assets/audio/c1.mp3']);
+    const rows = validatePackCards(
+      'story-test-pack',
+      [
+        {
+          knowledgeId: 'story-test-pack:story:c1',
+          cardType: 'story_reading',
+          sortOrder: 1,
+          content: storyContent,
+        },
+      ],
+      storyManifest,
+    );
+    expect(rows[0]?.cardType).toBe('story_reading');
   });
 });
 

@@ -1,6 +1,6 @@
 import { PackVerificationError } from './errors.js';
 import { CARD_TYPE_VOCABULARY } from './constants.js';
-import { packCardRowSchema, parseCardContentJson } from './card.js';
+import { vocabularyPackCardRowSchema, parseCardContentJson } from './card.js';
 import { knowledgeIdMatchesHeadword } from './knowledge-id.js';
 import { assertAllowedPackPath } from './paths.js';
 import type { PackCardRow } from './card.js';
@@ -47,7 +47,7 @@ export function validateVocabularyCard(
     }
   }
 
-  return packCardRowSchema.parse({
+  return vocabularyPackCardRowSchema.parse({
     knowledgeId: card.knowledgeId,
     cardType: CARD_TYPE_VOCABULARY,
     sortOrder: card.sortOrder,
