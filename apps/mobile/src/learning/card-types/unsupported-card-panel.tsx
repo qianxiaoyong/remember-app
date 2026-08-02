@@ -5,13 +5,14 @@ import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
 
 interface UnsupportedCardPanelProps {
+  message?: string;
   onGoHome: () => void;
 }
 
 export function UnsupportedCardPanel(props: UnsupportedCardPanelProps): ReactElement {
   return (
     <View style={styles.root}>
-      <Text style={styles.message}>暂不支持此卡片类型</Text>
+      <Text style={styles.message}>{props.message ?? '暂不支持此卡片类型'}</Text>
       <PrimaryButton label="返回书库" onPress={props.onGoHome} />
     </View>
   );

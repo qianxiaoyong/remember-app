@@ -54,7 +54,9 @@ describe('validatePackCards', () => {
   });
 
   it('接受 vocabulary 行并返回 packCardRowSchema 结果', () => {
-    const rows = validatePackCards('remember-test-pack', [makeCard()], manifestPaths);
+    const cards = [makeCard()];
+    const rows = validatePackCards('remember-test-pack', cards, manifestPaths);
+    expect(rows).toHaveLength(cards.length);
     expect(rows[0]?.cardType).toBe('vocabulary');
   });
 });

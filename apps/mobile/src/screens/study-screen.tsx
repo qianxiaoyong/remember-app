@@ -140,6 +140,8 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
           ) : (
             <UnsupportedCardPanel onGoHome={goHome} />
           )
+        ) : session.currentItem ? (
+          <UnsupportedCardPanel message="无法加载此卡片内容" onGoHome={goHome} />
         ) : null}
       </View>
 

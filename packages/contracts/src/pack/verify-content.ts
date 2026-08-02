@@ -75,6 +75,13 @@ export function validatePackCards(
     }
   }
 
+  if (validated.length !== cards.length) {
+    throw new PackVerificationError(
+      'PACK_SCHEMA_INVALID',
+      `validated card count mismatch: expected ${String(cards.length)}, got ${String(validated.length)}`,
+    );
+  }
+
   return validated;
 }
 

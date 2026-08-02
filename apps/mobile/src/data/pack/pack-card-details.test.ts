@@ -20,4 +20,14 @@ describe('mapCardRowToDetail', () => {
     expect(detail?.cardType).toBe('vocabulary');
     expect(detail?.headword).toBe('hi');
   });
+
+  it('非法 content 返回 null', () => {
+    const detail = mapCardRowToDetail({
+      knowledgeId: 'p:en:word:hi',
+      cardType: 'vocabulary',
+      sortOrder: 1,
+      content: '{not-json',
+    });
+    expect(detail).toBeNull();
+  });
 });
