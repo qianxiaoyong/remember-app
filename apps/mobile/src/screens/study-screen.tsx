@@ -10,7 +10,8 @@ import { StudyRatingBar } from '../components/study/study-rating-bar';
 import { StudySessionOutcomePanel } from '../components/study/study-session-outcome-panel';
 import { PrimaryButton } from '../components/ui/primary-button';
 import { useStudyFlow } from '../hooks/use-study-flow';
-import { VocabularyStudyPanel } from '../learning/card-types/vocabulary/vocabulary-study-panel';
+import { resolveCardTypeDefinition } from '../learning/card-types/registry';
+import { UnsupportedCardPanel } from '../learning/card-types/unsupported-card-panel';
 import { listInstalledPacksUseCase } from '../use-cases/list-installed-packs';
 import {
   resolveStudyPackDisplayName,
@@ -55,6 +56,7 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
   const installedPacks = useMemo(() => listInstalledPacksUseCase(), []);
   const sessionOutcome = useMemo(() => resolveStudySessionOutcome(session), [session]);
   const packDisplayName = useMemo(() => resolveStudyPackDisplayName(props.packId), [props.packId]);
+  const cardTypeDefinition = cardDetail ? resolveCardTypeDefinition(cardDetail.cardType) : null;
 
   useEffect(() => {
     if (props.autoStart !== false && session === null) {
@@ -86,7 +88,12 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
     }
   };
 
-  const showRatingBar = revealed && session?.currentItem && intervalLabels;
+  const showRatingBar =
+    cardTypeDefinition?.reviewMode === 'sm2' && revealed && session?.currentItem && intervalLabels;
+
+  const goHome = (): void => {
+    router.replace('/library');
+  };
 
   return (
     <ScreenScaffold
@@ -108,30 +115,31 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
             onBrowseMarket={() => {
               navigateShellTab(router, 'market');
             }}
-            onGoHome={() => {
-              router.replace('/library');
-            }}
+            onGoHome={goHome}
             packDisplayName={packDisplayName}
             variant={sessionOutcome}
           />
         ) : cardDetail ? (
-          <VocabularyStudyPanel
-            content={cardDetail.content}
-            lexiconSelectedSurfaceForm={lexiconSelectedSurfaceForm}
-            onHomePress={() => {
-              router.replace('/library');
-            }}
-            onMorePress={() => {
-              setMoreVisible(true);
-            }}
-            onPlayExampleAudio={handlePlayExampleAudio}
-            onPlayPrimaryAudio={handlePlayPrimaryAudio}
-            onReveal={() => {
-              setRevealed(true);
-            }}
-            onTokenPress={openLexicon}
-            revealed={revealed}
-          />
+          cardTypeDefinition ? (
+            <cardTypeDefinition.Renderer
+              content={cardDetail.content}
+              knowledgeId={cardDetail.knowledgeId}
+              lexiconSelectedSurfaceForm={lexiconSelectedSurfaceForm}
+              onHomePress={goHome}
+              onMorePress={() => {
+                setMoreVisible(true);
+              }}
+              onPlayExampleAudio={handlePlayExampleAudio}
+              onPlayPrimaryAudio={handlePlayPrimaryAudio}
+              onTokenPress={openLexicon}
+              packId={props.packId}
+              revealed={revealed}
+              setRevealed={setRevealed}
+              sortOrder={cardDetail.sortOrder}
+            />
+          ) : (
+            <UnsupportedCardPanel onGoHome={goHome} />
+          )
         ) : null}
       </View>
 

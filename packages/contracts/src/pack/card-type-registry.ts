@@ -10,10 +10,7 @@ export type ParsedPackCardContent = {
   content: VocabularyContent;
 };
 
-export function parsePackCardContent(
-  cardType: string,
-  contentJson: string,
-): ParsedPackCardContent {
+export function parsePackCardContent(cardType: string, contentJson: string): ParsedPackCardContent {
   if (cardType !== CARD_TYPE_VOCABULARY) {
     throw new PackVerificationError(
       'PACK_UNSUPPORTED_CARD_TYPE',

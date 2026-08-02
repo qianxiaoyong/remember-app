@@ -1,7 +1,4 @@
-import {
-  parsePackCardContent,
-  type ParsedPackCardContent,
-} from '@remember/contracts';
+import { parsePackCardContent, type ParsedPackCardContent } from '@remember/contracts';
 import { openDatabaseSync } from 'expo-sqlite';
 
 export interface PackCardRow {
@@ -21,9 +18,7 @@ export function mapCardRowToDetail(row: PackCardRow): PackCardDetail | null {
   try {
     const parsed = parsePackCardContent(row.cardType, row.content);
     const headword =
-      parsed.cardType === 'vocabulary'
-        ? parsed.content.prompt.headword
-        : row.knowledgeId;
+      parsed.cardType === 'vocabulary' ? parsed.content.prompt.headword : row.knowledgeId;
     return {
       ...parsed,
       knowledgeId: row.knowledgeId,
