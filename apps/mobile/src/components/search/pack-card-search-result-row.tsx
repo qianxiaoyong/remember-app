@@ -12,8 +12,15 @@ interface PackCardSearchResultRowProps {
   onRejoinPress: () => void;
 }
 
+function resolveSearchSubtitle(card: PackCardDetail): string {
+  if (card.cardType === 'vocabulary') {
+    return card.content.reveal.definitions[0]?.text ?? '';
+  }
+  return card.content.lesson.titleZh;
+}
+
 export function PackCardSearchResultRow(props: PackCardSearchResultRowProps): ReactElement {
-  const definition = props.card.content.reveal.definitions[0]?.text ?? '';
+  const definition = resolveSearchSubtitle(props.card);
 
   return (
     <SurfaceCard>
@@ -29,13 +36,15 @@ export function PackCardSearchResultRow(props: PackCardSearchResultRowProps): Re
             {definition}
           </Text>
         </View>
-        <Pressable
-          accessibilityRole="button"
-          onPress={props.onRejoinPress}
-          style={styles.rejoinButton}
-        >
-          <Text style={styles.rejoinLabel}>加入复习 ›</Text>
-        </Pressable>
+        {props.card.cardType === 'vocabulary' ? (
+          <Pressable
+            accessibilityRole="button"
+            onPress={props.onRejoinPress}
+            style={styles.rejoinButton}
+          >
+            <Text style={styles.rejoinLabel}>加入复习 ›</Text>
+          </Pressable>
+        ) : null}
       </View>
     </SurfaceCard>
   );

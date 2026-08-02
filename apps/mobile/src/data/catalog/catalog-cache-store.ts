@@ -1,7 +1,11 @@
 import * as SecureStore from 'expo-secure-store';
 import { findCatalogItem, type CatalogPackItem } from '../../catalog/catalog-seed';
 import type { MarketCatalogQuery } from '../../use-cases/filter-catalog-items';
-import { filterCatalogItems, filterLocalCatalogSeed } from '../../use-cases/filter-catalog-items';
+import {
+  filterCatalogItems,
+  filterLocalCatalogSeed,
+  injectBundledCatalogSeedItems,
+} from '../../use-cases/filter-catalog-items';
 import { syncInstalledPackDisplayNamesFromCatalog } from '../../use-cases/sync-installed-pack-display-names';
 
 const CACHE_KEY = 'remember.catalogCache.v1';
@@ -62,7 +66,7 @@ export async function readCatalogDiskCache(): Promise<CatalogPackItem[] | null> 
 export async function resolveOfflineCatalog(query: MarketCatalogQuery): Promise<CatalogPackItem[]> {
   const cached = memoryCache ?? (await readCatalogDiskCache());
   if (cached && cached.length > 0) {
-    return filterCatalogItems(cached, query);
+    return filterCatalogItems(injectBundledCatalogSeedItems(cached), query);
   }
   return filterLocalCatalogSeed(query);
 }

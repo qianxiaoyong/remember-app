@@ -4,7 +4,8 @@ export const SUPPORTED_PROTOCOL_VERSIONS = [PROTOCOL_VERSION] as const;
 export const SUPPORTED_MANIFEST_VERSIONS = [MANIFEST_VERSION] as const;
 
 export const CARD_TYPE_VOCABULARY = 'vocabulary' as const;
-export const SUPPORTED_CARD_TYPES = [CARD_TYPE_VOCABULARY] as const;
+export const CARD_TYPE_STORY_READING = 'story_reading' as const;
+export const SUPPORTED_CARD_TYPES = [CARD_TYPE_VOCABULARY, CARD_TYPE_STORY_READING] as const;
 
 export const MAX_PACK_ZIP_BYTES = 200 * 1024 * 1024;
 export const MAX_PACK_FILE_BYTES = MAX_PACK_ZIP_BYTES;

@@ -1,8 +1,9 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { ReviewRating } from '@remember/domain';
 import { normalizeSurfaceForm } from '@remember/contracts';
 import type { LexiconLookupResult } from '../data/repositories/lexicon-entry-repository';
 import { confirmCardReview } from '../use-cases/confirm-card-review';
+import { confirmLessonComplete } from '../use-cases/confirm-lesson-complete';
 import { getPackCardDetailUseCase } from '../use-cases/get-pack-card-detail';
 import {
   getCurrentCardHeadword,
@@ -23,6 +24,7 @@ export function useStudyFlow(packId: string) {
   const [revealed, setRevealed] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [reachedBottom, setReachedBottom] = useState(false);
   const [lexiconEntry, setLexiconEntry] = useState<LexiconLookupResult | null>(null);
   const [lexiconVisible, setLexiconVisible] = useState(false);
   const [lexiconSaved, setLexiconSaved] = useState(false);
@@ -32,6 +34,7 @@ export function useStudyFlow(packId: string) {
   const startSession = useCallback(() => {
     setMessage(null);
     setRevealed(false);
+    setReachedBottom(false);
     try {
       const nextSession = resumeOrStartStudySession(packId);
       setSession(nextSession);
@@ -50,6 +53,10 @@ export function useStudyFlow(packId: string) {
     }
     return getPackCardDetailUseCase(packId, currentKnowledgeId);
   }, [currentKnowledgeId, packId]);
+
+  useEffect(() => {
+    setReachedBottom(false);
+  }, [currentKnowledgeId]);
 
   const headword = useMemo(() => {
     if (!currentKnowledgeId) {
@@ -84,6 +91,7 @@ export function useStudyFlow(packId: string) {
         });
         setSession(nextSession);
         setRevealed(false);
+        setReachedBottom(false);
       } catch (error) {
         setMessage(error instanceof Error ? error.message : '保存作答失败');
       } finally {
@@ -92,6 +100,27 @@ export function useStudyFlow(packId: string) {
     },
     [packId, session],
   );
+
+  const handleLessonComplete = useCallback(() => {
+    if (!session?.currentItem) {
+      return;
+    }
+    setIsSubmitting(true);
+    setMessage(null);
+    try {
+      const nextSession = confirmLessonComplete({
+        packId,
+        knowledgeId: session.currentItem.knowledgeId,
+      });
+      setSession(nextSession);
+      setRevealed(false);
+      setReachedBottom(false);
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : '保存完成状态失败');
+    } finally {
+      setIsSubmitting(false);
+    }
+  }, [packId, session]);
 
   const openLexicon = useCallback(
     (token: string) => {
@@ -121,9 +150,13 @@ export function useStudyFlow(packId: string) {
     if (!cardDetail) {
       return;
     }
+    const relativePath =
+      cardDetail.cardType === 'vocabulary'
+        ? cardDetail.content.prompt.primaryAudio
+        : cardDetail.content.lesson.primaryAudio;
     void playPackAssetAudio({
       packId,
-      relativePath: cardDetail.content.prompt.primaryAudio,
+      relativePath,
     });
   }, [cardDetail, packId]);
 
@@ -162,6 +195,7 @@ export function useStudyFlow(packId: string) {
     revealed,
     message,
     isSubmitting,
+    reachedBottom,
     lexiconEntry,
     lexiconVisible,
     lexiconSaved,
@@ -172,7 +206,9 @@ export function useStudyFlow(packId: string) {
     intervalLabels,
     startSession,
     setRevealed,
+    setReachedBottom,
     handleReview,
+    handleLessonComplete,
     openLexicon,
     handleToggleSave,
     handlePlayAudio,

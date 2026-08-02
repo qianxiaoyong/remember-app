@@ -4,6 +4,7 @@ vi.mock('expo-sqlite', () => ({
   openDatabaseSync: vi.fn(),
 }));
 
+import type { StoryReadingContent } from '@remember/contracts';
 import { mapCardRowToDetail } from './pack-card-details.js';
 
 describe('mapCardRowToDetail', () => {
@@ -19,6 +20,37 @@ describe('mapCardRowToDetail', () => {
     });
     expect(detail?.cardType).toBe('vocabulary');
     expect(detail?.headword).toBe('hi');
+  });
+
+  it('story_reading 行映射含 titleEn 作 headword', () => {
+    const content: StoryReadingContent = {
+      lesson: {
+        code: 'C1',
+        titleEn: 'The Pea',
+        titleZh: '豌豆',
+        coverImage: 'assets/images/c1.png',
+        primaryAudio: 'assets/audio/c1.mp3',
+      },
+      story: { paragraphs: [{ runs: [{ kind: 'text', text: 'Hi.' }] }] },
+      sidebar: [
+        {
+          vocabId: 'hi',
+          headword: 'hi',
+          ipa: '/haɪ/',
+          pos: 'int.',
+          definitionZh: '嗨',
+          tier: 'high',
+        },
+      ],
+    };
+    const detail = mapCardRowToDetail({
+      knowledgeId: 'p:story:c1',
+      cardType: 'story_reading',
+      sortOrder: 1,
+      content: JSON.stringify(content),
+    });
+    expect(detail?.cardType).toBe('story_reading');
+    expect(detail?.headword).toBe('The Pea');
   });
 
   it('非法 content 返回 null', () => {

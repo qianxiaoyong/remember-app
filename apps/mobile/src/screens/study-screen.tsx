@@ -34,6 +34,7 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
     startSession,
     revealed,
     isSubmitting,
+    reachedBottom,
     lexiconEntry,
     lexiconVisible,
     lexiconSaved,
@@ -42,7 +43,9 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
     cardDetail,
     intervalLabels,
     setRevealed,
+    setReachedBottom,
     handleReview,
+    handleLessonComplete,
     openLexicon,
     handleToggleSave,
     handlePlayAudio,
@@ -91,6 +94,9 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
   const showRatingBar =
     cardTypeDefinition?.reviewMode === 'sm2' && revealed && session?.currentItem && intervalLabels;
 
+  const showLessonCompleteBar =
+    cardTypeDefinition?.reviewMode === 'lesson_complete' && session?.currentItem;
+
   const goHome = (): void => {
     router.replace('/library');
   };
@@ -100,6 +106,15 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
       footer={
         showRatingBar ? (
           <StudyRatingBar disabled={isSubmitting} labels={intervalLabels} onRate={handleReview} />
+        ) : showLessonCompleteBar ? (
+          <View style={styles.lessonCompleteFooter}>
+            <PrimaryButton
+              disabled={!reachedBottom || isSubmitting}
+              label="我读完了"
+              loading={isSubmitting}
+              onPress={handleLessonComplete}
+            />
+          </View>
         ) : null
       }
       safeAreaEdges={['left', 'right']}
@@ -131,6 +146,9 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
               }}
               onPlayExampleAudio={handlePlayExampleAudio}
               onPlayPrimaryAudio={handlePlayPrimaryAudio}
+              onReachedBottom={() => {
+                setReachedBottom(true);
+              }}
               onTokenPress={openLexicon}
               packId={props.packId}
               revealed={revealed}
@@ -192,6 +210,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   emptyState: {
+    padding: spacing.lg,
+  },
+  lessonCompleteFooter: {
     padding: spacing.lg,
   },
 });

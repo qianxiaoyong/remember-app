@@ -33,3 +33,22 @@ export function filterCatalogItems(
 export function filterLocalCatalogSeed(query: MarketCatalogQuery): CatalogPackItem[] {
   return filterCatalogItems(catalogSeed, query);
 }
+
+/** APK 内带独立 zip 的内置包；市场目录在 API 未登记时仍注入。 */
+export const PRIMARY_BUNDLED_CATALOG_PACK_IDS = ['remember-test-pack', 'story-test-pack'] as const;
+
+/** APK 内置测试包：注入市场目录，API 未登记时仍可发现与安装；不覆盖已有 packId。 */
+export function injectBundledCatalogSeedItems(items: CatalogPackItem[]): CatalogPackItem[] {
+  const bundled = catalogSeed.filter(
+    (item) =>
+      item.isBundledTestPack &&
+      (PRIMARY_BUNDLED_CATALOG_PACK_IDS as readonly string[]).includes(item.packId),
+  );
+  const byId = new Map(items.map((item) => [item.packId, item]));
+  for (const item of bundled) {
+    if (!byId.has(item.packId)) {
+      byId.set(item.packId, item);
+    }
+  }
+  return [...byId.values()];
+}

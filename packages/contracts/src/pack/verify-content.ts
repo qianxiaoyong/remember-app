@@ -4,10 +4,11 @@ import { isSupportedCardType } from './card-type-registry.js';
 import { parseLexiconDefinitionsJson } from './lexicon.js';
 import type { PackManifest } from './manifest.js';
 import { normalizeSurfaceForm } from './normalize.js';
-import type { PackCardRow } from './card.js';
 import type { LexiconEntry } from './lexicon.js';
+import { validateStoryReadingCard } from './validate-story-reading-card.js';
 import { validateVocabularyCard } from './validate-vocabulary-card.js';
 import { isValidKnowledgeIdFormat } from './knowledge-id.js';
+import type { PackCardRow } from './card.js';
 
 export interface PackCardRecord {
   knowledgeId: string;
@@ -69,10 +70,11 @@ export function validatePackCards(
       );
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- cardType 分发预留多 type 分支
     if (card.cardType === CARD_TYPE_VOCABULARY) {
       validated.push(validateVocabularyCard(packId, card, manifestPaths));
+      continue;
     }
+    validated.push(validateStoryReadingCard(packId, card, manifestPaths));
   }
 
   if (validated.length !== cards.length) {

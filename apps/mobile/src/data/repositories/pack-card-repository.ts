@@ -19,11 +19,12 @@ export function listPackCards(sqlitePath: string): PackCardSummary[] {
   for (const row of rows) {
     const content = JSON.parse(row.content) as {
       prompt?: { headword?: string };
+      lesson?: { titleEn?: string };
     };
     cards.push({
       knowledgeId: row.knowledgeId,
       sortOrder: row.sortOrder,
-      headword: content.prompt?.headword ?? row.knowledgeId,
+      headword: content.prompt?.headword ?? content.lesson?.titleEn ?? row.knowledgeId,
     });
   }
 
@@ -47,10 +48,11 @@ export function getPackCard(sqlitePath: string, knowledgeId: string): PackCardSu
 
   const content = JSON.parse(row.content) as {
     prompt?: { headword?: string };
+    lesson?: { titleEn?: string };
   };
   return {
     knowledgeId: row.knowledgeId,
     sortOrder: row.sortOrder,
-    headword: content.prompt?.headword ?? row.knowledgeId,
+    headword: content.prompt?.headword ?? content.lesson?.titleEn ?? row.knowledgeId,
   };
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState, type ReactElement } from 'react';
 import type { PackSourceCard } from '@remember/pack-builder/pack-source';
+import { isStorySourceCard } from '../utils/is-story-source-card.js';
 import { loadPackSource, saveCard } from '../api/local-api-client.js';
 import { VOCABULARY_CARD_FORM_ID, VocabularyCardForm } from '../components/vocabulary-card-form.js';
 import { LoadingState } from '../components/loading-state.js';
@@ -70,16 +71,34 @@ export function CardEditPage({ packId, sortOrder, onBack }: CardEditPageProps): 
     );
   }
 
+  if (isStorySourceCard(card)) {
+    return (
+      <>
+        <StatusBanner title="story_reading 卡片暂不支持在 pack-editor 中编辑" variant="warning" />
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={onBack}
+          style={{ marginTop: 'var(--space-3)' }}
+        >
+          返回列表
+        </button>
+      </>
+    );
+  }
+
+  const vocabularyCard = card;
+
   return (
     <>
       {toast && <Toast message={toast} />}
 
       <VocabularyCardForm
-        defaultValues={card.content}
+        defaultValues={vocabularyCard.content}
         onSubmit={async (content) => {
           setSaving(true);
           try {
-            const nextCard: PackSourceCard = { ...card, content };
+            const nextCard: PackSourceCard = { ...vocabularyCard, content };
             await saveCard(packId, nextCard);
             setCard(nextCard);
             setToast('已保存');
@@ -97,7 +116,7 @@ export function CardEditPage({ packId, sortOrder, onBack }: CardEditPageProps): 
           返回列表
         </button>
         <div className="sticky-form-footer-meta">
-          <strong>#{String(sortOrder)}</strong> · {card.content.prompt.headword}
+          <strong>#{String(sortOrder)}</strong> · {vocabularyCard.content.prompt.headword}
         </div>
         <button
           type="submit"
