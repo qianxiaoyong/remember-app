@@ -3,8 +3,15 @@ import { useLocalSearchParams } from 'expo-router';
 import { StudyScreen } from '../src/screens/study-screen';
 
 export default function StudyRoute(): ReactElement {
-  const params = useLocalSearchParams<{ packId?: string | string[] }>();
+  const params = useLocalSearchParams<{ packId?: string | string[]; knowledgeId?: string | string[] }>();
   const rawPackId = params.packId;
+  const rawKnowledgeId = params.knowledgeId;
   const packId = Array.isArray(rawPackId) ? rawPackId[0] : rawPackId;
-  return <StudyScreen packId={packId ?? 'remember-test-pack'} />;
+  const knowledgeId = Array.isArray(rawKnowledgeId) ? rawKnowledgeId[0] : rawKnowledgeId;
+  return (
+    <StudyScreen
+      knowledgeId={knowledgeId ?? null}
+      packId={packId ?? 'remember-test-pack'}
+    />
+  );
 }

@@ -1,0 +1,192 @@
+import type { ReactElement } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import type { StoryReadingContent } from '@remember/contracts';
+import { useStoryAudioPlayer } from '../../../hooks/use-story-audio-player';
+import { CircleIconButton } from '../../../components/ui/circle-icon-button';
+import { BackChevronIcon, MoreVerticalIcon } from '../../../components/ui/shell-icons';
+import { colors } from '../../../theme/colors';
+import { spacing } from '../../../theme/spacing';
+import { listStoryLessonSummaries } from '../../../use-cases/resolve-story-reader-entry';
+import { resolvePackAssetUri } from '../../../use-cases/resolve-pack-asset-uri';
+import { countSidebarWords } from './count-tier-stats';
+import { StoryAudioBar } from './story-audio-bar';
+import { StoryLessonTabs, type StoryLessonTabId } from './story-lesson-tabs';
+import { StoryReadTab } from './story-read-tab';
+import { StoryVocabTab } from './story-vocab-tab';
+
+export interface StoryLessonShellProps {
+  packId: string;
+  knowledgeId: string;
+  content: StoryReadingContent;
+  initialAudioPositionMs?: number;
+  onHomePress: () => void;
+  onMorePress: () => void;
+  onReaderBookmark?: (positionMs: number) => void;
+  onNavigateLesson?: (knowledgeId: string) => void;
+}
+
+const BOOKMARK_DEBOUNCE_MS = 5000;
+
+export function StoryLessonShell(props: StoryLessonShellProps): ReactElement {
+  const insets = useSafeAreaInsets();
+  const [activeTab, setActiveTab] = useState<StoryLessonTabId>('read');
+  const wordCount = countSidebarWords(props.content);
+  const toolbarTop = insets.top + spacing.sm;
+  const audioUri = resolvePackAssetUri(props.packId, props.content.lesson.primaryAudio);
+  const audioPlayer = useStoryAudioPlayer({
+    uri: audioUri,
+    isActive: activeTab === 'read',
+    initialPositionMs: props.initialAudioPositionMs,
+  });
+  const bookmarkTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lessons = useMemo(() => listStoryLessonSummaries(props.packId), [props.packId]);
+
+  const adjacentLessonIds = useMemo(() => {
+    if (lessons.length === 0) {
+      return { previous: null, next: null };
+    }
+    const currentIndex = lessons.findIndex((lesson) => lesson.knowledgeId === props.knowledgeId);
+    if (currentIndex < 0) {
+      return { previous: null, next: null };
+    }
+    const previous = lessons[(currentIndex - 1 + lessons.length) % lessons.length]?.knowledgeId ?? null;
+    const next = lessons[(currentIndex + 1) % lessons.length]?.knowledgeId ?? null;
+    return { previous, next };
+  }, [lessons, props.knowledgeId]);
+
+  useEffect(() => {
+    setActiveTab('read');
+  }, [props.knowledgeId]);
+
+  useEffect(() => {
+    if (!props.onReaderBookmark) {
+      return;
+    }
+    if (bookmarkTimerRef.current) {
+      clearTimeout(bookmarkTimerRef.current);
+    }
+    bookmarkTimerRef.current = setTimeout(() => {
+      props.onReaderBookmark?.(audioPlayer.positionMs);
+    }, BOOKMARK_DEBOUNCE_MS);
+    return () => {
+      if (bookmarkTimerRef.current) {
+        clearTimeout(bookmarkTimerRef.current);
+      }
+    };
+  }, [audioPlayer.positionMs, props.onReaderBookmark]);
+
+  const navigateLesson = (knowledgeId: string | null): void => {
+    if (!knowledgeId || knowledgeId === props.knowledgeId) {
+      return;
+    }
+    props.onNavigateLesson?.(knowledgeId);
+  };
+
+  return (
+    <View style={styles.root}>
+      <View
+        style={[
+          styles.toolbar,
+          { paddingTop: toolbarTop, minHeight: toolbarTop + spacing.touchTarget },
+        ]}
+      >
+        <View style={styles.toolbarSide}>
+          <CircleIconButton
+            accessibilityLabel="返回书库"
+            onPress={() => {
+              props.onReaderBookmark?.(audioPlayer.positionMs);
+              props.onHomePress();
+            }}
+          >
+            <BackChevronIcon size="sm" />
+          </CircleIconButton>
+        </View>
+
+        <View style={styles.toolbarSide}>
+          <CircleIconButton accessibilityLabel="更多" onPress={props.onMorePress}>
+            <MoreVerticalIcon size="sm" />
+          </CircleIconButton>
+        </View>
+
+        <View pointerEvents="box-none" style={[styles.tabsOverlay, { top: toolbarTop }]}>
+          <StoryLessonTabs
+            activeTab={activeTab}
+            onChange={setActiveTab}
+            variant="toolbar"
+            vocabCount={wordCount}
+          />
+        </View>
+      </View>
+
+      <View style={styles.tabContent}>
+        {activeTab === 'read' ? (
+          <StoryReadTab
+            content={props.content}
+            knowledgeId={props.knowledgeId}
+            packId={props.packId}
+            positionMs={audioPlayer.positionMs}
+          />
+        ) : null}
+        {activeTab === 'vocab' ? <StoryVocabTab content={props.content} /> : null}
+      </View>
+
+      {activeTab === 'read' ? (
+        <View style={{ paddingBottom: Math.max(insets.bottom, spacing.sm) }}>
+          <StoryAudioBar
+            disabled={!audioPlayer.isReady}
+            durationMs={audioPlayer.durationMs}
+            onNextLesson={() => {
+              navigateLesson(adjacentLessonIds.next);
+            }}
+            onPause={audioPlayer.pause}
+            onPlay={audioPlayer.play}
+            onPreviousLesson={() => {
+              navigateLesson(adjacentLessonIds.previous);
+            }}
+            onSeek={audioPlayer.seek}
+            playing={audioPlayer.playing}
+            positionMs={audioPlayer.positionMs}
+          />
+        </View>
+      ) : null}
+    </View>
+  );
+}
+
+const TOOLBAR_SIDE_WIDTH = spacing.touchTarget;
+
+const styles = StyleSheet.create({
+  root: {
+    backgroundColor: colors.background,
+    flex: 1,
+  },
+  toolbar: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: spacing.lg,
+    paddingBottom: spacing.sm,
+    position: 'relative',
+  },
+  toolbarSide: {
+    alignItems: 'center',
+    height: spacing.touchTarget,
+    justifyContent: 'center',
+    width: TOOLBAR_SIDE_WIDTH,
+    zIndex: 2,
+  },
+  tabsOverlay: {
+    alignItems: 'center',
+    bottom: spacing.sm,
+    justifyContent: 'center',
+    left: spacing.lg + TOOLBAR_SIDE_WIDTH,
+    position: 'absolute',
+    right: spacing.lg + TOOLBAR_SIDE_WIDTH,
+    zIndex: 1,
+  },
+  tabContent: {
+    flex: 1,
+  },
+});

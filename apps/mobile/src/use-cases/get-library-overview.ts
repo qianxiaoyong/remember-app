@@ -9,8 +9,12 @@ import {
 import { resolveTodayTaskCount } from '../lib/resolve-today-task-count';
 import { sumPackTodayTaskCounts } from '../lib/sum-pack-today-task-counts';
 import { resolvePackDisplayName } from '../catalog/resolve-pack-display-name';
+import { getStoryReadingBookmark } from '../data/repositories/story-reading-bookmark-repository';
+import { getPackCardDetailUseCase } from './get-pack-card-detail';
 import { resolveContentPackId } from './resolve-content-pack-id';
+import { resolvePackLibraryPresentation } from './resolve-pack-library-presentation';
 import { findActiveStudySessionForContentPackId } from './find-active-study-session';
+import type { LibraryPresentation } from '../learning/card-types/types';
 
 export interface LibraryOverview {
   totalCards: number;
@@ -29,7 +33,8 @@ export interface InstalledPackSummary {
   learnedCount: number;
   todayTaskCount: number;
   hasActiveTask: boolean;
-  actionLabel: '开始学习' | '继续学习';
+  libraryPresentation: LibraryPresentation;
+  actionLabel: '开始学习' | '继续学习' | '开始阅读' | '继续阅读';
   statusHint: string;
   coverColor: string;
 }
@@ -92,6 +97,7 @@ export function listInstalledPackSummaries(now: Date = new Date()): InstalledPac
         : pack.displayName !== pack.packId
           ? pack.displayName
           : pack.packId;
+    const libraryPresentation = resolvePackLibraryPresentation(pack.packId);
 
     return {
       packId: pack.packId,
@@ -101,8 +107,18 @@ export function listInstalledPackSummaries(now: Date = new Date()): InstalledPac
       learnedCount,
       todayTaskCount,
       hasActiveTask,
-      actionLabel: hasActiveTask || todayTaskCount > 0 ? '继续学习' : '开始学习',
-      statusHint: buildStatusHint(todayTaskCount),
+      libraryPresentation,
+      actionLabel: buildActionLabel({
+        libraryPresentation,
+        hasActiveTask,
+        todayTaskCount,
+        hasBookmark: getStoryReadingBookmark(pack.packId) !== null,
+      }),
+      statusHint: buildStatusHint({
+        libraryPresentation,
+        packId: pack.packId,
+        todayTaskCount,
+      }),
       coverColor: packCoverPalette[index % packCoverPalette.length] ?? packCoverPalette[0],
     };
   });
@@ -127,11 +143,42 @@ function getTodayTaskCountForContentPack(
   });
 }
 
-function buildStatusHint(todayTaskCount: number): string {
-  if (todayTaskCount > 0) {
-    return `今日待复习 ${String(todayTaskCount)} 条`;
+function buildActionLabel(input: {
+  libraryPresentation: LibraryPresentation;
+  hasActiveTask: boolean;
+  todayTaskCount: number;
+  hasBookmark: boolean;
+}): InstalledPackSummary['actionLabel'] {
+  if (input.libraryPresentation === 'reader') {
+    return input.hasBookmark ? '继续阅读' : '开始阅读';
+  }
+  return input.hasActiveTask || input.todayTaskCount > 0 ? '继续学习' : '开始学习';
+}
+
+function buildStatusHint(input: {
+  libraryPresentation: LibraryPresentation;
+  packId: string;
+  todayTaskCount: number;
+}): string {
+  if (input.libraryPresentation === 'reader') {
+    return buildReaderStatusHint(input.packId);
+  }
+  if (input.todayTaskCount > 0) {
+    return `今日待复习 ${String(input.todayTaskCount)} 条`;
   }
   return '暂无未完成任务';
+}
+
+function buildReaderStatusHint(packId: string): string {
+  const bookmark = getStoryReadingBookmark(packId);
+  if (!bookmark) {
+    return '尚未开始';
+  }
+  const detail = getPackCardDetailUseCase(packId, bookmark.knowledgeId);
+  if (detail?.cardType !== 'story_reading') {
+    return '尚未开始';
+  }
+  return `上次读到：${detail.content.lesson.code} ${detail.content.lesson.titleZh}`;
 }
 
 interface PackStats {

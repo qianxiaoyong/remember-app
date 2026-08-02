@@ -35,15 +35,16 @@ cardType registry（ADR 0012）已在 `main` 落地；本 spec 冻结 **`story_r
 
 | 决策          | 内容                                                                      |
 | ------------- | ------------------------------------------------------------------------- |
-| D1 完成方式   | `reviewMode: lesson_complete`；滚到底可点「我读完了」；不进 SM-2          |
-| D2 注释样式   | 行内：`surface（glossZh）`，tier 决定背景色                               |
+| D1 完成方式   | `reviewMode: none`；无「我读完了」；**书签**记录阅读位置；不进 SM-2          |
+| D2 词注样式   | **无行内 gloss**；word run 用 tier **字色** + **点击弹层**（sidebar）       |
+| D2b 段下翻译  | optional `paragraphs[].translationZh`；「显示翻译」开关；不用 gloss 拼接     |
 | D3 窄屏词表   | 正文 `word` run 可点 → 底部弹层；顶栏/课头区「本课 N 词」→ 全词表页       |
 | D4 音频       | `lesson.primaryAudio` 包内路径；课头播放按钮                              |
 | D5 频次图例   | App 固定「红:高频 / 蓝:中频 / 绿:低频」文案；**运行时**按本课 `tier` 计数 |
 | D6 系列元数据 | 「40篇童话…」等 **只在 pack source `meta.json`**，不进 card content       |
 | D7 点词数据源 | **仅 `sidebar[]`**；MVP 不写 `lexicon_entries`                            |
 | D8 一课一卡   | 一张阅读页 = sqlite `cards` 一行                                          |
-| D9 进度       | 记住读到哪一课；下次从 **第一个未完成课** 继续（按 pack 内 `sortOrder`）  |
+| D9 进度       | `user.sqlite` **story_reading_bookmarks**（`knowledgeId` + `positionMs`）；书库「继续阅读」 |
 
 ## 3. 与现有架构的关系
 
@@ -52,7 +53,7 @@ pack zip / 安装 / 验签 / 权益 / Admin / sync_outbox     ← 不变
 cards 表（knowledgeId, cardType, sortOrder, content）  ← 多一种 cardType
         │
         ├─ vocabulary      → registry → VocabularyStudyPanel（SM-2）
-        └─ story_reading   → registry → StoryReadingPanel（lesson_complete）
+        └─ story_reading   → registry → StoryLessonShell（reviewMode: none, libraryPresentation: reader）
 ```
 
 **PR #7 已交付（本 spec 的前置）：** `cardTypeRegistry`、`parsePackCardContent`、`validatePackCards` 分发、`study-screen` 按 `reviewMode` 控制底栏、`UnsupportedCardPanel`。
@@ -141,7 +142,9 @@ card `content.lesson` 只保留 **课级** 字段（课次、本课标题、封�
 | `tier`         | ✅   | `high` \| `mid` \| `low` |
 | `vocabId`      | ✅   | 稳定 ID，与 sidebar 关联 |
 
-渲染：`surface（glossZh）`，`surface` 按 `tier` 上色（红/蓝/绿 App 主题 token）。
+渲染：`surface` 按 `tier` 下划线着色（红/蓝/绿 token）；`glossZh` 由「显示注释」开关控制。
+
+**段级时间轴（optional，Phase 1+）：** 每段可含 `audioStartMs` / `audioEndMs`（整数 ms，须成对出现）；用于精听 Tab 段级跟读。无时间轴的旧包仍可安装，精听 Tab 降级提示。
 
 ### 6.4 `sidebar[]`
 
@@ -161,7 +164,8 @@ card `content.lesson` 只保留 **课级** 字段（课次、本课标题、封�
 3. 每个 `kind: "word"` 的 `vocabId` **必须** 存在于 `sidebar`（同 id 的 `tier` 必须一致）
 4. `sidebar` 每条 `vocabId` **必须** 被至少一个 `word` run 引用（**不允许** 词表孤儿）
 5. `coverImage`、`primaryAudio` 路径符合 ADR 0008 资源规则
-6. `cardType === 'story_reading'` 时走本 schema；vocabulary schema **不变**
+6. 若任一段含时间轴字段，则 **全部段** 必须有，且单调递增、无重叠；最后一段 `audioEndMs` ≤ 音频时长（verify 可选传入时长）
+7. `cardType === 'story_reading'` 时走本 schema；vocabulary schema **不变**
 
 ### 6.6 protocolVersion
 
@@ -188,24 +192,24 @@ card `content.lesson` 只保留 **课级** 字段（课次、本课标题、封�
 
 遵循 UI 规范 §8 骨架：隐藏底部胶囊、轻量顶栏、右上角更多菜单。**不**使用 vocabulary 的两阶段 prompt/reveal。
 
-### 8.1 布局（竖屏 MVP）
+### 8.1 布局（课节壳 Phase 1）
 
 ```text
 ┌─────────────────────────────┐
-│ ←  进度          更多 ⋮     │
+│ ←  C1              更多 ⋮   │
+│  原文 | 精听 | 本课词 32     │  ← Tab 行
 ├─────────────────────────────┤
-│ [封面图]                     │
-│ C1  The Princess… / 公主…   │
-│ 🔊 播放    [本课 17 词 ›]    │
-│ 红:高频(17) 蓝:中频(7) 绿:低频(7)  ← 运行时计数
+│ [Hero 封面背景 + 标题叠字]    │
+│ 红:高频 蓝:中频 绿:低频  [显示注释] │
 ├─────────────────────────────┤
-│ （ScrollView 正文）          │
-│ Once upon a time, real（真的）…│
+│ （仅正文 ScrollView，Serif） │
 │ …                           │
 ├─────────────────────────────┤
-│      [ 我读完了 ]            │  ← 滚到底后可用
+│      [ 我读完了 ]            │  ← 仅「原文」Tab；滚到底后可用
 └─────────────────────────────┘
 ```
+
+精听 Tab：无「我读完了」；底栏为音频进度条 + 播放/暂停；段级高亮跟读；播完自动完成。本课词 Tab：词表浏览，无完成底栏。
 
 ### 8.2 交互
 
@@ -221,9 +225,9 @@ card `content.lesson` 只保留 **课级** 字段（课次、本课标题、封�
 
 | tier   | 含义 | 默认色（对齐教材习惯） |
 | ------ | ---- | ---------------------- |
-| `high` | 高频 | 红系背景               |
-| `mid`  | 中频 | 蓝系背景               |
-| `low`  | 低频 | 绿系背景               |
+| `high` | 高频 | 红系 **下划线**        |
+| `mid`  | 中频 | 蓝系 **下划线**        |
+| `low`  | 低频 | 绿系 **下划线**        |
 
 图例文案 App 写死；括号内数字由本课 content 统计。
 

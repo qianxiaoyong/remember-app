@@ -16,41 +16,233 @@ function w(surface, glossZh, tier, vocabId = surface.toLowerCase()) {
 }
 
 const sidebar = [
-  { vocabId: 'happy', headword: 'happy', ipa: '/ˈhæpi/', pos: 'adj.', definitionZh: '高兴的；快乐的', tier: 'high' },
-  { vocabId: 'look', headword: 'look', ipa: '/lʊk/', pos: 'v.', definitionZh: '看；寻找', tier: 'high' },
-  { vocabId: 'find', headword: 'find', ipa: '/faɪnd/', pos: 'v.', definitionZh: '找到', tier: 'high' },
-  { vocabId: 'many', headword: 'many', ipa: '/ˈmeni/', pos: 'adj.', definitionZh: '许多', tier: 'high' },
-  { vocabId: 'old', headword: 'old', ipa: '/əʊld/', pos: 'adj.', definitionZh: '老的', tier: 'high' },
-  { vocabId: 'small', headword: 'small', ipa: '/smɔːl/', pos: 'adj.', definitionZh: '小的', tier: 'high' },
-  { vocabId: 'big', headword: 'big', ipa: '/bɪɡ/', pos: 'adj.', definitionZh: '大的', tier: 'high' },
-  { vocabId: 'come', headword: 'come', ipa: '/kʌm/', pos: 'v.', definitionZh: '来；来到', tier: 'high' },
+  {
+    vocabId: 'happy',
+    headword: 'happy',
+    ipa: '/ˈhæpi/',
+    pos: 'adj.',
+    definitionZh: '高兴的；快乐的',
+    tier: 'high',
+  },
+  {
+    vocabId: 'look',
+    headword: 'look',
+    ipa: '/lʊk/',
+    pos: 'v.',
+    definitionZh: '看；寻找',
+    tier: 'high',
+  },
+  {
+    vocabId: 'find',
+    headword: 'find',
+    ipa: '/faɪnd/',
+    pos: 'v.',
+    definitionZh: '找到',
+    tier: 'high',
+  },
+  {
+    vocabId: 'many',
+    headword: 'many',
+    ipa: '/ˈmeni/',
+    pos: 'adj.',
+    definitionZh: '许多',
+    tier: 'high',
+  },
+  {
+    vocabId: 'old',
+    headword: 'old',
+    ipa: '/əʊld/',
+    pos: 'adj.',
+    definitionZh: '老的',
+    tier: 'high',
+  },
+  {
+    vocabId: 'small',
+    headword: 'small',
+    ipa: '/smɔːl/',
+    pos: 'adj.',
+    definitionZh: '小的',
+    tier: 'high',
+  },
+  {
+    vocabId: 'big',
+    headword: 'big',
+    ipa: '/bɪɡ/',
+    pos: 'adj.',
+    definitionZh: '大的',
+    tier: 'high',
+  },
+  {
+    vocabId: 'come',
+    headword: 'come',
+    ipa: '/kʌm/',
+    pos: 'v.',
+    definitionZh: '来；来到',
+    tier: 'high',
+  },
   { vocabId: 'say', headword: 'say', ipa: '/seɪ/', pos: 'v.', definitionZh: '说', tier: 'high' },
-  { vocabId: 'like', headword: 'like', ipa: '/laɪk/', pos: 'v.', definitionZh: '喜欢', tier: 'high' },
-  { vocabId: 'think', headword: 'think', ipa: '/θɪŋk/', pos: 'v.', definitionZh: '想；认为', tier: 'high' },
+  {
+    vocabId: 'like',
+    headword: 'like',
+    ipa: '/laɪk/',
+    pos: 'v.',
+    definitionZh: '喜欢',
+    tier: 'high',
+  },
+  {
+    vocabId: 'think',
+    headword: 'think',
+    ipa: '/θɪŋk/',
+    pos: 'v.',
+    definitionZh: '想；认为',
+    tier: 'high',
+  },
   { vocabId: 'have', headword: 'have', ipa: '/hæv/', pos: 'v.', definitionZh: '有', tier: 'high' },
-  { vocabId: 'make', headword: 'make', ipa: '/meɪk/', pos: 'v.', definitionZh: '做；制作', tier: 'high' },
+  {
+    vocabId: 'make',
+    headword: 'make',
+    ipa: '/meɪk/',
+    pos: 'v.',
+    definitionZh: '做；制作',
+    tier: 'high',
+  },
   { vocabId: 'put', headword: 'put', ipa: '/pʊt/', pos: 'v.', definitionZh: '放', tier: 'high' },
-  { vocabId: 'only', headword: 'only', ipa: '/ˈəʊnli/', pos: 'adv.', definitionZh: '只有；仅仅', tier: 'high' },
+  {
+    vocabId: 'only',
+    headword: 'only',
+    ipa: '/ˈəʊnli/',
+    pos: 'adv.',
+    definitionZh: '只有；仅仅',
+    tier: 'high',
+  },
   { vocabId: 'ask', headword: 'ask', ipa: '/ɑːsk/', pos: 'v.', definitionZh: '问', tier: 'high' },
-  { vocabId: 'take', headword: 'take', ipa: '/teɪk/', pos: 'v.', definitionZh: '带；拿', tier: 'high' },
-  { vocabId: 'now', headword: 'now', ipa: '/naʊ/', pos: 'adv.', definitionZh: '现在', tier: 'high' },
+  {
+    vocabId: 'take',
+    headword: 'take',
+    ipa: '/teɪk/',
+    pos: 'v.',
+    definitionZh: '带；拿',
+    tier: 'high',
+  },
+  {
+    vocabId: 'now',
+    headword: 'now',
+    ipa: '/naʊ/',
+    pos: 'adv.',
+    definitionZh: '现在',
+    tier: 'high',
+  },
   { vocabId: 'not', headword: 'not', ipa: '/nɒt/', pos: 'adv.', definitionZh: '不', tier: 'mid' },
-  { vocabId: 'meet', headword: 'meet', ipa: '/miːt/', pos: 'v.', definitionZh: '遇见', tier: 'mid' },
-  { vocabId: 'beautiful', headword: 'beautiful', ipa: '/ˈbjuːtɪfl/', pos: 'adj.', definitionZh: '漂亮的', tier: 'mid' },
-  { vocabId: 'girl', headword: 'girl', ipa: '/ɡɜːl/', pos: 'n.', definitionZh: '女孩', tier: 'mid' },
-  { vocabId: 'rain', headword: 'rain', ipa: '/reɪn/', pos: 'v.', definitionZh: '下雨', tier: 'mid' },
+  {
+    vocabId: 'meet',
+    headword: 'meet',
+    ipa: '/miːt/',
+    pos: 'v.',
+    definitionZh: '遇见',
+    tier: 'mid',
+  },
+  {
+    vocabId: 'beautiful',
+    headword: 'beautiful',
+    ipa: '/ˈbjuːtɪfl/',
+    pos: 'adj.',
+    definitionZh: '漂亮的',
+    tier: 'mid',
+  },
+  {
+    vocabId: 'girl',
+    headword: 'girl',
+    ipa: '/ɡɜːl/',
+    pos: 'n.',
+    definitionZh: '女孩',
+    tier: 'mid',
+  },
+  {
+    vocabId: 'rain',
+    headword: 'rain',
+    ipa: '/reɪn/',
+    pos: 'v.',
+    definitionZh: '下雨',
+    tier: 'mid',
+  },
   { vocabId: 'bed', headword: 'bed', ipa: '/bed/', pos: 'n.', definitionZh: '床', tier: 'mid' },
-  { vocabId: 'talk', headword: 'talk', ipa: '/tɔːk/', pos: 'v.', definitionZh: '说话', tier: 'mid' },
-  { vocabId: 'hard', headword: 'hard', ipa: '/hɑːd/', pos: 'adj.', definitionZh: '硬的', tier: 'mid' },
-  { vocabId: 'feel', headword: 'feel', ipa: '/fiːl/', pos: 'v.', definitionZh: '感觉', tier: 'mid' },
-  { vocabId: 'marry', headword: 'marry', ipa: '/ˈmæri/', pos: 'v.', definitionZh: '娶；嫁', tier: 'low' },
-  { vocabId: 'need', headword: 'need', ipa: '/niːd/', pos: 'v.', definitionZh: '需要', tier: 'low' },
-  { vocabId: 'idea', headword: 'idea', ipa: '/aɪˈdɪə/', pos: 'n.', definitionZh: '主意', tier: 'low' },
-  { vocabId: 'soft', headword: 'soft', ipa: '/sɒft/', pos: 'adj.', definitionZh: '柔软的', tier: 'low' },
-  { vocabId: 'museum', headword: 'museum', ipa: '/mjuːˈziːəm/', pos: 'n.', definitionZh: '博物馆', tier: 'low' },
+  {
+    vocabId: 'talk',
+    headword: 'talk',
+    ipa: '/tɔːk/',
+    pos: 'v.',
+    definitionZh: '说话',
+    tier: 'mid',
+  },
+  {
+    vocabId: 'hard',
+    headword: 'hard',
+    ipa: '/hɑːd/',
+    pos: 'adj.',
+    definitionZh: '硬的',
+    tier: 'mid',
+  },
+  {
+    vocabId: 'feel',
+    headword: 'feel',
+    ipa: '/fiːl/',
+    pos: 'v.',
+    definitionZh: '感觉',
+    tier: 'mid',
+  },
+  {
+    vocabId: 'marry',
+    headword: 'marry',
+    ipa: '/ˈmæri/',
+    pos: 'v.',
+    definitionZh: '娶；嫁',
+    tier: 'low',
+  },
+  {
+    vocabId: 'need',
+    headword: 'need',
+    ipa: '/niːd/',
+    pos: 'v.',
+    definitionZh: '需要',
+    tier: 'low',
+  },
+  {
+    vocabId: 'idea',
+    headword: 'idea',
+    ipa: '/aɪˈdɪə/',
+    pos: 'n.',
+    definitionZh: '主意',
+    tier: 'low',
+  },
+  {
+    vocabId: 'soft',
+    headword: 'soft',
+    ipa: '/sɒft/',
+    pos: 'adj.',
+    definitionZh: '柔软的',
+    tier: 'low',
+  },
+  {
+    vocabId: 'museum',
+    headword: 'museum',
+    ipa: '/mjuːˈziːəm/',
+    pos: 'n.',
+    definitionZh: '博物馆',
+    tier: 'low',
+  },
 ];
 
-const paragraphs = [
+/** 人工标注段级时间轴（ms）；总时长须 ≤ c1.mp3 实际时长 */
+const AUDIO_TOTAL_MS = 95_000;
+
+/** @param {{ runs: unknown[] }} paragraph */
+function paragraphTextLength(paragraph) {
+  return paragraph.runs
+    .map((run) => (run.kind === 'text' ? run.text.length : run.surface.length + 1))
+    .reduce((sum, n) => sum + n, 0);
+}
+
+const rawParagraphs = [
   {
     runs: [
       t('The prince is '),
@@ -192,6 +384,24 @@ const paragraphs = [
     ],
   },
 ];
+
+const textLengths = rawParagraphs.map(paragraphTextLength);
+const totalTextLength = textLengths.reduce((sum, n) => sum + n, 0);
+let cursorMs = 0;
+const paragraphs = rawParagraphs.map((paragraph, index) => {
+  const isLast = index === rawParagraphs.length - 1;
+  const segmentMs = isLast
+    ? AUDIO_TOTAL_MS - cursorMs
+    : Math.round((textLengths[index] / totalTextLength) * AUDIO_TOTAL_MS);
+  const audioStartMs = cursorMs;
+  const audioEndMs = audioStartMs + segmentMs;
+  cursorMs = audioEndMs;
+  return {
+    ...paragraph,
+    audioStartMs,
+    audioEndMs,
+  };
+});
 
 const cards = [
   {

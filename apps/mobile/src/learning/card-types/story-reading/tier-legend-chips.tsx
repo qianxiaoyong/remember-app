@@ -2,7 +2,6 @@ import type { ReactElement } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import type { StoryTier } from '@remember/contracts';
 import { colors } from '../../../theme/colors';
-import { spacing } from '../../../theme/spacing';
 import type { TierStats } from './count-tier-stats';
 import { formatTierLegend } from './count-tier-stats';
 import { tierAccentColor, tierChipBackgrounds } from './tier-colors';
@@ -23,7 +22,9 @@ export function TierLegendChips(props: TierLegendChipsProps): ReactElement {
           style={[styles.chip, { backgroundColor: tierChipBackgrounds[tier] }]}
         >
           <View style={[styles.dot, { backgroundColor: tierAccentColor(tier) }]} />
-          <Text style={styles.label}>{formatTierLegend(props.stats, tier)}</Text>
+          <Text numberOfLines={1} style={styles.label}>
+            {formatTierLegend(props.stats, tier)}
+          </Text>
         </View>
       ))}
     </View>
@@ -33,8 +34,8 @@ export function TierLegendChips(props: TierLegendChipsProps): ReactElement {
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: spacing.sm,
+    flexWrap: 'nowrap',
+    gap: 4,
   },
   chip: {
     alignItems: 'center',
@@ -42,18 +43,19 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     borderWidth: StyleSheet.hairlineWidth,
     flexDirection: 'row',
-    gap: 6,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: 4,
+    flexShrink: 0,
+    gap: 4,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
   },
   dot: {
-    borderRadius: 4,
-    height: 8,
-    width: 8,
+    borderRadius: 3,
+    height: 6,
+    width: 6,
   },
   label: {
     color: colors.textSecondary,
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: '500',
   },
 });

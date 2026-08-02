@@ -7,6 +7,105 @@ const PLAYBACK_WAIT_MS = 3000;
 let sharedPlayer: ReturnType<typeof createAudioPlayer> | null = null;
 let audioModeConfigured = false;
 
+export async function ensureExpoAudioMode(): Promise<void> {
+  await ensureAudioMode();
+}
+
+export async function resolveExpoAudioPlaybackUri(uri: string): Promise<string> {
+  return resolveUriForPlayback(uri);
+}
+
+export type ExpoAudioPositionState = {
+  positionMs: number;
+  durationMs: number;
+  playing: boolean;
+};
+
+export type ExpoAudioPositionListener = (state: ExpoAudioPositionState) => void;
+
+const positionListeners = new Set<ExpoAudioPositionListener>();
+let positionListenerAttached = false;
+
+function readPlayerPositionState(): ExpoAudioPositionState {
+  if (!sharedPlayer) {
+    return { positionMs: 0, durationMs: 0, playing: false };
+  }
+  const status = sharedPlayer.currentStatus;
+  const currentTimeSeconds =
+    'currentTime' in status && typeof status.currentTime === 'number' ? status.currentTime : 0;
+  return {
+    positionMs: Math.max(0, Math.round(currentTimeSeconds * 1000)),
+    durationMs: Math.max(0, Math.round(sharedPlayer.duration * 1000)),
+    playing: sharedPlayer.playing,
+  };
+}
+
+function notifyPositionListeners(): void {
+  const state = readPlayerPositionState();
+  for (const listener of positionListeners) {
+    listener(state);
+  }
+}
+
+function attachPositionListener(): void {
+  if (positionListenerAttached || !sharedPlayer) {
+    return;
+  }
+  sharedPlayer.addListener(PLAYBACK_STATUS_UPDATE, () => {
+    notifyPositionListeners();
+  });
+  positionListenerAttached = true;
+}
+
+export function subscribeExpoAudioPosition(listener: ExpoAudioPositionListener): () => void {
+  positionListeners.add(listener);
+  attachPositionListener();
+  listener(readPlayerPositionState());
+  return () => {
+    positionListeners.delete(listener);
+  };
+}
+
+export function getSharedExpoAudioPlayer(): ReturnType<typeof createAudioPlayer> | null {
+  return sharedPlayer;
+}
+
+export async function prepareExpoAudioUri(uri: string): Promise<'loaded' | 'failed'> {
+  try {
+    await ensureAudioMode();
+    const playbackUri = await resolveUriForPlayback(uri);
+    if (!sharedPlayer) {
+      sharedPlayer = createAudioPlayer({ uri: playbackUri }, { updateInterval: 100 });
+      positionListenerAttached = false;
+      attachPositionListener();
+    } else {
+      sharedPlayer.replace({ uri: playbackUri });
+      await sharedPlayer.seekTo(0);
+    }
+    const ready = await waitForPlayback(sharedPlayer);
+    notifyPositionListeners();
+    return ready === 'ready' ? 'loaded' : 'failed';
+  } catch {
+    return 'failed';
+  }
+}
+
+export function playPreparedExpoAudio(): void {
+  sharedPlayer?.play();
+}
+
+export function pausePreparedExpoAudio(): void {
+  sharedPlayer?.pause();
+}
+
+export async function seekPreparedExpoAudio(positionMs: number): Promise<void> {
+  if (!sharedPlayer) {
+    return;
+  }
+  await sharedPlayer.seekTo(positionMs / 1000);
+  notifyPositionListeners();
+}
+
 async function ensureAudioMode(): Promise<void> {
   if (audioModeConfigured) {
     return;
@@ -82,4 +181,6 @@ export function resetExpoAudioPlayerForTests(): void {
   sharedPlayer?.remove();
   sharedPlayer = null;
   audioModeConfigured = false;
+  positionListeners.clear();
+  positionListenerAttached = false;
 }

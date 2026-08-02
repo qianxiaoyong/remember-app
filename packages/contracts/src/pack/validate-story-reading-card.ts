@@ -4,6 +4,7 @@ import { knowledgeIdMatchesLessonCode } from './knowledge-id.js';
 import { assertAllowedPackPath } from './paths.js';
 import {
   parseStoryReadingContentJson,
+  type StoryParagraph,
   type StoryReadingContent,
   type StorySidebarEntry,
   type StoryWordRun,
@@ -17,10 +18,15 @@ export interface StoryPackCardRow {
   content: StoryReadingContent;
 }
 
+export interface StoryReadingValidateContext {
+  primaryAudioDurationMs?: number;
+}
+
 export function validateStoryReadingCard(
   packId: string,
   card: PackCardRecord,
   manifestPaths: ReadonlySet<string>,
+  context?: StoryReadingValidateContext,
 ): StoryPackCardRow {
   let content: StoryReadingContent;
   try {
@@ -49,6 +55,12 @@ export function validateStoryReadingCard(
   assertAssetReferenced(manifestPaths, content.lesson.primaryAudio, card.knowledgeId);
 
   validateRunsSidebarConsistency(content, card.knowledgeId);
+  validateParagraphTimeline(
+    content.story.paragraphs,
+    card.knowledgeId,
+    context?.primaryAudioDurationMs,
+  );
+  validateParagraphTranslations(content.story.paragraphs, card.knowledgeId);
 
   return {
     knowledgeId: card.knowledgeId,
@@ -100,6 +112,74 @@ function validateRunsSidebarConsistency(content: StoryReadingContent, knowledgeI
       throw new PackVerificationError(
         'PACK_CONTENT_INVALID',
         `orphan sidebar vocabId: ${entry.vocabId} (${knowledgeId})`,
+      );
+    }
+  }
+}
+
+function validateParagraphTimeline(
+  paragraphs: StoryParagraph[],
+  knowledgeId: string,
+  primaryAudioDurationMs?: number,
+): void {
+  const hasAnyTimeline = paragraphs.some(
+    (paragraph) => paragraph.audioStartMs !== undefined || paragraph.audioEndMs !== undefined,
+  );
+  if (!hasAnyTimeline) {
+    return;
+  }
+
+  let previousEndMs = 0;
+  for (let index = 0; index < paragraphs.length; index += 1) {
+    const paragraph = paragraphs[index];
+    if (paragraph === undefined) {
+      continue;
+    }
+    if (paragraph.audioStartMs === undefined || paragraph.audioEndMs === undefined) {
+      throw new PackVerificationError(
+        'PACK_CONTENT_INVALID',
+        `paragraph ${String(index)} missing audio timeline (${knowledgeId})`,
+      );
+    }
+
+    if (index > 0 && paragraph.audioStartMs < previousEndMs) {
+      throw new PackVerificationError(
+        'PACK_CONTENT_INVALID',
+        `paragraph ${String(index)} audioStartMs overlaps previous segment (${knowledgeId})`,
+      );
+    }
+
+    previousEndMs = paragraph.audioEndMs;
+  }
+
+  if (primaryAudioDurationMs !== undefined && previousEndMs > primaryAudioDurationMs) {
+    throw new PackVerificationError(
+      'PACK_CONTENT_INVALID',
+      `last paragraph audioEndMs exceeds primary audio duration (${knowledgeId})`,
+    );
+  }
+}
+
+function validateParagraphTranslations(
+  paragraphs: StoryParagraph[],
+  knowledgeId: string,
+): void {
+  const hasAnyTranslation = paragraphs.some(
+    (paragraph) => paragraph.translationZh !== undefined,
+  );
+  if (!hasAnyTranslation) {
+    return;
+  }
+
+  for (let index = 0; index < paragraphs.length; index += 1) {
+    const paragraph = paragraphs[index];
+    if (paragraph === undefined) {
+      continue;
+    }
+    if (paragraph.translationZh === undefined) {
+      throw new PackVerificationError(
+        'PACK_CONTENT_INVALID',
+        `paragraph ${String(index)} missing translationZh (${knowledgeId})`,
       );
     }
   }

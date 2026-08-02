@@ -1,9 +1,8 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { ReviewRating } from '@remember/domain';
 import { normalizeSurfaceForm } from '@remember/contracts';
 import type { LexiconLookupResult } from '../data/repositories/lexicon-entry-repository';
 import { confirmCardReview } from '../use-cases/confirm-card-review';
-import { confirmLessonComplete } from '../use-cases/confirm-lesson-complete';
 import { getPackCardDetailUseCase } from '../use-cases/get-pack-card-detail';
 import {
   getCurrentCardHeadword,
@@ -12,19 +11,33 @@ import {
 import { lookupLexiconToken } from '../use-cases/lookup-lexicon-token';
 import { playOrCacheLexiconAudio } from '../use-cases/play-or-cache-lexicon-audio';
 import { playPackAssetAudio } from '../use-cases/play-pack-asset-audio';
+import { resolvePackLibraryPresentation } from '../use-cases/resolve-pack-library-presentation';
+import { resolveStoryReaderEntry } from '../use-cases/resolve-story-reader-entry';
 import { resumeOrStartStudySession } from '../use-cases/resume-or-start-study-session';
+import { saveStoryReadingBookmark } from '../use-cases/save-story-reading-bookmark';
 import type { ActiveStudySession } from '../use-cases/study-session-types';
 import {
   isLexiconItemSavedUseCase,
   toggleSavedLexiconItem,
 } from '../use-cases/toggle-saved-lexicon-item';
 
-export function useStudyFlow(packId: string) {
+export function useStudyFlow(
+  packId: string,
+  options?: {
+    knowledgeId?: string | null;
+  },
+) {
+  const isReaderMode = useMemo(
+    () => resolvePackLibraryPresentation(packId) === 'reader',
+    [packId],
+  );
   const [session, setSession] = useState<ActiveStudySession | null>(null);
+  const [readerEntry, setReaderEntry] = useState<{ knowledgeId: string; positionMs: number } | null>(
+    null,
+  );
   const [revealed, setRevealed] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [reachedBottom, setReachedBottom] = useState(false);
   const [lexiconEntry, setLexiconEntry] = useState<LexiconLookupResult | null>(null);
   const [lexiconVisible, setLexiconVisible] = useState(false);
   const [lexiconSaved, setLexiconSaved] = useState(false);
@@ -32,9 +45,11 @@ export function useStudyFlow(packId: string) {
   const [audioMessage, setAudioMessage] = useState<string | null>(null);
 
   const startSession = useCallback(() => {
+    if (isReaderMode) {
+      return;
+    }
     setMessage(null);
     setRevealed(false);
-    setReachedBottom(false);
     try {
       const nextSession = resumeOrStartStudySession(packId);
       setSession(nextSession);
@@ -44,19 +59,33 @@ export function useStudyFlow(packId: string) {
     } catch (error) {
       setMessage(error instanceof Error ? error.message : '无法开始学习');
     }
-  }, [packId]);
+  }, [isReaderMode, packId]);
 
-  const currentKnowledgeId = session?.currentItem?.knowledgeId ?? null;
+  useEffect(() => {
+    if (!isReaderMode) {
+      setReaderEntry(null);
+      return;
+    }
+    setMessage(null);
+    try {
+      const entry = resolveStoryReaderEntry(packId, options?.knowledgeId);
+      setReaderEntry(entry);
+    } catch (error) {
+      setReaderEntry(null);
+      setMessage(error instanceof Error ? error.message : '无法打开阅读');
+    }
+  }, [isReaderMode, options?.knowledgeId, packId]);
+
+  const currentKnowledgeId = isReaderMode
+    ? (readerEntry?.knowledgeId ?? null)
+    : (session?.currentItem?.knowledgeId ?? null);
+
   const cardDetail = useMemo(() => {
     if (!currentKnowledgeId) {
       return null;
     }
     return getPackCardDetailUseCase(packId, currentKnowledgeId);
   }, [currentKnowledgeId, packId]);
-
-  useEffect(() => {
-    setReachedBottom(false);
-  }, [currentKnowledgeId]);
 
   const headword = useMemo(() => {
     if (!currentKnowledgeId) {
@@ -70,11 +99,11 @@ export function useStudyFlow(packId: string) {
   }, [currentKnowledgeId, packId]);
 
   const intervalLabels = useMemo(() => {
-    if (!currentKnowledgeId) {
+    if (!currentKnowledgeId || isReaderMode) {
       return null;
     }
     return getReviewIntervalLabels(currentKnowledgeId);
-  }, [currentKnowledgeId]);
+  }, [currentKnowledgeId, isReaderMode]);
 
   const handleReview = useCallback(
     (rating: ReviewRating) => {
@@ -91,7 +120,6 @@ export function useStudyFlow(packId: string) {
         });
         setSession(nextSession);
         setRevealed(false);
-        setReachedBottom(false);
       } catch (error) {
         setMessage(error instanceof Error ? error.message : '保存作答失败');
       } finally {
@@ -101,26 +129,19 @@ export function useStudyFlow(packId: string) {
     [packId, session],
   );
 
-  const handleLessonComplete = useCallback(() => {
-    if (!session?.currentItem) {
-      return;
-    }
-    setIsSubmitting(true);
-    setMessage(null);
-    try {
-      const nextSession = confirmLessonComplete({
+  const handleReaderBookmark = useCallback(
+    (positionMs: number) => {
+      if (!currentKnowledgeId) {
+        return;
+      }
+      saveStoryReadingBookmark({
         packId,
-        knowledgeId: session.currentItem.knowledgeId,
+        knowledgeId: currentKnowledgeId,
+        positionMs,
       });
-      setSession(nextSession);
-      setRevealed(false);
-      setReachedBottom(false);
-    } catch (error) {
-      setMessage(error instanceof Error ? error.message : '保存完成状态失败');
-    } finally {
-      setIsSubmitting(false);
-    }
-  }, [packId, session]);
+    },
+    [currentKnowledgeId, packId],
+  );
 
   const openLexicon = useCallback(
     (token: string) => {
@@ -192,10 +213,11 @@ export function useStudyFlow(packId: string) {
 
   return {
     session,
+    isReaderMode,
+    readerInitialPositionMs: readerEntry?.positionMs ?? 0,
     revealed,
     message,
     isSubmitting,
-    reachedBottom,
     lexiconEntry,
     lexiconVisible,
     lexiconSaved,
@@ -206,9 +228,8 @@ export function useStudyFlow(packId: string) {
     intervalLabels,
     startSession,
     setRevealed,
-    setReachedBottom,
     handleReview,
-    handleLessonComplete,
+    handleReaderBookmark,
     openLexicon,
     handleToggleSave,
     handlePlayAudio,

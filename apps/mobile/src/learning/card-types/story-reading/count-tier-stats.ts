@@ -20,9 +20,9 @@ export function countSidebarWords(content: StoryReadingContent): number {
 
 export function formatTierLegend(stats: TierStats, tier: StoryTier): string {
   const labels: Record<StoryTier, string> = {
-    high: '红:高频',
-    mid: '蓝:中频',
-    low: '绿:低频',
+    high: '高频',
+    mid: '中频',
+    low: '低频',
   };
   return `${labels[tier]}(${String(stats[tier])})`;
 }

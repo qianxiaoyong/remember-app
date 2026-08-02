@@ -51,7 +51,9 @@
                 "kind": "text",
                 "text": " a princess."
               }
-            ]
+            ],
+            "audioStartMs": 0,
+            "audioEndMs": 6786
           },
           {
             "runs": [
@@ -81,7 +83,9 @@
                 "kind": "text",
                 "text": " a princess."
               }
-            ]
+            ],
+            "audioStartMs": 6786,
+            "audioEndMs": 12619
           },
           {
             "runs": [
@@ -166,7 +170,9 @@
                 "kind": "text",
                 "text": "."
               }
-            ]
+            ],
+            "audioStartMs": 12619,
+            "audioEndMs": 25119
           },
           {
             "runs": [
@@ -207,7 +213,9 @@
                 "kind": "text",
                 "text": "."
               }
-            ]
+            ],
+            "audioStartMs": 25119,
+            "audioEndMs": 31548
           },
           {
             "runs": [
@@ -248,7 +256,9 @@
                 "kind": "text",
                 "text": ".'"
               }
-            ]
+            ],
+            "audioStartMs": 31548,
+            "audioEndMs": 37024
           },
           {
             "runs": [
@@ -289,7 +299,9 @@
                 "kind": "text",
                 "text": " she is a princess."
               }
-            ]
+            ],
+            "audioStartMs": 37024,
+            "audioEndMs": 45357
           },
           {
             "runs": [
@@ -352,7 +364,9 @@
                 "kind": "text",
                 "text": " a pea under 23 mattresses!"
               }
-            ]
+            ],
+            "audioStartMs": 45357,
+            "audioEndMs": 55714
           },
           {
             "runs": [
@@ -382,7 +396,9 @@
                 "kind": "text",
                 "text": "."
               }
-            ]
+            ],
+            "audioStartMs": 55714,
+            "audioEndMs": 61547
           },
           {
             "runs": [
@@ -412,7 +428,9 @@
                 "kind": "text",
                 "text": ".'"
               }
-            ]
+            ],
+            "audioStartMs": 61547,
+            "audioEndMs": 68333
           },
           {
             "runs": [
@@ -453,7 +471,9 @@
                 "kind": "text",
                 "text": " the pea under those mattresses!'"
               }
-            ]
+            ],
+            "audioStartMs": 68333,
+            "audioEndMs": 77857
           },
           {
             "runs": [
@@ -505,7 +525,9 @@
                 "kind": "text",
                 "text": " me?'"
               }
-            ]
+            ],
+            "audioStartMs": 77857,
+            "audioEndMs": 85357
           },
           {
             "runs": [
@@ -546,7 +568,9 @@
                 "kind": "text",
                 "text": " everyone can see it."
               }
-            ]
+            ],
+            "audioStartMs": 85357,
+            "audioEndMs": 95000
           }
         ]
       },

@@ -15,6 +15,7 @@ interface InstalledPackRowProps {
 export function InstalledPackRow(props: InstalledPackRowProps): ReactElement {
   const { pack } = props;
   const progress = pack.totalCards > 0 ? pack.learnedCount / pack.totalCards : 0;
+  const showProgress = pack.libraryPresentation === 'study';
 
   return (
     <SurfaceCard>
@@ -29,10 +30,14 @@ export function InstalledPackRow(props: InstalledPackRowProps): ReactElement {
             <Text numberOfLines={2} style={styles.title}>
               {pack.displayName}
             </Text>
-            <Text style={styles.progressLabel}>
-              总学习进度 {pack.learnedCount} / {pack.totalCards}
-            </Text>
-            <ProgressBar color={pack.coverColor} progress={progress} />
+            {showProgress ? (
+              <>
+                <Text style={styles.progressLabel}>
+                  总学习进度 {pack.learnedCount} / {pack.totalCards}
+                </Text>
+                <ProgressBar color={pack.coverColor} progress={progress} />
+              </>
+            ) : null}
           </View>
         </View>
       </Pressable>
