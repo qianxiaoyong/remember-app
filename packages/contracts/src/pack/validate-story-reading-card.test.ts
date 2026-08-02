@@ -5,10 +5,12 @@ import type { PackCardRecord } from './verify-content.js';
 
 const manifestPaths = new Set(['assets/images/c1.png', 'assets/audio/c1.mp3']);
 
-function makeStoryContent(overrides: {
-  sidebar?: unknown;
-  paragraphs?: unknown;
-} = {}): string {
+function makeStoryContent(
+  overrides: {
+    sidebar?: unknown;
+    paragraphs?: unknown;
+  } = {},
+): string {
   return JSON.stringify({
     lesson: {
       code: 'C1',

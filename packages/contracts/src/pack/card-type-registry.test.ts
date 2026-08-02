@@ -46,14 +46,24 @@ describe('parsePackCardContent', () => {
       reveal: { definitions: [{ text: '嗨' }], examples: [{ en: 'Hi.', zh: '嗨。' }] },
     });
     const result = parsePackCardContent('vocabulary', json);
-    expect(result.cardType).toBe('vocabulary');
-    expect(result.content.prompt.headword).toBe('hi');
+    expect(result).toEqual({
+      cardType: 'vocabulary',
+      content: {
+        prompt: { headword: 'hi', primaryAudio: 'assets/a.mp3' },
+        reveal: { definitions: [{ text: '嗨' }], examples: [{ en: 'Hi.', zh: '嗨。' }] },
+      },
+    });
   });
 
   it('story_reading 合法 content 解析成功', () => {
     const result = parsePackCardContent('story_reading', validStoryJson);
     expect(result.cardType).toBe('story_reading');
-    expect(result.content.lesson.code).toBe('C1');
+    expect(result).toMatchObject({
+      cardType: 'story_reading',
+      content: {
+        lesson: { code: 'C1' },
+      },
+    });
   });
 
   it('未知 cardType 抛 PACK_UNSUPPORTED_CARD_TYPE', () => {

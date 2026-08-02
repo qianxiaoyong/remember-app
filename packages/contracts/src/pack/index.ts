@@ -53,7 +53,12 @@ export {
   type StoryTier,
   type StoryWordRun,
 } from './story-reading-content.js';
-export { packCardRowSchema, parseCardContentJson, type PackCardRow } from './card.js';
+export {
+  packCardRowSchema,
+  // eslint-disable-next-line @typescript-eslint/no-deprecated -- ADR 0012 保留 vocabulary 别名
+  parseCardContentJson,
+  type PackCardRow,
+} from './card.js';
 export {
   isSupportedCardType,
   parsePackCardContent,

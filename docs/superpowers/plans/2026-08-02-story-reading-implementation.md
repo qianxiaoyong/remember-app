@@ -28,13 +28,13 @@
 
 ## 范围外（defer）
 
-| 项 | 说明 |
-| --- | --- |
-| pack-editor story 表单 | 本 PR 不做 |
-| story 正文搜索索引 | spec §8.2 defer |
-| 宽屏双栏 / QR 音频 / 理解题 | spec 非目标 |
-| story 词写入 lexicon_entries / 收藏本 | MVP 不做 |
-| `protocolVersion` bump | 明确不做 |
+| 项                                    | 说明            |
+| ------------------------------------- | --------------- |
+| pack-editor story 表单                | 本 PR 不做      |
+| story 正文搜索索引                    | spec §8.2 defer |
+| 宽屏双栏 / QR 音频 / 理解题           | spec 非目标     |
+| story 词写入 lexicon_entries / 收藏本 | MVP 不做        |
+| `protocolVersion` bump                | 明确不做        |
 
 ---
 
@@ -42,12 +42,12 @@
 
 story 课点「我读完了」后写入 `learning_states`，使 `buildStudyQueuePlan` **不再**将其作为 new 或 due：
 
-| 字段 | 值 | 理由 |
-| --- | --- | --- |
-| `easiness` | `2.5` | SM-2 默认，不参与 story 调度 |
-| `intervalDays` | `36500` | 极大间隔，语义为「已完成」 |
-| `repetitions` | `1` | 非 0，避免被标为 relearn |
-| `dueAt` | `9999-12-31T23:59:59.999Z` | 永不到期 → 不进 due 队列 |
+| 字段           | 值                         | 理由                         |
+| -------------- | -------------------------- | ---------------------------- |
+| `easiness`     | `2.5`                      | SM-2 默认，不参与 story 调度 |
+| `intervalDays` | `36500`                    | 极大间隔，语义为「已完成」   |
+| `repetitions`  | `1`                        | 非 0，避免被标为 relearn     |
+| `dueAt`        | `9999-12-31T23:59:59.999Z` | 永不到期 → 不进 due 队列     |
 
 **sync_outbox：** 复用 `buildSyncOutboxPayload`；`rating` 传固定值 `'good'`（或新增 `'complete'` 仅写 payload 元数据，**不**调 `applyReview`）。实施时若 domain 层无 `'complete'`，用 `'good'` + 上述哨兵字段，并在 use-case 注释说明 story 专用。
 
@@ -255,7 +255,7 @@ assets/audio/c1.mp3    # 最小音频占位
 lexicon.json       # 1 条占位 entry（满足 lexicon_entries ≥1 结构自检；与 story 词无关）
 ```
 
-  cards.json content 参考 spec §9，含 ≥3 个 word run + 对应 sidebar。
+cards.json content 参考 spec §9，含 ≥3 个 word run + 对应 sidebar。
 
 - [ ] **Step 2: 写 verify 集成测试**
 
@@ -450,7 +450,7 @@ pnpm --filter @remember/mobile test -- story-reading registry count-tier
   - `/study/story-vocab-list?packId=&knowledgeId=`
   - 页内 `getPackCardDetailUseCase` 加载 sidebar
 
-- [ ] **Step 4: story-reading-panel  wired 点词 + 导航入口**
+- [ ] **Step 4: story-reading-panel wired 点词 + 导航入口**
 
 - [ ] **Step 5: Commit**
 
@@ -545,8 +545,8 @@ git commit -m "chore: story_reading 实施收尾 format/lint 修复"
 git checkout -b feat/story-reading main   # 已创建
 ```
 
-| PR | Tasks | 说明 |
-| --- | --- | --- |
+| PR    | Tasks    | 说明                 |
+| ----- | -------- | -------------------- |
 | 单 PR | Task 0–7 | 推荐单人 review 合并 |
 
 **禁止：** 与 pack-editor、en-grade3 WIP、card-type-registry 分支未提交内容混 PR。
@@ -568,18 +568,18 @@ git checkout -b feat/story-reading main   # 已创建
 
 ## Self-Review
 
-| 要求 | Task |
-| --- | --- |
-| ADR 附录 | Task 0 |
-| contracts schema + parse + validate | Task 1 |
-| pack-builder fixture + 负例 | Task 2 |
-| lesson_complete + 完成哨兵 | Task 3 |
-| StoryReadingRenderer 主 UI | Task 4 |
-| 点词 + 词表页 | Task 5 |
-| fixture + 手工 QA | Task 6 |
-| pnpm check + vocabulary 回归 | Task 7 |
-| 不含 pack-editor / Admin / API | Global Constraints |
-| protocolVersion 不 bump | Global Constraints |
+| 要求                                | Task               |
+| ----------------------------------- | ------------------ |
+| ADR 附录                            | Task 0             |
+| contracts schema + parse + validate | Task 1             |
+| pack-builder fixture + 负例         | Task 2             |
+| lesson_complete + 完成哨兵          | Task 3             |
+| StoryReadingRenderer 主 UI          | Task 4             |
+| 点词 + 词表页                       | Task 5             |
+| fixture + 手工 QA                   | Task 6             |
+| pnpm check + vocabulary 回归        | Task 7             |
+| 不含 pack-editor / Admin / API      | Global Constraints |
+| protocolVersion 不 bump             | Global Constraints |
 
 ---
 

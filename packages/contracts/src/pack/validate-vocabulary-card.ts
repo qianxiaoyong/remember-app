@@ -1,5 +1,6 @@
 import { PackVerificationError } from './errors.js';
 import { CARD_TYPE_VOCABULARY } from './constants.js';
+import type { VocabularyContent } from './vocabulary-content.js';
 import { vocabularyPackCardRowSchema, parseCardContentJson } from './card.js';
 import { knowledgeIdMatchesHeadword } from './knowledge-id.js';
 import { assertAllowedPackPath } from './paths.js';
@@ -11,8 +12,9 @@ export function validateVocabularyCard(
   card: PackCardRecord,
   manifestPaths: ReadonlySet<string>,
 ): PackCardRow {
-  let content: ReturnType<typeof parseCardContentJson>;
+  let content: VocabularyContent;
   try {
+    // eslint-disable-next-line @typescript-eslint/no-deprecated -- vocabulary validator 专用别名
     content = parseCardContentJson(card.content);
   } catch {
     throw new PackVerificationError(

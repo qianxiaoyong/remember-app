@@ -23,6 +23,8 @@ export type ParsedPackCardContent =
 
 export function parsePackCardContent(cardType: string, contentJson: string): ParsedPackCardContent {
   if (cardType === CARD_TYPE_VOCABULARY) {
+    // parseCardContentJson 为 vocabulary 稳定别名
+    // eslint-disable-next-line @typescript-eslint/no-deprecated -- ADR 0012 保留别名
     return { cardType: CARD_TYPE_VOCABULARY, content: parseCardContentJson(contentJson) };
   }
   if (cardType === CARD_TYPE_STORY_READING) {

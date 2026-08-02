@@ -14,11 +14,11 @@
 
 `cards.cardType` 与 registry 键使用 **小写 snake_case 字符串**，与 SQLite、`constants.ts`、`SUPPORTED_CARD_TYPES` 一致：
 
-| 值                  | 状态                     |
-| ------------------- | ------------------------ |
-| `vocabulary`        | 第一期已冻结（ADR 0008） |
+| 值                  | 状态                                           |
+| ------------------- | ---------------------------------------------- |
+| `vocabulary`        | 第一期已冻结（ADR 0008）                       |
 | `story_reading`     | **已实现**（2026-08-02，`feat/story-reading`） |
-| `dialogue_scenario` | 预留，**本 ADR 不实现**  |
+| `dialogue_scenario` | 预留，**本 ADR 不实现**                        |
 
 扩展新 type 时须同步更新 `SUPPORTED_CARD_TYPES`、parse 分支、validate 注册、mobile Renderer 注册；不得半套落地。
 
@@ -26,12 +26,12 @@
 
 每种 cardType 在 mobile registry 声明 `reviewMode`，study 壳层据此决定是否展示 SM-2 三按钮底栏：
 
-| 值            | 含义                        | 本计划          |
-| ------------- | --------------------------- | --------------- |
-| `sm2`              | 揭示后展示间隔复习按钮           | ✅ `vocabulary`     |
-| `lesson_complete`  | 滚到底后「我读完了」，不进 SM-2 | ✅ `story_reading` |
-| `none`             | 无 SM-2 底栏（只读/浏览类）      | 预留                |
-| `interactive`      | 交互式作答后再评分               | 预留                |
+| 值                | 含义                            | 本计划             |
+| ----------------- | ------------------------------- | ------------------ |
+| `sm2`             | 揭示后展示间隔复习按钮          | ✅ `vocabulary`    |
+| `lesson_complete` | 滚到底后「我读完了」，不进 SM-2 | ✅ `story_reading` |
+| `none`            | 无 SM-2 底栏（只读/浏览类）     | 预留               |
+| `interactive`     | 交互式作答后再评分              | 预留               |
 
 ### 3. 三层分发（静态编译期，非运行时插件）
 
@@ -126,20 +126,20 @@ apps/mobile            cardTypeRegistry[type].Renderer
 
 用户点「我读完了」后写入一行，使调度器不再将其作为 new 或 due：
 
-| 字段 | 值 |
-| --- | --- |
-| `dueAt` | `9999-12-31T23:59:59.999Z` |
-| `intervalDays` | `36500` |
-| `repetitions` | `1` |
-| `easiness` | `2.5` |
+| 字段           | 值                         |
+| -------------- | -------------------------- |
+| `dueAt`        | `9999-12-31T23:59:59.999Z` |
+| `intervalDays` | `36500`                    |
+| `repetitions`  | `1`                        |
+| `easiness`     | `2.5`                      |
 
 未点完成退出：无行，下次仍作 new 课入队。
 
 ### 与 vocabulary 差异
 
-| | vocabulary | story_reading |
-| --- | --- | --- |
-| 阶段 | prompt → reveal | 单屏阅读 |
-| 底栏 | SM-2 三按钮 | 我读完了 |
-| 点词 | lexicon_entries | sidebar |
+|      | vocabulary               | story_reading          |
+| ---- | ------------------------ | ---------------------- |
+| 阶段 | prompt → reveal          | 单屏阅读               |
+| 底栏 | SM-2 三按钮              | 我读完了               |
+| 点词 | lexicon_entries          | sidebar                |
 | 主图 | prompt.primaryImage 可选 | lesson.coverImage 必填 |

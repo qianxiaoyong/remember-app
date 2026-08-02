@@ -23,7 +23,7 @@ export interface PackSourceStoryCard {
 export type PackSourceCard = PackSourceVocabularyCard | PackSourceStoryCard;
 
 export function isStorySourceCard(card: PackSourceCard): card is PackSourceStoryCard {
-  return 'cardType' in card && card.cardType === 'story_reading';
+  return 'cardType' in card;
 }
 
 export interface PackSource {

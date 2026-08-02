@@ -2,6 +2,7 @@ import { vocabularyContentSchema } from '@remember/contracts';
 import { readPackSource } from '@remember/pack-builder/pack-source';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
+import { isStorySourceCard } from '../utils/is-story-source-card.js';
 
 export interface ValidationIssue {
   sortOrder?: number;
@@ -14,6 +15,10 @@ export function validatePackSource(sourceDir: string): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
 
   for (const card of source.cards) {
+    if (isStorySourceCard(card)) {
+      continue;
+    }
+
     const parsed = vocabularyContentSchema.safeParse(card.content);
     if (!parsed.success) {
       for (const issue of parsed.error.issues) {

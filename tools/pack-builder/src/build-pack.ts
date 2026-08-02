@@ -16,7 +16,12 @@ import { join, relative } from 'node:path';
 import { tmpdir } from 'node:os';
 import { sha256Hex } from './sha256.js';
 import { ed } from './configure-ed25519.js';
-import { readPackSource, type PackSource, type PackSourceCard, isStorySourceCard } from './pack-source.js';
+import {
+  readPackSource,
+  type PackSource,
+  type PackSourceCard,
+  isStorySourceCard,
+} from './pack-source.js';
 import { writeZip } from './zip-archive.js';
 
 const TEST_PRIVATE_KEY_HEX = '9d61b19deffd5a60ba844af492ec2cc44401c569d40c893265af344b4352f907';

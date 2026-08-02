@@ -1,5 +1,5 @@
 import { PackVerificationError } from './errors.js';
-import { CARD_TYPE_STORY_READING, CARD_TYPE_VOCABULARY } from './constants.js';
+import { CARD_TYPE_VOCABULARY } from './constants.js';
 import { isSupportedCardType } from './card-type-registry.js';
 import { parseLexiconDefinitionsJson } from './lexicon.js';
 import type { PackManifest } from './manifest.js';
@@ -72,9 +72,9 @@ export function validatePackCards(
 
     if (card.cardType === CARD_TYPE_VOCABULARY) {
       validated.push(validateVocabularyCard(packId, card, manifestPaths));
-    } else if (card.cardType === CARD_TYPE_STORY_READING) {
-      validated.push(validateStoryReadingCard(packId, card, manifestPaths));
+      continue;
     }
+    validated.push(validateStoryReadingCard(packId, card, manifestPaths));
   }
 
   if (validated.length !== cards.length) {

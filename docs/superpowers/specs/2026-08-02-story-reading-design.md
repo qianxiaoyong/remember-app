@@ -12,13 +12,13 @@ cardType registry（ADR 0012）已在 `main` 落地；本 spec 冻结 **`story_r
 
 ### 1.1 目标
 
-| # | 目标 |
-| --- | --- |
-| G1 | 新增 `cardType: story_reading`，与 `vocabulary` 可在 **同一 pack、同一 App** 共存 |
-| G2 | 移动端 **注释阅读 UI**：插图、播放按钮、行内注释、点词详情、「本课 N 词」入口、频次图例（运行时计数） |
-| G3 | 学习完成方式为 **`lesson_complete`**：滚到底 →「我读完了」→ 记进度 → 下一课；**不进 SM-2 复习队列** |
-| G4 | 复用现有 pack 管道（zip 验签、安装、同步、Admin 发版）；仅扩展 contracts 校验与 mobile Renderer |
-| G5 | 正文用 **结构化 JSON runs**，不用 HTML 富文本；Zod `.strict()` 可校验 |
+| #   | 目标                                                                                                  |
+| --- | ----------------------------------------------------------------------------------------------------- |
+| G1  | 新增 `cardType: story_reading`，与 `vocabulary` 可在 **同一 pack、同一 App** 共存                     |
+| G2  | 移动端 **注释阅读 UI**：插图、播放按钮、行内注释、点词详情、「本课 N 词」入口、频次图例（运行时计数） |
+| G3  | 学习完成方式为 **`lesson_complete`**：滚到底 →「我读完了」→ 记进度 → 下一课；**不进 SM-2 复习队列**   |
+| G4  | 复用现有 pack 管道（zip 验签、安装、同步、Admin 发版）；仅扩展 contracts 校验与 mobile Renderer       |
+| G5  | 正文用 **结构化 JSON runs**，不用 HTML 富文本；Zod `.strict()` 可校验                                 |
 
 ### 1.2 非目标（MVP defer）
 
@@ -33,17 +33,17 @@ cardType registry（ADR 0012）已在 `main` 落地；本 spec 冻结 **`story_r
 
 ## 2. 产品决策摘要
 
-| 决策 | 内容 |
-| --- | --- |
-| D1 完成方式 | `reviewMode: lesson_complete`；滚到底可点「我读完了」；不进 SM-2 |
-| D2 注释样式 | 行内：`surface（glossZh）`，tier 决定背景色 |
-| D3 窄屏词表 | 正文 `word` run 可点 → 底部弹层；顶栏/课头区「本课 N 词」→ 全词表页 |
-| D4 音频 | `lesson.primaryAudio` 包内路径；课头播放按钮 |
-| D5 频次图例 | App 固定「红:高频 / 蓝:中频 / 绿:低频」文案；**运行时**按本课 `tier` 计数 |
-| D6 系列元数据 | 「40篇童话…」等 **只在 pack source `meta.json`**，不进 card content |
-| D7 点词数据源 | **仅 `sidebar[]`**；MVP 不写 `lexicon_entries` |
-| D8 一课一卡 | 一张阅读页 = sqlite `cards` 一行 |
-| D9 进度 | 记住读到哪一课；下次从 **第一个未完成课** 继续（按 pack 内 `sortOrder`） |
+| 决策          | 内容                                                                      |
+| ------------- | ------------------------------------------------------------------------- |
+| D1 完成方式   | `reviewMode: lesson_complete`；滚到底可点「我读完了」；不进 SM-2          |
+| D2 注释样式   | 行内：`surface（glossZh）`，tier 决定背景色                               |
+| D3 窄屏词表   | 正文 `word` run 可点 → 底部弹层；顶栏/课头区「本课 N 词」→ 全词表页       |
+| D4 音频       | `lesson.primaryAudio` 包内路径；课头播放按钮                              |
+| D5 频次图例   | App 固定「红:高频 / 蓝:中频 / 绿:低频」文案；**运行时**按本课 `tier` 计数 |
+| D6 系列元数据 | 「40篇童话…」等 **只在 pack source `meta.json`**，不进 card content       |
+| D7 点词数据源 | **仅 `sidebar[]`**；MVP 不写 `lexicon_entries`                            |
+| D8 一课一卡   | 一张阅读页 = sqlite `cards` 一行                                          |
+| D9 进度       | 记住读到哪一课；下次从 **第一个未完成课** 继续（按 pack 内 `sortOrder`）  |
 
 ## 3. 与现有架构的关系
 
@@ -110,13 +110,13 @@ card `content.lesson` 只保留 **课级** 字段（课次、本课标题、封�
 
 ### 6.2 `lesson`
 
-| 字段 | 类型 | 必填 | 说明 |
-| --- | --- | --- | --- |
-| `code` | string min 1 | ✅ | 课次，如 `C1`；用于 knowledgeId slug |
-| `titleEn` | string min 1 | ✅ | 英文标题 |
-| `titleZh` | string min 1 | ✅ | 中文标题 |
-| `coverImage` | string min 1 | ✅ | 包内相对路径，须在 manifest 资源清单 |
-| `primaryAudio` | string min 1 | ✅ | 本课朗读音频，包内相对路径 |
+| 字段           | 类型         | 必填 | 说明                                 |
+| -------------- | ------------ | ---- | ------------------------------------ |
+| `code`         | string min 1 | ✅   | 课次，如 `C1`；用于 knowledgeId slug |
+| `titleEn`      | string min 1 | ✅   | 英文标题                             |
+| `titleZh`      | string min 1 | ✅   | 中文标题                             |
+| `coverImage`   | string min 1 | ✅   | 包内相对路径，须在 manifest 资源清单 |
+| `primaryAudio` | string min 1 | ✅   | 本课朗读音频，包内相对路径           |
 
 **故意省略：** `wordCount`（App 可由 sidebar/runs 统计）、系列名、QR URL。
 
@@ -126,33 +126,33 @@ card `content.lesson` 只保留 **课级** 字段（课次、本课标题、封�
 
 **`kind: "text"`**
 
-| 字段 | 必填 |
-| --- | --- |
-| `kind: "text"` | ✅ |
-| `text` | ✅ 非空字符串 |
+| 字段           | 必填          |
+| -------------- | ------------- |
+| `kind: "text"` | ✅            |
+| `text`         | ✅ 非空字符串 |
 
 **`kind: "word"`**（注释词）
 
-| 字段 | 必填 | 说明 |
-| --- | --- | --- |
-| `kind: "word"` | ✅ | |
-| `surface` | ✅ | 英文词形（展示用） |
-| `glossZh` | ✅ | 行内中文注释 |
-| `tier` | ✅ | `high` \| `mid` \| `low` |
-| `vocabId` | ✅ | 稳定 ID，与 sidebar 关联 |
+| 字段           | 必填 | 说明                     |
+| -------------- | ---- | ------------------------ |
+| `kind: "word"` | ✅   |                          |
+| `surface`      | ✅   | 英文词形（展示用）       |
+| `glossZh`      | ✅   | 行内中文注释             |
+| `tier`         | ✅   | `high` \| `mid` \| `low` |
+| `vocabId`      | ✅   | 稳定 ID，与 sidebar 关联 |
 
 渲染：`surface（glossZh）`，`surface` 按 `tier` 上色（红/蓝/绿 App 主题 token）。
 
 ### 6.4 `sidebar[]`
 
-| 字段 | 必填 | 说明 |
-| --- | --- | --- |
-| `vocabId` | ✅ | 主键，包内本课唯一 |
-| `headword` | ✅ | 词头 |
-| `ipa` | ✅ | 音标字符串 |
-| `pos` | ✅ | 词性，如 `n.` `adj.` |
-| `definitionZh` | ✅ | 中文释义（弹层/词表用，可与 glossZh 相同） |
-| `tier` | ✅ | `high` \| `mid` \| `low` |
+| 字段           | 必填 | 说明                                       |
+| -------------- | ---- | ------------------------------------------ |
+| `vocabId`      | ✅   | 主键，包内本课唯一                         |
+| `headword`     | ✅   | 词头                                       |
+| `ipa`          | ✅   | 音标字符串                                 |
+| `pos`          | ✅   | 词性，如 `n.` `adj.`                       |
+| `definitionZh` | ✅   | 中文释义（弹层/词表用，可与 glossZh 相同） |
+| `tier`         | ✅   | `high` \| `mid` \| `low`                   |
 
 ### 6.5 校验规则（pack-builder / contracts）
 
@@ -161,7 +161,7 @@ card `content.lesson` 只保留 **课级** 字段（课次、本课标题、封�
 3. 每个 `kind: "word"` 的 `vocabId` **必须** 存在于 `sidebar`（同 id 的 `tier` 必须一致）
 4. `sidebar` 每条 `vocabId` **必须** 被至少一个 `word` run 引用（**不允许** 词表孤儿）
 5. `coverImage`、`primaryAudio` 路径符合 ADR 0008 资源规则
-6. `cardType === 'story_reading'` 时走本 schema；vocabulary  schema **不变**
+6. `cardType === 'story_reading'` 时走本 schema；vocabulary schema **不变**
 
 ### 6.6 protocolVersion
 
@@ -171,12 +171,12 @@ card `content.lesson` 只保留 **课级** 字段（课次、本课标题、封�
 
 在 ADR 0012 `reviewMode` 枚举中 **新增** `lesson_complete`（实施时同步 `types.ts` 与 ADR 附录）。
 
-| reviewMode | 底栏 | 适用 |
-| --- | --- | --- |
-| `sm2` | 忘记/模糊/记得 | vocabulary |
+| reviewMode        | 底栏                             | 适用          |
+| ----------------- | -------------------------------- | ------------- |
+| `sm2`             | 忘记/模糊/记得                   | vocabulary    |
 | `lesson_complete` | 「我读完了」（滚到底后 enabled） | story_reading |
-| `none` | 无 | 预留 |
-| `interactive` | 交互提交 | 预留 |
+| `none`            | 无                               | 预留          |
+| `interactive`     | 交互提交                         | 预留          |
 
 **study-screen 行为：**
 
@@ -209,31 +209,31 @@ card `content.lesson` 只保留 **课级** 字段（课次、本课标题、封�
 
 ### 8.2 交互
 
-| 操作 | 行为 |
-| --- | --- |
-| 播放 | 播 `lesson.primaryAudio`；复用 pack 内音频播放链 |
-| 点 `word` run | 底部 sheet：headword、ipa、pos、definitionZh、tier 色条 |
-| 「本课 N 词」 | 进入词表页（列表同 sidebar 顺序；项可点开展开详情） |
-| 滚到底 | 启用「我读完了」 |
-| 更多菜单 | 与 vocabulary 相同（搜索/切换包/设置）；搜索是否索引 story 正文 **defer** 至实施计划 |
+| 操作          | 行为                                                                                 |
+| ------------- | ------------------------------------------------------------------------------------ |
+| 播放          | 播 `lesson.primaryAudio`；复用 pack 内音频播放链                                     |
+| 点 `word` run | 底部 sheet：headword、ipa、pos、definitionZh、tier 色条                              |
+| 「本课 N 词」 | 进入词表页（列表同 sidebar 顺序；项可点开展开详情）                                  |
+| 滚到底        | 启用「我读完了」                                                                     |
+| 更多菜单      | 与 vocabulary 相同（搜索/切换包/设置）；搜索是否索引 story 正文 **defer** 至实施计划 |
 
 ### 8.3 视觉 token（频次）
 
-| tier | 含义 | 默认色（对齐教材习惯） |
-| --- | --- | --- |
-| `high` | 高频 | 红系背景 |
-| `mid` | 中频 | 蓝系背景 |
-| `low` | 低频 | 绿系背景 |
+| tier   | 含义 | 默认色（对齐教材习惯） |
+| ------ | ---- | ---------------------- |
+| `high` | 高频 | 红系背景               |
+| `mid`  | 中频 | 蓝系背景               |
+| `low`  | 低频 | 绿系背景               |
 
 图例文案 App 写死；括号内数字由本课 content 统计。
 
 ### 8.4 与 vocabulary 差异
 
-| | vocabulary | story_reading |
-| --- | --- | --- |
-| 阶段 | prompt → reveal | 单屏阅读 |
-| 底栏 | SM-2 三按钮 | 我读完了 |
-| 点词 | lexicon_entries | sidebar |
+|      | vocabulary               | story_reading          |
+| ---- | ------------------------ | ---------------------- |
+| 阶段 | prompt → reveal          | 单屏阅读               |
+| 底栏 | SM-2 三按钮              | 我读完了               |
+| 点词 | lexicon_entries          | sidebar                |
 | 图片 | prompt.primaryImage 可选 | lesson.coverImage 必填 |
 
 ## 9. 示例 content（节选）
@@ -300,6 +300,6 @@ card `content.lesson` 只保留 **课级** 字段（课次、本课标题、封�
 
 ## 12. 修订记录
 
-| 日期 | 说明 |
-| --- | --- |
+| 日期       | 说明                                                  |
+| ---------- | ----------------------------------------------------- |
 | 2026-08-02 | 首版确认：产品决策、schema、UI、进度、protocolVersion |

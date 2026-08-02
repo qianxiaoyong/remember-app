@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState, type ReactElement } from 'react';
+import { isStorySourceCard } from '../utils/is-story-source-card.js';
 import {
   buildPack,
   createCard,
@@ -50,7 +51,9 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
         .sort((left, right) => left.sortOrder - right.sortOrder)
         .map((card) => ({
           sortOrder: card.sortOrder,
-          headword: card.content.prompt.headword,
+          headword: isStorySourceCard(card)
+            ? `${card.content.lesson.code} ${card.content.lesson.titleEn}`
+            : card.content.prompt.headword,
         })),
     );
   }, [packId]);
@@ -139,6 +142,9 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
     setError(null);
     try {
       const card = await createCard(packId);
+      if (isStorySourceCard(card)) {
+        throw new Error('createCard returned unexpected story_reading card');
+      }
       onEditCard(card.sortOrder, card.content.prompt.headword);
     } catch (createError: unknown) {
       setError(createError instanceof Error ? createError.message : String(createError));
