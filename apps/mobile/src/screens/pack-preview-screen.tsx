@@ -12,6 +12,7 @@ import { playSamplePreviewAudio } from '../use-cases/play-sample-preview-audio';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 
+/** 预览页仅适用于 catalog sample（vocabulary）；其他 cardType 需单独预览计划。 */
 interface PackPreviewScreenProps {
   packId: string;
   headword: string;

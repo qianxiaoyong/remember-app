@@ -1,18 +1,17 @@
 import type { ReactElement } from 'react';
 import { useEffect, useMemo, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LexiconPopup } from '../components/lexicon-popup';
 import { ScreenScaffold } from '../components/shell/screen-scaffold';
-import { StudyHeaderBand } from '../components/study/study-header-band';
 import { StudyMoreMenu } from '../components/study/study-more-menu';
 import { StudyRatingBar } from '../components/study/study-rating-bar';
-import { StudyRecallPanel } from '../components/study/study-recall-panel';
-import { StudyRevealScrollBody } from '../components/study/study-reveal-scroll-body';
 import { StudySessionOutcomePanel } from '../components/study/study-session-outcome-panel';
 import { PrimaryButton } from '../components/ui/primary-button';
 import { useStudyFlow } from '../hooks/use-study-flow';
+import { resolveCardTypeDefinition } from '../learning/card-types/registry';
+import { UnsupportedCardPanel } from '../learning/card-types/unsupported-card-panel';
 import { listInstalledPacksUseCase } from '../use-cases/list-installed-packs';
 import {
   resolveStudyPackDisplayName,
@@ -57,6 +56,7 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
   const installedPacks = useMemo(() => listInstalledPacksUseCase(), []);
   const sessionOutcome = useMemo(() => resolveStudySessionOutcome(session), [session]);
   const packDisplayName = useMemo(() => resolveStudyPackDisplayName(props.packId), [props.packId]);
+  const cardTypeDefinition = cardDetail ? resolveCardTypeDefinition(cardDetail.cardType) : null;
 
   useEffect(() => {
     if (props.autoStart !== false && session === null) {
@@ -88,7 +88,12 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
     }
   };
 
-  const showRatingBar = revealed && session?.currentItem && intervalLabels;
+  const showRatingBar =
+    cardTypeDefinition?.reviewMode === 'sm2' && revealed && session?.currentItem && intervalLabels;
+
+  const goHome = (): void => {
+    router.replace('/library');
+  };
 
   return (
     <ScreenScaffold
@@ -110,46 +115,33 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
             onBrowseMarket={() => {
               navigateShellTab(router, 'market');
             }}
-            onGoHome={() => {
-              router.replace('/library');
-            }}
+            onGoHome={goHome}
             packDisplayName={packDisplayName}
             variant={sessionOutcome}
           />
         ) : cardDetail ? (
-          <>
-            <StudyHeaderBand
+          cardTypeDefinition ? (
+            <cardTypeDefinition.Renderer
               content={cardDetail.content}
-              onHomePress={() => {
-                router.replace('/library');
-              }}
+              knowledgeId={cardDetail.knowledgeId}
+              lexiconSelectedSurfaceForm={lexiconSelectedSurfaceForm}
+              onHomePress={goHome}
               onMorePress={() => {
                 setMoreVisible(true);
               }}
-              onPlayAudio={handlePlayPrimaryAudio}
+              onPlayExampleAudio={handlePlayExampleAudio}
+              onPlayPrimaryAudio={handlePlayPrimaryAudio}
+              onTokenPress={openLexicon}
+              packId={props.packId}
               revealed={revealed}
+              setRevealed={setRevealed}
+              sortOrder={cardDetail.sortOrder}
             />
-            {revealed ? (
-              <ScrollView
-                contentContainerStyle={styles.revealContent}
-                showsVerticalScrollIndicator={false}
-                style={styles.revealScroll}
-              >
-                <StudyRevealScrollBody
-                  content={cardDetail.content}
-                  highlightSurfaceForm={lexiconSelectedSurfaceForm}
-                  onPlayExampleAudio={handlePlayExampleAudio}
-                  onTokenPress={openLexicon}
-                />
-              </ScrollView>
-            ) : (
-              <StudyRecallPanel
-                onReveal={() => {
-                  setRevealed(true);
-                }}
-              />
-            )}
-          </>
+          ) : (
+            <UnsupportedCardPanel onGoHome={goHome} />
+          )
+        ) : session.currentItem ? (
+          <UnsupportedCardPanel message="无法加载此卡片内容" onGoHome={goHome} />
         ) : null}
       </View>
 
@@ -201,12 +193,5 @@ const styles = StyleSheet.create({
   },
   emptyState: {
     padding: spacing.lg,
-  },
-  revealScroll: {
-    backgroundColor: colors.background,
-    flex: 1,
-  },
-  revealContent: {
-    paddingBottom: spacing.lg,
   },
 });

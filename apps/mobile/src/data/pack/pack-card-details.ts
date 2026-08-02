@@ -1,55 +1,60 @@
-import { parseCardContentJson, type VocabularyContent } from '@remember/contracts';
+import { parsePackCardContent, type ParsedPackCardContent } from '@remember/contracts';
 import { openDatabaseSync } from 'expo-sqlite';
 
-export interface PackCardDetail {
+export interface PackCardRow {
+  knowledgeId: string;
+  cardType: string;
+  sortOrder: number;
+  content: string;
+}
+
+export type PackCardDetail = ParsedPackCardContent & {
   knowledgeId: string;
   sortOrder: number;
   headword: string;
-  content: VocabularyContent;
+};
+
+export function mapCardRowToDetail(row: PackCardRow): PackCardDetail | null {
+  try {
+    const parsed = parsePackCardContent(row.cardType, row.content);
+    return {
+      ...parsed,
+      knowledgeId: row.knowledgeId,
+      sortOrder: row.sortOrder,
+      headword: parsed.content.prompt.headword,
+    };
+  } catch {
+    return null;
+  }
 }
 
 export function getPackCardDetail(sqlitePath: string, knowledgeId: string): PackCardDetail | null {
   const db = openDatabaseSync(sqlitePath);
   db.execSync('PRAGMA query_only = ON');
-  const row = db.getFirstSync<{
-    knowledgeId: string;
-    sortOrder: number;
-    content: string;
-  }>('SELECT knowledgeId, sortOrder, content FROM cards WHERE knowledgeId = ?', [knowledgeId]);
+  const row = db.getFirstSync<PackCardRow>(
+    'SELECT knowledgeId, cardType, sortOrder, content FROM cards WHERE knowledgeId = ?',
+    [knowledgeId],
+  );
 
   db.closeSync();
   if (!row) {
     return null;
   }
 
-  const content = parseCardContentJson(row.content);
-  return {
-    knowledgeId: row.knowledgeId,
-    sortOrder: row.sortOrder,
-    headword: content.prompt.headword,
-    content,
-  };
+  return mapCardRowToDetail(row);
 }
 
 export function listPackCardDetails(sqlitePath: string): PackCardDetail[] {
   const db = openDatabaseSync(sqlitePath);
   db.execSync('PRAGMA query_only = ON');
-  const rows = db.getAllSync<{
-    knowledgeId: string;
-    sortOrder: number;
-    content: string;
-  }>('SELECT knowledgeId, sortOrder, content FROM cards ORDER BY sortOrder ASC');
+  const rows = db.getAllSync<PackCardRow>(
+    'SELECT knowledgeId, cardType, sortOrder, content FROM cards ORDER BY sortOrder ASC',
+  );
   db.closeSync();
 
-  return rows.map((row) => {
-    const content = parseCardContentJson(row.content);
-    return {
-      knowledgeId: row.knowledgeId,
-      sortOrder: row.sortOrder,
-      headword: content.prompt.headword,
-      content,
-    };
-  });
+  return rows
+    .map((row) => mapCardRowToDetail(row))
+    .filter((detail): detail is PackCardDetail => detail !== null);
 }
 
 export function searchPackCardsByHeadword(sqlitePath: string, query: string): PackCardDetail[] {
