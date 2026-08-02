@@ -17,7 +17,7 @@
 | 值                  | 状态                     |
 | ------------------- | ------------------------ |
 | `vocabulary`        | 第一期已冻结（ADR 0008） |
-| `story_reading`     | 预留，**本 ADR 不实现**  |
+| `story_reading`     | **已实现**（2026-08-02，`feat/story-reading`） |
 | `dialogue_scenario` | 预留，**本 ADR 不实现**  |
 
 扩展新 type 时须同步更新 `SUPPORTED_CARD_TYPES`、parse 分支、validate 注册、mobile Renderer 注册；不得半套落地。
@@ -28,9 +28,10 @@
 
 | 值            | 含义                        | 本计划          |
 | ------------- | --------------------------- | --------------- |
-| `sm2`         | 揭示后展示间隔复习按钮      | ✅ `vocabulary` |
-| `none`        | 无 SM-2 底栏（只读/浏览类） | 预留            |
-| `interactive` | 交互式作答后再评分          | 预留            |
+| `sm2`              | 揭示后展示间隔复习按钮           | ✅ `vocabulary`     |
+| `lesson_complete`  | 滚到底后「我读完了」，不进 SM-2 | ✅ `story_reading` |
+| `none`             | 无 SM-2 底栏（只读/浏览类）      | 预留                |
+| `interactive`      | 交互式作答后再评分               | 预留                |
 
 ### 3. 三层分发（静态编译期，非运行时插件）
 
@@ -67,13 +68,13 @@ apps/mobile            cardTypeRegistry[type].Renderer
 
 ## 后果
 
-- `SUPPORTED_CARD_TYPES` 在本 refactor 结束时仍 **仅** `vocabulary`。
+- `SUPPORTED_CARD_TYPES` 含 `vocabulary` 与 `story_reading`（2026-08-02 起）。
 - 搜索/预览等路径须识别 `PackCardDetail.cardType`；非 vocabulary 预览不在本计划范围。
 - 页面/用例继续经 repository / use-case 读 sqlite，不直连数据库。
 
 ## 附录：新增 cardType 检查清单
 
-后续 `story_reading` 等 **另开计划**，按序：
+后续新 type **另开计划**，按序：
 
 1. ADR 或 amend 0012：content schema 与 `reviewMode`
 2. `packages/contracts`：schema + `parsePackCardContent` 分支 + `SUPPORTED_CARD_TYPES` 追加
@@ -82,3 +83,63 @@ apps/mobile            cardTypeRegistry[type].Renderer
 5. `registry.ts` 注册一行
 6. pack-builder 测试包 + mobile 手工回归
 7. （可选）pack-editor 表单
+
+## 附录：story_reading（2026-08-02 冻结）
+
+关联 spec：`docs/superpowers/specs/2026-08-02-story-reading-design.md`；`protocolVersion` **保持 1**。
+
+### content JSON（严格三键）
+
+```typescript
+{
+  lesson: { code, titleEn, titleZh, coverImage, primaryAudio };
+  story: { paragraphs: [{ runs: TextRun | WordRun[] }] };
+  sidebar: [{ vocabId, headword, ipa, pos, definitionZh, tier }];
+}
+```
+
+- `TextRun`：`{ kind: 'text', text }`
+- `WordRun`：`{ kind: 'word', surface, glossZh, tier, vocabId }`；`tier`: `high` | `mid` | `low`
+- 可选字段省略键，不用 `null`；Zod `.strict()`
+
+### knowledgeId
+
+```text
+{packId}:story:{lessonSlug}
+```
+
+`lessonSlug` 由 `lesson.code` 规范化（trim、小写、非 `[a-z0-9-]` → `-`）。与 vocabulary `{packId}:en:word|phrase:{slug}` 命名空间隔离。
+
+### 校验（contracts / pack-builder）
+
+1. 至少 1 个 `paragraph`、至少 1 个 run
+2. 每个 `word` run 的 `vocabId` 须在 `sidebar` 存在，且 `tier` 一致
+3. `sidebar` 每条 `vocabId` 须被至少一个 `word` run 引用（不允许孤儿）
+4. `coverImage`、`primaryAudio` 须在 manifest 资源清单
+5. MVP **不写** story 词到 `lexicon_entries`；点词读 `sidebar`
+
+### reviewMode
+
+`story_reading` → `lesson_complete`：study 壳层展示「我读完了」（滚到底 enabled）；**不进 SM-2**。
+
+### 完成哨兵（learning_states）
+
+用户点「我读完了」后写入一行，使调度器不再将其作为 new 或 due：
+
+| 字段 | 值 |
+| --- | --- |
+| `dueAt` | `9999-12-31T23:59:59.999Z` |
+| `intervalDays` | `36500` |
+| `repetitions` | `1` |
+| `easiness` | `2.5` |
+
+未点完成退出：无行，下次仍作 new 课入队。
+
+### 与 vocabulary 差异
+
+| | vocabulary | story_reading |
+| --- | --- | --- |
+| 阶段 | prompt → reveal | 单屏阅读 |
+| 底栏 | SM-2 三按钮 | 我读完了 |
+| 点词 | lexicon_entries | sidebar |
+| 主图 | prompt.primaryImage 可选 | lesson.coverImage 必填 |
