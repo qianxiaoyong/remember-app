@@ -5,10 +5,10 @@ import type { VocabularyContent } from './vocabulary-content.js';
 
 export type CardType = typeof CARD_TYPE_VOCABULARY;
 
-export type ParsedPackCardContent = {
+export interface ParsedPackCardContent {
   cardType: typeof CARD_TYPE_VOCABULARY;
   content: VocabularyContent;
-};
+}
 
 export function parsePackCardContent(cardType: string, contentJson: string): ParsedPackCardContent {
   if (cardType !== CARD_TYPE_VOCABULARY) {

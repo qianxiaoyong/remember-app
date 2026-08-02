@@ -1,6 +1,6 @@
 import type { VocabularyContent } from '@remember/contracts';
-import type { CardRendererProps } from '../types.js';
-import { VocabularyStudyPanel } from './vocabulary-study-panel.js';
+import type { CardRendererProps } from '../types';
+import { VocabularyStudyPanel } from './vocabulary-study-panel';
 
 export function parseVocabularyContent(content: unknown): VocabularyContent {
   return content as VocabularyContent;

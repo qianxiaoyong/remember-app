@@ -14,12 +14,10 @@ describe('parsePackCardContent', () => {
   });
 
   it('未知 cardType 抛 PACK_UNSUPPORTED_CARD_TYPE', () => {
-    expect(() => parsePackCardContent('story_reading', '{}')).toThrow(PackVerificationError);
-    try {
-      parsePackCardContent('story_reading', '{}');
-    } catch (error) {
-      expect(error).toBeInstanceOf(PackVerificationError);
-      expect((error as PackVerificationError).code).toBe('PACK_UNSUPPORTED_CARD_TYPE');
-    }
+    expect(() => parsePackCardContent('story_reading', '{}')).toThrow(
+      expect.objectContaining({
+        code: 'PACK_UNSUPPORTED_CARD_TYPE',
+      } satisfies Partial<PackVerificationError>),
+    );
   });
 });

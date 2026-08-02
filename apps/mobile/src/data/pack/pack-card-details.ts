@@ -17,13 +17,11 @@ export type PackCardDetail = ParsedPackCardContent & {
 export function mapCardRowToDetail(row: PackCardRow): PackCardDetail | null {
   try {
     const parsed = parsePackCardContent(row.cardType, row.content);
-    const headword =
-      parsed.cardType === 'vocabulary' ? parsed.content.prompt.headword : row.knowledgeId;
     return {
       ...parsed,
       knowledgeId: row.knowledgeId,
       sortOrder: row.sortOrder,
-      headword,
+      headword: parsed.content.prompt.headword,
     };
   } catch {
     return null;

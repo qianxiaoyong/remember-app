@@ -69,6 +69,7 @@ export function validatePackCards(
       );
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- cardType 分发预留多 type 分支
     if (card.cardType === CARD_TYPE_VOCABULARY) {
       validated.push(validateVocabularyCard(packId, card, manifestPaths));
     }
