@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react';
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
+import type { LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { StoryReadingContent, StorySidebarEntry } from '@remember/contracts';
@@ -11,10 +11,13 @@ import { resolvePackAssetUri } from '../../../use-cases/resolve-pack-asset-uri';
 import { colors } from '../../../theme/colors';
 import { spacing } from '../../../theme/spacing';
 import { countSidebarWords, countTierStats, formatTierLegend } from './count-tier-stats';
+import {
+  isScrollAtBottom,
+  isScrollContentFullyVisible,
+  SCROLL_BOTTOM_THRESHOLD,
+} from './scroll-reach-bottom';
 import { StoryVocabSheet } from './story-vocab-sheet';
 import { tierBackgroundColors } from './tier-colors';
-
-const SCROLL_BOTTOM_THRESHOLD = 48;
 
 export interface StoryReadingPanelProps {
   packId: string;
@@ -41,11 +44,41 @@ export function StoryReadingPanel(props: StoryReadingPanelProps): ReactElement {
   }, [props.content.sidebar]);
   const coverUri = resolvePackAssetUri(props.packId, props.content.lesson.coverImage);
   const wordCount = countSidebarWords(props.content);
+  const contentHeightRef = useRef(0);
+  const layoutHeightRef = useRef(0);
+
+  const tryMarkReachedBottomIfFullyVisible = (): void => {
+    if (
+      isScrollContentFullyVisible(
+        contentHeightRef.current,
+        layoutHeightRef.current,
+        SCROLL_BOTTOM_THRESHOLD,
+      )
+    ) {
+      props.onReachedBottom?.();
+    }
+  };
+
+  const handleContentSizeChange = (_width: number, height: number): void => {
+    contentHeightRef.current = height;
+    tryMarkReachedBottomIfFullyVisible();
+  };
+
+  const handleScrollViewLayout = (event: LayoutChangeEvent): void => {
+    layoutHeightRef.current = event.nativeEvent.layout.height;
+    tryMarkReachedBottomIfFullyVisible();
+  };
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>): void => {
     const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
-    const distanceFromBottom = contentSize.height - layoutMeasurement.height - contentOffset.y;
-    if (distanceFromBottom <= SCROLL_BOTTOM_THRESHOLD) {
+    if (
+      isScrollAtBottom({
+        contentHeight: contentSize.height,
+        layoutHeight: layoutMeasurement.height,
+        scrollOffsetY: contentOffset.y,
+        threshold: SCROLL_BOTTOM_THRESHOLD,
+      })
+    ) {
       props.onReachedBottom?.();
     }
   };
@@ -75,6 +108,8 @@ export function StoryReadingPanel(props: StoryReadingPanelProps): ReactElement {
 
       <ScrollView
         contentContainerStyle={styles.scrollContent}
+        onContentSizeChange={handleContentSizeChange}
+        onLayout={handleScrollViewLayout}
         onScroll={handleScroll}
         scrollEventThrottle={16}
         showsVerticalScrollIndicator={false}
