@@ -52,8 +52,9 @@
                 "text": " a princess."
               }
             ],
+            "translationZh": "王子并不快乐。他想娶一位公主。",
             "audioStartMs": 0,
-            "audioEndMs": 6786
+            "audioEndMs": 9826
           },
           {
             "runs": [
@@ -84,8 +85,9 @@
                 "text": " a princess."
               }
             ],
-            "audioStartMs": 6786,
-            "audioEndMs": 12619
+            "translationZh": "他四处寻找，却找不到一位公主。",
+            "audioStartMs": 9826,
+            "audioEndMs": 18273
           },
           {
             "runs": [
@@ -171,8 +173,9 @@
                 "text": "."
               }
             ],
-            "audioStartMs": 12619,
-            "audioEndMs": 25119
+            "translationZh": "他遇见了许多公主。有的太老，有的太小或太大，有的也不漂亮。",
+            "audioStartMs": 18273,
+            "audioEndMs": 36373
           },
           {
             "runs": [
@@ -214,8 +217,9 @@
                 "text": "."
               }
             ],
-            "audioStartMs": 25119,
-            "audioEndMs": 31548
+            "translationZh": "有一天，一个女孩来到他的城堡。外面正下着雨。",
+            "audioStartMs": 36373,
+            "audioEndMs": 45682
           },
           {
             "runs": [
@@ -257,8 +261,9 @@
                 "text": ".'"
               }
             ],
-            "audioStartMs": 31548,
-            "audioEndMs": 37024
+            "translationZh": "「我是公主，」她说，「我需要一张床。」",
+            "audioStartMs": 45682,
+            "audioEndMs": 53612
           },
           {
             "runs": [
@@ -300,8 +305,9 @@
                 "text": " she is a princess."
               }
             ],
-            "audioStartMs": 37024,
-            "audioEndMs": 45357
+            "translationZh": "王子喜欢这个女孩，但他不认为她是公主。",
+            "audioStartMs": 53612,
+            "audioEndMs": 65679
           },
           {
             "runs": [
@@ -365,8 +371,9 @@
                 "text": " a pea under 23 mattresses!"
               }
             ],
-            "audioStartMs": 45357,
-            "audioEndMs": 55714
+            "translationZh": "他有了一个主意。王子为她铺床，还在二十三张床垫下放了一颗豌豆！",
+            "audioStartMs": 65679,
+            "audioEndMs": 80676
           },
           {
             "runs": [
@@ -397,8 +404,9 @@
                 "text": "."
               }
             ],
-            "audioStartMs": 55714,
-            "audioEndMs": 61547
+            "translationZh": "第二天早上，王子和这个女孩交谈。",
+            "audioStartMs": 80676,
+            "audioEndMs": 89123
           },
           {
             "runs": [
@@ -429,8 +437,9 @@
                 "text": ".'"
               }
             ],
-            "audioStartMs": 61547,
-            "audioEndMs": 68333
+            "translationZh": "「我浑身青一块紫一块，」她说，「你的床太硬了。」",
+            "audioStartMs": 89123,
+            "audioEndMs": 98949
           },
           {
             "runs": [
@@ -472,8 +481,9 @@
                 "text": " the pea under those mattresses!'"
               }
             ],
-            "audioStartMs": 68333,
-            "audioEndMs": 77857
+            "translationZh": "王子想：「只有公主才能感觉到那些床垫下的豌豆！」",
+            "audioStartMs": 98949,
+            "audioEndMs": 112740
           },
           {
             "runs": [
@@ -526,8 +536,9 @@
                 "text": " me?'"
               }
             ],
-            "audioStartMs": 77857,
-            "audioEndMs": 85357
+            "translationZh": "「只有公主才会这么娇贵。」他问道：「你愿意嫁给我吗？」",
+            "audioStartMs": 112740,
+            "audioEndMs": 123600
           },
           {
             "runs": [
@@ -569,8 +580,9 @@
                 "text": " everyone can see it."
               }
             ],
-            "audioStartMs": 85357,
-            "audioEndMs": 95000
+            "translationZh": "王子和他的公主把那颗豌豆带到了博物馆。现在所有人都能看见它。",
+            "audioStartMs": 123600,
+            "audioEndMs": 137561
           }
         ]
       },

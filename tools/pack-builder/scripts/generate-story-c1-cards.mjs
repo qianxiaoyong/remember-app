@@ -1,9 +1,10 @@
-import { writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const outputPath = resolve(__dirname, '../source/story-test-pack/cards.json');
+const audioPath = resolve(__dirname, '../source/story-test-pack/assets/audio/c1.mp3');
 
 /** @param {string} text */
 function t(text) {
@@ -13,6 +14,52 @@ function t(text) {
 /** @param {string} surface @param {string} glossZh @param {'high'|'mid'|'low'} tier @param {string} [vocabId] */
 function w(surface, glossZh, tier, vocabId = surface.toLowerCase()) {
   return { kind: 'word', surface, glossZh, tier, vocabId };
+}
+
+/** @param {string} filePath */
+function readMp3DurationMs(filePath) {
+  const buffer = readFileSync(filePath);
+  let offset = 0;
+  if (buffer.slice(0, 3).toString() === 'ID3') {
+    const tagSize =
+      ((buffer[6] & 0x7f) << 21) |
+      ((buffer[7] & 0x7f) << 14) |
+      ((buffer[8] & 0x7f) << 7) |
+      (buffer[9] & 0x7f);
+    offset = 10 + tagSize;
+  }
+
+  const bitrates = [0, 32, 40, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256, 320, 0];
+  const samplerates = [44100, 48000, 32000, 0];
+  let frames = 0;
+  let sampleRate = 44100;
+
+  while (offset + 4 < buffer.length) {
+    if (buffer[offset] === 0xff && (buffer[offset + 1] & 0xe0) === 0xe0) {
+      const layer = (buffer[offset + 1] >> 1) & 0x3;
+      if (layer !== 0x1) {
+        offset += 1;
+        continue;
+      }
+      const bitrateIndex = (buffer[offset + 2] >> 4) & 0xf;
+      const sampleRateIndex = (buffer[offset + 2] >> 2) & 0x3;
+      const padding = (buffer[offset + 2] >> 1) & 0x1;
+      const bitrate = bitrates[bitrateIndex] * 1000;
+      const nextSampleRate = samplerates[sampleRateIndex];
+      if (!bitrate || !nextSampleRate) {
+        offset += 1;
+        continue;
+      }
+      sampleRate = nextSampleRate;
+      const frameLength = Math.floor((144 * bitrate) / sampleRate) + padding;
+      frames += 1;
+      offset += frameLength;
+      continue;
+    }
+    offset += 1;
+  }
+
+  return Math.round((frames * 1152 * 1000) / sampleRate);
 }
 
 const sidebar = [
@@ -233,7 +280,7 @@ const sidebar = [
 ];
 
 /** 人工标注段级时间轴（ms）；总时长须 ≤ c1.mp3 实际时长 */
-const AUDIO_TOTAL_MS = 95_000;
+const AUDIO_TOTAL_MS = readMp3DurationMs(audioPath);
 
 /** @param {{ runs: unknown[] }} paragraph */
 function paragraphTextLength(paragraph) {
@@ -244,6 +291,7 @@ function paragraphTextLength(paragraph) {
 
 const rawParagraphs = [
   {
+    translationZh: '王子并不快乐。他想娶一位公主。',
     runs: [
       t('The prince is '),
       w('not', '不', 'mid'),
@@ -255,6 +303,7 @@ const rawParagraphs = [
     ],
   },
   {
+    translationZh: '他四处寻找，却找不到一位公主。',
     runs: [
       t('He '),
       w('looks', '寻找', 'high', 'look'),
@@ -264,6 +313,7 @@ const rawParagraphs = [
     ],
   },
   {
+    translationZh: '他遇见了许多公主。有的太老，有的太小或太大，有的也不漂亮。',
     runs: [
       t('He '),
       w('meets', '遇见', 'mid', 'meet'),
@@ -283,6 +333,7 @@ const rawParagraphs = [
     ],
   },
   {
+    translationZh: '有一天，一个女孩来到他的城堡。外面正下着雨。',
     runs: [
       t('One day, a '),
       w('girl', '女孩', 'mid'),
@@ -294,6 +345,7 @@ const rawParagraphs = [
     ],
   },
   {
+    translationZh: '「我是公主，」她说，「我需要一张床。」',
     runs: [
       t("'I'm a princess,' she "),
       w('says', '说', 'high', 'say'),
@@ -305,6 +357,7 @@ const rawParagraphs = [
     ],
   },
   {
+    translationZh: '王子喜欢这个女孩，但他不认为她是公主。',
     runs: [
       t('The prince '),
       w('likes', '喜欢', 'high', 'like'),
@@ -316,6 +369,7 @@ const rawParagraphs = [
     ],
   },
   {
+    translationZh: '他有了一个主意。王子为她铺床，还在二十三张床垫下放了一颗豌豆！',
     runs: [
       t('He '),
       w('has', '有', 'high', 'have'),
@@ -331,6 +385,7 @@ const rawParagraphs = [
     ],
   },
   {
+    translationZh: '第二天早上，王子和这个女孩交谈。',
     runs: [
       t('The next morning, the prince '),
       w('talks', '说话', 'mid', 'talk'),
@@ -340,6 +395,7 @@ const rawParagraphs = [
     ],
   },
   {
+    translationZh: '「我浑身青一块紫一块，」她说，「你的床太硬了。」',
     runs: [
       t("'I am black and blue,' she "),
       w('says', '说', 'high', 'say'),
@@ -349,6 +405,7 @@ const rawParagraphs = [
     ],
   },
   {
+    translationZh: '王子想：「只有公主才能感觉到那些床垫下的豌豆！」',
     runs: [
       t('The prince '),
       w('thinks', '想', 'high', 'think'),
@@ -360,6 +417,7 @@ const rawParagraphs = [
     ],
   },
   {
+    translationZh: '「只有公主才会这么娇贵。」他问道：「你愿意嫁给我吗？」',
     runs: [
       t("'"),
       w('Only', '只有', 'high', 'only'),
@@ -373,6 +431,7 @@ const rawParagraphs = [
     ],
   },
   {
+    translationZh: '王子和他的公主把那颗豌豆带到了博物馆。现在所有人都能看见它。',
     runs: [
       t('The prince and his princess '),
       w('take', '带', 'high'),
@@ -397,7 +456,8 @@ const paragraphs = rawParagraphs.map((paragraph, index) => {
   const audioEndMs = audioStartMs + segmentMs;
   cursorMs = audioEndMs;
   return {
-    ...paragraph,
+    runs: paragraph.runs,
+    translationZh: paragraph.translationZh,
     audioStartMs,
     audioEndMs,
   };
@@ -422,4 +482,4 @@ const cards = [
 ];
 
 writeFileSync(outputPath, `${JSON.stringify(cards, null, 2)}\n`);
-process.stdout.write(`wrote ${outputPath}\n`);
+process.stdout.write(`wrote ${outputPath} (audio ${String(AUDIO_TOTAL_MS)} ms)\n`);
