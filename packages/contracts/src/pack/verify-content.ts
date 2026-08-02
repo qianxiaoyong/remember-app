@@ -1,13 +1,13 @@
 import { PackVerificationError } from './errors.js';
 import { CARD_TYPE_VOCABULARY } from './constants.js';
-import { packCardRowSchema, parseCardContentJson } from './card.js';
-import { isValidKnowledgeIdFormat, knowledgeIdMatchesHeadword } from './knowledge-id.js';
+import { isSupportedCardType } from './card-type-registry.js';
 import { parseLexiconDefinitionsJson } from './lexicon.js';
 import type { PackManifest } from './manifest.js';
-import { assertAllowedPackPath } from './paths.js';
 import { normalizeSurfaceForm } from './normalize.js';
 import type { PackCardRow } from './card.js';
 import type { LexiconEntry } from './lexicon.js';
+import { validateVocabularyCard } from './validate-vocabulary-card.js';
+import { isValidKnowledgeIdFormat } from './knowledge-id.js';
 
 export interface PackCardRecord {
   knowledgeId: string;
@@ -62,57 +62,16 @@ export function validatePackCards(
     }
     sortOrders.add(card.sortOrder);
 
-    if (card.cardType !== CARD_TYPE_VOCABULARY) {
+    if (!isSupportedCardType(card.cardType)) {
       throw new PackVerificationError(
-        'PACK_CONTENT_INVALID',
-        `unsupported cardType: ${card.knowledgeId}`,
+        'PACK_UNSUPPORTED_CARD_TYPE',
+        `unsupported cardType: ${card.cardType}`,
       );
     }
 
-    let content: ReturnType<typeof parseCardContentJson>;
-    try {
-      content = parseCardContentJson(card.content);
-    } catch {
-      throw new PackVerificationError(
-        'PACK_CONTENT_INVALID',
-        `invalid card content: ${card.knowledgeId}`,
-      );
+    if (card.cardType === CARD_TYPE_VOCABULARY) {
+      validated.push(validateVocabularyCard(packId, card, manifestPaths));
     }
-
-    const kind = card.knowledgeId.includes(':en:phrase:') ? 'phrase' : 'word';
-    if (
-      !knowledgeIdMatchesHeadword({
-        knowledgeId: card.knowledgeId,
-        packId,
-        headword: content.prompt.headword,
-        kind,
-      })
-    ) {
-      throw new PackVerificationError(
-        'PACK_CONTENT_INVALID',
-        `knowledgeId does not match headword: ${card.knowledgeId}`,
-      );
-    }
-
-    assertAssetReferenced(manifestPaths, content.prompt.primaryAudio, card.knowledgeId);
-    if (content.prompt.primaryImage) {
-      assertAssetReferenced(manifestPaths, content.prompt.primaryImage, card.knowledgeId);
-    }
-
-    for (const example of content.reveal.examples) {
-      if (example.audio) {
-        assertAssetReferenced(manifestPaths, example.audio, card.knowledgeId);
-      }
-    }
-
-    validated.push(
-      packCardRowSchema.parse({
-        knowledgeId: card.knowledgeId,
-        cardType: card.cardType,
-        sortOrder: card.sortOrder,
-        content,
-      }),
-    );
   }
 
   return validated;
@@ -163,28 +122,6 @@ export function validateLexiconEntries(records: PackLexiconRecord[]): LexiconEnt
   }
 
   return validated;
-}
-
-function assertAssetReferenced(
-  manifestPaths: ReadonlySet<string>,
-  assetPath: string,
-  context: string,
-): void {
-  try {
-    assertAllowedPackPath(assetPath);
-  } catch {
-    throw new PackVerificationError(
-      'PACK_CONTENT_INVALID',
-      `illegal asset path on ${context}: ${assetPath}`,
-    );
-  }
-
-  if (!manifestPaths.has(assetPath)) {
-    throw new PackVerificationError(
-      'PACK_CONTENT_INVALID',
-      `asset not listed in manifest: ${assetPath} (${context})`,
-    );
-  }
 }
 
 export function collectManifestPaths(manifest: PackManifest): Set<string> {

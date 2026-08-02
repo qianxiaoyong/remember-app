@@ -48,7 +48,7 @@ describe('validatePackCards', () => {
       validatePackCards('remember-test-pack', [makeCard({ cardType: 'choice' })], manifestPaths),
     ).toThrow(
       expect.objectContaining({
-        code: 'PACK_CONTENT_INVALID',
+        code: 'PACK_UNSUPPORTED_CARD_TYPE',
       } satisfies Partial<PackVerificationError>),
     );
   });
