@@ -109,6 +109,22 @@ function bundledTestPackVariant(
 
 export const catalogSeed: CatalogPackItem[] = [
   bundledTestPackVariant('remember-test-pack'),
+  {
+    packId: 'story-test-pack',
+    title: 'Story 阅读测试包',
+    primaryCategory: 'primary',
+    secondaryCategory: '三年级',
+    version: '测试',
+    contentTags: ['阅读', '童话'],
+    cardCount: 1,
+    sizeLabel: '约 1 MB',
+    updatedAt: '2026-08-02',
+    priceCents: 1,
+    priceLabel: '¥0.01',
+    summary: 'story_reading 注释阅读真机验收用内置包（C1 公主与豌豆）。',
+    sampleHeadwords: ['The Princess and the Pea'],
+    isBundledTestPack: true,
+  },
   bundledTestPackVariant('remember-test-pack-2', { version: '外研版' }),
   bundledTestPackVariant('remember-test-pack-3', { version: '译林版' }),
   bundledTestPackVariant('remember-test-pack-4', {

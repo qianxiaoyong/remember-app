@@ -12,6 +12,7 @@ import {
 import {
   filterCatalogItems,
   filterLocalCatalogSeed,
+  injectBundledCatalogSeedItems,
   type MarketCatalogQuery,
 } from './filter-catalog-items';
 
@@ -32,7 +33,7 @@ export async function readCachedMarketCatalog(
   if (!cached || cached.length === 0) {
     return null;
   }
-  return filterCatalogItems(cached, query);
+  return filterCatalogItems(injectBundledCatalogSeedItems(cached), query);
 }
 
 /** App 启动时后台拉全量目录写入缓存；失败静默。 */
@@ -64,7 +65,7 @@ export async function fetchMarketCatalog(query: MarketCatalogQuery): Promise<Cat
     const items = summaries.map(mapCatalogSummaryToItem);
 
     const existing = readCatalogMemoryCache() ?? [];
-    const merged = mergeCatalogCache(existing, items);
+    const merged = injectBundledCatalogSeedItems(mergeCatalogCache(existing, items));
     writeCatalogMemoryCache(merged);
 
     return filterCatalogItems(merged, query);

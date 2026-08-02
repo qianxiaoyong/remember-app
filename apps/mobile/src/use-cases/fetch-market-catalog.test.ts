@@ -60,8 +60,10 @@ describe('fetchMarketCatalog', () => {
     });
 
     expect(fetchCatalogPacks).toHaveBeenCalledTimes(1);
-    expect(items).toHaveLength(1);
-    expect(items[0]?.packId).toBe('en-grade3-v1-rj');
+    expect(items).toHaveLength(2);
+    expect(items.map((item) => item.packId).sort()).toEqual(
+      ['en-grade3-v1-rj', 'story-test-pack'].sort(),
+    );
   });
 
   it('returns cached items before network refresh path', async () => {
@@ -91,8 +93,24 @@ describe('fetchMarketCatalog', () => {
       keyword: '',
     });
 
-    expect(cached).toHaveLength(1);
-    expect(cached?.[0]?.packId).toBe('en-grade3-v1-rj');
+    expect(cached).toHaveLength(3);
+    expect(cached?.map((item) => item.packId).sort()).toEqual(
+      ['en-grade3-v1-rj', 'remember-test-pack', 'story-test-pack'].sort(),
+    );
+  });
+
+  it('injects bundled test packs missing from API catalog', async () => {
+    fetchCatalogPacks.mockResolvedValue([grade3Pack]);
+
+    const items = await fetchMarketCatalog({
+      primaryCategory: 'all',
+      secondaryCategory: '全部',
+      versionFilter: '全部版本',
+      keyword: '',
+    });
+
+    expect(items.some((item) => item.packId === 'story-test-pack')).toBe(true);
+    expect(items.some((item) => item.packId === 'en-grade3-v1-rj')).toBe(true);
   });
 
   it('merges list refresh without dropping detail-only fields from cache', async () => {
