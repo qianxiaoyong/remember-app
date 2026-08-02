@@ -1,4 +1,4 @@
-import type { LexiconEntry, VocabularyContent } from '@remember/contracts';
+import type { LexiconEntry, StoryReadingContent, VocabularyContent } from '@remember/contracts';
 import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
@@ -8,10 +8,22 @@ export interface PackSourceMeta {
   keyId: string;
 }
 
-export interface PackSourceCard {
+export interface PackSourceVocabularyCard {
   kind: 'word' | 'phrase';
   sortOrder: number;
   content: VocabularyContent;
+}
+
+export interface PackSourceStoryCard {
+  cardType: 'story_reading';
+  sortOrder: number;
+  content: StoryReadingContent;
+}
+
+export type PackSourceCard = PackSourceVocabularyCard | PackSourceStoryCard;
+
+export function isStorySourceCard(card: PackSourceCard): card is PackSourceStoryCard {
+  return 'cardType' in card && card.cardType === 'story_reading';
 }
 
 export interface PackSource {

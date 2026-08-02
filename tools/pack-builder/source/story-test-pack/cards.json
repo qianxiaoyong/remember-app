@@ -1,0 +1,74 @@
+[
+  {
+    "cardType": "story_reading",
+    "sortOrder": 1,
+    "content": {
+      "lesson": {
+        "code": "C1",
+        "titleEn": "The Princess and the Pea",
+        "titleZh": "公主与豌豆",
+        "coverImage": "assets/images/c1.png",
+        "primaryAudio": "assets/audio/c1.mp3"
+      },
+      "story": {
+        "paragraphs": [
+          {
+            "runs": [
+              { "kind": "text", "text": "The prince is " },
+              {
+                "kind": "word",
+                "surface": "not",
+                "glossZh": "不",
+                "tier": "mid",
+                "vocabId": "not"
+              },
+              { "kind": "text", "text": " " },
+              {
+                "kind": "word",
+                "surface": "happy",
+                "glossZh": "快乐的",
+                "tier": "high",
+                "vocabId": "happy"
+              },
+              { "kind": "text", "text": ". He wants a " },
+              {
+                "kind": "word",
+                "surface": "real",
+                "glossZh": "真正的",
+                "tier": "low",
+                "vocabId": "real"
+              },
+              { "kind": "text", "text": " princess." }
+            ]
+          }
+        ]
+      },
+      "sidebar": [
+        {
+          "vocabId": "not",
+          "headword": "not",
+          "ipa": "/nɒt/",
+          "pos": "adv.",
+          "definitionZh": "不",
+          "tier": "mid"
+        },
+        {
+          "vocabId": "happy",
+          "headword": "happy",
+          "ipa": "/ˈhæpi/",
+          "pos": "adj.",
+          "definitionZh": "快乐的",
+          "tier": "high"
+        },
+        {
+          "vocabId": "real",
+          "headword": "real",
+          "ipa": "/rɪəl/",
+          "pos": "adj.",
+          "definitionZh": "真正的",
+          "tier": "low"
+        }
+      ]
+    }
+  }
+]

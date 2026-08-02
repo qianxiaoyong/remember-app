@@ -1,5 +1,7 @@
 import {
   buildKnowledgeId,
+  buildStoryKnowledgeId,
+  CARD_TYPE_STORY_READING,
   CREATE_PACK_SQLITE_SQL,
   MANIFEST_VERSION,
   normalizeSurfaceForm,
@@ -14,7 +16,7 @@ import { join, relative } from 'node:path';
 import { tmpdir } from 'node:os';
 import { sha256Hex } from './sha256.js';
 import { ed } from './configure-ed25519.js';
-import { readPackSource, type PackSource, type PackSourceCard } from './pack-source.js';
+import { readPackSource, type PackSource, type PackSourceCard, isStorySourceCard } from './pack-source.js';
 import { writeZip } from './zip-archive.js';
 
 const TEST_PRIVATE_KEY_HEX = '9d61b19deffd5a60ba844af492ec2cc44401c569d40c893265af344b4352f907';
@@ -64,6 +66,9 @@ function buildLexiconFromExamples(
   }
 
   for (const card of cards) {
+    if (isStorySourceCard(card)) {
+      continue;
+    }
     for (const example of card.content.reveal.examples) {
       addExampleTokensToLexicon(example.en, bySurface);
     }
@@ -90,6 +95,16 @@ function createSqliteBytes(source: PackSource): Uint8Array {
   );
 
   for (const card of source.cards) {
+    if (isStorySourceCard(card)) {
+      const knowledgeId = buildStoryKnowledgeId(source.meta.packId, card.content.lesson.code);
+      insertCard.run(
+        knowledgeId,
+        CARD_TYPE_STORY_READING,
+        card.sortOrder,
+        JSON.stringify(card.content),
+      );
+      continue;
+    }
     const knowledgeId = buildKnowledgeId(
       source.meta.packId,
       card.content.prompt.headword,
