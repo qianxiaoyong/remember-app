@@ -1,18 +1,16 @@
 import type { ReactElement } from 'react';
 import { useEffect, useMemo, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LexiconPopup } from '../components/lexicon-popup';
 import { ScreenScaffold } from '../components/shell/screen-scaffold';
-import { StudyHeaderBand } from '../components/study/study-header-band';
 import { StudyMoreMenu } from '../components/study/study-more-menu';
 import { StudyRatingBar } from '../components/study/study-rating-bar';
-import { StudyRecallPanel } from '../components/study/study-recall-panel';
-import { StudyRevealScrollBody } from '../components/study/study-reveal-scroll-body';
 import { StudySessionOutcomePanel } from '../components/study/study-session-outcome-panel';
 import { PrimaryButton } from '../components/ui/primary-button';
 import { useStudyFlow } from '../hooks/use-study-flow';
+import { VocabularyStudyPanel } from '../learning/card-types/vocabulary/vocabulary-study-panel';
 import { listInstalledPacksUseCase } from '../use-cases/list-installed-packs';
 import {
   resolveStudyPackDisplayName,
@@ -117,39 +115,23 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
             variant={sessionOutcome}
           />
         ) : cardDetail ? (
-          <>
-            <StudyHeaderBand
-              content={cardDetail.content}
-              onHomePress={() => {
-                router.replace('/library');
-              }}
-              onMorePress={() => {
-                setMoreVisible(true);
-              }}
-              onPlayAudio={handlePlayPrimaryAudio}
-              revealed={revealed}
-            />
-            {revealed ? (
-              <ScrollView
-                contentContainerStyle={styles.revealContent}
-                showsVerticalScrollIndicator={false}
-                style={styles.revealScroll}
-              >
-                <StudyRevealScrollBody
-                  content={cardDetail.content}
-                  highlightSurfaceForm={lexiconSelectedSurfaceForm}
-                  onPlayExampleAudio={handlePlayExampleAudio}
-                  onTokenPress={openLexicon}
-                />
-              </ScrollView>
-            ) : (
-              <StudyRecallPanel
-                onReveal={() => {
-                  setRevealed(true);
-                }}
-              />
-            )}
-          </>
+          <VocabularyStudyPanel
+            content={cardDetail.content}
+            lexiconSelectedSurfaceForm={lexiconSelectedSurfaceForm}
+            onHomePress={() => {
+              router.replace('/library');
+            }}
+            onMorePress={() => {
+              setMoreVisible(true);
+            }}
+            onPlayExampleAudio={handlePlayExampleAudio}
+            onPlayPrimaryAudio={handlePlayPrimaryAudio}
+            onReveal={() => {
+              setRevealed(true);
+            }}
+            onTokenPress={openLexicon}
+            revealed={revealed}
+          />
         ) : null}
       </View>
 
@@ -201,12 +183,5 @@ const styles = StyleSheet.create({
   },
   emptyState: {
     padding: spacing.lg,
-  },
-  revealScroll: {
-    backgroundColor: colors.background,
-    flex: 1,
-  },
-  revealContent: {
-    paddingBottom: spacing.lg,
   },
 });
