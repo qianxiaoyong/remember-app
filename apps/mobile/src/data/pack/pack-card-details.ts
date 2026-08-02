@@ -14,6 +14,13 @@ export type PackCardDetail = ParsedPackCardContent & {
   headword: string;
 };
 
+function resolveHeadword(parsed: ParsedPackCardContent): string {
+  if (parsed.cardType === 'vocabulary') {
+    return parsed.content.prompt.headword;
+  }
+  return parsed.content.lesson.titleEn;
+}
+
 export function mapCardRowToDetail(row: PackCardRow): PackCardDetail | null {
   try {
     const parsed = parsePackCardContent(row.cardType, row.content);
@@ -21,7 +28,7 @@ export function mapCardRowToDetail(row: PackCardRow): PackCardDetail | null {
       ...parsed,
       knowledgeId: row.knowledgeId,
       sortOrder: row.sortOrder,
-      headword: parsed.content.prompt.headword,
+      headword: resolveHeadword(parsed),
     };
   } catch {
     return null;

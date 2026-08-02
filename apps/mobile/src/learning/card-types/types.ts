@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
 
-export type ReviewMode = 'sm2' | 'none' | 'interactive';
+export type ReviewMode = 'sm2' | 'lesson_complete' | 'none' | 'interactive';
 
 export interface CardRendererProps {
   packId: string;
@@ -15,6 +15,7 @@ export interface CardRendererProps {
   onPlayPrimaryAudio: () => void;
   onPlayExampleAudio: (relativePath: string) => void;
   onTokenPress: (token: string) => void;
+  onReachedBottom?: () => void;
 }
 
 export interface CardTypeDefinition {
