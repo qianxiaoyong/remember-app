@@ -12,6 +12,7 @@
     "format:check": "prettier --check .",
     "lint": "eslint .",
     "build:packages": "pnpm --filter @remember/contracts build && pnpm --filter @remember/domain build",
+    "check:prepare": "pnpm build:packages && pnpm --filter @remember/pack-builder build && node tools/scripts/ensure-prisma-client.mjs",
     "typecheck": "pnpm build:packages && pnpm -r --if-present typecheck",
     "test": "node --test tools/checks/check-source.test.mjs && pnpm build:packages && node tools/scripts/ensure-prisma-client.mjs && pnpm -r --if-present test",
     "test:contract": "pnpm --filter @remember/contracts test",
@@ -24,7 +25,7 @@
     "dev:db:down": "docker compose --project-name remember-dev --env-file infra/dev/.env --file infra/dev/compose.yaml down",
     "dev:pack-editor": "pnpm --filter @remember/pack-editor dev",
     "build": "node tools/scripts/ensure-prisma-client.mjs && pnpm -r --if-present build",
-    "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm test:contract && pnpm check:deps && pnpm check:secrets && pnpm check:source && pnpm build"
+    "check": "pnpm format:check && pnpm check:prepare && pnpm lint && pnpm typecheck && pnpm test && pnpm test:contract && pnpm check:deps && pnpm check:secrets && pnpm check:source && pnpm build"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
