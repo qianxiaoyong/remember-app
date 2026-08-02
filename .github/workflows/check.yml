@@ -7,6 +7,36 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-bookworm
+        env:
+          POSTGRES_DB: remember_test
+          POSTGRES_USER: remember
+          POSTGRES_PASSWORD: ci-test-password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U remember -d remember_test"
+          --health-interval 2s
+          --health-timeout 3s
+          --health-retries 30
+
+    env:
+      DATABASE_URL: postgresql://remember:ci-test-password@127.0.0.1:5432/remember_test
+      AUTH_PHONE_PEPPER: integration-test-pepper
+      SMS_MOCK_ENABLED: 'true'
+      AUTH_SMS_RESEND_INTERVAL_MS: '0'
+      REDEMPTION_CODE_PEPPER: integration-test-redemption-pepper
+      PACK_DOWNLOAD_TOKEN_PEPPER: integration-download-pepper
+      WECHAT_PAY_MOCK_ENABLED: 'true'
+      WECHAT_PAY_MOCK_NOTIFY_SECRET: integration-mock-notify-secret
+      PACK_DOWNLOAD_MOCK_ENABLED: 'true'
+      API_PUBLIC_BASE_URL: http://127.0.0.1:3000
+      ADMIN_SESSION_TTL_DAYS: '7'
+      ADMIN_BOOTSTRAP_LOGIN_NAME: admin
+      ADMIN_BOOTSTRAP_PASSWORD: integration-admin-password
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,6 +57,9 @@ jobs:
 
       - name: Run quality checks
         run: pnpm check
+
+      - name: Prepare database schema
+        run: pnpm --filter @remember/api exec prisma migrate deploy
 
       - name: Run integration tests
         run: pnpm test:integration
