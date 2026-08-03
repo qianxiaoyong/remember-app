@@ -32,42 +32,50 @@ export function StoryLessonFields({
   })();
 
   return (
-    <div className="edit-prompt-band">
-      <div className="edit-phase-label">Lesson · 课程信息</div>
-      <div className="edit-prompt-grid">
-        <label className="field-label">
-          课号 code
+    <div className="edit-prompt-band edit-story-lesson-band">
+      <div className="edit-story-lesson-head">
+        <div className="edit-phase-label">Lesson · 课程信息</div>
+        <p className="field-helper edit-story-knowledge-id">
+          knowledgeId：<code>{knowledgeIdPreview}</code>
+        </p>
+      </div>
+      <div className="edit-story-lesson-row">
+        <label className="field-label field-label-compact">
+          课号
           <input {...register('lesson.code')} className="input input-sm" placeholder="C1" />
           {errors.lesson?.code && <ErrorText message={errors.lesson.code.message} />}
         </label>
-        <label className="field-label">
+        <label className="field-label field-label-compact">
           英文标题
           <input {...register('lesson.titleEn')} className="input input-sm" />
           {errors.lesson?.titleEn && <ErrorText message={errors.lesson.titleEn.message} />}
         </label>
-        <label className="field-label">
+        <label className="field-label field-label-compact">
           中文标题
           <input {...register('lesson.titleZh')} className="input input-sm" />
           {errors.lesson?.titleZh && <ErrorText message={errors.lesson.titleZh.message} />}
         </label>
-        <label className="field-label">
+        <label className="field-label field-label-compact">
           封面图
-          <span className="field-helper">assets/images/…</span>
-          <input {...register('lesson.coverImage')} className="input input-sm" />
+          <input
+            {...register('lesson.coverImage')}
+            className="input input-sm"
+            placeholder="assets/images/…"
+          />
           {errors.lesson?.coverImage && <ErrorText message={errors.lesson.coverImage.message} />}
         </label>
-        <label className="field-label">
+        <label className="field-label field-label-compact">
           主音频
-          <span className="field-helper">assets/audio/…</span>
-          <input {...register('lesson.primaryAudio')} className="input input-sm" />
+          <input
+            {...register('lesson.primaryAudio')}
+            className="input input-sm"
+            placeholder="assets/audio/…"
+          />
           {errors.lesson?.primaryAudio && (
             <ErrorText message={errors.lesson.primaryAudio.message} />
           )}
         </label>
       </div>
-      <p className="field-helper" style={{ marginTop: 'var(--space-2)' }}>
-        knowledgeId（只读）：<code>{knowledgeIdPreview}</code>
-      </p>
     </div>
   );
 }

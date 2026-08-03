@@ -68,6 +68,11 @@ export function StoryParagraphEditor({
         </button>
       </div>
 
+      <p className="field-helper edit-story-section-hint">
+        正文由 <strong>text</strong>（普通英文）与 <strong>word</strong>（可点词，须对应 sidebar
+        词条）交替组成；App 里 word 按 tier 上色，点击弹出 sidebar 释义。
+      </p>
+
       <label className="field-label" style={{ marginBottom: 'var(--space-3)' }}>
         <input
           type="checkbox"

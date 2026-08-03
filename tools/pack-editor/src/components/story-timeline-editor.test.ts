@@ -11,8 +11,8 @@ describe('buildSegmentTrack', () => {
 
     const track = buildSegmentTrack(paragraphs, 10000);
     expect(track).toEqual([
-      { leftPct: 0, widthPct: 50, label: 'seg1' },
-      { leftPct: 50, widthPct: 50, label: 'seg2' },
+      { paragraphIndex: 0, leftPct: 0, widthPct: 50, label: '段1' },
+      { paragraphIndex: 1, leftPct: 50, widthPct: 50, label: '段2' },
     ]);
   });
 

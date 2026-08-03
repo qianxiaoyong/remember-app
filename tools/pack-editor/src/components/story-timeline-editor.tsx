@@ -12,6 +12,7 @@ import { fetchAudioDurationMs, packAssetUrl } from '../api/local-api-client.js';
 import { collectStoryContentIssues } from '../utils/story-content-issues.js';
 
 export interface SegmentTrackItem {
+  paragraphIndex: number;
   leftPct: number;
   widthPct: number;
   label: string;
@@ -25,7 +26,7 @@ export function buildSegmentTrack(
     return [];
   }
 
-  return paragraphs.flatMap((paragraph, index) => {
+  return paragraphs.flatMap((paragraph, paragraphIndex) => {
     if (paragraph.audioStartMs === undefined || paragraph.audioEndMs === undefined) {
       return [];
     }
@@ -35,9 +36,10 @@ export function buildSegmentTrack(
     }
     return [
       {
+        paragraphIndex,
         leftPct: (paragraph.audioStartMs / durationMs) * 100,
         widthPct: (span / durationMs) * 100,
-        label: `seg${String(index + 1)}`,
+        label: `段${String(paragraphIndex + 1)}`,
       },
     ];
   });
@@ -204,48 +206,53 @@ export function StoryTimelineEditor({
     <div className="edit-subsection">
       <div className="edit-subsection-head">
         <span className="edit-subsection-title">时间轴</span>
+        <label className="edit-timeline-toggle">
+          <input
+            type="checkbox"
+            checked={timelineEnabled}
+            onChange={(event) => {
+              toggleTimeline(event.target.checked);
+            }}
+          />
+          启用段级跟读
+        </label>
       </div>
 
-      <label className="field-label" style={{ marginBottom: 'var(--space-2)' }}>
-        <input
-          type="checkbox"
-          checked={timelineEnabled}
-          onChange={(event) => {
-            toggleTimeline(event.target.checked);
-          }}
-        />{' '}
-        全段启用时间轴
-      </label>
+      <p className="field-helper edit-story-section-hint">
+        为每段正文绑定音频起止时间（App 跟读高亮用）。流程：播放主音频 → 点下方色块选段 →
+        拖动到位置后点「设为起点/终点」→ 保存。
+      </p>
 
       {timelineEnabled && (
-        <>
-          <div className="card-panel" style={{ marginBottom: 'var(--space-3)' }}>
-            <div className="edit-subsection-head">
-              <span>音频</span>
-              {audioUrl && (
-                <button
-                  type="button"
-                  className="btn btn-ghost btn-sm"
-                  onClick={() => {
-                    const audio = audioRef.current;
-                    if (!audio) {
-                      return;
-                    }
-                    if (audio.paused) {
-                      void audio.play();
-                    } else {
-                      audio.pause();
-                    }
-                  }}
-                >
-                  ▶ / ⏸
-                </button>
-              )}
-            </div>
-            {loadError && <p className="field-error">{loadError}</p>}
-            {audioUrl && <audio ref={audioRef} src={audioUrl} preload="metadata" />}
+        <div
+          className="card-panel edit-timeline-panel"
+          style={hasTimelineIssue ? { borderColor: 'var(--color-danger)' } : undefined}
+        >
+          <div className="edit-timeline-audio-row">
+            <button
+              type="button"
+              className="btn btn-ghost btn-sm"
+              disabled={!audioUrl}
+              onClick={() => {
+                const audio = audioRef.current;
+                if (!audio) {
+                  return;
+                }
+                if (audio.paused) {
+                  void audio.play();
+                } else {
+                  audio.pause();
+                }
+              }}
+            >
+              ▶ 播放
+            </button>
+            {audioUrl && (
+              <audio ref={audioRef} src={audioUrl} preload="metadata" className="sr-only" />
+            )}
             <input
               type="range"
+              className="edit-timeline-slider"
               min={0}
               max={durationMs || 1}
               value={currentMs}
@@ -257,68 +264,41 @@ export function StoryTimelineEditor({
                   audio.currentTime = nextMs / 1000;
                 }
               }}
-              style={{ width: '100%' }}
             />
-            <p className="field-helper">
+            <span className="field-helper edit-timeline-time">
               {formatMs(currentMs)} / {formatMs(durationMs)}
-            </p>
+            </span>
+          </div>
+          {loadError && <p className="field-error">{loadError}</p>}
+
+          <div className="edit-timeline-track">
+            {track.map((segment) => (
+              <button
+                key={`${segment.label}-${String(segment.paragraphIndex)}`}
+                type="button"
+                title={segment.label}
+                onClick={() => {
+                  setSelectedIndex(segment.paragraphIndex);
+                }}
+                className={
+                  segment.paragraphIndex === selectedIndex
+                    ? 'edit-timeline-segment is-active'
+                    : 'edit-timeline-segment'
+                }
+                style={{
+                  left: `${String(segment.leftPct)}%`,
+                  width: `${String(segment.widthPct)}%`,
+                }}
+              >
+                {segment.label}
+              </button>
+            ))}
           </div>
 
-          <div className="card-panel" style={{ marginBottom: 'var(--space-3)' }}>
-            <div className="edit-subsection-head">
-              <span>段轨道</span>
-            </div>
-            <div
-              style={{
-                position: 'relative',
-                height: '2rem',
-                background: 'var(--color-surface-muted, #eee)',
-                borderRadius: '4px',
-                overflow: 'hidden',
-              }}
-            >
-              {track.map((segment, index) => (
-                <button
-                  key={segment.label}
-                  type="button"
-                  title={segment.label}
-                  onClick={() => {
-                    setSelectedIndex(index);
-                  }}
-                  style={{
-                    position: 'absolute',
-                    left: `${String(segment.leftPct)}%`,
-                    width: `${String(segment.widthPct)}%`,
-                    top: 0,
-                    bottom: 0,
-                    border: 'none',
-                    background:
-                      index === selectedIndex
-                        ? 'var(--color-primary, #2563eb)'
-                        : 'var(--color-accent, #93c5fd)',
-                    color: '#fff',
-                    fontSize: '0.75rem',
-                    cursor: 'pointer',
-                  }}
-                >
-                  {segment.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div
-            className="card-panel"
-            style={{
-              marginBottom: 'var(--space-3)',
-              ...(hasTimelineIssue ? { borderColor: 'var(--color-danger)' } : {}),
-            }}
-          >
-            <div className="edit-subsection-head">
-              <span>当前段 #{selectedIndex + 1}</span>
-            </div>
-            <div className="edit-inline-row">
-              <label className="field-label">
+          <div className="edit-timeline-current">
+            <div className="edit-timeline-current-title">编辑段落 #{selectedIndex + 1}</div>
+            <div className="edit-timeline-ms-grid">
+              <label className="field-label field-label-compact">
                 起点 ms
                 <input
                   type="number"
@@ -331,14 +311,14 @@ export function StoryTimelineEditor({
               </label>
               <button
                 type="button"
-                className="btn btn-ghost btn-sm"
+                className="btn btn-secondary btn-sm"
                 onClick={() => {
                   setFromPlayback('audioStartMs');
                 }}
               >
-                设为播放位置
+                设为起点
               </button>
-              <label className="field-label">
+              <label className="field-label field-label-compact">
                 终点 ms
                 <input
                   type="number"
@@ -351,28 +331,27 @@ export function StoryTimelineEditor({
               </label>
               <button
                 type="button"
-                className="btn btn-ghost btn-sm"
+                className="btn btn-secondary btn-sm"
                 onClick={() => {
                   setFromPlayback('audioEndMs');
                 }}
               >
-                设为播放位置
+                设为终点
               </button>
               <button type="button" className="btn btn-ghost btn-sm" onClick={playSegment}>
-                ▶ 播放本段
+                ▶ 试听本段
               </button>
             </div>
-            {timelineIssues
-              .filter((issue) =>
-                issue.path.startsWith(`story.paragraphs[${String(selectedIndex)}]`),
-              )
-              .map((issue) => (
-                <p key={`${issue.path}:${issue.message}`} className="field-error">
-                  {issue.message}
-                </p>
-              ))}
           </div>
-        </>
+
+          {timelineIssues
+            .filter((issue) => issue.path.startsWith(`story.paragraphs[${String(selectedIndex)}]`))
+            .map((issue) => (
+              <p key={`${issue.path}:${issue.message}`} className="field-error">
+                {issue.message}
+              </p>
+            ))}
+        </div>
       )}
     </div>
   );
