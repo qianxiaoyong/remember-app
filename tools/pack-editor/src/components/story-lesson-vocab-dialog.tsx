@@ -1,5 +1,4 @@
 import {
-  STORY_LEGEND_TIERS,
   STORY_TIER_OPTIONS,
   type StoryReadingContent,
   type StoryTier,
@@ -16,9 +15,15 @@ import { useEffect, useMemo, useRef, type ReactElement } from 'react';
 import { unmarkVocabInRuns } from '../utils/story-runs-markup.js';
 import { countStoryTierStats, formatStoryTierLegend } from '../utils/story-tier-stats.js';
 import { applySidebarTierToParagraphs } from '../utils/sync-word-run-tiers.js';
+import {
+  STORY_EDITOR_TIER_ORDER,
+  insertSidebarEntryAtTierHead,
+  moveSidebarEntryToTierHead,
+  sortSidebarIndicesByTier,
+} from '../utils/story-sidebar-order.js';
 
 const tierOptions = STORY_TIER_OPTIONS;
-const legendTiers = STORY_LEGEND_TIERS;
+const legendTiers = STORY_EDITOR_TIER_ORDER;
 
 interface StoryLessonVocabDialogProps {
   open: boolean;
@@ -41,6 +46,10 @@ export function StoryLessonVocabDialog({
   const allParagraphs = useWatch({ control, name: 'story.paragraphs' });
 
   const tierStats = useMemo(() => countStoryTierStats(sidebarValues), [sidebarValues]);
+  const sortedSidebarIndices = useMemo(
+    () => sortSidebarIndicesByTier(sidebarValues),
+    [sidebarValues],
+  );
 
   useEffect(() => {
     if (!open) {
@@ -78,9 +87,8 @@ export function StoryLessonVocabDialog({
   }
 
   function handleTierChange(sidebarIndex: number, vocabId: string, tier: StoryTier): void {
-    setValue(`sidebar.${String(sidebarIndex)}.tier` as FieldPath<StoryReadingContent>, tier, {
-      shouldDirty: true,
-    });
+    const nextSidebar = moveSidebarEntryToTierHead(sidebarValues, sidebarIndex, tier);
+    setValue('sidebar', nextSidebar, { shouldDirty: true });
     setValue(
       'story.paragraphs',
       applySidebarTierToParagraphs({
@@ -148,7 +156,11 @@ export function StoryLessonVocabDialog({
                 </tr>
               </thead>
               <tbody>
-                {sidebar.fields.map((field, sidebarIndex) => {
+                {sortedSidebarIndices.map((sidebarIndex) => {
+                  const field = sidebar.fields[sidebarIndex];
+                  if (field === undefined) {
+                    return null;
+                  }
                   const tier = sidebarValues[sidebarIndex]?.tier ?? 'high';
                   const vocabId = sidebarValues[sidebarIndex]?.vocabId ?? '';
                   return (
@@ -241,7 +253,7 @@ export function StoryLessonVocabDialog({
             type="button"
             className="btn btn-secondary btn-sm"
             onClick={() => {
-              sidebar.append({
+              const nextSidebar = insertSidebarEntryAtTierHead(sidebarValues, {
                 vocabId: 'new-word',
                 headword: '',
                 ipa: '',
@@ -249,6 +261,7 @@ export function StoryLessonVocabDialog({
                 definitionZh: '',
                 tier: 'high',
               });
+              setValue('sidebar', nextSidebar, { shouldDirty: true });
             }}
           >
             + 添加词条

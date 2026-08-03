@@ -12,6 +12,7 @@ import {
   collectVocabIdsFromRuns,
   syncRunsToPlainText,
 } from '../utils/story-runs-markup.js';
+import { insertSidebarEntryAtTierHead } from '../utils/story-sidebar-order.js';
 import { StoryParagraphBodyEditor } from './story-paragraph-body-editor.js';
 import {
   createStorySidebarEntry,
@@ -95,7 +96,10 @@ export function StoryParagraphItem({
         vocabId = `${baseId}-${String(suffix)}`;
         suffix += 1;
       }
-      nextSidebar = [...sidebar, createStorySidebarEntry(headword, vocabId)];
+      nextSidebar = insertSidebarEntryAtTierHead(
+        sidebar,
+        createStorySidebarEntry(headword, vocabId),
+      );
     }
 
     const syncedRuns = syncRunsToPlainText(runs, input.plainText, nextSidebar);

@@ -8,9 +8,10 @@ import {
   type UseFormRegister,
   type UseFormSetValue,
 } from 'react-hook-form';
-import { useMemo, type ReactElement } from 'react';
+import { useMemo, useEffect, useState, type ReactElement } from 'react';
 import { collectVocabIdsFromRuns, unmarkVocabInRuns } from '../utils/story-runs-markup.js';
 import { applySidebarTierToParagraphs } from '../utils/sync-word-run-tiers.js';
+import { moveSidebarEntryToTierHead } from '../utils/story-sidebar-order.js';
 
 const tierOptions = STORY_TIER_OPTIONS;
 
@@ -36,8 +37,35 @@ export function StoryParagraphVocab({
   });
 
   const paragraphVocabIds = useMemo(() => collectVocabIdsFromRuns(runs), [runs]);
+  const [vocabDisplayOrder, setVocabDisplayOrder] = useState<string[]>([]);
 
-  const vocabRows = paragraphVocabIds.flatMap((vocabId) => {
+  useEffect(() => {
+    setVocabDisplayOrder(collectVocabIdsFromRuns(runs));
+  }, [paragraphIndex]);
+
+  useEffect(() => {
+    const ids = collectVocabIdsFromRuns(runs);
+    setVocabDisplayOrder((previous) => {
+      const newIds = ids.filter((id) => !previous.includes(id));
+      let next = previous.filter((id) => ids.includes(id));
+      for (const id of newIds) {
+        next = [id, ...next.filter((existingId) => existingId !== id)];
+      }
+      return next.length === 0 ? ids : next;
+    });
+  }, [runs]);
+
+  const orderedVocabIds = useMemo(() => {
+    const fromOrder = vocabDisplayOrder.filter((id) => paragraphVocabIds.includes(id));
+    for (const id of paragraphVocabIds) {
+      if (!fromOrder.includes(id)) {
+        fromOrder.push(id);
+      }
+    }
+    return fromOrder;
+  }, [paragraphVocabIds, vocabDisplayOrder]);
+
+  const vocabRows = orderedVocabIds.flatMap((vocabId) => {
     const sidebarIndex = sidebarValues.findIndex((entry) => entry.vocabId === vocabId);
     if (sidebarIndex < 0) {
       return [];
@@ -67,9 +95,8 @@ export function StoryParagraphVocab({
   }
 
   function handleTierChange(sidebarIndex: number, vocabId: string, tier: StoryTier): void {
-    setValue(`sidebar.${String(sidebarIndex)}.tier` as FieldPath<StoryReadingContent>, tier, {
-      shouldDirty: true,
-    });
+    const nextSidebar = moveSidebarEntryToTierHead(sidebarValues, sidebarIndex, tier);
+    setValue('sidebar', nextSidebar, { shouldDirty: true });
     setValue(
       'story.paragraphs',
       applySidebarTierToParagraphs({
