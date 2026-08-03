@@ -1,5 +1,11 @@
 import type { StoryReadingContent } from '@remember/contracts';
-import { useWatch, type Control, type UseFormGetValues, type UseFormRegister, type UseFormSetValue } from 'react-hook-form';
+import {
+  useWatch,
+  type Control,
+  type UseFormGetValues,
+  type UseFormRegister,
+  type UseFormSetValue,
+} from 'react-hook-form';
 import { useEffect, useState, type ReactElement } from 'react';
 import type { StoryParagraph } from '@remember/contracts';
 import { useStoryAudio } from '../context/story-audio-context.js';

@@ -65,9 +65,7 @@ export function StorySegmentTimeline({
     const recomputed = recomputeSegmentTimeline(paragraphs, audio.durationMs);
     const changed = recomputed.some((item, index) => {
       const current = paragraphs[index];
-      return (
-        item.audioStartMs !== current?.audioStartMs || item.audioEndMs !== current?.audioEndMs
-      );
+      return item.audioStartMs !== current?.audioStartMs || item.audioEndMs !== current?.audioEndMs;
     });
     if (!changed) {
       return;
@@ -77,9 +75,13 @@ export function StorySegmentTimeline({
 
   function writeParagraphs(paragraphs: StoryReadingContent['story']['paragraphs']): void {
     for (let index = 0; index < paragraphs.length; index += 1) {
-      setValue(`story.paragraphs.${String(index)}` as FieldPath<StoryReadingContent>, paragraphs[index]!, {
-        shouldDirty: true,
-      });
+      setValue(
+        `story.paragraphs.${String(index)}` as FieldPath<StoryReadingContent>,
+        paragraphs[index]!,
+        {
+          shouldDirty: true,
+        },
+      );
     }
   }
 
@@ -127,11 +129,7 @@ export function StorySegmentTimeline({
           type="button"
           className="btn btn-secondary btn-sm"
           disabled={!canSetStart}
-          title={
-            canSetStart
-              ? undefined
-              : '请按顺序从段1开始标起点，或先标前一段'
-          }
+          title={canSetStart ? undefined : '请按顺序从段1开始标起点，或先标前一段'}
           onClick={() => {
             const ms = audio.getPlaybackMs();
             if (ms !== null) {
@@ -184,9 +182,7 @@ export function StorySegmentTimeline({
         className="btn btn-ghost btn-sm"
         disabled={!canClearTimeline}
         title={
-          canClearTimeline
-            ? '清除本段及之后各段的时间轴，便于从本段起重新标定'
-            : '本段尚未设置起点'
+          canClearTimeline ? '清除本段及之后各段的时间轴，便于从本段起重新标定' : '本段尚未设置起点'
         }
         onClick={clearTimeline}
       >

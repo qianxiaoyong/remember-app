@@ -7,7 +7,11 @@ import {
   type UseFormSetValue,
 } from 'react-hook-form';
 import type { ReactElement } from 'react';
-import { applyWordMarkAtSelection, collectVocabIdsFromRuns, syncRunsToPlainText } from '../utils/story-runs-markup.js';
+import {
+  applyWordMarkAtSelection,
+  collectVocabIdsFromRuns,
+  syncRunsToPlainText,
+} from '../utils/story-runs-markup.js';
 import { StoryParagraphBodyEditor } from './story-paragraph-body-editor.js';
 import { StoryParagraphPreview } from './story-paragraph-preview.js';
 import {
@@ -90,14 +94,15 @@ export function StoryParagraphItem({
         vocabId = `${baseId}-${String(suffix)}`;
         suffix += 1;
       }
-      nextSidebar = [
-        ...sidebar,
-        createStorySidebarEntry(headword, vocabId),
-      ];
+      nextSidebar = [...sidebar, createStorySidebarEntry(headword, vocabId)];
     }
 
     const syncedRuns = syncRunsToPlainText(runs, input.plainText, nextSidebar);
-    const trimmedStart = trimPlainSelection(input.plainText, input.selectionStart, input.selectionEnd);
+    const trimmedStart = trimPlainSelection(
+      input.plainText,
+      input.selectionStart,
+      input.selectionEnd,
+    );
     if (!trimmedStart.text) {
       return;
     }

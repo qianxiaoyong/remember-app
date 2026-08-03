@@ -114,9 +114,9 @@ describe('collectStoryContentIssues', () => {
     }
 
     const issues = collectStoryContentIssues(content);
-    expect(
-      issues.some((issue) => issue.message.includes('marked in order from segment 1')),
-    ).toBe(true);
+    expect(issues.some((issue) => issue.message.includes('marked in order from segment 1'))).toBe(
+      true,
+    );
   });
 
   it('末段超出音频时长', () => {

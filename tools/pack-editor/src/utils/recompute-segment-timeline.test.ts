@@ -25,10 +25,7 @@ describe('recomputeSegmentTimeline', () => {
   });
 
   it('下一段有起点时本段终点等于下一段起点', () => {
-    const result = recomputeSegmentTimeline(
-      [paragraph(0, 999), paragraph(9826, 20000)],
-      137561,
-    );
+    const result = recomputeSegmentTimeline([paragraph(0, 999), paragraph(9826, 20000)], 137561);
     expect(result[0]?.audioEndMs).toBe(9826);
     expect(result[1]?.audioEndMs).toBe(137561);
   });
@@ -60,11 +57,7 @@ describe('recomputeSegmentTimeline', () => {
   });
 
   it('clearSegmentTimelineFrom 清除本段及之后并重算前段终点', () => {
-    const paragraphs = [
-      paragraph(0, 5000),
-      paragraph(5000, 10000),
-      paragraph(10000, 137561),
-    ];
+    const paragraphs = [paragraph(0, 5000), paragraph(5000, 10000), paragraph(10000, 137561)];
     const result = clearSegmentTimelineFrom(paragraphs, 1, 137561);
     expect(result[0]?.audioStartMs).toBe(0);
     expect(result[0]?.audioEndMs).toBe(137561);

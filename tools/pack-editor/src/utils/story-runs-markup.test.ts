@@ -179,8 +179,10 @@ describe('buildPreviewSegments', () => {
       { kind: 'word', surface: 'happy', glossZh: '高兴', tier: 'high', vocabId: 'happy' },
       { kind: 'text', text: '.' },
     ];
-    expect(buildPreviewSegments(corrupted).map((segment) => segment.text).join('')).toBe(
-      'The prince is not happy.',
-    );
+    expect(
+      buildPreviewSegments(corrupted)
+        .map((segment) => segment.text)
+        .join(''),
+    ).toBe('The prince is not happy.');
   });
 });

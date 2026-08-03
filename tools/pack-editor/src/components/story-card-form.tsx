@@ -19,11 +19,7 @@ interface StoryCardFormProps {
   onSubmit: (content: StoryReadingContent) => Promise<void>;
 }
 
-function StoryCardFormBody({
-  packId,
-  defaultValues,
-  onSubmit,
-}: StoryCardFormProps): ReactElement {
+function StoryCardFormBody({ packId, defaultValues, onSubmit }: StoryCardFormProps): ReactElement {
   const [selectedParagraphIndex, setSelectedParagraphIndex] = useState(0);
   const [contentIssues, setContentIssues] = useState<{ path: string; message: string }[]>([]);
   const [checkToast, setCheckToast] = useState<string | null>(null);
