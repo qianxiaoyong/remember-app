@@ -4,6 +4,7 @@ import {
   playPreparedExpoAudio,
   prepareExpoAudioUri,
   seekPreparedExpoAudio,
+  setPreparedExpoAudioPlaybackRate,
   subscribeExpoAudioPosition,
   type ExpoAudioPositionState,
 } from '../use-cases/play-expo-audio-uri';
@@ -22,6 +23,7 @@ export function useStoryAudioPlayer(input: {
   uri: string | null;
   isActive: boolean;
   initialPositionMs?: number;
+  playbackRate?: number;
 }): StoryAudioPlayerState {
   const [positionMs, setPositionMs] = useState(0);
   const [durationMs, setDurationMs] = useState(0);
@@ -29,6 +31,7 @@ export function useStoryAudioPlayer(input: {
   const [isReady, setIsReady] = useState(false);
   const wasActiveRef = useRef(input.isActive);
   const initialSeekAppliedRef = useRef<string | null>(null);
+  const playbackRate = input.playbackRate ?? 1;
 
   useEffect(() => {
     if (!input.uri) {
@@ -66,6 +69,13 @@ export function useStoryAudioPlayer(input: {
       void seekPreparedExpoAudio(initialPositionMs);
     }
   }, [input.initialPositionMs, input.uri, isReady]);
+
+  useEffect(() => {
+    if (!isReady) {
+      return;
+    }
+    setPreparedExpoAudioPlaybackRate(playbackRate);
+  }, [isReady, playbackRate]);
 
   useEffect(() => {
     const handlePosition = (state: ExpoAudioPositionState): void => {

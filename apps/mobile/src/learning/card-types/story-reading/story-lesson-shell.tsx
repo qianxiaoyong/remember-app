@@ -17,6 +17,15 @@ import {
 } from './story-follow-along';
 import { StoryAudioBar } from './story-audio-bar';
 import { StoryLessonTabs, type StoryLessonTabId } from './story-lesson-tabs';
+import {
+  cycleStoryLoopMode,
+  resolveLoopSeekMs,
+  type StoryLoopMode,
+} from './story-loop-mode';
+import {
+  cycleStoryPlaybackRate,
+  type StoryPlaybackRate,
+} from './story-playback-rate';
 import { StoryReadTab } from './story-read-tab';
 import { StoryVocabTab } from './story-vocab-tab';
 
@@ -36,6 +45,8 @@ const BOOKMARK_DEBOUNCE_MS = 5000;
 export function StoryLessonShell(props: StoryLessonShellProps): ReactElement {
   const insets = useSafeAreaInsets();
   const [activeTab, setActiveTab] = useState<StoryLessonTabId>('read');
+  const [loopMode, setLoopMode] = useState<StoryLoopMode>('none');
+  const [playbackRate, setPlaybackRate] = useState<StoryPlaybackRate>(1);
   const wordCount = countSidebarWords(props.content);
   const toolbarTop = insets.top + spacing.sm;
   const audioUri = resolvePackAssetUri(props.packId, props.content.lesson.primaryAudio);
@@ -43,8 +54,10 @@ export function StoryLessonShell(props: StoryLessonShellProps): ReactElement {
     uri: audioUri,
     isActive: activeTab === 'read',
     initialPositionMs: props.initialAudioPositionMs,
+    playbackRate,
   });
   const bookmarkTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const loopHandledRef = useRef(false);
   const lessons = useMemo(() => listStoryLessonSummaries(props.packId), [props.packId]);
 
   const adjacentLessonIds = useMemo(() => {
@@ -62,7 +75,46 @@ export function StoryLessonShell(props: StoryLessonShellProps): ReactElement {
 
   useEffect(() => {
     setActiveTab('read');
+    setLoopMode('none');
+    loopHandledRef.current = false;
   }, [props.knowledgeId]);
+
+  const paragraphs = props.content.story.paragraphs;
+
+  useEffect(() => {
+    if (loopMode === 'none') {
+      loopHandledRef.current = false;
+      return;
+    }
+
+    const seekTo = resolveLoopSeekMs({
+      mode: loopMode,
+      positionMs: audioPlayer.positionMs,
+      durationMs: audioPlayer.durationMs,
+      paragraphs,
+    });
+
+    if (seekTo === null) {
+      loopHandledRef.current = false;
+      return;
+    }
+
+    if (loopHandledRef.current) {
+      return;
+    }
+
+    loopHandledRef.current = true;
+    audioPlayer.seek(seekTo);
+    audioPlayer.play();
+  }, [
+    audioPlayer.durationMs,
+    audioPlayer.play,
+    audioPlayer.playing,
+    audioPlayer.positionMs,
+    audioPlayer.seek,
+    loopMode,
+    paragraphs,
+  ]);
 
   useEffect(() => {
     if (!props.onReaderBookmark) {
@@ -88,7 +140,6 @@ export function StoryLessonShell(props: StoryLessonShellProps): ReactElement {
     props.onNavigateLesson?.(knowledgeId);
   };
 
-  const paragraphs = props.content.story.paragraphs;
   const canPreviousParagraph = canJumpParagraph(paragraphs, audioPlayer.positionMs, 'prev');
   const canNextParagraph = canJumpParagraph(paragraphs, audioPlayer.positionMs, 'next');
 
@@ -156,6 +207,14 @@ export function StoryLessonShell(props: StoryLessonShellProps): ReactElement {
             canPreviousParagraph={canPreviousParagraph}
             disabled={!audioPlayer.isReady}
             durationMs={audioPlayer.durationMs}
+            loopMode={loopMode}
+            playbackRate={playbackRate}
+            onCycleLoopMode={() => {
+              setLoopMode((current) => cycleStoryLoopMode(current));
+            }}
+            onCyclePlaybackRate={() => {
+              setPlaybackRate((current) => cycleStoryPlaybackRate(current));
+            }}
             onNextLesson={() => {
               navigateLesson(adjacentLessonIds.next);
             }}

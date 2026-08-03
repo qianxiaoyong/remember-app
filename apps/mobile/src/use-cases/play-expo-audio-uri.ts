@@ -1,5 +1,6 @@
 import { Asset } from 'expo-asset';
 import { createAudioPlayer, setAudioModeAsync, setIsAudioActiveAsync } from 'expo-audio';
+import { Platform } from 'react-native';
 
 const PLAYBACK_STATUS_UPDATE = 'playbackStatusUpdate';
 const PLAYBACK_WAIT_MS = 3000;
@@ -104,6 +105,18 @@ export async function seekPreparedExpoAudio(positionMs: number): Promise<void> {
   }
   await sharedPlayer.seekTo(positionMs / 1000);
   notifyPositionListeners();
+}
+
+export function setPreparedExpoAudioPlaybackRate(rate: number): void {
+  if (!sharedPlayer) {
+    return;
+  }
+  if (Platform.OS === 'android') {
+    sharedPlayer.shouldCorrectPitch = true;
+    sharedPlayer.setPlaybackRate(rate);
+    return;
+  }
+  sharedPlayer.setPlaybackRate(rate, 'high');
 }
 
 async function ensureAudioMode(): Promise<void> {

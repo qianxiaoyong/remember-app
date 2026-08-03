@@ -5,17 +5,28 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { CircleIconButton } from '../../../components/ui/circle-icon-button';
 import { colors } from '../../../theme/colors';
 import { spacing } from '../../../theme/spacing';
+import type { StoryLoopMode } from './story-loop-mode';
+import { storyLoopModeAccessibilityLabel, storyLoopModeLabel } from './story-loop-mode';
+import type { StoryPlaybackRate } from './story-playback-rate';
+import {
+  storyPlaybackRateAccessibilityLabel,
+  storyPlaybackRateLabel,
+} from './story-playback-rate';
 
 interface StoryAudioBarProps {
   positionMs: number;
   durationMs: number;
   playing: boolean;
   disabled?: boolean;
+  loopMode: StoryLoopMode;
+  playbackRate: StoryPlaybackRate;
   canPreviousParagraph?: boolean;
   canNextParagraph?: boolean;
   onPlay: () => void;
   onPause: () => void;
   onSeek: (positionMs: number) => void;
+  onCycleLoopMode: () => void;
+  onCyclePlaybackRate: () => void;
   onPreviousParagraph?: () => void;
   onNextParagraph?: () => void;
   onPreviousLesson?: () => void;
@@ -57,8 +68,31 @@ function ParagraphSkipIcon(props: { direction: 'up' | 'down'; disabled?: boolean
       )}
       <View style={[styles.skipLine, { backgroundColor: color }]} />
       <View style={[styles.skipLine, { backgroundColor: color }]} />
-      <View style={[styles.skipLine, { backgroundColor: color }]} />
     </View>
+  );
+}
+
+function LessonSkipIcon(props: { direction: 'prev' | 'next' }): ReactElement {
+  return (
+    <Text style={styles.lessonSkipGlyph}>{props.direction === 'prev' ? '«' : '»'}</Text>
+  );
+}
+
+function LoopModeIcon(props: { mode: StoryLoopMode }): ReactElement {
+  const active = props.mode !== 'none';
+  return (
+    <View style={[styles.loopIcon, active ? styles.loopIconActive : null]}>
+      <Text style={[styles.loopGlyph, active ? styles.loopGlyphActive : null]}>↻</Text>
+      <Text style={[styles.loopLabel, active ? styles.loopLabelActive : null]}>
+        {storyLoopModeLabel(props.mode)}
+      </Text>
+    </View>
+  );
+}
+
+function PlaybackRateIcon(props: { rate: StoryPlaybackRate }): ReactElement {
+  return (
+    <Text style={styles.playbackRateLabel}>{storyPlaybackRateLabel(props.rate)}</Text>
   );
 }
 
@@ -81,11 +115,8 @@ export function StoryAudioBar(props: StoryAudioBarProps): ReactElement {
 
   return (
     <View style={styles.root}>
-      <View style={styles.progressSection}>
-        <View style={styles.timeRow}>
-          <Text style={styles.time}>{formatAudioTime(props.positionMs)}</Text>
-          <Text style={styles.time}>{formatAudioTime(props.durationMs)}</Text>
-        </View>
+      <View style={styles.progressRow}>
+        <Text style={styles.time}>{formatAudioTime(props.positionMs)}</Text>
         <Pressable
           accessibilityRole="adjustable"
           disabled={props.disabled || props.durationMs <= 0}
@@ -102,9 +133,28 @@ export function StoryAudioBar(props: StoryAudioBarProps): ReactElement {
             <View style={[styles.trackThumb, { left: `${String(progress * 100)}%` }]} />
           </View>
         </Pressable>
+        <Text style={styles.time}>{formatAudioTime(props.durationMs)}</Text>
       </View>
 
       <View style={styles.transportRow}>
+        <CircleIconButton
+          accessibilityLabel={storyLoopModeAccessibilityLabel(props.loopMode)}
+          onPress={props.onCycleLoopMode}
+        >
+          <LoopModeIcon mode={props.loopMode} />
+        </CircleIconButton>
+
+        <CircleIconButton
+          accessibilityLabel={storyPlaybackRateAccessibilityLabel(props.playbackRate)}
+          onPress={props.onCyclePlaybackRate}
+        >
+          <PlaybackRateIcon rate={props.playbackRate} />
+        </CircleIconButton>
+
+        <CircleIconButton accessibilityLabel="上一篇" onPress={props.onPreviousLesson}>
+          <LessonSkipIcon direction="prev" />
+        </CircleIconButton>
+
         <CircleIconButton
           accessibilityLabel="上一段"
           {...(props.canPreviousParagraph && props.onPreviousParagraph
@@ -131,25 +181,10 @@ export function StoryAudioBar(props: StoryAudioBarProps): ReactElement {
         >
           <ParagraphSkipIcon direction="down" disabled={!props.canNextParagraph} />
         </CircleIconButton>
-      </View>
 
-      <View style={styles.lessonNavRow}>
-        <Pressable
-          accessibilityLabel="上一篇"
-          accessibilityRole="button"
-          onPress={props.onPreviousLesson}
-          style={styles.lessonNavButton}
-        >
-          <Text style={styles.lessonNavLabel}>‹ 上一篇</Text>
-        </Pressable>
-        <Pressable
-          accessibilityLabel="下一篇"
-          accessibilityRole="button"
-          onPress={props.onNextLesson}
-          style={styles.lessonNavButton}
-        >
-          <Text style={styles.lessonNavLabel}>下一篇 ›</Text>
-        </Pressable>
+        <CircleIconButton accessibilityLabel="下一篇" onPress={props.onNextLesson}>
+          <LessonSkipIcon direction="next" />
+        </CircleIconButton>
       </View>
     </View>
   );
@@ -160,24 +195,25 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     borderTopColor: colors.border,
     borderTopWidth: StyleSheet.hairlineWidth,
-    gap: spacing.md,
-    paddingBottom: spacing.md,
-    paddingHorizontal: spacing.lg,
-    paddingTop: spacing.md,
+    gap: spacing.sm,
+    paddingBottom: spacing.sm,
+    paddingHorizontal: spacing.md,
+    paddingTop: spacing.sm,
   },
-  progressSection: {
-    gap: spacing.xs,
-  },
-  timeRow: {
+  progressRow: {
+    alignItems: 'center',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    gap: spacing.sm,
   },
   time: {
     color: colors.textMuted,
-    fontSize: 12,
+    fontSize: 11,
     fontVariant: ['tabular-nums'],
+    minWidth: 34,
+    textAlign: 'center',
   },
   trackWrap: {
+    flex: 1,
     justifyContent: 'center',
     paddingVertical: spacing.xs,
   },
@@ -210,79 +246,109 @@ const styles = StyleSheet.create({
   transportRow: {
     alignItems: 'center',
     flexDirection: 'row',
-    justifyContent: 'center',
-    gap: spacing.xl,
+    justifyContent: 'space-between',
   },
   playButton: {
     alignItems: 'center',
     backgroundColor: colors.accent,
     borderRadius: 999,
-    height: 52,
+    height: 44,
     justifyContent: 'center',
-    width: 52,
+    width: 44,
   },
   playButtonDisabled: {
     opacity: 0.45,
   },
   playIcon: {
-    marginLeft: 4,
+    marginLeft: 3,
   },
   playTriangle: {
     borderBottomColor: 'transparent',
-    borderBottomWidth: 10,
+    borderBottomWidth: 8,
     borderLeftColor: colors.surface,
-    borderLeftWidth: 16,
+    borderLeftWidth: 13,
     borderTopColor: 'transparent',
-    borderTopWidth: 10,
+    borderTopWidth: 8,
     height: 0,
     width: 0,
   },
   pauseIcon: {
     flexDirection: 'row',
-    gap: 6,
+    gap: 5,
   },
   pauseBar: {
     backgroundColor: colors.surface,
     borderRadius: 1,
-    height: 18,
+    height: 16,
     width: 4,
   },
   paragraphSkipIcon: {
     alignItems: 'center',
     gap: 2,
-    height: 24,
+    height: 22,
     justifyContent: 'center',
-    width: 24,
+    width: 22,
   },
   skipArrow: {
     borderLeftColor: 'transparent',
-    borderLeftWidth: 5,
+    borderLeftWidth: 4,
     borderRightColor: 'transparent',
-    borderRightWidth: 5,
+    borderRightWidth: 4,
     height: 0,
     width: 0,
   },
   skipArrowUp: {
-    borderBottomWidth: 6,
+    borderBottomWidth: 5,
   },
   skipArrowDown: {
-    borderTopWidth: 6,
+    borderTopWidth: 5,
   },
   skipLine: {
     borderRadius: 1,
     height: 2,
-    width: 14,
+    width: 12,
   },
-  lessonNavRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  lessonSkipGlyph: {
+    color: colors.textPrimary,
+    fontSize: 18,
+    fontWeight: '700',
+    lineHeight: 20,
   },
-  lessonNavButton: {
-    paddingVertical: spacing.xs,
+  loopIcon: {
+    alignItems: 'center',
+    height: 24,
+    justifyContent: 'center',
+    width: 24,
   },
-  lessonNavLabel: {
-    color: colors.textSecondary,
-    fontSize: 12,
-    fontWeight: '500',
+  loopIconActive: {
+    opacity: 1,
+  },
+  loopGlyph: {
+    color: colors.textMuted,
+    fontSize: 14,
+    fontWeight: '700',
+    lineHeight: 14,
+  },
+  loopGlyphActive: {
+    color: colors.accent,
+  },
+  loopLabel: {
+    color: colors.textMuted,
+    fontSize: 9,
+    fontWeight: '700',
+    lineHeight: 10,
+    marginTop: -1,
+  },
+  loopLabelActive: {
+    color: colors.accent,
+  },
+  playbackRateLabel: {
+    color: colors.textPrimary,
+    fontSize: 11,
+    fontVariant: ['tabular-nums'],
+    fontWeight: '700',
+    lineHeight: 14,
+    minWidth: 28,
+    textAlign: 'center',
   },
 });
