@@ -5,6 +5,7 @@ import { useMemo, useState, type ReactElement } from 'react';
 import { StoryAudioProvider } from '../context/story-audio-context.js';
 import { normalizeStoryContent } from '../utils/normalize-story-content.js';
 import { collectStoryContentIssues } from '../utils/story-content-issues.js';
+import { syncWordRunTiersFromSidebar } from '../utils/sync-word-run-tiers.js';
 import { StoryLessonFields } from './story-lesson-fields.js';
 import { StoryParagraphEditor } from './story-paragraph-editor.js';
 import { StoryTimelineEditor } from './story-timeline-editor.js';
@@ -60,11 +61,15 @@ function StoryCardFormBody({ packId, defaultValues, onSubmit }: StoryCardFormPro
     setSelectedParagraphIndex(index);
   }
 
-  function refreshContentIssues(): void {
-    const values = getValues();
-    const issues = collectStoryContentIssues(values, {
+  function collectIssuesFromForm(): ReturnType<typeof collectStoryContentIssues> {
+    const synced = syncWordRunTiersFromSidebar(getValues());
+    return collectStoryContentIssues(synced, {
       ...(audio.durationMs > 0 ? { primaryAudioDurationMs: audio.durationMs } : {}),
     });
+  }
+
+  function refreshContentIssues(): void {
+    const issues = collectIssuesFromForm();
     setContentIssues(issues);
     if (issues.length === 0) {
       setCheckToast('检查完成，未发现问题');
@@ -82,7 +87,8 @@ function StoryCardFormBody({ packId, defaultValues, onSubmit }: StoryCardFormPro
         className="card-panel edit-form edit-story-form"
         onSubmit={(event) => {
           void handleSubmit(async (values) => {
-            const issues = collectStoryContentIssues(values, {
+            const synced = syncWordRunTiersFromSidebar(values);
+            const issues = collectStoryContentIssues(synced, {
               ...(audio.durationMs > 0 ? { primaryAudioDurationMs: audio.durationMs } : {}),
             });
             if (issues.length > 0) {
@@ -90,8 +96,9 @@ function StoryCardFormBody({ packId, defaultValues, onSubmit }: StoryCardFormPro
               setCheckToast('请先修复检查规则中的问题再保存');
               return;
             }
+            setValue('story.paragraphs', synced.story.paragraphs, { shouldDirty: true });
             await onSubmit(
-              normalizeStoryContent(values, {
+              normalizeStoryContent(synced, {
                 ...(audio.durationMs > 0 ? { primaryAudioDurationMs: audio.durationMs } : {}),
               }),
             );

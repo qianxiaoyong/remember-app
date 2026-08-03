@@ -1,4 +1,4 @@
-import type { StoryReadingContent } from '@remember/contracts';
+import type { StoryReadingContent, StoryTier } from '@remember/contracts';
 import { STORY_TIER_OPTIONS } from '@remember/contracts';
 import {
   useFieldArray,
@@ -10,6 +10,7 @@ import {
 } from 'react-hook-form';
 import { useMemo, type ReactElement } from 'react';
 import { collectVocabIdsFromRuns, unmarkVocabInRuns } from '../utils/story-runs-markup.js';
+import { applySidebarTierToParagraphs } from '../utils/sync-word-run-tiers.js';
 
 const tierOptions = STORY_TIER_OPTIONS;
 
@@ -65,6 +66,18 @@ export function StoryParagraphVocab({
     }
   }
 
+  function handleTierChange(vocabId: string, tier: StoryTier): void {
+    setValue(
+      'story.paragraphs',
+      applySidebarTierToParagraphs({
+        paragraphs: allParagraphs,
+        vocabId,
+        tier,
+      }),
+      { shouldDirty: true },
+    );
+  }
+
   return (
     <div className="edit-story-block edit-story-block-vocab">
       <div className="edit-story-block-title">本段用词（{String(vocabRows.length)}）</div>
@@ -86,75 +99,82 @@ export function StoryParagraphVocab({
               </tr>
             </thead>
             <tbody>
-              {vocabRows.map(({ field, sidebarIndex, vocabId }) => (
-                <tr key={field.id}>
-                  <td>
-                    <input
-                      {...register(
-                        `sidebar.${String(sidebarIndex)}.vocabId` as FieldPath<StoryReadingContent>,
-                      )}
-                      className="input input-sm"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      {...register(
-                        `sidebar.${String(sidebarIndex)}.headword` as FieldPath<StoryReadingContent>,
-                      )}
-                      className="input input-sm"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      {...register(
-                        `sidebar.${String(sidebarIndex)}.ipa` as FieldPath<StoryReadingContent>,
-                      )}
-                      className="input input-sm"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      {...register(
-                        `sidebar.${String(sidebarIndex)}.pos` as FieldPath<StoryReadingContent>,
-                      )}
-                      className="input input-sm"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      {...register(
-                        `sidebar.${String(sidebarIndex)}.definitionZh` as FieldPath<StoryReadingContent>,
-                      )}
-                      className="input input-sm"
-                    />
-                  </td>
-                  <td>
-                    <select
-                      {...register(
-                        `sidebar.${String(sidebarIndex)}.tier` as FieldPath<StoryReadingContent>,
-                      )}
-                      className="select input-sm"
-                    >
-                      {tierOptions.map((tier) => (
-                        <option key={tier} value={tier}>
-                          {tier}
-                        </option>
-                      ))}
-                    </select>
-                  </td>
-                  <td>
-                    <button
-                      type="button"
-                      className="btn btn-ghost btn-sm"
-                      onClick={() => {
-                        removeFromParagraph(sidebarIndex, vocabId);
-                      }}
-                    >
-                      取消标记
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {vocabRows.map(({ field, sidebarIndex, vocabId }) => {
+                const tierField = register(
+                  `sidebar.${String(sidebarIndex)}.tier` as FieldPath<StoryReadingContent>,
+                );
+                return (
+                  <tr key={field.id}>
+                    <td>
+                      <input
+                        {...register(
+                          `sidebar.${String(sidebarIndex)}.vocabId` as FieldPath<StoryReadingContent>,
+                        )}
+                        className="input input-sm"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        {...register(
+                          `sidebar.${String(sidebarIndex)}.headword` as FieldPath<StoryReadingContent>,
+                        )}
+                        className="input input-sm"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        {...register(
+                          `sidebar.${String(sidebarIndex)}.ipa` as FieldPath<StoryReadingContent>,
+                        )}
+                        className="input input-sm"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        {...register(
+                          `sidebar.${String(sidebarIndex)}.pos` as FieldPath<StoryReadingContent>,
+                        )}
+                        className="input input-sm"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        {...register(
+                          `sidebar.${String(sidebarIndex)}.definitionZh` as FieldPath<StoryReadingContent>,
+                        )}
+                        className="input input-sm"
+                      />
+                    </td>
+                    <td>
+                      <select
+                        {...tierField}
+                        className="select input-sm"
+                        onChange={(event) => {
+                          void tierField.onChange(event);
+                          handleTierChange(vocabId, event.target.value as StoryTier);
+                        }}
+                      >
+                        {tierOptions.map((tier) => (
+                          <option key={tier} value={tier}>
+                            {tier}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        className="btn btn-ghost btn-sm"
+                        onClick={() => {
+                          removeFromParagraph(sidebarIndex, vocabId);
+                        }}
+                      >
+                        取消标记
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

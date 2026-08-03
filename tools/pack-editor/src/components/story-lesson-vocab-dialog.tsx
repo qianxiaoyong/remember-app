@@ -1,4 +1,4 @@
-import { STORY_LEGEND_TIERS, STORY_TIER_OPTIONS } from '@remember/contracts';
+import { STORY_LEGEND_TIERS, STORY_TIER_OPTIONS, type StoryReadingContent, type StoryTier } from '@remember/contracts';
 import {
   useFieldArray,
   useWatch,
@@ -10,6 +10,7 @@ import {
 import { useEffect, useMemo, useRef, type ReactElement } from 'react';
 import { unmarkVocabInRuns } from '../utils/story-runs-markup.js';
 import { countStoryTierStats, formatStoryTierLegend } from '../utils/story-tier-stats.js';
+import { applySidebarTierToParagraphs } from '../utils/sync-word-run-tiers.js';
 
 const tierOptions = STORY_TIER_OPTIONS;
 const legendTiers = STORY_LEGEND_TIERS;
@@ -71,6 +72,18 @@ export function StoryLessonVocabDialog({
     sidebar.remove(sidebarIndex);
   }
 
+  function handleTierChange(vocabId: string, tier: StoryTier): void {
+    setValue(
+      'story.paragraphs',
+      applySidebarTierToParagraphs({
+        paragraphs: allParagraphs,
+        vocabId,
+        tier,
+      }),
+      { shouldDirty: true },
+    );
+  }
+
   return (
     <div
       className="dialog-overlay"
@@ -129,6 +142,10 @@ export function StoryLessonVocabDialog({
               <tbody>
                 {sidebar.fields.map((field, sidebarIndex) => {
                   const tier = sidebarValues[sidebarIndex]?.tier ?? 'high';
+                  const vocabId = sidebarValues[sidebarIndex]?.vocabId ?? '';
+                  const tierField = register(
+                    `sidebar.${String(sidebarIndex)}.tier` as FieldPath<StoryReadingContent>,
+                  );
                   return (
                     <tr key={field.id}>
                       <td className="story-vocab-tier-bar-cell" aria-hidden="true">
@@ -176,14 +193,18 @@ export function StoryLessonVocabDialog({
                       </td>
                       <td>
                         <select
-                          {...register(
-                            `sidebar.${String(sidebarIndex)}.tier` as FieldPath<StoryReadingContent>,
-                          )}
+                          {...tierField}
                           className="select input-sm"
+                          onChange={(event) => {
+                            void tierField.onChange(event);
+                            if (vocabId) {
+                              handleTierChange(vocabId, event.target.value as StoryTier);
+                            }
+                          }}
                         >
-                          {tierOptions.map((tier) => (
-                            <option key={tier} value={tier}>
-                              {tier}
+                          {tierOptions.map((option) => (
+                            <option key={option} value={option}>
+                              {option}
                             </option>
                           ))}
                         </select>
