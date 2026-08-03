@@ -40,7 +40,8 @@ export const storyParagraphSchema = z
   )
   .refine(
     (paragraph) =>
-      paragraph.audioStartMs === undefined || paragraph.audioEndMs! > paragraph.audioStartMs,
+      paragraph.audioStartMs === undefined ||
+      (paragraph.audioEndMs !== undefined && paragraph.audioEndMs > paragraph.audioStartMs),
     { message: 'audioEndMs must be greater than audioStartMs' },
   );
 

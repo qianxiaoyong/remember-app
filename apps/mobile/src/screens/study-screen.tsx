@@ -54,7 +54,10 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
     handlePlayPrimaryAudio,
     handlePlayExampleAudio,
     closeLexicon,
-  } = useStudyFlow(props.packId, { knowledgeId: props.knowledgeId });
+  } = useStudyFlow(
+    props.packId,
+    props.knowledgeId === undefined ? undefined : { knowledgeId: props.knowledgeId },
+  );
   const [moreVisible, setMoreVisible] = useState(false);
   const [switchVisible, setSwitchVisible] = useState(false);
 
@@ -111,7 +114,7 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
           <View style={styles.emptyState}>
             <PrimaryButton label="恢复或开始任务" onPress={startSession} />
           </View>
-        ) : sessionOutcome ? (
+        ) : sessionOutcome && session ? (
           <StudySessionOutcomePanel
             completedCount={session.completedCount}
             onBrowseMarket={() => {
@@ -125,7 +128,6 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
           cardTypeDefinition ? (
             <cardTypeDefinition.Renderer
               content={cardDetail.content}
-              initialAudioPositionMs={isReaderMode ? readerInitialPositionMs : undefined}
               knowledgeId={cardDetail.knowledgeId}
               lexiconSelectedSurfaceForm={lexiconSelectedSurfaceForm}
               onHomePress={goHome}
@@ -135,12 +137,13 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
               onNavigateLesson={handleNavigateLesson}
               onPlayExampleAudio={handlePlayExampleAudio}
               onPlayPrimaryAudio={handlePlayPrimaryAudio}
-              onReaderBookmark={isReaderMode ? handleReaderBookmark : undefined}
               onTokenPress={openLexicon}
               packId={props.packId}
               revealed={revealed}
               setRevealed={setRevealed}
               sortOrder={cardDetail.sortOrder}
+              {...(isReaderMode ? { onReaderBookmark: handleReaderBookmark } : {})}
+              {...(isReaderMode ? { initialAudioPositionMs: readerInitialPositionMs } : {})}
             />
           ) : (
             <UnsupportedCardPanel onGoHome={goHome} />

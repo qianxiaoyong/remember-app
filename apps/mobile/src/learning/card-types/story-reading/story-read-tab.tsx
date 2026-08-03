@@ -129,10 +129,7 @@ export function StoryReadTab(props: StoryReadTabProps): ReactElement {
                 style={styles.paragraphBlock}
               >
                 <Text
-                  style={[
-                    styles.paragraph,
-                    isFollowAlong ? styles.paragraphFollowAlong : null,
-                  ]}
+                  style={[styles.paragraph, isFollowAlong ? styles.paragraphFollowAlong : null]}
                 >
                   {paragraph.runs.map((run, runIndex) => {
                     if (run.kind === 'text') {
@@ -150,7 +147,9 @@ export function StoryReadTab(props: StoryReadTabProps): ReactElement {
                         }}
                         style={[
                           styles.wordSurface,
-                          isFollowAlong ? styles.paragraphFollowAlong : tierWordColorStyle(run.tier),
+                          isFollowAlong
+                            ? styles.paragraphFollowAlong
+                            : tierWordColorStyle(run.tier),
                         ]}
                       >
                         {run.surface}

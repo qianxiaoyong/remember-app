@@ -10,10 +10,12 @@ export function StoryReadingCardRenderer(props: CardRendererProps) {
   return (
     <StoryLessonShell
       content={parseStoryReadingContent(props.content)}
-      initialAudioPositionMs={props.initialAudioPositionMs}
       knowledgeId={props.knowledgeId}
       onHomePress={props.onHomePress}
       onMorePress={props.onMorePress}
+      {...(props.initialAudioPositionMs !== undefined
+        ? { initialAudioPositionMs: props.initialAudioPositionMs }
+        : {})}
       {...(props.onNavigateLesson ? { onNavigateLesson: props.onNavigateLesson } : {})}
       {...(props.onReaderBookmark ? { onReaderBookmark: props.onReaderBookmark } : {})}
       packId={props.packId}

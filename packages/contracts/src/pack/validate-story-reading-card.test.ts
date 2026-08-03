@@ -61,7 +61,7 @@ function makeStoryCard(overrides: Partial<PackCardRecord> = {}): PackCardRecord 
 
 describe('validateStoryReadingCard', () => {
   it('合法 story content 校验通过', () => {
-    const row = validateStoryReadingCard('story-test-pack', makeStoryCard(), manifestPaths);
+    const row = validateStoryReadingCard('story-test-pack', makeStoryCard(), { manifestPaths });
     expect(row.cardType).toBe('story_reading');
     expect(row.content.lesson.code).toBe('C1');
   });
@@ -87,7 +87,7 @@ describe('validateStoryReadingCard', () => {
             ],
           }),
         }),
-        manifestPaths,
+        { manifestPaths },
       ),
     ).toThrow(
       expect.objectContaining({
@@ -122,7 +122,7 @@ describe('validateStoryReadingCard', () => {
             ],
           }),
         }),
-        manifestPaths,
+        { manifestPaths },
       ),
     ).toThrow(
       expect.objectContaining({
@@ -152,7 +152,7 @@ describe('validateStoryReadingCard', () => {
             ],
           }),
         }),
-        manifestPaths,
+        { manifestPaths },
       ),
     ).toThrow(
       expect.objectContaining({
@@ -166,7 +166,7 @@ describe('validateStoryReadingCard', () => {
       validateStoryReadingCard(
         'story-test-pack',
         makeStoryCard({ knowledgeId: 'story-test-pack:story:wrong' }),
-        manifestPaths,
+        { manifestPaths },
       ),
     ).toThrow(
       expect.objectContaining({
@@ -195,8 +195,7 @@ describe('validateStoryReadingCard', () => {
           ],
         }),
       }),
-      manifestPaths,
-      { primaryAudioDurationMs: 3000 },
+      { manifestPaths, context: { primaryAudioDurationMs: 3000 } },
     );
     expect(row.content.story.paragraphs).toHaveLength(2);
   });
@@ -220,7 +219,7 @@ describe('validateStoryReadingCard', () => {
             ],
           }),
         }),
-        manifestPaths,
+        { manifestPaths },
       ),
     ).toThrow(
       expect.objectContaining({
@@ -250,7 +249,7 @@ describe('validateStoryReadingCard', () => {
             ],
           }),
         }),
-        manifestPaths,
+        { manifestPaths },
       ),
     ).toThrow(
       expect.objectContaining({
@@ -275,8 +274,7 @@ describe('validateStoryReadingCard', () => {
             ],
           }),
         }),
-        manifestPaths,
-        { primaryAudioDurationMs: 4000 },
+        { manifestPaths, context: { primaryAudioDurationMs: 4000 } },
       ),
     ).toThrow(
       expect.objectContaining({
@@ -309,7 +307,7 @@ describe('validateStoryReadingCard', () => {
             sidebar: [],
           }),
         }),
-        manifestPaths,
+        { manifestPaths },
       ),
     ).toThrow(
       expect.objectContaining({
@@ -335,7 +333,7 @@ describe('validateStoryReadingCard', () => {
             ],
           }),
         }),
-        manifestPaths,
+        { manifestPaths },
       ),
     ).toThrow(
       expect.objectContaining({

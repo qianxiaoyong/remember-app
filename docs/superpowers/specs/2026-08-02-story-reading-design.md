@@ -33,17 +33,17 @@ cardType registry（ADR 0012）已在 `main` 落地；本 spec 冻结 **`story_r
 
 ## 2. 产品决策摘要
 
-| 决策          | 内容                                                                      |
-| ------------- | ------------------------------------------------------------------------- |
-| D1 完成方式   | `reviewMode: none`；无「我读完了」；**书签**记录阅读位置；不进 SM-2          |
-| D2 词注样式   | **无行内 gloss**；word run 用 tier **字色** + **点击弹层**（sidebar）       |
-| D2b 段下翻译  | optional `paragraphs[].translationZh`；「显示翻译」开关；不用 gloss 拼接     |
-| D3 窄屏词表   | 正文 `word` run 可点 → 底部弹层；顶栏/课头区「本课 N 词」→ 全词表页       |
-| D4 音频       | `lesson.primaryAudio` 包内路径；课头播放按钮                              |
-| D5 频次图例   | App 固定「红:高频 / 蓝:中频 / 绿:低频」文案；**运行时**按本课 `tier` 计数 |
-| D6 系列元数据 | 「40篇童话…」等 **只在 pack source `meta.json`**，不进 card content       |
-| D7 点词数据源 | **仅 `sidebar[]`**；MVP 不写 `lexicon_entries`                            |
-| D8 一课一卡   | 一张阅读页 = sqlite `cards` 一行                                          |
+| 决策          | 内容                                                                                        |
+| ------------- | ------------------------------------------------------------------------------------------- |
+| D1 完成方式   | `reviewMode: none`；无「我读完了」；**书签**记录阅读位置；不进 SM-2                         |
+| D2 词注样式   | **无行内 gloss**；word run 用 tier **字色** + **点击弹层**（sidebar）                       |
+| D2b 段下翻译  | optional `paragraphs[].translationZh`；「显示翻译」开关；不用 gloss 拼接                    |
+| D3 窄屏词表   | 正文 `word` run 可点 → 底部弹层；顶栏/课头区「本课 N 词」→ 全词表页                         |
+| D4 音频       | `lesson.primaryAudio` 包内路径；课头播放按钮                                                |
+| D5 频次图例   | App 固定「红:高频 / 蓝:中频 / 绿:低频」文案；**运行时**按本课 `tier` 计数                   |
+| D6 系列元数据 | 「40篇童话…」等 **只在 pack source `meta.json`**，不进 card content                         |
+| D7 点词数据源 | **仅 `sidebar[]`**；MVP 不写 `lexicon_entries`                                              |
+| D8 一课一卡   | 一张阅读页 = sqlite `cards` 一行                                                            |
 | D9 进度       | `user.sqlite` **story_reading_bookmarks**（`knowledgeId` + `positionMs`）；书库「继续阅读」 |
 
 ## 3. 与现有架构的关系

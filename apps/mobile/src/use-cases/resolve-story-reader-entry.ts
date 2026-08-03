@@ -51,12 +51,12 @@ export function resolveStoryReaderEntry(
   return { knowledgeId: firstLesson.knowledgeId, positionMs: 0 };
 }
 
-export function listStoryLessonSummaries(packId: string): Array<{
+export function listStoryLessonSummaries(packId: string): {
   knowledgeId: string;
   sortOrder: number;
   code: string;
   titleZh: string;
-}> {
+}[] {
   const installedPack = getInstalledPack(packId);
   if (!installedPack) {
     return [];
@@ -64,15 +64,10 @@ export function listStoryLessonSummaries(packId: string): Array<{
 
   return listPackCardDetails(installedPack.sqlitePath)
     .filter((card) => card.cardType === CARD_TYPE_STORY_READING)
-    .map((card) => {
-      if (card.cardType !== CARD_TYPE_STORY_READING) {
-        throw new Error('unexpected card type');
-      }
-      return {
-        knowledgeId: card.knowledgeId,
-        sortOrder: card.sortOrder,
-        code: card.content.lesson.code,
-        titleZh: card.content.lesson.titleZh,
-      };
-    });
+    .map((card) => ({
+      knowledgeId: card.knowledgeId,
+      sortOrder: card.sortOrder,
+      code: card.content.lesson.code,
+      titleZh: card.content.lesson.titleZh,
+    }));
 }

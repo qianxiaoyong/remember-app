@@ -22,11 +22,15 @@ export interface StoryReadingValidateContext {
   primaryAudioDurationMs?: number;
 }
 
+export interface StoryReadingValidateInput {
+  manifestPaths: ReadonlySet<string>;
+  context?: StoryReadingValidateContext;
+}
+
 export function validateStoryReadingCard(
   packId: string,
   card: PackCardRecord,
-  manifestPaths: ReadonlySet<string>,
-  context?: StoryReadingValidateContext,
+  input: StoryReadingValidateInput,
 ): StoryPackCardRow {
   let content: StoryReadingContent;
   try {
@@ -51,14 +55,14 @@ export function validateStoryReadingCard(
     );
   }
 
-  assertAssetReferenced(manifestPaths, content.lesson.coverImage, card.knowledgeId);
-  assertAssetReferenced(manifestPaths, content.lesson.primaryAudio, card.knowledgeId);
+  assertAssetReferenced(input.manifestPaths, content.lesson.coverImage, card.knowledgeId);
+  assertAssetReferenced(input.manifestPaths, content.lesson.primaryAudio, card.knowledgeId);
 
   validateRunsSidebarConsistency(content, card.knowledgeId);
   validateParagraphTimeline(
     content.story.paragraphs,
     card.knowledgeId,
-    context?.primaryAudioDurationMs,
+    input.context?.primaryAudioDurationMs,
   );
   validateParagraphTranslations(content.story.paragraphs, card.knowledgeId);
 
@@ -160,13 +164,8 @@ function validateParagraphTimeline(
   }
 }
 
-function validateParagraphTranslations(
-  paragraphs: StoryParagraph[],
-  knowledgeId: string,
-): void {
-  const hasAnyTranslation = paragraphs.some(
-    (paragraph) => paragraph.translationZh !== undefined,
-  );
+function validateParagraphTranslations(paragraphs: StoryParagraph[], knowledgeId: string): void {
+  const hasAnyTranslation = paragraphs.some((paragraph) => paragraph.translationZh !== undefined);
   if (!hasAnyTranslation) {
     return;
   }

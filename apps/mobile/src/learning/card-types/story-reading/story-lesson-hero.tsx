@@ -67,10 +67,7 @@ export function StoryLessonHero(props: StoryLessonHeroProps): ReactElement {
         accessibilityLabel="课文封面"
         resizeMode="cover"
         source={{ uri: props.coverUri }}
-        style={[
-          styles.coverImage,
-          { aspectRatio: coverAspectRatio ?? PLACEHOLDER_ASPECT_RATIO },
-        ]}
+        style={[styles.coverImage, { aspectRatio: coverAspectRatio ?? PLACEHOLDER_ASPECT_RATIO }]}
       />
       <View pointerEvents="none" style={styles.titleBar}>
         {titles}

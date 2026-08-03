@@ -1,9 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import {
-  cycleStoryLoopMode,
-  resolveLoopSeekMs,
-  storyLoopModeLabel,
-} from './story-loop-mode.js';
+import { cycleStoryLoopMode, resolveLoopSeekMs, storyLoopModeLabel } from './story-loop-mode.js';
 
 const paragraphs = [
   { runs: [{ kind: 'text' as const, text: 'A' }], audioStartMs: 0, audioEndMs: 1000 },

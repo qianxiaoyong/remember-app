@@ -20,21 +20,21 @@
 
 ## 产品决策（2026-08-02 已确认）
 
-| # | 决策 | 内容 |
-| --- | --- | --- |
-| D1 | Tab 范围 Phase 1 | **原文 \| 精听 \| 本课词**（不含「评测」） |
-| D2 | 跟读粒度 | **段级**（`paragraphs[]` 一段一高亮） |
-| D3 | 时间轴来源 | **人工标注** `audioStartMs` / `audioEndMs` |
-| D4 | 原文 Tab 完成 | 滚到底 → 显示「我读完了」→ 用户手动点 → `confirmLessonComplete` |
-| D5 | 精听 Tab 完成 | **隐藏**「我读完了」；**播完最后一帧** → 自动 `confirmLessonComplete` |
-| D6 | 本课词 Tab | 只浏览 `sidebar`，不触发完成 |
-| D7 | 高频词样式 | **下划线**，不用背景色（中/低频同理，色线区分 tier） |
-| D8 | 中文注释 | **开关**，**默认关闭**；开时 inline `（glossZh）` |
-| D9 | 滚动 | **仅正文区** ScrollView；`showsVerticalScrollIndicator={false}` |
-| D10 | 封面 | 课头 Hero：**插图作背景** + 底部渐变 + 标题叠字 |
-| D11 | 本课 N 词 | 入口移到 **顶栏 Tab 行**（第三 Tab），不单占课头 card |
-| D12 | 字体 | story 正文 **Serif**（推荐 `expo-font` + Lora；或系统 `serif` 降级） |
-| D13 | protocolVersion | **保持 1**；时间轴字段 optional，旧包可降级 |
+| #   | 决策             | 内容                                                                  |
+| --- | ---------------- | --------------------------------------------------------------------- |
+| D1  | Tab 范围 Phase 1 | **原文 \| 精听 \| 本课词**（不含「评测」）                            |
+| D2  | 跟读粒度         | **段级**（`paragraphs[]` 一段一高亮）                                 |
+| D3  | 时间轴来源       | **人工标注** `audioStartMs` / `audioEndMs`                            |
+| D4  | 原文 Tab 完成    | 滚到底 → 显示「我读完了」→ 用户手动点 → `confirmLessonComplete`       |
+| D5  | 精听 Tab 完成    | **隐藏**「我读完了」；**播完最后一帧** → 自动 `confirmLessonComplete` |
+| D6  | 本课词 Tab       | 只浏览 `sidebar`，不触发完成                                          |
+| D7  | 高频词样式       | **下划线**，不用背景色（中/低频同理，色线区分 tier）                  |
+| D8  | 中文注释         | **开关**，**默认关闭**；开时 inline `（glossZh）`                     |
+| D9  | 滚动             | **仅正文区** ScrollView；`showsVerticalScrollIndicator={false}`       |
+| D10 | 封面             | 课头 Hero：**插图作背景** + 底部渐变 + 标题叠字                       |
+| D11 | 本课 N 词        | 入口移到 **顶栏 Tab 行**（第三 Tab），不单占课头 card                 |
+| D12 | 字体             | story 正文 **Serif**（推荐 `expo-font` + Lora；或系统 `serif` 降级）  |
+| D13 | protocolVersion  | **保持 1**；时间轴字段 optional，旧包可降级                           |
 
 ---
 
@@ -68,11 +68,11 @@ onLessonChromeChange?: (state: {
 onLessonAutoComplete?: () => void;
 ```
 
-| Tab | footerVisible | completeEnabled | 完成触发 |
-| --- | --- | --- | --- |
-| 原文 | true | 滚到底后 true | 用户点「我读完了」 |
-| 精听 | false | — | 播完 → `onLessonAutoComplete` |
-| 本课词 | false | — | 无 |
+| Tab    | footerVisible | completeEnabled | 完成触发                      |
+| ------ | ------------- | --------------- | ----------------------------- |
+| 原文   | true          | 滚到底后 true   | 用户点「我读完了」            |
+| 精听   | false         | —               | 播完 → `onLessonAutoComplete` |
+| 本课词 | false         | —               | 无                            |
 
 ---
 
@@ -82,17 +82,19 @@ onLessonAutoComplete?: () => void;
 
 ```typescript
 // story-reading-content.ts
-export const storyParagraphSchema = z.object({
-  runs: z.array(storyRunSchema).min(1),
-  audioStartMs: z.number().int().min(0).optional(),
-  audioEndMs: z.number().int().min(0).optional(),
-}).strict().refine(
-  (p) => (p.audioStartMs === undefined) === (p.audioEndMs === undefined),
-  { message: 'audioStartMs and audioEndMs must both be set or both omitted' },
-).refine(
-  (p) => p.audioStartMs === undefined || p.audioEndMs > p.audioStartMs,
-  { message: 'audioEndMs must be greater than audioStartMs' },
-);
+export const storyParagraphSchema = z
+  .object({
+    runs: z.array(storyRunSchema).min(1),
+    audioStartMs: z.number().int().min(0).optional(),
+    audioEndMs: z.number().int().min(0).optional(),
+  })
+  .strict()
+  .refine((p) => (p.audioStartMs === undefined) === (p.audioEndMs === undefined), {
+    message: 'audioStartMs and audioEndMs must both be set or both omitted',
+  })
+  .refine((p) => p.audioStartMs === undefined || p.audioEndMs > p.audioStartMs, {
+    message: 'audioEndMs must be greater than audioStartMs',
+  });
 ```
 
 ### validate-story-reading-card 新增规则
@@ -334,14 +336,14 @@ node tools/pack-builder/dist/cli.js verify -- tools/pack-builder/fixtures/story-
 
 ## 范围外（defer Phase 2+）
 
-| 项 | 说明 |
-| --- | --- |
-| Tab「评测」 | 需 assessment schema + `reviewMode: interactive` |
-| 句级跟读 | 需 sentences[] 或更细时间轴 |
-| 自动对齐工具 | Whisper 等；本期人工标 |
-| pack-editor 时间轴 UI | CLI/脚本足够 |
-| story 词写入 lexicon_entries | spec MVP 不做 |
-| protocolVersion bump | 不做 |
+| 项                           | 说明                                             |
+| ---------------------------- | ------------------------------------------------ |
+| Tab「评测」                  | 需 assessment schema + `reviewMode: interactive` |
+| 句级跟读                     | 需 sentences[] 或更细时间轴                      |
+| 自动对齐工具                 | Whisper 等；本期人工标                           |
+| pack-editor 时间轴 UI        | CLI/脚本足够                                     |
+| story 词写入 lexicon_entries | spec MVP 不做                                    |
+| protocolVersion bump         | 不做                                             |
 
 ---
 

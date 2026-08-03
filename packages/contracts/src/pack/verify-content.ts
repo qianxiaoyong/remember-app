@@ -74,7 +74,7 @@ export function validatePackCards(
       validated.push(validateVocabularyCard(packId, card, manifestPaths));
       continue;
     }
-    validated.push(validateStoryReadingCard(packId, card, manifestPaths));
+    validated.push(validateStoryReadingCard(packId, card, { manifestPaths }));
   }
 
   if (validated.length !== cards.length) {

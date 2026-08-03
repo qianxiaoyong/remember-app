@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
 import { useState } from 'react';
-import type { LayoutChangeEvent } from 'react-native';
+import type { DimensionValue, LayoutChangeEvent } from 'react-native';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { CircleIconButton } from '../../../components/ui/circle-icon-button';
 import { colors } from '../../../theme/colors';
@@ -8,10 +8,7 @@ import { spacing } from '../../../theme/spacing';
 import type { StoryLoopMode } from './story-loop-mode';
 import { storyLoopModeAccessibilityLabel, storyLoopModeLabel } from './story-loop-mode';
 import type { StoryPlaybackRate } from './story-playback-rate';
-import {
-  storyPlaybackRateAccessibilityLabel,
-  storyPlaybackRateLabel,
-} from './story-playback-rate';
+import { storyPlaybackRateAccessibilityLabel, storyPlaybackRateLabel } from './story-playback-rate';
 
 interface StoryAudioBarProps {
   positionMs: number;
@@ -29,8 +26,8 @@ interface StoryAudioBarProps {
   onCyclePlaybackRate: () => void;
   onPreviousParagraph?: () => void;
   onNextParagraph?: () => void;
-  onPreviousLesson?: () => void;
-  onNextLesson?: () => void;
+  onPreviousLesson: () => void;
+  onNextLesson: () => void;
 }
 
 function formatAudioTime(ms: number): string {
@@ -73,9 +70,7 @@ function ParagraphSkipIcon(props: { direction: 'up' | 'down'; disabled?: boolean
 }
 
 function LessonSkipIcon(props: { direction: 'prev' | 'next' }): ReactElement {
-  return (
-    <Text style={styles.lessonSkipGlyph}>{props.direction === 'prev' ? '«' : '»'}</Text>
-  );
+  return <Text style={styles.lessonSkipGlyph}>{props.direction === 'prev' ? '«' : '»'}</Text>;
 }
 
 function LoopModeIcon(props: { mode: StoryLoopMode }): ReactElement {
@@ -91,9 +86,7 @@ function LoopModeIcon(props: { mode: StoryLoopMode }): ReactElement {
 }
 
 function PlaybackRateIcon(props: { rate: StoryPlaybackRate }): ReactElement {
-  return (
-    <Text style={styles.playbackRateLabel}>{storyPlaybackRateLabel(props.rate)}</Text>
-  );
+  return <Text style={styles.playbackRateLabel}>{storyPlaybackRateLabel(props.rate)}</Text>;
 }
 
 export function StoryAudioBar(props: StoryAudioBarProps): ReactElement {
@@ -119,7 +112,7 @@ export function StoryAudioBar(props: StoryAudioBarProps): ReactElement {
         <Text style={styles.time}>{formatAudioTime(props.positionMs)}</Text>
         <Pressable
           accessibilityRole="adjustable"
-          disabled={props.disabled || props.durationMs <= 0}
+          disabled={(props.disabled ?? false) || props.durationMs <= 0}
           onPress={(event) => {
             handleTrackPress(event.nativeEvent.locationX);
           }}
@@ -130,7 +123,12 @@ export function StoryAudioBar(props: StoryAudioBarProps): ReactElement {
               <View style={[styles.trackFill, { flex: progress }]} />
               <View style={{ flex: 1 - progress }} />
             </View>
-            <View style={[styles.trackThumb, { left: `${String(progress * 100)}%` }]} />
+            <View
+              style={[
+                styles.trackThumb,
+                { left: `${String(Math.round(progress * 100))}%` as DimensionValue },
+              ]}
+            />
           </View>
         </Pressable>
         <Text style={styles.time}>{formatAudioTime(props.durationMs)}</Text>

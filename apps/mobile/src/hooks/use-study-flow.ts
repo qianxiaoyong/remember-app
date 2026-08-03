@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { ReviewRating } from '@remember/domain';
 import { normalizeSurfaceForm } from '@remember/contracts';
 import type { LexiconLookupResult } from '../data/repositories/lexicon-entry-repository';
@@ -27,14 +27,12 @@ export function useStudyFlow(
     knowledgeId?: string | null;
   },
 ) {
-  const isReaderMode = useMemo(
-    () => resolvePackLibraryPresentation(packId) === 'reader',
-    [packId],
-  );
+  const isReaderMode = useMemo(() => resolvePackLibraryPresentation(packId) === 'reader', [packId]);
   const [session, setSession] = useState<ActiveStudySession | null>(null);
-  const [readerEntry, setReaderEntry] = useState<{ knowledgeId: string; positionMs: number } | null>(
-    null,
-  );
+  const [readerEntry, setReaderEntry] = useState<{
+    knowledgeId: string;
+    positionMs: number;
+  } | null>(null);
   const [revealed, setRevealed] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);

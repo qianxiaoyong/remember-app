@@ -19,19 +19,19 @@
 
 ## 产品决策（2026-08-02 已确认， supersede 旧 shell plan）
 
-| # | 决策 | 内容 |
-| --- | --- | --- |
-| R1 | Tab | **原文 \| 本课词**；精听并入原文页 |
-| R2 | 底栏 | **播放器**：播放/暂停/进度/拖动 + **上一篇/下一篇** |
-| R3 | 篇间导航 | 包首/包尾 **循环**（末篇下一篇 → 首篇） |
-| R4 | 切课续播 | **上一篇/下一篇始终从 0 开始**；仅书库「继续阅读」用书签 `positionMs` |
-| R5 | 进度 | **书签**：`knowledgeId + positionMs`；无每日任务；**不写** `learning_states` |
-| R6 | reviewMode | `story_reading` → **`none`**；去掉 `lesson_complete` / 「我读完了」 |
-| R7 | 词注 | **无行内 gloss**；word run 仅 tier 字色 + **点击弹层**（sidebar） |
-| R8 | 跟读 | **无 run 高亮**；当前段 **整段字体颜色** 区分 |
-| R9 | 段下中文 | **`paragraphs[].translationZh`** + 「显示翻译」开关；不用 gloss 拼接 |
-| R10 | 书库 | `libraryPresentation: 'reader'`：**隐藏** SM-2 进度条；「上次读到」+ **继续阅读** |
-| R11 | 呈现扩展 | registry 登记 `libraryPresentation`；MVP 两种：`study` / `reader`；未来 cardType 可增 |
+| #   | 决策       | 内容                                                                                  |
+| --- | ---------- | ------------------------------------------------------------------------------------- |
+| R1  | Tab        | **原文 \| 本课词**；精听并入原文页                                                    |
+| R2  | 底栏       | **播放器**：播放/暂停/进度/拖动 + **上一篇/下一篇**                                   |
+| R3  | 篇间导航   | 包首/包尾 **循环**（末篇下一篇 → 首篇）                                               |
+| R4  | 切课续播   | **上一篇/下一篇始终从 0 开始**；仅书库「继续阅读」用书签 `positionMs`                 |
+| R5  | 进度       | **书签**：`knowledgeId + positionMs`；无每日任务；**不写** `learning_states`          |
+| R6  | reviewMode | `story_reading` → **`none`**；去掉 `lesson_complete` / 「我读完了」                   |
+| R7  | 词注       | **无行内 gloss**；word run 仅 tier 字色 + **点击弹层**（sidebar）                     |
+| R8  | 跟读       | **无 run 高亮**；当前段 **整段字体颜色** 区分                                         |
+| R9  | 段下中文   | **`paragraphs[].translationZh`** + 「显示翻译」开关；不用 gloss 拼接                  |
+| R10 | 书库       | `libraryPresentation: 'reader'`：**隐藏** SM-2 进度条；「上次读到」+ **继续阅读**     |
+| R11 | 呈现扩展   | registry 登记 `libraryPresentation`；MVP 两种：`study` / `reader`；未来 cardType 可增 |
 
 ---
 
@@ -132,10 +132,10 @@ user.sqlite v3
 
 ## 与前序 shell plan 的显式废弃项
 
-| 旧决策 | 状态 |
-| --- | --- |
-| 三 Tab含精听 | **废弃** |
-| D4/D5 我读完了 / 精听自动完成 | **废弃** |
-| D8 行内 gloss | **废弃** |
-| D7 下划线 tier（已改字色） | **保持字色** |
-| lesson_complete reviewMode | **改为 none** |
+| 旧决策                        | 状态          |
+| ----------------------------- | ------------- |
+| 三 Tab含精听                  | **废弃**      |
+| D4/D5 我读完了 / 精听自动完成 | **废弃**      |
+| D8 行内 gloss                 | **废弃**      |
+| D7 下划线 tier（已改字色）    | **保持字色**  |
+| lesson_complete reviewMode    | **改为 none** |

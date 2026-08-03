@@ -16,11 +16,11 @@ export async function resolveExpoAudioPlaybackUri(uri: string): Promise<string> 
   return resolveUriForPlayback(uri);
 }
 
-export type ExpoAudioPositionState = {
+export interface ExpoAudioPositionState {
   positionMs: number;
   durationMs: number;
   playing: boolean;
-};
+}
 
 export type ExpoAudioPositionListener = (state: ExpoAudioPositionState) => void;
 

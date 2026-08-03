@@ -11,21 +11,11 @@ import { spacing } from '../../../theme/spacing';
 import { listStoryLessonSummaries } from '../../../use-cases/resolve-story-reader-entry';
 import { resolvePackAssetUri } from '../../../use-cases/resolve-pack-asset-uri';
 import { countSidebarWords } from './count-tier-stats';
-import {
-  canJumpParagraph,
-  resolveParagraphJumpMs,
-} from './story-follow-along';
+import { canJumpParagraph, resolveParagraphJumpMs } from './story-follow-along';
 import { StoryAudioBar } from './story-audio-bar';
 import { StoryLessonTabs, type StoryLessonTabId } from './story-lesson-tabs';
-import {
-  cycleStoryLoopMode,
-  resolveLoopSeekMs,
-  type StoryLoopMode,
-} from './story-loop-mode';
-import {
-  cycleStoryPlaybackRate,
-  type StoryPlaybackRate,
-} from './story-playback-rate';
+import { cycleStoryLoopMode, resolveLoopSeekMs, type StoryLoopMode } from './story-loop-mode';
+import { cycleStoryPlaybackRate, type StoryPlaybackRate } from './story-playback-rate';
 import { StoryReadTab } from './story-read-tab';
 import { StoryVocabTab } from './story-vocab-tab';
 
@@ -53,8 +43,10 @@ export function StoryLessonShell(props: StoryLessonShellProps): ReactElement {
   const audioPlayer = useStoryAudioPlayer({
     uri: audioUri,
     isActive: activeTab === 'read',
-    initialPositionMs: props.initialAudioPositionMs,
     playbackRate,
+    ...(props.initialAudioPositionMs !== undefined
+      ? { initialPositionMs: props.initialAudioPositionMs }
+      : {}),
   });
   const bookmarkTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const loopHandledRef = useRef(false);
@@ -68,7 +60,8 @@ export function StoryLessonShell(props: StoryLessonShellProps): ReactElement {
     if (currentIndex < 0) {
       return { previous: null, next: null };
     }
-    const previous = lessons[(currentIndex - 1 + lessons.length) % lessons.length]?.knowledgeId ?? null;
+    const previous =
+      lessons[(currentIndex - 1 + lessons.length) % lessons.length]?.knowledgeId ?? null;
     const next = lessons[(currentIndex + 1) % lessons.length]?.knowledgeId ?? null;
     return { previous, next };
   }, [lessons, props.knowledgeId]);
