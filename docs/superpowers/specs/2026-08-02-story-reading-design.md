@@ -15,8 +15,8 @@ cardType registry（ADR 0012）已在 `main` 落地；本 spec 冻结 **`story_r
 | #   | 目标                                                                                                  |
 | --- | ----------------------------------------------------------------------------------------------------- |
 | G1  | 新增 `cardType: story_reading`，与 `vocabulary` 可在 **同一 pack、同一 App** 共存                     |
-| G2  | 移动端 **注释阅读 UI**：插图、播放按钮、行内注释、点词详情、「本课 N 词」入口、频次图例（运行时计数） |
-| G3  | 学习完成方式为 **`lesson_complete`**：滚到底 →「我读完了」→ 记进度 → 下一课；**不进 SM-2 复习队列**   |
+| G2  | 移动端 **阅读器 UI**：Hero 封面、段级跟读、底栏播放器、点词弹层、顶栏「本课 N 词」Tab、频次图例（运行时计数） |
+| G3  | 阅读进度由 **`story_reading_bookmarks`**（`knowledgeId` + `positionMs`）记录；**不进 SM-2**、无「我读完了」 |
 | G4  | 复用现有 pack 管道（zip 验签、安装、同步、Admin 发版）；仅扩展 contracts 校验与 mobile Renderer       |
 | G5  | 正文用 **结构化 JSON runs**，不用 HTML 富文本；Zod `.strict()` 可校验                                 |
 
@@ -58,7 +58,7 @@ cards 表（knowledgeId, cardType, sortOrder, content）  ← 多一种 cardType
 
 **PR #7 已交付（本 spec 的前置）：** `cardTypeRegistry`、`parsePackCardContent`、`validatePackCards` 分发、`study-screen` 按 `reviewMode` 控制底栏、`UnsupportedCardPanel`。
 
-**本 spec 交付：** ADR 0012 附录、`storyReadingContentSchema`、verify 规则、`StoryReadingRenderer`、`lesson_complete` 完成路径、测试包样例。
+**本 spec 交付：** ADR 0012 附录、`storyReadingContentSchema`、verify 规则、`StoryLessonShell`（reader v2）、书签进度、测试包样例。
 
 ## 4. 进度与 knowledgeId
 
@@ -72,22 +72,26 @@ cards 表（knowledgeId, cardType, sortOrder, content）  ← 多一种 cardType
 - 示例：`en-fairy-tales-v1:story:c1`
 - 包内唯一；与 vocabulary 的 `{packId}:en:word|phrase:{slug}` **命名空间隔离**
 
-### 4.2 完成态语义
+### 4.2 阅读进度（书签）
 
-用户点「我读完了」后：
+`story_reading` **不写入** `learning_states`，**不进入** SM-2 学习会话队列。
 
-1. 写入/更新 `user.sqlite` `learning_states` 该 `knowledgeId` 一行
-2. 使用 **完成哨兵**（实施计划定具体值）：使该卡 **不再** 出现在 SM-2 到期复习（`dueAt` 永不到期或等价语义）
-3. 当前会话队列该项标记 `done`，进入下一项
-4. 写入 `sync_outbox`（与 vocabulary 相同事务边界）
+| 存储 | 字段 | 说明 |
+| ---- | ---- | ---- |
+| `user.sqlite` `story_reading_bookmarks` | `packId`（PK）、`knowledgeId`、`positionMs`、`updatedAt` | 每包一条；记录上次读到哪一课、音频进度 |
 
-未点完成就退出：无 `learning_states` 行，下次仍作为 **new** 课入队（从该课重新开始）。
+行为：
+
+1. 书库「继续阅读」→ `/study?packId=`，App 读书签恢复 `knowledgeId` + `positionMs`
+2. 播放中 debounce 更新 `positionMs`；返回书库时写入
+3. 篇间「上一篇/下一篇」→ 新课从 `positionMs = 0` 开始（见 v2 plan R4）
+4. **无**「完成课」概念；用户可随时退出，下次从书签续读
 
 ### 4.3 队列与混 pack
 
-- `story_reading` 课 **永不** 因 SM-2 到期再入队
-- 未学完的 story 课按 `cards.sortOrder` 与其他 **new** 卡一并受 `dailyNewCardQuota` 约束
-- 与 `vocabulary` 混 pack 时：vocabulary 仍走现有 due/review 逻辑；story 仅 new + 一次 complete
+- 纯 `story_reading` 包：`libraryPresentation: reader`，书库 **不展示** SM-2 进度条
+- `story_reading` **永不** 进入 `resumeOrStartStudySession` 队列
+- 混 pack（story + vocabulary）：MVP 若含 story 则整包 fallback 为 `reader` 呈现（vocabulary SM-2 Defer，见 v2 plan R11）
 
 ## 5. pack 元数据（系列信息）
 
@@ -138,13 +142,15 @@ card `content.lesson` 只保留 **课级** 字段（课次、本课标题、封�
 | -------------- | ---- | ------------------------ |
 | `kind: "word"` | ✅   |                          |
 | `surface`      | ✅   | 英文词形（展示用）       |
-| `glossZh`      | ✅   | 行内中文注释             |
+| `glossZh`      | ✅   | 词义（pack 校验用；UI 不 inline 展示，见 sidebar / translationZh） |
 | `tier`         | ✅   | `high` \| `mid` \| `low` |
 | `vocabId`      | ✅   | 稳定 ID，与 sidebar 关联 |
 
-渲染：`surface` 按 `tier` 下划线着色（红/蓝/绿 token）；`glossZh` 由「显示注释」开关控制。
+渲染：`surface` 按 `tier` **字色**区分；跟读时 **整段** 变色高亮；点词弹层读 `sidebar`。
 
-**段级时间轴（optional，Phase 1+）：** 每段可含 `audioStartMs` / `audioEndMs`（整数 ms，须成对出现）；用于精听 Tab 段级跟读。无时间轴的旧包仍可安装，精听 Tab 降级提示。
+**`paragraphs[].translationZh`（optional）：** 段下中文整段翻译；「显示翻译」开关控制；须全段都有或全无（同时间轴规则）。
+
+**段级时间轴（optional）：** 每段可含 `audioStartMs` / `audioEndMs`（整数 ms，须成对出现）；用于播放器段级跟读与自动滚动。无时间轴的旧包仍可安装，跟读降级为纯播放。
 
 ### 6.4 `sidebar[]`
 
@@ -171,45 +177,48 @@ card `content.lesson` 只保留 **课级** 字段（课次、本课标题、封�
 
 **保持 `protocolVersion: 1`。** 理由：zip 外壳、manifest、sqlite 三表、vocabulary schema 均未破坏性变更；新 cardType 由 ADR 0012 扩展。旧版 App 不支持 `story_reading` 时验包或运行时分发错误，由 **App 版本** 解决，不 bump 协议版本。
 
-## 7. reviewMode：`lesson_complete`
+## 7. reviewMode 与 libraryPresentation
 
-在 ADR 0012 `reviewMode` 枚举中 **新增** `lesson_complete`（实施时同步 `types.ts` 与 ADR 附录）。
+| reviewMode | 底栏 | 适用 |
+| ---------- | ---- | ---- |
+| `sm2` | 忘记/模糊/记得 | `vocabulary` |
+| `none` | 无 SM-2 / 无完成底栏 | **`story_reading`** |
+| `lesson_complete` | 「我读完了」（预留，当前无 cardType 使用） | 预留 |
+| `interactive` | 交互提交 | 预留 |
 
-| reviewMode        | 底栏                             | 适用          |
-| ----------------- | -------------------------------- | ------------- |
-| `sm2`             | 忘记/模糊/记得                   | vocabulary    |
-| `lesson_complete` | 「我读完了」（滚到底后 enabled） | story_reading |
-| `none`            | 无                               | 预留          |
-| `interactive`     | 交互提交                         | 预留          |
+| libraryPresentation | 书库 UI | 适用 |
+| ------------------- | ------- | ---- |
+| `study` | SM-2 进度条 + 继续学习 | `vocabulary` |
+| `reader` | 「上次读到」+ 继续阅读 | **`story_reading`** |
 
-**study-screen 行为：**
+**study-screen 行为（reader）：**
 
-- 不显示 `StudyRatingBar`
-- `lesson_complete` 时 footer 显示「我读完了」；默认 disabled，Renderer 报告「已滚到底」后 enabled
-- 点击 → 调用 `confirmLessonComplete`（新 use-case，不写 SM-2 间隔）→ 下一卡
+- `reviewMode: none` → 不显示 `StudyRatingBar`，无「我读完了」
+- 经 `?knowledgeId=` 或书签进入 **reader 模式**，不调用 `resumeOrStartStudySession`
+- 播放器与 Tab 由 `StoryLessonShell` 自管；进度写 `story_reading_bookmarks`
 
 ## 8. 移动端 UI
 
 遵循 UI 规范 §8 骨架：隐藏底部胶囊、轻量顶栏、右上角更多菜单。**不**使用 vocabulary 的两阶段 prompt/reveal。
 
-### 8.1 布局（课节壳 Phase 1）
+### 8.1 布局（reader v2）
 
 ```text
 ┌─────────────────────────────┐
-│ ←  C1              更多 ⋮   │
-│  原文 | 精听 | 本课词 32     │  ← Tab 行
+│ ←                    更多 ⋮ │
+│      原文 | 本课词 32        │  ← Tab 行（顶栏居中）
 ├─────────────────────────────┤
-│ [Hero 封面背景 + 标题叠字]    │
-│ 红:高频 蓝:中频 绿:低频  [显示注释] │
+│ [Hero 封面 + 标题叠字]        │  ← 固定
+│ 图例 chip    [显示翻译]       │
 ├─────────────────────────────┤
-│ （仅正文 ScrollView，Serif） │
+│ （仅正文 ScrollView，Serif）  │  ← 段级跟读变色 + auto-scroll
 │ …                           │
 ├─────────────────────────────┤
-│      [ 我读完了 ]            │  ← 仅「原文」Tab；滚到底后可用
+│ 进度条 + 播放/暂停 + 段/篇导航 │  ← 仅「原文」Tab；固定底栏
 └─────────────────────────────┘
 ```
 
-精听 Tab：无「我读完了」；底栏为音频进度条 + 播放/暂停；段级高亮跟读；播完自动完成。本课词 Tab：词表浏览，无完成底栏。
+本课词 Tab：词表浏览，无底栏播放器。
 
 ### 8.2 交互
 
@@ -218,16 +227,16 @@ card `content.lesson` 只保留 **课级** 字段（课次、本课标题、封�
 | 播放          | 播 `lesson.primaryAudio`；复用 pack 内音频播放链                                     |
 | 点 `word` run | 底部 sheet：headword、ipa、pos、definitionZh、tier 色条                              |
 | 「本课 N 词」 | 进入词表页（列表同 sidebar 顺序；项可点开展开详情）                                  |
-| 滚到底        | 启用「我读完了」                                                                     |
+| 段级跟读      | 播放时当前段变色；自动滚入视区；可拖进度、跳段/跳篇                                   |
 | 更多菜单      | 与 vocabulary 相同（搜索/切换包/设置）；搜索是否索引 story 正文 **defer** 至实施计划 |
 
 ### 8.3 视觉 token（频次）
 
 | tier   | 含义 | 默认色（对齐教材习惯） |
 | ------ | ---- | ---------------------- |
-| `high` | 高频 | 红系 **下划线**        |
-| `mid`  | 中频 | 蓝系 **下划线**        |
-| `low`  | 低频 | 绿系 **下划线**        |
+| `high` | 高频 | 红系 **字色**          |
+| `mid`  | 中频 | 蓝系 **字色**          |
+| `low`  | 低频 | 绿系 **字色**          |
 
 图例文案 App 写死；括号内数字由本课 content 统计。
 
@@ -236,7 +245,8 @@ card `content.lesson` 只保留 **课级** 字段（课次、本课标题、封�
 |      | vocabulary               | story_reading          |
 | ---- | ------------------------ | ---------------------- |
 | 阶段 | prompt → reveal          | 单屏阅读               |
-| 底栏 | SM-2 三按钮              | 我读完了               |
+| 底栏 | SM-2 三按钮              | 音频播放器（无 SM-2）  |
+| 进度 | learning_states + 队列   | story_reading_bookmarks |
 | 点词 | lexicon_entries          | sidebar                |
 | 图片 | prompt.primaryImage 可选 | lesson.coverImage 必填 |
 
@@ -283,22 +293,23 @@ card `content.lesson` 只保留 **课级** 字段（课次、本课标题、封�
 
 ## 10. 实施清单（ADR 0012 附录顺序）
 
-1. **ADR 0012 附录**：冻结本 spec 的 schema、`reviewMode: lesson_complete`、knowledgeId 规则
-2. **`packages/contracts`**：`story-reading-content.ts`、`parsePackCardContent` 分支、`SUPPORTED_CARD_TYPES` 追加、`validate-story-reading-card.ts`
-3. **pack-builder verify**：注册 story 校验 + 一致性规则测试
-4. **`apps/mobile`**：`story-reading/` Renderer、词表页、点词 sheet、`confirmLessonComplete`、registry 注册、`reviewMode: lesson_complete` 底栏
-5. **测试包**：至少 1 课 story_reading fixture zip
+1. **ADR 0012 附录**：schema、`reviewMode: none`、`libraryPresentation: reader`、knowledgeId 规则
+2. **`packages/contracts`**：`story-reading-content.ts`（含 optional `translationZh`、时间轴）、validate
+3. **pack-builder verify**：story 校验 + 测试包
+4. **`apps/mobile`**：`StoryLessonShell`、书签 v3 表、reader 路由、registry
+5. **测试包**：至少 1 课 story_reading fixture zip（C1 公主与豌豆）
 6. **（可选）** pack-editor story 表单
 
 ## 11. 验收要点
 
 - [ ] 含 story_reading 的 zip 通过 `pack-builder verify`
 - [ ] 故意缺少 sidebar 对应项的 pack **被拒绝**
-- [ ] App 安装后可播放音频、显示封面、正文行内注释与 tier 色
-- [ ] 点词弹层与「本课 N 词」数据一致
+- [ ] App 安装后可播放音频、Hero 封面、正文 tier 字色与段级跟读
+- [ ] 点词弹层与「本课 N 词」Tab 数据一致
 - [ ] 频次图例数字与本课 tier 统计一致
-- [ ] 滚到底前「我读完了」disabled；完成后进入下一课且 **不再** SM-2 复习
-- [ ] 杀进程再进，从未完成的课继续；已完成课不重复强制
+- [ ] 「显示翻译」展示 `translationZh`；默认关闭
+- [ ] 书库继续阅读恢复书签；篇间导航从 0 播
+- [ ] 杀进程再进，从书签 positionMs 续播
 - [ ] 同 pack 内 vocabulary 学习行为 **零回归**
 - [ ] `protocolVersion` 仍为 1 的 pack 可正常构建
 
@@ -307,3 +318,4 @@ card `content.lesson` 只保留 **课级** 字段（课次、本课标题、封�
 | 日期       | 说明                                                  |
 | ---------- | ----------------------------------------------------- |
 | 2026-08-02 | 首版确认：产品决策、schema、UI、进度、protocolVersion |
+| 2026-08-03 | reader v2：reviewMode none、书签进度、translationZh、合并播放器；废弃 lesson_complete / 我读完了 |

@@ -29,9 +29,18 @@
 | 值                | 含义                            | 本计划             |
 | ----------------- | ------------------------------- | ------------------ |
 | `sm2`             | 揭示后展示间隔复习按钮          | ✅ `vocabulary`    |
-| `lesson_complete` | 滚到底后「我读完了」，不进 SM-2 | ✅ `story_reading` |
-| `none`            | 无 SM-2 底栏（只读/浏览类）     | 预留               |
+| `none`            | 无 SM-2 底栏（阅读/浏览类）     | ✅ `story_reading` |
+| `lesson_complete` | 滚到底后「我读完了」（预留）    | 预留               |
 | `interactive`     | 交互式作答后再评分              | 预留               |
+
+### 2.1 libraryPresentation
+
+registry 可选声明 `libraryPresentation`，书库 UI 据此分支（**不由 pack 固定 enum 决定**）：
+
+| 值       | 书库行为                         | 本计划             |
+| -------- | -------------------------------- | ------------------ |
+| `study`  | SM-2 进度条 + 继续/开始学习      | ✅ `vocabulary`    |
+| `reader` | 「上次读到」+ 继续/开始阅读      | ✅ `story_reading` |
 
 ### 3. 三层分发（静态编译期，非运行时插件）
 
@@ -45,7 +54,7 @@ apps/mobile            cardTypeRegistry[type].Renderer
 
 - **contracts**：`parsePackCardContent` 为统一入口；`parseCardContentJson` 保留为 vocabulary 别名，避免外部引用一次性断裂。
 - **pack-builder**：经 `@remember/contracts` 校验；未知 `cardType` 抛 `PACK_UNSUPPORTED_CARD_TYPE`。
-- **mobile**：`cardTypeRegistry` 映射 `Renderer` + `reviewMode`；会话/SM-2/同步逻辑保留在 `study-screen` 壳层，Renderer 只负责卡片区呈现。
+- **mobile**：`cardTypeRegistry` 映射 `Renderer` + `reviewMode` + `libraryPresentation`；会话/SM-2 逻辑保留在 `study-screen` 壳层，Renderer 只负责卡片区呈现。
 
 **明确不做：** 运行时插件、远程加载 Renderer、HTML 富文本进 pack、App 直连 LLM。
 
@@ -84,22 +93,30 @@ apps/mobile            cardTypeRegistry[type].Renderer
 6. pack-builder 测试包 + mobile 手工回归
 7. （可选）pack-editor 表单
 
-## 附录：story_reading（2026-08-02 冻结）
+## 附录：story_reading（2026-08-02 冻结；2026-08-03 reader v2 修订）
 
 关联 spec：`docs/superpowers/specs/2026-08-02-story-reading-design.md`；`protocolVersion` **保持 1**。
 
-### content JSON（严格三键）
+### content JSON（严格三键 + optional 段字段）
 
 ```typescript
 {
   lesson: { code, titleEn, titleZh, coverImage, primaryAudio };
-  story: { paragraphs: [{ runs: TextRun | WordRun[] }] };
+  story: {
+    paragraphs: [{
+      runs: TextRun | WordRun[];
+      translationZh?: string;
+      audioStartMs?: number;
+      audioEndMs?: number;
+    }];
+  };
   sidebar: [{ vocabId, headword, ipa, pos, definitionZh, tier }];
 }
 ```
 
 - `TextRun`：`{ kind: 'text', text }`
 - `WordRun`：`{ kind: 'word', surface, glossZh, tier, vocabId }`；`tier`: `high` | `mid` | `low`
+- `glossZh`：pack 校验字段；UI **不** inline 展示（点词读 sidebar；段译读 `translationZh`）
 - 可选字段省略键，不用 `null`；Zod `.strict()`
 
 ### knowledgeId
@@ -118,28 +135,34 @@ apps/mobile            cardTypeRegistry[type].Renderer
 4. `coverImage`、`primaryAudio` 须在 manifest 资源清单
 5. MVP **不写** story 词到 `lexicon_entries`；点词读 `sidebar`
 
-### reviewMode
+### reviewMode 与 libraryPresentation
 
-`story_reading` → `lesson_complete`：study 壳层展示「我读完了」（滚到底 enabled）；**不进 SM-2**。
+```text
+story_reading → reviewMode: none, libraryPresentation: reader
+```
 
-### 完成哨兵（learning_states）
+- study 壳层 **无** SM-2 底栏、**无**「我读完了」
+- reader 模式经 `?knowledgeId=` 或书签进入，不建 SM-2 session 队列
 
-用户点「我读完了」后写入一行，使调度器不再将其作为 new 或 due：
+### 阅读进度（bookmarks）
 
-| 字段           | 值                         |
-| -------------- | -------------------------- |
-| `dueAt`        | `9999-12-31T23:59:59.999Z` |
-| `intervalDays` | `36500`                    |
-| `repetitions`  | `1`                        |
-| `easiness`     | `2.5`                      |
+`user.sqlite` `story_reading_bookmarks`（v3 migration）：
 
-未点完成退出：无行，下次仍作 new 课入队。
+| 字段          | 说明               |
+| ------------- | ------------------ |
+| `packId`      | PK                 |
+| `knowledgeId` | 当前课             |
+| `positionMs`  | 音频进度           |
+| `updatedAt`   | ISO 时间           |
+
+**不写入** `learning_states`；**不使用** 完成哨兵。
 
 ### 与 vocabulary 差异
 
 |      | vocabulary               | story_reading          |
 | ---- | ------------------------ | ---------------------- |
-| 阶段 | prompt → reveal          | 单屏阅读               |
-| 底栏 | SM-2 三按钮              | 我读完了               |
+| 阶段 | prompt → reveal          | 单屏阅读 + 播放器      |
+| 底栏 | SM-2 三按钮              | 音频播放器             |
+| 进度 | learning_states + 队列   | story_reading_bookmarks |
 | 点词 | lexicon_entries          | sidebar                |
 | 主图 | prompt.primaryImage 可选 | lesson.coverImage 必填 |
