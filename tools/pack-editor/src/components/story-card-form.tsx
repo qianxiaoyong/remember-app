@@ -6,6 +6,7 @@ import { normalizeStoryContent } from '../utils/normalize-story-content.js';
 import { StoryLessonFields } from './story-lesson-fields.js';
 import { StoryParagraphEditor } from './story-paragraph-editor.js';
 import { StorySidebarEditor } from './story-sidebar-editor.js';
+import { StoryTimelineEditor } from './story-timeline-editor.js';
 
 export const STORY_CARD_FORM_ID = 'story-card-form';
 
@@ -50,6 +51,12 @@ export function StoryCardForm({
       <div className="edit-reveal-body">
         <StorySidebarEditor register={register} control={control} />
         <StoryParagraphEditor register={register} control={control} setValue={setValue} />
+        <StoryTimelineEditor
+          packId={packId}
+          register={register}
+          control={control}
+          setValue={setValue}
+        />
       </div>
     </form>
   );
