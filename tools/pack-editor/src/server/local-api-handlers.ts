@@ -1,10 +1,15 @@
-import { vocabularyContentSchema } from '@remember/contracts';
+import { storyReadingContentSchema, vocabularyContentSchema } from '@remember/contracts';
 import {
+  isStorySourceCard,
   listPackSourceDirs,
   readPackSource,
   writePackSource,
   type PackSourceCard,
 } from '@remember/pack-builder/pack-source';
+import {
+  createStoryCardTemplate,
+  suggestNextLessonCode,
+} from '../utils/story-card-template.js';
 import { mkdirSync } from 'node:fs';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { join } from 'node:path';
@@ -71,7 +76,9 @@ export async function handleSaveCard(input: SaveCardInput): Promise<void> {
     return;
   }
 
-  const parsed = vocabularyContentSchema.safeParse(card.content);
+  const parsed = isStorySourceCard(card)
+    ? storyReadingContentSchema.safeParse(card.content)
+    : vocabularyContentSchema.safeParse(card.content);
   if (!parsed.success) {
     sendJson(res, 400, {
       error: 'validation failed',
@@ -97,6 +104,8 @@ export async function handleSaveCard(input: SaveCardInput): Promise<void> {
 
 interface CreateCardBody {
   kind?: 'word' | 'phrase';
+  cardType?: 'story_reading';
+  lessonCode?: string;
 }
 
 export async function handleCreateCard(
@@ -111,23 +120,33 @@ export async function handleCreateCard(
   }
 
   const body = await readJsonBody<CreateCardBody>(req);
-  const kind = body.kind === 'phrase' ? 'phrase' : 'word';
   const source = readPackSource(resolved.path);
   const maxSortOrder = source.cards.reduce((max, card) => Math.max(max, card.sortOrder), 0);
-  const newCard: PackSourceCard = {
-    kind,
-    sortOrder: maxSortOrder + 1,
-    content: {
-      prompt: {
-        headword: 'new-word',
-        primaryAudio: 'assets/audio/new-word.mp3',
+
+  let newCard: PackSourceCard;
+  if (body.cardType === 'story_reading') {
+    const existingCodes = source.cards
+      .filter(isStorySourceCard)
+      .map((card) => card.content.lesson.code);
+    const lessonCode = body.lessonCode?.trim() || suggestNextLessonCode(existingCodes);
+    newCard = createStoryCardTemplate({ sortOrder: maxSortOrder + 1, lessonCode });
+  } else {
+    const kind = body.kind === 'phrase' ? 'phrase' : 'word';
+    newCard = {
+      kind,
+      sortOrder: maxSortOrder + 1,
+      content: {
+        prompt: {
+          headword: 'new-word',
+          primaryAudio: 'assets/audio/new-word.mp3',
+        },
+        reveal: {
+          definitions: [{ text: '待填写' }],
+          examples: [{ en: 'Example sentence.', zh: '例句。' }],
+        },
       },
-      reveal: {
-        definitions: [{ text: '待填写' }],
-        examples: [{ en: 'Example sentence.', zh: '例句。' }],
-      },
-    },
-  };
+    };
+  }
 
   source.cards.push(newCard);
   writePackSource(resolved.path, source);

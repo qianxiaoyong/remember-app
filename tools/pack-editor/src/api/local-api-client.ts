@@ -65,6 +65,23 @@ export async function createCard(
   return data.card;
 }
 
+export async function createStoryCard(
+  packId: string,
+  lessonCode?: string,
+): Promise<PackSourceCard> {
+  const data = await readJson<{ card: PackSourceCard }>(
+    await fetch(`/local-api/packs/${encodeURIComponent(packId)}/cards`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        cardType: 'story_reading',
+        ...(lessonCode ? { lessonCode } : {}),
+      }),
+    }),
+  );
+  return data.card;
+}
+
 export async function deleteCard(packId: string, sortOrder: number): Promise<void> {
   await readJson<{ ok: true }>(
     await fetch(`/local-api/packs/${encodeURIComponent(packId)}/cards/${String(sortOrder)}`, {
