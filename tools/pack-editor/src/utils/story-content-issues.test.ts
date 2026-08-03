@@ -87,6 +87,33 @@ describe('collectStoryContentIssues', () => {
     expect(issues.some((issue) => issue.message.includes('missing translationZh'))).toBe(true);
   });
 
+  it('空 translationZh 视为缺失', () => {
+    const content = baseContent();
+    const secondParagraph = content.story.paragraphs[1];
+    if (!secondParagraph) {
+      throw new Error('expected second paragraph');
+    }
+    secondParagraph.translationZh = '';
+
+    const issues = collectStoryContentIssues(content);
+    expect(issues.some((issue) => issue.message.includes('missing translationZh'))).toBe(true);
+  });
+
+  it('duplicate sidebar vocabId', () => {
+    const content = baseContent();
+    content.sidebar.push({
+      vocabId: 'world',
+      headword: 'world duplicate',
+      ipa: '/wɜːld/',
+      pos: 'n.',
+      definitionZh: '世界副本',
+      tier: 'high',
+    });
+
+    const issues = collectStoryContentIssues(content);
+    expect(issues.some((issue) => issue.message.includes('duplicate sidebar vocabId'))).toBe(true);
+  });
+
   it('时间轴重叠', () => {
     const content = baseContent();
     const secondParagraph = content.story.paragraphs[1];
@@ -99,14 +126,8 @@ describe('collectStoryContentIssues', () => {
     expect(issues.some((issue) => issue.message.includes('overlaps previous segment'))).toBe(true);
   });
 
-  it('跳段标起点报错', () => {
+  it('仅首段有 timeline 其余无 → 报错', () => {
     const content = baseContent();
-    content.story.paragraphs.push({
-      runs: [{ kind: 'text', text: 'Third.' }],
-      audioStartMs: 3000,
-      audioEndMs: 4000,
-      translationZh: '第三段',
-    });
     const secondParagraph = content.story.paragraphs[1];
     if (secondParagraph) {
       delete secondParagraph.audioStartMs;
@@ -114,9 +135,7 @@ describe('collectStoryContentIssues', () => {
     }
 
     const issues = collectStoryContentIssues(content);
-    expect(issues.some((issue) => issue.message.includes('marked in order from segment 1'))).toBe(
-      true,
-    );
+    expect(issues.some((issue) => issue.message.includes('missing audio timeline'))).toBe(true);
   });
 
   it('末段超出音频时长', () => {

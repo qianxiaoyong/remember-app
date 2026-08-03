@@ -5,6 +5,9 @@ import type {
   StoryTier,
   StoryWordRun,
 } from '@remember/contracts';
+import { findLostWordAnchors, StoryRunsSyncError } from './story-word-anchors.js';
+
+export { StoryRunsSyncError } from './story-word-anchors.js';
 
 const WORD_TOKEN_PATTERN = /\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g;
 
@@ -148,6 +151,11 @@ export function syncRunsToPlainText(
     return [{ kind: 'text', text: newPlain || ' ' }];
   }
 
+  const lost = findLostWordAnchors(wordRuns, newPlain);
+  if (lost.length > 0) {
+    throw new StoryRunsSyncError(lost);
+  }
+
   return rebuildRunsFromWordAnchors(wordRuns, newPlain, sidebar);
 }
 
@@ -161,7 +169,7 @@ function rebuildRunsFromWordAnchors(
   for (const word of wordRuns) {
     const idx = plain.indexOf(word.surface, cursor);
     if (idx === -1) {
-      continue;
+      throw new StoryRunsSyncError([word]);
     }
     if (idx > cursor) {
       appendTextRun(result, plain.slice(cursor, idx));

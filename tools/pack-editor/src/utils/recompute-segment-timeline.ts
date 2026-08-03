@@ -25,6 +25,52 @@ export function canSetSegmentStart(paragraphIndex: number, paragraphs: StoryPara
   return paragraphIndex <= contiguous;
 }
 
+export function recomputeSegmentEnds(
+  paragraphs: StoryParagraph[],
+  durationMs: number,
+): StoryParagraph[] {
+  return paragraphs.map((paragraph, index) => {
+    const start = paragraph.audioStartMs;
+    if (start === undefined || !Number.isFinite(start)) {
+      return paragraph;
+    }
+
+    const clampedStart = Math.max(0, Math.round(start));
+
+    let nextStart: number | undefined;
+    for (let nextIndex = index + 1; nextIndex < paragraphs.length; nextIndex += 1) {
+      const candidate = paragraphs[nextIndex]?.audioStartMs;
+      if (candidate !== undefined && Number.isFinite(candidate)) {
+        nextStart = candidate;
+        break;
+      }
+    }
+
+    let endMs: number;
+    if (nextStart !== undefined) {
+      endMs = Math.round(nextStart);
+    } else if (durationMs > 0) {
+      endMs = durationMs;
+    } else if (
+      paragraph.audioEndMs !== undefined &&
+      Number.isFinite(paragraph.audioEndMs) &&
+      paragraph.audioEndMs > clampedStart
+    ) {
+      endMs = Math.round(paragraph.audioEndMs);
+    } else {
+      endMs = clampedStart + 1;
+    }
+
+    endMs = Math.max(endMs, clampedStart + 1);
+
+    return {
+      ...paragraph,
+      audioStartMs: clampedStart,
+      audioEndMs: endMs,
+    };
+  });
+}
+
 export function recomputeSegmentTimeline(
   paragraphs: StoryParagraph[],
   durationMs: number,

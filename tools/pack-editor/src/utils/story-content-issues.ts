@@ -1,5 +1,12 @@
-import type { StoryParagraph, StoryReadingContent, StoryWordRun } from '@remember/contracts';
+import type {
+  StoryParagraph,
+  StoryReadingContent,
+  StorySidebarEntry,
+  StoryWordRun,
+} from '@remember/contracts';
 import type { PackSourceStoryCard } from '@remember/pack-builder/pack-source';
+import { findLostWordAnchors } from './story-word-anchors.js';
+import { runsToPlainText } from './story-runs-markup.js';
 
 export interface StoryContentIssue {
   path: string;
@@ -12,6 +19,7 @@ export function collectStoryContentIssues(
 ): StoryContentIssue[] {
   const issues: StoryContentIssue[] = [];
   issues.push(...collectSidebarIssues(content));
+  issues.push(...collectWordAnchorIssues(content));
   issues.push(...collectTimelineIssues(content.story.paragraphs, options?.primaryAudioDurationMs));
   issues.push(...collectTranslationIssues(content.story.paragraphs));
   return issues;
@@ -19,8 +27,19 @@ export function collectStoryContentIssues(
 
 function collectSidebarIssues(content: StoryReadingContent): StoryContentIssue[] {
   const issues: StoryContentIssue[] = [];
-  const sidebarById = new Map(content.sidebar.map((entry) => [entry.vocabId, entry]));
+  const sidebarById = new Map<string, StorySidebarEntry>();
   const referencedVocabIds = new Set<string>();
+
+  for (const [index, entry] of content.sidebar.entries()) {
+    if (sidebarById.has(entry.vocabId)) {
+      issues.push({
+        path: `sidebar[${String(index)}].vocabId`,
+        message: `duplicate sidebar vocabId: ${entry.vocabId}`,
+      });
+    } else {
+      sidebarById.set(entry.vocabId, entry);
+    }
+  }
 
   for (const [paragraphIndex, paragraph] of content.story.paragraphs.entries()) {
     for (const [runIndex, run] of paragraph.runs.entries()) {
@@ -58,15 +77,34 @@ function collectSidebarIssues(content: StoryReadingContent): StoryContentIssue[]
   return issues;
 }
 
+function collectWordAnchorIssues(content: StoryReadingContent): StoryContentIssue[] {
+  const issues: StoryContentIssue[] = [];
+  for (const [paragraphIndex, paragraph] of content.story.paragraphs.entries()) {
+    const plain = runsToPlainText(paragraph.runs);
+    const wordRuns = paragraph.runs.filter((run): run is StoryWordRun => run.kind === 'word');
+    for (const word of findLostWordAnchors(wordRuns, plain)) {
+      issues.push({
+        path: `story.paragraphs[${String(paragraphIndex)}].runs`,
+        message: `word anchor lost after text edit: ${word.surface} (${word.vocabId})`,
+      });
+    }
+  }
+  return issues;
+}
+
 function collectTimelineIssues(
   paragraphs: StoryParagraph[],
   primaryAudioDurationMs?: number,
 ): StoryContentIssue[] {
   const issues: StoryContentIssue[] = [];
-  let previousEndMs = 0;
-  let seenStarted = false;
-  let seenGapAfterStart = false;
+  const hasAnyTimeline = paragraphs.some(
+    (paragraph) => paragraph.audioStartMs !== undefined || paragraph.audioEndMs !== undefined,
+  );
+  if (!hasAnyTimeline) {
+    return issues;
+  }
 
+  let previousEndMs = 0;
   for (let index = 0; index < paragraphs.length; index += 1) {
     const paragraph = paragraphs[index];
     if (paragraph === undefined) {
@@ -76,13 +114,6 @@ function collectTimelineIssues(
     const hasStart = paragraph.audioStartMs !== undefined;
     const hasEnd = paragraph.audioEndMs !== undefined;
 
-    if (!hasStart && !hasEnd) {
-      if (seenStarted) {
-        seenGapAfterStart = true;
-      }
-      continue;
-    }
-
     if (hasStart !== hasEnd) {
       issues.push({
         path: `story.paragraphs[${String(index)}]`,
@@ -91,26 +122,11 @@ function collectTimelineIssues(
       continue;
     }
 
-    if (seenGapAfterStart) {
-      issues.push({
-        path: `story.paragraphs[${String(index)}].audioStartMs`,
-        message: 'segment starts must be marked in order from segment 1',
-      });
-    }
-
-    if (seenStarted && index > 0) {
-      const previousParagraph = paragraphs[index - 1];
-      if (previousParagraph?.audioStartMs === undefined) {
-        issues.push({
-          path: `story.paragraphs[${String(index)}].audioStartMs`,
-          message: 'segment starts must be marked in order from segment 1',
-        });
-      }
-    }
-
-    seenStarted = true;
-
     if (paragraph.audioStartMs === undefined || paragraph.audioEndMs === undefined) {
+      issues.push({
+        path: `story.paragraphs[${String(index)}]`,
+        message: 'paragraph missing audio timeline',
+      });
       continue;
     }
 
@@ -153,7 +169,7 @@ function collectTranslationIssues(paragraphs: StoryParagraph[]): StoryContentIss
     if (paragraph === undefined) {
       continue;
     }
-    if (paragraph.translationZh === undefined) {
+    if (paragraph.translationZh === undefined || paragraph.translationZh.trim() === '') {
       issues.push({
         path: `story.paragraphs[${String(index)}].translationZh`,
         message: 'paragraph missing translationZh',

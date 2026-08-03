@@ -7,6 +7,7 @@ import {
   markedTextToRuns,
   runsToMarkedText,
   runsToPlainText,
+  StoryRunsSyncError,
   syncRunsToPlainText,
 } from './story-runs-markup.js';
 
@@ -105,6 +106,13 @@ describe('syncRunsToPlainText', () => {
       { kind: 'word', surface: 'idea', glossZh: '主意', tier: 'low', vocabId: 'idea' },
       { kind: 'text', text: '.' },
     ]);
+  });
+
+  it('改字导致 anchor 丢失时报错', () => {
+    const edited = 'The prince is very happy. He wants to marry a princess.';
+    expect(() => syncRunsToPlainText(c1ParagraphOneRuns, edited, sidebar)).toThrow(
+      StoryRunsSyncError,
+    );
   });
 });
 

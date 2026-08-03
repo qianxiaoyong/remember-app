@@ -82,6 +82,14 @@ function StoryCardFormBody({ packId, defaultValues, onSubmit }: StoryCardFormPro
         className="card-panel edit-form edit-story-form"
         onSubmit={(event) => {
           void handleSubmit(async (values) => {
+            const issues = collectStoryContentIssues(values, {
+              ...(audio.durationMs > 0 ? { primaryAudioDurationMs: audio.durationMs } : {}),
+            });
+            if (issues.length > 0) {
+              setContentIssues(issues);
+              setCheckToast('请先修复检查规则中的问题再保存');
+              return;
+            }
             await onSubmit(
               normalizeStoryContent(values, {
                 ...(audio.durationMs > 0 ? { primaryAudioDurationMs: audio.durationMs } : {}),

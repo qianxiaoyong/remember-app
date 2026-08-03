@@ -1,7 +1,11 @@
 import type { StoryReadingContent, StoryRun } from '@remember/contracts';
 import { useEffect, useRef, useState, type ReactElement } from 'react';
 import type { FieldPath, UseFormSetValue } from 'react-hook-form';
-import { runsToPlainText, syncRunsToPlainText } from '../utils/story-runs-markup.js';
+import {
+  runsToPlainText,
+  StoryRunsSyncError,
+  syncRunsToPlainText,
+} from '../utils/story-runs-markup.js';
 
 interface SelectionRange {
   start: number;
@@ -53,12 +57,21 @@ export function StoryParagraphBodyEditor({
     if (!form) {
       return undefined;
     }
-    function handleSubmit(): void {
-      commitPlainText(plainTextRef.current);
+    function handleSubmit(event: Event): void {
+      try {
+        commitPlainText(plainTextRef.current);
+      } catch (error) {
+        if (error instanceof StoryRunsSyncError) {
+          event.preventDefault();
+          event.stopImmediatePropagation();
+        } else {
+          throw error;
+        }
+      }
     }
-    form.addEventListener('submit', handleSubmit);
+    form.addEventListener('submit', handleSubmit, { capture: true });
     return () => {
-      form.removeEventListener('submit', handleSubmit);
+      form.removeEventListener('submit', handleSubmit, { capture: true });
     };
   }, [paragraphIndex, runs, sidebar, setValue, runsPath]);
 

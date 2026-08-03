@@ -1,5 +1,5 @@
 import { storyReadingContentSchema, type StoryReadingContent } from '@remember/contracts';
-import { recomputeSegmentTimeline } from './recompute-segment-timeline.js';
+import { recomputeSegmentEnds } from './recompute-segment-timeline.js';
 import { runsToPlainText, syncRunsToPlainText } from './story-runs-markup.js';
 
 export function normalizeStoryContent(
@@ -16,7 +16,7 @@ export function normalizeStoryContent(
   };
 
   const durationMs = options?.primaryAudioDurationMs ?? 0;
-  const timelineParagraphs = recomputeSegmentTimeline(values.story.paragraphs, durationMs);
+  const timelineParagraphs = recomputeSegmentEnds(values.story.paragraphs, durationMs);
 
   const paragraphs = timelineParagraphs.map((paragraph) => {
     const plain = runsToPlainText(paragraph.runs);
