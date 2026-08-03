@@ -10,11 +10,12 @@ import {
   createStoryCardTemplate,
   suggestNextLessonCode,
 } from '../utils/story-card-template.js';
-import { mkdirSync } from 'node:fs';
+import { mkdirSync, createReadStream } from 'node:fs';
 import type { IncomingMessage, ServerResponse } from 'node:http';
-import { join } from 'node:path';
+import { extname, join } from 'node:path';
 import { readJsonBody, sendJson } from './json-response.js';
-import { getPackBuilderRoot, resolveSourceDir } from './paths.js';
+import { getPackBuilderRoot, resolvePackAssetPath, resolveSourceDir } from './paths.js';
+import { readAudioDurationMs } from './read-audio-duration-ms.js';
 import { runPackBuild } from './run-pack-build.js';
 import { validatePackSource } from './validate-pack-source.js';
 
@@ -217,5 +218,72 @@ export async function handleBuild(
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     sendJson(res, 500, { ok: false, error: message });
+  }
+}
+
+const assetContentTypes: Record<string, string> = {
+  '.mp3': 'audio/mpeg',
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.webp': 'image/webp',
+};
+
+export function handleGetAsset(
+  packId: string,
+  assetRelativePath: string,
+  res: ServerResponse,
+): void {
+  const resolved = resolveSourceDir(packId);
+  if (!resolved.ok) {
+    sendJson(res, resolved.status, { error: resolved.message });
+    return;
+  }
+
+  const asset = resolvePackAssetPath(resolved.path, assetRelativePath);
+  if (!asset.ok) {
+    sendJson(res, asset.status, { error: asset.message });
+    return;
+  }
+
+  const contentType = assetContentTypes[extname(asset.absolutePath).toLowerCase()] ?? 'application/octet-stream';
+  res.statusCode = 200;
+  res.setHeader('Content-Type', contentType);
+  createReadStream(asset.absolutePath).pipe(res);
+}
+
+export function handleGetAudioMeta(
+  packId: string,
+  relativePath: string | undefined,
+  res: ServerResponse,
+): void {
+  const resolved = resolveSourceDir(packId);
+  if (!resolved.ok) {
+    sendJson(res, resolved.status, { error: resolved.message });
+    return;
+  }
+
+  if (!relativePath?.trim()) {
+    sendJson(res, 400, { error: 'missing path query' });
+    return;
+  }
+
+  const asset = resolvePackAssetPath(resolved.path, relativePath);
+  if (!asset.ok) {
+    sendJson(res, asset.status, { error: asset.message });
+    return;
+  }
+
+  if (extname(asset.absolutePath).toLowerCase() !== '.mp3') {
+    sendJson(res, 400, { error: 'not an mp3 file' });
+    return;
+  }
+
+  try {
+    const durationMs = readAudioDurationMs(asset.absolutePath);
+    sendJson(res, 200, { durationMs });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    sendJson(res, 500, { error: message });
   }
 }

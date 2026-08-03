@@ -3,6 +3,8 @@ import {
   handleBuild,
   handleCreateCard,
   handleDeleteCard,
+  handleGetAsset,
+  handleGetAudioMeta,
   handleGetSource,
   handleListPacks,
   handleSaveCard,
@@ -33,6 +35,32 @@ async function handleLocalApi(
   ) {
     if (req.method === 'GET') {
       handleGetSource(segments[2] ?? '', res);
+      return;
+    }
+  }
+
+  if (
+    segments.length === 4 &&
+    segments[0] === 'local-api' &&
+    segments[1] === 'packs' &&
+    segments[3] === 'audio-meta'
+  ) {
+    if (req.method === 'GET') {
+      const url = new URL(req.url ?? '', 'http://localhost');
+      handleGetAudioMeta(segments[2] ?? '', url.searchParams.get('path') ?? undefined, res);
+      return;
+    }
+  }
+
+  if (
+    segments.length >= 5 &&
+    segments[0] === 'local-api' &&
+    segments[1] === 'packs' &&
+    segments[3] === 'assets'
+  ) {
+    if (req.method === 'GET') {
+      const assetPath = segments.slice(4).map((part) => decodeURIComponent(part)).join('/');
+      handleGetAsset(segments[2] ?? '', assetPath, res);
       return;
     }
   }

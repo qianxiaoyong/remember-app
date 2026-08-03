@@ -119,3 +119,19 @@ export function suggestNextPatchVersion(version: string): string {
   const patch = match[3] ?? '0';
   return `${major}.${minor}.${String(Number(patch) + 1)}`;
 }
+
+export function packAssetUrl(packId: string, relativePath: string): string {
+  return `/local-api/packs/${encodeURIComponent(packId)}/assets/${relativePath
+    .split('/')
+    .map((segment) => encodeURIComponent(segment))
+    .join('/')}`;
+}
+
+export async function fetchAudioDurationMs(packId: string, relativePath: string): Promise<number> {
+  const data = await readJson<{ durationMs: number }>(
+    await fetch(
+      `/local-api/packs/${encodeURIComponent(packId)}/audio-meta?path=${encodeURIComponent(relativePath)}`,
+    ),
+  );
+  return data.durationMs;
+}
