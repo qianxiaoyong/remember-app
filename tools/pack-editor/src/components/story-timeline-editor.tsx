@@ -1,9 +1,10 @@
 import type { StoryParagraph } from '@remember/contracts';
-import { useWatch, type Control, type FieldPath, type UseFormSetValue } from 'react-hook-form';
-import type { ReactElement } from 'react';
+import { useWatch, type Control } from 'react-hook-form';
+import { useEffect, useState, type ReactElement } from 'react';
 import type { StoryReadingContent } from '@remember/contracts';
-import type { StoryTimelineAudio } from '../hooks/use-story-timeline-audio.js';
+import { useStoryAudio } from '../context/story-audio-context.js';
 import { collectStoryContentIssues } from '../utils/story-content-issues.js';
+import { formatAudioTimeMs } from '../utils/format-audio-time.js';
 
 export interface SegmentTrackItem {
   paragraphIndex: number;
@@ -39,34 +40,44 @@ export function buildSegmentTrack(
   });
 }
 
-function formatMs(ms: number): string {
-  const totalSeconds = Math.floor(ms / 1000);
-  const minutes = Math.floor(totalSeconds / 60);
-  const seconds = totalSeconds % 60;
-  return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+/** 段 Tab 导航：始终按数组顺序均分，避免 ms 与段落顺序不一致时 Tab 错位。 */
+export function buildParagraphNavTrack(paragraphs: StoryParagraph[]): SegmentTrackItem[] {
+  if (paragraphs.length === 0) {
+    return [];
+  }
+  const widthPct = 100 / paragraphs.length;
+  return paragraphs.map((_paragraph, paragraphIndex) => ({
+    paragraphIndex,
+    leftPct: paragraphIndex * widthPct,
+    widthPct,
+    label: `段${String(paragraphIndex + 1)}`,
+  }));
 }
 
 interface StoryTimelineEditorProps {
   control: Control<StoryReadingContent>;
-  setValue: UseFormSetValue<StoryReadingContent>;
   selectedParagraphIndex: number;
   onSelectParagraph: (index: number) => void;
-  audio: StoryTimelineAudio;
+  translationEnabled: boolean;
+  onToggleTranslation: (enabled: boolean) => void;
+  onAddParagraph: () => void;
+  onCheckRules: () => void;
+  contentIssues: { path: string; message: string }[];
 }
 
 export function StoryTimelineEditor({
   control,
-  setValue,
   selectedParagraphIndex,
   onSelectParagraph,
-  audio,
+  translationEnabled,
+  onToggleTranslation,
+  onAddParagraph,
+  onCheckRules,
+  contentIssues,
 }: StoryTimelineEditorProps): ReactElement {
+  const audio = useStoryAudio();
   const paragraphs = useWatch({ control, name: 'story.paragraphs' });
   const watchedContent = useWatch({ control });
-
-  const timelineEnabled = paragraphs.some(
-    (paragraph) => paragraph.audioStartMs !== undefined || paragraph.audioEndMs !== undefined,
-  );
 
   const timelineIssues =
     watchedContent.lesson && watchedContent.story && watchedContent.sidebar
@@ -75,141 +86,137 @@ export function StoryTimelineEditor({
         }).filter((issue) => issue.path.includes('audio'))
       : [];
 
-  const track = buildSegmentTrack(paragraphs, audio.durationMs);
+  const track = buildParagraphNavTrack(paragraphs);
   const hasTimelineIssue = timelineIssues.length > 0;
+  const [isScrubbing, setIsScrubbing] = useState(false);
+  const [sliderMs, setSliderMs] = useState(audio.currentMs);
+  const sliderMax = Math.max(audio.durationMs, 1);
 
-  function toggleTimeline(enabled: boolean): void {
-    if (!enabled) {
-      for (let index = 0; index < paragraphs.length; index += 1) {
-        setValue(
-          `story.paragraphs.${String(index)}.audioStartMs` as FieldPath<StoryReadingContent>,
-          undefined,
-          { shouldDirty: true },
-        );
-        setValue(
-          `story.paragraphs.${String(index)}.audioEndMs` as FieldPath<StoryReadingContent>,
-          undefined,
-          { shouldDirty: true },
-        );
-      }
-      return;
+  useEffect(() => {
+    if (!isScrubbing && audio.segmentPreview === null) {
+      setSliderMs(audio.currentMs);
     }
-
-    const count = paragraphs.length;
-    const slice = count > 0 && audio.durationMs > 0 ? Math.floor(audio.durationMs / count) : 5000;
-    for (let index = 0; index < count; index += 1) {
-      const start = index * slice;
-      const end =
-        index === count - 1
-          ? audio.durationMs > 0
-            ? audio.durationMs
-            : slice * (index + 1)
-          : (index + 1) * slice;
-      setValue(
-        `story.paragraphs.${String(index)}.audioStartMs` as FieldPath<StoryReadingContent>,
-        start,
-        { shouldDirty: true },
-      );
-      setValue(
-        `story.paragraphs.${String(index)}.audioEndMs` as FieldPath<StoryReadingContent>,
-        end,
-        { shouldDirty: true },
-      );
-    }
-  }
+  }, [audio.currentMs, audio.segmentPreview, isScrubbing]);
 
   return (
-    <div className="edit-subsection">
-      <div className="edit-subsection-head">
-        <span className="edit-subsection-title">时间轴</span>
-        <label className="edit-timeline-toggle">
-          <input
-            type="checkbox"
-            checked={timelineEnabled}
-            onChange={(event) => {
-              toggleTimeline(event.target.checked);
+    <div className="edit-story-audio-band card-panel">
+      <div
+        className="edit-timeline-track"
+        style={hasTimelineIssue ? { outline: '1px solid var(--color-danger)' } : undefined}
+      >
+        {track.map((segment) => (
+          <button
+            key={`${segment.label}-${String(segment.paragraphIndex)}`}
+            type="button"
+            title={segment.label}
+            onClick={() => {
+              onSelectParagraph(segment.paragraphIndex);
             }}
-          />
-          启用段级跟读
-        </label>
+            className={
+              segment.paragraphIndex === selectedParagraphIndex
+                ? 'edit-timeline-segment is-active'
+                : 'edit-timeline-segment'
+            }
+            style={{
+              left: `${String(segment.leftPct)}%`,
+              width: `${String(segment.widthPct)}%`,
+            }}
+          >
+            {segment.label}
+          </button>
+        ))}
       </div>
 
-      <p className="field-helper edit-story-section-hint">
-        播放主音频 → 点轨道色块选中段落 → 在对应段落卡内设起点/终点 ms。
-      </p>
-
-      {timelineEnabled && (
-        <div
-          className="card-panel edit-timeline-panel"
-          style={hasTimelineIssue ? { borderColor: 'var(--color-danger)' } : undefined}
+      <div className="edit-story-audio-controls-row">
+        <button
+          type="button"
+          className="btn btn-secondary btn-sm"
+          disabled={!audio.audioUrl}
+          onClick={() => {
+            if (audio.isPlaying) {
+              audio.togglePlayPause();
+            } else {
+              audio.togglePlayPause(sliderMs);
+            }
+          }}
         >
-          <div className="edit-timeline-audio-row">
-            <button
-              type="button"
-              className="btn btn-ghost btn-sm"
-              disabled={!audio.audioUrl}
-              onClick={audio.togglePlayPause}
-            >
-              ▶ 播放
-            </button>
-            {audio.audioUrl && (
-              <audio
-                ref={audio.audioRef}
-                src={audio.audioUrl}
-                preload="metadata"
-                className="sr-only"
-              />
-            )}
-            <input
-              type="range"
-              className="edit-timeline-slider"
-              min={0}
-              max={audio.durationMs || 1}
-              value={audio.currentMs}
-              onChange={(event) => {
-                audio.seekToMs(Number.parseInt(event.target.value, 10));
-              }}
-            />
-            <span className="field-helper edit-timeline-time">
-              {formatMs(audio.currentMs)} / {formatMs(audio.durationMs)}
-            </span>
-          </div>
-          {audio.loadError && <p className="field-error">{audio.loadError}</p>}
+          {audio.isPlaying ? '⏸ 暂停' : '▶ 播放'}
+        </button>
+        <input
+          type="range"
+          className="edit-timeline-slider"
+          min={0}
+          max={sliderMax}
+          step={1}
+          value={Math.min(sliderMs, sliderMax)}
+          onPointerDown={(event) => {
+            event.currentTarget.setPointerCapture(event.pointerId);
+            setIsScrubbing(true);
+            audio.beginScrub();
+            setSliderMs(audio.currentMs);
+          }}
+          onPointerUp={(event) => {
+            if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+              event.currentTarget.releasePointerCapture(event.pointerId);
+            }
+            const ms = Number.parseInt(event.currentTarget.value, 10);
+            if (!Number.isNaN(ms)) {
+              setSliderMs(ms);
+              audio.endScrub(ms);
+            } else {
+              audio.endScrub(sliderMs);
+            }
+            setIsScrubbing(false);
+          }}
+          onPointerCancel={() => {
+            audio.endScrub(sliderMs);
+            setIsScrubbing(false);
+          }}
+          onInput={(event) => {
+            const ms = Number.parseInt(event.currentTarget.value, 10);
+            if (Number.isNaN(ms)) {
+              return;
+            }
+            setSliderMs(ms);
+            audio.scrubToMs(ms);
+          }}
+        />
+        <span className="field-helper edit-timeline-time">
+          {formatAudioTimeMs(sliderMs)} / {formatAudioTimeMs(audio.durationMs)}
+        </span>
+        <label className="edit-story-translation-toggle">
+          <input
+            type="checkbox"
+            checked={translationEnabled}
+            onChange={(event) => {
+              onToggleTranslation(event.target.checked);
+            }}
+          />
+          启用段译
+        </label>
+        <button type="button" className="btn btn-ghost btn-sm" onClick={onAddParagraph}>
+          + 添加段落
+        </button>
+        <button type="button" className="btn btn-ghost btn-sm" onClick={onCheckRules}>
+          检查规则
+        </button>
+      </div>
+      {audio.loadError && <p className="field-error">{audio.loadError}</p>}
 
-          <div className="edit-timeline-track">
-            {track.map((segment) => (
-              <button
-                key={`${segment.label}-${String(segment.paragraphIndex)}`}
-                type="button"
-                title={segment.label}
-                onClick={() => {
-                  onSelectParagraph(segment.paragraphIndex);
-                }}
-                className={
-                  segment.paragraphIndex === selectedParagraphIndex
-                    ? 'edit-timeline-segment is-active'
-                    : 'edit-timeline-segment'
-                }
-                style={{
-                  left: `${String(segment.leftPct)}%`,
-                  width: `${String(segment.widthPct)}%`,
-                }}
-              >
-                {segment.label}
-              </button>
-            ))}
-          </div>
+      {timelineIssues.map((issue) => (
+        <p key={`${issue.path}:${issue.message}`} className="field-error">
+          {issue.path}: {issue.message}
+        </p>
+      ))}
 
-          <p className="field-helper">
-            当前选中：段落 #{selectedParagraphIndex + 1}（起止 ms 在该段落卡内编辑）
-          </p>
-
-          {timelineIssues.map((issue) => (
-            <p key={`${issue.path}:${issue.message}`} className="field-error">
+      {contentIssues.length > 0 && (
+        <ul className="edit-story-issue-list">
+          {contentIssues.map((issue) => (
+            <li key={`${issue.path}:${issue.message}`}>
               {issue.path}: {issue.message}
-            </p>
+            </li>
           ))}
-        </div>
+        </ul>
       )}
     </div>
   );

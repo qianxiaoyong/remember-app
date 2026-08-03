@@ -75,7 +75,7 @@ export function CardEditPage({ packId, sortOrder, onBack }: CardEditPageProps): 
   if (isStorySourceCard(card)) {
     const storyCard = card;
     return (
-      <>
+      <div className="edit-page-with-footer">
         {toast && <Toast message={toast} />}
 
         <StoryCardForm
@@ -115,7 +115,7 @@ export function CardEditPage({ packId, sortOrder, onBack }: CardEditPageProps): 
             {saving ? '保存中…' : '保存'}
           </button>
         </div>
-      </>
+      </div>
     );
   }
 

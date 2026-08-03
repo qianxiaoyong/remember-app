@@ -7,7 +7,7 @@ import {
   type PackSourceCard,
 } from '@remember/pack-builder/pack-source';
 import { createStoryCardTemplate, suggestNextLessonCode } from '../utils/story-card-template.js';
-import { mkdirSync, createReadStream } from 'node:fs';
+import { mkdirSync, createReadStream, statSync } from 'node:fs';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { extname, join } from 'node:path';
 import { readJsonBody, sendJson } from './json-response.js';
@@ -229,6 +229,7 @@ const assetContentTypes: Record<string, string> = {
 export function handleGetAsset(
   packId: string,
   assetRelativePath: string,
+  req: IncomingMessage,
   res: ServerResponse,
 ): void {
   const resolved = resolveSourceDir(packId);
@@ -245,7 +246,41 @@ export function handleGetAsset(
 
   const contentType =
     assetContentTypes[extname(asset.absolutePath).toLowerCase()] ?? 'application/octet-stream';
+  const { size } = statSync(asset.absolutePath);
+  const rangeHeader = req.headers.range;
+
+  res.setHeader('Accept-Ranges', 'bytes');
+
+  if (rangeHeader) {
+    const match = /^bytes=(\d*)-(\d*)$/.exec(rangeHeader);
+    if (!match) {
+      res.statusCode = 416;
+      res.setHeader('Content-Range', `bytes */${String(size)}`);
+      res.end();
+      return;
+    }
+
+    const start = match[1] ? Number.parseInt(match[1], 10) : 0;
+    const end = match[2] ? Number.parseInt(match[2], 10) : size - 1;
+
+    if (Number.isNaN(start) || Number.isNaN(end) || start >= size || end >= size || start > end) {
+      res.statusCode = 416;
+      res.setHeader('Content-Range', `bytes */${String(size)}`);
+      res.end();
+      return;
+    }
+
+    const chunkSize = end - start + 1;
+    res.statusCode = 206;
+    res.setHeader('Content-Range', `bytes ${String(start)}-${String(end)}/${String(size)}`);
+    res.setHeader('Content-Length', String(chunkSize));
+    res.setHeader('Content-Type', contentType);
+    createReadStream(asset.absolutePath, { start, end }).pipe(res);
+    return;
+  }
+
   res.statusCode = 200;
+  res.setHeader('Content-Length', String(size));
   res.setHeader('Content-Type', contentType);
   createReadStream(asset.absolutePath).pipe(res);
 }

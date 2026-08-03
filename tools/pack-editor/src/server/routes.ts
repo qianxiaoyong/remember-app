@@ -63,7 +63,7 @@ async function handleLocalApi(
         .slice(4)
         .map((part) => decodeURIComponent(part))
         .join('/');
-      handleGetAsset(segments[2] ?? '', assetPath, res);
+      handleGetAsset(segments[2] ?? '', assetPath, req, res);
       return;
     }
   }
