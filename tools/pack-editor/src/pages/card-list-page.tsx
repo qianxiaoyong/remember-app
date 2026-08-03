@@ -1,14 +1,16 @@
 import { useCallback, useEffect, useMemo, useState, type ReactElement } from 'react';
-import { isStorySourceCard } from '../utils/is-story-source-card.js';
+import { isStorySourceCard } from '@remember/pack-builder/pack-source';
 import {
   buildPack,
   createCard,
+  createStoryCard,
   deleteCard,
   loadPackSource,
   suggestNextPatchVersion,
   validatePack,
   type ValidationIssue,
 } from '../api/local-api-client.js';
+import { suggestNextLessonCode } from '../utils/story-card-template.js';
 import { ConfirmDialog } from '../components/confirm-dialog.js';
 import { DataTable } from '../components/data-table.js';
 import { LoadingState } from '../components/loading-state.js';
@@ -22,9 +24,17 @@ interface CardListPageProps {
   onEditCard: (sortOrder: number, headword: string) => void;
 }
 
+interface CardRow {
+  sortOrder: number;
+  headword: string;
+  cardType: 'vocabulary' | 'story';
+  lessonCode?: string;
+  titleZh?: string;
+}
+
 export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps): ReactElement {
   const [packVersion, setPackVersion] = useState('');
-  const [cards, setCards] = useState<{ sortOrder: number; headword: string }[]>([]);
+  const [cards, setCards] = useState<CardRow[]>([]);
   const [search, setSearch] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -37,10 +47,9 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
     null,
   );
   const [copyHint, setCopyHint] = useState<string | null>(null);
-  const [deleteTarget, setDeleteTarget] = useState<{
-    sortOrder: number;
-    headword: string;
-  } | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<CardRow | null>(null);
+  const [showCreateStoryDialog, setShowCreateStoryDialog] = useState(false);
+  const [nextLessonCode, setNextLessonCode] = useState('C1');
 
   const reloadCards = useCallback(async (): Promise<void> => {
     const source = await loadPackSource(packId);
@@ -49,12 +58,22 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
     setCards(
       [...source.cards]
         .sort((left, right) => left.sortOrder - right.sortOrder)
-        .map((card) => ({
-          sortOrder: card.sortOrder,
-          headword: isStorySourceCard(card)
-            ? `${card.content.lesson.code} ${card.content.lesson.titleEn}`
-            : card.content.prompt.headword,
-        })),
+        .map((card) => {
+          if (isStorySourceCard(card)) {
+            return {
+              sortOrder: card.sortOrder,
+              headword: `${card.content.lesson.code} ${card.content.lesson.titleEn}`,
+              cardType: 'story' as const,
+              lessonCode: card.content.lesson.code,
+              titleZh: card.content.lesson.titleZh,
+            };
+          }
+          return {
+            sortOrder: card.sortOrder,
+            headword: card.content.prompt.headword,
+            cardType: 'vocabulary' as const,
+          };
+        }),
     );
   }, [packId]);
 
@@ -135,6 +154,32 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
     } catch {
       setCopyHint('复制失败，请手动复制');
     }
+  };
+
+  const handleCreateStory = async (): Promise<void> => {
+    setBusyAction('create');
+    setError(null);
+    try {
+      const card = await createStoryCard(packId, nextLessonCode.trim() || undefined);
+      if (!isStorySourceCard(card)) {
+        throw new Error('createStoryCard returned unexpected card type');
+      }
+      setShowCreateStoryDialog(false);
+      onEditCard(card.sortOrder, `${card.content.lesson.code} ${card.content.lesson.titleEn}`);
+    } catch (createError: unknown) {
+      setError(createError instanceof Error ? createError.message : String(createError));
+    } finally {
+      setBusyAction(null);
+    }
+  };
+
+  const openCreateStoryDialog = async (): Promise<void> => {
+    const source = await loadPackSource(packId);
+    const existingCodes = source.cards
+      .filter(isStorySourceCard)
+      .map((card) => card.content.lesson.code);
+    setNextLessonCode(suggestNextLessonCode(existingCodes));
+    setShowCreateStoryDialog(true);
   };
 
   const handleCreate = async (): Promise<void> => {
@@ -292,6 +337,14 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
           <div className="toolbar-spacer" />
           <button
             type="button"
+            className="btn btn-secondary btn-sm"
+            onClick={() => void openCreateStoryDialog()}
+            disabled={busyAction !== null}
+          >
+            + 新增一课
+          </button>
+          <button
+            type="button"
             className="btn btn-primary btn-sm"
             onClick={() => void handleCreate()}
             disabled={busyAction !== null}
@@ -305,6 +358,7 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
           showActions
           columns={[
             { key: 'sortOrder', label: '#', className: 'data-table-col-index' },
+            { key: 'type', label: 'type' },
             { key: 'headword', label: 'headword' },
           ]}
           rows={filteredCards.map((card) => ({
@@ -312,14 +366,22 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
             onClick: () => {
               onEditCard(card.sortOrder, card.headword);
             },
-            cells: [card.sortOrder, card.headword],
+            cells: [
+              card.sortOrder,
+              card.cardType === 'story' ? (
+                <span className="badge badge-story">story</span>
+              ) : (
+                <span className="badge badge-vocab">vocabulary</span>
+              ),
+              card.headword,
+            ],
             action: (
               <button
                 type="button"
                 className="btn btn-ghost btn-sm btn-row-delete"
                 title={`删除 ${card.headword}`}
                 onClick={() => {
-                  setDeleteTarget({ sortOrder: card.sortOrder, headword: card.headword });
+                  setDeleteTarget(card);
                 }}
               >
                 删除
@@ -332,10 +394,12 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
 
       <ConfirmDialog
         open={deleteTarget !== null}
-        title="删除单词"
+        title={deleteTarget?.cardType === 'story' ? '删除一课' : '删除单词'}
         description={
           deleteTarget
-            ? `确定删除 #${String(deleteTarget.sortOrder)}「${deleteTarget.headword}」？此操作不可撤销。`
+            ? deleteTarget.cardType === 'story'
+              ? `确定删除一课 #${String(deleteTarget.sortOrder)} ${deleteTarget.lessonCode ?? ''} ${deleteTarget.titleZh ?? deleteTarget.headword}？此操作不可撤销。`
+              : `确定删除 #${String(deleteTarget.sortOrder)}「${deleteTarget.headword}」？此操作不可撤销。`
             : ''
         }
         confirmLabel="确认删除"
@@ -345,6 +409,30 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
         }}
         onConfirm={() => void handleDeleteConfirm()}
       />
+
+      <ConfirmDialog
+        open={showCreateStoryDialog}
+        title="新增一课"
+        description="将创建 story_reading 模板卡（单段 + 占位时间轴 + 空 sidebar）。"
+        confirmLabel="创建"
+        busy={busyAction === 'create'}
+        onCancel={() => {
+          setShowCreateStoryDialog(false);
+        }}
+        onConfirm={() => void handleCreateStory()}
+      >
+        <label className="field-label">
+          lessonCode
+          <input
+            className="input"
+            type="text"
+            value={nextLessonCode}
+            onChange={(event) => {
+              setNextLessonCode(event.target.value);
+            }}
+          />
+        </label>
+      </ConfirmDialog>
 
       <ConfirmDialog
         open={showBuildDialog}
