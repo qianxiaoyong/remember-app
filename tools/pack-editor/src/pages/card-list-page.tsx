@@ -3,13 +3,17 @@ import { isStorySourceCard } from '../utils/is-story-source-card.js';
 import {
   buildPack,
   createCard,
+  createStoryCard,
   deleteCard,
   loadPackSource,
   suggestNextPatchVersion,
   validatePack,
   type ValidationIssue,
 } from '../api/local-api-client.js';
-import { ConfirmDialog } from '../components/confirm-dialog.js';
+import { suggestNextLessonCode } from '../utils/story-card-template.js';
+import { mapSourceCardsToRows, type CardRow } from './card-list-utils.js';
+import { BuildPackDialog, CreateStoryDialog, DeleteCardDialog } from './card-list-dialogs.js';
+import { BuildResultBanner, ValidationIssuesBanner } from './card-list-banners.js';
 import { DataTable } from '../components/data-table.js';
 import { LoadingState } from '../components/loading-state.js';
 import { PageHeader } from '../components/page-header.js';
@@ -24,7 +28,7 @@ interface CardListPageProps {
 
 export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps): ReactElement {
   const [packVersion, setPackVersion] = useState('');
-  const [cards, setCards] = useState<{ sortOrder: number; headword: string }[]>([]);
+  const [cards, setCards] = useState<CardRow[]>([]);
   const [search, setSearch] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -37,25 +41,15 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
     null,
   );
   const [copyHint, setCopyHint] = useState<string | null>(null);
-  const [deleteTarget, setDeleteTarget] = useState<{
-    sortOrder: number;
-    headword: string;
-  } | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<CardRow | null>(null);
+  const [showCreateStoryDialog, setShowCreateStoryDialog] = useState(false);
+  const [nextLessonCode, setNextLessonCode] = useState('C1');
 
   const reloadCards = useCallback(async (): Promise<void> => {
     const source = await loadPackSource(packId);
     setPackVersion(source.meta.packVersion);
     setNextVersion(suggestNextPatchVersion(source.meta.packVersion));
-    setCards(
-      [...source.cards]
-        .sort((left, right) => left.sortOrder - right.sortOrder)
-        .map((card) => ({
-          sortOrder: card.sortOrder,
-          headword: isStorySourceCard(card)
-            ? `${card.content.lesson.code} ${card.content.lesson.titleEn}`
-            : card.content.prompt.headword,
-        })),
-    );
+    setCards(mapSourceCardsToRows(source.cards));
   }, [packId]);
 
   useEffect(() => {
@@ -135,6 +129,32 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
     } catch {
       setCopyHint('复制失败，请手动复制');
     }
+  };
+
+  const handleCreateStory = async (): Promise<void> => {
+    setBusyAction('create');
+    setError(null);
+    try {
+      const card = await createStoryCard(packId, nextLessonCode.trim() || undefined);
+      if (!isStorySourceCard(card)) {
+        throw new Error('createStoryCard returned unexpected card type');
+      }
+      setShowCreateStoryDialog(false);
+      onEditCard(card.sortOrder, `${card.content.lesson.code} ${card.content.lesson.titleEn}`);
+    } catch (createError: unknown) {
+      setError(createError instanceof Error ? createError.message : String(createError));
+    } finally {
+      setBusyAction(null);
+    }
+  };
+
+  const openCreateStoryDialog = async (): Promise<void> => {
+    const source = await loadPackSource(packId);
+    const existingCodes = source.cards
+      .filter(isStorySourceCard)
+      .map((card) => card.content.lesson.code);
+    setNextLessonCode(suggestNextLessonCode(existingCodes));
+    setShowCreateStoryDialog(true);
   };
 
   const handleCreate = async (): Promise<void> => {
@@ -231,57 +251,23 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
         }
       />
 
-      {validationIssues !== null && (
-        <StatusBanner
-          variant={validationIssues.length === 0 ? 'success' : 'warning'}
-          title={
-            validationIssues.length === 0
-              ? '校验通过'
-              : `校验发现 ${String(validationIssues.length)} 个问题`
-          }
-          onDismiss={() => {
-            setValidationIssues(null);
-          }}
-        >
-          {validationIssues.length > 0 && (
-            <ul className="status-issue-list">
-              {validationIssues.map((issue, index) => (
-                <li key={`${issue.path}-${String(index)}`}>
-                  {issue.sortOrder !== undefined ? `#${String(issue.sortOrder)} ` : ''}
-                  {issue.path}: {issue.message}
-                </li>
-              ))}
-            </ul>
-          )}
-        </StatusBanner>
-      )}
+      <ValidationIssuesBanner
+        issues={validationIssues}
+        onDismiss={() => {
+          setValidationIssues(null);
+        }}
+      />
 
-      {buildMessage && (
-        <StatusBanner
-          variant={buildOutputPath ? 'success' : 'error'}
-          title={buildMessage}
-          onDismiss={() => {
-            setBuildMessage(null);
-            setBuildOutputPath(null);
-          }}
-        >
-          {buildOutputPath && (
-            <div style={{ marginTop: 'var(--space-2)' }}>
-              <code style={{ fontSize: '12px', wordBreak: 'break-all' }}>{buildOutputPath}</code>
-              <div style={{ marginTop: 'var(--space-2)', display: 'flex', gap: 'var(--space-2)' }}>
-                <button
-                  type="button"
-                  className="btn btn-secondary btn-sm"
-                  onClick={() => void handleCopyPath()}
-                >
-                  复制路径
-                </button>
-                {copyHint && <span style={{ fontSize: '12px' }}>{copyHint}</span>}
-              </div>
-            </div>
-          )}
-        </StatusBanner>
-      )}
+      <BuildResultBanner
+        message={buildMessage}
+        outputPath={buildOutputPath}
+        copyHint={copyHint}
+        onDismiss={() => {
+          setBuildMessage(null);
+          setBuildOutputPath(null);
+        }}
+        onCopyPath={() => void handleCopyPath()}
+      />
 
       <div className="card-panel">
         <div className="toolbar">
@@ -290,6 +276,14 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
             显示 {filteredCards.length} / {cards.length} 条
           </span>
           <div className="toolbar-spacer" />
+          <button
+            type="button"
+            className="btn btn-secondary btn-sm"
+            onClick={() => void openCreateStoryDialog()}
+            disabled={busyAction !== null}
+          >
+            + 新增一课
+          </button>
           <button
             type="button"
             className="btn btn-primary btn-sm"
@@ -305,6 +299,7 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
           showActions
           columns={[
             { key: 'sortOrder', label: '#', className: 'data-table-col-index' },
+            { key: 'type', label: 'type' },
             { key: 'headword', label: 'headword' },
           ]}
           rows={filteredCards.map((card) => ({
@@ -312,14 +307,22 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
             onClick: () => {
               onEditCard(card.sortOrder, card.headword);
             },
-            cells: [card.sortOrder, card.headword],
+            cells: [
+              card.sortOrder,
+              card.cardType === 'story' ? (
+                <span className="badge badge-story">story</span>
+              ) : (
+                <span className="badge badge-vocab">vocabulary</span>
+              ),
+              card.headword,
+            ],
             action: (
               <button
                 type="button"
                 className="btn btn-ghost btn-sm btn-row-delete"
                 title={`删除 ${card.headword}`}
                 onClick={() => {
-                  setDeleteTarget({ sortOrder: card.sortOrder, headword: card.headword });
+                  setDeleteTarget(card);
                 }}
               >
                 删除
@@ -330,15 +333,8 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
         />
       </div>
 
-      <ConfirmDialog
-        open={deleteTarget !== null}
-        title="删除单词"
-        description={
-          deleteTarget
-            ? `确定删除 #${String(deleteTarget.sortOrder)}「${deleteTarget.headword}」？此操作不可撤销。`
-            : ''
-        }
-        confirmLabel="确认删除"
+      <DeleteCardDialog
+        target={deleteTarget}
         busy={busyAction === 'delete'}
         onCancel={() => {
           setDeleteTarget(null);
@@ -346,29 +342,28 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
         onConfirm={() => void handleDeleteConfirm()}
       />
 
-      <ConfirmDialog
+      <CreateStoryDialog
+        open={showCreateStoryDialog}
+        lessonCode={nextLessonCode}
+        busy={busyAction === 'create'}
+        onLessonCodeChange={setNextLessonCode}
+        onCancel={() => {
+          setShowCreateStoryDialog(false);
+        }}
+        onConfirm={() => void handleCreateStory()}
+      />
+
+      <BuildPackDialog
         open={showBuildDialog}
-        title="打包确认"
-        description={`将把 meta.packVersion 从 v${packVersion} bump 为 v${nextVersion}（默认 patch +1，可修改），然后执行 build:pack。`}
-        confirmLabel="确认打包"
+        packVersion={packVersion}
+        nextVersion={nextVersion}
         busy={busyAction === 'build'}
+        onNextVersionChange={setNextVersion}
         onCancel={() => {
           setShowBuildDialog(false);
         }}
         onConfirm={() => void handleBuild()}
-      >
-        <label className="field-label">
-          packVersion（建议 {suggestNextPatchVersion(packVersion)}）
-          <input
-            className="input"
-            type="text"
-            value={nextVersion}
-            onChange={(event) => {
-              setNextVersion(event.target.value);
-            }}
-          />
-        </label>
-      </ConfirmDialog>
+      />
     </>
   );
 }

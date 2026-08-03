@@ -1,0 +1,193 @@
+import type { StoryReadingContent } from '@remember/contracts';
+import {
+  useWatch,
+  type Control,
+  type FieldPath,
+  type UseFormRegister,
+  type UseFormSetValue,
+} from 'react-hook-form';
+import type { ReactElement } from 'react';
+import {
+  applyWordMarkAtSelection,
+  collectVocabIdsFromRuns,
+  syncRunsToPlainText,
+} from '../utils/story-runs-markup.js';
+import { StoryParagraphBodyEditor } from './story-paragraph-body-editor.js';
+import { StoryParagraphPreview } from './story-paragraph-preview.js';
+import {
+  createStorySidebarEntry,
+  slugFromSelection,
+  StoryParagraphVocab,
+} from './story-paragraph-vocab.js';
+
+function trimPlainSelection(
+  plain: string,
+  selectionStart: number,
+  selectionEnd: number,
+): { start: number; end: number; text: string } {
+  let start = selectionStart;
+  let end = selectionEnd;
+  while (start < end && /\s/.test(plain[start] ?? '')) {
+    start += 1;
+  }
+  while (end > start && /\s/.test(plain[end - 1] ?? '')) {
+    end -= 1;
+  }
+  return { start, end, text: plain.slice(start, end) };
+}
+
+interface StoryParagraphItemProps {
+  paragraphIndex: number;
+  paragraphCount: number;
+  register: UseFormRegister<StoryReadingContent>;
+  control: Control<StoryReadingContent>;
+  setValue: UseFormSetValue<StoryReadingContent>;
+  translationEnabled: boolean;
+  contentIssues: { path: string; message: string }[];
+  onRemove: () => void;
+}
+
+export function StoryParagraphItem({
+  paragraphIndex,
+  paragraphCount,
+  register,
+  control,
+  setValue,
+  translationEnabled,
+  contentIssues,
+  onRemove,
+}: StoryParagraphItemProps): ReactElement {
+  const runs = useWatch({
+    control,
+    name: `story.paragraphs.${String(paragraphIndex)}.runs` as `story.paragraphs.${number}.runs`,
+  });
+  const sidebar = useWatch({ control, name: 'sidebar' });
+
+  const hasIssue = contentIssues.length > 0;
+  const runsPath =
+    `story.paragraphs.${String(paragraphIndex)}.runs` as FieldPath<StoryReadingContent>;
+  const sidebarPath = 'sidebar' as FieldPath<StoryReadingContent>;
+
+  function markSelection(input: {
+    selectedText: string;
+    selectionStart: number;
+    selectionEnd: number;
+    plainText: string;
+  }): void {
+    const headword = input.selectedText.trim();
+    if (!headword) {
+      return;
+    }
+
+    const existingEntry = sidebar.find(
+      (entry) => entry.headword.toLowerCase() === headword.toLowerCase(),
+    );
+    let vocabId: string;
+    let nextSidebar = sidebar;
+    if (existingEntry) {
+      vocabId = existingEntry.vocabId;
+    } else {
+      const baseId = slugFromSelection(headword) || 'word';
+      vocabId = baseId;
+      let suffix = 2;
+      while (sidebar.some((entry) => entry.vocabId === vocabId)) {
+        vocabId = `${baseId}-${String(suffix)}`;
+        suffix += 1;
+      }
+      nextSidebar = [...sidebar, createStorySidebarEntry(headword, vocabId)];
+    }
+
+    const syncedRuns = syncRunsToPlainText(runs, input.plainText, nextSidebar);
+    const trimmedStart = trimPlainSelection(
+      input.plainText,
+      input.selectionStart,
+      input.selectionEnd,
+    );
+    if (!trimmedStart.text) {
+      return;
+    }
+
+    const nextRuns = applyWordMarkAtSelection({
+      runs: syncedRuns,
+      selectionStart: trimmedStart.start,
+      selectionEnd: trimmedStart.end,
+      vocabId,
+      sidebar: nextSidebar,
+    });
+
+    if (!collectVocabIdsFromRuns(nextRuns).includes(vocabId)) {
+      return;
+    }
+
+    if (nextSidebar !== sidebar) {
+      setValue(sidebarPath, nextSidebar, { shouldDirty: true });
+    }
+    setValue(runsPath, nextRuns, { shouldDirty: true });
+  }
+
+  return (
+    <div
+      className="edit-story-paragraph-card"
+      style={hasIssue ? { borderColor: 'var(--color-danger)' } : undefined}
+    >
+      <div className="edit-story-paragraph-header">
+        <span className="edit-story-paragraph-title">
+          段落 #{paragraphIndex + 1} / 共 {paragraphCount} 段
+        </span>
+        <div className="edit-story-paragraph-actions">
+          <button
+            type="button"
+            className="btn btn-ghost btn-sm"
+            disabled={paragraphCount <= 1}
+            onClick={onRemove}
+          >
+            删段
+          </button>
+        </div>
+      </div>
+
+      <div className="edit-story-paragraph-scroll">
+        <div className="edit-story-block edit-story-block-preview">
+          <div className="edit-story-block-title">预览</div>
+          <StoryParagraphPreview runs={runs} />
+        </div>
+
+        <StoryParagraphBodyEditor
+          paragraphIndex={paragraphIndex}
+          runs={runs}
+          sidebar={sidebar}
+          setValue={setValue}
+          onMarkSelection={markSelection}
+        />
+
+        {translationEnabled && (
+          <div className="edit-story-block edit-story-block-translation">
+            <label className="field-label field-label-compact">
+              段译
+              <textarea
+                {...register(
+                  `story.paragraphs.${String(paragraphIndex)}.translationZh` as FieldPath<StoryReadingContent>,
+                )}
+                className="input"
+                rows={2}
+              />
+            </label>
+          </div>
+        )}
+
+        <StoryParagraphVocab
+          paragraphIndex={paragraphIndex}
+          register={register}
+          control={control}
+          setValue={setValue}
+        />
+
+        {contentIssues.map((issue) => (
+          <p key={`${issue.path}:${issue.message}`} className="field-error">
+            {issue.message}
+          </p>
+        ))}
+      </div>
+    </div>
+  );
+}

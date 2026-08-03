@@ -65,6 +65,23 @@ export async function createCard(
   return data.card;
 }
 
+export async function createStoryCard(
+  packId: string,
+  lessonCode?: string,
+): Promise<PackSourceCard> {
+  const data = await readJson<{ card: PackSourceCard }>(
+    await fetch(`/local-api/packs/${encodeURIComponent(packId)}/cards`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        cardType: 'story_reading',
+        ...(lessonCode ? { lessonCode } : {}),
+      }),
+    }),
+  );
+  return data.card;
+}
+
 export async function deleteCard(packId: string, sortOrder: number): Promise<void> {
   await readJson<{ ok: true }>(
     await fetch(`/local-api/packs/${encodeURIComponent(packId)}/cards/${String(sortOrder)}`, {
@@ -101,4 +118,20 @@ export function suggestNextPatchVersion(version: string): string {
   const minor = match[2] ?? '0';
   const patch = match[3] ?? '0';
   return `${major}.${minor}.${String(Number(patch) + 1)}`;
+}
+
+export function packAssetUrl(packId: string, relativePath: string): string {
+  return `/local-api/packs/${encodeURIComponent(packId)}/assets/${relativePath
+    .split('/')
+    .map((segment) => encodeURIComponent(segment))
+    .join('/')}`;
+}
+
+export async function fetchAudioDurationMs(packId: string, relativePath: string): Promise<number> {
+  const data = await readJson<{ durationMs: number }>(
+    await fetch(
+      `/local-api/packs/${encodeURIComponent(packId)}/audio-meta?path=${encodeURIComponent(relativePath)}`,
+    ),
+  );
+  return data.durationMs;
 }

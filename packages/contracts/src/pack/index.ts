@@ -45,12 +45,15 @@ export {
 } from './vocabulary-content.js';
 export {
   storyReadingContentSchema,
+  storyRunSchema,
   storySidebarEntrySchema,
   storyTierSchema,
   parseStoryReadingContentJson,
   type StoryReadingContent,
   type StoryParagraph,
+  type StoryRun,
   type StorySidebarEntry,
+  type StoryTextRun,
   type StoryTier,
   type StoryWordRun,
 } from './story-reading-content.js';

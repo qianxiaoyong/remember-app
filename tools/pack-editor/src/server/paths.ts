@@ -17,7 +17,33 @@ function isPathInside(parent: string, child: string): boolean {
   );
 }
 
+const allowedAssetPathPattern = /^assets\/[^/]+(?:\/[^/]+)*$/;
 const packIdPattern = /^[a-z0-9][a-z0-9-]*$/;
+
+export type ResolveAssetPathResult =
+  | { ok: true; absolutePath: string; relativePath: string }
+  | { ok: false; status: 403 | 404; message: string };
+
+export function resolvePackAssetPath(
+  sourceDir: string,
+  relativePath: string,
+): ResolveAssetPathResult {
+  const normalized = relativePath.replace(/\\/g, '/').trim();
+  if (!allowedAssetPathPattern.test(normalized) || normalized.includes('..')) {
+    return { ok: false, status: 403, message: 'invalid asset path' };
+  }
+
+  const absolutePath = resolve(sourceDir, normalized);
+  if (!isPathInside(sourceDir, absolutePath)) {
+    return { ok: false, status: 403, message: 'path escape' };
+  }
+
+  if (!existsSync(absolutePath)) {
+    return { ok: false, status: 404, message: 'asset not found' };
+  }
+
+  return { ok: true, absolutePath, relativePath: normalized };
+}
 
 export type ResolveSourceDirResult =
   { ok: true; path: string } | { ok: false; status: 403; message: string };
