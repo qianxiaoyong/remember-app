@@ -19,11 +19,7 @@ function entry(vocabId: string, tier: StorySidebarEntry['tier']): StorySidebarEn
 
 describe('story-sidebar-order', () => {
   it('insertSidebarEntryAtTierHead 将新 mid 词插到 mid 组最上面', () => {
-    const sidebar = [
-      entry('happy', 'high'),
-      entry('not', 'mid'),
-      entry('marry', 'low'),
-    ];
+    const sidebar = [entry('happy', 'high'), entry('not', 'mid'), entry('marry', 'low')];
     const next = insertSidebarEntryAtTierHead(sidebar, entry('wants', 'mid'));
     expect(next.map((item) => item.vocabId)).toEqual(['happy', 'wants', 'not', 'marry']);
   });

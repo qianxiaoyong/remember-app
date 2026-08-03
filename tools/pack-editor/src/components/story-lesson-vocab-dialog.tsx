@@ -1,8 +1,4 @@
-import {
-  STORY_TIER_OPTIONS,
-  type StoryReadingContent,
-  type StoryTier,
-} from '@remember/contracts';
+import { STORY_TIER_OPTIONS, type StoryReadingContent, type StoryTier } from '@remember/contracts';
 import {
   useFieldArray,
   useWatch,
@@ -101,17 +97,18 @@ export function StoryLessonVocabDialog({
     setValue('sidebar', nextSidebar, { shouldDirty: true });
 
     allParagraphs.forEach((paragraph, paragraphIdx) => {
-      let changed = false;
+      const needsUpdate = paragraph.runs.some(
+        (run) => run.kind === 'word' && run.vocabId === vocabId && run.tier !== tier,
+      );
+      if (!needsUpdate) {
+        return;
+      }
       const nextRuns = paragraph.runs.map((run) => {
         if (run.kind === 'word' && run.vocabId === vocabId && run.tier !== tier) {
-          changed = true;
           return { ...run, tier };
         }
         return run;
       });
-      if (!changed) {
-        return;
-      }
       setValue(
         `story.paragraphs.${String(paragraphIdx)}.runs` as FieldPath<StoryReadingContent>,
         nextRuns,

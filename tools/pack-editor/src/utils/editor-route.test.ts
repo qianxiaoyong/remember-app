@@ -24,8 +24,8 @@ describe('editor-route', () => {
       packId: 'story-test-pack',
       sortOrder: 1,
     });
-    expect(
-      editorRouteToHash({ page: 'edit', packId: 'story-test-pack', sortOrder: 1 }),
-    ).toBe('#/pack/story-test-pack/card/1');
+    expect(editorRouteToHash({ page: 'edit', packId: 'story-test-pack', sortOrder: 1 })).toBe(
+      '#/pack/story-test-pack/card/1',
+    );
   });
 });

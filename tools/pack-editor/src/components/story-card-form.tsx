@@ -1,7 +1,14 @@
 import { storyReadingContentSchema, type StoryReadingContent } from '@remember/contracts';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm, useWatch, type FieldPath } from 'react-hook-form';
-import { useCallback, useEffect, useMemo, useState, type ReactElement, type RefObject } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactElement,
+  type RefObject,
+} from 'react';
 import { StoryAudioProvider } from '../context/story-audio-context.js';
 import { normalizeStoryContent } from '../utils/normalize-story-content.js';
 import { collectStoryContentIssues } from '../utils/story-content-issues.js';
@@ -21,7 +28,12 @@ interface StoryCardFormProps {
   checkRulesRef?: RefObject<(() => void) | null>;
 }
 
-function StoryCardFormBody({ packId, defaultValues, onSubmit, checkRulesRef }: StoryCardFormProps): ReactElement {
+function StoryCardFormBody({
+  packId,
+  defaultValues,
+  onSubmit,
+  checkRulesRef,
+}: StoryCardFormProps): ReactElement {
   const [selectedParagraphIndex, setSelectedParagraphIndex] = useState(0);
   const [contentIssues, setContentIssues] = useState<{ path: string; message: string }[]>([]);
   const [checkToast, setCheckToast] = useState<string | null>(null);
