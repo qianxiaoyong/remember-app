@@ -4,7 +4,7 @@ import {
   readPackSource,
   type PackSourceCard,
 } from '@remember/pack-builder/pack-source';
-import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { Readable } from 'node:stream';
@@ -57,6 +57,11 @@ function writeMinimalPackSource(sourceDir: string, cards: PackSourceCard[]): voi
   writeFileSync(join(sourceDir, 'lexicon.json'), '[]\n');
 }
 
+function copyStoryAssets(sourceDir: string): void {
+  const fixtureDir = join(paths.getPackBuilderRoot(), 'source', 'story-test-pack');
+  cpSync(join(fixtureDir, 'assets'), join(sourceDir, 'assets'), { recursive: true });
+}
+
 describe('local-api story handlers', () => {
   let tempDir: string;
 
@@ -101,6 +106,7 @@ describe('local-api story handlers', () => {
     }
 
     writeMinimalPackSource(tempDir, [initial]);
+    copyStoryAssets(tempDir);
     const updated = structuredClone(initial);
     updated.content.lesson.titleZh = '测试标题';
 
@@ -155,5 +161,92 @@ describe('local-api story handlers', () => {
     expect(status).toBe(400);
     expect(body).toMatchObject({ error: 'validation failed' });
     expect(storyReadingContentSchema.safeParse(invalid.content).success).toBe(false);
+  });
+
+  it('POST create 重复 lessonCode 400', async () => {
+    const initial = readPackSource(join(paths.getPackBuilderRoot(), 'source', 'story-test-pack'))
+      .cards[0];
+    if (!initial || !isStorySourceCard(initial)) {
+      throw new Error('expected story card fixture');
+    }
+
+    writeMinimalPackSource(tempDir, [initial]);
+
+    const { res, read } = captureJsonResponse();
+    await handleCreateCard(
+      'story-test-temp',
+      createJsonRequest({ cardType: 'story_reading', lessonCode: initial.content.lesson.code }),
+      res,
+    );
+
+    const { status, body } = await read();
+    expect(status).toBe(400);
+    expect(body).toMatchObject({ error: 'duplicate lesson code' });
+  });
+
+  it('PUT save 部分时间轴 400', async () => {
+    const initial = readPackSource(join(paths.getPackBuilderRoot(), 'source', 'story-test-pack'))
+      .cards[0];
+    if (!initial || !isStorySourceCard(initial)) {
+      throw new Error('expected story card fixture');
+    }
+
+    writeMinimalPackSource(tempDir, [initial]);
+    copyStoryAssets(tempDir);
+    const updated = structuredClone(initial);
+    const secondParagraph = updated.content.story.paragraphs[1];
+    if (secondParagraph) {
+      delete secondParagraph.audioStartMs;
+      delete secondParagraph.audioEndMs;
+    }
+
+    const { res, read } = captureJsonResponse();
+    await handleSaveCard({
+      packId: 'story-test-temp',
+      sortOrderText: String(updated.sortOrder),
+      req: createJsonRequest(updated),
+      res,
+    });
+
+    const { status, body } = await read();
+    expect(status).toBe(400);
+    expect(body).toMatchObject({ error: 'validation failed' });
+    expect((body as { issues: { message: string }[] }).issues.length).toBeGreaterThan(0);
+  });
+
+  it('PUT save slot 类型 mismatch 400', async () => {
+    const initial = readPackSource(join(paths.getPackBuilderRoot(), 'source', 'story-test-pack'))
+      .cards[0];
+    if (!initial || !isStorySourceCard(initial)) {
+      throw new Error('expected story card fixture');
+    }
+
+    writeMinimalPackSource(tempDir, [initial]);
+    const vocabularyCard: PackSourceCard = {
+      kind: 'word',
+      sortOrder: initial.sortOrder,
+      content: {
+        prompt: {
+          headword: 'test',
+          primaryAudio: 'assets/audio/test.mp3',
+        },
+        reveal: {
+          definitions: [{ text: '测试' }],
+          examples: [{ en: 'Test.', zh: '测试。' }],
+        },
+      },
+    };
+
+    const { res, read } = captureJsonResponse();
+    await handleSaveCard({
+      packId: 'story-test-temp',
+      sortOrderText: String(vocabularyCard.sortOrder),
+      req: createJsonRequest(vocabularyCard),
+      res,
+    });
+
+    const { status, body } = await read();
+    expect(status).toBe(400);
+    expect(body).toMatchObject({ error: 'card type mismatch' });
   });
 });

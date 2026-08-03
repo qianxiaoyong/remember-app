@@ -14,6 +14,7 @@ import { readJsonBody, sendJson } from './json-response.js';
 import { getPackBuilderRoot, resolvePackAssetPath, resolveSourceDir } from './paths.js';
 import { readAudioDurationMs } from './read-audio-duration-ms.js';
 import { runPackBuild } from './run-pack-build.js';
+import { validateStorySourceCard } from './story-source-validation.js';
 import { validatePackSource } from './validate-pack-source.js';
 
 interface BuildRequestBody {
@@ -95,6 +96,33 @@ export async function handleSaveCard(input: SaveCardInput): Promise<void> {
     return;
   }
 
+  const existing = source.cards[index];
+  if (existing === undefined) {
+    sendJson(res, 404, { error: 'card not found' });
+    return;
+  }
+
+  const incomingIsStory = isStorySourceCard(card);
+  const existingIsStory = isStorySourceCard(existing);
+  if (incomingIsStory !== existingIsStory) {
+    sendJson(res, 400, { error: 'card type mismatch' });
+    return;
+  }
+
+  if (incomingIsStory && isStorySourceCard(card)) {
+    const storyIssues = validateStorySourceCard(resolved.path, card);
+    if (storyIssues.length > 0) {
+      sendJson(res, 400, {
+        error: 'validation failed',
+        issues: storyIssues.map((issue) => ({
+          path: issue.path,
+          message: issue.message,
+        })),
+      });
+      return;
+    }
+  }
+
   source.cards[index] = card;
   writePackSource(resolved.path, source);
   sendJson(res, 200, { ok: true });
@@ -127,6 +155,10 @@ export async function handleCreateCard(
       .filter(isStorySourceCard)
       .map((card) => card.content.lesson.code);
     const lessonCode = body.lessonCode?.trim() ?? suggestNextLessonCode(existingCodes);
+    if (existingCodes.includes(lessonCode)) {
+      sendJson(res, 400, { error: 'duplicate lesson code', lessonCode });
+      return;
+    }
     newCard = createStoryCardTemplate({ sortOrder: maxSortOrder + 1, lessonCode });
   } else {
     const kind = body.kind === 'phrase' ? 'phrase' : 'word';
@@ -275,14 +307,26 @@ export function handleGetAsset(input: {
     input.res.setHeader('Content-Range', `bytes ${String(start)}-${String(end)}/${String(size)}`);
     input.res.setHeader('Content-Length', String(chunkSize));
     input.res.setHeader('Content-Type', contentType);
-    createReadStream(asset.absolutePath, { start, end }).pipe(input.res);
+    const stream = createReadStream(asset.absolutePath, { start, end });
+    stream.on('error', () => {
+      if (!input.res.writableEnded) {
+        input.res.destroy();
+      }
+    });
+    stream.pipe(input.res);
     return;
   }
 
   input.res.statusCode = 200;
   input.res.setHeader('Content-Length', String(size));
   input.res.setHeader('Content-Type', contentType);
-  createReadStream(asset.absolutePath).pipe(input.res);
+  const stream = createReadStream(asset.absolutePath);
+  stream.on('error', () => {
+    if (!input.res.writableEnded) {
+      input.res.destroy();
+    }
+  });
+  stream.pipe(input.res);
 }
 
 export function handleGetAudioMeta(

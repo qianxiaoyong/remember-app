@@ -1,4 +1,4 @@
-import { storyReadingContentSchema } from '@remember/contracts';
+import { assertAllowedPackPath, storyReadingContentSchema } from '@remember/contracts';
 import type { PackSourceStoryCard } from '@remember/pack-builder/pack-source';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
@@ -31,6 +31,17 @@ export function validateStorySourceCard(
   ];
 
   for (const asset of assetPaths) {
+    try {
+      assertAllowedPackPath(asset.path);
+    } catch {
+      issues.push({
+        sortOrder: card.sortOrder,
+        path: asset.field,
+        message: `illegal asset path: ${asset.path}`,
+      });
+      continue;
+    }
+
     if (!existsSync(join(sourceDir, asset.path))) {
       issues.push({
         sortOrder: card.sortOrder,
