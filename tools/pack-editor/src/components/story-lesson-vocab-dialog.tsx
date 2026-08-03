@@ -30,8 +30,8 @@ export function StoryLessonVocabDialog({
 }: StoryLessonVocabDialogProps): ReactElement | null {
   const panelRef = useRef<HTMLDivElement>(null);
   const sidebar = useFieldArray({ control, name: 'sidebar' });
-  const sidebarValues = useWatch({ control, name: 'sidebar' }) ?? [];
-  const allParagraphs = useWatch({ control, name: 'story.paragraphs' }) ?? [];
+  const sidebarValues = useWatch({ control, name: 'sidebar' });
+  const allParagraphs = useWatch({ control, name: 'story.paragraphs' });
 
   const tierStats = useMemo(() => countStoryTierStats(sidebarValues), [sidebarValues]);
 

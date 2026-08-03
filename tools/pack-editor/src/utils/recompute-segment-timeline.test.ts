@@ -50,7 +50,12 @@ describe('recomputeSegmentTimeline', () => {
 
   it('applySegmentTimelineToParagraphs 设置新起点并重算', () => {
     const paragraphs = [paragraph(0, 9826), paragraph(undefined, undefined)];
-    const result = applySegmentTimelineToParagraphs(paragraphs, 1, 9826, 137561);
+    const result = applySegmentTimelineToParagraphs({
+      paragraphs,
+      paragraphIndex: 1,
+      startMs: 9826,
+      durationMs: 137561,
+    });
     expect(result[0]?.audioEndMs).toBe(9826);
     expect(result[1]?.audioStartMs).toBe(9826);
     expect(result[1]?.audioEndMs).toBe(137561);

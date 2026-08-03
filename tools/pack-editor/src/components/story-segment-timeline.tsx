@@ -33,15 +33,15 @@ export function StorySegmentTimeline({
   getValues,
 }: StorySegmentTimelineProps): ReactElement {
   const audio = useStoryAudio();
-  const allParagraphs = useWatch({ control, name: 'story.paragraphs' }) ?? [];
+  const allParagraphs = useWatch({ control, name: 'story.paragraphs' });
   const paragraph = useWatch({
     control,
     name: `story.paragraphs.${String(paragraphIndex)}` as `story.paragraphs.${number}`,
   });
 
   const segmentLabel = `段${String(paragraphIndex + 1)}`;
-  const startMs = Number(paragraph?.audioStartMs);
-  const endMs = Number(paragraph?.audioEndMs);
+  const startMs = Number(paragraph.audioStartMs);
+  const endMs = Number(paragraph.audioEndMs);
   const hasStartMs = Number.isFinite(startMs);
   const hasEndMs = Number.isFinite(endMs);
   const segmentDuration =
@@ -49,8 +49,9 @@ export function StorySegmentTimeline({
   const segmentSpanMs = hasStartMs && hasEndMs && endMs > startMs ? endMs - startMs : null;
   const isThisSegmentActive =
     segmentSpanMs !== null &&
-    audio.segmentPreview?.startMs === startMs &&
-    audio.segmentPreview?.endMs === endMs;
+    audio.segmentPreview !== null &&
+    audio.segmentPreview.startMs === startMs &&
+    audio.segmentPreview.endMs === endMs;
   const canSetStart = canSetSegmentStart(paragraphIndex, allParagraphs);
   const canClearTimeline = hasStartMs;
   const startFieldPath =
@@ -75,24 +76,24 @@ export function StorySegmentTimeline({
 
   function writeParagraphs(paragraphs: StoryReadingContent['story']['paragraphs']): void {
     for (let index = 0; index < paragraphs.length; index += 1) {
-      setValue(
-        `story.paragraphs.${String(index)}` as FieldPath<StoryReadingContent>,
-        paragraphs[index]!,
-        {
-          shouldDirty: true,
-        },
-      );
+      const item = paragraphs[index];
+      if (item === undefined) {
+        continue;
+      }
+      setValue(`story.paragraphs.${String(index)}` as FieldPath<StoryReadingContent>, item, {
+        shouldDirty: true,
+      });
     }
   }
 
   function applyStartMs(startMsValue: number): void {
     const paragraphs = getValues('story.paragraphs');
-    const updated = applySegmentTimelineToParagraphs(
+    const updated = applySegmentTimelineToParagraphs({
       paragraphs,
       paragraphIndex,
-      startMsValue,
-      audio.durationMs,
-    );
+      startMs: startMsValue,
+      durationMs: audio.durationMs,
+    });
     writeParagraphs(updated);
   }
 

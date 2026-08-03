@@ -62,13 +62,6 @@ function StoryCardFormBody({ packId, defaultValues, onSubmit }: StoryCardFormPro
 
   function refreshContentIssues(): void {
     const values = getValues();
-    if (!values.lesson || !values.story || !values.sidebar) {
-      setCheckToast('内容尚未加载完整，请稍后再试');
-      window.setTimeout(() => {
-        setCheckToast(null);
-      }, 2000);
-      return;
-    }
     const issues = collectStoryContentIssues(values, {
       ...(audio.durationMs > 0 ? { primaryAudioDurationMs: audio.durationMs } : {}),
     });

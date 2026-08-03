@@ -52,9 +52,7 @@ export function StoryAudioProvider({
   children,
 }: StoryAudioProviderProps): ReactElement {
   const engineRef = useRef<StoryAudioEngine | null>(null);
-  if (engineRef.current === null) {
-    engineRef.current = new StoryAudioEngine();
-  }
+  engineRef.current ??= new StoryAudioEngine();
   const engine = engineRef.current;
 
   const trimmed = primaryAudio.trim();

@@ -226,37 +226,37 @@ const assetContentTypes: Record<string, string> = {
   '.webp': 'image/webp',
 };
 
-export function handleGetAsset(
-  packId: string,
-  assetRelativePath: string,
-  req: IncomingMessage,
-  res: ServerResponse,
-): void {
-  const resolved = resolveSourceDir(packId);
+export function handleGetAsset(input: {
+  packId: string;
+  assetRelativePath: string;
+  req: IncomingMessage;
+  res: ServerResponse;
+}): void {
+  const resolved = resolveSourceDir(input.packId);
   if (!resolved.ok) {
-    sendJson(res, resolved.status, { error: resolved.message });
+    sendJson(input.res, resolved.status, { error: resolved.message });
     return;
   }
 
-  const asset = resolvePackAssetPath(resolved.path, assetRelativePath);
+  const asset = resolvePackAssetPath(resolved.path, input.assetRelativePath);
   if (!asset.ok) {
-    sendJson(res, asset.status, { error: asset.message });
+    sendJson(input.res, asset.status, { error: asset.message });
     return;
   }
 
   const contentType =
     assetContentTypes[extname(asset.absolutePath).toLowerCase()] ?? 'application/octet-stream';
   const { size } = statSync(asset.absolutePath);
-  const rangeHeader = req.headers.range;
+  const rangeHeader = input.req.headers.range;
 
-  res.setHeader('Accept-Ranges', 'bytes');
+  input.res.setHeader('Accept-Ranges', 'bytes');
 
   if (rangeHeader) {
     const match = /^bytes=(\d*)-(\d*)$/.exec(rangeHeader);
     if (!match) {
-      res.statusCode = 416;
-      res.setHeader('Content-Range', `bytes */${String(size)}`);
-      res.end();
+      input.res.statusCode = 416;
+      input.res.setHeader('Content-Range', `bytes */${String(size)}`);
+      input.res.end();
       return;
     }
 
@@ -264,25 +264,25 @@ export function handleGetAsset(
     const end = match[2] ? Number.parseInt(match[2], 10) : size - 1;
 
     if (Number.isNaN(start) || Number.isNaN(end) || start >= size || end >= size || start > end) {
-      res.statusCode = 416;
-      res.setHeader('Content-Range', `bytes */${String(size)}`);
-      res.end();
+      input.res.statusCode = 416;
+      input.res.setHeader('Content-Range', `bytes */${String(size)}`);
+      input.res.end();
       return;
     }
 
     const chunkSize = end - start + 1;
-    res.statusCode = 206;
-    res.setHeader('Content-Range', `bytes ${String(start)}-${String(end)}/${String(size)}`);
-    res.setHeader('Content-Length', String(chunkSize));
-    res.setHeader('Content-Type', contentType);
-    createReadStream(asset.absolutePath, { start, end }).pipe(res);
+    input.res.statusCode = 206;
+    input.res.setHeader('Content-Range', `bytes ${String(start)}-${String(end)}/${String(size)}`);
+    input.res.setHeader('Content-Length', String(chunkSize));
+    input.res.setHeader('Content-Type', contentType);
+    createReadStream(asset.absolutePath, { start, end }).pipe(input.res);
     return;
   }
 
-  res.statusCode = 200;
-  res.setHeader('Content-Length', String(size));
-  res.setHeader('Content-Type', contentType);
-  createReadStream(asset.absolutePath).pipe(res);
+  input.res.statusCode = 200;
+  input.res.setHeader('Content-Length', String(size));
+  input.res.setHeader('Content-Type', contentType);
+  createReadStream(asset.absolutePath).pipe(input.res);
 }
 
 export function handleGetAudioMeta(

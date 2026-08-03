@@ -84,22 +84,22 @@ function stripTimeline(paragraph: StoryParagraph): StoryParagraph {
   return next;
 }
 
-export function applySegmentTimelineToParagraphs(
-  paragraphs: StoryParagraph[],
-  paragraphIndex: number,
-  startMs: number,
-  durationMs: number,
-): StoryParagraph[] {
-  const updated = paragraphs.map((paragraph, index) => {
-    if (index !== paragraphIndex) {
+export function applySegmentTimelineToParagraphs(input: {
+  paragraphs: StoryParagraph[];
+  paragraphIndex: number;
+  startMs: number;
+  durationMs: number;
+}): StoryParagraph[] {
+  const updated = input.paragraphs.map((paragraph, index) => {
+    if (index !== input.paragraphIndex) {
       return paragraph;
     }
     return {
       ...paragraph,
-      audioStartMs: Math.max(0, Math.round(startMs)),
+      audioStartMs: Math.max(0, Math.round(input.startMs)),
     };
   });
-  return recomputeSegmentTimeline(updated, durationMs);
+  return recomputeSegmentTimeline(updated, input.durationMs);
 }
 
 /** 清除从 paragraphIndex 起（含）各段的时间轴，并重算此前各段终点。 */

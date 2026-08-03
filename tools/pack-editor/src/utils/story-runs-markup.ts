@@ -45,7 +45,14 @@ function needsSpaceBetweenRuns(left: StoryRun, right: StoryRun): boolean {
   if (/^[.,!?;:)\]'"]/.test(rightText)) {
     return false;
   }
-  if (/[\('"[\{]$/.test(leftText)) {
+  const lastChar = leftText.at(-1) ?? '';
+  if (
+    lastChar === '(' ||
+    lastChar === "'" ||
+    lastChar === '"' ||
+    lastChar === '[' ||
+    lastChar === '{'
+  ) {
     return false;
   }
   if (!isTextRun(left) && !isTextRun(right)) {
@@ -57,9 +64,13 @@ function needsSpaceBetweenRuns(left: StoryRun, right: StoryRun): boolean {
 export function runsToPlainText(runs: StoryRun[]): string {
   let result = '';
   for (let index = 0; index < runs.length; index += 1) {
-    const run = runs[index]!;
+    const run = runs[index];
+    if (run === undefined) {
+      continue;
+    }
     const piece = runTextPiece(run);
-    if (index > 0 && needsSpaceBetweenRuns(runs[index - 1]!, run)) {
+    const previous = index > 0 ? runs[index - 1] : undefined;
+    if (previous !== undefined && needsSpaceBetweenRuns(previous, run)) {
       result += ' ';
     }
     result += piece;
@@ -216,8 +227,12 @@ export function unmarkVocabInRuns(runs: StoryRun[], vocabId: string): StoryRun[]
 export function buildPreviewSegments(runs: StoryRun[]): StoryPreviewSegment[] {
   const segments: StoryPreviewSegment[] = [];
   for (let index = 0; index < runs.length; index += 1) {
-    const run = runs[index]!;
-    if (index > 0 && needsSpaceBetweenRuns(runs[index - 1]!, run)) {
+    const run = runs[index];
+    if (run === undefined) {
+      continue;
+    }
+    const previous = index > 0 ? runs[index - 1] : undefined;
+    if (previous !== undefined && needsSpaceBetweenRuns(previous, run)) {
       segments.push({ kind: 'text', text: ' ' });
     }
     if (isTextRun(run)) {
@@ -235,9 +250,13 @@ export function buildPreviewSegments(runs: StoryRun[]): StoryPreviewSegment[] {
 }
 
 function plainContributionLength(runs: StoryRun[], index: number): number {
-  const run = runs[index]!;
+  const run = runs[index];
+  if (run === undefined) {
+    return 0;
+  }
   let length = runTextPiece(run).length;
-  if (index > 0 && needsSpaceBetweenRuns(runs[index - 1]!, run)) {
+  const previous = index > 0 ? runs[index - 1] : undefined;
+  if (previous !== undefined && needsSpaceBetweenRuns(previous, run)) {
     length += 1;
   }
   return length;
@@ -254,7 +273,10 @@ function plainOffsetBeforeRun(runs: StoryRun[], index: number): number {
 function sliceRunsByPlainRange(runs: StoryRun[], rangeStart: number, rangeEnd: number): StoryRun[] {
   const result: StoryRun[] = [];
   for (let index = 0; index < runs.length; index += 1) {
-    const run = runs[index]!;
+    const run = runs[index];
+    if (run === undefined) {
+      continue;
+    }
     const runStart = plainOffsetBeforeRun(runs, index);
     const runEnd = runStart + plainContributionLength(runs, index);
 
@@ -262,7 +284,8 @@ function sliceRunsByPlainRange(runs: StoryRun[], rangeStart: number, rangeEnd: n
       continue;
     }
 
-    const hasLeadingSpace = index > 0 && needsSpaceBetweenRuns(runs[index - 1]!, run);
+    const previous = index > 0 ? runs[index - 1] : undefined;
+    const hasLeadingSpace = previous !== undefined && needsSpaceBetweenRuns(previous, run);
     const contentStart = runStart + (hasLeadingSpace ? 1 : 0);
     const contentLength = runPlainLength(run);
     const effectiveRangeStart = Math.max(rangeStart, contentStart);

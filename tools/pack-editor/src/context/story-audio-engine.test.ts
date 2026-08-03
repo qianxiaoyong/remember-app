@@ -66,7 +66,7 @@ describe('StoryAudioEngine', () => {
 
   it('seek 不因 element.currentTime 读回旧值而回退', () => {
     const engine = new StoryAudioEngine();
-    let storedTime = 1.8;
+    const storedTime = 1.8;
     const audio = createMockAudio({ paused: true });
     Object.defineProperty(audio, 'currentTime', {
       configurable: true,

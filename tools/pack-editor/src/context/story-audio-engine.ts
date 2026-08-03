@@ -357,7 +357,8 @@ export class StoryAudioEngine {
     const clampedStart = Math.max(0, Math.round(startMs));
     const clampedEnd = Math.max(clampedStart, Math.round(endMs));
     const active = this.segmentPreview;
-    const isSame = active?.startMs === clampedStart && active?.endMs === clampedEnd;
+    const isSame =
+      active !== null && active.startMs === clampedStart && active.endMs === clampedEnd;
 
     if (isSame && !element.paused) {
       element.pause();
@@ -365,7 +366,7 @@ export class StoryAudioEngine {
       return;
     }
 
-    if (element && !element.paused) {
+    if (!element.paused) {
       element.pause();
     }
 
