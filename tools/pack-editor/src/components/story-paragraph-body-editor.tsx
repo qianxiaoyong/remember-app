@@ -18,6 +18,7 @@ interface StoryParagraphBodyEditorProps {
     selectedText: string;
     selectionStart: number;
     selectionEnd: number;
+    plainText: string;
   }) => void;
 }
 
@@ -30,6 +31,8 @@ export function StoryParagraphBodyEditor({
 }: StoryParagraphBodyEditorProps): ReactElement {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [plainText, setPlainText] = useState(() => runsToPlainText(runs));
+  const plainTextRef = useRef(plainText);
+  plainTextRef.current = plainText;
   const [selectionRange, setSelectionRange] = useState<SelectionRange | null>(null);
 
   const runsPath =
@@ -44,6 +47,20 @@ export function StoryParagraphBodyEditor({
     const synced = syncRunsToPlainText(runs, next, sidebar);
     setValue(runsPath, synced, { shouldDirty: true });
   }
+
+  useEffect(() => {
+    const form = textareaRef.current?.form;
+    if (!form) {
+      return undefined;
+    }
+    function handleSubmit(): void {
+      commitPlainText(plainTextRef.current);
+    }
+    form.addEventListener('submit', handleSubmit);
+    return () => {
+      form.removeEventListener('submit', handleSubmit);
+    };
+  }, [paragraphIndex, runs, sidebar, setValue, runsPath]);
 
   function refreshSelection(): void {
     const textarea = textareaRef.current;
@@ -72,6 +89,7 @@ export function StoryParagraphBodyEditor({
       selectedText: selectionRange.text.trim(),
       selectionStart: selectionRange.start,
       selectionEnd: selectionRange.end,
+      plainText,
     });
     setSelectionRange(null);
   }

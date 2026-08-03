@@ -3,11 +3,18 @@ import {
   useWatch,
   type Control,
   type FieldPath,
+  type UseFormGetValues,
   type UseFormRegister,
   type UseFormSetValue,
 } from 'react-hook-form';
-import type { ReactElement } from 'react';
+import { useEffect, type ReactElement } from 'react';
 import { useStoryAudio } from '../context/story-audio-context.js';
+import {
+  applySegmentTimelineToParagraphs,
+  canSetSegmentStart,
+  clearSegmentTimelineFrom,
+  recomputeSegmentTimeline,
+} from '../utils/recompute-segment-timeline.js';
 import { formatAudioTimeMs, formatSegmentDurationSeconds } from '../utils/format-audio-time.js';
 
 interface StorySegmentTimelineProps {
@@ -15,6 +22,7 @@ interface StorySegmentTimelineProps {
   register: UseFormRegister<StoryReadingContent>;
   control: Control<StoryReadingContent>;
   setValue: UseFormSetValue<StoryReadingContent>;
+  getValues: UseFormGetValues<StoryReadingContent>;
 }
 
 export function StorySegmentTimeline({
@@ -22,8 +30,10 @@ export function StorySegmentTimeline({
   register,
   control,
   setValue,
+  getValues,
 }: StorySegmentTimelineProps): ReactElement {
   const audio = useStoryAudio();
+  const allParagraphs = useWatch({ control, name: 'story.paragraphs' }) ?? [];
   const paragraph = useWatch({
     control,
     name: `story.paragraphs.${String(paragraphIndex)}` as `story.paragraphs.${number}`,
@@ -41,6 +51,54 @@ export function StorySegmentTimeline({
     segmentSpanMs !== null &&
     audio.segmentPreview?.startMs === startMs &&
     audio.segmentPreview?.endMs === endMs;
+  const canSetStart = canSetSegmentStart(paragraphIndex, allParagraphs);
+  const canClearTimeline = hasStartMs;
+  const startFieldPath =
+    `story.paragraphs.${String(paragraphIndex)}.audioStartMs` as FieldPath<StoryReadingContent>;
+  const startField = register(startFieldPath, { valueAsNumber: true });
+
+  useEffect(() => {
+    if (audio.durationMs <= 0) {
+      return;
+    }
+    const paragraphs = getValues('story.paragraphs');
+    const recomputed = recomputeSegmentTimeline(paragraphs, audio.durationMs);
+    const changed = recomputed.some((item, index) => {
+      const current = paragraphs[index];
+      return (
+        item.audioStartMs !== current?.audioStartMs || item.audioEndMs !== current?.audioEndMs
+      );
+    });
+    if (!changed) {
+      return;
+    }
+    writeParagraphs(recomputed);
+  }, [audio.durationMs, getValues, setValue]);
+
+  function writeParagraphs(paragraphs: StoryReadingContent['story']['paragraphs']): void {
+    for (let index = 0; index < paragraphs.length; index += 1) {
+      setValue(`story.paragraphs.${String(index)}` as FieldPath<StoryReadingContent>, paragraphs[index]!, {
+        shouldDirty: true,
+      });
+    }
+  }
+
+  function applyStartMs(startMsValue: number): void {
+    const paragraphs = getValues('story.paragraphs');
+    const updated = applySegmentTimelineToParagraphs(
+      paragraphs,
+      paragraphIndex,
+      startMsValue,
+      audio.durationMs,
+    );
+    writeParagraphs(updated);
+  }
+
+  function clearTimeline(): void {
+    const paragraphs = getValues('story.paragraphs');
+    const updated = clearSegmentTimelineFrom(paragraphs, paragraphIndex, audio.durationMs);
+    writeParagraphs(updated);
+  }
 
   return (
     <div className="edit-story-audio-segment-row">
@@ -54,22 +112,30 @@ export function StorySegmentTimeline({
           className="input input-sm edit-paragraph-timeline-ms"
           placeholder="ms"
           title="毫秒"
-          {...register(
-            `story.paragraphs.${String(paragraphIndex)}.audioStartMs` as FieldPath<StoryReadingContent>,
-            { valueAsNumber: true },
-          )}
+          disabled={!canSetStart}
+          {...startField}
+          onBlur={(event) => {
+            void startField.onBlur(event);
+            const ms = Number.parseInt(event.target.value, 10);
+            if (!Number.isFinite(ms) || !canSetStart) {
+              return;
+            }
+            applyStartMs(ms);
+          }}
         />
         <button
           type="button"
           className="btn btn-secondary btn-sm"
+          disabled={!canSetStart}
+          title={
+            canSetStart
+              ? undefined
+              : '请按顺序从段1开始标起点，或先标前一段'
+          }
           onClick={() => {
             const ms = audio.getPlaybackMs();
             if (ms !== null) {
-              setValue(
-                `story.paragraphs.${String(paragraphIndex)}.audioStartMs` as FieldPath<StoryReadingContent>,
-                ms,
-                { shouldDirty: true },
-              );
+              applyStartMs(ms);
             }
           }}
         >
@@ -82,36 +148,13 @@ export function StorySegmentTimeline({
       </span>
 
       <span className="edit-paragraph-timeline-item">
-        <span className="edit-paragraph-timeline-label">终点</span>
+        <span className="edit-paragraph-timeline-label">{segmentLabel}终点</span>
         <span className="edit-paragraph-timeline-value">
           {hasEndMs ? formatAudioTimeMs(endMs) : '--:--'}
         </span>
-        <input
-          type="number"
-          className="input input-sm edit-paragraph-timeline-ms"
-          placeholder="ms"
-          title="毫秒"
-          {...register(
-            `story.paragraphs.${String(paragraphIndex)}.audioEndMs` as FieldPath<StoryReadingContent>,
-            { valueAsNumber: true },
-          )}
-        />
-        <button
-          type="button"
-          className="btn btn-secondary btn-sm"
-          onClick={() => {
-            const ms = audio.getPlaybackMs();
-            if (ms !== null) {
-              setValue(
-                `story.paragraphs.${String(paragraphIndex)}.audioEndMs` as FieldPath<StoryReadingContent>,
-                ms,
-                { shouldDirty: true },
-              );
-            }
-          }}
-        >
-          设为终点
-        </button>
+        <span className="edit-paragraph-timeline-ms-readonly">
+          {hasEndMs ? String(Math.round(endMs)) : '—'}
+        </span>
       </span>
 
       <span className="edit-paragraph-timeline-sep" aria-hidden="true">
@@ -134,6 +177,20 @@ export function StorySegmentTimeline({
         }}
       >
         {isThisSegmentActive && audio.isPlaying ? '⏸ 暂停' : '▶ 试听本段'}
+      </button>
+
+      <button
+        type="button"
+        className="btn btn-ghost btn-sm"
+        disabled={!canClearTimeline}
+        title={
+          canClearTimeline
+            ? '清除本段及之后各段的时间轴，便于从本段起重新标定'
+            : '本段尚未设置起点'
+        }
+        onClick={clearTimeline}
+      >
+        删除本段时间轴
       </button>
     </div>
   );

@@ -2,6 +2,10 @@
   {
     "surfaceForm": "placeholder",
     "displayForm": "placeholder",
-    "definitions": [{ "text": "结构自检占位词条" }]
+    "definitions": [
+      {
+        "text": "结构自检占位词条"
+      }
+    ]
   }
 ]

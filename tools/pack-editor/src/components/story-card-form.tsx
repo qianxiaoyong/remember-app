@@ -93,7 +93,11 @@ function StoryCardFormBody({
         className="card-panel edit-form edit-story-form"
         onSubmit={(event) => {
           void handleSubmit(async (values) => {
-            await onSubmit(normalizeStoryContent(values));
+            await onSubmit(
+              normalizeStoryContent(values, {
+                ...(audio.durationMs > 0 ? { primaryAudioDurationMs: audio.durationMs } : {}),
+              }),
+            );
           })(event);
         }}
       >
@@ -103,6 +107,7 @@ function StoryCardFormBody({
             control={control}
             register={register}
             setValue={setValue}
+            getValues={getValues}
             selectedParagraphIndex={selectedParagraphIndex}
             onSelectParagraph={selectParagraph}
             translationEnabled={translationEnabled}

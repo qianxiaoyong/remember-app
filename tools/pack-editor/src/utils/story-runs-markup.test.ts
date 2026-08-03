@@ -51,6 +51,17 @@ describe('runsToPlainText', () => {
       'The prince is not happy. He wants to marry a princess.',
     );
   });
+
+  it('缺失边界空格的 runs 仍能还原可读文本', () => {
+    const corrupted: StoryRun[] = [
+      { kind: 'text', text: 'The prince' },
+      { kind: 'word', surface: 'likes', glossZh: '喜欢', tier: 'high', vocabId: 'like' },
+      { kind: 'text', text: 'the' },
+      { kind: 'word', surface: 'girl', glossZh: '女孩', tier: 'mid', vocabId: 'girl' },
+      { kind: 'text', text: '.' },
+    ];
+    expect(runsToPlainText(corrupted)).toBe('The prince likes the girl.');
+  });
 });
 
 describe('runsToMarkedText', () => {
@@ -75,6 +86,26 @@ describe('syncRunsToPlainText', () => {
     expect(runsToPlainText(synced)).toBe(edited);
     expect(collectVocabIdsFromRuns(synced)).toEqual(['not', 'happy']);
   });
+
+  it('未改 plain 时仍重建 text run 边界空格', () => {
+    const corrupted: StoryRun[] = [
+      { kind: 'text', text: 'He' },
+      { kind: 'word', surface: 'has', glossZh: '有', tier: 'high', vocabId: 'have' },
+      { kind: 'text', text: 'an' },
+      { kind: 'word', surface: 'idea', glossZh: '主意', tier: 'low', vocabId: 'idea' },
+      { kind: 'text', text: '.' },
+    ];
+    const plain = runsToPlainText(corrupted);
+    const synced = syncRunsToPlainText(corrupted, plain, sidebar);
+    expect(runsToPlainText(synced)).toBe('He has an idea.');
+    expect(synced).toEqual([
+      { kind: 'text', text: 'He ' },
+      { kind: 'word', surface: 'has', glossZh: '有', tier: 'high', vocabId: 'have' },
+      { kind: 'text', text: ' an ' },
+      { kind: 'word', surface: 'idea', glossZh: '主意', tier: 'low', vocabId: 'idea' },
+      { kind: 'text', text: '.' },
+    ]);
+  });
 });
 
 describe('applyWordMarkAtSelection', () => {
@@ -96,6 +127,38 @@ describe('applyWordMarkAtSelection', () => {
       { kind: 'text', text: ' everywhere.' },
     ]);
   });
+
+  it('缺失词间空格的 runs 也能正确标记末尾词', () => {
+    const corrupted: StoryRun[] = [
+      { kind: 'text', text: 'He wants to marry a' },
+      { kind: 'word', surface: 'not', glossZh: '不', tier: 'mid', vocabId: 'not' },
+      { kind: 'word', surface: 'happy', glossZh: '高兴', tier: 'high', vocabId: 'happy' },
+      { kind: 'text', text: '. He wants to marry a princess.' },
+    ];
+    const plain = runsToPlainText(corrupted);
+    const start = plain.indexOf('princess');
+    const end = start + 'princess'.length;
+    const princessSidebar = [
+      ...sidebar,
+      {
+        vocabId: 'princess',
+        headword: 'princess',
+        ipa: '',
+        pos: 'n.',
+        definitionZh: '公主',
+        tier: 'high' as const,
+      },
+    ];
+    const next = applyWordMarkAtSelection({
+      runs: corrupted,
+      selectionStart: start,
+      selectionEnd: end,
+      vocabId: 'princess',
+      sidebar: princessSidebar,
+    });
+    expect(collectVocabIdsFromRuns(next)).toContain('princess');
+    expect(runsToPlainText(next)).toBe(plain);
+  });
 });
 
 describe('buildPreviewSegments', () => {
@@ -107,5 +170,17 @@ describe('buildPreviewSegments', () => {
       { kind: 'word', text: 'happy', tier: 'high', vocabId: 'happy' },
       { kind: 'text', text: '. He wants to marry a princess.' },
     ]);
+  });
+
+  it('相邻 word run 缺失空格时分段仍可读', () => {
+    const corrupted: StoryRun[] = [
+      { kind: 'text', text: 'The prince is' },
+      { kind: 'word', surface: 'not', glossZh: '不', tier: 'mid', vocabId: 'not' },
+      { kind: 'word', surface: 'happy', glossZh: '高兴', tier: 'high', vocabId: 'happy' },
+      { kind: 'text', text: '.' },
+    ];
+    expect(buildPreviewSegments(corrupted).map((segment) => segment.text).join('')).toBe(
+      'The prince is not happy.',
+    );
   });
 });

@@ -1,6 +1,11 @@
 import { storyReadingContentSchema, type StoryReadingContent } from '@remember/contracts';
+import { recomputeSegmentTimeline } from './recompute-segment-timeline.js';
+import { runsToPlainText, syncRunsToPlainText } from './story-runs-markup.js';
 
-export function normalizeStoryContent(values: StoryReadingContent): StoryReadingContent {
+export function normalizeStoryContent(
+  values: StoryReadingContent,
+  options?: { primaryAudioDurationMs?: number },
+): StoryReadingContent {
   const lesson = {
     ...values.lesson,
     code: values.lesson.code.trim(),
@@ -10,15 +15,19 @@ export function normalizeStoryContent(values: StoryReadingContent): StoryReading
     primaryAudio: values.lesson.primaryAudio.trim(),
   };
 
-  const paragraphs = values.story.paragraphs.map((paragraph) => {
-    const runs = paragraph.runs
+  const durationMs = options?.primaryAudioDurationMs ?? 0;
+  const timelineParagraphs = recomputeSegmentTimeline(values.story.paragraphs, durationMs);
+
+  const paragraphs = timelineParagraphs.map((paragraph) => {
+    const plain = runsToPlainText(paragraph.runs);
+    const syncedRuns = syncRunsToPlainText(paragraph.runs, plain, values.sidebar);
+    const runs = syncedRuns
       .map((run) => {
         if (run.kind === 'text') {
-          const text = run.text.trim();
-          if (!text) {
+          if (run.text.length === 0) {
             return null;
           }
-          return { kind: 'text' as const, text };
+          return { kind: 'text' as const, text: run.text };
         }
         return {
           kind: 'word' as const,

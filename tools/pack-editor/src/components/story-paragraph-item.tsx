@@ -1,6 +1,5 @@
 import type { StoryReadingContent } from '@remember/contracts';
 import {
-  useFieldArray,
   useWatch,
   type Control,
   type FieldPath,
@@ -8,10 +7,30 @@ import {
   type UseFormSetValue,
 } from 'react-hook-form';
 import type { ReactElement } from 'react';
-import { applyWordMarkAtSelection, runsToPlainText } from '../utils/story-runs-markup.js';
+import { applyWordMarkAtSelection, collectVocabIdsFromRuns, syncRunsToPlainText } from '../utils/story-runs-markup.js';
 import { StoryParagraphBodyEditor } from './story-paragraph-body-editor.js';
 import { StoryParagraphPreview } from './story-paragraph-preview.js';
-import { slugFromSelection, StoryParagraphVocab } from './story-paragraph-vocab.js';
+import {
+  createStorySidebarEntry,
+  slugFromSelection,
+  StoryParagraphVocab,
+} from './story-paragraph-vocab.js';
+
+function trimPlainSelection(
+  plain: string,
+  selectionStart: number,
+  selectionEnd: number,
+): { start: number; end: number; text: string } {
+  let start = selectionStart;
+  let end = selectionEnd;
+  while (start < end && /\s/.test(plain[start] ?? '')) {
+    start += 1;
+  }
+  while (end > start && /\s/.test(plain[end - 1] ?? '')) {
+    end -= 1;
+  }
+  return { start, end, text: plain.slice(start, end) };
+}
 
 interface StoryParagraphItemProps {
   paragraphIndex: number;
@@ -34,7 +53,6 @@ export function StoryParagraphItem({
   contentIssues,
   onRemove,
 }: StoryParagraphItemProps): ReactElement {
-  const sidebarFieldArray = useFieldArray({ control, name: 'sidebar' });
   const runs = useWatch({
     control,
     name: `story.paragraphs.${String(paragraphIndex)}.runs` as `story.paragraphs.${number}.runs`,
@@ -44,13 +62,19 @@ export function StoryParagraphItem({
   const hasIssue = contentIssues.length > 0;
   const runsPath =
     `story.paragraphs.${String(paragraphIndex)}.runs` as FieldPath<StoryReadingContent>;
+  const sidebarPath = 'sidebar' as FieldPath<StoryReadingContent>;
 
   function markSelection(input: {
     selectedText: string;
     selectionStart: number;
     selectionEnd: number;
+    plainText: string;
   }): void {
     const headword = input.selectedText.trim();
+    if (!headword) {
+      return;
+    }
+
     const existingEntry = sidebar.find(
       (entry) => entry.headword.toLowerCase() === headword.toLowerCase(),
     );
@@ -68,37 +92,32 @@ export function StoryParagraphItem({
       }
       nextSidebar = [
         ...sidebar,
-        {
-          vocabId,
-          headword,
-          ipa: '',
-          pos: '',
-          definitionZh: '',
-          tier: 'high' as const,
-        },
+        createStorySidebarEntry(headword, vocabId),
       ];
-      sidebarFieldArray.append({
-        vocabId,
-        headword,
-        ipa: '',
-        pos: '',
-        definitionZh: '',
-        tier: 'high',
-      });
     }
 
-    const plain = runsToPlainText(runs);
+    const syncedRuns = syncRunsToPlainText(runs, input.plainText, nextSidebar);
+    const trimmedStart = trimPlainSelection(input.plainText, input.selectionStart, input.selectionEnd);
+    if (!trimmedStart.text) {
+      return;
+    }
+
     const nextRuns = applyWordMarkAtSelection({
-      runs,
-      selectionStart: input.selectionStart,
-      selectionEnd: input.selectionEnd,
+      runs: syncedRuns,
+      selectionStart: trimmedStart.start,
+      selectionEnd: trimmedStart.end,
       vocabId,
       sidebar: nextSidebar,
     });
-    if (runsToPlainText(nextRuns) === plain && nextRuns === runs) {
+
+    if (!collectVocabIdsFromRuns(nextRuns).includes(vocabId)) {
       return;
     }
-    setValue(runsPath, nextRuns, { shouldDirty: true, shouldValidate: true });
+
+    if (nextSidebar !== sidebar) {
+      setValue(sidebarPath, nextSidebar, { shouldDirty: true });
+    }
+    setValue(runsPath, nextRuns, { shouldDirty: true });
   }
 
   return (

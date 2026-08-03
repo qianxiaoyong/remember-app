@@ -63,32 +63,71 @@ function collectTimelineIssues(
   primaryAudioDurationMs?: number,
 ): StoryContentIssue[] {
   const issues: StoryContentIssue[] = [];
-  const hasAnyTimeline = paragraphs.some(
-    (paragraph) => paragraph.audioStartMs !== undefined || paragraph.audioEndMs !== undefined,
-  );
-  if (!hasAnyTimeline) {
-    return issues;
-  }
-
   let previousEndMs = 0;
+  let seenStarted = false;
+  let seenGapAfterStart = false;
+
   for (let index = 0; index < paragraphs.length; index += 1) {
     const paragraph = paragraphs[index];
     if (paragraph === undefined) {
       continue;
     }
-    if (paragraph.audioStartMs === undefined || paragraph.audioEndMs === undefined) {
+
+    const hasStart = paragraph.audioStartMs !== undefined;
+    const hasEnd = paragraph.audioEndMs !== undefined;
+
+    if (!hasStart && !hasEnd) {
+      if (seenStarted) {
+        seenGapAfterStart = true;
+      }
+      continue;
+    }
+
+    if (hasStart !== hasEnd) {
       issues.push({
         path: `story.paragraphs[${String(index)}]`,
-        message: 'paragraph missing audio timeline',
+        message: 'paragraph timeline must set both start and end together',
       });
       continue;
     }
+
+    if (seenGapAfterStart) {
+      issues.push({
+        path: `story.paragraphs[${String(index)}].audioStartMs`,
+        message: 'segment starts must be marked in order from segment 1',
+      });
+    }
+
+    if (seenStarted && index > 0) {
+      const previousParagraph = paragraphs[index - 1];
+      if (previousParagraph?.audioStartMs === undefined) {
+        issues.push({
+          path: `story.paragraphs[${String(index)}].audioStartMs`,
+          message: 'segment starts must be marked in order from segment 1',
+        });
+      }
+    }
+
+    seenStarted = true;
+
+    if (paragraph.audioStartMs === undefined || paragraph.audioEndMs === undefined) {
+      continue;
+    }
+
     if (index > 0 && paragraph.audioStartMs < previousEndMs) {
       issues.push({
         path: `story.paragraphs[${String(index)}].audioStartMs`,
         message: 'audioStartMs overlaps previous segment',
       });
     }
+
+    if (paragraph.audioEndMs <= paragraph.audioStartMs) {
+      issues.push({
+        path: `story.paragraphs[${String(index)}].audioEndMs`,
+        message: 'audioEndMs must be greater than audioStartMs',
+      });
+    }
+
     previousEndMs = paragraph.audioEndMs;
   }
 

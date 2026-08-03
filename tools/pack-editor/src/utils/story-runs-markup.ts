@@ -27,8 +27,44 @@ function runPlainLength(run: StoryRun): number {
   return isTextRun(run) ? run.text.length : run.surface.length;
 }
 
+function runTextPiece(run: StoryRun): string {
+  return isTextRun(run) ? run.text : run.surface;
+}
+
+function needsSpaceBetweenRuns(left: StoryRun, right: StoryRun): boolean {
+  const leftText = runTextPiece(left);
+  const rightText = runTextPiece(right);
+  if (!leftText || !rightText) {
+    return false;
+  }
+  const leftEnd = leftText.at(-1) ?? '';
+  const rightStart = rightText.at(0) ?? '';
+  if (/\s/.test(leftEnd) || /\s/.test(rightStart)) {
+    return false;
+  }
+  if (/^[.,!?;:)\]'"]/.test(rightText)) {
+    return false;
+  }
+  if (/[\('"[\{]$/.test(leftText)) {
+    return false;
+  }
+  if (!isTextRun(left) && !isTextRun(right)) {
+    return true;
+  }
+  return /[a-zA-Z0-9]$/.test(leftText) && /^[a-zA-Z0-9]/.test(rightText);
+}
+
 export function runsToPlainText(runs: StoryRun[]): string {
-  return runs.map((run) => (isTextRun(run) ? run.text : run.surface)).join('');
+  let result = '';
+  for (let index = 0; index < runs.length; index += 1) {
+    const run = runs[index]!;
+    const piece = runTextPiece(run);
+    if (index > 0 && needsSpaceBetweenRuns(runs[index - 1]!, run)) {
+      result += ' ';
+    }
+    result += piece;
+  }
+  return result;
 }
 
 export function collectVocabIdsFromRuns(runs: StoryRun[]): string[] {
@@ -96,25 +132,28 @@ export function syncRunsToPlainText(
   newPlain: string,
   sidebar: StorySidebarEntry[],
 ): StoryRun[] {
-  const oldPlain = runsToPlainText(oldRuns);
-  if (oldPlain === newPlain) {
-    return oldRuns;
-  }
-
   const wordRuns = oldRuns.filter((run): run is StoryWordRun => !isTextRun(run));
   if (wordRuns.length === 0) {
     return [{ kind: 'text', text: newPlain || ' ' }];
   }
 
+  return rebuildRunsFromWordAnchors(wordRuns, newPlain, sidebar);
+}
+
+function rebuildRunsFromWordAnchors(
+  wordRuns: StoryWordRun[],
+  plain: string,
+  sidebar: StorySidebarEntry[],
+): StoryRun[] {
   let cursor = 0;
   const result: StoryRun[] = [];
   for (const word of wordRuns) {
-    const idx = newPlain.indexOf(word.surface, cursor);
+    const idx = plain.indexOf(word.surface, cursor);
     if (idx === -1) {
       continue;
     }
     if (idx > cursor) {
-      appendTextRun(result, newPlain.slice(cursor, idx));
+      appendTextRun(result, plain.slice(cursor, idx));
     }
     const entry = sidebar.find((item) => item.vocabId === word.vocabId);
     result.push({
@@ -126,12 +165,12 @@ export function syncRunsToPlainText(
     });
     cursor = idx + word.surface.length;
   }
-  if (cursor < newPlain.length) {
-    appendTextRun(result, newPlain.slice(cursor));
+  if (cursor < plain.length) {
+    appendTextRun(result, plain.slice(cursor));
   }
 
   if (result.length === 0) {
-    return [{ kind: 'text', text: newPlain || ' ' }];
+    return [{ kind: 'text', text: plain || ' ' }];
   }
   return mergeAdjacentTextRuns(result);
 }
@@ -175,34 +214,66 @@ export function unmarkVocabInRuns(runs: StoryRun[], vocabId: string): StoryRun[]
 }
 
 export function buildPreviewSegments(runs: StoryRun[]): StoryPreviewSegment[] {
-  return runs.map((run) => {
-    if (isTextRun(run)) {
-      return { kind: 'text', text: run.text };
+  const segments: StoryPreviewSegment[] = [];
+  for (let index = 0; index < runs.length; index += 1) {
+    const run = runs[index]!;
+    if (index > 0 && needsSpaceBetweenRuns(runs[index - 1]!, run)) {
+      segments.push({ kind: 'text', text: ' ' });
     }
-    return {
+    if (isTextRun(run)) {
+      segments.push({ kind: 'text', text: run.text });
+      continue;
+    }
+    segments.push({
       kind: 'word',
       text: run.surface,
       tier: run.tier,
       vocabId: run.vocabId,
-    };
-  });
+    });
+  }
+  return segments;
+}
+
+function plainContributionLength(runs: StoryRun[], index: number): number {
+  const run = runs[index]!;
+  let length = runTextPiece(run).length;
+  if (index > 0 && needsSpaceBetweenRuns(runs[index - 1]!, run)) {
+    length += 1;
+  }
+  return length;
+}
+
+function plainOffsetBeforeRun(runs: StoryRun[], index: number): number {
+  let offset = 0;
+  for (let runIndex = 0; runIndex < index; runIndex += 1) {
+    offset += plainContributionLength(runs, runIndex);
+  }
+  return offset;
 }
 
 function sliceRunsByPlainRange(runs: StoryRun[], rangeStart: number, rangeEnd: number): StoryRun[] {
   const result: StoryRun[] = [];
-  let offset = 0;
-  for (const run of runs) {
-    const len = runPlainLength(run);
-    const runStart = offset;
-    const runEnd = offset + len;
-    offset = runEnd;
+  for (let index = 0; index < runs.length; index += 1) {
+    const run = runs[index]!;
+    const runStart = plainOffsetBeforeRun(runs, index);
+    const runEnd = runStart + plainContributionLength(runs, index);
 
     if (runEnd <= rangeStart || runStart >= rangeEnd) {
       continue;
     }
 
-    const sliceStart = Math.max(0, rangeStart - runStart);
-    const sliceEnd = Math.min(len, rangeEnd - runStart);
+    const hasLeadingSpace = index > 0 && needsSpaceBetweenRuns(runs[index - 1]!, run);
+    const contentStart = runStart + (hasLeadingSpace ? 1 : 0);
+    const contentLength = runPlainLength(run);
+    const effectiveRangeStart = Math.max(rangeStart, contentStart);
+    const effectiveRangeEnd = Math.min(rangeEnd, contentStart + contentLength);
+
+    if (effectiveRangeStart >= effectiveRangeEnd) {
+      continue;
+    }
+
+    const sliceStart = effectiveRangeStart - contentStart;
+    const sliceEnd = effectiveRangeEnd - contentStart;
 
     if (isTextRun(run)) {
       const text = run.text.slice(sliceStart, sliceEnd);
@@ -212,7 +283,7 @@ function sliceRunsByPlainRange(runs: StoryRun[], rangeStart: number, rangeEnd: n
       continue;
     }
 
-    if (sliceStart === 0 && sliceEnd === len) {
+    if (sliceStart === 0 && sliceEnd === contentLength) {
       result.push({ ...run });
     } else {
       appendTextRun(result, run.surface.slice(sliceStart, sliceEnd));

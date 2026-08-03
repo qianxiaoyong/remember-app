@@ -1095,6 +1095,13 @@
   color: var(--color-text-secondary);
 }
 
+.edit-paragraph-timeline-ms-readonly {
+  min-width: 4.5rem;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-secondary);
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

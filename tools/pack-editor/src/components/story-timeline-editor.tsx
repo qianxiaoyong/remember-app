@@ -1,5 +1,5 @@
 import type { StoryReadingContent } from '@remember/contracts';
-import { useWatch, type Control, type UseFormRegister, type UseFormSetValue } from 'react-hook-form';
+import { useWatch, type Control, type UseFormGetValues, type UseFormRegister, type UseFormSetValue } from 'react-hook-form';
 import { useEffect, useState, type ReactElement } from 'react';
 import type { StoryParagraph } from '@remember/contracts';
 import { useStoryAudio } from '../context/story-audio-context.js';
@@ -60,6 +60,7 @@ interface StoryTimelineEditorProps {
   control: Control<StoryReadingContent>;
   register: UseFormRegister<StoryReadingContent>;
   setValue: UseFormSetValue<StoryReadingContent>;
+  getValues: UseFormGetValues<StoryReadingContent>;
   selectedParagraphIndex: number;
   onSelectParagraph: (index: number) => void;
   translationEnabled: boolean;
@@ -73,6 +74,7 @@ export function StoryTimelineEditor({
   control,
   register,
   setValue,
+  getValues,
   selectedParagraphIndex,
   onSelectParagraph,
   translationEnabled,
@@ -233,6 +235,7 @@ export function StoryTimelineEditor({
         register={register}
         control={control}
         setValue={setValue}
+        getValues={getValues}
       />
 
       {audio.loadError && <p className="field-error">{audio.loadError}</p>}

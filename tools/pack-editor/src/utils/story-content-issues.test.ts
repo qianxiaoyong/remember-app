@@ -99,6 +99,26 @@ describe('collectStoryContentIssues', () => {
     expect(issues.some((issue) => issue.message.includes('overlaps previous segment'))).toBe(true);
   });
 
+  it('跳段标起点报错', () => {
+    const content = baseContent();
+    content.story.paragraphs.push({
+      runs: [{ kind: 'text', text: 'Third.' }],
+      audioStartMs: 3000,
+      audioEndMs: 4000,
+      translationZh: '第三段',
+    });
+    const secondParagraph = content.story.paragraphs[1];
+    if (secondParagraph) {
+      delete secondParagraph.audioStartMs;
+      delete secondParagraph.audioEndMs;
+    }
+
+    const issues = collectStoryContentIssues(content);
+    expect(
+      issues.some((issue) => issue.message.includes('marked in order from segment 1')),
+    ).toBe(true);
+  });
+
   it('末段超出音频时长', () => {
     const content = baseContent();
     const secondParagraph = content.story.paragraphs[1];

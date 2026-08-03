@@ -35,13 +35,17 @@ export function StoryParagraphVocab({
 
   const paragraphVocabIds = useMemo(() => collectVocabIdsFromRuns(runs), [runs]);
 
-  const vocabRows = sidebar.fields
-    .map((field, sidebarIndex) => ({
-      field,
-      sidebarIndex,
-      vocabId: sidebarValues[sidebarIndex]?.vocabId ?? '',
-    }))
-    .filter((row) => row.vocabId !== '' && paragraphVocabIds.includes(row.vocabId));
+  const vocabRows = paragraphVocabIds.flatMap((vocabId) => {
+    const sidebarIndex = sidebarValues.findIndex((entry) => entry.vocabId === vocabId);
+    if (sidebarIndex < 0) {
+      return [];
+    }
+    const field = sidebar.fields[sidebarIndex];
+    if (field === undefined) {
+      return [];
+    }
+    return [{ field, sidebarIndex, vocabId }];
+  });
 
   function removeFromParagraph(sidebarIndex: number, vocabId: string): void {
     const unmarked = unmarkVocabInRuns(runs, vocabId);
@@ -164,4 +168,19 @@ export function slugFromSelection(text: string): string {
     .toLowerCase()
     .replace(/\s+/g, '-')
     .replace(/[^a-z0-9-]/g, '');
+}
+
+export function createStorySidebarEntry(
+  headword: string,
+  vocabId: string,
+  tier: StoryReadingContent['sidebar'][number]['tier'] = 'high',
+): StoryReadingContent['sidebar'][number] {
+  return {
+    vocabId,
+    headword,
+    ipa: '-',
+    pos: '-',
+    definitionZh: headword,
+    tier,
+  };
 }
