@@ -1,7 +1,8 @@
 import { storyReadingContentSchema, type StoryReadingContent } from '@remember/contracts';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import type { ReactElement } from 'react';
+import { useForm, useWatch } from 'react-hook-form';
+import { useMemo, useState, type ReactElement } from 'react';
+import { useStoryTimelineAudio } from '../hooks/use-story-timeline-audio.js';
 import { normalizeStoryContent } from '../utils/normalize-story-content.js';
 import { StoryLessonFields } from './story-lesson-fields.js';
 import { StoryParagraphEditor } from './story-paragraph-editor.js';
@@ -21,6 +22,7 @@ export function StoryCardForm({
   defaultValues,
   onSubmit,
 }: StoryCardFormProps): ReactElement {
+  const [selectedParagraphIndex, setSelectedParagraphIndex] = useState(0);
   const {
     register,
     control,
@@ -31,6 +33,19 @@ export function StoryCardForm({
     resolver: zodResolver(storyReadingContentSchema),
     defaultValues,
   });
+
+  const lesson = useWatch({ control, name: 'lesson' });
+  const paragraphs = useWatch({ control, name: 'story.paragraphs' });
+  const primaryAudio = lesson.primaryAudio;
+  const audio = useStoryTimelineAudio(packId, primaryAudio);
+
+  const timelineEnabled = useMemo(
+    () =>
+      paragraphs.some(
+        (paragraph) => paragraph.audioStartMs !== undefined || paragraph.audioEndMs !== undefined,
+      ),
+    [paragraphs],
+  );
 
   return (
     <form
@@ -45,12 +60,21 @@ export function StoryCardForm({
       <StoryLessonFields packId={packId} register={register} control={control} errors={errors} />
       <div className="edit-reveal-body">
         <StorySidebarEditor register={register} control={control} />
-        <StoryParagraphEditor register={register} control={control} setValue={setValue} />
         <StoryTimelineEditor
-          packId={packId}
+          control={control}
+          setValue={setValue}
+          selectedParagraphIndex={selectedParagraphIndex}
+          onSelectParagraph={setSelectedParagraphIndex}
+          audio={audio}
+        />
+        <StoryParagraphEditor
           register={register}
           control={control}
           setValue={setValue}
+          selectedParagraphIndex={selectedParagraphIndex}
+          onSelectParagraph={setSelectedParagraphIndex}
+          timelineEnabled={timelineEnabled}
+          audio={audio}
         />
       </div>
     </form>
