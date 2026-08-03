@@ -1,8 +1,6 @@
 import { vocabularyContentSchema } from '@remember/contracts';
-import { readPackSource } from '@remember/pack-builder/pack-source';
-import { existsSync } from 'node:fs';
-import { join } from 'node:path';
-import { isStorySourceCard } from '../utils/is-story-source-card.js';
+import { readPackSource, isStorySourceCard } from '@remember/pack-builder/pack-source';
+import { validateStorySourceCard } from './story-source-validation.js';
 
 export interface ValidationIssue {
   sortOrder?: number;
@@ -16,6 +14,7 @@ export function validatePackSource(sourceDir: string): ValidationIssue[] {
 
   for (const card of source.cards) {
     if (isStorySourceCard(card)) {
+      issues.push(...validateStorySourceCard(sourceDir, card));
       continue;
     }
 
