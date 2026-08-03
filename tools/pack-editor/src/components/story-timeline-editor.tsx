@@ -64,7 +64,7 @@ export function StoryTimelineEditor({
   setValue,
 }: StoryTimelineEditorProps): ReactElement {
   const lesson = useWatch({ control, name: 'lesson' });
-  const paragraphs = useWatch({ control, name: 'story.paragraphs' }) ?? [];
+  const paragraphs = useWatch({ control, name: 'story.paragraphs' });
   const watchedContent = useWatch({ control });
   const audioRef = useRef<HTMLAudioElement>(null);
   const [durationMs, setDurationMs] = useState(0);
@@ -73,18 +73,18 @@ export function StoryTimelineEditor({
   const [loadError, setLoadError] = useState<string | null>(null);
 
   const timelineEnabled = paragraphs.some(
-    (paragraph) =>
-      paragraph?.audioStartMs !== undefined || paragraph?.audioEndMs !== undefined,
+    (paragraph) => paragraph.audioStartMs !== undefined || paragraph.audioEndMs !== undefined,
   );
 
-  const timelineIssues = watchedContent
-    ? collectStoryContentIssues(watchedContent as StoryReadingContent, {
-        ...(durationMs > 0 ? { primaryAudioDurationMs: durationMs } : {}),
-      }).filter((issue) => issue.path.includes('audio'))
-    : [];
+  const timelineIssues =
+    watchedContent.lesson && watchedContent.story && watchedContent.sidebar
+      ? collectStoryContentIssues(watchedContent as StoryReadingContent, {
+          ...(durationMs > 0 ? { primaryAudioDurationMs: durationMs } : {}),
+        }).filter((issue) => issue.path.includes('audio'))
+      : [];
 
-  const track = buildSegmentTrack(paragraphs as StoryParagraph[], durationMs);
-  const primaryAudio = lesson?.primaryAudio?.trim() ?? '';
+  const track = buildSegmentTrack(paragraphs, durationMs);
+  const primaryAudio = lesson.primaryAudio.trim();
   const audioUrl = primaryAudio ? packAssetUrl(packId, primaryAudio) : '';
 
   useEffect(() => {
@@ -145,7 +145,12 @@ export function StoryTimelineEditor({
     const slice = count > 0 && durationMs > 0 ? Math.floor(durationMs / count) : 5000;
     for (let index = 0; index < count; index += 1) {
       const start = index * slice;
-      const end = index === count - 1 ? durationMs || slice * (index + 1) : (index + 1) * slice;
+      const end =
+        index === count - 1
+          ? durationMs > 0
+            ? durationMs
+            : slice * (index + 1)
+          : (index + 1) * slice;
       setValue(
         `story.paragraphs.${String(index)}.audioStartMs` as FieldPath<StoryReadingContent>,
         start,
@@ -175,12 +180,13 @@ export function StoryTimelineEditor({
   function playSegment(): void {
     const audio = audioRef.current;
     const paragraph = paragraphs[selectedIndex];
-    if (!audio || !paragraph?.audioStartMs || paragraph.audioEndMs === undefined) {
+    const startMs = paragraph?.audioStartMs;
+    const endMs = paragraph?.audioEndMs;
+    if (!audio || startMs === undefined || endMs === undefined) {
       return;
     }
-    audio.currentTime = paragraph.audioStartMs / 1000;
+    audio.currentTime = startMs / 1000;
     void audio.play();
-    const endMs = paragraph.audioEndMs;
     const onTimeUpdate = (): void => {
       if (Math.round(audio.currentTime * 1000) >= endMs) {
         audio.pause();
@@ -323,7 +329,13 @@ export function StoryTimelineEditor({
                   )}
                 />
               </label>
-              <button type="button" className="btn btn-ghost btn-sm" onClick={() => setFromPlayback('audioStartMs')}>
+              <button
+                type="button"
+                className="btn btn-ghost btn-sm"
+                onClick={() => {
+                  setFromPlayback('audioStartMs');
+                }}
+              >
                 设为播放位置
               </button>
               <label className="field-label">
@@ -337,7 +349,13 @@ export function StoryTimelineEditor({
                   )}
                 />
               </label>
-              <button type="button" className="btn btn-ghost btn-sm" onClick={() => setFromPlayback('audioEndMs')}>
+              <button
+                type="button"
+                className="btn btn-ghost btn-sm"
+                onClick={() => {
+                  setFromPlayback('audioEndMs');
+                }}
+              >
                 设为播放位置
               </button>
               <button type="button" className="btn btn-ghost btn-sm" onClick={playSegment}>
@@ -345,7 +363,9 @@ export function StoryTimelineEditor({
               </button>
             </div>
             {timelineIssues
-              .filter((issue) => issue.path.startsWith(`story.paragraphs[${String(selectedIndex)}]`))
+              .filter((issue) =>
+                issue.path.startsWith(`story.paragraphs[${String(selectedIndex)}]`),
+              )
               .map((issue) => (
                 <p key={`${issue.path}:${issue.message}`} className="field-error">
                   {issue.message}

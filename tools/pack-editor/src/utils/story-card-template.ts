@@ -8,7 +8,7 @@ export function suggestNextLessonCode(existingCodes: string[]): string {
     .filter((value) => Number.isFinite(value));
 
   const next = numbers.length > 0 ? Math.max(...numbers) + 1 : 1;
-  return `C${next}`;
+  return `C${String(next)}`;
 }
 
 export function createStoryCardTemplate(input: {

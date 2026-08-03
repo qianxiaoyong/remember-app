@@ -31,23 +31,23 @@
 
 ## 文件结构（实施前锁定）
 
-| 路径 | 职责 |
-| --- | --- |
-| `tools/pack-editor/src/utils/story-card-template.ts` | 新增一课默认 content 模板 |
-| `tools/pack-editor/src/utils/normalize-story-content.ts` | 保存前 trim / 删空 run / Zod parse |
-| `tools/pack-editor/src/utils/story-content-issues.ts` | 交叉规则校验（sidebar 孤儿、tier、时间轴、translation）→ ValidationIssue[] |
-| `tools/pack-editor/src/components/story-card-form.tsx` | story 编辑主表单（sticky footer 与 vocabulary 对齐） |
-| `tools/pack-editor/src/components/story-lesson-fields.tsx` | lesson 字段 + 只读 knowledgeId 预览 |
-| `tools/pack-editor/src/components/story-sidebar-editor.tsx` | sidebar CRUD 表 |
-| `tools/pack-editor/src/components/story-paragraph-editor.tsx` | 段落列表、runs 编辑、插入 word run |
-| `tools/pack-editor/src/components/story-timeline-editor.tsx` | **时间轴 MVP UI**（音频预览 + 段起止编辑） |
-| `tools/pack-editor/src/server/read-audio-duration-ms.ts` | Node 侧读 mp3 时长（复用 pack-builder 脚本逻辑或 ffprobe 不可用时的 frame 估算） |
-| `tools/pack-editor/src/server/story-source-validation.ts` | 服务端 story 卡校验（schema + 文件存在 + 交叉规则） |
-| `tools/pack-editor/src/server/local-api-handlers.ts` | 扩展 save/create/validate/assets |
-| `tools/pack-editor/src/server/routes.ts` | 新增 assets / audio-meta 路由 |
-| `tools/pack-editor/src/pages/card-edit-page.tsx` | 挂载 StoryCardForm |
-| `tools/pack-editor/src/pages/card-list-page.tsx` | 「+ 新增一课」、类型列 |
-| `tools/pack-editor/src/api/local-api-client.ts` | `createStoryCard`、`fetchAudioDurationMs`、`assetUrl` |
+| 路径                                                          | 职责                                                                             |
+| ------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `tools/pack-editor/src/utils/story-card-template.ts`          | 新增一课默认 content 模板                                                        |
+| `tools/pack-editor/src/utils/normalize-story-content.ts`      | 保存前 trim / 删空 run / Zod parse                                               |
+| `tools/pack-editor/src/utils/story-content-issues.ts`         | 交叉规则校验（sidebar 孤儿、tier、时间轴、translation）→ ValidationIssue[]       |
+| `tools/pack-editor/src/components/story-card-form.tsx`        | story 编辑主表单（sticky footer 与 vocabulary 对齐）                             |
+| `tools/pack-editor/src/components/story-lesson-fields.tsx`    | lesson 字段 + 只读 knowledgeId 预览                                              |
+| `tools/pack-editor/src/components/story-sidebar-editor.tsx`   | sidebar CRUD 表                                                                  |
+| `tools/pack-editor/src/components/story-paragraph-editor.tsx` | 段落列表、runs 编辑、插入 word run                                               |
+| `tools/pack-editor/src/components/story-timeline-editor.tsx`  | **时间轴 MVP UI**（音频预览 + 段起止编辑）                                       |
+| `tools/pack-editor/src/server/read-audio-duration-ms.ts`      | Node 侧读 mp3 时长（复用 pack-builder 脚本逻辑或 ffprobe 不可用时的 frame 估算） |
+| `tools/pack-editor/src/server/story-source-validation.ts`     | 服务端 story 卡校验（schema + 文件存在 + 交叉规则）                              |
+| `tools/pack-editor/src/server/local-api-handlers.ts`          | 扩展 save/create/validate/assets                                                 |
+| `tools/pack-editor/src/server/routes.ts`                      | 新增 assets / audio-meta 路由                                                    |
+| `tools/pack-editor/src/pages/card-edit-page.tsx`              | 挂载 StoryCardForm                                                               |
+| `tools/pack-editor/src/pages/card-list-page.tsx`              | 「+ 新增一课」、类型列                                                           |
+| `tools/pack-editor/src/api/local-api-client.ts`               | `createStoryCard`、`fetchAudioDurationMs`、`assetUrl`                            |
 
 ---
 
@@ -170,7 +170,8 @@ if (isStorySourceCard(card)) {
 
 ```typescript
 if (body.cardType === 'story_reading') {
-  const lessonCode = body.lessonCode?.trim() || suggestNextLessonCode(/* scan existing story cards */);
+  const lessonCode =
+    body.lessonCode?.trim() || suggestNextLessonCode(/* scan existing story cards */);
   const newCard = createStoryCardTemplate({ sortOrder: maxSortOrder + 1, lessonCode });
   source.cards.push(newCard);
   // 201 { card: newCard }
@@ -213,7 +214,9 @@ export function packAssetUrl(packId: string, relativePath: string): string {
 
 export async function fetchAudioDurationMs(packId: string, relativePath: string): Promise<number> {
   const data = await readJson<{ durationMs: number }>(
-    await fetch(`/local-api/packs/${encodeURIComponent(packId)}/audio-meta?path=${encodeURIComponent(relativePath)}`),
+    await fetch(
+      `/local-api/packs/${encodeURIComponent(packId)}/audio-meta?path=${encodeURIComponent(relativePath)}`,
+    ),
   );
   return data.durationMs;
 }

@@ -25,7 +25,7 @@ export function validateStorySourceCard(
   }
 
   const content = parsed.data;
-  const assetPaths: Array<{ path: string; field: string }> = [
+  const assetPaths: { path: string; field: string }[] = [
     { path: content.lesson.coverImage, field: 'lesson.coverImage' },
     { path: content.lesson.primaryAudio, field: 'lesson.primaryAudio' },
   ];

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState, type ReactElement } from 'react';
-import { isStorySourceCard } from '@remember/pack-builder/pack-source';
+import { isStorySourceCard } from '../utils/is-story-source-card.js';
 import {
   buildPack,
   createCard,
@@ -11,7 +11,9 @@ import {
   type ValidationIssue,
 } from '../api/local-api-client.js';
 import { suggestNextLessonCode } from '../utils/story-card-template.js';
-import { ConfirmDialog } from '../components/confirm-dialog.js';
+import { mapSourceCardsToRows, type CardRow } from './card-list-utils.js';
+import { BuildPackDialog, CreateStoryDialog, DeleteCardDialog } from './card-list-dialogs.js';
+import { BuildResultBanner, ValidationIssuesBanner } from './card-list-banners.js';
 import { DataTable } from '../components/data-table.js';
 import { LoadingState } from '../components/loading-state.js';
 import { PageHeader } from '../components/page-header.js';
@@ -22,14 +24,6 @@ interface CardListPageProps {
   packId: string;
   onBack: () => void;
   onEditCard: (sortOrder: number, headword: string) => void;
-}
-
-interface CardRow {
-  sortOrder: number;
-  headword: string;
-  cardType: 'vocabulary' | 'story';
-  lessonCode?: string;
-  titleZh?: string;
 }
 
 export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps): ReactElement {
@@ -55,26 +49,7 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
     const source = await loadPackSource(packId);
     setPackVersion(source.meta.packVersion);
     setNextVersion(suggestNextPatchVersion(source.meta.packVersion));
-    setCards(
-      [...source.cards]
-        .sort((left, right) => left.sortOrder - right.sortOrder)
-        .map((card) => {
-          if (isStorySourceCard(card)) {
-            return {
-              sortOrder: card.sortOrder,
-              headword: `${card.content.lesson.code} ${card.content.lesson.titleEn}`,
-              cardType: 'story' as const,
-              lessonCode: card.content.lesson.code,
-              titleZh: card.content.lesson.titleZh,
-            };
-          }
-          return {
-            sortOrder: card.sortOrder,
-            headword: card.content.prompt.headword,
-            cardType: 'vocabulary' as const,
-          };
-        }),
-    );
+    setCards(mapSourceCardsToRows(source.cards));
   }, [packId]);
 
   useEffect(() => {
@@ -276,57 +251,23 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
         }
       />
 
-      {validationIssues !== null && (
-        <StatusBanner
-          variant={validationIssues.length === 0 ? 'success' : 'warning'}
-          title={
-            validationIssues.length === 0
-              ? '校验通过'
-              : `校验发现 ${String(validationIssues.length)} 个问题`
-          }
-          onDismiss={() => {
-            setValidationIssues(null);
-          }}
-        >
-          {validationIssues.length > 0 && (
-            <ul className="status-issue-list">
-              {validationIssues.map((issue, index) => (
-                <li key={`${issue.path}-${String(index)}`}>
-                  {issue.sortOrder !== undefined ? `#${String(issue.sortOrder)} ` : ''}
-                  {issue.path}: {issue.message}
-                </li>
-              ))}
-            </ul>
-          )}
-        </StatusBanner>
-      )}
+      <ValidationIssuesBanner
+        issues={validationIssues}
+        onDismiss={() => {
+          setValidationIssues(null);
+        }}
+      />
 
-      {buildMessage && (
-        <StatusBanner
-          variant={buildOutputPath ? 'success' : 'error'}
-          title={buildMessage}
-          onDismiss={() => {
-            setBuildMessage(null);
-            setBuildOutputPath(null);
-          }}
-        >
-          {buildOutputPath && (
-            <div style={{ marginTop: 'var(--space-2)' }}>
-              <code style={{ fontSize: '12px', wordBreak: 'break-all' }}>{buildOutputPath}</code>
-              <div style={{ marginTop: 'var(--space-2)', display: 'flex', gap: 'var(--space-2)' }}>
-                <button
-                  type="button"
-                  className="btn btn-secondary btn-sm"
-                  onClick={() => void handleCopyPath()}
-                >
-                  复制路径
-                </button>
-                {copyHint && <span style={{ fontSize: '12px' }}>{copyHint}</span>}
-              </div>
-            </div>
-          )}
-        </StatusBanner>
-      )}
+      <BuildResultBanner
+        message={buildMessage}
+        outputPath={buildOutputPath}
+        copyHint={copyHint}
+        onDismiss={() => {
+          setBuildMessage(null);
+          setBuildOutputPath(null);
+        }}
+        onCopyPath={() => void handleCopyPath()}
+      />
 
       <div className="card-panel">
         <div className="toolbar">
@@ -392,17 +333,8 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
         />
       </div>
 
-      <ConfirmDialog
-        open={deleteTarget !== null}
-        title={deleteTarget?.cardType === 'story' ? '删除一课' : '删除单词'}
-        description={
-          deleteTarget
-            ? deleteTarget.cardType === 'story'
-              ? `确定删除一课 #${String(deleteTarget.sortOrder)} ${deleteTarget.lessonCode ?? ''} ${deleteTarget.titleZh ?? deleteTarget.headword}？此操作不可撤销。`
-              : `确定删除 #${String(deleteTarget.sortOrder)}「${deleteTarget.headword}」？此操作不可撤销。`
-            : ''
-        }
-        confirmLabel="确认删除"
+      <DeleteCardDialog
+        target={deleteTarget}
         busy={busyAction === 'delete'}
         onCancel={() => {
           setDeleteTarget(null);
@@ -410,53 +342,28 @@ export function CardListPage({ packId, onBack, onEditCard }: CardListPageProps):
         onConfirm={() => void handleDeleteConfirm()}
       />
 
-      <ConfirmDialog
+      <CreateStoryDialog
         open={showCreateStoryDialog}
-        title="新增一课"
-        description="将创建 story_reading 模板卡（单段 + 占位时间轴 + 空 sidebar）。"
-        confirmLabel="创建"
+        lessonCode={nextLessonCode}
         busy={busyAction === 'create'}
+        onLessonCodeChange={setNextLessonCode}
         onCancel={() => {
           setShowCreateStoryDialog(false);
         }}
         onConfirm={() => void handleCreateStory()}
-      >
-        <label className="field-label">
-          lessonCode
-          <input
-            className="input"
-            type="text"
-            value={nextLessonCode}
-            onChange={(event) => {
-              setNextLessonCode(event.target.value);
-            }}
-          />
-        </label>
-      </ConfirmDialog>
+      />
 
-      <ConfirmDialog
+      <BuildPackDialog
         open={showBuildDialog}
-        title="打包确认"
-        description={`将把 meta.packVersion 从 v${packVersion} bump 为 v${nextVersion}（默认 patch +1，可修改），然后执行 build:pack。`}
-        confirmLabel="确认打包"
+        packVersion={packVersion}
+        nextVersion={nextVersion}
         busy={busyAction === 'build'}
+        onNextVersionChange={setNextVersion}
         onCancel={() => {
           setShowBuildDialog(false);
         }}
         onConfirm={() => void handleBuild()}
-      >
-        <label className="field-label">
-          packVersion（建议 {suggestNextPatchVersion(packVersion)}）
-          <input
-            className="input"
-            type="text"
-            value={nextVersion}
-            onChange={(event) => {
-              setNextVersion(event.target.value);
-            }}
-          />
-        </label>
-      </ConfirmDialog>
+      />
     </>
   );
 }

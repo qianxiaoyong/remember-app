@@ -6,10 +6,7 @@ import {
   writePackSource,
   type PackSourceCard,
 } from '@remember/pack-builder/pack-source';
-import {
-  createStoryCardTemplate,
-  suggestNextLessonCode,
-} from '../utils/story-card-template.js';
+import { createStoryCardTemplate, suggestNextLessonCode } from '../utils/story-card-template.js';
 import { mkdirSync, createReadStream } from 'node:fs';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { extname, join } from 'node:path';
@@ -129,7 +126,7 @@ export async function handleCreateCard(
     const existingCodes = source.cards
       .filter(isStorySourceCard)
       .map((card) => card.content.lesson.code);
-    const lessonCode = body.lessonCode?.trim() || suggestNextLessonCode(existingCodes);
+    const lessonCode = body.lessonCode?.trim() ?? suggestNextLessonCode(existingCodes);
     newCard = createStoryCardTemplate({ sortOrder: maxSortOrder + 1, lessonCode });
   } else {
     const kind = body.kind === 'phrase' ? 'phrase' : 'word';
@@ -246,7 +243,8 @@ export function handleGetAsset(
     return;
   }
 
-  const contentType = assetContentTypes[extname(asset.absolutePath).toLowerCase()] ?? 'application/octet-stream';
+  const contentType =
+    assetContentTypes[extname(asset.absolutePath).toLowerCase()] ?? 'application/octet-stream';
   res.statusCode = 200;
   res.setHeader('Content-Type', contentType);
   createReadStream(asset.absolutePath).pipe(res);

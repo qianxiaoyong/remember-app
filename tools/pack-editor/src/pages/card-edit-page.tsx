@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactElement } from 'react';
 import type { PackSourceCard } from '@remember/pack-builder/pack-source';
-import { isStorySourceCard } from '@remember/pack-builder/pack-source';
+import { isStorySourceCard } from '../utils/is-story-source-card.js';
 import { loadPackSource, saveCard } from '../api/local-api-client.js';
 import { STORY_CARD_FORM_ID, StoryCardForm } from '../components/story-card-form.js';
 import { VOCABULARY_CARD_FORM_ID, VocabularyCardForm } from '../components/vocabulary-card-form.js';

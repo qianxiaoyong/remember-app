@@ -40,10 +40,11 @@ function captureJsonResponse(): {
 
   return {
     res,
-    read: async () => ({
-      status,
-      body: JSON.parse(payload) as unknown,
-    }),
+    read: () =>
+      Promise.resolve({
+        status,
+        body: JSON.parse(payload) as unknown,
+      }),
   };
 }
 
@@ -73,7 +74,11 @@ describe('local-api story handlers', () => {
     writeMinimalPackSource(tempDir, []);
 
     const { res, read } = captureJsonResponse();
-    await handleCreateCard('story-test-temp', createJsonRequest({ cardType: 'story_reading' }), res);
+    await handleCreateCard(
+      'story-test-temp',
+      createJsonRequest({ cardType: 'story_reading' }),
+      res,
+    );
 
     const { status, body } = await read();
     expect(status).toBe(201);
@@ -89,9 +94,8 @@ describe('local-api story handlers', () => {
   });
 
   it('PUT save 合法 story 200', async () => {
-    const initial = readPackSource(
-      join(paths.getPackBuilderRoot(), 'source', 'story-test-pack'),
-    ).cards[0];
+    const initial = readPackSource(join(paths.getPackBuilderRoot(), 'source', 'story-test-pack'))
+      .cards[0];
     if (!initial || !isStorySourceCard(initial)) {
       throw new Error('expected story card fixture');
     }
@@ -119,9 +123,8 @@ describe('local-api story handlers', () => {
   });
 
   it('PUT save 非法 tier 400', async () => {
-    const initial = readPackSource(
-      join(paths.getPackBuilderRoot(), 'source', 'story-test-pack'),
-    ).cards[0];
+    const initial = readPackSource(join(paths.getPackBuilderRoot(), 'source', 'story-test-pack'))
+      .cards[0];
     if (!initial || !isStorySourceCard(initial)) {
       throw new Error('expected story card fixture');
     }
@@ -131,8 +134,12 @@ describe('local-api story handlers', () => {
     if (!isStorySourceCard(invalid)) {
       throw new Error('expected story card');
     }
+    const firstSidebar = invalid.content.sidebar[0];
+    if (!firstSidebar) {
+      throw new Error('expected sidebar entry');
+    }
     invalid.content.sidebar[0] = {
-      ...invalid.content.sidebar[0]!,
+      ...firstSidebar,
       tier: 'invalid-tier' as 'high',
     };
 

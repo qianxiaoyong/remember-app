@@ -42,12 +42,7 @@ export function StoryCardForm({
         })(event);
       }}
     >
-      <StoryLessonFields
-        packId={packId}
-        register={register}
-        control={control}
-        errors={errors}
-      />
+      <StoryLessonFields packId={packId} register={register} control={control} errors={errors} />
       <div className="edit-reveal-body">
         <StorySidebarEditor register={register} control={control} />
         <StoryParagraphEditor register={register} control={control} setValue={setValue} />

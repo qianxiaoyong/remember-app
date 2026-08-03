@@ -25,16 +25,14 @@ export function StoryParagraphEditor({
 }: StoryParagraphEditorProps): ReactElement {
   const paragraphs = useFieldArray({ control, name: 'story.paragraphs' });
   const watchedContent = useWatch({ control });
-  const [contentIssues, setContentIssues] = useState<
-    Array<{ path: string; message: string }>
-  >([]);
+  const [contentIssues, setContentIssues] = useState<{ path: string; message: string }[]>([]);
 
   const translationEnabled = useMemo(() => {
-    const items = watchedContent?.story?.paragraphs ?? [];
-    return items.some((paragraph) => paragraph?.translationZh !== undefined);
-  }, [watchedContent?.story?.paragraphs]);
+    const items = watchedContent.story?.paragraphs ?? [];
+    return items.some((paragraph) => paragraph.translationZh !== undefined);
+  }, [watchedContent]);
 
-  const sidebarOptions = (watchedContent?.sidebar ?? []) as StoryReadingContent['sidebar'];
+  const sidebarOptions = (watchedContent.sidebar ?? []) as StoryReadingContent['sidebar'];
 
   function toggleTranslation(enabled: boolean): void {
     for (let index = 0; index < paragraphs.fields.length; index += 1) {
@@ -49,12 +47,10 @@ export function StoryParagraphEditor({
   }
 
   function refreshContentIssues(): void {
-    if (!watchedContent?.lesson || !watchedContent.story || !watchedContent.sidebar) {
+    if (!watchedContent.lesson || !watchedContent.story || !watchedContent.sidebar) {
       return;
     }
-    setContentIssues(
-      collectStoryContentIssues(watchedContent as StoryReadingContent),
-    );
+    setContentIssues(collectStoryContentIssues(watchedContent as StoryReadingContent));
   }
 
   return (
@@ -138,7 +134,7 @@ interface ParagraphItemProps {
   setValue: UseFormSetValue<StoryReadingContent>;
   sidebarOptions: StoryReadingContent['sidebar'];
   translationEnabled: boolean;
-  contentIssues: Array<{ path: string; message: string }>;
+  contentIssues: { path: string; message: string }[];
   onMoveUp: () => void;
   onMoveDown: () => void;
   onRemove: () => void;
@@ -174,7 +170,12 @@ function ParagraphItem({
       <div className="edit-subsection-head">
         <span className="edit-subsection-title">段落 #{paragraphIndex + 1}</span>
         <div style={{ display: 'flex', gap: 'var(--space-1)' }}>
-          <button type="button" className="btn btn-ghost btn-sm" disabled={paragraphIndex === 0} onClick={onMoveUp}>
+          <button
+            type="button"
+            className="btn btn-ghost btn-sm"
+            disabled={paragraphIndex === 0}
+            onClick={onMoveUp}
+          >
             ↑
           </button>
           <button
@@ -185,7 +186,12 @@ function ParagraphItem({
           >
             ↓
           </button>
-          <button type="button" className="btn btn-ghost btn-sm" disabled={paragraphCount <= 1} onClick={onRemove}>
+          <button
+            type="button"
+            className="btn btn-ghost btn-sm"
+            disabled={paragraphCount <= 1}
+            onClick={onRemove}
+          >
             删段
           </button>
         </div>
@@ -277,21 +283,36 @@ function RunRow({
   const base = `story.paragraphs.${String(paragraphIndex)}.runs.${String(runIndex)}`;
 
   return (
-    <div className="edit-inline-row" style={{ alignItems: 'flex-start', flexWrap: 'wrap', marginBottom: 'var(--space-2)' }}>
+    <div
+      className="edit-inline-row"
+      style={{ alignItems: 'flex-start', flexWrap: 'wrap', marginBottom: 'var(--space-2)' }}
+    >
       <select
         {...register(kindPath)}
         className="select input-sm"
         onChange={(event) => {
           const nextKind = event.target.value;
           if (nextKind === 'text') {
-            setValue(`${base}.kind` as FieldPath<StoryReadingContent>, 'text', { shouldDirty: true });
+            setValue(`${base}.kind` as FieldPath<StoryReadingContent>, 'text', {
+              shouldDirty: true,
+            });
             setValue(`${base}.text` as FieldPath<StoryReadingContent>, '', { shouldDirty: true });
           } else {
-            setValue(`${base}.kind` as FieldPath<StoryReadingContent>, 'word', { shouldDirty: true });
-            setValue(`${base}.surface` as FieldPath<StoryReadingContent>, '', { shouldDirty: true });
-            setValue(`${base}.glossZh` as FieldPath<StoryReadingContent>, '', { shouldDirty: true });
-            setValue(`${base}.tier` as FieldPath<StoryReadingContent>, 'high', { shouldDirty: true });
-            setValue(`${base}.vocabId` as FieldPath<StoryReadingContent>, '', { shouldDirty: true });
+            setValue(`${base}.kind` as FieldPath<StoryReadingContent>, 'word', {
+              shouldDirty: true,
+            });
+            setValue(`${base}.surface` as FieldPath<StoryReadingContent>, '', {
+              shouldDirty: true,
+            });
+            setValue(`${base}.glossZh` as FieldPath<StoryReadingContent>, '', {
+              shouldDirty: true,
+            });
+            setValue(`${base}.tier` as FieldPath<StoryReadingContent>, 'high', {
+              shouldDirty: true,
+            });
+            setValue(`${base}.vocabId` as FieldPath<StoryReadingContent>, '', {
+              shouldDirty: true,
+            });
           }
         }}
       >
@@ -317,7 +338,9 @@ function RunRow({
             setValue(`${base}.glossZh` as FieldPath<StoryReadingContent>, entry.definitionZh, {
               shouldDirty: true,
             });
-            setValue(`${base}.tier` as FieldPath<StoryReadingContent>, entry.tier, { shouldDirty: true });
+            setValue(`${base}.tier` as FieldPath<StoryReadingContent>, entry.tier, {
+              shouldDirty: true,
+            });
           }}
         >
           <option value="">从 sidebar 选择…</option>
@@ -354,7 +377,10 @@ function RunRow({
             className="input input-sm"
             placeholder="vocabId"
           />
-          <select {...register(`${base}.tier` as FieldPath<StoryReadingContent>)} className="select input-sm">
+          <select
+            {...register(`${base}.tier` as FieldPath<StoryReadingContent>)}
+            className="select input-sm"
+          >
             {tierOptions.map((tier) => (
               <option key={tier} value={tier}>
                 {tier}

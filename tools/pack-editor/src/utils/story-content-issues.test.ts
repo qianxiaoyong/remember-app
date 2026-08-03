@@ -61,12 +61,14 @@ describe('collectStoryContentIssues', () => {
 
   it('tier mismatch', () => {
     const content = baseContent();
-    content.story.paragraphs[0]!.runs[1] = {
-      kind: 'word',
-      surface: 'world',
-      glossZh: '世界',
+    const firstParagraph = content.story.paragraphs[0];
+    const wordRun = firstParagraph?.runs[1];
+    if (!firstParagraph || wordRun?.kind !== 'word') {
+      throw new Error('expected word run fixture');
+    }
+    firstParagraph.runs[1] = {
+      ...wordRun,
       tier: 'low',
-      vocabId: 'world',
     };
 
     const issues = collectStoryContentIssues(content);
@@ -75,7 +77,11 @@ describe('collectStoryContentIssues', () => {
 
   it('缺 translationZh', () => {
     const content = baseContent();
-    delete content.story.paragraphs[1]!.translationZh;
+    const secondParagraph = content.story.paragraphs[1];
+    if (!secondParagraph) {
+      throw new Error('expected second paragraph');
+    }
+    delete secondParagraph.translationZh;
 
     const issues = collectStoryContentIssues(content);
     expect(issues.some((issue) => issue.message.includes('missing translationZh'))).toBe(true);
@@ -83,7 +89,11 @@ describe('collectStoryContentIssues', () => {
 
   it('时间轴重叠', () => {
     const content = baseContent();
-    content.story.paragraphs[1]!.audioStartMs = 500;
+    const secondParagraph = content.story.paragraphs[1];
+    if (!secondParagraph) {
+      throw new Error('expected second paragraph');
+    }
+    secondParagraph.audioStartMs = 500;
 
     const issues = collectStoryContentIssues(content);
     expect(issues.some((issue) => issue.message.includes('overlaps previous segment'))).toBe(true);
@@ -91,11 +101,15 @@ describe('collectStoryContentIssues', () => {
 
   it('末段超出音频时长', () => {
     const content = baseContent();
-    content.story.paragraphs[1]!.audioEndMs = 5000;
+    const secondParagraph = content.story.paragraphs[1];
+    if (!secondParagraph) {
+      throw new Error('expected second paragraph');
+    }
+    secondParagraph.audioEndMs = 5000;
 
     const issues = collectStoryContentIssues(content, { primaryAudioDurationMs: 3000 });
-    expect(
-      issues.some((issue) => issue.message.includes('exceeds primary audio duration')),
-    ).toBe(true);
+    expect(issues.some((issue) => issue.message.includes('exceeds primary audio duration'))).toBe(
+      true,
+    );
   });
 });

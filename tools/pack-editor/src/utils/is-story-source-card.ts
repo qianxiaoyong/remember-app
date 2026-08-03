@@ -1,26 +1,7 @@
-export interface StorySourceCardShape {
-  cardType: 'story_reading';
-  sortOrder: number;
-  content: {
-    lesson: {
-      code: string;
-      titleEn: string;
-    };
-  };
-}
+import type { PackSourceCard, PackSourceStoryCard } from '@remember/pack-builder/pack-source';
 
-export interface VocabularySourceCardShape {
-  kind: 'word' | 'phrase';
-  sortOrder: number;
-  content: {
-    prompt: {
-      headword: string;
-    };
-  };
-}
-
-export type PackSourceCardShape = StorySourceCardShape | VocabularySourceCardShape;
-
-export function isStorySourceCard(card: PackSourceCardShape): card is StorySourceCardShape {
+export function isStorySourceCard(card: PackSourceCard): card is PackSourceStoryCard {
   return 'cardType' in card;
 }
+
+export type { PackSourceCard, PackSourceStoryCard };

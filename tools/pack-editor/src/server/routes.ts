@@ -59,7 +59,10 @@ async function handleLocalApi(
     segments[3] === 'assets'
   ) {
     if (req.method === 'GET') {
-      const assetPath = segments.slice(4).map((part) => decodeURIComponent(part)).join('/');
+      const assetPath = segments
+        .slice(4)
+        .map((part) => decodeURIComponent(part))
+        .join('/');
       handleGetAsset(segments[2] ?? '', assetPath, res);
       return;
     }

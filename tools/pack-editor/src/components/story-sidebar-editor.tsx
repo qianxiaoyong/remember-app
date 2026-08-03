@@ -9,10 +9,7 @@ interface StorySidebarEditorProps {
   control: Control<StoryReadingContent>;
 }
 
-export function StorySidebarEditor({
-  register,
-  control,
-}: StorySidebarEditorProps): ReactElement {
+export function StorySidebarEditor({ register, control }: StorySidebarEditorProps): ReactElement {
   const sidebar = useFieldArray({ control, name: 'sidebar' });
 
   return (
@@ -57,25 +54,33 @@ export function StorySidebarEditor({
                 <tr key={field.id}>
                   <td>
                     <input
-                      {...register(`sidebar.${String(index)}.vocabId` as FieldPath<StoryReadingContent>)}
+                      {...register(
+                        `sidebar.${String(index)}.vocabId` as FieldPath<StoryReadingContent>,
+                      )}
                       className="input input-sm"
                     />
                   </td>
                   <td>
                     <input
-                      {...register(`sidebar.${String(index)}.headword` as FieldPath<StoryReadingContent>)}
+                      {...register(
+                        `sidebar.${String(index)}.headword` as FieldPath<StoryReadingContent>,
+                      )}
                       className="input input-sm"
                     />
                   </td>
                   <td>
                     <input
-                      {...register(`sidebar.${String(index)}.ipa` as FieldPath<StoryReadingContent>)}
+                      {...register(
+                        `sidebar.${String(index)}.ipa` as FieldPath<StoryReadingContent>,
+                      )}
                       className="input input-sm"
                     />
                   </td>
                   <td>
                     <input
-                      {...register(`sidebar.${String(index)}.pos` as FieldPath<StoryReadingContent>)}
+                      {...register(
+                        `sidebar.${String(index)}.pos` as FieldPath<StoryReadingContent>,
+                      )}
                       className="input input-sm"
                     />
                   </td>
@@ -89,7 +94,9 @@ export function StorySidebarEditor({
                   </td>
                   <td>
                     <select
-                      {...register(`sidebar.${String(index)}.tier` as FieldPath<StoryReadingContent>)}
+                      {...register(
+                        `sidebar.${String(index)}.tier` as FieldPath<StoryReadingContent>,
+                      )}
                       className="select input-sm"
                     >
                       {tierOptions.map((tier) => (

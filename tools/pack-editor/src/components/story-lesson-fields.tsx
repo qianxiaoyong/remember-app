@@ -18,15 +18,18 @@ export function StoryLessonFields({
   control,
   errors,
 }: StoryLessonFieldsProps): ReactElement {
-  const lessonCode = useWatch({ control, name: 'lesson.code' }) ?? '';
-  let knowledgeIdPreview = '';
-  try {
-    knowledgeIdPreview = lessonCode.trim()
-      ? buildStoryKnowledgeId(packId, lessonCode)
-      : '（填写课号后生成）';
-  } catch {
-    knowledgeIdPreview = '（课号格式无效）';
-  }
+  const lessonCode = useWatch({ control, name: 'lesson.code' });
+  const knowledgeIdPreview = (() => {
+    const code = typeof lessonCode === 'string' ? lessonCode.trim() : '';
+    if (!code) {
+      return '（填写课号后生成）';
+    }
+    try {
+      return buildStoryKnowledgeId(packId, code);
+    } catch {
+      return '（课号格式无效）';
+    }
+  })();
 
   return (
     <div className="edit-prompt-band">
