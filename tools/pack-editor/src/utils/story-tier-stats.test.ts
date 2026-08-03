@@ -37,7 +37,30 @@ describe('story-tier-stats', () => {
         tier: 'low',
       },
     ]);
-    expect(stats).toEqual({ high: 2, mid: 1, low: 1 });
+    expect(stats).toEqual({ high: 2, mid: 1, low: 1, normal: 0 });
     expect(formatStoryTierLegend(stats, 'high')).toBe('高频(2)');
+  });
+
+  it('normal 计入普通频次统计', () => {
+    const stats = countStoryTierStats([
+      {
+        vocabId: 'a',
+        headword: 'a',
+        ipa: '',
+        pos: '',
+        definitionZh: '',
+        tier: 'high',
+      },
+      {
+        vocabId: 'b',
+        headword: 'b',
+        ipa: '',
+        pos: '',
+        definitionZh: '',
+        tier: 'normal',
+      },
+    ]);
+    expect(stats).toEqual({ high: 1, mid: 0, low: 0, normal: 1 });
+    expect(formatStoryTierLegend(stats, 'normal')).toBe('普通(1)');
   });
 });

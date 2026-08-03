@@ -1,26 +1,28 @@
 import { storyReadingContentSchema, type StoryReadingContent } from '@remember/contracts';
 import { recomputeSegmentEnds } from './recompute-segment-timeline.js';
 import { runsToPlainText, syncRunsToPlainText } from './story-runs-markup.js';
+import { syncWordRunTiersFromSidebar } from './sync-word-run-tiers.js';
 
 export function normalizeStoryContent(
   values: StoryReadingContent,
   options?: { primaryAudioDurationMs?: number },
 ): StoryReadingContent {
+  const tierSynced = syncWordRunTiersFromSidebar(values);
   const lesson = {
-    ...values.lesson,
-    code: values.lesson.code.trim(),
-    titleEn: values.lesson.titleEn.trim(),
-    titleZh: values.lesson.titleZh.trim(),
-    coverImage: values.lesson.coverImage.trim(),
-    primaryAudio: values.lesson.primaryAudio.trim(),
+    ...tierSynced.lesson,
+    code: tierSynced.lesson.code.trim(),
+    titleEn: tierSynced.lesson.titleEn.trim(),
+    titleZh: tierSynced.lesson.titleZh.trim(),
+    coverImage: tierSynced.lesson.coverImage.trim(),
+    primaryAudio: tierSynced.lesson.primaryAudio.trim(),
   };
 
   const durationMs = options?.primaryAudioDurationMs ?? 0;
-  const timelineParagraphs = recomputeSegmentEnds(values.story.paragraphs, durationMs);
+  const timelineParagraphs = recomputeSegmentEnds(tierSynced.story.paragraphs, durationMs);
 
   const paragraphs = timelineParagraphs.map((paragraph) => {
     const plain = runsToPlainText(paragraph.runs);
-    const syncedRuns = syncRunsToPlainText(paragraph.runs, plain, values.sidebar);
+    const syncedRuns = syncRunsToPlainText(paragraph.runs, plain, tierSynced.sidebar);
     const runs = syncedRuns
       .map((run) => {
         if (run.kind === 'text') {
@@ -51,7 +53,7 @@ export function normalizeStoryContent(
     return next;
   });
 
-  const sidebar = values.sidebar.map((entry) => ({
+  const sidebar = tierSynced.sidebar.map((entry) => ({
     vocabId: entry.vocabId.trim(),
     headword: entry.headword.trim(),
     ipa: entry.ipa.trim(),

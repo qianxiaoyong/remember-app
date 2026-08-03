@@ -9,6 +9,7 @@ import {
 } from 'react-hook-form';
 import { useEffect, type ReactElement } from 'react';
 import { useStoryAudio } from '../context/story-audio-context.js';
+import { useMiniConfirm } from '../hooks/use-mini-confirm.js';
 import {
   applySegmentTimelineToParagraphs,
   canSetSegmentStart,
@@ -33,6 +34,7 @@ export function StorySegmentTimeline({
   getValues,
 }: StorySegmentTimelineProps): ReactElement {
   const audio = useStoryAudio();
+  const { askConfirm, miniConfirmDialog } = useMiniConfirm();
   const allParagraphs = useWatch({ control, name: 'story.paragraphs' });
   const paragraph = useWatch({
     control,
@@ -104,91 +106,102 @@ export function StorySegmentTimeline({
   }
 
   return (
-    <div className="edit-story-audio-segment-row">
-      <span className="edit-paragraph-timeline-item">
-        <span className="edit-paragraph-timeline-label">{segmentLabel}起点</span>
-        <span className="edit-paragraph-timeline-value">
-          {hasStartMs ? formatAudioTimeMs(startMs) : '--:--'}
+    <>
+      {miniConfirmDialog}
+      <div className="edit-story-audio-segment-row">
+        <span className="edit-paragraph-timeline-item">
+          <span className="edit-paragraph-timeline-label">{segmentLabel}起点</span>
+          <span className="edit-paragraph-timeline-value">
+            {hasStartMs ? formatAudioTimeMs(startMs) : '--:--'}
+          </span>
+          <input
+            type="number"
+            className="input input-sm edit-paragraph-timeline-ms"
+            placeholder="ms"
+            title="毫秒"
+            disabled={!canSetStart}
+            {...startField}
+            onBlur={(event) => {
+              void startField.onBlur(event);
+              const ms = Number.parseInt(event.target.value, 10);
+              if (!Number.isFinite(ms) || !canSetStart) {
+                return;
+              }
+              applyStartMs(ms);
+            }}
+          />
+          <button
+            type="button"
+            className="btn btn-secondary btn-sm"
+            disabled={!canSetStart}
+            title={canSetStart ? undefined : '请按顺序从段1开始标起点，或先标前一段'}
+            onClick={() => {
+              const ms = audio.getPlaybackMs();
+              if (ms !== null) {
+                applyStartMs(ms);
+              }
+            }}
+          >
+            设为起点
+          </button>
         </span>
-        <input
-          type="number"
-          className="input input-sm edit-paragraph-timeline-ms"
-          placeholder="ms"
-          title="毫秒"
-          disabled={!canSetStart}
-          {...startField}
-          onBlur={(event) => {
-            void startField.onBlur(event);
-            const ms = Number.parseInt(event.target.value, 10);
-            if (!Number.isFinite(ms) || !canSetStart) {
-              return;
-            }
-            applyStartMs(ms);
-          }}
-        />
+
+        <span className="edit-paragraph-timeline-sep" aria-hidden="true">
+          →
+        </span>
+
+        <span className="edit-paragraph-timeline-item">
+          <span className="edit-paragraph-timeline-label">{segmentLabel}终点</span>
+          <span className="edit-paragraph-timeline-value">
+            {hasEndMs ? formatAudioTimeMs(endMs) : '--:--'}
+          </span>
+          <span className="edit-paragraph-timeline-ms-readonly">
+            {hasEndMs ? String(Math.round(endMs)) : '—'}
+          </span>
+        </span>
+
+        <span className="edit-paragraph-timeline-sep" aria-hidden="true">
+          ·
+        </span>
+
+        <span className="edit-paragraph-timeline-item">
+          <span className="edit-paragraph-timeline-label">时长</span>
+          <span className="edit-paragraph-timeline-duration">{segmentDuration ?? '--'}</span>
+        </span>
+
         <button
           type="button"
-          className="btn btn-secondary btn-sm"
-          disabled={!canSetStart}
-          title={canSetStart ? undefined : '请按顺序从段1开始标起点，或先标前一段'}
+          className="btn btn-ghost btn-sm"
+          disabled={segmentSpanMs === null}
           onClick={() => {
-            const ms = audio.getPlaybackMs();
-            if (ms !== null) {
-              applyStartMs(ms);
+            if (hasStartMs && hasEndMs && endMs > startMs) {
+              audio.toggleSegmentPreview(startMs, endMs);
             }
           }}
         >
-          设为起点
+          {isThisSegmentActive && audio.isPlaying ? '⏸ 暂停' : '▶ 试听本段'}
         </button>
-      </span>
 
-      <span className="edit-paragraph-timeline-sep" aria-hidden="true">
-        →
-      </span>
-
-      <span className="edit-paragraph-timeline-item">
-        <span className="edit-paragraph-timeline-label">{segmentLabel}终点</span>
-        <span className="edit-paragraph-timeline-value">
-          {hasEndMs ? formatAudioTimeMs(endMs) : '--:--'}
-        </span>
-        <span className="edit-paragraph-timeline-ms-readonly">
-          {hasEndMs ? String(Math.round(endMs)) : '—'}
-        </span>
-      </span>
-
-      <span className="edit-paragraph-timeline-sep" aria-hidden="true">
-        ·
-      </span>
-
-      <span className="edit-paragraph-timeline-item">
-        <span className="edit-paragraph-timeline-label">时长</span>
-        <span className="edit-paragraph-timeline-duration">{segmentDuration ?? '--'}</span>
-      </span>
-
-      <button
-        type="button"
-        className="btn btn-ghost btn-sm"
-        disabled={segmentSpanMs === null}
-        onClick={() => {
-          if (hasStartMs && hasEndMs && endMs > startMs) {
-            audio.toggleSegmentPreview(startMs, endMs);
+        <button
+          type="button"
+          className="btn btn-ghost btn-sm"
+          disabled={!canClearTimeline}
+          title={
+            canClearTimeline
+              ? '清除本段及之后各段的时间轴，便于从本段起重新标定'
+              : '本段尚未设置起点'
           }
-        }}
-      >
-        {isThisSegmentActive && audio.isPlaying ? '⏸ 暂停' : '▶ 试听本段'}
-      </button>
-
-      <button
-        type="button"
-        className="btn btn-ghost btn-sm"
-        disabled={!canClearTimeline}
-        title={
-          canClearTimeline ? '清除本段及之后各段的时间轴，便于从本段起重新标定' : '本段尚未设置起点'
-        }
-        onClick={clearTimeline}
-      >
-        删除本段时间轴
-      </button>
-    </div>
+          onClick={() => {
+            askConfirm({
+              message: '确定删除本段时间轴？本段及之后各段的时间轴将被清除。',
+              confirmLabel: '删除',
+              onConfirm: clearTimeline,
+            });
+          }}
+        >
+          删除本段时间轴
+        </button>
+      </div>
+    </>
   );
 }

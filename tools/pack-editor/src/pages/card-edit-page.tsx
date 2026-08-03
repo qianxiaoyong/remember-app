@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactElement } from 'react';
+import { useEffect, useRef, useState, type ReactElement } from 'react';
 import type { PackSourceCard } from '@remember/pack-builder/pack-source';
 import { isStorySourceCard } from '../utils/is-story-source-card.js';
 import { loadPackSource, saveCard } from '../api/local-api-client.js';
@@ -20,6 +20,7 @@ export function CardEditPage({ packId, sortOrder, onBack }: CardEditPageProps): 
   const [toast, setToast] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const checkRulesRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -81,6 +82,7 @@ export function CardEditPage({ packId, sortOrder, onBack }: CardEditPageProps): 
         <StoryCardForm
           packId={packId}
           defaultValues={storyCard.content}
+          checkRulesRef={checkRulesRef}
           onSubmit={async (content) => {
             setSaving(true);
             try {
@@ -91,6 +93,12 @@ export function CardEditPage({ packId, sortOrder, onBack }: CardEditPageProps): 
               window.setTimeout(() => {
                 setToast(null);
               }, 2000);
+            } catch (saveError: unknown) {
+              const message = saveError instanceof Error ? saveError.message : String(saveError);
+              setToast(`保存失败：${message}`);
+              window.setTimeout(() => {
+                setToast(null);
+              }, 4000);
             } finally {
               setSaving(false);
             }
@@ -105,15 +113,26 @@ export function CardEditPage({ packId, sortOrder, onBack }: CardEditPageProps): 
             <strong>#{String(sortOrder)}</strong> · {storyCard.content.lesson.code}{' '}
             {storyCard.content.lesson.titleZh}
           </div>
-          <button
-            type="submit"
-            form={STORY_CARD_FORM_ID}
-            className="btn btn-primary"
-            disabled={saving}
-          >
-            {saving && <span className="btn-spinner" aria-hidden="true" />}
-            {saving ? '保存中…' : '保存'}
-          </button>
+          <div className="sticky-form-footer-actions">
+            <button
+              type="button"
+              className="btn btn-secondary btn-sm"
+              onClick={() => {
+                checkRulesRef.current?.();
+              }}
+            >
+              检查规则
+            </button>
+            <button
+              type="submit"
+              form={STORY_CARD_FORM_ID}
+              className="btn btn-primary"
+              disabled={saving}
+            >
+              {saving && <span className="btn-spinner" aria-hidden="true" />}
+              {saving ? '保存中…' : '保存'}
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -137,6 +156,12 @@ export function CardEditPage({ packId, sortOrder, onBack }: CardEditPageProps): 
             window.setTimeout(() => {
               setToast(null);
             }, 2000);
+          } catch (saveError: unknown) {
+            const message = saveError instanceof Error ? saveError.message : String(saveError);
+            setToast(`保存失败：${message}`);
+            window.setTimeout(() => {
+              setToast(null);
+            }, 4000);
           } finally {
             setSaving(false);
           }

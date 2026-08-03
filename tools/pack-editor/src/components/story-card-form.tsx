@@ -1,10 +1,18 @@
 import { storyReadingContentSchema, type StoryReadingContent } from '@remember/contracts';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm, useWatch, type FieldPath } from 'react-hook-form';
-import { useMemo, useState, type ReactElement } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactElement,
+  type RefObject,
+} from 'react';
 import { StoryAudioProvider } from '../context/story-audio-context.js';
 import { normalizeStoryContent } from '../utils/normalize-story-content.js';
 import { collectStoryContentIssues } from '../utils/story-content-issues.js';
+import { syncWordRunTiersFromSidebar } from '../utils/sync-word-run-tiers.js';
 import { StoryLessonFields } from './story-lesson-fields.js';
 import { StoryParagraphEditor } from './story-paragraph-editor.js';
 import { StoryTimelineEditor } from './story-timeline-editor.js';
@@ -17,9 +25,15 @@ interface StoryCardFormProps {
   packId: string;
   defaultValues: StoryReadingContent;
   onSubmit: (content: StoryReadingContent) => Promise<void>;
+  checkRulesRef?: RefObject<(() => void) | null>;
 }
 
-function StoryCardFormBody({ packId, defaultValues, onSubmit }: StoryCardFormProps): ReactElement {
+function StoryCardFormBody({
+  packId,
+  defaultValues,
+  onSubmit,
+  checkRulesRef,
+}: StoryCardFormProps): ReactElement {
   const [selectedParagraphIndex, setSelectedParagraphIndex] = useState(0);
   const [contentIssues, setContentIssues] = useState<{ path: string; message: string }[]>([]);
   const [checkToast, setCheckToast] = useState<string | null>(null);
@@ -60,11 +74,15 @@ function StoryCardFormBody({ packId, defaultValues, onSubmit }: StoryCardFormPro
     setSelectedParagraphIndex(index);
   }
 
-  function refreshContentIssues(): void {
-    const values = getValues();
-    const issues = collectStoryContentIssues(values, {
+  function collectIssuesFromForm(): ReturnType<typeof collectStoryContentIssues> {
+    const synced = syncWordRunTiersFromSidebar(getValues());
+    return collectStoryContentIssues(synced, {
       ...(audio.durationMs > 0 ? { primaryAudioDurationMs: audio.durationMs } : {}),
     });
+  }
+
+  const refreshContentIssues = useCallback((): void => {
+    const issues = collectIssuesFromForm();
     setContentIssues(issues);
     if (issues.length === 0) {
       setCheckToast('检查完成，未发现问题');
@@ -72,6 +90,20 @@ function StoryCardFormBody({ packId, defaultValues, onSubmit }: StoryCardFormPro
         setCheckToast(null);
       }, 2000);
     }
+  }, [audio.durationMs, getValues]);
+
+  useEffect(() => {
+    if (!checkRulesRef) {
+      return undefined;
+    }
+    checkRulesRef.current = refreshContentIssues;
+    return () => {
+      checkRulesRef.current = null;
+    };
+  }, [checkRulesRef, refreshContentIssues]);
+
+  function showFormValidationError(): void {
+    setCheckToast('表单字段校验失败，请检查标红字段');
   }
 
   return (
@@ -81,21 +113,28 @@ function StoryCardFormBody({ packId, defaultValues, onSubmit }: StoryCardFormPro
         id={STORY_CARD_FORM_ID}
         className="card-panel edit-form edit-story-form"
         onSubmit={(event) => {
-          void handleSubmit(async (values) => {
-            const issues = collectStoryContentIssues(values, {
-              ...(audio.durationMs > 0 ? { primaryAudioDurationMs: audio.durationMs } : {}),
-            });
-            if (issues.length > 0) {
-              setContentIssues(issues);
-              setCheckToast('请先修复检查规则中的问题再保存');
-              return;
-            }
-            await onSubmit(
-              normalizeStoryContent(values, {
+          void handleSubmit(
+            async (values) => {
+              const synced = syncWordRunTiersFromSidebar(values);
+              const issues = collectStoryContentIssues(synced, {
                 ...(audio.durationMs > 0 ? { primaryAudioDurationMs: audio.durationMs } : {}),
-              }),
-            );
-          })(event);
+              });
+              if (issues.length > 0) {
+                setContentIssues(issues);
+                setCheckToast('请先修复检查规则中的问题再保存');
+                return;
+              }
+              setValue('story.paragraphs', synced.story.paragraphs, { shouldDirty: true });
+              await onSubmit(
+                normalizeStoryContent(synced, {
+                  ...(audio.durationMs > 0 ? { primaryAudioDurationMs: audio.durationMs } : {}),
+                }),
+              );
+            },
+            () => {
+              showFormValidationError();
+            },
+          )(event);
         }}
       >
         <StoryLessonFields packId={packId} register={register} control={control} errors={errors} />
@@ -113,7 +152,6 @@ function StoryCardFormBody({ packId, defaultValues, onSubmit }: StoryCardFormPro
               paragraphs.append({ runs: [{ kind: 'text', text: ' ' }] });
               selectParagraph(paragraphs.fields.length);
             }}
-            onCheckRules={refreshContentIssues}
             contentIssues={contentIssues}
           />
           <StoryParagraphEditor
@@ -124,6 +162,9 @@ function StoryCardFormBody({ packId, defaultValues, onSubmit }: StoryCardFormPro
             onSelectParagraph={selectParagraph}
             translationEnabled={translationEnabled}
             contentIssues={contentIssues}
+            onRunsSyncError={(message) => {
+              setCheckToast(message);
+            }}
             paragraphs={paragraphs}
           />
         </div>

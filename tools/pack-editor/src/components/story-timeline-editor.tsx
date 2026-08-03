@@ -72,7 +72,6 @@ interface StoryTimelineEditorProps {
   translationEnabled: boolean;
   onToggleTranslation: (enabled: boolean) => void;
   onAddParagraph: () => void;
-  onCheckRules: () => void;
   contentIssues: { path: string; message: string }[];
 }
 
@@ -86,7 +85,6 @@ export function StoryTimelineEditor({
   translationEnabled,
   onToggleTranslation,
   onAddParagraph,
-  onCheckRules,
   contentIssues,
 }: StoryTimelineEditorProps): ReactElement {
   const audio = useStoryAudio();
@@ -214,15 +212,12 @@ export function StoryTimelineEditor({
         </button>
         <button
           type="button"
-          className="btn btn-ghost btn-sm"
+          className="btn btn-secondary btn-sm btn-story-lesson-vocab"
           onClick={() => {
             setLessonVocabOpen(true);
           }}
         >
           本课词频
-        </button>
-        <button type="button" className="btn btn-ghost btn-sm" onClick={onCheckRules}>
-          检查规则
         </button>
       </div>
 

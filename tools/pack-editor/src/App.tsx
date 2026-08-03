@@ -1,14 +1,14 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import type { ReactElement } from 'react';
 import { AppShell, type BreadcrumbItem } from './components/app-shell.js';
 import { CardEditPage } from './pages/card-edit-page.js';
 import { CardListPage } from './pages/card-list-page.js';
 import { PackPickerPage } from './pages/pack-picker-page.js';
-
-type EditorRoute =
-  | { page: 'picker' }
-  | { page: 'list'; packId: string }
-  | { page: 'edit'; packId: string; sortOrder: number; headword?: string };
+import {
+  editorRouteToHash,
+  readEditorRouteFromLocation,
+  type EditorRoute,
+} from './utils/editor-route.js';
 
 function buildBreadcrumbs(
   route: EditorRoute,
@@ -52,15 +52,34 @@ function buildBreadcrumbs(
 }
 
 export function App(): ReactElement {
-  const [route, setRoute] = useState<EditorRoute>({ page: 'picker' });
-  const breadcrumbs = buildBreadcrumbs(route, setRoute);
+  const [route, setRoute] = useState<EditorRoute>(() => readEditorRouteFromLocation());
+
+  const navigate = useCallback((next: EditorRoute) => {
+    setRoute(next);
+    const nextHash = editorRouteToHash(next);
+    if (window.location.hash !== nextHash) {
+      window.location.hash = nextHash;
+    }
+  }, []);
+
+  useEffect(() => {
+    const syncRouteFromHash = (): void => {
+      setRoute(readEditorRouteFromLocation());
+    };
+    window.addEventListener('hashchange', syncRouteFromHash);
+    return () => {
+      window.removeEventListener('hashchange', syncRouteFromHash);
+    };
+  }, []);
+
+  const breadcrumbs = buildBreadcrumbs(route, navigate);
 
   return (
     <AppShell breadcrumbs={breadcrumbs}>
       {route.page === 'picker' && (
         <PackPickerPage
           onSelectPack={(packId) => {
-            setRoute({ page: 'list', packId });
+            navigate({ page: 'list', packId });
           }}
         />
       )}
@@ -68,10 +87,10 @@ export function App(): ReactElement {
         <CardListPage
           packId={route.packId}
           onBack={() => {
-            setRoute({ page: 'picker' });
+            navigate({ page: 'picker' });
           }}
           onEditCard={(sortOrder, headword) => {
-            setRoute({ page: 'edit', packId: route.packId, sortOrder, headword });
+            navigate({ page: 'edit', packId: route.packId, sortOrder, headword });
           }}
         />
       )}
@@ -80,7 +99,7 @@ export function App(): ReactElement {
           packId={route.packId}
           sortOrder={route.sortOrder}
           onBack={() => {
-            setRoute({ page: 'list', packId: route.packId });
+            navigate({ page: 'list', packId: route.packId });
           }}
         />
       )}

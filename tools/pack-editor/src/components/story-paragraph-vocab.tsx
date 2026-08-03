@@ -1,4 +1,5 @@
 import type { StoryReadingContent, StoryTier } from '@remember/contracts';
+import { STORY_TIER_OPTIONS } from '@remember/contracts';
 import {
   useFieldArray,
   useWatch,
@@ -9,14 +10,19 @@ import {
 } from 'react-hook-form';
 import { useMemo, type ReactElement } from 'react';
 import { collectVocabIdsFromRuns, unmarkVocabInRuns } from '../utils/story-runs-markup.js';
+import { moveSidebarEntryToTierHead } from '../utils/story-sidebar-order.js';
+import { orderParagraphVocabIds } from '../utils/story-paragraph-vocab-order.js';
+import { useMiniConfirm } from '../hooks/use-mini-confirm.js';
 
-const tierOptions: StoryTier[] = ['high', 'mid', 'low'];
+const tierOptions = STORY_TIER_OPTIONS;
 
 interface StoryParagraphVocabProps {
   paragraphIndex: number;
   register: UseFormRegister<StoryReadingContent>;
   control: Control<StoryReadingContent>;
   setValue: UseFormSetValue<StoryReadingContent>;
+  vocabDisplayOrder: string[];
+  onVocabRemovedFromParagraph: (vocabId: string) => void;
 }
 
 export function StoryParagraphVocab({
@@ -24,7 +30,10 @@ export function StoryParagraphVocab({
   register,
   control,
   setValue,
+  vocabDisplayOrder,
+  onVocabRemovedFromParagraph,
 }: StoryParagraphVocabProps): ReactElement {
+  const { askConfirm, miniConfirmDialog } = useMiniConfirm();
   const sidebar = useFieldArray({ control, name: 'sidebar' });
   const sidebarValues = useWatch({ control, name: 'sidebar' });
   const allParagraphs = useWatch({ control, name: 'story.paragraphs' });
@@ -35,7 +44,12 @@ export function StoryParagraphVocab({
 
   const paragraphVocabIds = useMemo(() => collectVocabIdsFromRuns(runs), [runs]);
 
-  const vocabRows = paragraphVocabIds.flatMap((vocabId) => {
+  const orderedVocabIds = useMemo(
+    () => orderParagraphVocabIds(vocabDisplayOrder, paragraphVocabIds),
+    [vocabDisplayOrder, paragraphVocabIds],
+  );
+
+  const vocabRows = orderedVocabIds.flatMap((vocabId) => {
     const sidebarIndex = sidebarValues.findIndex((entry) => entry.vocabId === vocabId);
     if (sidebarIndex < 0) {
       return [];
@@ -62,103 +76,153 @@ export function StoryParagraphVocab({
     if (!stillUsed) {
       sidebar.remove(sidebarIndex);
     }
+    onVocabRemovedFromParagraph(vocabId);
+  }
+
+  function handleTierChange(sidebarIndex: number, vocabId: string, tier: StoryTier): void {
+    const nextSidebar = moveSidebarEntryToTierHead(sidebarValues, sidebarIndex, tier);
+    setValue('sidebar', nextSidebar, { shouldDirty: true });
+
+    allParagraphs.forEach((paragraph, paragraphIdx) => {
+      const needsUpdate = paragraph.runs.some(
+        (run) => run.kind === 'word' && run.vocabId === vocabId && run.tier !== tier,
+      );
+      if (!needsUpdate) {
+        return;
+      }
+      const nextRuns = paragraph.runs.map((run) => {
+        if (run.kind === 'word' && run.vocabId === vocabId && run.tier !== tier) {
+          return { ...run, tier };
+        }
+        return run;
+      });
+      setValue(
+        `story.paragraphs.${String(paragraphIdx)}.runs` as FieldPath<StoryReadingContent>,
+        nextRuns,
+        { shouldDirty: true },
+      );
+    });
   }
 
   return (
-    <div className="edit-story-block edit-story-block-vocab">
-      <div className="edit-story-block-title">本段用词（{String(vocabRows.length)}）</div>
+    <>
+      {miniConfirmDialog}
+      <div className="edit-story-block edit-story-block-vocab">
+        <div className="edit-story-block-title">本段用词（{String(vocabRows.length)}）</div>
 
-      {vocabRows.length === 0 ? (
-        <p className="field-helper">在正文中选中文字，点「标记为可点词」后词条会出现在这里。</p>
-      ) : (
-        <div className="data-table-wrap">
-          <table className="data-table data-table-compact">
-            <thead>
-              <tr>
-                <th>vocabId</th>
-                <th>headword</th>
-                <th>ipa</th>
-                <th>pos</th>
-                <th>definitionZh</th>
-                <th>tier</th>
-                <th />
-              </tr>
-            </thead>
-            <tbody>
-              {vocabRows.map(({ field, sidebarIndex, vocabId }) => (
-                <tr key={field.id}>
-                  <td>
-                    <input
-                      {...register(
-                        `sidebar.${String(sidebarIndex)}.vocabId` as FieldPath<StoryReadingContent>,
-                      )}
-                      className="input input-sm"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      {...register(
-                        `sidebar.${String(sidebarIndex)}.headword` as FieldPath<StoryReadingContent>,
-                      )}
-                      className="input input-sm"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      {...register(
-                        `sidebar.${String(sidebarIndex)}.ipa` as FieldPath<StoryReadingContent>,
-                      )}
-                      className="input input-sm"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      {...register(
-                        `sidebar.${String(sidebarIndex)}.pos` as FieldPath<StoryReadingContent>,
-                      )}
-                      className="input input-sm"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      {...register(
-                        `sidebar.${String(sidebarIndex)}.definitionZh` as FieldPath<StoryReadingContent>,
-                      )}
-                      className="input input-sm"
-                    />
-                  </td>
-                  <td>
-                    <select
-                      {...register(
-                        `sidebar.${String(sidebarIndex)}.tier` as FieldPath<StoryReadingContent>,
-                      )}
-                      className="select input-sm"
-                    >
-                      {tierOptions.map((tier) => (
-                        <option key={tier} value={tier}>
-                          {tier}
-                        </option>
-                      ))}
-                    </select>
-                  </td>
-                  <td>
-                    <button
-                      type="button"
-                      className="btn btn-ghost btn-sm"
-                      onClick={() => {
-                        removeFromParagraph(sidebarIndex, vocabId);
-                      }}
-                    >
-                      取消标记
-                    </button>
-                  </td>
+        {vocabRows.length === 0 ? (
+          <p className="field-helper">在正文中选中文字，点「标记为可点词」后词条会出现在这里。</p>
+        ) : (
+          <div className="data-table-wrap">
+            <table className="data-table data-table-compact">
+              <thead>
+                <tr>
+                  <th className="story-vocab-tier-bar-cell" aria-hidden="true" />
+                  <th>vocabId</th>
+                  <th>headword</th>
+                  <th>ipa</th>
+                  <th>pos</th>
+                  <th>definitionZh</th>
+                  <th>tier</th>
+                  <th />
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-    </div>
+              </thead>
+              <tbody>
+                {vocabRows.map(({ field, sidebarIndex, vocabId }) => {
+                  const currentTier = sidebarValues[sidebarIndex]?.tier ?? 'high';
+                  const headword = sidebarValues[sidebarIndex]?.headword ?? vocabId;
+                  return (
+                    <tr key={field.id}>
+                      <td className="story-vocab-tier-bar-cell" aria-hidden="true">
+                        <span
+                          className={`story-vocab-tier-bar story-vocab-tier-bar-${currentTier}`}
+                        />
+                      </td>
+                      <td>
+                        <input
+                          {...register(
+                            `sidebar.${String(sidebarIndex)}.vocabId` as FieldPath<StoryReadingContent>,
+                          )}
+                          className="input input-sm"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          {...register(
+                            `sidebar.${String(sidebarIndex)}.headword` as FieldPath<StoryReadingContent>,
+                          )}
+                          className="input input-sm"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          {...register(
+                            `sidebar.${String(sidebarIndex)}.ipa` as FieldPath<StoryReadingContent>,
+                          )}
+                          className="input input-sm"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          {...register(
+                            `sidebar.${String(sidebarIndex)}.pos` as FieldPath<StoryReadingContent>,
+                          )}
+                          className="input input-sm"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          {...register(
+                            `sidebar.${String(sidebarIndex)}.definitionZh` as FieldPath<StoryReadingContent>,
+                          )}
+                          className="input input-sm"
+                        />
+                      </td>
+                      <td>
+                        <select
+                          className="select input-sm"
+                          value={currentTier}
+                          onChange={(event) => {
+                            handleTierChange(
+                              sidebarIndex,
+                              vocabId,
+                              event.target.value as StoryTier,
+                            );
+                          }}
+                        >
+                          {tierOptions.map((tier) => (
+                            <option key={tier} value={tier}>
+                              {tier}
+                            </option>
+                          ))}
+                        </select>
+                      </td>
+                      <td>
+                        <button
+                          type="button"
+                          className="btn btn-ghost btn-sm"
+                          onClick={() => {
+                            askConfirm({
+                              message: `确定取消标记「${headword}」？正文中的点词标记将被移除。`,
+                              confirmLabel: '取消标记',
+                              onConfirm: () => {
+                                removeFromParagraph(sidebarIndex, vocabId);
+                              },
+                            });
+                          }}
+                        >
+                          取消标记
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </>
   );
 }
 

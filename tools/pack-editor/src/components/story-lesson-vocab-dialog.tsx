@@ -1,4 +1,4 @@
-import type { StoryReadingContent, StoryTier } from '@remember/contracts';
+import { STORY_TIER_OPTIONS, type StoryReadingContent, type StoryTier } from '@remember/contracts';
 import {
   useFieldArray,
   useWatch,
@@ -7,11 +7,18 @@ import {
   type UseFormRegister,
   type UseFormSetValue,
 } from 'react-hook-form';
-import { useEffect, useMemo, useRef, type ReactElement } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactElement } from 'react';
 import { unmarkVocabInRuns } from '../utils/story-runs-markup.js';
 import { countStoryTierStats, formatStoryTierLegend } from '../utils/story-tier-stats.js';
+import {
+  STORY_EDITOR_TIER_ORDER,
+  insertSidebarEntryAtTierHead,
+  moveSidebarEntryToTierHead,
+  sortSidebarIndicesByTier,
+} from '../utils/story-sidebar-order.js';
 
-const tierOptions: StoryTier[] = ['high', 'mid', 'low'];
+const tierOptions = STORY_TIER_OPTIONS;
+const legendTiers = STORY_EDITOR_TIER_ORDER;
 
 interface StoryLessonVocabDialogProps {
   open: boolean;
@@ -29,15 +36,30 @@ export function StoryLessonVocabDialog({
   setValue,
 }: StoryLessonVocabDialogProps): ReactElement | null {
   const panelRef = useRef<HTMLDivElement>(null);
+  const [tierFilter, setTierFilter] = useState<StoryTier | null>(null);
   const sidebar = useFieldArray({ control, name: 'sidebar' });
   const sidebarValues = useWatch({ control, name: 'sidebar' });
   const allParagraphs = useWatch({ control, name: 'story.paragraphs' });
 
   const tierStats = useMemo(() => countStoryTierStats(sidebarValues), [sidebarValues]);
+  const sortedSidebarIndices = useMemo(
+    () => sortSidebarIndicesByTier(sidebarValues),
+    [sidebarValues],
+  );
+  const visibleSidebarIndices = useMemo(() => {
+    if (tierFilter === null) {
+      return sortedSidebarIndices;
+    }
+    return sortedSidebarIndices.filter((sidebarIndex) => {
+      const tier = sidebarValues[sidebarIndex]?.tier ?? 'high';
+      return tier === tierFilter;
+    });
+  }, [sortedSidebarIndices, sidebarValues, tierFilter]);
 
   useEffect(() => {
     if (!open) {
-      return;
+      setTierFilter(null);
+      return undefined;
     }
     const handleKeyDown = (event: KeyboardEvent): void => {
       if (event.key === 'Escape') {
@@ -68,6 +90,31 @@ export function StoryLessonVocabDialog({
       }
     }
     sidebar.remove(sidebarIndex);
+  }
+
+  function handleTierChange(sidebarIndex: number, vocabId: string, tier: StoryTier): void {
+    const nextSidebar = moveSidebarEntryToTierHead(sidebarValues, sidebarIndex, tier);
+    setValue('sidebar', nextSidebar, { shouldDirty: true });
+
+    allParagraphs.forEach((paragraph, paragraphIdx) => {
+      const needsUpdate = paragraph.runs.some(
+        (run) => run.kind === 'word' && run.vocabId === vocabId && run.tier !== tier,
+      );
+      if (!needsUpdate) {
+        return;
+      }
+      const nextRuns = paragraph.runs.map((run) => {
+        if (run.kind === 'word' && run.vocabId === vocabId && run.tier !== tier) {
+          return { ...run, tier };
+        }
+        return run;
+      });
+      setValue(
+        `story.paragraphs.${String(paragraphIdx)}.runs` as FieldPath<StoryReadingContent>,
+        nextRuns,
+        { shouldDirty: true },
+      );
+    });
   }
 
   return (
@@ -101,15 +148,28 @@ export function StoryLessonVocabDialog({
         </div>
 
         <div className="story-tier-legend-row">
-          {tierOptions.map((tier) => (
-            <span key={tier} className={`story-tier-legend-chip story-tier-legend-chip-${tier}`}>
-              {formatStoryTierLegend(tierStats, tier)}
-            </span>
-          ))}
+          {legendTiers.map((tier) => {
+            const isActive = tierFilter === tier;
+            return (
+              <button
+                key={tier}
+                type="button"
+                className={`story-tier-legend-chip story-tier-legend-chip-${tier}${isActive ? ' is-active' : ''}`}
+                aria-pressed={isActive}
+                onClick={() => {
+                  setTierFilter((current) => (current === tier ? null : tier));
+                }}
+              >
+                {formatStoryTierLegend(tierStats, tier)}
+              </button>
+            );
+          })}
         </div>
 
         {sidebar.fields.length === 0 ? (
           <p className="field-helper">暂无本课用词。在段落正文中标记可点词后，词条会出现在这里。</p>
+        ) : visibleSidebarIndices.length === 0 ? (
+          <p className="field-helper">当前频次下暂无词条。</p>
         ) : (
           <div className="data-table-wrap story-lesson-vocab-table-wrap">
             <table className="data-table data-table-compact">
@@ -126,8 +186,13 @@ export function StoryLessonVocabDialog({
                 </tr>
               </thead>
               <tbody>
-                {sidebar.fields.map((field, sidebarIndex) => {
+                {visibleSidebarIndices.map((sidebarIndex) => {
+                  const field = sidebar.fields[sidebarIndex];
+                  if (field === undefined) {
+                    return null;
+                  }
                   const tier = sidebarValues[sidebarIndex]?.tier ?? 'high';
+                  const vocabId = sidebarValues[sidebarIndex]?.vocabId ?? '';
                   return (
                     <tr key={field.id}>
                       <td className="story-vocab-tier-bar-cell" aria-hidden="true">
@@ -175,14 +240,16 @@ export function StoryLessonVocabDialog({
                       </td>
                       <td>
                         <select
-                          {...register(
-                            `sidebar.${String(sidebarIndex)}.tier` as FieldPath<StoryReadingContent>,
-                          )}
                           className="select input-sm"
+                          value={tier}
+                          onChange={(event) => {
+                            const nextTier = event.target.value as StoryTier;
+                            handleTierChange(sidebarIndex, vocabId, nextTier);
+                          }}
                         >
-                          {tierOptions.map((tier) => (
-                            <option key={tier} value={tier}>
-                              {tier}
+                          {tierOptions.map((option) => (
+                            <option key={option} value={option}>
+                              {option}
                             </option>
                           ))}
                         </select>
@@ -216,7 +283,7 @@ export function StoryLessonVocabDialog({
             type="button"
             className="btn btn-secondary btn-sm"
             onClick={() => {
-              sidebar.append({
+              const nextSidebar = insertSidebarEntryAtTierHead(sidebarValues, {
                 vocabId: 'new-word',
                 headword: '',
                 ipa: '',
@@ -224,6 +291,7 @@ export function StoryLessonVocabDialog({
                 definitionZh: '',
                 tier: 'high',
               });
+              setValue('sidebar', nextSidebar, { shouldDirty: true });
             }}
           >
             + 添加词条

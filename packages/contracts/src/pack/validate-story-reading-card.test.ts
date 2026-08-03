@@ -341,4 +341,41 @@ describe('validateStoryReadingCard', () => {
       } satisfies Partial<PackVerificationError>),
     );
   });
+
+  it('接受 tier normal 的可点词', () => {
+    const row = validateStoryReadingCard(
+      'story-test-pack',
+      makeStoryCard({
+        content: makeStoryContent({
+          paragraphs: [
+            {
+              runs: [
+                { kind: 'text', text: 'He wants to ' },
+                {
+                  kind: 'word',
+                  surface: 'marry',
+                  glossZh: '娶',
+                  tier: 'normal',
+                  vocabId: 'marry',
+                },
+                { kind: 'text', text: ' a princess.' },
+              ],
+            },
+          ],
+          sidebar: [
+            {
+              vocabId: 'marry',
+              headword: 'marry',
+              ipa: '/ˈmæri/',
+              pos: 'v.',
+              definitionZh: '娶',
+              tier: 'normal',
+            },
+          ],
+        }),
+      }),
+      { manifestPaths },
+    );
+    expect(row.content.sidebar[0]?.tier).toBe('normal');
+  });
 });

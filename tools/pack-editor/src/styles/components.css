@@ -426,6 +426,26 @@
   overflow: hidden;
 }
 
+.dialog-overlay-mini {
+  z-index: 250;
+}
+
+.dialog-panel-mini {
+  max-width: 320px;
+  padding: var(--space-4);
+}
+
+.dialog-panel-mini-message {
+  margin: 0 0 var(--space-3);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-text);
+}
+
+.dialog-actions-mini {
+  margin-top: 0;
+}
+
 .story-lesson-vocab-dialog-header {
   display: flex;
   align-items: flex-start;
@@ -455,6 +475,20 @@
   font-size: 12px;
   font-weight: 500;
   border: 1px solid var(--color-border, #e0e0e0);
+  cursor: pointer;
+  font: inherit;
+  line-height: 1.4;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+
+.story-tier-legend-chip:hover {
+  filter: brightness(0.97);
+}
+
+.story-tier-legend-chip.is-active {
+  box-shadow: 0 0 0 2px currentColor;
 }
 
 .story-tier-legend-chip-high {
@@ -470,6 +504,11 @@
 .story-tier-legend-chip-low {
   color: #27ae60;
   background: rgba(39, 174, 96, 0.1);
+}
+
+.story-tier-legend-chip-normal {
+  color: #7f8c8d;
+  background: rgba(127, 140, 141, 0.1);
 }
 
 .story-lesson-vocab-table-wrap {
@@ -504,6 +543,10 @@
 
 .story-vocab-tier-bar-low {
   background: #27ae60;
+}
+
+.story-vocab-tier-bar-normal {
+  background: var(--color-border, #d0d0d0);
 }
 
 .story-lesson-vocab-dialog .dialog-actions {
@@ -666,6 +709,24 @@
 
 .sticky-form-footer-meta strong {
   color: var(--color-text);
+}
+
+.sticky-form-footer-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.btn-story-lesson-vocab {
+  font-weight: 600;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-primary-soft);
+}
+
+.btn-story-lesson-vocab:hover:not(:disabled) {
+  filter: brightness(0.97);
 }
 
 .input-sm {
@@ -934,6 +995,68 @@
   margin-bottom: var(--space-2);
 }
 
+.edit-story-block-body-compact {
+  padding: var(--space-2) var(--space-3);
+}
+
+.edit-story-body-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-1);
+}
+
+.edit-story-body-label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.edit-story-body-hint {
+  font-size: 12px;
+  color: var(--color-text-muted, #666);
+  white-space: nowrap;
+}
+
+.edit-story-body-surface {
+  box-sizing: border-box;
+  margin: 0;
+  padding: var(--space-2);
+  line-height: 1.6;
+  font-size: 14px;
+  font-family: inherit;
+  background: var(--color-surface-muted, #fafafa);
+  border: 1px solid var(--color-border, #e0e0e0);
+  border-radius: 4px;
+}
+
+.edit-story-body-surface-slot {
+  position: relative;
+}
+
+.edit-story-body-surface-measure {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.edit-story-body-preview {
+  cursor: text;
+}
+
+.edit-story-body-preview:hover,
+.edit-story-body-preview:focus-visible {
+  border-color: var(--color-primary, #2563eb);
+  outline: none;
+}
+
+.edit-story-body-preview .edit-story-paragraph-preview {
+  margin: 0;
+}
+
 .edit-story-block-preview .edit-story-paragraph-preview {
   margin: 0;
   padding: var(--space-2);
@@ -986,6 +1109,12 @@
   color: #27ae60;
 }
 
+.edit-story-word-normal {
+  color: inherit;
+  font-weight: inherit;
+  cursor: text;
+}
+
 .edit-story-markup {
   margin-bottom: var(--space-2);
 }
@@ -993,8 +1122,24 @@
 .edit-story-markup-textarea,
 .edit-story-body-textarea {
   width: 100%;
-  font-family: inherit;
-  font-size: 14px;
+}
+
+.edit-story-body-textarea.edit-story-body-surface {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  min-height: 0;
+  padding: var(--space-2);
+  resize: none;
+  overflow-y: auto;
+  color: inherit;
+  background: var(--color-surface-muted, #fafafa);
+}
+
+.edit-story-body-textarea.edit-story-body-surface:focus {
+  outline: none;
+  border-color: var(--color-primary, #2563eb);
 }
 
 .edit-story-body {
@@ -1013,7 +1158,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-2);
-  margin-top: var(--space-2);
+  margin-top: var(--space-1);
 }
 
 .edit-story-paragraph-timeline {

@@ -26,8 +26,16 @@ export interface BuildResult {
 
 async function readJson<T>(response: Response): Promise<T> {
   if (!response.ok) {
-    const body = (await response.json().catch(() => ({}))) as { error?: string };
-    throw new Error(body.error ?? `请求失败 (${String(response.status)})`);
+    const body = (await response.json().catch(() => ({}))) as {
+      error?: string;
+      issues?: { path?: string; message: string }[];
+    };
+    const issueSummary = body.issues
+      ?.map((issue) => issue.message)
+      .filter(Boolean)
+      .join('；');
+    const detail = issueSummary ?? body.error ?? `请求失败 (${String(response.status)})`;
+    throw new Error(detail);
   }
   return response.json() as Promise<T>;
 }

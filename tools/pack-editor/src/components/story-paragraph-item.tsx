@@ -7,13 +7,16 @@ import {
   type UseFormSetValue,
 } from 'react-hook-form';
 import type { ReactElement } from 'react';
+import { useEffect, useState } from 'react';
 import {
   applyWordMarkAtSelection,
   collectVocabIdsFromRuns,
   syncRunsToPlainText,
 } from '../utils/story-runs-markup.js';
+import { insertSidebarEntryAtTierHead } from '../utils/story-sidebar-order.js';
+import { prependParagraphVocabId } from '../utils/story-paragraph-vocab-order.js';
+import { useMiniConfirm } from '../hooks/use-mini-confirm.js';
 import { StoryParagraphBodyEditor } from './story-paragraph-body-editor.js';
-import { StoryParagraphPreview } from './story-paragraph-preview.js';
 import {
   createStorySidebarEntry,
   slugFromSelection,
@@ -44,6 +47,7 @@ interface StoryParagraphItemProps {
   setValue: UseFormSetValue<StoryReadingContent>;
   translationEnabled: boolean;
   contentIssues: { path: string; message: string }[];
+  onRunsSyncError?: ((message: string) => void) | undefined;
   onRemove: () => void;
 }
 
@@ -55,6 +59,7 @@ export function StoryParagraphItem({
   setValue,
   translationEnabled,
   contentIssues,
+  onRunsSyncError,
   onRemove,
 }: StoryParagraphItemProps): ReactElement {
   const runs = useWatch({
@@ -62,6 +67,17 @@ export function StoryParagraphItem({
     name: `story.paragraphs.${String(paragraphIndex)}.runs` as `story.paragraphs.${number}.runs`,
   });
   const sidebar = useWatch({ control, name: 'sidebar' });
+  const [vocabDisplayOrder, setVocabDisplayOrder] = useState<string[]>([]);
+  const { askConfirm, miniConfirmDialog } = useMiniConfirm();
+
+  useEffect(() => {
+    setVocabDisplayOrder(collectVocabIdsFromRuns(runs));
+  }, [paragraphIndex]);
+
+  useEffect(() => {
+    const ids = collectVocabIdsFromRuns(runs);
+    setVocabDisplayOrder((previous) => previous.filter((id) => ids.includes(id)));
+  }, [runs]);
 
   const hasIssue = contentIssues.length > 0;
   const runsPath =
@@ -94,7 +110,10 @@ export function StoryParagraphItem({
         vocabId = `${baseId}-${String(suffix)}`;
         suffix += 1;
       }
-      nextSidebar = [...sidebar, createStorySidebarEntry(headword, vocabId)];
+      nextSidebar = insertSidebarEntryAtTierHead(
+        sidebar,
+        createStorySidebarEntry(headword, vocabId),
+      );
     }
 
     const syncedRuns = syncRunsToPlainText(runs, input.plainText, nextSidebar);
@@ -123,71 +142,83 @@ export function StoryParagraphItem({
       setValue(sidebarPath, nextSidebar, { shouldDirty: true });
     }
     setValue(runsPath, nextRuns, { shouldDirty: true });
+    setVocabDisplayOrder((previous) =>
+      prependParagraphVocabId(previous, vocabId, collectVocabIdsFromRuns(nextRuns)),
+    );
   }
 
   return (
-    <div
-      className="edit-story-paragraph-card"
-      style={hasIssue ? { borderColor: 'var(--color-danger)' } : undefined}
-    >
-      <div className="edit-story-paragraph-header">
-        <span className="edit-story-paragraph-title">
-          段落 #{paragraphIndex + 1} / 共 {paragraphCount} 段
-        </span>
-        <div className="edit-story-paragraph-actions">
-          <button
-            type="button"
-            className="btn btn-ghost btn-sm"
-            disabled={paragraphCount <= 1}
-            onClick={onRemove}
-          >
-            删段
-          </button>
-        </div>
-      </div>
-
-      <div className="edit-story-paragraph-scroll">
-        <div className="edit-story-block edit-story-block-preview">
-          <div className="edit-story-block-title">预览</div>
-          <StoryParagraphPreview runs={runs} />
-        </div>
-
-        <StoryParagraphBodyEditor
-          paragraphIndex={paragraphIndex}
-          runs={runs}
-          sidebar={sidebar}
-          setValue={setValue}
-          onMarkSelection={markSelection}
-        />
-
-        {translationEnabled && (
-          <div className="edit-story-block edit-story-block-translation">
-            <label className="field-label field-label-compact">
-              段译
-              <textarea
-                {...register(
-                  `story.paragraphs.${String(paragraphIndex)}.translationZh` as FieldPath<StoryReadingContent>,
-                )}
-                className="input"
-                rows={2}
-              />
-            </label>
+    <>
+      {miniConfirmDialog}
+      <div
+        className="edit-story-paragraph-card"
+        style={hasIssue ? { borderColor: 'var(--color-danger)' } : undefined}
+      >
+        <div className="edit-story-paragraph-header">
+          <span className="edit-story-paragraph-title">
+            段落 #{paragraphIndex + 1} / 共 {paragraphCount} 段
+          </span>
+          <div className="edit-story-paragraph-actions">
+            <button
+              type="button"
+              className="btn btn-ghost btn-sm"
+              disabled={paragraphCount <= 1}
+              onClick={() => {
+                askConfirm({
+                  message: `确定删除段落 #${String(paragraphIndex + 1)}？段落正文与段译将被移除。`,
+                  confirmLabel: '删段',
+                  onConfirm: onRemove,
+                });
+              }}
+            >
+              删段
+            </button>
           </div>
-        )}
+        </div>
 
-        <StoryParagraphVocab
-          paragraphIndex={paragraphIndex}
-          register={register}
-          control={control}
-          setValue={setValue}
-        />
+        <div className="edit-story-paragraph-scroll">
+          <StoryParagraphBodyEditor
+            paragraphIndex={paragraphIndex}
+            runs={runs}
+            sidebar={sidebar}
+            setValue={setValue}
+            onRunsSyncError={onRunsSyncError}
+            onMarkSelection={markSelection}
+          />
 
-        {contentIssues.map((issue) => (
-          <p key={`${issue.path}:${issue.message}`} className="field-error">
-            {issue.message}
-          </p>
-        ))}
+          {translationEnabled && (
+            <div className="edit-story-block edit-story-block-translation">
+              <label className="field-label field-label-compact">
+                段译
+                <textarea
+                  {...register(
+                    `story.paragraphs.${String(paragraphIndex)}.translationZh` as FieldPath<StoryReadingContent>,
+                  )}
+                  className="input"
+                  rows={2}
+                />
+              </label>
+            </div>
+          )}
+
+          <StoryParagraphVocab
+            paragraphIndex={paragraphIndex}
+            register={register}
+            control={control}
+            setValue={setValue}
+            vocabDisplayOrder={vocabDisplayOrder}
+            onVocabRemovedFromParagraph={(vocabId) => {
+              setVocabDisplayOrder((previous) => previous.filter((id) => id !== vocabId));
+            }}
+          />
+
+          {contentIssues.map((issue) => (
+            <p key={`${issue.path}:${issue.message}`} className="field-error">
+              {issue.message}
+            </p>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
