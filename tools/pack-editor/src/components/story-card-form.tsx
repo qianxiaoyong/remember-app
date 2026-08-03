@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import type { ReactElement } from 'react';
 import { normalizeStoryContent } from '../utils/normalize-story-content.js';
 import { StoryLessonFields } from './story-lesson-fields.js';
+import { StoryParagraphEditor } from './story-paragraph-editor.js';
 import { StorySidebarEditor } from './story-sidebar-editor.js';
 
 export const STORY_CARD_FORM_ID = 'story-card-form';
@@ -23,6 +24,7 @@ export function StoryCardForm({
     register,
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<StoryReadingContent>({
     resolver: zodResolver(storyReadingContentSchema),
@@ -47,6 +49,7 @@ export function StoryCardForm({
       />
       <div className="edit-reveal-body">
         <StorySidebarEditor register={register} control={control} />
+        <StoryParagraphEditor register={register} control={control} setValue={setValue} />
       </div>
     </form>
   );
