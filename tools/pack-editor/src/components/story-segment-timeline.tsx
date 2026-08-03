@@ -9,6 +9,7 @@ import {
 } from 'react-hook-form';
 import { useEffect, type ReactElement } from 'react';
 import { useStoryAudio } from '../context/story-audio-context.js';
+import { useMiniConfirm } from '../hooks/use-mini-confirm.js';
 import {
   applySegmentTimelineToParagraphs,
   canSetSegmentStart,
@@ -33,6 +34,7 @@ export function StorySegmentTimeline({
   getValues,
 }: StorySegmentTimelineProps): ReactElement {
   const audio = useStoryAudio();
+  const { askConfirm, miniConfirmDialog } = useMiniConfirm();
   const allParagraphs = useWatch({ control, name: 'story.paragraphs' });
   const paragraph = useWatch({
     control,
@@ -104,7 +106,9 @@ export function StorySegmentTimeline({
   }
 
   return (
-    <div className="edit-story-audio-segment-row">
+    <>
+      {miniConfirmDialog}
+      <div className="edit-story-audio-segment-row">
       <span className="edit-paragraph-timeline-item">
         <span className="edit-paragraph-timeline-label">{segmentLabel}起点</span>
         <span className="edit-paragraph-timeline-value">
@@ -185,10 +189,17 @@ export function StorySegmentTimeline({
         title={
           canClearTimeline ? '清除本段及之后各段的时间轴，便于从本段起重新标定' : '本段尚未设置起点'
         }
-        onClick={clearTimeline}
+        onClick={() => {
+          askConfirm({
+            message: '确定删除本段时间轴？本段及之后各段的时间轴将被清除。',
+            confirmLabel: '删除',
+            onConfirm: clearTimeline,
+          });
+        }}
       >
         删除本段时间轴
       </button>
     </div>
+    </>
   );
 }

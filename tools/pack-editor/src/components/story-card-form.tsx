@@ -1,7 +1,7 @@
 import { storyReadingContentSchema, type StoryReadingContent } from '@remember/contracts';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm, useWatch, type FieldPath } from 'react-hook-form';
-import { useMemo, useState, type ReactElement } from 'react';
+import { useCallback, useEffect, useMemo, useState, type ReactElement, type RefObject } from 'react';
 import { StoryAudioProvider } from '../context/story-audio-context.js';
 import { normalizeStoryContent } from '../utils/normalize-story-content.js';
 import { collectStoryContentIssues } from '../utils/story-content-issues.js';
@@ -18,9 +18,10 @@ interface StoryCardFormProps {
   packId: string;
   defaultValues: StoryReadingContent;
   onSubmit: (content: StoryReadingContent) => Promise<void>;
+  checkRulesRef?: RefObject<(() => void) | null>;
 }
 
-function StoryCardFormBody({ packId, defaultValues, onSubmit }: StoryCardFormProps): ReactElement {
+function StoryCardFormBody({ packId, defaultValues, onSubmit, checkRulesRef }: StoryCardFormProps): ReactElement {
   const [selectedParagraphIndex, setSelectedParagraphIndex] = useState(0);
   const [contentIssues, setContentIssues] = useState<{ path: string; message: string }[]>([]);
   const [checkToast, setCheckToast] = useState<string | null>(null);
@@ -68,7 +69,7 @@ function StoryCardFormBody({ packId, defaultValues, onSubmit }: StoryCardFormPro
     });
   }
 
-  function refreshContentIssues(): void {
+  const refreshContentIssues = useCallback((): void => {
     const issues = collectIssuesFromForm();
     setContentIssues(issues);
     if (issues.length === 0) {
@@ -77,7 +78,17 @@ function StoryCardFormBody({ packId, defaultValues, onSubmit }: StoryCardFormPro
         setCheckToast(null);
       }, 2000);
     }
-  }
+  }, [audio.durationMs, getValues]);
+
+  useEffect(() => {
+    if (!checkRulesRef) {
+      return undefined;
+    }
+    checkRulesRef.current = refreshContentIssues;
+    return () => {
+      checkRulesRef.current = null;
+    };
+  }, [checkRulesRef, refreshContentIssues]);
 
   function showFormValidationError(): void {
     setCheckToast('表单字段校验失败，请检查标红字段');
@@ -129,7 +140,6 @@ function StoryCardFormBody({ packId, defaultValues, onSubmit }: StoryCardFormPro
               paragraphs.append({ runs: [{ kind: 'text', text: ' ' }] });
               selectParagraph(paragraphs.fields.length);
             }}
-            onCheckRules={refreshContentIssues}
             contentIssues={contentIssues}
           />
           <StoryParagraphEditor

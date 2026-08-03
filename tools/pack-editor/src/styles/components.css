@@ -426,6 +426,26 @@
   overflow: hidden;
 }
 
+.dialog-overlay-mini {
+  z-index: 250;
+}
+
+.dialog-panel-mini {
+  max-width: 320px;
+  padding: var(--space-4);
+}
+
+.dialog-panel-mini-message {
+  margin: 0 0 var(--space-3);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-text);
+}
+
+.dialog-actions-mini {
+  margin-top: 0;
+}
+
 .story-lesson-vocab-dialog-header {
   display: flex;
   align-items: flex-start;
@@ -689,6 +709,24 @@
 
 .sticky-form-footer-meta strong {
   color: var(--color-text);
+}
+
+.sticky-form-footer-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.btn-story-lesson-vocab {
+  font-weight: 600;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-primary-soft);
+}
+
+.btn-story-lesson-vocab:hover:not(:disabled) {
+  filter: brightness(0.97);
 }
 
 .input-sm {
@@ -992,6 +1030,19 @@
   border-radius: 4px;
 }
 
+.edit-story-body-surface-slot {
+  position: relative;
+}
+
+.edit-story-body-surface-measure {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
 .edit-story-body-preview {
   cursor: text;
 }
@@ -1074,10 +1125,21 @@
 }
 
 .edit-story-body-textarea.edit-story-body-surface {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
   min-height: 0;
   padding: var(--space-2);
   resize: none;
   overflow-y: auto;
+  color: inherit;
+  background: var(--color-surface-muted, #fafafa);
+}
+
+.edit-story-body-textarea.edit-story-body-surface:focus {
+  outline: none;
+  border-color: var(--color-primary, #2563eb);
 }
 
 .edit-story-body {

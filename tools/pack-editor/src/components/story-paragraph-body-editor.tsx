@@ -73,17 +73,8 @@ export function StoryParagraphBodyEditor({
   }, []);
 
   useLayoutEffect(() => {
-    if (!isEditing) {
-      measurePreviewHeight();
-      return;
-    }
-    const textarea = textareaRef.current;
-    if (!textarea) {
-      return;
-    }
-    textarea.style.height = 'auto';
-    setSurfaceHeight(textarea.scrollHeight);
-  }, [isEditing, runs, plainText, measurePreviewHeight]);
+    measurePreviewHeight();
+  }, [runs, measurePreviewHeight]);
 
   useEffect(() => {
     if (isEditing) {
@@ -212,29 +203,41 @@ export function StoryParagraphBodyEditor({
 
       {isEditing ? (
         <>
-          <textarea
-            ref={textareaRef}
-            className="input edit-story-body-textarea edit-story-body-surface"
-            style={surfaceHeight === undefined ? undefined : { height: surfaceHeight }}
-            value={plainText}
-            onChange={(event) => {
-              setPlainText(event.target.value);
-            }}
-            onBlur={() => {
-              if (commitPlainText(plainText)) {
-                exitEditMode(false);
-              }
-            }}
-            onKeyDown={(event) => {
-              if (event.key === 'Escape') {
-                event.preventDefault();
-                exitEditMode(true);
-              }
-            }}
-            onSelect={refreshSelection}
-            onMouseUp={refreshSelection}
-            onKeyUp={refreshSelection}
-          />
+          <div
+            className="edit-story-body-surface-slot"
+            style={surfaceHeight === undefined ? undefined : { minHeight: surfaceHeight }}
+          >
+            <div
+              ref={previewRef}
+              className="edit-story-body-preview edit-story-body-surface edit-story-body-surface-measure"
+              aria-hidden="true"
+            >
+              <StoryParagraphPreview runs={runs} />
+            </div>
+            <textarea
+              ref={textareaRef}
+              className="edit-story-body-textarea edit-story-body-surface"
+              style={surfaceHeight === undefined ? undefined : { height: surfaceHeight }}
+              value={plainText}
+              onChange={(event) => {
+                setPlainText(event.target.value);
+              }}
+              onBlur={() => {
+                if (commitPlainText(plainText)) {
+                  exitEditMode(false);
+                }
+              }}
+              onKeyDown={(event) => {
+                if (event.key === 'Escape') {
+                  event.preventDefault();
+                  exitEditMode(true);
+                }
+              }}
+              onSelect={refreshSelection}
+              onMouseUp={refreshSelection}
+              onKeyUp={refreshSelection}
+            />
+          </div>
 
           {selectionRange?.text.trim() && (
             <div className="edit-story-mark-toolbar">

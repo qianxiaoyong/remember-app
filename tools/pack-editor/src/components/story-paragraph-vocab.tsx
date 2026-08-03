@@ -14,6 +14,7 @@ import {
   moveSidebarEntryToTierHead,
 } from '../utils/story-sidebar-order.js';
 import { orderParagraphVocabIds } from '../utils/story-paragraph-vocab-order.js';
+import { useMiniConfirm } from '../hooks/use-mini-confirm.js';
 
 const tierOptions = STORY_TIER_OPTIONS;
 
@@ -34,6 +35,7 @@ export function StoryParagraphVocab({
   vocabDisplayOrder,
   onVocabRemovedFromParagraph,
 }: StoryParagraphVocabProps): ReactElement {
+  const { askConfirm, miniConfirmDialog } = useMiniConfirm();
   const sidebar = useFieldArray({ control, name: 'sidebar' });
   const sidebarValues = useWatch({ control, name: 'sidebar' });
   const allParagraphs = useWatch({ control, name: 'story.paragraphs' });
@@ -104,7 +106,9 @@ export function StoryParagraphVocab({
   }
 
   return (
-    <div className="edit-story-block edit-story-block-vocab">
+    <>
+      {miniConfirmDialog}
+      <div className="edit-story-block edit-story-block-vocab">
       <div className="edit-story-block-title">本段用词（{String(vocabRows.length)}）</div>
 
       {vocabRows.length === 0 ? (
@@ -114,6 +118,7 @@ export function StoryParagraphVocab({
           <table className="data-table data-table-compact">
             <thead>
               <tr>
+                <th className="story-vocab-tier-bar-cell" aria-hidden="true" />
                 <th>vocabId</th>
                 <th>headword</th>
                 <th>ipa</th>
@@ -126,8 +131,14 @@ export function StoryParagraphVocab({
             <tbody>
               {vocabRows.map(({ field, sidebarIndex, vocabId }) => {
                 const currentTier = sidebarValues[sidebarIndex]?.tier ?? 'high';
+                const headword = sidebarValues[sidebarIndex]?.headword ?? vocabId;
                 return (
                   <tr key={field.id}>
+                    <td className="story-vocab-tier-bar-cell" aria-hidden="true">
+                      <span
+                        className={`story-vocab-tier-bar story-vocab-tier-bar-${currentTier}`}
+                      />
+                    </td>
                     <td>
                       <input
                         {...register(
@@ -188,7 +199,13 @@ export function StoryParagraphVocab({
                         type="button"
                         className="btn btn-ghost btn-sm"
                         onClick={() => {
-                          removeFromParagraph(sidebarIndex, vocabId);
+                          askConfirm({
+                            message: `确定取消标记「${headword}」？正文中的点词标记将被移除。`,
+                            confirmLabel: '取消标记',
+                            onConfirm: () => {
+                              removeFromParagraph(sidebarIndex, vocabId);
+                            },
+                          });
                         }}
                       >
                         取消标记
@@ -202,6 +219,7 @@ export function StoryParagraphVocab({
         </div>
       )}
     </div>
+    </>
   );
 }
 

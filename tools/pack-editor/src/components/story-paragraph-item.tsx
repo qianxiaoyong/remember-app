@@ -15,6 +15,7 @@ import {
 } from '../utils/story-runs-markup.js';
 import { insertSidebarEntryAtTierHead } from '../utils/story-sidebar-order.js';
 import { prependParagraphVocabId } from '../utils/story-paragraph-vocab-order.js';
+import { useMiniConfirm } from '../hooks/use-mini-confirm.js';
 import { StoryParagraphBodyEditor } from './story-paragraph-body-editor.js';
 import {
   createStorySidebarEntry,
@@ -67,6 +68,7 @@ export function StoryParagraphItem({
   });
   const sidebar = useWatch({ control, name: 'sidebar' });
   const [vocabDisplayOrder, setVocabDisplayOrder] = useState<string[]>([]);
+  const { askConfirm, miniConfirmDialog } = useMiniConfirm();
 
   useEffect(() => {
     setVocabDisplayOrder(collectVocabIdsFromRuns(runs));
@@ -146,10 +148,12 @@ export function StoryParagraphItem({
   }
 
   return (
-    <div
-      className="edit-story-paragraph-card"
-      style={hasIssue ? { borderColor: 'var(--color-danger)' } : undefined}
-    >
+    <>
+      {miniConfirmDialog}
+      <div
+        className="edit-story-paragraph-card"
+        style={hasIssue ? { borderColor: 'var(--color-danger)' } : undefined}
+      >
       <div className="edit-story-paragraph-header">
         <span className="edit-story-paragraph-title">
           段落 #{paragraphIndex + 1} / 共 {paragraphCount} 段
@@ -159,7 +163,13 @@ export function StoryParagraphItem({
             type="button"
             className="btn btn-ghost btn-sm"
             disabled={paragraphCount <= 1}
-            onClick={onRemove}
+            onClick={() => {
+              askConfirm({
+                message: `确定删除段落 #${String(paragraphIndex + 1)}？段落正文与段译将被移除。`,
+                confirmLabel: '删段',
+                onConfirm: onRemove,
+              });
+            }}
           >
             删段
           </button>
@@ -209,5 +219,6 @@ export function StoryParagraphItem({
         ))}
       </div>
     </div>
+    </>
   );
 }
