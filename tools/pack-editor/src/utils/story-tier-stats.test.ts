@@ -40,4 +40,26 @@ describe('story-tier-stats', () => {
     expect(stats).toEqual({ high: 2, mid: 1, low: 1 });
     expect(formatStoryTierLegend(stats, 'high')).toBe('高频(2)');
   });
+
+  it('normal 不计入频次图例统计', () => {
+    const stats = countStoryTierStats([
+      {
+        vocabId: 'a',
+        headword: 'a',
+        ipa: '',
+        pos: '',
+        definitionZh: '',
+        tier: 'high',
+      },
+      {
+        vocabId: 'b',
+        headword: 'b',
+        ipa: '',
+        pos: '',
+        definitionZh: '',
+        tier: 'normal',
+      },
+    ]);
+    expect(stats).toEqual({ high: 1, mid: 0, low: 0 });
+  });
 });

@@ -15,6 +15,13 @@ export function StoryParagraphPreview({ runs }: StoryParagraphPreviewProps): Rea
         if (segment.kind === 'text') {
           return <span key={index}>{segment.text}</span>;
         }
+        if (segment.tier === 'normal') {
+          return (
+            <span key={index} className="edit-story-word-normal" title={segment.vocabId}>
+              {segment.text}
+            </span>
+          );
+        }
         return (
           <span
             key={index}

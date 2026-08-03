@@ -1,4 +1,5 @@
-import type { StoryReadingContent, StoryTier } from '@remember/contracts';
+import type { StoryReadingContent } from '@remember/contracts';
+import { STORY_TIER_OPTIONS } from '@remember/contracts';
 import {
   useFieldArray,
   useWatch,
@@ -10,7 +11,7 @@ import {
 import { useMemo, type ReactElement } from 'react';
 import { collectVocabIdsFromRuns, unmarkVocabInRuns } from '../utils/story-runs-markup.js';
 
-const tierOptions: StoryTier[] = ['high', 'mid', 'low'];
+const tierOptions = STORY_TIER_OPTIONS;
 
 interface StoryParagraphVocabProps {
   paragraphIndex: number;

@@ -1,4 +1,4 @@
-import type { StoryReadingContent, StoryTier } from '@remember/contracts';
+import { STORY_LEGEND_TIERS, STORY_TIER_OPTIONS } from '@remember/contracts';
 import {
   useFieldArray,
   useWatch,
@@ -11,7 +11,8 @@ import { useEffect, useMemo, useRef, type ReactElement } from 'react';
 import { unmarkVocabInRuns } from '../utils/story-runs-markup.js';
 import { countStoryTierStats, formatStoryTierLegend } from '../utils/story-tier-stats.js';
 
-const tierOptions: StoryTier[] = ['high', 'mid', 'low'];
+const tierOptions = STORY_TIER_OPTIONS;
+const legendTiers = STORY_LEGEND_TIERS;
 
 interface StoryLessonVocabDialogProps {
   open: boolean;
@@ -101,7 +102,7 @@ export function StoryLessonVocabDialog({
         </div>
 
         <div className="story-tier-legend-row">
-          {tierOptions.map((tier) => (
+          {legendTiers.map((tier) => (
             <span key={tier} className={`story-tier-legend-chip story-tier-legend-chip-${tier}`}>
               {formatStoryTierLegend(tierStats, tier)}
             </span>

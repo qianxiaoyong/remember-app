@@ -1,12 +1,13 @@
 import type { ReactElement } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import type { StoryTier } from '@remember/contracts';
+import type { StoryLegendTier } from '@remember/contracts';
+import { STORY_LEGEND_TIERS } from '@remember/contracts';
 import { colors } from '../../../theme/colors';
 import type { TierStats } from './count-tier-stats';
 import { formatTierLegend } from './count-tier-stats';
 import { tierAccentColor, tierChipBackgrounds } from './tier-colors';
 
-const TIERS: StoryTier[] = ['high', 'mid', 'low'];
+const TIERS = STORY_LEGEND_TIERS satisfies readonly StoryLegendTier[];
 
 interface TierLegendChipsProps {
   stats: TierStats;

@@ -146,7 +146,7 @@ export function StoryReadTab(props: StoryReadTabProps): ReactElement {
                           openVocabSheet(run.vocabId);
                         }}
                         style={[
-                          styles.wordSurface,
+                          run.tier === 'normal' ? null : styles.wordSurface,
                           isFollowAlong
                             ? styles.paragraphFollowAlong
                             : tierWordColorStyle(run.tier),

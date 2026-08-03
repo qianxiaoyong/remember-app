@@ -1,6 +1,12 @@
 import { z } from 'zod';
 
-export const storyTierSchema = z.enum(['high', 'mid', 'low']);
+export const storyTierSchema = z.enum(['high', 'mid', 'low', 'normal']);
+
+export const storyLegendTierSchema = z.enum(['high', 'mid', 'low']);
+
+export const STORY_TIER_OPTIONS = ['high', 'mid', 'low', 'normal'] as const;
+
+export const STORY_LEGEND_TIERS = ['high', 'mid', 'low'] as const;
 
 export const storyTextRunSchema = z
   .object({
@@ -79,6 +85,7 @@ export const storyReadingContentSchema = z
   .strict();
 
 export type StoryTier = z.infer<typeof storyTierSchema>;
+export type StoryLegendTier = z.infer<typeof storyLegendTierSchema>;
 export type StoryTextRun = z.infer<typeof storyTextRunSchema>;
 export type StoryWordRun = z.infer<typeof storyWordRunSchema>;
 export type StoryRun = z.infer<typeof storyRunSchema>;

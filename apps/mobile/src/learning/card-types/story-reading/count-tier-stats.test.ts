@@ -51,4 +51,22 @@ describe('countTierStats', () => {
   it('按 sidebar tier 统计数量', () => {
     expect(countTierStats(sampleContent)).toEqual({ high: 2, mid: 1, low: 1 });
   });
+
+  it('normal 不计入红蓝绿频次图例', () => {
+    const content: StoryReadingContent = {
+      ...sampleContent,
+      sidebar: [
+        ...sampleContent.sidebar,
+        {
+          vocabId: 'n',
+          headword: 'n',
+          ipa: '/n/',
+          pos: 'n.',
+          definitionZh: 'n',
+          tier: 'normal',
+        },
+      ],
+    };
+    expect(countTierStats(content)).toEqual({ high: 2, mid: 1, low: 1 });
+  });
 });

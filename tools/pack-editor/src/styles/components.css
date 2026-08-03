@@ -506,6 +506,10 @@
   background: #27ae60;
 }
 
+.story-vocab-tier-bar-normal {
+  background: var(--color-border, #d0d0d0);
+}
+
 .story-lesson-vocab-dialog .dialog-actions {
   flex-shrink: 0;
   margin-top: 0;
@@ -1033,6 +1037,12 @@
 
 .edit-story-word-low {
   color: #27ae60;
+}
+
+.edit-story-word-normal {
+  color: inherit;
+  font-weight: inherit;
+  cursor: text;
 }
 
 .edit-story-markup {
