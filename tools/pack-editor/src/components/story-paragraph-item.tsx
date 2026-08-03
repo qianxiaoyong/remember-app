@@ -8,9 +8,7 @@ import {
   type UseFormSetValue,
 } from 'react-hook-form';
 import type { ReactElement } from 'react';
-import { useStoryAudio } from '../context/story-audio-context.js';
 import { applyWordMarkAtSelection, runsToPlainText } from '../utils/story-runs-markup.js';
-import { formatAudioTimeMs, formatSegmentDurationSeconds } from '../utils/format-audio-time.js';
 import { StoryParagraphBodyEditor } from './story-paragraph-body-editor.js';
 import { StoryParagraphPreview } from './story-paragraph-preview.js';
 import { slugFromSelection, StoryParagraphVocab } from './story-paragraph-vocab.js';
@@ -36,30 +34,14 @@ export function StoryParagraphItem({
   contentIssues,
   onRemove,
 }: StoryParagraphItemProps): ReactElement {
-  const audio = useStoryAudio();
   const sidebarFieldArray = useFieldArray({ control, name: 'sidebar' });
   const runs = useWatch({
     control,
     name: `story.paragraphs.${String(paragraphIndex)}.runs` as `story.paragraphs.${number}.runs`,
   });
   const sidebar = useWatch({ control, name: 'sidebar' });
-  const paragraph = useWatch({
-    control,
-    name: `story.paragraphs.${String(paragraphIndex)}` as `story.paragraphs.${number}`,
-  });
 
   const hasIssue = contentIssues.length > 0;
-  const startMs = Number(paragraph.audioStartMs);
-  const endMs = Number(paragraph.audioEndMs);
-  const hasStartMs = Number.isFinite(startMs);
-  const hasEndMs = Number.isFinite(endMs);
-  const segmentDuration =
-    hasStartMs && hasEndMs ? formatSegmentDurationSeconds(startMs, endMs) : null;
-  const segmentSpanMs = hasStartMs && hasEndMs && endMs > startMs ? endMs - startMs : null;
-  const isThisSegmentActive =
-    segmentSpanMs !== null &&
-    audio.segmentPreview?.startMs === startMs &&
-    audio.segmentPreview?.endMs === endMs;
   const runsPath =
     `story.paragraphs.${String(paragraphIndex)}.runs` as FieldPath<StoryReadingContent>;
 
@@ -168,103 +150,6 @@ export function StoryParagraphItem({
             </label>
           </div>
         )}
-
-        <div className="edit-story-block edit-story-block-timeline">
-          <div className="edit-story-block-title">本段时间轴</div>
-          <div className="edit-paragraph-timeline">
-            <span className="edit-paragraph-timeline-item">
-              <span className="edit-paragraph-timeline-label">起点</span>
-              <span className="edit-paragraph-timeline-value">
-                {hasStartMs ? formatAudioTimeMs(startMs) : '--:--'}
-              </span>
-              <input
-                type="number"
-                className="input input-sm edit-paragraph-timeline-ms"
-                placeholder="ms"
-                title="毫秒"
-                {...register(
-                  `story.paragraphs.${String(paragraphIndex)}.audioStartMs` as FieldPath<StoryReadingContent>,
-                  { valueAsNumber: true },
-                )}
-              />
-              <button
-                type="button"
-                className="btn btn-secondary btn-sm"
-                onClick={() => {
-                  const ms = audio.getPlaybackMs();
-                  if (ms !== null) {
-                    setValue(
-                      `story.paragraphs.${String(paragraphIndex)}.audioStartMs` as FieldPath<StoryReadingContent>,
-                      ms,
-                      { shouldDirty: true },
-                    );
-                  }
-                }}
-              >
-                设为起点
-              </button>
-            </span>
-
-            <span className="edit-paragraph-timeline-sep" aria-hidden="true">
-              →
-            </span>
-
-            <span className="edit-paragraph-timeline-item">
-              <span className="edit-paragraph-timeline-label">终点</span>
-              <span className="edit-paragraph-timeline-value">
-                {hasEndMs ? formatAudioTimeMs(endMs) : '--:--'}
-              </span>
-              <input
-                type="number"
-                className="input input-sm edit-paragraph-timeline-ms"
-                placeholder="ms"
-                title="毫秒"
-                {...register(
-                  `story.paragraphs.${String(paragraphIndex)}.audioEndMs` as FieldPath<StoryReadingContent>,
-                  { valueAsNumber: true },
-                )}
-              />
-              <button
-                type="button"
-                className="btn btn-secondary btn-sm"
-                onClick={() => {
-                  const ms = audio.getPlaybackMs();
-                  if (ms !== null) {
-                    setValue(
-                      `story.paragraphs.${String(paragraphIndex)}.audioEndMs` as FieldPath<StoryReadingContent>,
-                      ms,
-                      { shouldDirty: true },
-                    );
-                  }
-                }}
-              >
-                设为终点
-              </button>
-            </span>
-
-            <span className="edit-paragraph-timeline-sep" aria-hidden="true">
-              ·
-            </span>
-
-            <span className="edit-paragraph-timeline-item">
-              <span className="edit-paragraph-timeline-label">时长</span>
-              <span className="edit-paragraph-timeline-duration">{segmentDuration ?? '--'}</span>
-            </span>
-
-            <button
-              type="button"
-              className="btn btn-ghost btn-sm"
-              disabled={segmentSpanMs === null}
-              onClick={() => {
-                if (hasStartMs && hasEndMs && endMs > startMs) {
-                  audio.toggleSegmentPreview(startMs, endMs);
-                }
-              }}
-            >
-              {isThisSegmentActive && audio.isPlaying ? '⏸ 暂停' : '▶ 试听本段'}
-            </button>
-          </div>
-        </div>
 
         <StoryParagraphVocab
           paragraphIndex={paragraphIndex}

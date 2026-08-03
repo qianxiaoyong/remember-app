@@ -101,6 +101,8 @@ function StoryCardFormBody({
         <div className="edit-reveal-body edit-story-body-stack">
           <StoryTimelineEditor
             control={control}
+            register={register}
+            setValue={setValue}
             selectedParagraphIndex={selectedParagraphIndex}
             onSelectParagraph={selectParagraph}
             translationEnabled={translationEnabled}

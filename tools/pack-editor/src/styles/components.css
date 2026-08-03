@@ -418,6 +418,99 @@
   box-shadow: var(--shadow-md);
 }
 
+.dialog-panel-wide {
+  max-width: min(960px, 96vw);
+  max-height: min(85vh, 720px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.story-lesson-vocab-dialog-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.story-lesson-vocab-dialog-subtitle {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+.story-tier-legend-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.story-tier-legend-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid var(--color-border, #e0e0e0);
+}
+
+.story-tier-legend-chip-high {
+  color: #c0392b;
+  background: rgba(192, 57, 43, 0.08);
+}
+
+.story-tier-legend-chip-mid {
+  color: #5a8fd4;
+  background: rgba(90, 143, 212, 0.1);
+}
+
+.story-tier-legend-chip-low {
+  color: #27ae60;
+  background: rgba(39, 174, 96, 0.1);
+}
+
+.story-lesson-vocab-table-wrap {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  margin-bottom: var(--space-3);
+}
+
+.story-vocab-tier-bar-cell {
+  width: 0.75rem;
+  padding: 0;
+  vertical-align: middle;
+}
+
+.story-vocab-tier-bar {
+  display: block;
+  width: 4px;
+  height: 100%;
+  min-height: 2rem;
+  margin: 0 auto;
+  border-radius: 2px;
+}
+
+.story-vocab-tier-bar-high {
+  background: #c0392b;
+}
+
+.story-vocab-tier-bar-mid {
+  background: #5a8fd4;
+}
+
+.story-vocab-tier-bar-low {
+  background: #27ae60;
+}
+
+.story-lesson-vocab-dialog .dialog-actions {
+  flex-shrink: 0;
+  margin-top: 0;
+}
+
 .dialog-panel h2 {
   font-size: 18px;
   font-weight: 600;
@@ -771,6 +864,15 @@
 
 .edit-story-audio-controls-row .edit-timeline-time {
   white-space: nowrap;
+}
+
+.edit-story-audio-segment-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-border, #e8e8e8);
 }
 
 .edit-story-content {

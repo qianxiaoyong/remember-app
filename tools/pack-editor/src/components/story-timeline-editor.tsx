@@ -1,10 +1,12 @@
-import type { StoryParagraph } from '@remember/contracts';
-import { useWatch, type Control } from 'react-hook-form';
-import { useEffect, useState, type ReactElement } from 'react';
 import type { StoryReadingContent } from '@remember/contracts';
+import { useWatch, type Control, type UseFormRegister, type UseFormSetValue } from 'react-hook-form';
+import { useEffect, useState, type ReactElement } from 'react';
+import type { StoryParagraph } from '@remember/contracts';
 import { useStoryAudio } from '../context/story-audio-context.js';
 import { collectStoryContentIssues } from '../utils/story-content-issues.js';
 import { formatAudioTimeMs } from '../utils/format-audio-time.js';
+import { StorySegmentTimeline } from './story-segment-timeline.js';
+import { StoryLessonVocabDialog } from './story-lesson-vocab-dialog.js';
 
 export interface SegmentTrackItem {
   paragraphIndex: number;
@@ -56,6 +58,8 @@ export function buildParagraphNavTrack(paragraphs: StoryParagraph[]): SegmentTra
 
 interface StoryTimelineEditorProps {
   control: Control<StoryReadingContent>;
+  register: UseFormRegister<StoryReadingContent>;
+  setValue: UseFormSetValue<StoryReadingContent>;
   selectedParagraphIndex: number;
   onSelectParagraph: (index: number) => void;
   translationEnabled: boolean;
@@ -67,6 +71,8 @@ interface StoryTimelineEditorProps {
 
 export function StoryTimelineEditor({
   control,
+  register,
+  setValue,
   selectedParagraphIndex,
   onSelectParagraph,
   translationEnabled,
@@ -90,6 +96,7 @@ export function StoryTimelineEditor({
   const hasTimelineIssue = timelineIssues.length > 0;
   const [isScrubbing, setIsScrubbing] = useState(false);
   const [sliderMs, setSliderMs] = useState(audio.currentMs);
+  const [lessonVocabOpen, setLessonVocabOpen] = useState(false);
   const sliderMax = Math.max(audio.durationMs, 1);
 
   useEffect(() => {
@@ -197,10 +204,37 @@ export function StoryTimelineEditor({
         <button type="button" className="btn btn-ghost btn-sm" onClick={onAddParagraph}>
           + 添加段落
         </button>
+        <button
+          type="button"
+          className="btn btn-ghost btn-sm"
+          onClick={() => {
+            setLessonVocabOpen(true);
+          }}
+        >
+          本课词频
+        </button>
         <button type="button" className="btn btn-ghost btn-sm" onClick={onCheckRules}>
           检查规则
         </button>
       </div>
+
+      <StoryLessonVocabDialog
+        open={lessonVocabOpen}
+        onClose={() => {
+          setLessonVocabOpen(false);
+        }}
+        register={register}
+        control={control}
+        setValue={setValue}
+      />
+
+      <StorySegmentTimeline
+        paragraphIndex={selectedParagraphIndex}
+        register={register}
+        control={control}
+        setValue={setValue}
+      />
+
       {audio.loadError && <p className="field-error">{audio.loadError}</p>}
 
       {timelineIssues.map((issue) => (
