@@ -66,7 +66,10 @@ export function StoryParagraphVocab({
     }
   }
 
-  function handleTierChange(vocabId: string, tier: StoryTier): void {
+  function handleTierChange(sidebarIndex: number, vocabId: string, tier: StoryTier): void {
+    setValue(`sidebar.${String(sidebarIndex)}.tier` as FieldPath<StoryReadingContent>, tier, {
+      shouldDirty: true,
+    });
     setValue(
       'story.paragraphs',
       applySidebarTierToParagraphs({
@@ -100,9 +103,7 @@ export function StoryParagraphVocab({
             </thead>
             <tbody>
               {vocabRows.map(({ field, sidebarIndex, vocabId }) => {
-                const tierField = register(
-                  `sidebar.${String(sidebarIndex)}.tier` as FieldPath<StoryReadingContent>,
-                );
+                const currentTier = sidebarValues[sidebarIndex]?.tier ?? 'high';
                 return (
                   <tr key={field.id}>
                     <td>
@@ -147,11 +148,10 @@ export function StoryParagraphVocab({
                     </td>
                     <td>
                       <select
-                        {...tierField}
                         className="select input-sm"
+                        value={currentTier}
                         onChange={(event) => {
-                          void tierField.onChange(event);
-                          handleTierChange(vocabId, event.target.value as StoryTier);
+                          handleTierChange(sidebarIndex, vocabId, event.target.value as StoryTier);
                         }}
                       >
                         {tierOptions.map((tier) => (

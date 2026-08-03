@@ -1,4 +1,9 @@
-import { STORY_LEGEND_TIERS, STORY_TIER_OPTIONS, type StoryReadingContent, type StoryTier } from '@remember/contracts';
+import {
+  STORY_LEGEND_TIERS,
+  STORY_TIER_OPTIONS,
+  type StoryReadingContent,
+  type StoryTier,
+} from '@remember/contracts';
 import {
   useFieldArray,
   useWatch,
@@ -72,7 +77,10 @@ export function StoryLessonVocabDialog({
     sidebar.remove(sidebarIndex);
   }
 
-  function handleTierChange(vocabId: string, tier: StoryTier): void {
+  function handleTierChange(sidebarIndex: number, vocabId: string, tier: StoryTier): void {
+    setValue(`sidebar.${String(sidebarIndex)}.tier` as FieldPath<StoryReadingContent>, tier, {
+      shouldDirty: true,
+    });
     setValue(
       'story.paragraphs',
       applySidebarTierToParagraphs({
@@ -143,9 +151,6 @@ export function StoryLessonVocabDialog({
                 {sidebar.fields.map((field, sidebarIndex) => {
                   const tier = sidebarValues[sidebarIndex]?.tier ?? 'high';
                   const vocabId = sidebarValues[sidebarIndex]?.vocabId ?? '';
-                  const tierField = register(
-                    `sidebar.${String(sidebarIndex)}.tier` as FieldPath<StoryReadingContent>,
-                  );
                   return (
                     <tr key={field.id}>
                       <td className="story-vocab-tier-bar-cell" aria-hidden="true">
@@ -193,13 +198,11 @@ export function StoryLessonVocabDialog({
                       </td>
                       <td>
                         <select
-                          {...tierField}
                           className="select input-sm"
+                          value={tier}
                           onChange={(event) => {
-                            void tierField.onChange(event);
-                            if (vocabId) {
-                              handleTierChange(vocabId, event.target.value as StoryTier);
-                            }
+                            const nextTier = event.target.value as StoryTier;
+                            handleTierChange(sidebarIndex, vocabId, nextTier);
                           }}
                         >
                           {tierOptions.map((option) => (

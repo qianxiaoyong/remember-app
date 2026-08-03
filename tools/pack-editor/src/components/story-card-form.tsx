@@ -79,6 +79,10 @@ function StoryCardFormBody({ packId, defaultValues, onSubmit }: StoryCardFormPro
     }
   }
 
+  function showFormValidationError(): void {
+    setCheckToast('表单字段校验失败，请检查标红字段');
+  }
+
   return (
     <>
       {checkToast && <Toast message={checkToast} variant="mini" />}
@@ -86,23 +90,28 @@ function StoryCardFormBody({ packId, defaultValues, onSubmit }: StoryCardFormPro
         id={STORY_CARD_FORM_ID}
         className="card-panel edit-form edit-story-form"
         onSubmit={(event) => {
-          void handleSubmit(async (values) => {
-            const synced = syncWordRunTiersFromSidebar(values);
-            const issues = collectStoryContentIssues(synced, {
-              ...(audio.durationMs > 0 ? { primaryAudioDurationMs: audio.durationMs } : {}),
-            });
-            if (issues.length > 0) {
-              setContentIssues(issues);
-              setCheckToast('请先修复检查规则中的问题再保存');
-              return;
-            }
-            setValue('story.paragraphs', synced.story.paragraphs, { shouldDirty: true });
-            await onSubmit(
-              normalizeStoryContent(synced, {
+          void handleSubmit(
+            async (values) => {
+              const synced = syncWordRunTiersFromSidebar(values);
+              const issues = collectStoryContentIssues(synced, {
                 ...(audio.durationMs > 0 ? { primaryAudioDurationMs: audio.durationMs } : {}),
-              }),
-            );
-          })(event);
+              });
+              if (issues.length > 0) {
+                setContentIssues(issues);
+                setCheckToast('请先修复检查规则中的问题再保存');
+                return;
+              }
+              setValue('story.paragraphs', synced.story.paragraphs, { shouldDirty: true });
+              await onSubmit(
+                normalizeStoryContent(synced, {
+                  ...(audio.durationMs > 0 ? { primaryAudioDurationMs: audio.durationMs } : {}),
+                }),
+              );
+            },
+            () => {
+              showFormValidationError();
+            },
+          )(event);
         }}
       >
         <StoryLessonFields packId={packId} register={register} control={control} errors={errors} />
@@ -131,6 +140,9 @@ function StoryCardFormBody({ packId, defaultValues, onSubmit }: StoryCardFormPro
             onSelectParagraph={selectParagraph}
             translationEnabled={translationEnabled}
             contentIssues={contentIssues}
+            onRunsSyncError={(message) => {
+              setCheckToast(message);
+            }}
             paragraphs={paragraphs}
           />
         </div>

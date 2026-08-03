@@ -16,6 +16,7 @@ interface StoryParagraphEditorProps {
   onSelectParagraph: (index: number) => void;
   translationEnabled: boolean;
   contentIssues: { path: string; message: string }[];
+  onRunsSyncError?: ((message: string) => void) | undefined;
   paragraphs: UseFieldArrayReturn<StoryReadingContent, 'story.paragraphs'>;
 }
 
@@ -27,6 +28,7 @@ export function StoryParagraphEditor({
   onSelectParagraph,
   translationEnabled,
   contentIssues,
+  onRunsSyncError,
   paragraphs,
 }: StoryParagraphEditorProps): ReactElement {
   const activeIndex = Math.min(selectedParagraphIndex, Math.max(paragraphs.fields.length - 1, 0));
@@ -46,6 +48,7 @@ export function StoryParagraphEditor({
           contentIssues={contentIssues.filter((issue) =>
             issue.path.startsWith(`story.paragraphs[${String(activeIndex)}]`),
           )}
+          onRunsSyncError={onRunsSyncError}
           onRemove={() => {
             if (paragraphs.fields.length > 1) {
               paragraphs.remove(activeIndex);

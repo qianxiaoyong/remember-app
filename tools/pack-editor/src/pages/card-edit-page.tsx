@@ -91,6 +91,12 @@ export function CardEditPage({ packId, sortOrder, onBack }: CardEditPageProps): 
               window.setTimeout(() => {
                 setToast(null);
               }, 2000);
+            } catch (saveError: unknown) {
+              const message = saveError instanceof Error ? saveError.message : String(saveError);
+              setToast(`保存失败：${message}`);
+              window.setTimeout(() => {
+                setToast(null);
+              }, 4000);
             } finally {
               setSaving(false);
             }
@@ -137,6 +143,12 @@ export function CardEditPage({ packId, sortOrder, onBack }: CardEditPageProps): 
             window.setTimeout(() => {
               setToast(null);
             }, 2000);
+          } catch (saveError: unknown) {
+            const message = saveError instanceof Error ? saveError.message : String(saveError);
+            setToast(`保存失败：${message}`);
+            window.setTimeout(() => {
+              setToast(null);
+            }, 4000);
           } finally {
             setSaving(false);
           }

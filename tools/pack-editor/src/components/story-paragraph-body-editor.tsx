@@ -28,6 +28,7 @@ interface StoryParagraphBodyEditorProps {
   runs: StoryRun[];
   sidebar: StoryReadingContent['sidebar'];
   setValue: UseFormSetValue<StoryReadingContent>;
+  onRunsSyncError?: ((message: string) => void) | undefined;
   onMarkSelection: (input: {
     selectedText: string;
     selectionStart: number;
@@ -41,10 +42,12 @@ export function StoryParagraphBodyEditor({
   runs,
   sidebar,
   setValue,
+  onRunsSyncError,
   onMarkSelection,
 }: StoryParagraphBodyEditorProps): ReactElement {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const previewRef = useRef<HTMLDivElement>(null);
+  const isEditingRef = useRef(false);
   const [isEditing, setIsEditing] = useState(false);
   const [surfaceHeight, setSurfaceHeight] = useState<number | undefined>(undefined);
   const [plainText, setPlainText] = useState(() => runsToPlainText(runs));
@@ -52,6 +55,7 @@ export function StoryParagraphBodyEditor({
   plainTextRef.current = plainText;
   const [selectionRange, setSelectionRange] = useState<SelectionRange | null>(null);
   const markedCount = collectVocabIdsFromRuns(runs).length;
+  isEditingRef.current = isEditing;
 
   const runsPath =
     `story.paragraphs.${String(paragraphIndex)}.runs` as FieldPath<StoryReadingContent>;
@@ -141,16 +145,20 @@ export function StoryParagraphBodyEditor({
       return undefined;
     }
     function handleSubmit(event: Event): void {
+      if (!isEditingRef.current) {
+        return;
+      }
       if (!commitPlainText(plainTextRef.current)) {
         event.preventDefault();
         event.stopImmediatePropagation();
+        onRunsSyncError?.('正文改字导致词标记丢失，请先修复后再保存');
       }
     }
     form.addEventListener('submit', handleSubmit, { capture: true });
     return () => {
       form.removeEventListener('submit', handleSubmit, { capture: true });
     };
-  }, [paragraphIndex, runs, sidebar, setValue, runsPath]);
+  }, [paragraphIndex, runs, sidebar, setValue, runsPath, onRunsSyncError]);
 
   function refreshSelection(): void {
     const textarea = textareaRef.current;

@@ -43,6 +43,7 @@ interface StoryParagraphItemProps {
   setValue: UseFormSetValue<StoryReadingContent>;
   translationEnabled: boolean;
   contentIssues: { path: string; message: string }[];
+  onRunsSyncError?: ((message: string) => void) | undefined;
   onRemove: () => void;
 }
 
@@ -54,6 +55,7 @@ export function StoryParagraphItem({
   setValue,
   translationEnabled,
   contentIssues,
+  onRunsSyncError,
   onRemove,
 }: StoryParagraphItemProps): ReactElement {
   const runs = useWatch({
@@ -151,6 +153,7 @@ export function StoryParagraphItem({
           runs={runs}
           sidebar={sidebar}
           setValue={setValue}
+          onRunsSyncError={onRunsSyncError}
           onMarkSelection={markSelection}
         />
 
