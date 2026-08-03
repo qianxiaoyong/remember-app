@@ -16,9 +16,10 @@ describe('cardTypeRegistry', () => {
     expect(def?.reviewMode).toBe('sm2');
   });
 
-  it('story_reading 已注册且 reviewMode 为 lesson_complete', () => {
+  it('story_reading 已注册且 reviewMode 为 none', () => {
     const def = resolveCardTypeDefinition('story_reading');
-    expect(def?.reviewMode).toBe('lesson_complete');
+    expect(def?.reviewMode).toBe('none');
+    expect(def?.libraryPresentation).toBe('reader');
   });
 
   it('未知 type 返回 null', () => {

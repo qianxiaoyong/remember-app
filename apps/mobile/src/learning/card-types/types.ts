@@ -2,6 +2,8 @@ import type { ReactElement } from 'react';
 
 export type ReviewMode = 'sm2' | 'lesson_complete' | 'none' | 'interactive';
 
+export type LibraryPresentation = 'study' | 'reader';
+
 export interface CardRendererProps {
   packId: string;
   knowledgeId: string;
@@ -15,10 +17,13 @@ export interface CardRendererProps {
   onPlayPrimaryAudio: () => void;
   onPlayExampleAudio: (relativePath: string) => void;
   onTokenPress: (token: string) => void;
-  onReachedBottom?: () => void;
+  initialAudioPositionMs?: number;
+  onReaderBookmark?: (positionMs: number) => void;
+  onNavigateLesson?: (knowledgeId: string) => void;
 }
 
 export interface CardTypeDefinition {
   reviewMode: ReviewMode;
+  libraryPresentation: LibraryPresentation;
   Renderer: (props: CardRendererProps) => ReactElement;
 }

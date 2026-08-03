@@ -4,9 +4,14 @@ import { StoryReadingCardRenderer } from './story-reading/parse-content';
 import { VocabularyCardRenderer } from './vocabulary/parse-content';
 
 export const cardTypeRegistry: Record<string, CardTypeDefinition> = {
-  [CARD_TYPE_VOCABULARY]: { reviewMode: 'sm2', Renderer: VocabularyCardRenderer },
+  [CARD_TYPE_VOCABULARY]: {
+    reviewMode: 'sm2',
+    libraryPresentation: 'study',
+    Renderer: VocabularyCardRenderer,
+  },
   [CARD_TYPE_STORY_READING]: {
-    reviewMode: 'lesson_complete',
+    reviewMode: 'none',
+    libraryPresentation: 'reader',
     Renderer: StoryReadingCardRenderer,
   },
 };

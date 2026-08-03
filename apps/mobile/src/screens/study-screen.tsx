@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -18,11 +18,13 @@ import {
   resolveStudySessionOutcome,
 } from '../use-cases/resolve-study-session-outcome';
 import { navigateShellTab } from '../shell/shell-tab-transition';
+import { saveStoryReadingBookmark } from '../use-cases/save-story-reading-bookmark';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 
 interface StudyScreenProps {
   packId: string;
+  knowledgeId?: string | null;
   autoStart?: boolean;
 }
 
@@ -31,10 +33,11 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
   const insets = useSafeAreaInsets();
   const {
     session,
+    isReaderMode,
+    readerInitialPositionMs,
     startSession,
     revealed,
     isSubmitting,
-    reachedBottom,
     lexiconEntry,
     lexiconVisible,
     lexiconSaved,
@@ -43,16 +46,18 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
     cardDetail,
     intervalLabels,
     setRevealed,
-    setReachedBottom,
     handleReview,
-    handleLessonComplete,
+    handleReaderBookmark,
     openLexicon,
     handleToggleSave,
     handlePlayAudio,
     handlePlayPrimaryAudio,
     handlePlayExampleAudio,
     closeLexicon,
-  } = useStudyFlow(props.packId);
+  } = useStudyFlow(
+    props.packId,
+    props.knowledgeId === undefined ? undefined : { knowledgeId: props.knowledgeId },
+  );
   const [moreVisible, setMoreVisible] = useState(false);
   const [switchVisible, setSwitchVisible] = useState(false);
 
@@ -62,10 +67,26 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
   const cardTypeDefinition = cardDetail ? resolveCardTypeDefinition(cardDetail.cardType) : null;
 
   useEffect(() => {
-    if (props.autoStart !== false && session === null) {
+    if (props.autoStart !== false && session === null && !isReaderMode) {
       startSession();
     }
-  }, [props.autoStart, props.packId, session, startSession]);
+  }, [props.autoStart, isReaderMode, props.packId, session, startSession]);
+
+  const handleNavigateLesson = useCallback(
+    (knowledgeId: string) => {
+      saveStoryReadingBookmark({
+        packId: props.packId,
+        knowledgeId,
+        positionMs: 0,
+      });
+      router.replace(`/study?packId=${props.packId}&knowledgeId=${knowledgeId}`);
+    },
+    [props.packId, router],
+  );
+
+  const goHome = useCallback((): void => {
+    router.replace('/library');
+  }, [router]);
 
   const moreItems = [
     { id: 'search', label: '搜索当前知识库' },
@@ -73,58 +94,27 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
     { id: 'settings', label: '基础学习设置' },
   ];
 
-  const moreMenuAnchorTop = insets.top + spacing.sm + spacing.touchTarget + spacing.xs;
-  const moreMenuAnchorRight = spacing.lg;
-
-  const handleMoreItem = (itemId: string): void => {
-    setMoreVisible(false);
-    if (itemId === 'search') {
-      router.push(`/search?packId=${props.packId}`);
-      return;
-    }
-    if (itemId === 'switch') {
-      setSwitchVisible(true);
-      return;
-    }
-    if (itemId === 'settings') {
-      router.push('/settings');
-    }
-  };
-
   const showRatingBar =
     cardTypeDefinition?.reviewMode === 'sm2' && revealed && session?.currentItem && intervalLabels;
 
-  const showLessonCompleteBar =
-    cardTypeDefinition?.reviewMode === 'lesson_complete' && session?.currentItem;
-
-  const goHome = (): void => {
-    router.replace('/library');
-  };
+  const moreMenuAnchorTop = insets.top + spacing.sm + spacing.touchTarget + spacing.xs;
+  const moreMenuAnchorRight = spacing.lg;
 
   return (
     <ScreenScaffold
       footer={
         showRatingBar ? (
           <StudyRatingBar disabled={isSubmitting} labels={intervalLabels} onRate={handleReview} />
-        ) : showLessonCompleteBar ? (
-          <View style={styles.lessonCompleteFooter}>
-            <PrimaryButton
-              disabled={!reachedBottom || isSubmitting}
-              label="我读完了"
-              loading={isSubmitting}
-              onPress={handleLessonComplete}
-            />
-          </View>
         ) : null
       }
       safeAreaEdges={['left', 'right']}
     >
       <View style={styles.root}>
-        {!session ? (
+        {!isReaderMode && !session ? (
           <View style={styles.emptyState}>
             <PrimaryButton label="恢复或开始任务" onPress={startSession} />
           </View>
-        ) : sessionOutcome ? (
+        ) : sessionOutcome && session ? (
           <StudySessionOutcomePanel
             completedCount={session.completedCount}
             onBrowseMarket={() => {
@@ -144,21 +134,23 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
               onMorePress={() => {
                 setMoreVisible(true);
               }}
+              onNavigateLesson={handleNavigateLesson}
               onPlayExampleAudio={handlePlayExampleAudio}
               onPlayPrimaryAudio={handlePlayPrimaryAudio}
-              onReachedBottom={() => {
-                setReachedBottom(true);
-              }}
               onTokenPress={openLexicon}
               packId={props.packId}
               revealed={revealed}
               setRevealed={setRevealed}
               sortOrder={cardDetail.sortOrder}
+              {...(isReaderMode ? { onReaderBookmark: handleReaderBookmark } : {})}
+              {...(isReaderMode ? { initialAudioPositionMs: readerInitialPositionMs } : {})}
             />
           ) : (
             <UnsupportedCardPanel onGoHome={goHome} />
           )
-        ) : session.currentItem ? (
+        ) : isReaderMode ? (
+          <UnsupportedCardPanel message="无法加载此阅读内容" onGoHome={goHome} />
+        ) : session?.currentItem ? (
           <UnsupportedCardPanel message="无法加载此卡片内容" onGoHome={goHome} />
         ) : null}
       </View>
@@ -180,7 +172,20 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
         onClose={() => {
           setMoreVisible(false);
         }}
-        onItemPress={handleMoreItem}
+        onItemPress={(itemId) => {
+          setMoreVisible(false);
+          if (itemId === 'search') {
+            router.push(`/search?packId=${props.packId}`);
+            return;
+          }
+          if (itemId === 'switch') {
+            setSwitchVisible(true);
+            return;
+          }
+          if (itemId === 'settings') {
+            router.push('/settings');
+          }
+        }}
         visible={moreVisible}
       />
 
@@ -210,9 +215,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   emptyState: {
-    padding: spacing.lg,
-  },
-  lessonCompleteFooter: {
     padding: spacing.lg,
   },
 });

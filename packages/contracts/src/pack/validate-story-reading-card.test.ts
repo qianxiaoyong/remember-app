@@ -61,7 +61,7 @@ function makeStoryCard(overrides: Partial<PackCardRecord> = {}): PackCardRecord 
 
 describe('validateStoryReadingCard', () => {
   it('合法 story content 校验通过', () => {
-    const row = validateStoryReadingCard('story-test-pack', makeStoryCard(), manifestPaths);
+    const row = validateStoryReadingCard('story-test-pack', makeStoryCard(), { manifestPaths });
     expect(row.cardType).toBe('story_reading');
     expect(row.content.lesson.code).toBe('C1');
   });
@@ -87,7 +87,7 @@ describe('validateStoryReadingCard', () => {
             ],
           }),
         }),
-        manifestPaths,
+        { manifestPaths },
       ),
     ).toThrow(
       expect.objectContaining({
@@ -122,7 +122,7 @@ describe('validateStoryReadingCard', () => {
             ],
           }),
         }),
-        manifestPaths,
+        { manifestPaths },
       ),
     ).toThrow(
       expect.objectContaining({
@@ -152,7 +152,7 @@ describe('validateStoryReadingCard', () => {
             ],
           }),
         }),
-        manifestPaths,
+        { manifestPaths },
       ),
     ).toThrow(
       expect.objectContaining({
@@ -166,7 +166,174 @@ describe('validateStoryReadingCard', () => {
       validateStoryReadingCard(
         'story-test-pack',
         makeStoryCard({ knowledgeId: 'story-test-pack:story:wrong' }),
-        manifestPaths,
+        { manifestPaths },
+      ),
+    ).toThrow(
+      expect.objectContaining({
+        code: 'PACK_CONTENT_INVALID',
+      } satisfies Partial<PackVerificationError>),
+    );
+  });
+
+  it('段级时间轴齐全且单调时通过', () => {
+    const row = validateStoryReadingCard(
+      'story-test-pack',
+      makeStoryCard({
+        content: makeStoryContent({
+          sidebar: [],
+          paragraphs: [
+            {
+              runs: [{ kind: 'text', text: 'A.' }],
+              audioStartMs: 0,
+              audioEndMs: 1000,
+            },
+            {
+              runs: [{ kind: 'text', text: 'B.' }],
+              audioStartMs: 1000,
+              audioEndMs: 2500,
+            },
+          ],
+        }),
+      }),
+      { manifestPaths, context: { primaryAudioDurationMs: 3000 } },
+    );
+    expect(row.content.story.paragraphs).toHaveLength(2);
+  });
+
+  it('段级时间轴缺段时被拒绝', () => {
+    expect(() =>
+      validateStoryReadingCard(
+        'story-test-pack',
+        makeStoryCard({
+          content: makeStoryContent({
+            sidebar: [],
+            paragraphs: [
+              {
+                runs: [{ kind: 'text', text: 'A.' }],
+                audioStartMs: 0,
+                audioEndMs: 1000,
+              },
+              {
+                runs: [{ kind: 'text', text: 'B.' }],
+              },
+            ],
+          }),
+        }),
+        { manifestPaths },
+      ),
+    ).toThrow(
+      expect.objectContaining({
+        code: 'PACK_CONTENT_INVALID',
+      } satisfies Partial<PackVerificationError>),
+    );
+  });
+
+  it('段级时间轴重叠时被拒绝', () => {
+    expect(() =>
+      validateStoryReadingCard(
+        'story-test-pack',
+        makeStoryCard({
+          content: makeStoryContent({
+            sidebar: [],
+            paragraphs: [
+              {
+                runs: [{ kind: 'text', text: 'A.' }],
+                audioStartMs: 0,
+                audioEndMs: 1500,
+              },
+              {
+                runs: [{ kind: 'text', text: 'B.' }],
+                audioStartMs: 1200,
+                audioEndMs: 2500,
+              },
+            ],
+          }),
+        }),
+        { manifestPaths },
+      ),
+    ).toThrow(
+      expect.objectContaining({
+        code: 'PACK_CONTENT_INVALID',
+      } satisfies Partial<PackVerificationError>),
+    );
+  });
+
+  it('audioEndMs 超过音频时长时被拒绝', () => {
+    expect(() =>
+      validateStoryReadingCard(
+        'story-test-pack',
+        makeStoryCard({
+          content: makeStoryContent({
+            sidebar: [],
+            paragraphs: [
+              {
+                runs: [{ kind: 'text', text: 'A.' }],
+                audioStartMs: 0,
+                audioEndMs: 5000,
+              },
+            ],
+          }),
+        }),
+        { manifestPaths, context: { primaryAudioDurationMs: 4000 } },
+      ),
+    ).toThrow(
+      expect.objectContaining({
+        code: 'PACK_CONTENT_INVALID',
+      } satisfies Partial<PackVerificationError>),
+    );
+  });
+
+  it('只填一半时间字段时 JSON 解析失败', () => {
+    expect(() =>
+      validateStoryReadingCard(
+        'story-test-pack',
+        makeStoryCard({
+          content: JSON.stringify({
+            lesson: {
+              code: 'C1',
+              titleEn: 'The Princess and the Pea',
+              titleZh: '公主与豌豆',
+              coverImage: 'assets/images/c1.png',
+              primaryAudio: 'assets/audio/c1.mp3',
+            },
+            story: {
+              paragraphs: [
+                {
+                  runs: [{ kind: 'text', text: 'A.' }],
+                  audioStartMs: 0,
+                },
+              ],
+            },
+            sidebar: [],
+          }),
+        }),
+        { manifestPaths },
+      ),
+    ).toThrow(
+      expect.objectContaining({
+        code: 'PACK_CONTENT_INVALID',
+      } satisfies Partial<PackVerificationError>),
+    );
+  });
+
+  it('只填一半 translationZh 时被拒绝', () => {
+    expect(() =>
+      validateStoryReadingCard(
+        'story-test-pack',
+        makeStoryCard({
+          content: makeStoryContent({
+            paragraphs: [
+              {
+                runs: [{ kind: 'text', text: 'A.' }],
+                translationZh: '甲。',
+              },
+              {
+                runs: [{ kind: 'text', text: 'B.' }],
+              },
+            ],
+          }),
+        }),
+        { manifestPaths },
       ),
     ).toThrow(
       expect.objectContaining({

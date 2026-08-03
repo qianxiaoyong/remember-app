@@ -49,6 +49,7 @@ export {
   storyTierSchema,
   parseStoryReadingContentJson,
   type StoryReadingContent,
+  type StoryParagraph,
   type StorySidebarEntry,
   type StoryTier,
   type StoryWordRun,
@@ -96,7 +97,11 @@ export {
   bytesToBase64,
   type Ed25519Verifier,
 } from './verify-signature.js';
-export { validateStoryReadingCard, type StoryPackCardRow } from './validate-story-reading-card.js';
+export {
+  validateStoryReadingCard,
+  type StoryPackCardRow,
+  type StoryReadingValidateContext,
+} from './validate-story-reading-card.js';
 export {
   validateLexiconEntries,
   validatePackCards,

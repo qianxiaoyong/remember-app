@@ -1,16 +1,10 @@
 import type { StoryTier } from '@remember/contracts';
 import { colors } from '../../../theme/colors';
 
-export const tierBackgroundColors: Record<StoryTier, string> = {
-  high: '#FAD4D0',
-  mid: '#D4E4FA',
-  low: '#D4F0DC',
-};
-
-export const tierLegendLabels: Record<StoryTier, string> = {
-  high: '红:高频',
-  mid: '蓝:中频',
-  low: '绿:低频',
+export const tierChipBackgrounds: Record<StoryTier, string> = {
+  high: '#FCE4E1',
+  mid: '#E0EBFA',
+  low: '#DCF0E3',
 };
 
 export function tierAccentColor(tier: StoryTier): string {
@@ -22,3 +16,9 @@ export function tierAccentColor(tier: StoryTier): string {
   }
   return colors.studyRatingGood;
 }
+
+export function tierWordColorStyle(tier: StoryTier): { color: string } {
+  return { color: tierAccentColor(tier) };
+}
+
+export const storyFollowAlongTextColor = colors.accent;

@@ -27,8 +27,23 @@ export const storyRunSchema = z.discriminatedUnion('kind', [
 export const storyParagraphSchema = z
   .object({
     runs: z.array(storyRunSchema).min(1),
+    audioStartMs: z.number().int().min(0).optional(),
+    audioEndMs: z.number().int().min(0).optional(),
+    translationZh: z.string().min(1).optional(),
   })
-  .strict();
+  .strict()
+  .refine(
+    (paragraph) => (paragraph.audioStartMs === undefined) === (paragraph.audioEndMs === undefined),
+    {
+      message: 'audioStartMs and audioEndMs must both be set or both omitted',
+    },
+  )
+  .refine(
+    (paragraph) =>
+      paragraph.audioStartMs === undefined ||
+      (paragraph.audioEndMs !== undefined && paragraph.audioEndMs > paragraph.audioStartMs),
+    { message: 'audioEndMs must be greater than audioStartMs' },
+  );
 
 export const storyLessonSchema = z
   .object({

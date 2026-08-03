@@ -1,4 +1,4 @@
-export const USER_DB_VERSION = 2;
+export const USER_DB_VERSION = 3;
 
 export const USER_DB_TABLE_NAMES = [
   'installed_packs',
@@ -7,6 +7,7 @@ export const USER_DB_TABLE_NAMES = [
   'study_queue_items',
   'sync_outbox',
   'saved_lexicon_items',
+  'story_reading_bookmarks',
 ] as const;
 
 export type UserDbTableName = (typeof USER_DB_TABLE_NAMES)[number];
@@ -73,7 +74,17 @@ export const MIGRATION_V2_SQL: readonly string[] = [
   `CREATE INDEX idx_saved_lexicon_items_pack_id ON saved_lexicon_items (packId)`,
 ];
 
+export const MIGRATION_V3_SQL: readonly string[] = [
+  `CREATE TABLE story_reading_bookmarks (
+    packId TEXT NOT NULL PRIMARY KEY,
+    knowledgeId TEXT NOT NULL,
+    positionMs INTEGER NOT NULL DEFAULT 0,
+    updatedAt TEXT NOT NULL
+  )`,
+];
+
 export const MIGRATIONS: Readonly<Record<number, readonly string[]>> = {
   1: MIGRATION_V1_SQL,
   2: MIGRATION_V2_SQL,
+  3: MIGRATION_V3_SQL,
 };
