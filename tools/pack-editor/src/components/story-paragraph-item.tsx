@@ -13,7 +13,6 @@ import {
   syncRunsToPlainText,
 } from '../utils/story-runs-markup.js';
 import { StoryParagraphBodyEditor } from './story-paragraph-body-editor.js';
-import { StoryParagraphPreview } from './story-paragraph-preview.js';
 import {
   createStorySidebarEntry,
   slugFromSelection,
@@ -147,11 +146,6 @@ export function StoryParagraphItem({
       </div>
 
       <div className="edit-story-paragraph-scroll">
-        <div className="edit-story-block edit-story-block-preview">
-          <div className="edit-story-block-title">预览</div>
-          <StoryParagraphPreview runs={runs} />
-        </div>
-
         <StoryParagraphBodyEditor
           paragraphIndex={paragraphIndex}
           runs={runs}
