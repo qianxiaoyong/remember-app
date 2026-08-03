@@ -1,7 +1,8 @@
 import { useEffect, useState, type ReactElement } from 'react';
 import type { PackSourceCard } from '@remember/pack-builder/pack-source';
-import { isStorySourceCard } from '../utils/is-story-source-card.js';
+import { isStorySourceCard } from '@remember/pack-builder/pack-source';
 import { loadPackSource, saveCard } from '../api/local-api-client.js';
+import { STORY_CARD_FORM_ID, StoryCardForm } from '../components/story-card-form.js';
 import { VOCABULARY_CARD_FORM_ID, VocabularyCardForm } from '../components/vocabulary-card-form.js';
 import { LoadingState } from '../components/loading-state.js';
 import { StatusBanner } from '../components/status-banner.js';
@@ -72,17 +73,48 @@ export function CardEditPage({ packId, sortOrder, onBack }: CardEditPageProps): 
   }
 
   if (isStorySourceCard(card)) {
+    const storyCard = card;
     return (
       <>
-        <StatusBanner title="story_reading 卡片暂不支持在 pack-editor 中编辑" variant="warning" />
-        <button
-          type="button"
-          className="btn btn-secondary"
-          onClick={onBack}
-          style={{ marginTop: 'var(--space-3)' }}
-        >
-          返回列表
-        </button>
+        {toast && <Toast message={toast} />}
+
+        <StoryCardForm
+          packId={packId}
+          defaultValues={storyCard.content}
+          onSubmit={async (content) => {
+            setSaving(true);
+            try {
+              const nextCard = { ...storyCard, content };
+              await saveCard(packId, nextCard);
+              setCard(nextCard);
+              setToast('已保存');
+              window.setTimeout(() => {
+                setToast(null);
+              }, 2000);
+            } finally {
+              setSaving(false);
+            }
+          }}
+        />
+
+        <div className="sticky-form-footer">
+          <button type="button" className="btn btn-secondary" onClick={onBack}>
+            返回列表
+          </button>
+          <div className="sticky-form-footer-meta">
+            <strong>#{String(sortOrder)}</strong> · {storyCard.content.lesson.code}{' '}
+            {storyCard.content.lesson.titleZh}
+          </div>
+          <button
+            type="submit"
+            form={STORY_CARD_FORM_ID}
+            className="btn btn-primary"
+            disabled={saving}
+          >
+            {saving && <span className="btn-spinner" aria-hidden="true" />}
+            {saving ? '保存中…' : '保存'}
+          </button>
+        </div>
       </>
     );
   }

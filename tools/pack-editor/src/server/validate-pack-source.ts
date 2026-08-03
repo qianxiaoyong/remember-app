@@ -1,5 +1,7 @@
 import { vocabularyContentSchema } from '@remember/contracts';
 import { readPackSource, isStorySourceCard } from '@remember/pack-builder/pack-source';
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import { validateStorySourceCard } from './story-source-validation.js';
 
 export interface ValidationIssue {

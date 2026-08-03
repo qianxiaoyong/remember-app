@@ -2,7 +2,6 @@ import { storyReadingContentSchema } from '@remember/contracts';
 import {
   isStorySourceCard,
   readPackSource,
-  writePackSource,
   type PackSourceCard,
 } from '@remember/pack-builder/pack-source';
 import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';

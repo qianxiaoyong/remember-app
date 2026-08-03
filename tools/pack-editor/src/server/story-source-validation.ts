@@ -54,7 +54,10 @@ export function validateStorySourceCard(
     }
   }
 
-  for (const issue of collectStoryContentIssues(content, { primaryAudioDurationMs })) {
+  const contentIssuesOptions =
+    primaryAudioDurationMs === undefined ? {} : { primaryAudioDurationMs };
+
+  for (const issue of collectStoryContentIssues(content, contentIssuesOptions)) {
     issues.push({
       sortOrder: card.sortOrder,
       path: issue.path,
