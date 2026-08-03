@@ -11,7 +11,7 @@ import {
   type UseFormRegister,
   type UseFormSetValue,
 } from 'react-hook-form';
-import { useEffect, useMemo, useRef, type ReactElement } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactElement } from 'react';
 import { unmarkVocabInRuns } from '../utils/story-runs-markup.js';
 import { countStoryTierStats, formatStoryTierLegend } from '../utils/story-tier-stats.js';
 import {
@@ -40,6 +40,7 @@ export function StoryLessonVocabDialog({
   setValue,
 }: StoryLessonVocabDialogProps): ReactElement | null {
   const panelRef = useRef<HTMLDivElement>(null);
+  const [tierFilter, setTierFilter] = useState<StoryTier | null>(null);
   const sidebar = useFieldArray({ control, name: 'sidebar' });
   const sidebarValues = useWatch({ control, name: 'sidebar' });
   const allParagraphs = useWatch({ control, name: 'story.paragraphs' });
@@ -49,10 +50,20 @@ export function StoryLessonVocabDialog({
     () => sortSidebarIndicesByTier(sidebarValues),
     [sidebarValues],
   );
+  const visibleSidebarIndices = useMemo(() => {
+    if (tierFilter === null) {
+      return sortedSidebarIndices;
+    }
+    return sortedSidebarIndices.filter((sidebarIndex) => {
+      const tier = sidebarValues[sidebarIndex]?.tier ?? 'high';
+      return tier === tierFilter;
+    });
+  }, [sortedSidebarIndices, sidebarValues, tierFilter]);
 
   useEffect(() => {
     if (!open) {
-      return;
+      setTierFilter(null);
+      return undefined;
     }
     const handleKeyDown = (event: KeyboardEvent): void => {
       if (event.key === 'Escape') {
@@ -140,15 +151,28 @@ export function StoryLessonVocabDialog({
         </div>
 
         <div className="story-tier-legend-row">
-          {legendTiers.map((tier) => (
-            <span key={tier} className={`story-tier-legend-chip story-tier-legend-chip-${tier}`}>
-              {formatStoryTierLegend(tierStats, tier)}
-            </span>
-          ))}
+          {legendTiers.map((tier) => {
+            const isActive = tierFilter === tier;
+            return (
+              <button
+                key={tier}
+                type="button"
+                className={`story-tier-legend-chip story-tier-legend-chip-${tier}${isActive ? ' is-active' : ''}`}
+                aria-pressed={isActive}
+                onClick={() => {
+                  setTierFilter((current) => (current === tier ? null : tier));
+                }}
+              >
+                {formatStoryTierLegend(tierStats, tier)}
+              </button>
+            );
+          })}
         </div>
 
         {sidebar.fields.length === 0 ? (
           <p className="field-helper">暂无本课用词。在段落正文中标记可点词后，词条会出现在这里。</p>
+        ) : visibleSidebarIndices.length === 0 ? (
+          <p className="field-helper">当前频次下暂无词条。</p>
         ) : (
           <div className="data-table-wrap story-lesson-vocab-table-wrap">
             <table className="data-table data-table-compact">
@@ -165,7 +189,7 @@ export function StoryLessonVocabDialog({
                 </tr>
               </thead>
               <tbody>
-                {sortedSidebarIndices.map((sidebarIndex) => {
+                {visibleSidebarIndices.map((sidebarIndex) => {
                   const field = sidebar.fields[sidebarIndex];
                   if (field === undefined) {
                     return null;

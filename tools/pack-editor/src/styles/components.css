@@ -455,6 +455,20 @@
   font-size: 12px;
   font-weight: 500;
   border: 1px solid var(--color-border, #e0e0e0);
+  cursor: pointer;
+  font: inherit;
+  line-height: 1.4;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+
+.story-tier-legend-chip:hover {
+  filter: brightness(0.97);
+}
+
+.story-tier-legend-chip.is-active {
+  box-shadow: 0 0 0 2px currentColor;
 }
 
 .story-tier-legend-chip-high {
