@@ -12,13 +12,13 @@ cardType registry（ADR 0012）已在 `main` 落地；本 spec 冻结 **`story_r
 
 ### 1.1 目标
 
-| #   | 目标                                                                                                  |
-| --- | ----------------------------------------------------------------------------------------------------- |
-| G1  | 新增 `cardType: story_reading`，与 `vocabulary` 可在 **同一 pack、同一 App** 共存                     |
+| #   | 目标                                                                                                          |
+| --- | ------------------------------------------------------------------------------------------------------------- |
+| G1  | 新增 `cardType: story_reading`，与 `vocabulary` 可在 **同一 pack、同一 App** 共存                             |
 | G2  | 移动端 **阅读器 UI**：Hero 封面、段级跟读、底栏播放器、点词弹层、顶栏「本课 N 词」Tab、频次图例（运行时计数） |
-| G3  | 阅读进度由 **`story_reading_bookmarks`**（`knowledgeId` + `positionMs`）记录；**不进 SM-2**、无「我读完了」 |
-| G4  | 复用现有 pack 管道（zip 验签、安装、同步、Admin 发版）；仅扩展 contracts 校验与 mobile Renderer       |
-| G5  | 正文用 **结构化 JSON runs**，不用 HTML 富文本；Zod `.strict()` 可校验                                 |
+| G3  | 阅读进度由 **`story_reading_bookmarks`**（`knowledgeId` + `positionMs`）记录；**不进 SM-2**、无「我读完了」   |
+| G4  | 复用现有 pack 管道（zip 验签、安装、同步、Admin 发版）；仅扩展 contracts 校验与 mobile Renderer               |
+| G5  | 正文用 **结构化 JSON runs**，不用 HTML 富文本；Zod `.strict()` 可校验                                         |
 
 ### 1.2 非目标（MVP defer）
 
@@ -76,8 +76,8 @@ cards 表（knowledgeId, cardType, sortOrder, content）  ← 多一种 cardType
 
 `story_reading` **不写入** `learning_states`，**不进入** SM-2 学习会话队列。
 
-| 存储 | 字段 | 说明 |
-| ---- | ---- | ---- |
+| 存储                                    | 字段                                                     | 说明                                   |
+| --------------------------------------- | -------------------------------------------------------- | -------------------------------------- |
 | `user.sqlite` `story_reading_bookmarks` | `packId`（PK）、`knowledgeId`、`positionMs`、`updatedAt` | 每包一条；记录上次读到哪一课、音频进度 |
 
 行为：
@@ -138,13 +138,13 @@ card `content.lesson` 只保留 **课级** 字段（课次、本课标题、封�
 
 **`kind: "word"`**（注释词）
 
-| 字段           | 必填 | 说明                     |
-| -------------- | ---- | ------------------------ |
-| `kind: "word"` | ✅   |                          |
-| `surface`      | ✅   | 英文词形（展示用）       |
+| 字段           | 必填 | 说明                                                               |
+| -------------- | ---- | ------------------------------------------------------------------ |
+| `kind: "word"` | ✅   |                                                                    |
+| `surface`      | ✅   | 英文词形（展示用）                                                 |
 | `glossZh`      | ✅   | 词义（pack 校验用；UI 不 inline 展示，见 sidebar / translationZh） |
-| `tier`         | ✅   | `high` \| `mid` \| `low` |
-| `vocabId`      | ✅   | 稳定 ID，与 sidebar 关联 |
+| `tier`         | ✅   | `high` \| `mid` \| `low`                                           |
+| `vocabId`      | ✅   | 稳定 ID，与 sidebar 关联                                           |
 
 渲染：`surface` 按 `tier` **字色**区分；跟读时 **整段** 变色高亮；点词弹层读 `sidebar`。
 
@@ -179,17 +179,17 @@ card `content.lesson` 只保留 **课级** 字段（课次、本课标题、封�
 
 ## 7. reviewMode 与 libraryPresentation
 
-| reviewMode | 底栏 | 适用 |
-| ---------- | ---- | ---- |
-| `sm2` | 忘记/模糊/记得 | `vocabulary` |
-| `none` | 无 SM-2 / 无完成底栏 | **`story_reading`** |
-| `lesson_complete` | 「我读完了」（预留，当前无 cardType 使用） | 预留 |
-| `interactive` | 交互提交 | 预留 |
+| reviewMode        | 底栏                                       | 适用                |
+| ----------------- | ------------------------------------------ | ------------------- |
+| `sm2`             | 忘记/模糊/记得                             | `vocabulary`        |
+| `none`            | 无 SM-2 / 无完成底栏                       | **`story_reading`** |
+| `lesson_complete` | 「我读完了」（预留，当前无 cardType 使用） | 预留                |
+| `interactive`     | 交互提交                                   | 预留                |
 
-| libraryPresentation | 书库 UI | 适用 |
-| ------------------- | ------- | ---- |
-| `study` | SM-2 进度条 + 继续学习 | `vocabulary` |
-| `reader` | 「上次读到」+ 继续阅读 | **`story_reading`** |
+| libraryPresentation | 书库 UI                | 适用                |
+| ------------------- | ---------------------- | ------------------- |
+| `study`             | SM-2 进度条 + 继续学习 | `vocabulary`        |
+| `reader`            | 「上次读到」+ 继续阅读 | **`story_reading`** |
 
 **study-screen 行为（reader）：**
 
@@ -227,7 +227,7 @@ card `content.lesson` 只保留 **课级** 字段（课次、本课标题、封�
 | 播放          | 播 `lesson.primaryAudio`；复用 pack 内音频播放链                                     |
 | 点 `word` run | 底部 sheet：headword、ipa、pos、definitionZh、tier 色条                              |
 | 「本课 N 词」 | 进入词表页（列表同 sidebar 顺序；项可点开展开详情）                                  |
-| 段级跟读      | 播放时当前段变色；自动滚入视区；可拖进度、跳段/跳篇                                   |
+| 段级跟读      | 播放时当前段变色；自动滚入视区；可拖进度、跳段/跳篇                                  |
 | 更多菜单      | 与 vocabulary 相同（搜索/切换包/设置）；搜索是否索引 story 正文 **defer** 至实施计划 |
 
 ### 8.3 视觉 token（频次）
@@ -242,13 +242,13 @@ card `content.lesson` 只保留 **课级** 字段（课次、本课标题、封�
 
 ### 8.4 与 vocabulary 差异
 
-|      | vocabulary               | story_reading          |
-| ---- | ------------------------ | ---------------------- |
-| 阶段 | prompt → reveal          | 单屏阅读               |
-| 底栏 | SM-2 三按钮              | 音频播放器（无 SM-2）  |
+|      | vocabulary               | story_reading           |
+| ---- | ------------------------ | ----------------------- |
+| 阶段 | prompt → reveal          | 单屏阅读                |
+| 底栏 | SM-2 三按钮              | 音频播放器（无 SM-2）   |
 | 进度 | learning_states + 队列   | story_reading_bookmarks |
-| 点词 | lexicon_entries          | sidebar                |
-| 图片 | prompt.primaryImage 可选 | lesson.coverImage 必填 |
+| 点词 | lexicon_entries          | sidebar                 |
+| 图片 | prompt.primaryImage 可选 | lesson.coverImage 必填  |
 
 ## 9. 示例 content（节选）
 
@@ -315,7 +315,7 @@ card `content.lesson` 只保留 **课级** 字段（课次、本课标题、封�
 
 ## 12. 修订记录
 
-| 日期       | 说明                                                  |
-| ---------- | ----------------------------------------------------- |
-| 2026-08-02 | 首版确认：产品决策、schema、UI、进度、protocolVersion |
+| 日期       | 说明                                                                                             |
+| ---------- | ------------------------------------------------------------------------------------------------ |
+| 2026-08-02 | 首版确认：产品决策、schema、UI、进度、protocolVersion                                            |
 | 2026-08-03 | reader v2：reviewMode none、书签进度、translationZh、合并播放器；废弃 lesson_complete / 我读完了 |

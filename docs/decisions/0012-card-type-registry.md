@@ -26,21 +26,21 @@
 
 每种 cardType 在 mobile registry 声明 `reviewMode`，study 壳层据此决定是否展示 SM-2 三按钮底栏：
 
-| 值                | 含义                            | 本计划             |
-| ----------------- | ------------------------------- | ------------------ |
-| `sm2`             | 揭示后展示间隔复习按钮          | ✅ `vocabulary`    |
-| `none`            | 无 SM-2 底栏（阅读/浏览类）     | ✅ `story_reading` |
-| `lesson_complete` | 滚到底后「我读完了」（预留）    | 预留               |
-| `interactive`     | 交互式作答后再评分              | 预留               |
+| 值                | 含义                         | 本计划             |
+| ----------------- | ---------------------------- | ------------------ |
+| `sm2`             | 揭示后展示间隔复习按钮       | ✅ `vocabulary`    |
+| `none`            | 无 SM-2 底栏（阅读/浏览类）  | ✅ `story_reading` |
+| `lesson_complete` | 滚到底后「我读完了」（预留） | 预留               |
+| `interactive`     | 交互式作答后再评分           | 预留               |
 
 ### 2.1 libraryPresentation
 
 registry 可选声明 `libraryPresentation`，书库 UI 据此分支（**不由 pack 固定 enum 决定**）：
 
-| 值       | 书库行为                         | 本计划             |
-| -------- | -------------------------------- | ------------------ |
-| `study`  | SM-2 进度条 + 继续/开始学习      | ✅ `vocabulary`    |
-| `reader` | 「上次读到」+ 继续/开始阅读      | ✅ `story_reading` |
+| 值       | 书库行为                    | 本计划             |
+| -------- | --------------------------- | ------------------ |
+| `study`  | SM-2 进度条 + 继续/开始学习 | ✅ `vocabulary`    |
+| `reader` | 「上次读到」+ 继续/开始阅读 | ✅ `story_reading` |
 
 ### 3. 三层分发（静态编译期，非运行时插件）
 
@@ -148,21 +148,21 @@ story_reading → reviewMode: none, libraryPresentation: reader
 
 `user.sqlite` `story_reading_bookmarks`（v3 migration）：
 
-| 字段          | 说明               |
-| ------------- | ------------------ |
-| `packId`      | PK                 |
-| `knowledgeId` | 当前课             |
-| `positionMs`  | 音频进度           |
-| `updatedAt`   | ISO 时间           |
+| 字段          | 说明     |
+| ------------- | -------- |
+| `packId`      | PK       |
+| `knowledgeId` | 当前课   |
+| `positionMs`  | 音频进度 |
+| `updatedAt`   | ISO 时间 |
 
 **不写入** `learning_states`；**不使用** 完成哨兵。
 
 ### 与 vocabulary 差异
 
-|      | vocabulary               | story_reading          |
-| ---- | ------------------------ | ---------------------- |
-| 阶段 | prompt → reveal          | 单屏阅读 + 播放器      |
-| 底栏 | SM-2 三按钮              | 音频播放器             |
+|      | vocabulary               | story_reading           |
+| ---- | ------------------------ | ----------------------- |
+| 阶段 | prompt → reveal          | 单屏阅读 + 播放器       |
+| 底栏 | SM-2 三按钮              | 音频播放器              |
 | 进度 | learning_states + 队列   | story_reading_bookmarks |
-| 点词 | lexicon_entries          | sidebar                |
-| 主图 | prompt.primaryImage 可选 | lesson.coverImage 必填 |
+| 点词 | lexicon_entries          | sidebar                 |
+| 主图 | prompt.primaryImage 可选 | lesson.coverImage 必填  |
