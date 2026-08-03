@@ -7,12 +7,14 @@ import {
   type UseFormSetValue,
 } from 'react-hook-form';
 import type { ReactElement } from 'react';
+import { useEffect, useState } from 'react';
 import {
   applyWordMarkAtSelection,
   collectVocabIdsFromRuns,
   syncRunsToPlainText,
 } from '../utils/story-runs-markup.js';
 import { insertSidebarEntryAtTierHead } from '../utils/story-sidebar-order.js';
+import { prependParagraphVocabId } from '../utils/story-paragraph-vocab-order.js';
 import { StoryParagraphBodyEditor } from './story-paragraph-body-editor.js';
 import {
   createStorySidebarEntry,
@@ -64,6 +66,16 @@ export function StoryParagraphItem({
     name: `story.paragraphs.${String(paragraphIndex)}.runs` as `story.paragraphs.${number}.runs`,
   });
   const sidebar = useWatch({ control, name: 'sidebar' });
+  const [vocabDisplayOrder, setVocabDisplayOrder] = useState<string[]>([]);
+
+  useEffect(() => {
+    setVocabDisplayOrder(collectVocabIdsFromRuns(runs));
+  }, [paragraphIndex]);
+
+  useEffect(() => {
+    const ids = collectVocabIdsFromRuns(runs);
+    setVocabDisplayOrder((previous) => previous.filter((id) => ids.includes(id)));
+  }, [runs]);
 
   const hasIssue = contentIssues.length > 0;
   const runsPath =
@@ -128,6 +140,9 @@ export function StoryParagraphItem({
       setValue(sidebarPath, nextSidebar, { shouldDirty: true });
     }
     setValue(runsPath, nextRuns, { shouldDirty: true });
+    setVocabDisplayOrder((previous) =>
+      prependParagraphVocabId(previous, vocabId, collectVocabIdsFromRuns(nextRuns)),
+    );
   }
 
   return (
@@ -181,6 +196,10 @@ export function StoryParagraphItem({
           register={register}
           control={control}
           setValue={setValue}
+          vocabDisplayOrder={vocabDisplayOrder}
+          onVocabRemovedFromParagraph={(vocabId) => {
+            setVocabDisplayOrder((previous) => previous.filter((id) => id !== vocabId));
+          }}
         />
 
         {contentIssues.map((issue) => (

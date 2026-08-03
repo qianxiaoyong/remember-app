@@ -8,10 +8,12 @@ import {
   type UseFormRegister,
   type UseFormSetValue,
 } from 'react-hook-form';
-import { useMemo, useEffect, useState, type ReactElement } from 'react';
+import { useMemo, type ReactElement } from 'react';
 import { collectVocabIdsFromRuns, unmarkVocabInRuns } from '../utils/story-runs-markup.js';
-import { applySidebarTierToParagraphs } from '../utils/sync-word-run-tiers.js';
-import { moveSidebarEntryToTierHead } from '../utils/story-sidebar-order.js';
+import {
+  moveSidebarEntryToTierHead,
+} from '../utils/story-sidebar-order.js';
+import { orderParagraphVocabIds } from '../utils/story-paragraph-vocab-order.js';
 
 const tierOptions = STORY_TIER_OPTIONS;
 
@@ -20,6 +22,8 @@ interface StoryParagraphVocabProps {
   register: UseFormRegister<StoryReadingContent>;
   control: Control<StoryReadingContent>;
   setValue: UseFormSetValue<StoryReadingContent>;
+  vocabDisplayOrder: string[];
+  onVocabRemovedFromParagraph: (vocabId: string) => void;
 }
 
 export function StoryParagraphVocab({
@@ -27,6 +31,8 @@ export function StoryParagraphVocab({
   register,
   control,
   setValue,
+  vocabDisplayOrder,
+  onVocabRemovedFromParagraph,
 }: StoryParagraphVocabProps): ReactElement {
   const sidebar = useFieldArray({ control, name: 'sidebar' });
   const sidebarValues = useWatch({ control, name: 'sidebar' });
@@ -37,33 +43,11 @@ export function StoryParagraphVocab({
   });
 
   const paragraphVocabIds = useMemo(() => collectVocabIdsFromRuns(runs), [runs]);
-  const [vocabDisplayOrder, setVocabDisplayOrder] = useState<string[]>([]);
 
-  useEffect(() => {
-    setVocabDisplayOrder(collectVocabIdsFromRuns(runs));
-  }, [paragraphIndex]);
-
-  useEffect(() => {
-    const ids = collectVocabIdsFromRuns(runs);
-    setVocabDisplayOrder((previous) => {
-      const newIds = ids.filter((id) => !previous.includes(id));
-      let next = previous.filter((id) => ids.includes(id));
-      for (const id of newIds) {
-        next = [id, ...next.filter((existingId) => existingId !== id)];
-      }
-      return next.length === 0 ? ids : next;
-    });
-  }, [runs]);
-
-  const orderedVocabIds = useMemo(() => {
-    const fromOrder = vocabDisplayOrder.filter((id) => paragraphVocabIds.includes(id));
-    for (const id of paragraphVocabIds) {
-      if (!fromOrder.includes(id)) {
-        fromOrder.push(id);
-      }
-    }
-    return fromOrder;
-  }, [paragraphVocabIds, vocabDisplayOrder]);
+  const orderedVocabIds = useMemo(
+    () => orderParagraphVocabIds(vocabDisplayOrder, paragraphVocabIds),
+    [vocabDisplayOrder, paragraphVocabIds],
+  );
 
   const vocabRows = orderedVocabIds.flatMap((vocabId) => {
     const sidebarIndex = sidebarValues.findIndex((entry) => entry.vocabId === vocabId);
@@ -92,20 +76,31 @@ export function StoryParagraphVocab({
     if (!stillUsed) {
       sidebar.remove(sidebarIndex);
     }
+    onVocabRemovedFromParagraph(vocabId);
   }
 
   function handleTierChange(sidebarIndex: number, vocabId: string, tier: StoryTier): void {
     const nextSidebar = moveSidebarEntryToTierHead(sidebarValues, sidebarIndex, tier);
     setValue('sidebar', nextSidebar, { shouldDirty: true });
-    setValue(
-      'story.paragraphs',
-      applySidebarTierToParagraphs({
-        paragraphs: allParagraphs,
-        vocabId,
-        tier,
-      }),
-      { shouldDirty: true },
-    );
+
+    allParagraphs.forEach((paragraph, paragraphIdx) => {
+      let changed = false;
+      const nextRuns = paragraph.runs.map((run) => {
+        if (run.kind === 'word' && run.vocabId === vocabId && run.tier !== tier) {
+          changed = true;
+          return { ...run, tier };
+        }
+        return run;
+      });
+      if (!changed) {
+        return;
+      }
+      setValue(
+        `story.paragraphs.${String(paragraphIdx)}.runs` as FieldPath<StoryReadingContent>,
+        nextRuns,
+        { shouldDirty: true },
+      );
+    });
   }
 
   return (

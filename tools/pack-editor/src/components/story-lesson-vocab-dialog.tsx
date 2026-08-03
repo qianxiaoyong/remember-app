@@ -14,7 +14,6 @@ import {
 import { useEffect, useMemo, useRef, type ReactElement } from 'react';
 import { unmarkVocabInRuns } from '../utils/story-runs-markup.js';
 import { countStoryTierStats, formatStoryTierLegend } from '../utils/story-tier-stats.js';
-import { applySidebarTierToParagraphs } from '../utils/sync-word-run-tiers.js';
 import {
   STORY_EDITOR_TIER_ORDER,
   insertSidebarEntryAtTierHead,
@@ -89,15 +88,25 @@ export function StoryLessonVocabDialog({
   function handleTierChange(sidebarIndex: number, vocabId: string, tier: StoryTier): void {
     const nextSidebar = moveSidebarEntryToTierHead(sidebarValues, sidebarIndex, tier);
     setValue('sidebar', nextSidebar, { shouldDirty: true });
-    setValue(
-      'story.paragraphs',
-      applySidebarTierToParagraphs({
-        paragraphs: allParagraphs,
-        vocabId,
-        tier,
-      }),
-      { shouldDirty: true },
-    );
+
+    allParagraphs.forEach((paragraph, paragraphIdx) => {
+      let changed = false;
+      const nextRuns = paragraph.runs.map((run) => {
+        if (run.kind === 'word' && run.vocabId === vocabId && run.tier !== tier) {
+          changed = true;
+          return { ...run, tier };
+        }
+        return run;
+      });
+      if (!changed) {
+        return;
+      }
+      setValue(
+        `story.paragraphs.${String(paragraphIdx)}.runs` as FieldPath<StoryReadingContent>,
+        nextRuns,
+        { shouldDirty: true },
+      );
+    });
   }
 
   return (

@@ -73,11 +73,17 @@ export function StoryParagraphBodyEditor({
   }, []);
 
   useLayoutEffect(() => {
-    if (isEditing) {
+    if (!isEditing) {
+      measurePreviewHeight();
       return;
     }
-    measurePreviewHeight();
-  }, [isEditing, runs, measurePreviewHeight]);
+    const textarea = textareaRef.current;
+    if (!textarea) {
+      return;
+    }
+    textarea.style.height = 'auto';
+    setSurfaceHeight(textarea.scrollHeight);
+  }, [isEditing, runs, plainText, measurePreviewHeight]);
 
   useEffect(() => {
     if (isEditing) {
