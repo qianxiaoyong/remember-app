@@ -12,6 +12,10 @@ import { AdminCatalogTaxonomyService } from './catalog-taxonomy/admin-catalog-ta
 import { AdminDashboardController } from './dashboard/admin-dashboard.controller.js';
 import { AdminDashboardRepository } from './dashboard/admin-dashboard.repository.js';
 import { AdminDashboardService } from './dashboard/admin-dashboard.service.js';
+import { AdminLexiconController } from './lexicon/admin-lexicon.controller.js';
+import { AdminLexiconEnrichService } from './lexicon/admin-lexicon-enrich.service.js';
+import { AdminLexiconRepository } from './lexicon/admin-lexicon.repository.js';
+import { AdminLexiconService } from './lexicon/admin-lexicon.service.js';
 import { AdminOrdersController } from './orders/admin-orders.controller.js';
 import { AdminOrdersRepository } from './orders/admin-orders.repository.js';
 import { AdminOrdersService } from './orders/admin-orders.service.js';
@@ -38,6 +42,7 @@ import { AdminUsersService } from './users/admin-users.service.js';
     AdminPackAccessController,
     AdminPacksController,
     AdminCatalogTaxonomyController,
+    AdminLexiconController,
     AdminRefundsController,
     AdminRedemptionController,
     AdminAuditLogsController,
@@ -55,6 +60,9 @@ import { AdminUsersService } from './users/admin-users.service.js';
     AdminPackVersionsService,
     AdminCatalogTaxonomyRepository,
     AdminCatalogTaxonomyService,
+    AdminLexiconRepository,
+    AdminLexiconEnrichService,
+    AdminLexiconService,
     AdminRefundsService,
     AdminRedemptionService,
     AdminAuditLogsService,

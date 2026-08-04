@@ -275,16 +275,17 @@ model RedemptionEvent {
 }
 
 model AdminUser {
-  id           String         @id @default(uuid()) @db.Uuid
-  loginName    String         @unique @map("login_name")
-  passwordHash String         @map("password_hash")
-  role         String         @default("super_admin")
-  status       String         @default("active")
-  totpSecret   String?        @map("totp_secret")
-  createdAt    DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt    DateTime       @updatedAt @map("updated_at") @db.Timestamptz(6)
-  sessions     AdminSession[]
-  auditLogs    AuditLog[]
+  id              String         @id @default(uuid()) @db.Uuid
+  loginName       String         @unique @map("login_name")
+  passwordHash    String         @map("password_hash")
+  role            String         @default("super_admin")
+  status          String         @default("active")
+  totpSecret      String?        @map("totp_secret")
+  createdAt       DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt       DateTime       @updatedAt @map("updated_at") @db.Timestamptz(6)
+  sessions        AdminSession[]
+  auditLogs       AuditLog[]
+  publishedLemmas ContentLemma[]
 
   @@map("admin_users")
 }
@@ -317,4 +318,119 @@ model AuditLog {
   @@index([createdAt(sort: Desc)])
   @@index([action])
   @@map("audit_logs")
+}
+
+model ContentLemma {
+  id                   String                  @id @default(uuid()) @db.Uuid
+  lemmaKey             String                  @unique @map("lemma_key")
+  headword             String
+  ipa                  String?
+  pos                  String?
+  status               String                  @default("draft")
+  source               String
+  difficultyLevel      Int?                    @map("difficulty_level")
+  cefrLevel            String?                 @map("cefr_level")
+  frequencyBnc         Int?                    @map("frequency_bnc")
+  frequencyFrq         Int?                    @map("frequency_frq")
+  collinsStar          Int?                    @map("collins_star")
+  oxfordCore           Boolean?                @map("oxford_core")
+  importBatchId        String?                 @map("import_batch_id") @db.Uuid
+  publishedAt          DateTime?               @map("published_at") @db.Timestamptz(6)
+  publishedByAdminId   String?                 @map("published_by_admin_id") @db.Uuid
+  createdAt            DateTime                @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt            DateTime                @updatedAt @map("updated_at") @db.Timestamptz(6)
+  importBatch          ContentImportBatch?     @relation(fields: [importBatchId], references: [id])
+  publishedByAdmin     AdminUser?              @relation(fields: [publishedByAdminId], references: [id])
+  fragments            ContentLemmaFragment[]
+  forms                ContentLemmaForm[]
+  assets               ContentLemmaAsset[]
+  tagLinks             ContentLemmaTagLink[]
+
+  @@index([status])
+  @@index([headword])
+  @@map("content_lemmas")
+}
+
+model ContentLemmaFragment {
+  id           String       @id @default(uuid()) @db.Uuid
+  lemmaId      String       @map("lemma_id") @db.Uuid
+  fragmentType String       @map("fragment_type")
+  content      Json
+  sortOrder    Int          @map("sort_order")
+  source       String
+  createdAt    DateTime     @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime     @updatedAt @map("updated_at") @db.Timestamptz(6)
+  lemma        ContentLemma @relation(fields: [lemmaId], references: [id], onDelete: Cascade)
+
+  @@index([lemmaId, fragmentType])
+  @@map("content_lemma_fragments")
+}
+
+model ContentLemmaForm {
+  formKey     String       @id @map("form_key")
+  lemmaId     String       @map("lemma_id") @db.Uuid
+  formType    String       @map("form_type")
+  displayForm String       @map("display_form")
+  source      String
+  createdAt   DateTime     @default(now()) @map("created_at") @db.Timestamptz(6)
+  lemma       ContentLemma @relation(fields: [lemmaId], references: [id], onDelete: Cascade)
+
+  @@index([lemmaId])
+  @@map("content_lemma_forms")
+}
+
+model ContentTag {
+  id        String                @id @default(uuid()) @db.Uuid
+  tagKey    String                @unique @map("tag_key")
+  labelZh   String                @map("label_zh")
+  createdAt DateTime              @default(now()) @map("created_at") @db.Timestamptz(6)
+  lemmaLinks ContentLemmaTagLink[]
+
+  @@map("content_tags")
+}
+
+model ContentLemmaTagLink {
+  lemmaId   String       @map("lemma_id") @db.Uuid
+  tagId     String       @map("tag_id") @db.Uuid
+  createdAt DateTime     @default(now()) @map("created_at") @db.Timestamptz(6)
+  lemma     ContentLemma @relation(fields: [lemmaId], references: [id], onDelete: Cascade)
+  tag       ContentTag   @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([lemmaId, tagId])
+  @@map("content_lemma_tag_links")
+}
+
+model ContentImportBatch {
+  id             String         @id @default(uuid()) @db.Uuid
+  sourceName     String         @map("source_name")
+  fileVersion    String         @map("file_version")
+  fileSha256     String         @unique @map("file_sha256")
+  status         String         @default("running")
+  insertedCount  Int            @default(0) @map("inserted_count")
+  skippedCount   Int            @default(0) @map("skipped_count")
+  errorCount     Int            @default(0) @map("error_count")
+  startedAt      DateTime       @default(now()) @map("started_at") @db.Timestamptz(6)
+  finishedAt     DateTime?      @map("finished_at") @db.Timestamptz(6)
+  errorMessage   String?        @map("error_message")
+  lemmas         ContentLemma[]
+
+  @@map("content_import_batches")
+}
+
+model ContentLemmaAsset {
+  id          String       @id @default(uuid()) @db.Uuid
+  lemmaId     String       @map("lemma_id") @db.Uuid
+  assetKind   String       @map("asset_kind")
+  storageKind String       @map("storage_kind")
+  pathOrKey   String       @map("path_or_key")
+  sha256      String?
+  durationMs  Int?         @map("duration_ms")
+  mimeType    String?      @map("mime_type")
+  voiceId     String?      @map("voice_id")
+  ttsText     String?      @map("tts_text")
+  createdAt   DateTime     @default(now()) @map("created_at") @db.Timestamptz(6)
+  lemma       ContentLemma @relation(fields: [lemmaId], references: [id], onDelete: Cascade)
+
+  @@index([lemmaId, assetKind])
+  @@map("content_lemma_assets")
 }

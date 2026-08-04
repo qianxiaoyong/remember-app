@@ -10,6 +10,15 @@ import {
   handleSaveCard,
   handleValidate,
 } from './local-api-handlers.js';
+import {
+  handleGetPackLexicon,
+  handleLexiconBatchGet,
+  handleLexiconByForm,
+  handleLexiconDetail,
+  handleLexiconSearch,
+  handleSavePackLexicon,
+} from './lexicon-proxy-handlers.js';
+import { handleTtsStatus, handleTtsSynthesize } from './tts-handlers.js';
 import { sendJson } from './json-response.js';
 
 async function handleLocalApi(
@@ -126,6 +135,61 @@ async function handleLocalApi(
   ) {
     if (req.method === 'POST') {
       await handleBuild(segments[2] ?? '', req, res);
+      return;
+    }
+  }
+
+  if (
+    segments.length === 4 &&
+    segments[0] === 'local-api' &&
+    segments[1] === 'packs' &&
+    segments[3] === 'lexicon'
+  ) {
+    if (req.method === 'GET') {
+      handleGetPackLexicon(segments[2] ?? '', res);
+      return;
+    }
+    if (req.method === 'PUT') {
+      await handleSavePackLexicon(segments[2] ?? '', req, res);
+      return;
+    }
+  }
+
+  if (segments.length === 3 && segments[0] === 'local-api' && segments[1] === 'lexicon') {
+    const url = new URL(req.url ?? '', 'http://localhost');
+    if (segments[2] === 'search' && req.method === 'GET') {
+      await handleLexiconSearch(url, res);
+      return;
+    }
+    if (segments[2] === 'batch-get' && req.method === 'POST') {
+      await handleLexiconBatchGet(req, res);
+      return;
+    }
+    if (req.method === 'GET' && segments[2] !== 'search' && segments[2] !== 'batch-get') {
+      await handleLexiconDetail(decodeURIComponent(segments[2] ?? ''), res);
+      return;
+    }
+  }
+
+  if (
+    segments.length === 4 &&
+    segments[0] === 'local-api' &&
+    segments[1] === 'lexicon' &&
+    segments[2] === 'by-form'
+  ) {
+    if (req.method === 'GET') {
+      await handleLexiconByForm(decodeURIComponent(segments[3] ?? ''), res);
+      return;
+    }
+  }
+
+  if (segments.length === 3 && segments[0] === 'local-api' && segments[1] === 'tts') {
+    if (segments[2] === 'status' && req.method === 'GET') {
+      handleTtsStatus(res);
+      return;
+    }
+    if (segments[2] === 'synthesize' && req.method === 'POST') {
+      await handleTtsSynthesize(req, res);
       return;
     }
   }

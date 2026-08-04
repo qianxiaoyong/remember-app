@@ -10,6 +10,7 @@ export const adminResourceGroups: Record<string, string> = {
 
 export const adminCustomRoutes: Record<string, { group: string; label: string }> = {
   '/catalog-taxonomy': { group: '内容', label: '分类管理' },
+  '/lexicon': { group: '内容', label: '中心词库' },
 };
 
 const actionLabels = {
@@ -49,6 +50,18 @@ export function parseAdminRoute(
       group: custom.group,
       resourceLabel: custom.label,
       breadcrumbSegments: [custom.group, custom.label],
+    };
+  }
+
+  const lexiconDetailMatch = /^\/lexicon\/([^/]+)$/.exec(pathname);
+  if (lexiconDetailMatch) {
+    const lemmaKey = decodeURIComponent(lexiconDetailMatch[1] ?? '');
+    return {
+      group: '内容',
+      resourceLabel: '中心词库',
+      action: 'show',
+      actionLabel: actionLabels.show,
+      breadcrumbSegments: ['内容', '中心词库', lemmaKey],
     };
   }
 
