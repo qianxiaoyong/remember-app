@@ -60,7 +60,7 @@
 | ---- | ---------------------------------------------- | --------------------------------------------------------------------------------------------- | ---------------- |
 | 1    | `2026-08-04-phase8-pack-and-app-update.md`     | 验证 pack 版本更新/回退；APK 最低版本与 `protocolVersion` 强制策略（若缺则最小 API）；RC 用例 | 轻               |
 | 2    | `2026-08-04-phase8-production-deployment.md`   | 生产 Compose + Caddy；env 校验；COS 私有桶接 Admin 发版；`pg_dump` 备份脚本                   | 中               |
-| 3    | `2026-08-04-phase8-release-candidate-check.md` | RC 勾选清单 + 弱网/断网/小屏实机项；邀请账号全链路                                            | 轻（偏 runbook） |
+| 3    | `2026-08-04-phase8-release-candidate-check.md` | RC 勾选清单 — [runbook 已交付](../runbooks/release-candidate-checklist.md) | 轻 |
 
 **依赖：** 2 可先于 1 搭骨架（空 API 也能起）；**RC（3）必须 1+2 可跑**。  
 **并行 Pause：** 真实微信支付（Pause C/D）仅影响 RC 清单中「真实付/退」几行，不阻塞 Compose/COS/备份。
@@ -103,7 +103,7 @@
 - [x] 生产 Compose **一键 up**（[production-deploy.md](../../runbooks/production-deploy.md) §5）；本地 staging `/health` OK
 - [ ] Admin 在 staging 能 **上传 zip → 发布 → App 能下载安装学习** — **defer 统一真机验收**
 - [x] `pg_dump` 备份 + **按 ADR 0003 流程恢复** 到空库，订单/`pack_access` 计数一致（2026-08-04 staging 演练 PASS）
-- [ ] RC 清单 **P0 项** 在 Android 8+ 真机走通 — **defer 子计划 3 统一验收**
+- [ ] RC 清单 **P0 项** 在 Android 8+ 真机走通 — runbook 已交付；勾选 defer 统一验收
 - [x] 生产 `.env` 经 **校验脚本** 启动前检查（`tools/scripts/validate-prod-env.mjs`）
 
 ### 8.2 可 defer 到 Pause 解除后（P1）
