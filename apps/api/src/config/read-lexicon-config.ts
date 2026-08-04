@@ -1,6 +1,7 @@
 export interface LexiconConfig {
   enrichMockEnabled: boolean;
   enrichMaxConcurrent: number;
+  enrichTestDelayMs: number;
   enrichApiUrl: string | null;
   enrichApiKey: string | null;
 }
@@ -18,6 +19,18 @@ function readPositiveInt(name: string, fallback: number): number {
   const value = Number(raw);
   if (!Number.isFinite(value) || value <= 0) {
     throw new Error(`${name} must be a positive number`);
+  }
+  return value;
+}
+
+function readNonNegativeInt(name: string, fallback: number): number {
+  const raw = process.env[name]?.trim();
+  if (!raw) {
+    return fallback;
+  }
+  const value = Number(raw);
+  if (!Number.isFinite(value) || value < 0) {
+    throw new Error(`${name} must be a non-negative number`);
   }
   return value;
 }
@@ -46,6 +59,7 @@ export function readLexiconConfig(): LexiconConfig {
   return {
     enrichMockEnabled: readBoolean('LEXICON_ENRICH_MOCK_ENABLED', enrichMockDefault),
     enrichMaxConcurrent: readPositiveInt('LEXICON_ENRICH_MAX_CONCURRENT', 5),
+    enrichTestDelayMs: readNonNegativeInt('LEXICON_ENRICH_TEST_DELAY_MS', 0),
     enrichApiUrl,
     enrichApiKey,
   };

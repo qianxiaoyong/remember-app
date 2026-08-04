@@ -264,4 +264,56 @@ describe('admin lexicon API', () => {
     expect(body.draftFragments).toHaveLength(2);
     expect(body.draftFragments[0]?.source).toBe('llm');
   });
+
+  describe('enrich 并发限流', () => {
+    let rateLimitApp: INestApplication;
+
+    beforeAll(async () => {
+      process.env.LEXICON_ENRICH_MAX_CONCURRENT = '1';
+      process.env.LEXICON_ENRICH_TEST_DELAY_MS = '300';
+
+      const moduleRef = await Test.createTestingModule({ imports: [AppModule] }).compile();
+      rateLimitApp = moduleRef.createNestApplication();
+      rateLimitApp.setGlobalPrefix('api/v1');
+      await rateLimitApp.init();
+    });
+
+    afterAll(async () => {
+      await rateLimitApp.close();
+      delete process.env.LEXICON_ENRICH_TEST_DELAY_MS;
+      process.env.LEXICON_ENRICH_MAX_CONCURRENT = '5';
+    });
+
+    it('并发 enrich 超限时返回 LEXICON_ENRICH_RATE_LIMITED', async () => {
+      const server = rateLimitApp.getHttpServer() as HttpServer;
+      const admin = await adminLogin(server);
+
+      const enrichPayload = (lemmaKey: string) => ({
+        lemmaKey,
+        fragmentTypes: ['definition_zh'],
+      });
+
+      const [firstResponse, secondResponse] = await Promise.all([
+        request(server)
+          .post('/api/v1/admin/lexicon/enrich')
+          .set('Authorization', `Bearer ${admin.token}`)
+          .send(enrichPayload('go')),
+        request(server)
+          .post('/api/v1/admin/lexicon/enrich')
+          .set('Authorization', `Bearer ${admin.token}`)
+          .send(enrichPayload('gone')),
+      ]);
+
+      const statuses = [firstResponse.status, secondResponse.status];
+      expect(statuses).toContain(200);
+      expect(statuses).toContain(429);
+
+      const rateLimited = [firstResponse, secondResponse].find(
+        (response) => response.status === 429,
+      );
+      expect(rateLimited?.body).toMatchObject({
+        code: 'LEXICON_ENRICH_RATE_LIMITED',
+      });
+    });
+  });
 });

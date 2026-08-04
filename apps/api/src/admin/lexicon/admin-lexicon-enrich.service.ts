@@ -3,6 +3,12 @@ import type { AdminLexiconEnrichRequest, FragmentType } from '@remember/contract
 import { readLexiconConfig } from '../../config/read-lexicon-config.js';
 import { AdminLexiconRepository } from './admin-lexicon.repository.js';
 
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
 interface DraftFragment {
   fragmentType: FragmentType;
   content: Record<string, unknown>;
@@ -27,6 +33,10 @@ export class AdminLexiconEnrichService {
 
     this.activeCount += 1;
     try {
+      if (this.config.enrichTestDelayMs > 0) {
+        await sleep(this.config.enrichTestDelayMs);
+      }
+
       const lemma = await this.repository.findLemmaByKey(input.lemmaKey);
       const headword = lemma?.headword ?? input.lemmaKey;
 
