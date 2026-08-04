@@ -118,6 +118,15 @@ export function mapEcdictRow(row: EcdictCsvRow): MapEcdictRowResult {
     });
   }
 
+  const headwordFormKey = normalizeFormKey(headword);
+  if (headwordFormKey && !seenFormKeys.has(headwordFormKey)) {
+    forms.unshift({
+      formKey: headwordFormKey,
+      formType: 'lemma',
+      displayForm: headword,
+    });
+  }
+
   const tags = parseEcdictTagKeys(row.tag ?? '').map((tagKey) => ({
     tagKey,
     labelZh: labelForEcdictTag(tagKey),

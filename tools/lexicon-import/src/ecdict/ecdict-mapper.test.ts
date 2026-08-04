@@ -50,7 +50,8 @@ describe('mapEcdictRow', () => {
     expect(mapped.lemmaKey).toBe('go');
     expect(mapped.ipa).toBe('/ɡəʊ/');
     expect(mapped.fragments).toHaveLength(2);
-    expect(mapped.forms.map((form) => form.formKey)).toEqual(['went', 'gone']);
+    expect(mapped.forms.map((form) => form.formKey)).toEqual(['go', 'went', 'gone']);
+    expect(mapped.forms[0]?.formType).toBe('lemma');
     expect(mapped.tags).toEqual([{ tagKey: 'zk', labelZh: '中考' }]);
   });
 

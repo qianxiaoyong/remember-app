@@ -1,5 +1,5 @@
 export type EcdictLemmaFormType =
-  'past' | 'plural' | 'gerund' | 'third_person' | 'comparative' | 'superlative' | 'other';
+  'lemma' | 'past' | 'plural' | 'gerund' | 'third_person' | 'comparative' | 'superlative' | 'other';
 
 export interface ParsedExchangeForm {
   formType: EcdictLemmaFormType;
@@ -15,6 +15,8 @@ const EXCHANGE_TYPE_MAP: Record<string, EcdictLemmaFormType> = {
   t: 'superlative',
   s: 'plural',
 };
+
+/** exchange 字段仅含变形；headword 原形由 map-ecdict-row 以 formType `lemma` 单独写入。 */
 
 export function parseExchangeField(exchange: string): ParsedExchangeForm[] {
   if (!exchange.trim()) {

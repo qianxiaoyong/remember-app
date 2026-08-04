@@ -57,6 +57,18 @@ export async function handleLexiconByForm(formKey: string, res: ServerResponse):
   }
 }
 
+export async function handleLexiconDetail(lemmaKey: string, res: ServerResponse): Promise<void> {
+  try {
+    const upstream = await proxyAdminLexiconRequest(`/${encodeURIComponent(lemmaKey)}`, {
+      method: 'GET',
+    });
+    await forwardLexiconResponse(upstream, res);
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error);
+    sendJson(res, 503, { error: message });
+  }
+}
+
 export async function handleLexiconBatchGet(
   req: IncomingMessage,
   res: ServerResponse,

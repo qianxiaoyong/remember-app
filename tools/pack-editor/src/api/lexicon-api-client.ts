@@ -6,6 +6,7 @@ import type {
 } from '@remember/contracts';
 import {
   adminLexiconByFormResponseSchema,
+  adminLexiconDetailSchema,
   adminLexiconSearchResponseSchema,
   lexiconEntrySchema,
 } from '@remember/contracts';
@@ -38,10 +39,19 @@ export async function searchCentralLexicon(
   return adminLexiconSearchResponseSchema.parse(body);
 }
 
+export async function fetchLemmaByLemmaKey(lemmaKey: string): Promise<AdminLexiconDetail | null> {
+  const response = await fetch(`/local-api/lexicon/${encodeURIComponent(lemmaKey)}`);
+  if (response.status === 404) {
+    return null;
+  }
+  const body = await readJson<unknown>(response);
+  return adminLexiconDetailSchema.parse(body);
+}
+
 export async function fetchLemmaByForm(formKey: string): Promise<AdminLexiconDetail | null> {
   const response = await fetch(`/local-api/lexicon/by-form/${encodeURIComponent(formKey)}`);
   if (response.status === 404) {
-    return null;
+    return fetchLemmaByLemmaKey(formKey);
   }
   const body = await readJson<unknown>(response);
   const parsed = adminLexiconByFormResponseSchema.parse(body);

@@ -16,6 +16,7 @@ export const fragmentTypeSchema = z.enum([
 ]);
 
 export const lemmaFormTypeSchema = z.enum([
+  'lemma',
   'past',
   'plural',
   'gerund',

@@ -46,6 +46,7 @@ describe('ecdict import CLI', () => {
     expect(go?.source).toBe('ecdict');
     expect(go?.status).toBe('draft');
     expect(go?.fragments.some((item) => item.fragmentType === 'definition_zh')).toBe(true);
+    expect(go?.forms.some((item) => item.formKey === 'go')).toBe(true);
     expect(go?.forms.some((item) => item.formKey === 'went')).toBe(true);
     expect(go?.tagLinks.some((link) => link.tag.tagKey === 'zk')).toBe(true);
 

@@ -14,6 +14,7 @@ import {
   handleGetPackLexicon,
   handleLexiconBatchGet,
   handleLexiconByForm,
+  handleLexiconDetail,
   handleLexiconSearch,
   handleSavePackLexicon,
 } from './lexicon-proxy-handlers.js';
@@ -162,6 +163,10 @@ async function handleLocalApi(
     }
     if (segments[2] === 'batch-get' && req.method === 'POST') {
       await handleLexiconBatchGet(req, res);
+      return;
+    }
+    if (req.method === 'GET' && segments[2] !== 'search' && segments[2] !== 'batch-get') {
+      await handleLexiconDetail(decodeURIComponent(segments[2] ?? ''), res);
       return;
     }
   }
