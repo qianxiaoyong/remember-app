@@ -297,4 +297,4 @@ AI写代码速度不是主要瓶颈；真实瓶颈是协议决策、Android原�
 ## 14. 下一项工作
 
 阶段 8：包/App 更新、Caddy+Compose 生产部署、COS、备份恢复演练、RC 验收（见 §11）。  
-实施前先写 kickoff：`docs/superpowers/plans/2026-08-01-phase8-release-kickoff.md`（建议文件名，实施前创建）。
+Kickoff：**`docs/superpowers/plans/2026-08-04-phase8-release-kickoff.md`**（已写；子计划 1–3 实施前再写细节）。
