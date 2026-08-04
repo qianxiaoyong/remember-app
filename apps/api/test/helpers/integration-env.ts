@@ -14,6 +14,4 @@ export function applyIntegrationTestEnv(): void {
   process.env.ADMIN_SESSION_TTL_DAYS ??= '7';
   process.env.ADMIN_BOOTSTRAP_LOGIN_NAME ??= 'admin';
   process.env.ADMIN_BOOTSTRAP_PASSWORD ??= 'integration-admin-password';
-  process.env.LEXICON_ENRICH_MOCK_ENABLED ??= 'true';
-  process.env.LEXICON_ENRICH_MAX_CONCURRENT ??= '5';
 }

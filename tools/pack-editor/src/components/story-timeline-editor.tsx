@@ -1,4 +1,4 @@
-import type { StoryParagraph, StoryReadingContent } from '@remember/contracts';
+import type { StoryReadingContent } from '@remember/contracts';
 import {
   useWatch,
   type Control,
@@ -7,12 +7,12 @@ import {
   type UseFormSetValue,
 } from 'react-hook-form';
 import { useEffect, useState, type ReactElement } from 'react';
+import type { StoryParagraph } from '@remember/contracts';
 import { useStoryAudio } from '../context/story-audio-context.js';
 import { collectStoryContentIssues } from '../utils/story-content-issues.js';
 import { formatAudioTimeMs } from '../utils/format-audio-time.js';
 import { StorySegmentTimeline } from './story-segment-timeline.js';
 import { StoryLessonVocabDialog } from './story-lesson-vocab-dialog.js';
-import { LexiconWorkbenchDialog } from './lexicon-workbench/lexicon-workbench-dialog.js';
 
 export interface SegmentTrackItem {
   paragraphIndex: number;
@@ -103,8 +103,6 @@ export function StoryTimelineEditor({
   const [isScrubbing, setIsScrubbing] = useState(false);
   const [sliderMs, setSliderMs] = useState(audio.currentMs);
   const [lessonVocabOpen, setLessonVocabOpen] = useState(false);
-  const [lexiconWorkbenchOpen, setLexiconWorkbenchOpen] = useState(false);
-  const storyContent = useWatch({ control }) as StoryReadingContent | undefined;
   const sliderMax = Math.max(audio.durationMs, 1);
 
   useEffect(() => {
@@ -221,30 +219,7 @@ export function StoryTimelineEditor({
         >
           本课词频
         </button>
-        <button
-          type="button"
-          className="btn btn-secondary btn-sm"
-          onClick={() => {
-            setLexiconWorkbenchOpen(true);
-          }}
-        >
-          中心词库补词
-        </button>
       </div>
-
-      {storyContent && (
-        <LexiconWorkbenchDialog
-          mode="story"
-          open={lexiconWorkbenchOpen}
-          onClose={() => {
-            setLexiconWorkbenchOpen(false);
-          }}
-          content={storyContent}
-          onApply={(sidebar) => {
-            setValue('sidebar', sidebar, { shouldDirty: true });
-          }}
-        />
-      )}
 
       <StoryLessonVocabDialog
         open={lessonVocabOpen}
