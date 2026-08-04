@@ -27,7 +27,7 @@
 阶段 0–5  ✅（见各 phase completion）
 阶段 6    ✅ mock/dev；§6.9 真实付/退 defer（Pause C/D）
 阶段 7    ✅ Admin MVP（PR #5）
-阶段 8    ⏸ 子计划 2 Task 11 门禁完成；真机 E2E / RC 待统一验收
+阶段 8    ⏸ 子计划 1+2 代码完成；真机 E2E / RC 待统一验收
 ```
 
 **已有资产（复用，不重写）：**

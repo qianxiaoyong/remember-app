@@ -31,6 +31,8 @@ export function mapCatalogSummaryToItem(summary: CatalogPackSummary): CatalogPac
     ...(summary.coverLines ? { coverLines: summary.coverLines } : {}),
     ...(summary.includedHighlights ? { includedHighlights: summary.includedHighlights } : {}),
     ...(summary.isBundledTestPack ? { isBundledTestPack: true } : { isBundledTestPack: false }),
+    ...(summary.currentPackVersion ? { currentPackVersion: summary.currentPackVersion } : {}),
+    ...(summary.protocolVersion !== undefined ? { protocolVersion: summary.protocolVersion } : {}),
     ...(summary.taxonomy ? { taxonomy: summary.taxonomy } : {}),
   };
 }

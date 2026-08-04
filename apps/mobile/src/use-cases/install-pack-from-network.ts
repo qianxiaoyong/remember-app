@@ -10,6 +10,7 @@ import { installPackFromZipBytes } from '../data/pack/install-pack-from-zip';
 import type { InstalledPackRow } from '../data/repositories/installed-pack-repository';
 import { writeOfflineLicenseExpiry } from '../data/offline-license/offline-license-store';
 import { aliasInstalledPack } from './alias-installed-pack';
+import { mapPackInstallError } from './map-pack-install-error';
 
 const DOWNLOAD_ERROR_MESSAGES: Record<string, string> = {
   PACK_ACCESS_DENIED: '暂无下载权限，请先购买或兑换',
@@ -54,7 +55,7 @@ export async function installPackFromNetwork(catalogPackId: string): Promise<Ins
     if (error instanceof ApiRequestError) {
       throw new Error(DOWNLOAD_ERROR_MESSAGES[error.code] ?? error.message, { cause: error });
     }
-    throw error;
+    throw mapPackInstallError(error);
   } finally {
     activeDownloadPackId = null;
   }

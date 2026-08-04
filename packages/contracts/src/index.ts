@@ -1,4 +1,5 @@
 export { healthResponseSchema, type HealthResponse } from './api/health.js';
+export { appReleaseResponseSchema, type AppReleaseResponse } from './api/app-release.js';
 export * from './admin/index.js';
 export * from './auth/index.js';
 export * from './catalog/index.js';

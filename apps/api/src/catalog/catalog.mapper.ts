@@ -8,7 +8,7 @@ import {
   type CatalogPackDetail,
   type CatalogPackSummary,
 } from '@remember/contracts';
-import type { PackWithTaxonomy } from './catalog.repository.js';
+import type { PackWithCatalogVersion } from './catalog.repository.js';
 
 function toIsoString(value: Date): string {
   return value.toISOString();
@@ -21,7 +21,7 @@ function parseStringArray(value: unknown): string[] | undefined {
   return value.filter((item): item is string => typeof item === 'string');
 }
 
-function mapPackTaxonomy(pack: PackWithTaxonomy) {
+function mapPackTaxonomy(pack: PackWithCatalogVersion) {
   if (!pack.primaryNode || !pack.secondaryNode || !pack.versionNode) {
     return undefined;
   }
@@ -45,7 +45,7 @@ function parseIncludedHighlights(value: unknown) {
   return items.length > 0 ? items : undefined;
 }
 
-function mapPackSummary(pack: PackWithTaxonomy): CatalogPackSummary {
+function mapPackSummary(pack: PackWithCatalogVersion): CatalogPackSummary {
   const taxonomy = mapPackTaxonomy(pack);
   return catalogPackSummarySchema.parse({
     packId: pack.packId,
@@ -68,11 +68,17 @@ function mapPackSummary(pack: PackWithTaxonomy): CatalogPackSummary {
       return highlights ? { includedHighlights: highlights } : {};
     })(),
     ...(pack.isBundledTestPack ? { isBundledTestPack: true } : {}),
+    ...(pack.currentVersion
+      ? {
+          currentPackVersion: pack.currentVersion.packVersion,
+          protocolVersion: pack.currentVersion.protocolVersion,
+        }
+      : {}),
     ...(taxonomy ? { taxonomy } : {}),
   });
 }
 
-export function mapPackDetail(pack: PackWithTaxonomy): CatalogPackDetail {
+export function mapPackDetail(pack: PackWithCatalogVersion): CatalogPackDetail {
   const samplePreviewsRaw = Array.isArray(pack.samplePreviews) ? pack.samplePreviews : [];
   const samplePreviews = samplePreviewsRaw.map((item) => packSamplePreviewSchema.parse(item));
   const introMediaRaw = Array.isArray(pack.introMedia) ? pack.introMedia : undefined;
@@ -86,6 +92,6 @@ export function mapPackDetail(pack: PackWithTaxonomy): CatalogPackDetail {
   });
 }
 
-export function mapPackSummaries(packs: PackWithTaxonomy[]): CatalogPackSummary[] {
+export function mapPackSummaries(packs: PackWithCatalogVersion[]): CatalogPackSummary[] {
   return packs.map((pack) => mapPackSummary(pack));
 }

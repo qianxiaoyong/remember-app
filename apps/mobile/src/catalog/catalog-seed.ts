@@ -34,6 +34,9 @@ export interface CatalogPackItem {
   coverImage?: number;
   /** 后台 taxonomy 挂载；有则优先用于展示 label */
   taxonomy?: CatalogPackTaxonomy;
+  /** 当前发布的内容版本（semver）；来自 catalog API */
+  currentPackVersion?: string;
+  protocolVersion?: number;
   /** 详情「包含内容」；后台可配置 1～4 条 */
   includedHighlights?: IncludedHighlight[];
 }

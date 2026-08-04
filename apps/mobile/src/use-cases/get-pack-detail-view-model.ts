@@ -56,6 +56,10 @@ export async function getPackDetailViewModelFromCatalogItem(
   const packAccess = await resolvePackAccess(packId);
   const action = resolveDetailAction({
     isInstalled,
+    ...(installed?.packVersion ? { installedPackVersion: installed.packVersion } : {}),
+    ...(catalogItem.currentPackVersion
+      ? { catalogPackVersion: catalogItem.currentPackVersion }
+      : {}),
     packAccess,
     isBundledTestPack: catalogItem.isBundledTestPack,
   });

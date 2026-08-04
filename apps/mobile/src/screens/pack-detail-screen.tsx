@@ -27,6 +27,7 @@ import {
 } from '../use-cases/get-pack-detail-view-model';
 import { installBundledTestPack } from '../use-cases/install-bundled-test-pack';
 import { installPackFromNetwork } from '../use-cases/install-pack-from-network';
+import { mapPackInstallError } from '../use-cases/map-pack-install-error';
 import { purchasePackWithMockPayment } from '../use-cases/purchase-pack-with-mock-payment';
 import { isMockPaymentEnabled } from '../config/mock-payment-enabled';
 import { playSamplePreviewAudio } from '../use-cases/play-sample-preview-audio';
@@ -87,24 +88,24 @@ export function PackDetailScreen(props: PackDetailScreenProps): ReactElement {
         return;
       }
 
-      if (viewModel.actionKind === 'install') {
+      if (viewModel.actionKind === 'install' || viewModel.actionKind === 'update') {
         if (!viewModel.isBundledTestPack) {
           await installPackFromNetwork(viewModel.packId);
           markLibraryNeedsRefresh();
           await refresh();
-          setMessage('安装成功');
+          setMessage(viewModel.actionKind === 'update' ? '更新成功' : '安装成功');
           return;
         }
         await installBundledTestPack(viewModel.packId);
         markLibraryNeedsRefresh();
         await refresh();
-        setMessage('安装成功');
+        setMessage(viewModel.actionKind === 'update' ? '更新成功' : '安装成功');
         return;
       }
 
       router.push(`/study?packId=${viewModel.packId}`);
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : '操作失败');
+      setMessage(mapPackInstallError(error).message);
     } finally {
       setIsBusy(false);
     }

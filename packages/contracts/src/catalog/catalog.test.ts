@@ -22,6 +22,8 @@ describe('catalog contracts', () => {
           priceCents: 1,
           summary: '阶段 4 验包用的固定测试知识库。',
           isBundledTestPack: true,
+          currentPackVersion: '1.0.0',
+          protocolVersion: 1,
         },
       ],
     });

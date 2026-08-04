@@ -71,4 +71,17 @@ describe('resolveDetailAction', () => {
     expect(action.actionKind).toBe('purchase');
     expect(action.packAccessUnavailable).toBe(false);
   });
+
+  it('已安装且 catalog 版本更高时显示更新', () => {
+    const action = resolveDetailAction({
+      isInstalled: true,
+      installedPackVersion: '1.0.0',
+      catalogPackVersion: '1.0.1',
+      packAccess: { status: 'granted' },
+      isBundledTestPack: false,
+    });
+
+    expect(action.actionKind).toBe('update');
+    expect(action.actionLabel).toBe('更新');
+  });
 });
