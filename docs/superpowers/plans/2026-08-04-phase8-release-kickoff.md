@@ -27,7 +27,7 @@
 阶段 0–5  ✅（见各 phase completion）
 阶段 6    ✅ mock/dev；§6.9 真实付/退 defer（Pause C/D）
 阶段 7    ✅ Admin MVP（PR #5）
-阶段 8    ⏸ 本文档；子计划 1–3 待写
+阶段 8    ⏸ 子计划 2 Task 10 完成（部署 runbook）；Task 11 / 子计划 1、3 待验收
 ```
 
 **已有资产（复用，不重写）：**
@@ -99,12 +99,12 @@
 
 ### 8.1 必须全绿（P0）
 
-- [ ] `pnpm check` 在 `main` 全绿（发布分支同基线）
-- [ ] 生产 Compose **一键 up**（文档化命令）；API `/health` 或等价探活 OK
-- [ ] Admin 在 staging 能 **上传 zip → 发布 → App 能下载安装学习**
-- [ ] `pg_dump` 备份 + **按 ADR 0003 流程恢复** 到空库，订单/`pack_access` 计数一致
-- [ ] RC 清单 **P0 项** 在 Android 8+ 真机走通：安装 APK → 登录（mock 码）→ 兑换/获权 → 下载 → 学习 → 杀进程恢复 → 同步/换机（至少 staging）
-- [ ] 生产 `.env` 经 **校验脚本** 启动前检查（缺变量即失败，无默认值蒙混）
+- [ ] `pnpm check` 在 `main` 全绿（发布分支同基线）— Task 11
+- [x] 生产 Compose **一键 up**（[production-deploy.md](../../runbooks/production-deploy.md) §5）；本地 staging `/health` OK
+- [ ] Admin 在 staging 能 **上传 zip → 发布 → App 能下载安装学习** — Task 11
+- [x] `pg_dump` 备份 + **按 ADR 0003 流程恢复** 到空库，订单/`pack_access` 计数一致（2026-08-04 staging 演练 PASS）
+- [ ] RC 清单 **P0 项** 在 Android 8+ 真机走通 — 子计划 3
+- [x] 生产 `.env` 经 **校验脚本** 启动前检查（`tools/scripts/validate-prod-env.mjs`）
 
 ### 8.2 可 defer 到 Pause 解除后（P1）
 

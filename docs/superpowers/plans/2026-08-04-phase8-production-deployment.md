@@ -642,9 +642,9 @@ git commit -m "infra: add postgres backup and restore scripts for production"
 8. **批准上 prod**：复制 `.env` 模板、`COMPOSE_PROJECT_NAME=remember-prod`、新 DB volume、人工 checklist
 9. **回滚**：`docker compose pull` 上一 tag / `up` 旧 digest
 
-- [ ] **Step 1:** 写完 runbook 全文
+- [x] **Step 1:** 写完 runbook 全文
 
-- [ ] **Step 2:** 在 kickoff §8.1 相关项打勾（staging 可跑通）
+- [x] **Step 2:** 在 kickoff §8.1 相关项打勾（staging 可跑通）
 
 - [ ] **Step 3:** Commit
 
