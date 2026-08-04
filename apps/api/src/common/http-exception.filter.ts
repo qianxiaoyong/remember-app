@@ -14,13 +14,11 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const body =
       typeof exceptionResponse === 'string'
         ? { message: exceptionResponse }
-        : typeof exceptionResponse === 'object' && exceptionResponse !== null
-          ? { ...(exceptionResponse as Record<string, unknown>) }
-          : { message: 'Request failed' };
+        : { ...(exceptionResponse as Record<string, unknown>) };
 
     response.status(status).json({
       ...body,
-      requestId: request.requestId ?? readRequestId(request),
+      requestId: readRequestId(request),
     });
   }
 }

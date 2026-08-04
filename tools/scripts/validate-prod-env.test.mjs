@@ -5,11 +5,12 @@ import path from 'node:path';
 import { test } from 'node:test';
 import { loadEnvFile, validateProdEnv } from './validate-prod-env.mjs';
 
+const stagingPassword = 'staging-password';
 const validStagingEnv = {
   POSTGRES_DB: 'remember',
   POSTGRES_USER: 'remember',
-  POSTGRES_PASSWORD: 'staging-password',
-  DATABASE_URL: 'postgresql://remember:staging-password@postgres:5432/remember',
+  POSTGRES_PASSWORD: stagingPassword,
+  DATABASE_URL: `postgresql://remember:${stagingPassword}@postgres:5432/remember`,
   NODE_ENV: 'staging',
   PORT: '3000',
   API_PUBLIC_BASE_URL: 'https://api.staging.remember.wehub.top',

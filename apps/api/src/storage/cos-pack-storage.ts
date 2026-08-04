@@ -19,6 +19,10 @@ function createCosClient(config: CosConfig): CosClient {
   });
 }
 
+function toError(value: unknown): Error {
+  return value instanceof Error ? value : new Error(String(value));
+}
+
 function promisifyPutObject(
   client: CosClient,
   params: COS.PutObjectParams,
@@ -26,7 +30,7 @@ function promisifyPutObject(
   return new Promise((resolve, reject) => {
     client.putObject(params, (error, data) => {
       if (error) {
-        reject(error);
+        reject(toError(error));
         return;
       }
       resolve(data);
@@ -41,7 +45,7 @@ function promisifyGetObjectUrl(
   return new Promise((resolve, reject) => {
     client.getObjectUrl(params, (error, data) => {
       if (error) {
-        reject(error);
+        reject(toError(error));
         return;
       }
       resolve(data);
@@ -70,9 +74,10 @@ export class CosPackStorage {
 
   async putObject(key: string, body: Buffer): Promise<void> {
     const config = this.requireEnabledConfig();
+    const client = this.requireClient();
 
     try {
-      await promisifyPutObject(this.client!, {
+      await promisifyPutObject(client, {
         Bucket: config.bucket,
         Region: config.region,
         Key: key,
@@ -89,9 +94,10 @@ export class CosPackStorage {
 
   async getPresignedDownloadUrl(key: string): Promise<string> {
     const config = this.requireEnabledConfig();
+    const client = this.requireClient();
 
     try {
-      const result = await promisifyGetObjectUrl(this.client!, {
+      const result = await promisifyGetObjectUrl(client, {
         Bucket: config.bucket,
         Region: config.region,
         Key: key,
@@ -126,5 +132,16 @@ export class CosPackStorage {
 
     assertCosConfigEnabled(this.config);
     return this.config;
+  }
+
+  private requireClient(): CosClient {
+    const client = this.client;
+    if (!client) {
+      throw new ServiceUnavailableException({
+        code: 'COS_NOT_ENABLED',
+        message: 'COS 尚未启用',
+      });
+    }
+    return client;
   }
 }

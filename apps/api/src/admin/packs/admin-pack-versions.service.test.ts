@@ -99,7 +99,7 @@ describe('AdminPackVersionsService uploadVersion', () => {
     return new AdminPackVersionsService(
       repository as never,
       prisma as never,
-      packVerifyService as never,
+      packVerifyService,
       auditService as never,
       cosPackStorage as never,
     );
@@ -118,9 +118,7 @@ describe('AdminPackVersionsService uploadVersion', () => {
     );
     expect(prisma.$transaction).toHaveBeenCalledTimes(1);
 
-    const stored = await readFile(
-      join(storageDir, 'remember-test-pack', '9.9.9', 'pack.zip'),
-    );
+    const stored = await readFile(join(storageDir, 'remember-test-pack', '9.9.9', 'pack.zip'));
     expect(Array.from(stored)).toEqual(Array.from(zipBytes));
   });
 

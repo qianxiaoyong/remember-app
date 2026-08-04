@@ -105,9 +105,7 @@ function runCli() {
   console.log(`OK: prod env validated (${envPath})`);
 }
 
-const isCli =
-  process.argv[1] &&
-  fileURLToPath(import.meta.url) === path.resolve(process.argv[1]);
+const isCli = process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1]);
 
 if (isCli) {
   runCli();

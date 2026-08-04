@@ -32,7 +32,14 @@ import { AdminUsersRepository } from './users/admin-users.repository.js';
 import { AdminUsersService } from './users/admin-users.service.js';
 
 @Module({
-  imports: [AdminAuthModule, AuditModule, PackVerifyModule, PaymentModule, RedemptionModule, StorageModule],
+  imports: [
+    AdminAuthModule,
+    AuditModule,
+    PackVerifyModule,
+    PaymentModule,
+    RedemptionModule,
+    StorageModule,
+  ],
   controllers: [
     AdminDashboardController,
     AdminOrdersController,

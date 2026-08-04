@@ -1,25 +1,22 @@
-import type { NextFunction, Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { describe, expect, it, vi } from 'vitest';
-import {
-  readRequestId,
-  requestIdMiddleware,
-  type RequestWithId,
-} from './request-id.middleware.js';
+import { readRequestId, requestIdMiddleware, type RequestWithId } from './request-id.middleware.js';
 
 describe('requestIdMiddleware', () => {
   it('沿用客户端 X-Request-Id', () => {
     const request = {
       header: vi.fn().mockReturnValue('test-req-1'),
     } as unknown as Request;
+    const setHeader = vi.fn();
     const response = {
-      setHeader: vi.fn(),
+      setHeader,
     } as unknown as Response;
     const next = vi.fn();
 
     requestIdMiddleware(request, response, next);
 
     expect((request as RequestWithId).requestId).toBe('test-req-1');
-    expect(response.setHeader).toHaveBeenCalledWith('X-Request-Id', 'test-req-1');
+    expect(setHeader).toHaveBeenCalledWith('X-Request-Id', 'test-req-1');
     expect(next).toHaveBeenCalledTimes(1);
   });
 

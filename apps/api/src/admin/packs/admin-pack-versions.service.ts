@@ -25,6 +25,7 @@ import { AdminPacksRepository } from './admin-packs.repository.js';
 export class AdminPackVersionsService {
   private readonly packConfig = readAdminPackConfig();
 
+  // eslint-disable-next-line max-params -- Nest DI: repository, prisma, verify, audit, storage
   constructor(
     private readonly repository: AdminPacksRepository,
     private readonly prisma: PrismaService,

@@ -28,38 +28,38 @@
 
 ## 已确认拓扑决策
 
-| 决策 | 选择 |
-| ---- | ---- |
-| Admin | `admin.remember.wehub.top` 独立子域 |
+| 决策           | 选择                                                 |
+| -------------- | ---------------------------------------------------- |
+| Admin          | `admin.remember.wehub.top` 独立子域                  |
 | staging / prod | 同机双 Compose：`remember-staging` / `remember-prod` |
-| COS | 单桶双前缀（packs + backups） |
-| COS 实现 | 本子计划 Task 4–6 完整落地（非 defer 骨架） |
+| COS            | 单桶双前缀（packs + backups）                        |
+| COS 实现       | 本子计划 Task 4–6 完整落地（非 defer 骨架）          |
 
 ---
 
 ## 文件结构（本计划锁定）
 
-| 路径 | 职责 |
-| ---- | ---- |
-| `infra/prod/compose.yaml` | staging/prod 共用模板；`COMPOSE_PROJECT_NAME` 区分 |
-| `infra/prod/.env.example` | 全部必填变量说明，无真实值 |
-| `infra/prod/Caddyfile.example` | site + api + admin 三站点 |
-| `infra/prod/docker-entrypoint.sh` | 容器内 `prisma migrate deploy` → 启动 API |
-| `infra/prod/backup-db.ps1` | `pg_dump -Fc` + 可选 COS 上传 |
-| `infra/prod/restore-db.ps1` | 空库 `pg_restore --exit-on-error`（人工确认） |
-| `apps/api/Dockerfile` | monorepo 多阶段 API 镜像 |
-| `.dockerignore` | 缩小 build context |
-| `tools/scripts/validate-prod-env.mjs` | 启动前 env 校验 CLI |
-| `apps/api/src/config/read-cos-config.ts` | COS 开关与凭证 |
-| `apps/api/src/storage/cos-pack-storage.ts` | PUT + presigned GET |
-| `apps/api/src/storage/cos-pack-storage.test.ts` | 单元测试（mock SDK） |
-| `apps/api/src/common/request-id.middleware.ts` | `X-Request-Id` 入/出 |
-| `apps/api/src/common/http-exception.filter.ts` | 错误 JSON 含 `requestId` |
-| `apps/api/src/pack-download/pack-download.service.ts` | mock off → presign |
-| `apps/api/src/admin/packs/admin-pack-versions.service.ts` | 上传后 COS PUT |
-| `apps/api/test/pack-download-cos.e2e.test.ts` | mock COS 的集成测试 |
-| `docs/runbooks/production-deploy.md` | 空机 → staging → 批准 → prod |
-| `docs/runbooks/postgres-backup-restore.md` | ADR 0003 生产步骤 |
+| 路径                                                      | 职责                                               |
+| --------------------------------------------------------- | -------------------------------------------------- |
+| `infra/prod/compose.yaml`                                 | staging/prod 共用模板；`COMPOSE_PROJECT_NAME` 区分 |
+| `infra/prod/.env.example`                                 | 全部必填变量说明，无真实值                         |
+| `infra/prod/Caddyfile.example`                            | site + api + admin 三站点                          |
+| `infra/prod/docker-entrypoint.sh`                         | 容器内 `prisma migrate deploy` → 启动 API          |
+| `infra/prod/backup-db.ps1`                                | `pg_dump -Fc` + 可选 COS 上传                      |
+| `infra/prod/restore-db.ps1`                               | 空库 `pg_restore --exit-on-error`（人工确认）      |
+| `apps/api/Dockerfile`                                     | monorepo 多阶段 API 镜像                           |
+| `.dockerignore`                                           | 缩小 build context                                 |
+| `tools/scripts/validate-prod-env.mjs`                     | 启动前 env 校验 CLI                                |
+| `apps/api/src/config/read-cos-config.ts`                  | COS 开关与凭证                                     |
+| `apps/api/src/storage/cos-pack-storage.ts`                | PUT + presigned GET                                |
+| `apps/api/src/storage/cos-pack-storage.test.ts`           | 单元测试（mock SDK）                               |
+| `apps/api/src/common/request-id.middleware.ts`            | `X-Request-Id` 入/出                               |
+| `apps/api/src/common/http-exception.filter.ts`            | 错误 JSON 含 `requestId`                           |
+| `apps/api/src/pack-download/pack-download.service.ts`     | mock off → presign                                 |
+| `apps/api/src/admin/packs/admin-pack-versions.service.ts` | 上传后 COS PUT                                     |
+| `apps/api/test/pack-download-cos.e2e.test.ts`             | mock COS 的集成测试                                |
+| `docs/runbooks/production-deploy.md`                      | 空机 → staging → 批准 → prod                       |
+| `docs/runbooks/postgres-backup-restore.md`                | ADR 0003 生产步骤                                  |
 
 ---
 
@@ -104,7 +104,7 @@ POSTGRES_DB=remember
 POSTGRES_USER=remember
 POSTGRES_PASSWORD=
 API_HOST_PORT=3000
-DATABASE_URL=postgresql://remember:CHANGE_ME@postgres:5432/remember
+DATABASE_URL=
 NODE_ENV=production
 PORT=3000
 API_PUBLIC_BASE_URL=https://api.staging.remember.wehub.top
@@ -656,41 +656,36 @@ git commit -m "docs: add production deploy and postgres backup runbooks"
 
 ### Task 11: 全量检查与子计划验收
 
-- [ ] **Step 1:** `pnpm check`
+- [x] **Step 1:** `pnpm check`（2026-08-05 PASS）
 
-- [ ] **Step 2:** staging 端到端（人工）：Admin 上传 zip → 发布 → App presign 下载 → 安装学习
+- [ ] **Step 2:** staging 端到端（人工）：Admin 上传 zip → 发布 → App presign 下载 → 安装学习 — **defer 统一真机验收**
 
-- [ ] **Step 3:** 备份 + 恢复演练计数一致（ADR 0003）
+- [x] **Step 3:** 备份 + 恢复演练计数一致（ADR 0003，Task 9）
 
-- [ ] **Step 4:** 确认密钥未进入 Git
+- [x] **Step 4:** 确认密钥未进入 Git（`pnpm check:secrets` PASS；`infra/prod/.env` gitignored）
 
-```powershell
-pnpm check:secrets
-git status
-```
-
-- [ ] **Step 5:** 更新 kickoff §3 进度（可选单独 docs commit）
+- [x] **Step 5:** 更新 kickoff §3 / §8.1 进度
 
 ---
 
 ## 与子计划 1 / 3 的接口
 
-| 子计划 | 接口 |
-| ------ | ---- |
+| 子计划              | 接口                                                                                        |
+| ------------------- | ------------------------------------------------------------------------------------------- |
 | **1 pack/App 更新** | 需要本子计划 staging `API_PUBLIC_BASE_URL`；`currentVersion` 与 presign 下载在 staging 验证 |
-| **3 RC 清单** | 引用 `production-deploy.md` staging URL、备份 runbook、请求 ID 日志格式 |
+| **3 RC 清单**       | 引用 `production-deploy.md` staging URL、备份 runbook、请求 ID 日志格式                     |
 
 ---
 
 ## 验收清单（本子计划 Done）
 
-- [ ] `infra/prod` Compose 一键 up；`/api/v1/health` OK
-- [ ] `validate-prod-env.mjs` 缺变量失败、完整 env 通过
-- [ ] staging：Admin 上传 → 发布 → App COS presign 下载 → 安装学习
-- [ ] `pg_dump` + ADR 0003 恢复到空库，商业表计数一致
-- [ ] 响应含 `X-Request-Id`；错误 JSON 含 `requestId`
-- [ ] `pnpm check` 全绿
-- [ ] 密钥未进 Git/APK
+- [x] `infra/prod` Compose 一键 up；`/api/v1/health` OK
+- [x] `validate-prod-env.mjs` 缺变量失败、完整 env 通过
+- [ ] staging：Admin 上传 → 发布 → App COS presign 下载 → 安装学习 — **defer 真机**
+- [x] `pg_dump` + ADR 0003 恢复到空库，商业表计数一致
+- [x] 响应含 `X-Request-Id`（staging API 重建后验证）
+- [x] `pnpm check` 全绿
+- [x] 密钥未进 Git/APK（secretlint PASS）
 
 ## Defer（Pause / P1）
 
@@ -703,15 +698,15 @@ git status
 
 ## Self-Review（计划自检）
 
-| kickoff 要求 | 对应 Task |
-| ------------ | --------- |
-| Compose + Caddy | 1, 2, 8 |
-| env 校验 | 3 |
-| COS 私有桶 pack | 4, 5, 6 |
-| pg_dump 备份恢复 | 9 |
-| X-Request-Id + 结构化日志 | 7 |
-| staging → 人工批准 prod | 8, 10 |
-| 不做 K8s/APM/CI 生产 | Global Constraints |
+| kickoff 要求              | 对应 Task          |
+| ------------------------- | ------------------ |
+| Compose + Caddy           | 1, 2, 8            |
+| env 校验                  | 3                  |
+| COS 私有桶 pack           | 4, 5, 6            |
+| pg_dump 备份恢复          | 9                  |
+| X-Request-Id + 结构化日志 | 7                  |
+| staging → 人工批准 prod   | 8, 10              |
+| 不做 K8s/APM/CI 生产      | Global Constraints |
 
 无 TBD 占位；Task 边界可独立 review。
 
@@ -719,5 +714,5 @@ git status
 
 **Plan complete.** 实施选项：
 
-1. **Subagent-Driven（推荐）** — 每 Task 独立 subagent + 任务间 review  
+1. **Subagent-Driven（推荐）** — 每 Task 独立 subagent + 任务间 review
 2. **Inline Execution** — 本会话按 Task 0→11 逐步执行，每步 `pnpm check`

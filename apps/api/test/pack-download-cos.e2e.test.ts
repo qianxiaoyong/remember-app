@@ -101,8 +101,6 @@ describe('pack download COS integration', () => {
     expect(authBody.downloadUrl).not.toContain('/api/v1/packs/');
     expect(authBody.sha256).toMatch(/^[a-f0-9]{64}$/);
     expect(authBody.sizeBytes).toBeGreaterThan(0);
-    expect(getPresignedDownloadUrl).toHaveBeenCalledWith(
-      'packs/remember-test-pack/1.0.0/pack.zip',
-    );
+    expect(getPresignedDownloadUrl).toHaveBeenCalledWith('packs/remember-test-pack/1.0.0/pack.zip');
   });
 });

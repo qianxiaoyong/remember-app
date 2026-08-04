@@ -17,6 +17,7 @@ const OFFLINE_LICENSE_DAYS = 30;
 
 @Injectable()
 export class PackDownloadService {
+  // eslint-disable-next-line max-params -- Nest DI: prisma, access, catalog, config, storage
   constructor(
     private readonly prisma: PrismaService,
     private readonly packAccessRepository: PackAccessRepository,

@@ -11,15 +11,15 @@
 
 ## 2. 阶段 8 不是什么（控重）
 
-| 做（MVP） | 不做（阶段 8.x / 公网规模化后） |
-| --------- | ------------------------------- |
-| 单机 Docker Compose + Caddy HTTPS | Kubernetes、多区域、自动扩缩 |
-| 一份生产 `.env` 校验脚本 + 部署 runbook | 复杂配置中心 / Vault |
-| COS **一个**私有桶放 pack zip；营销图可走公开前缀 | CDN 全站、多桶策略、跨区域复制 |
-| `pg_dump` 定时备份 + **手动**恢复演练 1 次 | 热备、PITR、异地双活 |
-| 结构化日志 + `X-Request-Id` | Prometheus/Grafana 全套 |
-| RC **勾选清单**（真人走一遍） | 自动化 soak / 混沌工程 |
-| APK 更新：**检查版本 + 跳转下载页**（或静态 JSON） | 应用内差分升级、渠道包体系 |
+| 做（MVP）                                          | 不做（阶段 8.x / 公网规模化后） |
+| -------------------------------------------------- | ------------------------------- |
+| 单机 Docker Compose + Caddy HTTPS                  | Kubernetes、多区域、自动扩缩    |
+| 一份生产 `.env` 校验脚本 + 部署 runbook            | 复杂配置中心 / Vault            |
+| COS **一个**私有桶放 pack zip；营销图可走公开前缀  | CDN 全站、多桶策略、跨区域复制  |
+| `pg_dump` 定时备份 + **手动**恢复演练 1 次         | 热备、PITR、异地双活            |
+| 结构化日志 + `X-Request-Id`                        | Prometheus/Grafana 全套         |
+| RC **勾选清单**（真人走一遍）                      | 自动化 soak / 混沌工程          |
+| APK 更新：**检查版本 + 跳转下载页**（或静态 JSON） | 应用内差分升级、渠道包体系      |
 
 ## 3. 当前进度
 
@@ -27,40 +27,40 @@
 阶段 0–5  ✅（见各 phase completion）
 阶段 6    ✅ mock/dev；§6.9 真实付/退 defer（Pause C/D）
 阶段 7    ✅ Admin MVP（PR #5）
-阶段 8    ⏸ 子计划 2 Task 10 完成（部署 runbook）；Task 11 / 子计划 1、3 待验收
+阶段 8    ⏸ 子计划 2 Task 11 门禁完成；真机 E2E / RC 待统一验收
 ```
 
 **已有资产（复用，不重写）：**
 
-| 资产 | 路径 |
-| ---- | ---- |
-| 本地 dev DB Compose | `infra/dev/compose.yaml` |
+| 资产                    | 路径                                                                                   |
+| ----------------------- | -------------------------------------------------------------------------------------- |
+| 本地 dev DB Compose     | `infra/dev/compose.yaml`                                                               |
 | PG 备份恢复 Spike + ADR | `infra/technical-spikes/postgres/`、`docs/decisions/0003-postgresql-backup-restore.md` |
-| 介绍站 + Caddy 示例 | `apps/site/`、`docs/runbooks/deploy-remember-site.md` |
-| Android release 构建 | `docs/runbooks/android-release-build-windows.md`、`docs/decisions/0004-*` |
-| 包安装原子替换 | ADR 0005、`installPackFromZipBytes` |
-| 账号同步维护 | `docs/runbooks/account-sync-maintenance.md` |
+| 介绍站 + Caddy 示例     | `apps/site/`、`docs/runbooks/deploy-remember-site.md`                                  |
+| Android release 构建    | `docs/runbooks/android-release-build-windows.md`、`docs/decisions/0004-*`              |
+| 包安装原子替换          | ADR 0005、`installPackFromZipBytes`                                                    |
+| 账号同步维护            | `docs/runbooks/account-sync-maintenance.md`                                            |
 
 ## 4. 已确认产品决策（2026-08-04）
 
-| #   | 决策 | 内容 |
-| --- | ---- | ---- |
-| D1  | **首发形态** | **邀请内测**（少量账号 + 兑换码/补发权益），不追求公开市场首发 |
-| D2  | **支付** | RC 可走 **兑换码 + mock 付**；真实微信付/退 **不挡** 部署与备份，但 **不挡** 「对外宣称已商用付退」 |
-| D3  | **部署拓扑** | **一台**腾讯云轻量（或与介绍站同机）：Caddy → API；PostgreSQL 同机 Docker volume |
-| D4  | **域名** | API：`api.remember.wehub.top`（示例，备案后启用）；Admin：同机子路径或 `admin.` 子域二选一（子计划 2 定） |
-| D5  | **密钥** | 生产密钥 **仅** 服务器 `.env` + 本地离线备份；**不进** Git、**不进** APK |
-| D6  | **发布节奏** | 测试环境 = 生产 Compose 的 staging 副本（可同机不同端口或第二台轻量）；**人工**批准上正式 |
-| D7  | **包更新** | 客户端已有下载安装链；阶段 8 **验证 + 文档化** 版本检查与断点续传边界，非重写 |
-| D8  | **中心词库** | **已 revert**；不在阶段 8 范围 |
+| #   | 决策         | 内容                                                                                                      |
+| --- | ------------ | --------------------------------------------------------------------------------------------------------- |
+| D1  | **首发形态** | **邀请内测**（少量账号 + 兑换码/补发权益），不追求公开市场首发                                            |
+| D2  | **支付**     | RC 可走 **兑换码 + mock 付**；真实微信付/退 **不挡** 部署与备份，但 **不挡** 「对外宣称已商用付退」       |
+| D3  | **部署拓扑** | **一台**腾讯云轻量（或与介绍站同机）：Caddy → API；PostgreSQL 同机 Docker volume                          |
+| D4  | **域名**     | API：`api.remember.wehub.top`（示例，备案后启用）；Admin：同机子路径或 `admin.` 子域二选一（子计划 2 定） |
+| D5  | **密钥**     | 生产密钥 **仅** 服务器 `.env` + 本地离线备份；**不进** Git、**不进** APK                                  |
+| D6  | **发布节奏** | 测试环境 = 生产 Compose 的 staging 副本（可同机不同端口或第二台轻量）；**人工**批准上正式                 |
+| D7  | **包更新**   | 客户端已有下载安装链；阶段 8 **验证 + 文档化** 版本检查与断点续传边界，非重写                             |
+| D8  | **中心词库** | **已 revert**；不在阶段 8 范围                                                                            |
 
 ## 5. 推荐子计划（实施前逐份写细节）
 
-| 顺序 | 文件名（待创建） | 交付 | 估重 |
-| ---- | ---------------- | ---- | ---- |
-| 1    | `2026-08-04-phase8-pack-and-app-update.md` | 验证 pack 版本更新/回退；APK 最低版本与 `protocolVersion` 强制策略（若缺则最小 API）；RC 用例 | 轻 |
-| 2    | `2026-08-04-phase8-production-deployment.md` | 生产 Compose + Caddy；env 校验；COS 私有桶接 Admin 发版；`pg_dump` 备份脚本 | 中 |
-| 3    | `2026-08-04-phase8-release-candidate-check.md` | RC 勾选清单 + 弱网/断网/小屏实机项；邀请账号全链路 | 轻（偏 runbook） |
+| 顺序 | 文件名（待创建）                               | 交付                                                                                          | 估重             |
+| ---- | ---------------------------------------------- | --------------------------------------------------------------------------------------------- | ---------------- |
+| 1    | `2026-08-04-phase8-pack-and-app-update.md`     | 验证 pack 版本更新/回退；APK 最低版本与 `protocolVersion` 强制策略（若缺则最小 API）；RC 用例 | 轻               |
+| 2    | `2026-08-04-phase8-production-deployment.md`   | 生产 Compose + Caddy；env 校验；COS 私有桶接 Admin 发版；`pg_dump` 备份脚本                   | 中               |
+| 3    | `2026-08-04-phase8-release-candidate-check.md` | RC 勾选清单 + 弱网/断网/小屏实机项；邀请账号全链路                                            | 轻（偏 runbook） |
 
 **依赖：** 2 可先于 1 搭骨架（空 API 也能起）；**RC（3）必须 1+2 可跑**。  
 **并行 Pause：** 真实微信支付（Pause C/D）仅影响 RC 清单中「真实付/退」几行，不阻塞 Compose/COS/备份。
@@ -88,22 +88,22 @@
 
 ## 7. 并行暂停（Pause 矩阵）
 
-| 项 | 挡什么 | 不挡什么 |
-| -- | ------ | -------- |
-| **Pause C/D** 微信 AppID / 商户 | OpenSDK 实机付、§6.9 正式退出门禁 | 部署 API、兑换码开通、mock 订单 RC |
-| **ICP 备案** | 大陆公网 HTTPS 域名 | 本机/局域网/staging IP 联调 |
-| **COS 生产密钥** | 正式 zip 外链 | 继续 dev mock 下载 + Admin 上传本地存储路径验证 |
-| **短信模板** | 生产短信登录 | dev mock OTP |
+| 项                              | 挡什么                            | 不挡什么                                        |
+| ------------------------------- | --------------------------------- | ----------------------------------------------- |
+| **Pause C/D** 微信 AppID / 商户 | OpenSDK 实机付、§6.9 正式退出门禁 | 部署 API、兑换码开通、mock 订单 RC              |
+| **ICP 备案**                    | 大陆公网 HTTPS 域名               | 本机/局域网/staging IP 联调                     |
+| **COS 生产密钥**                | 正式 zip 外链                     | 继续 dev mock 下载 + Admin 上传本地存储路径验证 |
+| **短信模板**                    | 生产短信登录                      | dev mock OTP                                    |
 
 ## 8. 验收门禁（阶段完成）
 
 ### 8.1 必须全绿（P0）
 
-- [ ] `pnpm check` 在 `main` 全绿（发布分支同基线）— Task 11
+- [x] `pnpm check` 在 `main` 全绿（发布分支同基线）— 2026-08-05 `feat/phase8-release` PASS
 - [x] 生产 Compose **一键 up**（[production-deploy.md](../../runbooks/production-deploy.md) §5）；本地 staging `/health` OK
-- [ ] Admin 在 staging 能 **上传 zip → 发布 → App 能下载安装学习** — Task 11
+- [ ] Admin 在 staging 能 **上传 zip → 发布 → App 能下载安装学习** — **defer 统一真机验收**
 - [x] `pg_dump` 备份 + **按 ADR 0003 流程恢复** 到空库，订单/`pack_access` 计数一致（2026-08-04 staging 演练 PASS）
-- [ ] RC 清单 **P0 项** 在 Android 8+ 真机走通 — 子计划 3
+- [ ] RC 清单 **P0 项** 在 Android 8+ 真机走通 — **defer 子计划 3 统一验收**
 - [x] 生产 `.env` 经 **校验脚本** 启动前检查（`tools/scripts/validate-prod-env.mjs`）
 
 ### 8.2 可 defer 到 Pause 解除后（P1）
@@ -136,14 +136,14 @@
 
 建议交付物：
 
-| 交付 | 说明 |
-| ---- | ---- |
-| `infra/prod/compose.yaml` | `postgres` + `api`（`admin` 可先 `vite build` 静态由 Caddy 托管） |
-| `infra/prod/.env.example` | 列出全部必填变量，无真实值 |
-| `tools/scripts/validate-prod-env.mjs` | 启动前校验 |
-| `docs/runbooks/production-deploy.md` | 从空机到 staging 的步骤 |
-| COS | Admin 发版写 `cos_object_key`；App 下载走 presign（替换 mock URL） |
-| 备份 | `infra/prod/backup-db.ps1` 或 cron 示例；上传到 COS 备份前缀 |
+| 交付                                  | 说明                                                               |
+| ------------------------------------- | ------------------------------------------------------------------ |
+| `infra/prod/compose.yaml`             | `postgres` + `api`（`admin` 可先 `vite build` 静态由 Caddy 托管）  |
+| `infra/prod/.env.example`             | 列出全部必填变量，无真实值                                         |
+| `tools/scripts/validate-prod-env.mjs` | 启动前校验                                                         |
+| `docs/runbooks/production-deploy.md`  | 从空机到 staging 的步骤                                            |
+| COS                                   | Admin 发版写 `cos_object_key`；App 下载走 presign（替换 mock URL） |
+| 备份                                  | `infra/prod/backup-db.ps1` 或 cron 示例；上传到 COS 备份前缀       |
 
 **PostgreSQL：** 沿用 `postgres:18.4-bookworm`（与 ADR 0003、dev 一致）。
 
@@ -178,16 +178,16 @@ Week D  子计划 3：RC 清单实机跑 + 修 P0 + 打 RC tag
 
 ## 13. 文档清单（新窗口读什么）
 
-| 文档 | 用途 |
-| ---- | ---- |
-| 本文 | 范围、Pause、门禁 |
-| `2026-07-26-remember-app-mvp-development-order.md` §11 | 总清单原文 |
-| `2026-07-27-stages-3-6-technical-acceptance-checklist.md` | 阶段 6 defer 对照 |
-| `2026-08-01-phase7-minimum-admin-completion.md` §阶段 7 范围外 | 已知 defer |
-| `docs/runbooks/local-api-docker-dev.md` | dev 对照 |
-| `docs/runbooks/deploy-remember-site.md` | Caddy/备案 |
-| `docs/decisions/0003-postgresql-backup-restore.md` | 备份恢复 |
-| `docs/runbooks/android-release-build-windows.md` | 打 RC APK |
+| 文档                                                           | 用途              |
+| -------------------------------------------------------------- | ----------------- |
+| 本文                                                           | 范围、Pause、门禁 |
+| `2026-07-26-remember-app-mvp-development-order.md` §11         | 总清单原文        |
+| `2026-07-27-stages-3-6-technical-acceptance-checklist.md`      | 阶段 6 defer 对照 |
+| `2026-08-01-phase7-minimum-admin-completion.md` §阶段 7 范围外 | 已知 defer        |
+| `docs/runbooks/local-api-docker-dev.md`                        | dev 对照          |
+| `docs/runbooks/deploy-remember-site.md`                        | Caddy/备案        |
+| `docs/decisions/0003-postgresql-backup-restore.md`             | 备份恢复          |
+| `docs/runbooks/android-release-build-windows.md`               | 打 RC APK         |
 
 ## 14. 新窗口起手 Prompt
 

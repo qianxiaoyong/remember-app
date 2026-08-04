@@ -8,11 +8,11 @@ ADR：[0003 PostgreSQL 备份恢复验证](../decisions/0003-postgresql-backup-r
 
 ## 1. 范围
 
-| 做 | 不做 |
-| --- | --- |
-| `pg_dump -Fc` 定时/手动备份 | PITR / 热备 / 异地双活 |
-| 同卷原地 `pg_restore` 演练 | 无确认的生产误恢复 |
-| 核对 `orders` / `payment_events` / `pack_access` 行数 | 全库 every-table  diff |
+| 做                                                    | 不做                   |
+| ----------------------------------------------------- | ---------------------- |
+| `pg_dump -Fc` 定时/手动备份                           | PITR / 热备 / 异地双活 |
+| 同卷原地 `pg_restore` 演练                            | 无确认的生产误恢复     |
+| 核对 `orders` / `payment_events` / `pack_access` 行数 | 全库 every-table diff  |
 
 **格式：** PostgreSQL custom format（`-Fc`），与 ADR 0003 spike 一致。
 
@@ -110,27 +110,27 @@ ORDER BY table_name;
 
 > 实施者在 staging 完成一次 backup → restore 后填写。
 
-| 项 | 值 |
-| --- | --- |
-| 日期 | 2026-08-04 |
-| 环境 | `remember-staging` |
-| 备份文件 | `artifacts/remember-20260804-235203.dump` |
-| 备份 SHA-256 | `5985970650F506ED45E51FB8C662D51A1F0FBA2BAA3987DE1C51F09DC0D143B6` |
-| 备份前 orders / payment_events / pack_access | 0 / 0 / 0 |
-| 恢复后 orders / payment_events / pack_access | 0 / 0 / 0 |
-| 结果 | PASS（恢复后 `/api/v1/health` → `ok`） |
-| 操作人 | AI agent（本地 Windows + Docker Desktop） |
+| 项                                           | 值                                                                 |
+| -------------------------------------------- | ------------------------------------------------------------------ |
+| 日期                                         | 2026-08-04                                                         |
+| 环境                                         | `remember-staging`                                                 |
+| 备份文件                                     | `artifacts/remember-20260804-235203.dump`                          |
+| 备份 SHA-256                                 | `5985970650F506ED45E51FB8C662D51A1F0FBA2BAA3987DE1C51F09DC0D143B6` |
+| 备份前 orders / payment_events / pack_access | 0 / 0 / 0                                                          |
+| 恢复后 orders / payment_events / pack_access | 0 / 0 / 0                                                          |
+| 结果                                         | PASS（恢复后 `/api/v1/health` → `ok`）                             |
+| 操作人                                       | AI agent（本地 Windows + Docker Desktop）                          |
 
 ---
 
 ## 7. 故障排查
 
-| 现象 | 处理 |
-| --- | --- |
-| `DOCKER_CLI_NOT_FOUND` | 安装 Docker Desktop / 将 docker 加入 PATH |
-| `POSTGRES_SERVICE_NOT_RUNNING` | `docker compose up -d postgres` |
-| `pg_restore` 报对象不存在 | 首次空库可忽略部分 `--clean` 警告；应用库应已有 schema |
-| 恢复后 API 502 | 等待 `api` 容器 migrate 完成；查 `docker compose logs api` |
+| 现象                           | 处理                                                       |
+| ------------------------------ | ---------------------------------------------------------- |
+| `DOCKER_CLI_NOT_FOUND`         | 安装 Docker Desktop / 将 docker 加入 PATH                  |
+| `POSTGRES_SERVICE_NOT_RUNNING` | `docker compose up -d postgres`                            |
+| `pg_restore` 报对象不存在      | 首次空库可忽略部分 `--clean` 警告；应用库应已有 schema     |
+| 恢复后 API 502                 | 等待 `api` 容器 migrate 完成；查 `docker compose logs api` |
 
 ---
 

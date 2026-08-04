@@ -2,7 +2,7 @@
 
 日期：2026-08-04  
 范围：单机腾讯云轻量 + Docker Compose + Caddy HTTPS  
-状态：**Task 10 完成**（空机→staging→prod 步骤已文档化；Task 11 做端到端验收）
+状态：**Task 11 门禁完成**（`pnpm check` 全绿；真机 E2E defer 统一验收）
 
 相关文档：
 
@@ -40,24 +40,24 @@ COS（单桶双前缀）
 
 ## 2. 空机前提
 
-| 项 | 要求 |
-| --- | --- |
-| 服务器 | 腾讯云轻量；建议 2 vCPU / 4 GB+；系统盘留足 pack 与 DB 空间 |
-| Docker | Docker Engine 24+ 与 Compose v2（`docker compose version`） |
-| Caddy | Caddy 2.x，systemd 托管；配置目录如 `/etc/caddy/` |
-| 备案 / DNS | 大陆 HTTPS 需 ICP；A 记录指向公网 IP（见 §2.1） |
-| 运维机 | Windows 或 Linux，已装 Node 22 + pnpm 10.33.2（Admin 构建、seed、校验） |
-| 密钥 | 仅服务器 `infra/prod/.env.*` + 离线备份；**不进 Git / APK** |
-| 腾讯云 COS | 私有桶 + API 密钥（staging 可 mock 下载；prod 发版需 COS） |
+| 项         | 要求                                                                    |
+| ---------- | ----------------------------------------------------------------------- |
+| 服务器     | 腾讯云轻量；建议 2 vCPU / 4 GB+；系统盘留足 pack 与 DB 空间             |
+| Docker     | Docker Engine 24+ 与 Compose v2（`docker compose version`）             |
+| Caddy      | Caddy 2.x，systemd 托管；配置目录如 `/etc/caddy/`                       |
+| 备案 / DNS | 大陆 HTTPS 需 ICP；A 记录指向公网 IP（见 §2.1）                         |
+| 运维机     | Windows 或 Linux，已装 Node 22 + pnpm 10.33.2（Admin 构建、seed、校验） |
+| 密钥       | 仅服务器 `infra/prod/.env.*` + 离线备份；**不进 Git / APK**             |
+| 腾讯云 COS | 私有桶 + API 密钥（staging 可 mock 下载；prod 发版需 COS）              |
 
 ### 2.1 DNS 示例
 
-| 记录 | 指向 |
-| --- | --- |
-| `remember.wehub.top` | 服务器公网 IP |
-| `api.remember.wehub.top` | 同上 |
-| `admin.remember.wehub.top` | 同上 |
-| `api.staging.remember.wehub.top` | 同上（staging） |
+| 记录                               | 指向            |
+| ---------------------------------- | --------------- |
+| `remember.wehub.top`               | 服务器公网 IP   |
+| `api.remember.wehub.top`           | 同上            |
+| `admin.remember.wehub.top`         | 同上            |
+| `api.staging.remember.wehub.top`   | 同上（staging） |
 | `admin.staging.remember.wehub.top` | 同上（staging） |
 
 未备案前：可用本机 `127.0.0.1` + 端口做 Compose 验收；Caddy HTTPS 与公网域名待备案后启用。
@@ -114,20 +114,20 @@ copy infra\prod\.env.example infra\prod\.env.prod
 
 ### 4.2 必填项（编辑 `.env.staging` / `.env.prod`）
 
-| 变量 | staging 建议 | prod 建议 |
-| --- | --- | --- |
-| `COMPOSE_PROJECT_NAME` | `remember-staging` | `remember-prod` |
-| `POSTGRES_PASSWORD` | 强密码（与 prod **不同**） | 强密码 |
-| `API_HOST_PORT` | `3001` | `3000` |
-| `NODE_ENV` | `staging` | `production` |
-| `DATABASE_URL` | `postgresql://remember:PASSWORD@postgres:5432/remember` | 同上（密码与上表一致） |
-| `API_PUBLIC_BASE_URL` | `https://api.staging.remember.wehub.top` | `https://api.remember.wehub.top` |
-| `AUTH_PHONE_PEPPER` 等三个 pepper | 随机 32+ 字节 hex | **全新** pepper，勿复用 staging |
-| `SMS_MOCK_ENABLED` | `true` | `false`（需腾讯云 SMS 模板） |
-| `WECHAT_PAY_MOCK_ENABLED` | `true` | `true`（Pause C/D 解除前） |
-| `PACK_DOWNLOAD_MOCK_ENABLED` | `true`（无 COS 时） | `false`（需 COS） |
-| `COS_ENABLED` | `false` 或 `true` | `true`（mock 下载关闭时 **必填**） |
-| `ADMIN_BOOTSTRAP_*` | staging 管理员 | prod 独立账号 |
+| 变量                              | staging 建议                                            | prod 建议                          |
+| --------------------------------- | ------------------------------------------------------- | ---------------------------------- |
+| `COMPOSE_PROJECT_NAME`            | `remember-staging`                                      | `remember-prod`                    |
+| `POSTGRES_PASSWORD`               | 强密码（与 prod **不同**）                              | 强密码                             |
+| `API_HOST_PORT`                   | `3001`                                                  | `3000`                             |
+| `NODE_ENV`                        | `staging`                                               | `production`                       |
+| `DATABASE_URL`                    | `postgresql://remember:PASSWORD@postgres:5432/remember` | 同上（密码与上表一致）             |
+| `API_PUBLIC_BASE_URL`             | `https://api.staging.remember.wehub.top`                | `https://api.remember.wehub.top`   |
+| `AUTH_PHONE_PEPPER` 等三个 pepper | 随机 32+ 字节 hex                                       | **全新** pepper，勿复用 staging    |
+| `SMS_MOCK_ENABLED`                | `true`                                                  | `false`（需腾讯云 SMS 模板）       |
+| `WECHAT_PAY_MOCK_ENABLED`         | `true`                                                  | `true`（Pause C/D 解除前）         |
+| `PACK_DOWNLOAD_MOCK_ENABLED`      | `true`（无 COS 时）                                     | `false`（需 COS）                  |
+| `COS_ENABLED`                     | `false` 或 `true`                                       | `true`（mock 下载关闭时 **必填**） |
+| `ADMIN_BOOTSTRAP_*`               | staging 管理员                                          | prod 独立账号                      |
 
 ### 4.3 启动前校验
 
@@ -299,14 +299,14 @@ EXPO_PUBLIC_API_BASE_URL=https://api.staging.remember.wehub.top
 
 当 `PACK_DOWNLOAD_MOCK_ENABLED=false` 且 `NODE_ENV=production` 时，**必须** `COS_ENABLED=true` 且填齐 `COS_*`（校验脚本会拦截）。
 
-| 步骤 | 操作 |
-| --- | --- |
-| 1 | 腾讯云创建 **私有** 桶；记录 `region`、`bucket` |
-| 2 | 子账号密钥写入 `.env.prod`（`COS_SECRET_ID` / `COS_SECRET_KEY`） |
-| 3 | `COS_ENABLED=true`，`PACK_DOWNLOAD_MOCK_ENABLED=false` |
-| 4 | `validate-prod-env.mjs` 通过 → `docker compose ... up -d` |
-| 5 | Admin 上传 zip → API PUT 到 `packs/{packId}/{version}/pack.zip` |
-| 6 | App 授权下载应返回 **presigned HTTPS URL**（非 mock 本地路径） |
+| 步骤 | 操作                                                             |
+| ---- | ---------------------------------------------------------------- |
+| 1    | 腾讯云创建 **私有** 桶；记录 `region`、`bucket`                  |
+| 2    | 子账号密钥写入 `.env.prod`（`COS_SECRET_ID` / `COS_SECRET_KEY`） |
+| 3    | `COS_ENABLED=true`，`PACK_DOWNLOAD_MOCK_ENABLED=false`           |
+| 4    | `validate-prod-env.mjs` 通过 → `docker compose ... up -d`        |
+| 5    | Admin 上传 zip → API PUT 到 `packs/{packId}/{version}/pack.zip`  |
+| 6    | App 授权下载应返回 **presigned HTTPS URL**（非 mock 本地路径）   |
 
 **验收：**
 
@@ -369,7 +369,7 @@ docker compose up -d api
 
 ### 11.2 Admin 静态回滚
 
-保留上一版 `dist/`  tarball；`scp` 覆盖 `/srv/remember-admin/` 即可，无需重启 Compose。
+保留上一版 `dist/` tarball；`scp` 覆盖 `/srv/remember-admin/` 即可，无需重启 Compose。
 
 ### 11.3 数据库回滚
 
@@ -382,42 +382,44 @@ docker compose up -d api
 
 ## 12. 日常运维摘要
 
-| 操作 | 命令 / 文档 |
-| --- | --- |
-| 查看状态 | `docker compose --project-name remember-staging --env-file infra/prod/.env.staging -f infra/prod/compose.yaml ps` |
-| 重启 api | `... compose restart api` |
-| 备份 DB | `infra/prod/backup-db.ps1 -EnvFile infra/prod/.env.prod` |
-| 恢复 DB（破坏性） | `infra/prod/restore-db.ps1 -DumpPath ... -Force` |
-| env 校验 | `pnpm check:prod-env -- infra/prod/.env.prod` |
+| 操作              | 命令 / 文档                                                                                                       |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------- |
+| 查看状态          | `docker compose --project-name remember-staging --env-file infra/prod/.env.staging -f infra/prod/compose.yaml ps` |
+| 重启 api          | `... compose restart api`                                                                                         |
+| 备份 DB           | `infra/prod/backup-db.ps1 -EnvFile infra/prod/.env.prod`                                                          |
+| 恢复 DB（破坏性） | `infra/prod/restore-db.ps1 -DumpPath ... -Force`                                                                  |
+| env 校验          | `pnpm check:prod-env -- infra/prod/.env.prod`                                                                     |
 
 ---
 
 ## 13. staging / prod 对照表
 
-| 项 | staging | prod |
-| --- | --- | --- |
-| Compose project | `remember-staging` | `remember-prod` |
-| env 文件 | `infra/prod/.env.staging` | `infra/prod/.env.prod` |
-| `API_HOST_PORT` | `3001` | `3000` |
-| `NODE_ENV` | `staging` | `production` |
-| mock SMS / 付 | 允许 | SMS mock 禁止 |
-| pack 下载 | 可 mock | COS presign |
-| seed:dev-bootstrap | 首次 | 否（Admin 录入） |
-| Admin 目录 | `/srv/remember-admin-staging` | `/srv/remember-admin` |
+| 项                 | staging                       | prod                   |
+| ------------------ | ----------------------------- | ---------------------- |
+| Compose project    | `remember-staging`            | `remember-prod`        |
+| env 文件           | `infra/prod/.env.staging`     | `infra/prod/.env.prod` |
+| `API_HOST_PORT`    | `3001`                        | `3000`                 |
+| `NODE_ENV`         | `staging`                     | `production`           |
+| mock SMS / 付      | 允许                          | SMS mock 禁止          |
+| pack 下载          | 可 mock                       | COS presign            |
+| seed:dev-bootstrap | 首次                          | 否（Admin 录入）       |
+| Admin 目录         | `/srv/remember-admin-staging` | `/srv/remember-admin`  |
 
 ---
 
 ## 14. 阶段 8 文档完成情况
 
-| 项 | 状态 |
-| --- | --- |
-| Compose + `.env.example` | ✅ |
-| `validate-prod-env.mjs` | ✅ |
-| Caddy 示例 + Admin 部署 | ✅ |
-| 备份 / 恢复 runbook + staging 演练 | ✅（2026-08-04） |
-| 空机 → staging → prod / 回滚 | ✅ 本文 |
-| COS presign 端到端 | ⏸ Task 11 staging 验收 |
-| RC 真机清单 | ⏸ 子计划 3 |
+| 项                                 | 状态                   |
+| ---------------------------------- | ---------------------- |
+| Compose + `.env.example`           | ✅                     |
+| `validate-prod-env.mjs`            | ✅                     |
+| Caddy 示例 + Admin 部署            | ✅                     |
+| 备份 / 恢复 runbook + staging 演练 | ✅（2026-08-04）       |
+| 空机 → staging → prod / 回滚       | ✅ 本文                |
+| COS presign 端到端                 | ⏸ defer 统一真机验收 |
+| RC 真机清单                        | ⏸ 子计划 3             |
+| `pnpm check`                       | ✅ 2026-08-05          |
+| `X-Request-Id`                     | ✅ staging API 重建后  |
 
 ---
 
