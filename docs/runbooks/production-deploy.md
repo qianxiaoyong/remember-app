@@ -2,13 +2,13 @@
 
 日期：2026-08-04  
 范围：单机腾讯云轻量 + Docker Compose + Caddy HTTPS  
-状态：**进行中**（Task 8 骨架；Task 9–10 将补充备份与完整空机步骤）
+状态：**进行中**（Task 9 备份/恢复已完成；Task 10 将补充完整空机步骤）
 
 相关文档：
 
 - [介绍站部署](./deploy-remember-site.md)
 - [本地 API Docker 开发](./local-api-docker-dev.md)
-- [PostgreSQL 备份恢复](./postgres-backup-restore.md)（Task 9 创建）
+- [PostgreSQL 备份恢复](./postgres-backup-restore.md)
 - 子计划：`docs/superpowers/plans/2026-08-04-phase8-production-deployment.md`
 
 ---
@@ -149,8 +149,9 @@ curl http://127.0.0.1:3000/api/v1/health
 
 ---
 
-## 8. 待 Task 9–10 补充
+## 8. 待 Task 10 补充
 
-- [ ] `pg_dump` 备份与 ADR 0003 恢复演练
+- [x] `pg_dump` 备份脚本与恢复 runbook（见 [postgres-backup-restore.md](./postgres-backup-restore.md)）
+- [x] 在 staging **人工演练 1 次**并填写 runbook §6 记录表（2026-08-04 PASS）
 - [ ] 空机到 prod 批准流程、镜像 digest 记录与回滚
 - [ ] COS 生产密钥与 `PACK_DOWNLOAD_MOCK_ENABLED=false` 验收

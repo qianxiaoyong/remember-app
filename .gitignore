@@ -20,3 +20,4 @@ apps/mobile/ios/
 *.log
 apps/mobile/signing.properties
 infra/technical-spikes/postgres/artifacts/
+infra/prod/artifacts/
