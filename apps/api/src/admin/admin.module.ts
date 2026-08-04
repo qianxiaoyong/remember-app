@@ -4,6 +4,7 @@ import { AuditModule } from '../audit/audit.module.js';
 import { PackVerifyModule } from '../pack-verify/pack-verify.module.js';
 import { PaymentModule } from '../payment/payment.module.js';
 import { RedemptionModule } from '../redemption/redemption.module.js';
+import { StorageModule } from '../storage/storage.module.js';
 import { AdminAuditLogsController } from './audit-logs/admin-audit-logs.controller.js';
 import { AdminAuditLogsService } from './audit-logs/admin-audit-logs.service.js';
 import { AdminCatalogTaxonomyController } from './catalog-taxonomy/admin-catalog-taxonomy.controller.js';
@@ -31,7 +32,7 @@ import { AdminUsersRepository } from './users/admin-users.repository.js';
 import { AdminUsersService } from './users/admin-users.service.js';
 
 @Module({
-  imports: [AdminAuthModule, AuditModule, PackVerifyModule, PaymentModule, RedemptionModule],
+  imports: [AdminAuthModule, AuditModule, PackVerifyModule, PaymentModule, RedemptionModule, StorageModule],
   controllers: [
     AdminDashboardController,
     AdminOrdersController,

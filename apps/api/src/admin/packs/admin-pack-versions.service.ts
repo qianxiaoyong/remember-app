@@ -17,6 +17,7 @@ import { AuditService } from '../../audit/audit.service.js';
 import { readAdminPackConfig } from '../../config/read-admin-pack-config.js';
 import { PackVerifyService } from '../../pack-verify/pack-verify.service.js';
 import { PrismaService } from '../../prisma/prisma.service.js';
+import { CosPackStorage } from '../../storage/cos-pack-storage.js';
 import { toAdminPackVersion } from './admin-packs.mapper.js';
 import { AdminPacksRepository } from './admin-packs.repository.js';
 
@@ -29,6 +30,7 @@ export class AdminPackVersionsService {
     private readonly prisma: PrismaService,
     private readonly packVerifyService: PackVerifyService,
     private readonly auditService: AuditService,
+    private readonly cosPackStorage: CosPackStorage,
   ) {}
 
   async updateVersionNote(packId: string, versionId: string, note: string | null) {
@@ -83,6 +85,10 @@ export class AdminPackVersionsService {
     );
     await mkdir(dirname(targetPath), { recursive: true });
     await writeFile(targetPath, zipBytes);
+
+    if (this.cosPackStorage.isEnabled()) {
+      await this.cosPackStorage.putObject(cosObjectKey, Buffer.from(zipBytes));
+    }
 
     const now = new Date();
     const version = await this.prisma.$transaction(async (tx) => {

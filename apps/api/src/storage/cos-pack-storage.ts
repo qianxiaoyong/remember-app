@@ -1,4 +1,4 @@
-import { Injectable, ServiceUnavailableException } from '@nestjs/common';
+import { Injectable, Optional, ServiceUnavailableException, Inject } from '@nestjs/common';
 import COS from 'cos-nodejs-sdk-v5';
 import {
   assertCosConfigEnabled,
@@ -8,6 +8,9 @@ import {
 } from '../config/read-cos-config.js';
 
 type CosClient = Pick<COS, 'putObject' | 'getObjectUrl'>;
+
+export const COS_CLIENT_FACTORY = Symbol('COS_CLIENT_FACTORY');
+export type CosClientFactory = (config: CosConfig) => CosClient;
 
 function createCosClient(config: CosConfig): CosClient {
   return new COS({
@@ -51,9 +54,14 @@ export class CosPackStorage {
   private readonly config: ReadCosConfigResult;
   private readonly client: CosClient | null;
 
-  constructor(clientFactory: (config: CosConfig) => CosClient = createCosClient) {
+  constructor(
+    @Optional()
+    @Inject(COS_CLIENT_FACTORY)
+    clientFactory?: CosClientFactory,
+  ) {
     this.config = readCosConfig();
-    this.client = this.config.enabled ? clientFactory(this.config) : null;
+    const createClient = clientFactory ?? createCosClient;
+    this.client = this.config.enabled ? createClient(this.config) : null;
   }
 
   isEnabled(): boolean {
