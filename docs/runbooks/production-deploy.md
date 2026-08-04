@@ -10,6 +10,7 @@
 - [本地 API Docker 开发](./local-api-docker-dev.md)
 - [PostgreSQL 备份恢复](./postgres-backup-restore.md)
 - [Pack 更新 RC](./pack-update-rc.md)
+- [RC 验收清单](./release-candidate-checklist.md)
 - 子计划：`docs/superpowers/plans/2026-08-04-phase8-production-deployment.md`
 
 ---
@@ -410,17 +411,17 @@ docker compose up -d api
 
 ## 14. 阶段 8 文档完成情况
 
-| 项                                 | 状态                  |
-| ---------------------------------- | --------------------- |
-| Compose + `.env.example`           | ✅                    |
-| `validate-prod-env.mjs`            | ✅                    |
-| Caddy 示例 + Admin 部署            | ✅                    |
-| 备份 / 恢复 runbook + staging 演练 | ✅（2026-08-04）      |
-| 空机 → staging → prod / 回滚       | ✅ 本文               |
-| COS presign 端到端                 | ⏸ defer 统一真机验收  |
-| RC 真机清单                        | ⏸ 子计划 3            |
-| `pnpm check`                       | ✅ 2026-08-05         |
-| `X-Request-Id`                     | ✅ staging API 重建后 |
+| 项                                 | 状态                                    |
+| ---------------------------------- | --------------------------------------- |
+| Compose + `.env.example`           | ✅                                      |
+| `validate-prod-env.mjs`            | ✅                                      |
+| Caddy 示例 + Admin 部署            | ✅                                      |
+| 备份 / 恢复 runbook + staging 演练 | ✅（2026-08-04）                        |
+| 空机 → staging → prod / 回滚       | ✅ 本文                                 |
+| COS presign 端到端                 | ⏸ defer 统一真机验收                    |
+| RC 真机清单                        | ✅ runbook 就绪；P0 勾选 defer 统一验收 |
+| `pnpm check`                       | ✅ 2026-08-05                           |
+| `X-Request-Id`                     | ✅ staging API 重建后                   |
 
 ---
 
