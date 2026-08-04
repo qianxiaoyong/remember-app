@@ -9,6 +9,7 @@ import { packDownloadAuthorizationResponseSchema } from '@remember/contracts';
 import { CatalogRepository } from '../catalog/catalog.repository.js';
 import { PackAccessRepository } from '../pack-access/pack-access.repository.js';
 import { PrismaService } from '../prisma/prisma.service.js';
+import { CosPackStorage } from '../storage/cos-pack-storage.js';
 import { createDownloadToken } from './download-token.js';
 import { PackDownloadConfigService } from './pack-download-config.service.js';
 
@@ -21,6 +22,7 @@ export class PackDownloadService {
     private readonly packAccessRepository: PackAccessRepository,
     private readonly catalogRepository: CatalogRepository,
     private readonly packDownloadConfigService: PackDownloadConfigService,
+    private readonly cosPackStorage: CosPackStorage,
   ) {}
 
   async createDownloadAuthorization(
@@ -48,36 +50,49 @@ export class PackDownloadService {
       throw new NotFoundException({ code: 'PACK_VERSION_NOT_FOUND', message: '暂无可下载版本' });
     }
 
-    if (!this.packDownloadConfigService.readMockEnabled()) {
-      throw new ServiceUnavailableException({
-        code: 'PACK_DOWNLOAD_NOT_CONFIGURED',
-        message: '生产下载尚未配置，请开启 mock 模式或配置 COS',
-      });
-    }
-
-    const mockFile = await this.packDownloadConfigService.resolvePackDownloadFile(
-      packId,
-      version.packVersion,
-    );
-    const token = createDownloadToken({ userId, packId });
-    const baseUrl = this.packDownloadConfigService.readPublicBaseUrl();
-    const downloadUrl = `${baseUrl}/api/v1/packs/${encodeURIComponent(packId)}/download?token=${encodeURIComponent(token)}`;
-
     const offlineLicenseExpiresAt = new Date(
       Date.now() + OFFLINE_LICENSE_DAYS * 24 * 60 * 60 * 1000,
     ).toISOString();
 
-    const devContentPackId =
-      mockFile.manifestPackId !== packId ? mockFile.manifestPackId : undefined;
+    if (this.packDownloadConfigService.readMockEnabled()) {
+      const mockFile = await this.packDownloadConfigService.resolvePackDownloadFile(
+        packId,
+        version.packVersion,
+      );
+      const token = createDownloadToken({ userId, packId });
+      const baseUrl = this.packDownloadConfigService.readPublicBaseUrl();
+      const downloadUrl = `${baseUrl}/api/v1/packs/${encodeURIComponent(packId)}/download?token=${encodeURIComponent(token)}`;
 
-    return packDownloadAuthorizationResponseSchema.parse({
-      packId,
-      packVersion: version.packVersion,
-      sha256: mockFile.sha256,
-      sizeBytes: mockFile.sizeBytes,
-      downloadUrl,
-      offlineLicenseExpiresAt,
-      ...(devContentPackId ? { devContentPackId } : {}),
+      const devContentPackId =
+        mockFile.manifestPackId !== packId ? mockFile.manifestPackId : undefined;
+
+      return packDownloadAuthorizationResponseSchema.parse({
+        packId,
+        packVersion: version.packVersion,
+        sha256: mockFile.sha256,
+        sizeBytes: mockFile.sizeBytes,
+        downloadUrl,
+        offlineLicenseExpiresAt,
+        ...(devContentPackId ? { devContentPackId } : {}),
+      });
+    }
+
+    if (this.cosPackStorage.isEnabled()) {
+      const downloadUrl = await this.cosPackStorage.getPresignedDownloadUrl(version.cosObjectKey);
+
+      return packDownloadAuthorizationResponseSchema.parse({
+        packId,
+        packVersion: version.packVersion,
+        sha256: version.sha256,
+        sizeBytes: Number(version.sizeBytes),
+        downloadUrl,
+        offlineLicenseExpiresAt,
+      });
+    }
+
+    throw new ServiceUnavailableException({
+      code: 'PACK_DOWNLOAD_NOT_CONFIGURED',
+      message: '生产下载尚未配置，请开启 mock 模式或配置 COS',
     });
   }
 
