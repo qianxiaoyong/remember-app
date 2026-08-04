@@ -111,9 +111,6 @@ importers:
       '@remember/domain':
         specifier: workspace:*
         version: link:../../packages/domain
-      '@remember/lexicon-import':
-        specifier: workspace:*
-        version: link:../../tools/lexicon-import
       '@remember/pack-builder':
         specifier: workspace:*
         version: link:../../tools/pack-builder
@@ -136,6 +133,9 @@ importers:
       '@remember/config':
         specifier: workspace:*
         version: link:../../packages/config
+      '@remember/lexicon-import':
+        specifier: workspace:*
+        version: link:../../tools/lexicon-import
       '@types/express':
         specifier: 5.0.6
         version: 5.0.6
