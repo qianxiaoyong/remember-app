@@ -12,6 +12,7 @@ import { PaymentModule } from './payment/payment.module.js';
 import { PrismaModule } from './prisma/prisma.module.js';
 import { RedemptionModule } from './redemption/redemption.module.js';
 import { SyncModule } from './sync/sync.module.js';
+import { StorageModule } from './storage/storage.module.js';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { SyncModule } from './sync/sync.module.js';
     AdminModule,
     AuditModule,
     SyncModule,
+    StorageModule,
     CatalogModule,
     PackAccessModule,
     RedemptionModule,
