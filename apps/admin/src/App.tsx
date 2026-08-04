@@ -20,6 +20,7 @@ import { PackCreate, PackEdit, PackList } from './resources/packs.js';
 import PeopleIcon from '@mui/icons-material/People';
 import { UserList, UserShow } from './resources/users.js';
 import { adminTheme } from './theme/admin-theme.js';
+import { LexiconDetailPage, LexiconListPage } from './resources/lexicon/index.js';
 import { adminI18nProvider } from './i18n/admin-i18n.js';
 
 export function AdminApp() {
@@ -37,6 +38,8 @@ export function AdminApp() {
     >
       <CustomRoutes>
         <Route path="/catalog-taxonomy" element={<CatalogTaxonomyPage />} />
+        <Route path="/lexicon" element={<LexiconListPage />} />
+        <Route path="/lexicon/:lemmaKey" element={<LexiconDetailPage />} />
       </CustomRoutes>
       <Resource
         name="users"

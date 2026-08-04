@@ -104,3 +104,39 @@ pnpm --filter @remember/api test:integration
 - **端口 5432 占用**：改 `infra/dev/compose.yaml` 端口映射或停止本机其他 PostgreSQL
 - **手机连不上 API**：检查 Windows 防火墙是否放行 3000；API 需监听 `0.0.0.0` 而非仅 localhost
 - **登录/同步/outbox/换机恢复等深层问题**：见 [账号登录与云端同步维护手册](./account-sync-maintenance.md)
+
+## 8. ECDICT 导入中心词库（CLI）
+
+子计划 5 提供 `@remember/lexicon-import`，将 [ECDICT](https://github.com/skywind3000/ECDICT) CSV 写入 `content_*` 表。
+
+### 准备
+
+1. 数据库已启动（§2），`apps/api/.env` 已配置 `DATABASE_URL`
+2. 下载 `ecdict.csv`（UTF-8）到本机任意路径
+3. 编译 CLI：
+
+```powershell
+pnpm --filter @remember/lexicon-import build
+```
+
+### 导入
+
+```powershell
+# 加载 DATABASE_URL（PowerShell 示例，路径按本机调整）
+$env:DATABASE_URL = (Get-Content apps\api\.env | Where-Object { $_ -match '^DATABASE_URL=' }) -replace '^DATABASE_URL=',''
+
+# 试跑（不写库）
+pnpm --filter @remember/lexicon-import import:ecdict -- --file D:\data\ecdict.csv --dry-run --limit 100
+
+# 正式导入（可 --limit 做小批量验证）
+pnpm --filter @remember/lexicon-import import:ecdict -- --file D:\data\ecdict.csv --version 2024-01
+```
+
+**行为：**
+
+- `file_sha256` 幂等：同一文件已成功导入则直接退出
+- 已有 `lemma_key` **跳过**，不覆盖
+- 新词条 `status=draft`、`source=ecdict`
+- 失败批次可修正后重跑（同 sha256 且 `status=failed` 会重置计数重试）
+
+导入后在 Admin **中心词库** 搜索验证；draft 词条可手动发布后进 pack-editor 补词。

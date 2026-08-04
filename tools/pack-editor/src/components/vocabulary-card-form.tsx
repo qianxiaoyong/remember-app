@@ -1,11 +1,14 @@
 import { vocabularyContentSchema, type VocabularyContent } from '@remember/contracts';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useFieldArray, useForm, type FieldPath } from 'react-hook-form';
+import { useFieldArray, useForm, useWatch, type FieldPath } from 'react-hook-form';
 import type { ReactElement } from 'react';
+import { TtsSynthesizeButton } from './tts-synthesize-button.js';
+import { suggestExampleAudioPath, suggestPrimaryAudioPath } from '../utils/suggest-audio-path.js';
 
 export const VOCABULARY_CARD_FORM_ID = 'vocabulary-card-form';
 
 interface VocabularyCardFormProps {
+  packId: string;
   defaultValues: VocabularyContent;
   onSubmit: (content: VocabularyContent) => Promise<void>;
 }
@@ -49,6 +52,7 @@ function normalizeVocabularyContent(values: VocabularyContent): VocabularyConten
 }
 
 export function VocabularyCardForm({
+  packId,
   defaultValues,
   onSubmit,
 }: VocabularyCardFormProps): ReactElement {
@@ -56,11 +60,15 @@ export function VocabularyCardForm({
     register,
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<VocabularyContent>({
     resolver: zodResolver(vocabularyContentSchema),
     defaultValues,
   });
+
+  const headword = useWatch({ control, name: 'prompt.headword' });
+  const exampleValues = useWatch({ control, name: 'reveal.examples' });
 
   const definitions = useFieldArray({ control, name: 'reveal.definitions' });
   const examples = useFieldArray({ control, name: 'reveal.examples' });
@@ -86,7 +94,17 @@ export function VocabularyCardForm({
           <label className="field-label">
             主音频
             <span className="field-helper">assets/audio/…</span>
-            <input {...register('prompt.primaryAudio')} className="input input-sm" />
+            <div className="edit-inline-row">
+              <input {...register('prompt.primaryAudio')} className="input input-sm" />
+              <TtsSynthesizeButton
+                packId={packId}
+                text={headword}
+                relativePath={suggestPrimaryAudioPath(headword)}
+                onPathGenerated={(path) => {
+                  setValue('prompt.primaryAudio', path, { shouldDirty: true });
+                }}
+              />
+            </div>
             {errors.prompt?.primaryAudio && (
               <ErrorText message={errors.prompt.primaryAudio.message} />
             )}
@@ -215,13 +233,27 @@ export function VocabularyCardForm({
                     placeholder="中文"
                   />
                 </div>
-                <input
-                  {...register(
-                    `reveal.examples.${String(index)}.audio` as FieldPath<VocabularyContent>,
-                  )}
-                  className="input input-sm"
-                  placeholder="例句音频（可选）"
-                />
+                <div className="edit-inline-row">
+                  <input
+                    {...register(
+                      `reveal.examples.${String(index)}.audio` as FieldPath<VocabularyContent>,
+                    )}
+                    className="input input-sm"
+                    placeholder="例句音频（可选）"
+                  />
+                  <TtsSynthesizeButton
+                    packId={packId}
+                    text={exampleValues[index]?.en ?? ''}
+                    relativePath={suggestExampleAudioPath(headword, index)}
+                    onPathGenerated={(path) => {
+                      setValue(
+                        `reveal.examples.${String(index)}.audio` as FieldPath<VocabularyContent>,
+                        path,
+                        { shouldDirty: true },
+                      );
+                    }}
+                  />
+                </div>
               </div>
             ))}
           </div>

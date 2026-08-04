@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState, type ReactElement } from 'react';
-import type { PackSourceCard } from '@remember/pack-builder/pack-source';
+import type { PackSource, PackSourceCard } from '@remember/pack-builder/pack-source';
 import { isStorySourceCard } from '../utils/is-story-source-card.js';
 import { loadPackSource, saveCard } from '../api/local-api-client.js';
 import { STORY_CARD_FORM_ID, StoryCardForm } from '../components/story-card-form.js';
 import { VOCABULARY_CARD_FORM_ID, VocabularyCardForm } from '../components/vocabulary-card-form.js';
+import { LexiconWorkbenchDialog } from '../components/lexicon-workbench/lexicon-workbench-dialog.js';
 import { LoadingState } from '../components/loading-state.js';
 import { StatusBanner } from '../components/status-banner.js';
 import { Toast } from '../components/toast.js';
@@ -16,10 +17,12 @@ interface CardEditPageProps {
 
 export function CardEditPage({ packId, sortOrder, onBack }: CardEditPageProps): ReactElement {
   const [card, setCard] = useState<PackSourceCard | null>(null);
+  const [packSource, setPackSource] = useState<PackSource | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [lexiconWorkbenchOpen, setLexiconWorkbenchOpen] = useState(false);
   const checkRulesRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
@@ -37,6 +40,7 @@ export function CardEditPage({ packId, sortOrder, onBack }: CardEditPageProps): 
           return;
         }
         setCard(found);
+        setPackSource(source);
       })
       .catch((loadError: unknown) => {
         if (!cancelled) {
@@ -145,6 +149,7 @@ export function CardEditPage({ packId, sortOrder, onBack }: CardEditPageProps): 
       {toast && <Toast message={toast} />}
 
       <VocabularyCardForm
+        packId={packId}
         defaultValues={vocabularyCard.content}
         onSubmit={async (content) => {
           setSaving(true);
@@ -168,6 +173,24 @@ export function CardEditPage({ packId, sortOrder, onBack }: CardEditPageProps): 
         }}
       />
 
+      {packSource && (
+        <LexiconWorkbenchDialog
+          mode="vocabulary"
+          open={lexiconWorkbenchOpen}
+          onClose={() => {
+            setLexiconWorkbenchOpen(false);
+          }}
+          packId={packId}
+          cards={packSource.cards}
+          onApplied={() => {
+            setToast('lexicon.json 已更新');
+            window.setTimeout(() => {
+              setToast(null);
+            }, 2000);
+          }}
+        />
+      )}
+
       <div className="sticky-form-footer">
         <button type="button" className="btn btn-secondary" onClick={onBack}>
           返回列表
@@ -175,15 +198,26 @@ export function CardEditPage({ packId, sortOrder, onBack }: CardEditPageProps): 
         <div className="sticky-form-footer-meta">
           <strong>#{String(sortOrder)}</strong> · {vocabularyCard.content.prompt.headword}
         </div>
-        <button
-          type="submit"
-          form={VOCABULARY_CARD_FORM_ID}
-          className="btn btn-primary"
-          disabled={saving}
-        >
-          {saving && <span className="btn-spinner" aria-hidden="true" />}
-          {saving ? '保存中…' : '保存'}
-        </button>
+        <div className="sticky-form-footer-actions">
+          <button
+            type="button"
+            className="btn btn-secondary btn-sm"
+            onClick={() => {
+              setLexiconWorkbenchOpen(true);
+            }}
+          >
+            中心词库补词
+          </button>
+          <button
+            type="submit"
+            form={VOCABULARY_CARD_FORM_ID}
+            className="btn btn-primary"
+            disabled={saving}
+          >
+            {saving && <span className="btn-spinner" aria-hidden="true" />}
+            {saving ? '保存中…' : '保存'}
+          </button>
+        </div>
       </div>
     </>
   );

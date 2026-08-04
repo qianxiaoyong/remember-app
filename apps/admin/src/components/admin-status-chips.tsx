@@ -122,6 +122,8 @@ const auditActionLabels: Record<string, string> = {
   'redemption_code.update': '更新兑换码',
   'redemption_code.delete': '删除兑换码',
   'redemption_code.restore': '恢复兑换码',
+  'lexicon.patch': '更新词条',
+  'lexicon.publish': '发布词条',
 };
 
 export function formatAuditAction(action: string): string {

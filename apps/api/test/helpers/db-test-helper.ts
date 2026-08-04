@@ -15,6 +15,16 @@ export async function resetAuthTables(prisma: PrismaClient): Promise<void> {
   await prisma.user.deleteMany();
 }
 
+export async function resetContentLexiconTables(prisma: PrismaClient): Promise<void> {
+  await prisma.contentLemmaTagLink.deleteMany();
+  await prisma.contentLemmaFragment.deleteMany();
+  await prisma.contentLemmaForm.deleteMany();
+  await prisma.contentLemmaAsset.deleteMany();
+  await prisma.contentLemma.deleteMany();
+  await prisma.contentTag.deleteMany();
+  await prisma.contentImportBatch.deleteMany();
+}
+
 export async function resetAdminTables(prisma: PrismaClient): Promise<void> {
   await prisma.auditLog.deleteMany();
   await prisma.adminSession.deleteMany();

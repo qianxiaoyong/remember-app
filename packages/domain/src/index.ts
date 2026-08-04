@@ -15,3 +15,9 @@ export {
   type QueueItemType,
   type QueuePlanItem,
 } from './build-study-queue.js';
+export {
+  compareLemmaStatusForSearch,
+  lemmaStatusRank,
+  type LemmaSearchStatus,
+} from './lexicon/search-sort.js';
+export { normalizeFormKey, normalizeLemmaKey } from './lexicon/normalize-keys.js';

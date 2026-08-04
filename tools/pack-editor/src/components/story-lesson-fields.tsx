@@ -1,12 +1,15 @@
 import { buildStoryKnowledgeId } from '@remember/contracts';
-import { useWatch, type Control } from 'react-hook-form';
+import { useWatch, type Control, type UseFormSetValue } from 'react-hook-form';
 import type { ReactElement } from 'react';
 import type { StoryReadingContent } from '@remember/contracts';
+import { TtsSynthesizeButton } from './tts-synthesize-button.js';
+import { suggestLessonAudioPath } from '../utils/suggest-audio-path.js';
 
 interface StoryLessonFieldsProps {
   packId: string;
   register: ReturnType<typeof import('react-hook-form').useForm<StoryReadingContent>>['register'];
   control: Control<StoryReadingContent>;
+  setValue: UseFormSetValue<StoryReadingContent>;
   errors: ReturnType<
     typeof import('react-hook-form').useForm<StoryReadingContent>
   >['formState']['errors'];
@@ -16,9 +19,11 @@ export function StoryLessonFields({
   packId,
   register,
   control,
+  setValue,
   errors,
 }: StoryLessonFieldsProps): ReactElement {
   const lessonCode = useWatch({ control, name: 'lesson.code' });
+  const lessonTitleEn = useWatch({ control, name: 'lesson.titleEn' });
   const knowledgeIdPreview = (() => {
     const code = typeof lessonCode === 'string' ? lessonCode.trim() : '';
     if (!code) {
@@ -66,11 +71,23 @@ export function StoryLessonFields({
         </label>
         <label className="field-label field-label-compact">
           主音频
-          <input
-            {...register('lesson.primaryAudio')}
-            className="input input-sm"
-            placeholder="assets/audio/…"
-          />
+          <div className="edit-inline-row">
+            <input
+              {...register('lesson.primaryAudio')}
+              className="input input-sm"
+              placeholder="assets/audio/…"
+            />
+            <TtsSynthesizeButton
+              packId={packId}
+              text={lessonTitleEn}
+              relativePath={suggestLessonAudioPath(
+                typeof lessonCode === 'string' ? lessonCode : '',
+              )}
+              onPathGenerated={(path) => {
+                setValue('lesson.primaryAudio', path, { shouldDirty: true });
+              }}
+            />
+          </div>
           {errors.lesson?.primaryAudio && (
             <ErrorText message={errors.lesson.primaryAudio.message} />
           )}

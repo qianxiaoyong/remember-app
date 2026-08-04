@@ -1,0 +1,4 @@
+{
+  "extends": "@remember/config/typescript/node",
+  "include": ["src/**/*.ts"]
+}
