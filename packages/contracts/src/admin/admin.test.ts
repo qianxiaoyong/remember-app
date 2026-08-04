@@ -12,16 +12,6 @@ import {
   adminUserDetailSchema,
   adminUserListResponseSchema,
 } from './users.js';
-import {
-  adminLexiconBatchGetRequestSchema,
-  adminLexiconDetailSchema,
-  adminLexiconEnrichRequestSchema,
-  adminLexiconPatchRequestSchema,
-  adminLexiconSearchResponseSchema,
-  definitionZhContentSchema,
-  exampleContentSchema,
-  lemmaFragmentContentSchema,
-} from './lexicon.js';
 
 describe('admin contracts', () => {
   it('adminLogin round-trip', () => {
@@ -202,97 +192,5 @@ describe('admin contracts', () => {
       paidOrderCount: 1,
     });
     expect(detail.mainDeviceId).toBe('11111111-1111-4111-8111-111111111111');
-  });
-
-  it('adminLexiconSearchResponse round-trip', () => {
-    const response = adminLexiconSearchResponseSchema.parse({
-      items: [
-        {
-          lemmaKey: 'go',
-          headword: 'go',
-          status: 'published',
-          ipa: '/ɡoʊ/',
-          source: 'ecdict',
-        },
-        {
-          lemmaKey: 'gone',
-          headword: 'gone',
-          status: 'draft',
-          source: 'manual',
-        },
-      ],
-      total: 2,
-      limit: 20,
-      offset: 0,
-    });
-    expect(response.items[0]?.status).toBe('published');
-  });
-
-  it('adminLexiconDetail 拒绝未知字段', () => {
-    expect(() =>
-      adminLexiconDetailSchema.parse({
-        id: '550e8400-e29b-41d4-a716-446655440020',
-        lemmaKey: 'go',
-        headword: 'go',
-        status: 'published',
-        source: 'ecdict',
-        createdAt: '2026-08-04T02:00:00.000Z',
-        updatedAt: '2026-08-04T02:00:00.000Z',
-        fragments: [],
-        forms: [],
-        assets: [],
-        tags: [],
-        extra: true,
-      }),
-    ).toThrow();
-  });
-
-  it('lemmaFragmentContent 按类型校验 content', () => {
-    const parsed = lemmaFragmentContentSchema.parse({
-      fragmentType: 'example',
-      content: { en: 'I go home.', zh: '我回家。' },
-    });
-    expect(parsed.fragmentType).toBe('example');
-
-    expect(() =>
-      definitionZhContentSchema.parse({ text: '走', pos: 'v.', unknown: true }),
-    ).toThrow();
-    expect(() =>
-      exampleContentSchema.parse({ en: 'Hi', zh: '你好', note: 'x', extra: 1 }),
-    ).toThrow();
-  });
-
-  it('adminLexiconPatchRequest 拒绝无 id 的 delete', () => {
-    expect(() =>
-      adminLexiconPatchRequestSchema.parse({
-        patches: [
-          {
-            lemmaKey: 'go',
-            fragments: [
-              {
-                fragmentType: 'note',
-                content: { text: 'x' },
-                sortOrder: 0,
-                source: 'manual',
-                delete: true,
-              },
-            ],
-          },
-        ],
-      }),
-    ).toThrow();
-  });
-
-  it('adminLexiconBatchGetRequest 限制批量大小', () => {
-    expect(() => adminLexiconBatchGetRequestSchema.parse({ lemmaKeys: [] })).toThrow();
-  });
-
-  it('adminLexiconEnrichRequest round-trip', () => {
-    const request = adminLexiconEnrichRequestSchema.parse({
-      lemmaKey: 'go',
-      fragmentTypes: ['definition_zh', 'example'],
-      context: '三年级动词',
-    });
-    expect(request.fragmentTypes).toHaveLength(2);
   });
 });

@@ -137,13 +137,7 @@ function StoryCardFormBody({
           )(event);
         }}
       >
-        <StoryLessonFields
-          packId={packId}
-          register={register}
-          control={control}
-          setValue={setValue}
-          errors={errors}
-        />
+        <StoryLessonFields packId={packId} register={register} control={control} errors={errors} />
         <div className="edit-reveal-body edit-story-body-stack">
           <StoryTimelineEditor
             control={control}

@@ -3,7 +3,6 @@ import type { MenuProps } from 'react-admin';
 import { Menu, MenuItemLink } from 'react-admin';
 import DashboardIcon from '@mui/icons-material/SpaceDashboardOutlined';
 import CategoryIcon from '@mui/icons-material/Category';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
 import PeopleIcon from '@mui/icons-material/People';
 import { ListSubheader } from '@mui/material';
 import { adminColors } from '../theme/admin-colors.js';
@@ -29,7 +28,6 @@ export function AdminMenu(props: MenuProps) {
       <Menu.DashboardItem primaryText="驾驶舱" leftIcon={<DashboardIcon />} />
       <MenuGroupTitle>内容</MenuGroupTitle>
       <Menu.ResourceItem name="packs" />
-      <MenuItemLink to="/lexicon" primaryText="中心词库" leftIcon={<MenuBookIcon />} />
       <MenuItemLink to="/catalog-taxonomy" primaryText="分类管理" leftIcon={<CategoryIcon />} />
       <Menu.ResourceItem name="redemption-codes" />
       <MenuGroupTitle>交易</MenuGroupTitle>
