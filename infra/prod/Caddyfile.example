@@ -1,0 +1,48 @@
+# 记得生产 Caddy 配置示例
+# 合并到服务器 /etc/caddy/Caddyfile 或 include 此文件
+# 参考：docs/runbooks/production-deploy.md
+
+remember.wehub.top {
+	root * /srv/remember-site
+	encode gzip
+	file_server
+}
+
+api.remember.wehub.top {
+	encode gzip
+	reverse_proxy 127.0.0.1:3000
+}
+
+admin.remember.wehub.top {
+	encode gzip
+
+	# Admin SPA 与 dev Vite 代理一致：/api → 本机 API
+	handle /api/* {
+		reverse_proxy 127.0.0.1:3000
+	}
+
+	handle {
+		root * /srv/remember-admin
+		try_files {path} /index.html
+		file_server
+	}
+}
+
+# --- staging 示例（同机第二套 Compose，API 映射 127.0.0.1:3001）---
+#
+# api.staging.remember.wehub.top {
+# 	encode gzip
+# 	reverse_proxy 127.0.0.1:3001
+# }
+#
+# admin.staging.remember.wehub.top {
+# 	encode gzip
+# 	handle /api/* {
+# 		reverse_proxy 127.0.0.1:3001
+# 	}
+# 	handle {
+# 		root * /srv/remember-admin-staging
+# 		try_files {path} /index.html
+# 		file_server
+# 	}
+# }
