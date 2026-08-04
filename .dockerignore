@@ -1,0 +1,17 @@
+node_modules
+**/node_modules
+**/.git
+**/dist
+apps/api/data
+apps/api/test
+**/*.test.ts
+**/*.test.mjs
+tools/pack-builder/fixtures
+infra/technical-spikes
+docs
+.gitignore
+*.md
+# 保留 workspace package.json；仅排除 mobile 构建产物与大目录
+apps/mobile/android
+apps/mobile/.expo
+apps/mobile/dist
