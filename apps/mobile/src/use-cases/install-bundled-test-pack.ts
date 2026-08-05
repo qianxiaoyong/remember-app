@@ -82,19 +82,4 @@ function readBundledPackVersion(zipBytes: Uint8Array): string {
   return manifest.packVersion;
 }
 
-function isPackVersionOlder(installedVersion: string, bundledVersion: string): boolean {
-  const installedParts = installedVersion.split('.').map((part) => Number.parseInt(part, 10));
-  const bundledParts = bundledVersion.split('.').map((part) => Number.parseInt(part, 10));
-  const length = Math.max(installedParts.length, bundledParts.length);
-  for (let index = 0; index < length; index += 1) {
-    const installed = installedParts[index] ?? 0;
-    const bundled = bundledParts[index] ?? 0;
-    if (installed < bundled) {
-      return true;
-    }
-    if (installed > bundled) {
-      return false;
-    }
-  }
-  return false;
-}
+import { isPackVersionOlder } from '@remember/domain';

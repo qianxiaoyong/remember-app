@@ -1,0 +1,37 @@
+# staging / prod 共用；通过 COMPOSE_PROJECT_NAME 与独立 .env 区分环境
+services:
+  postgres:
+    image: postgres:18.4-bookworm
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:?POSTGRES_DB must be set}
+      POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER must be set}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set}
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}']
+      interval: 2s
+      timeout: 3s
+      retries: 30
+    volumes:
+      - postgres-data:/var/lib/postgresql
+    restart: unless-stopped
+
+  api:
+    build:
+      context: ../..
+      dockerfile: apps/api/Dockerfile
+    env_file:
+      - .env
+    environment:
+      ADMIN_PACK_STORAGE_DIR: /data/pack-storage
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - '${API_PORT_BIND:-127.0.0.1}:${API_HOST_PORT:-3000}:3000'
+    volumes:
+      - pack-storage:/data/pack-storage
+    restart: unless-stopped
+
+volumes:
+  postgres-data:
+  pack-storage:

@@ -15,3 +15,4 @@ export {
   type QueueItemType,
   type QueuePlanItem,
 } from './build-study-queue.js';
+export { isPackVersionOlder } from './compare-pack-version.js';

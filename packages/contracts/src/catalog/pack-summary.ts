@@ -23,6 +23,8 @@ export const catalogPackSummarySchema = z
     coverLines: z.array(z.string()).optional(),
     includedHighlights: z.array(includedHighlightSchema).max(4).optional(),
     isBundledTestPack: z.boolean().optional(),
+    currentPackVersion: z.string().min(1).optional(),
+    protocolVersion: z.number().int().positive().optional(),
     taxonomy: catalogPackTaxonomySchema.optional(),
   })
   .strict();

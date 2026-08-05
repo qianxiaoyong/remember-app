@@ -17,11 +17,20 @@ const packTaxonomyInclude = {
 
 export type PackWithTaxonomy = Prisma.PackGetPayload<{ include: typeof packTaxonomyInclude }>;
 
+export interface CatalogCurrentVersion {
+  packVersion: string;
+  protocolVersion: number;
+}
+
+export type PackWithCatalogVersion = PackWithTaxonomy & {
+  currentVersion: CatalogCurrentVersion | null;
+};
+
 @Injectable()
 export class CatalogRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  listPublishedPacks(query: ListPublishedPacksQuery): Promise<PackWithTaxonomy[]> {
+  async listPublishedPacks(query: ListPublishedPacksQuery): Promise<PackWithCatalogVersion[]> {
     const where: Prisma.PackWhereInput = {
       status: 'published',
     };
@@ -40,17 +49,57 @@ export class CatalogRepository {
       where.title = { contains: keyword, mode: 'insensitive' };
     }
 
-    return this.prisma.pack.findMany({
+    const packs = await this.prisma.pack.findMany({
       where,
       orderBy: { updatedAt: 'desc' },
       include: packTaxonomyInclude,
     });
+
+    return this.attachCurrentVersions(packs);
   }
 
-  findPublishedPackById(packId: string): Promise<PackWithTaxonomy | null> {
-    return this.prisma.pack.findFirst({
-      where: { packId, status: 'published' },
-      include: packTaxonomyInclude,
+  findPublishedPackById(packId: string): Promise<PackWithCatalogVersion | null> {
+    return this.prisma.pack
+      .findFirst({
+        where: { packId, status: 'published' },
+        include: packTaxonomyInclude,
+      })
+      .then(async (pack) => {
+        if (!pack) {
+          return null;
+        }
+        const [withVersion] = await this.attachCurrentVersions([pack]);
+        return withVersion ?? null;
+      });
+  }
+
+  private async attachCurrentVersions(
+    packs: PackWithTaxonomy[],
+  ): Promise<PackWithCatalogVersion[]> {
+    const versionIds = packs
+      .map((pack) => pack.currentVersionId)
+      .filter((id): id is string => Boolean(id));
+
+    if (versionIds.length === 0) {
+      return packs.map((pack) => ({ ...pack, currentVersion: null }));
+    }
+
+    const versions = await this.prisma.packVersion.findMany({
+      where: { id: { in: versionIds }, status: 'published' },
+      select: { id: true, packVersion: true, protocolVersion: true },
+    });
+    const versionById = new Map(versions.map((version) => [version.id, version]));
+
+    return packs.map((pack) => {
+      const current = pack.currentVersionId
+        ? (versionById.get(pack.currentVersionId) ?? null)
+        : null;
+      return {
+        ...pack,
+        currentVersion: current
+          ? { packVersion: current.packVersion, protocolVersion: current.protocolVersion }
+          : null,
+      };
     });
   }
 }

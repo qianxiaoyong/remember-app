@@ -28,6 +28,17 @@ export function AdminLoginPage() {
         <Typography variant="body2" color="text.secondary">
           内部管理系统
         </Typography>
+        {import.meta.env.DEV ? (
+          <Typography
+            variant="caption"
+            color="text.secondary"
+            sx={{ display: 'block', mt: 2, lineHeight: 1.6, textAlign: 'left' }}
+          >
+            本地 staging 验收：用户名 <strong>admin</strong>，密码{' '}
+            <strong>local-test-password</strong>（与 infra/prod/.env 中 ADMIN_BOOTSTRAP_* 一致）。
+            若仍失败，请清空浏览器自动填充后手动输入。
+          </Typography>
+        ) : null}
       </Box>
       <LoginForm />
     </Login>

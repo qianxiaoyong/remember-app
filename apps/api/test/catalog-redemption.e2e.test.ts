@@ -93,12 +93,22 @@ describe('catalog and redemption integration', () => {
     const body = catalogPackDetailSchema.parse(response.body);
     expect(body.samplePreviews.length).toBeGreaterThanOrEqual(1);
     expect(body.isBundledTestPack).toBe(true);
+    expect(body.currentPackVersion).toBe('1.0.0');
+    expect(body.protocolVersion).toBe(1);
   });
 
   it('GET /catalog/packs/missing 返回 404', async () => {
     const server = app.getHttpServer() as Parameters<typeof request>[0];
     const response = await request(server).get('/api/v1/catalog/packs/missing-pack').expect(404);
     expect(response.body).toMatchObject({ code: 'PACK_NOT_FOUND' });
+  });
+
+  it('GET /app/release 未配置时返回 404', async () => {
+    delete process.env.APP_RELEASE_MIN_ANDROID_VERSION;
+    delete process.env.APP_RELEASE_LATEST_APK_URL;
+    const server = app.getHttpServer() as Parameters<typeof request>[0];
+    const response = await request(server).get('/api/v1/app/release').expect(404);
+    expect(response.body).toMatchObject({ code: 'APP_RELEASE_NOT_CONFIGURED' });
   });
 
   it('POST /redemption/redeem 未登录返回 401', async () => {

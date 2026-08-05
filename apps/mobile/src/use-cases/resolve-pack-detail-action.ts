@@ -1,12 +1,19 @@
 import { readSessionToken } from '../data/session/session-store';
 import { fetchMyPackAccess } from '../data/api/pack-access-api';
 import { ApiNetworkError, ApiRequestError } from '../data/api/api-client';
+import { isPackVersionOlder } from '@remember/domain';
 
 export type PackAccessResolution =
   { status: 'granted' } | { status: 'denied' } | { status: 'unknown'; reason: 'network' | 'auth' };
 
 export type PackDetailActionKind =
-  'purchase' | 'download' | 'install' | 'start_study' | 'continue_study' | 'retry_access';
+  | 'purchase'
+  | 'download'
+  | 'install'
+  | 'update'
+  | 'start_study'
+  | 'continue_study'
+  | 'retry_access';
 
 export interface ResolvedPackDetailAction {
   hasPackAccess: boolean;
@@ -39,9 +46,27 @@ export async function resolvePackAccess(packId: string): Promise<PackAccessResol
 
 export function resolveDetailAction(input: {
   isInstalled: boolean;
+  installedPackVersion?: string;
+  catalogPackVersion?: string;
   packAccess: PackAccessResolution;
   isBundledTestPack: boolean;
 }): ResolvedPackDetailAction {
+  const hasGrantedAccess = input.packAccess.status === 'granted' || input.isBundledTestPack;
+  const needsUpdate =
+    input.isInstalled &&
+    input.installedPackVersion &&
+    input.catalogPackVersion &&
+    isPackVersionOlder(input.installedPackVersion, input.catalogPackVersion);
+
+  if (needsUpdate && hasGrantedAccess) {
+    return {
+      hasPackAccess: true,
+      packAccessUnavailable: false,
+      actionKind: 'update',
+      actionLabel: '更新',
+    };
+  }
+
   if (input.isInstalled) {
     return {
       hasPackAccess: input.packAccess.status === 'granted',
