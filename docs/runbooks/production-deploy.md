@@ -6,6 +6,7 @@
 
 相关文档：
 
+- [Staging API 零基础逐步部署](./deploy-staging-api-beginner.md)
 - [介绍站部署](./deploy-remember-site.md)
 - [本地 API Docker 开发](./local-api-docker-dev.md)
 - [PostgreSQL 备份恢复](./postgres-backup-restore.md)

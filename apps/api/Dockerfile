@@ -43,6 +43,6 @@ COPY --from=build /app/apps/api/package.json ./apps/api/package.json
 COPY --from=build /app/package.json ./package.json
 COPY --from=build /app/pnpm-workspace.yaml ./pnpm-workspace.yaml
 COPY infra/prod/docker-entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+RUN sed -i 's/\r$//' /entrypoint.sh && chmod +x /entrypoint.sh
 EXPOSE 3000
 ENTRYPOINT ["/entrypoint.sh"]
