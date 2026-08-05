@@ -162,7 +162,7 @@
 5. **回归**（杀进程、弱网、320dp、系统字体放大）
 6. **发布签字**（谁批准、哪一 git tag、哪一镜像 digest）
 
-产出：`docs/runbooks/release-candidate-checklist.md`（可打印/复制到 issue）。
+产出：[release-candidate-checklist.md](../runbooks/release-candidate-checklist.md)（可打印/复制到 issue）。**已交付**；P0 真机勾选待统一验收。
 
 ## 12. 建议实施顺序（给单人开发者）
 

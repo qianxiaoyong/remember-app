@@ -12,11 +12,11 @@
         }
       },
       "reveal": {
-        "definitions": [{ "text": "图片；照片", "pos": "n." }],
+        "definitions": [{ "text": "图片；照片（v1.0.1 验收包）", "pos": "n." }],
         "examples": [
           {
             "en": "She drew a picture.",
-            "zh": "她画了一幅画。"
+            "zh": "她画了一幅漂亮的画。"
           }
         ],
         "mnemonic": {
