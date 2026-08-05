@@ -79,6 +79,7 @@ curl -I https://remember.wehub.top/privacy.html
 - 返回 `200`，证书有效
 - 首页可看到应用名「记得」、功能说明与图标
 - 隐私政策页可打开
+- 页脚展示 **闽ICP备2026029361号-1**，链接至 `https://beian.miit.gov.cn/`
 - 联系邮箱链接正确
 
 ---
@@ -106,5 +107,7 @@ curl -I https://remember.wehub.top/privacy.html
 
 ## 7. 相关文档
 
+- [零基础逐步部署（OrcaTerm + Caddy）](./deploy-remember-site-beginner.md)
+- [生产 / Staging 全栈部署](./production-deploy.md)
 - [ADR 0004：Android 身份与签名](../decisions/0004-android-app-identity-and-signing.md)
 - [Android Release 构建指南（Windows）](./android-release-build-windows.md)
