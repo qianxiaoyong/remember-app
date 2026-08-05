@@ -56,11 +56,11 @@
 
 ## 5. 推荐子计划（实施前逐份写细节）
 
-| 顺序 | 文件名（待创建）                               | 交付                                                                                          | 估重             |
-| ---- | ---------------------------------------------- | --------------------------------------------------------------------------------------------- | ---------------- |
-| 1    | `2026-08-04-phase8-pack-and-app-update.md`     | 验证 pack 版本更新/回退；APK 最低版本与 `protocolVersion` 强制策略（若缺则最小 API）；RC 用例 | 轻               |
-| 2    | `2026-08-04-phase8-production-deployment.md`   | 生产 Compose + Caddy；env 校验；COS 私有桶接 Admin 发版；`pg_dump` 备份脚本                   | 中               |
-| 3    | `2026-08-04-phase8-release-candidate-check.md` | RC 勾选清单 — [runbook 已交付](../runbooks/release-candidate-checklist.md) | 轻 |
+| 顺序 | 文件名（待创建）                               | 交付                                                                                          | 估重 |
+| ---- | ---------------------------------------------- | --------------------------------------------------------------------------------------------- | ---- |
+| 1    | `2026-08-04-phase8-pack-and-app-update.md`     | 验证 pack 版本更新/回退；APK 最低版本与 `protocolVersion` 强制策略（若缺则最小 API）；RC 用例 | 轻   |
+| 2    | `2026-08-04-phase8-production-deployment.md`   | 生产 Compose + Caddy；env 校验；COS 私有桶接 Admin 发版；`pg_dump` 备份脚本                   | 中   |
+| 3    | `2026-08-04-phase8-release-candidate-check.md` | RC 勾选清单 — [runbook 已交付](../runbooks/release-candidate-checklist.md)                    | 轻   |
 
 **依赖：** 2 可先于 1 搭骨架（空 API 也能起）；**RC（3）必须 1+2 可跑**。  
 **并行 Pause：** 真实微信支付（Pause C/D）仅影响 RC 清单中「真实付/退」几行，不阻塞 Compose/COS/备份。
