@@ -402,34 +402,217 @@ docker compose --project-name remember-staging \
 | 8 | `od$ cp` 报错 | 粘贴多了 shell 提示符字符 | 只输入 `cp .env.staging .env` |
 | 9 | 容器内 `wget`/`ps` 不存在 | API 镜像为 slim | 用 `node -e "fetch(...)"` |
 | 10 | 混淆 `PORT` 与 `API_HOST_PORT` | 映射 3001→3000，进程听 3000 | `PORT=3000`，`API_HOST_PORT=3001` |
+| 11 | `corepack enable` EACCES | 需写 `/usr/bin` | 使用 **`sudo corepack enable`** |
+| 12 | 浏览器访问 API 根路径 404 | API 无 `GET /` | 访问 `/api/v1/health`；404 JSON 仍说明 API 在线 |
 
 ---
 
 ## 6. 验收清单
 
-- [ ] DNS：`api.staging.remember.wehub.top` → 公网 IP
+- [ ] DNS：`api.staging.remember.wehub.top`、`admin.staging.remember.wehub.top` → 公网 IP
 - [ ] `docker compose ps`：api `Up`，postgres `healthy`
 - [ ] `curl http://127.0.0.1:3001/api/v1/health` → `{"status":"ok"}`
 - [ ] `curl https://api.staging.remember.wehub.top/api/v1/health` → `{"status":"ok"}`
+- [ ] 浏览器访问 `https://api.staging.remember.wehub.top/` 得 404 JSON → **正常**（API 无首页，须访问 `/api/v1/...`）
+- [ ] seed 输出全 `ok`（管理员 + 兑换码 + 目录 pack）
+- [ ] `https://admin.staging.remember.wehub.top` 可登录 Admin
 - [ ] 腾讯云防火墙：**未**对公网开放 3001、5432
 - [ ] `.env.staging` / `.env` 已离线备份，**未**提交 Git
 
 ---
 
-## 7. 本阶段完成后：建议下一步
+## 7. 阶段 I：seed（初始化数据库）
 
-| 顺序 | 任务 | 文档 |
-|------|------|------|
-| 1 | **seed** 管理员 + 测试兑换码 + 目录 pack | [production-deploy.md §5.3](./production-deploy.md) |
-| 2 | 构建并部署 **Admin** → `admin.staging.remember.wehub.top` | [production-deploy.md §6–§7](./production-deploy.md) |
-| 3 | 手机 APK 指向 staging API 联调 | [production-deploy.md §8](./production-deploy.md) |
-| 4 | RC 勾选清单验收 | [release-candidate-checklist.md](./release-candidate-checklist.md) |
+**何时做：** Staging API 首次启动成功后 **做一次**；重复执行会 upsert，并**重置** bootstrap 管理员密码 hash。
 
-**seed 前置：** 服务器或本机需 `pnpm install` 后执行 `pnpm --filter @remember/api seed:dev-bootstrap`（需能连上 staging 的 Postgres 容器 IP，详见 production-deploy §5.3）。
+### 7.1 安装 Node 22 + pnpm（服务器一次性）
+
+```bash
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+sudo apt install -y nodejs
+node --version    # 期望 v22.x
+sudo corepack enable
+sudo corepack prepare pnpm@10.33.2 --activate
+pnpm --version    # 期望 10.33.2
+```
+
+| 命令 | 中文解释 |
+|------|----------|
+| `sudo corepack enable` | corepack 要写 `/usr/bin`，**必须 sudo**（普通用户会 EACCES） |
+
+### 7.2 安装 API 依赖
+
+```bash
+cd /opt/remember-app
+pnpm install --frozen-lockfile --filter @remember/api...
+```
+
+约 5～10 分钟。若提示 `Ignored build scripts`，seed 前需手动 `prisma generate`（见下）。
+
+### 7.3 执行 seed
+
+```bash
+cd /opt/remember-app
+set -a && source infra/prod/.env.staging && set +a
+
+PG_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' remember-staging-postgres-1)
+export DATABASE_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${PG_IP}:5432/${POSTGRES_DB}"
+
+pnpm --filter @remember/api exec prisma generate
+pnpm --filter @remember/api seed:dev-bootstrap
+```
+
+**期望输出：**
+
+```text
+ok dev catalog packs
+ok admin user admin
+ok version remember-test-pack @ 1.0.0
+ok version demo-primary-grade3 @ 1.0.0
+ok code TEST-REDEEM-001
+ok code TEST-REDEEM-GRADE3
+```
+
+**写入内容：**
+
+| 项 | 值 |
+|----|-----|
+| 管理员登录名 | `.env.staging` 中 `ADMIN_BOOTSTRAP_LOGIN_NAME`（如 `admin`） |
+| 管理员密码 | `.env.staging` 中 `ADMIN_BOOTSTRAP_PASSWORD` |
+| 测试兑换码 | `TEST-REDEEM-001`、`TEST-REDEEM-GRADE3` |
 
 ---
 
-## 8. 日常运维
+## 8. 阶段 J：部署 Admin 后台
+
+Admin 是 **SPA 静态站**，在 **Windows 本机构建**，上传到服务器，由 Caddy 托管；`/api/*` 反代到 Staging API。
+
+正式 URL：`https://admin.staging.remember.wehub.top`
+
+### 8.1 本机构建（Windows PowerShell）
+
+```powershell
+cd d:\AIcoder\remember-app
+pnpm --filter @remember/admin build
+```
+
+产物目录：`apps/admin/dist/`（含 `index.html`、`assets/`）。
+
+| 命令 | 中文解释 |
+|------|----------|
+| `pnpm --filter @remember/admin build` | 只编译 Admin，输出静态文件 |
+
+**通常无需** 设置 `VITE_API_BASE_URL`：Caddy 会把 Admin 域名下的 `/api/*` 转到本机 `127.0.0.1:3001`。
+
+### 8.2 上传到服务器
+
+**创建目录：**
+
+```bash
+sudo mkdir -p /srv/remember-admin-staging
+sudo chown -R ubuntu:ubuntu /srv/remember-admin-staging
+```
+
+**OrcaTerm 文件管理：** 进入 `/srv/remember-admin-staging`，上传 `apps/admin/dist/` **内的** `index.html` 与 `assets/`（不要多套一层 `dist` 文件夹）。
+
+**验证：**
+
+```bash
+ls -la /srv/remember-admin-staging/
+```
+
+### 8.3 配置 Caddy
+
+```bash
+sudo nano /etc/caddy/Caddyfile
+```
+
+在末尾追加：
+
+```caddy
+admin.staging.remember.wehub.top {
+	encode gzip
+
+	handle /api/* {
+		reverse_proxy 127.0.0.1:3001
+	}
+
+	handle {
+		root * /srv/remember-admin-staging
+		try_files {path} /index.html
+		file_server
+	}
+}
+```
+
+```bash
+sudo systemctl reload caddy
+```
+
+| 配置 | 中文解释 |
+|------|----------|
+| `handle /api/*` | Admin 页面发起的 API 请求走 Staging API |
+| `try_files ... /index.html` | 前端路由刷新不 404 |
+
+### 8.4 验收
+
+1. 打开 `https://admin.staging.remember.wehub.top`
+2. 使用 seed 的管理员账号登录
+3. 应看到「运营驾驶舱」；知识库状态可显示已上架 pack
+
+### 8.5 以后只改 Admin 时
+
+```powershell
+# 本机
+pnpm --filter @remember/admin build
+```
+
+OrcaTerm 覆盖上传 `/srv/remember-admin-staging/` → **不用** 重启 Caddy 或 Docker。
+
+---
+
+## 9. 「手机 APK 指向 staging 联调」是什么？
+
+**不是正式上线（prod）**，也 **不强制** 先完善所有 App 功能。
+
+| 概念 | 含义 |
+|------|------|
+| **Staging 联调** | 在你自己的 Android 手机上装 **测试 APK**，让 App 连接 `https://api.staging.remember.wehub.top`，真人走一遍：登录 → 兑换码 → 下载包 → 学习 |
+| **目的** | 验证「手机 ↔ 云端 API ↔ 数据库 ↔ 下载链」是否打通；发现真机专属问题（网络、证书、权限等） |
+| **与完善 App 的关系** | 可并行：未完善的功能先跳过或记 backlog；已完成的链路应先联调，避免 prod 才第一次真机测 |
+| **正式上线（prod）** | 另搭 `remember-prod`、`.env.prod`、`api.remember.wehub.top` 等；Staging 全绿 + RC 清单后再做 |
+
+**Staging 联调最小步骤（概要）：**
+
+1. 本机构建 APK，构建参数：`EXPO_PUBLIC_API_BASE_URL=https://api.staging.remember.wehub.top`
+2. 安装到手机
+3. 登录：验证码 **`000000`**（`SMS_MOCK_ENABLED=true`）
+4. 兑换码：**`TEST-REDEEM-001`**
+5. 下载并打开学习包
+
+详见 [production-deploy.md §8](./production-deploy.md)、[android-release-build-windows.md](./android-release-build-windows.md)、[release-candidate-checklist.md](./release-candidate-checklist.md)。
+
+**建议顺序：**
+
+```text
+Staging 后端 + Admin（你已完成）
+    → 手机 Staging 联调（验证主链路，约 1～2 小时）
+    → 并行完善 App 功能
+    → RC 清单勾选
+    → 再批准上 prod（不是现在）
+```
+
+---
+
+## 10. 日常运维（按改动类型）
+
+| 改动 | 操作 |
+|------|------|
+| 仅 Admin | 本机 `pnpm --filter @remember/admin build` → 上传 `/srv/remember-admin-staging/` |
+| 仅 API | 更新 `/opt/remember-app` → `sed` 换行符（若 zip 上传）→ `$DC up -d --build api` |
+| 仅介绍站 | 上传 `/srv/remember-site/` |
+| 改 `.env.staging` | 编辑 → `cp .env.staging .env` → `$DC up -d --force-recreate api` |
+| 改 Caddy | `nano /etc/caddy/Caddyfile` → `systemctl reload caddy` |
 
 **查看 API 日志：**
 
@@ -440,24 +623,12 @@ docker compose --project-name remember-staging \
   --file infra/prod/compose.yaml logs -f api
 ```
 
-**更新代码后重新部署：**
-
-1. 本机重新 `git archive` 并上传覆盖 `/opt/remember-app`（或 `git pull`）
-2. `sed -i 's/\r$//' infra/prod/docker-entrypoint.sh`（若从 Windows 上传）
-3. `docker compose ... up -d --build api`
-
-**改 `.env` 后：**
-
-```bash
-cp .env.staging .env
-docker compose ... up -d --force-recreate api
-```
-
 ---
 
-## 9. 相关文档
+## 11. 相关文档
 
 - [deploy-remember-site-beginner.md](./deploy-remember-site-beginner.md) — 介绍站
-- [production-deploy.md](./production-deploy.md) — 全栈 runbook（Admin、seed、prod）
+- [production-deploy.md](./production-deploy.md) — 全栈 runbook（prod、COS、RC）
 - [local-api-docker-dev.md](./local-api-docker-dev.md) — 本机 Docker 开发
+- [android-release-build-windows.md](./android-release-build-windows.md) — APK 构建
 - [release-candidate-checklist.md](./release-candidate-checklist.md) — RC 验收
