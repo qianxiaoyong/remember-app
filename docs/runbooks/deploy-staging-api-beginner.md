@@ -191,22 +191,22 @@ nano .env.staging
 
 **必填项对照表：**
 
-| 变量                         | Staging 填法                                            |
-| ---------------------------- | ------------------------------------------------------- |
-| `COMPOSE_PROJECT_NAME`       | `remember-staging`                                      |
-| `POSTGRES_PASSWORD`          | 上一步生成的密码                                        |
-| `API_HOST_PORT`              | **`3001`**                                              |
-| `PORT`                       | **`3000`**（容器内监听，勿与上一行混淆）                |
-| `DATABASE_URL`               | `postgresql://remember:同上密码@postgres:5432/remember` |
-| `NODE_ENV`                   | `staging`                                               |
-| `API_PUBLIC_BASE_URL`        | `https://api.staging.remember.wehub.top`                |
-| 三个 `*_PEPPER`              | 上一步生成的 hex                                        |
-| `SMS_MOCK_ENABLED`           | `true`                                                  |
-| `WECHAT_PAY_MOCK_ENABLED`    | `true`                                                  |
-| `PACK_DOWNLOAD_MOCK_ENABLED` | `true`                                                  |
-| `COS_ENABLED`                | `false`                                                 |
-| `ADMIN_BOOTSTRAP_LOGIN_NAME` | 自定，如 `admin`                                        |
-| `ADMIN_BOOTSTRAP_PASSWORD`   | 自定强密码（牢记，Admin 登录用）                        |
+| 变量                         | Staging 填法                                                                               |
+| ---------------------------- | ------------------------------------------------------------------------------------------ |
+| `COMPOSE_PROJECT_NAME`       | `remember-staging`                                                                         |
+| `POSTGRES_PASSWORD`          | 上一步生成的密码                                                                           |
+| `API_HOST_PORT`              | **`3001`**                                                                                 |
+| `PORT`                       | **`3000`**（容器内监听，勿与上一行混淆）                                                   |
+| `DATABASE_URL`               | `postgresql://remember:PASSWORD@postgres:5432/remember`（PASSWORD 换为 POSTGRES_PASSWORD） |
+| `NODE_ENV`                   | `staging`                                                                                  |
+| `API_PUBLIC_BASE_URL`        | `https://api.staging.remember.wehub.top`                                                   |
+| 三个 `*_PEPPER`              | 上一步生成的 hex                                                                           |
+| `SMS_MOCK_ENABLED`           | `true`                                                                                     |
+| `WECHAT_PAY_MOCK_ENABLED`    | `true`                                                                                     |
+| `PACK_DOWNLOAD_MOCK_ENABLED` | `true`                                                                                     |
+| `COS_ENABLED`                | `false`                                                                                    |
+| `ADMIN_BOOTSTRAP_LOGIN_NAME` | 自定，如 `admin`                                                                           |
+| `ADMIN_BOOTSTRAP_PASSWORD`   | 自定强密码（牢记，Admin 登录用）                                                           |
 
 保存：`Ctrl+O` → Enter → `Ctrl+X`。
 
