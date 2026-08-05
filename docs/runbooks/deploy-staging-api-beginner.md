@@ -31,27 +31,27 @@ Staging API 是 **测试环境后端**：同一台服务器上跑 **PostgreSQL +
     └─────────────────────┘
 ```
 
-| 组件 | 作用 |
-|------|------|
-| **DNS** | `api.staging.remember.wehub.top` → 服务器公网 IP |
-| **Docker Compose** | 一键启动 API + 数据库两个容器 |
-| **`.env.staging`** | 密码、pepper、mock 开关等（**不进 Git**） |
-| **Caddy** | 公网 HTTPS → 本机 `127.0.0.1:3001` |
-| **`API_HOST_PORT=3001`** | 宿主机端口（给 Caddy 连） |
-| **`PORT=3000`** | 容器内 API 监听端口（**不要改成 3001**） |
+| 组件                     | 作用                                             |
+| ------------------------ | ------------------------------------------------ |
+| **DNS**                  | `api.staging.remember.wehub.top` → 服务器公网 IP |
+| **Docker Compose**       | 一键启动 API + 数据库两个容器                    |
+| **`.env.staging`**       | 密码、pepper、mock 开关等（**不进 Git**）        |
+| **Caddy**                | 公网 HTTPS → 本机 `127.0.0.1:3001`               |
+| **`API_HOST_PORT=3001`** | 宿主机端口（给 Caddy 连）                        |
+| **`PORT=3000`**          | 容器内 API 监听端口（**不要改成 3001**）         |
 
 ---
 
 ## 2. 部署前准备
 
-| 项 | 要求 |
-|----|------|
-| 介绍站 | 已部署（可选，但建议先完成） |
-| ICP 备案 | 大陆 HTTPS 需要 |
-| 服务器 | 建议 2 vCPU / 4 GB+；已装 **Docker**、**Caddy** |
-| 防火墙 | 公网仅 **80 / 443**；**不要**把 3001、5432 暴露到公网 |
-| 本地 Windows | 有完整仓库；用于 `git archive` 打 zip |
-| 登录方式 | 腾讯云 **OrcaTerm**（网页终端 + 文件上传） |
+| 项           | 要求                                                  |
+| ------------ | ----------------------------------------------------- |
+| 介绍站       | 已部署（可选，但建议先完成）                          |
+| ICP 备案     | 大陆 HTTPS 需要                                       |
+| 服务器       | 建议 2 vCPU / 4 GB+；已装 **Docker**、**Caddy**       |
+| 防火墙       | 公网仅 **80 / 443**；**不要**把 3001、5432 暴露到公网 |
+| 本地 Windows | 有完整仓库；用于 `git archive` 打 zip                 |
+| 登录方式     | 腾讯云 **OrcaTerm**（网页终端 + 文件上传）            |
 
 ### 2.1 OrcaTerm 是什么？
 
@@ -67,10 +67,10 @@ Staging API 是 **测试环境后端**：同一台服务器上跑 **PostgreSQL +
 
 在 **DNSPod → wehub.top → 权威解析** 新增 **2 条 A 记录**：
 
-| 主机记录 | 类型 | 记录值 |
-|----------|------|--------|
-| `api.staging.remember` | A | 服务器公网 IP（如 `124.222.186.13`） |
-| `admin.staging.remember` | A | 同上（Admin 下一阶段用） |
+| 主机记录                 | 类型 | 记录值                               |
+| ------------------------ | ---- | ------------------------------------ |
+| `api.staging.remember`   | A    | 服务器公网 IP（如 `124.222.186.13`） |
+| `admin.staging.remember` | A    | 同上（Admin 下一阶段用）             |
 
 完整域名示例：`api.staging.remember.wehub.top`
 
@@ -96,9 +96,9 @@ docker compose version
 
 期望：Docker 24+、Compose v2.x。
 
-| 命令 | 中文解释 |
-|------|----------|
-| `docker --version` | 查看 Docker 引擎版本 |
+| 命令                     | 中文解释                                                                   |
+| ------------------------ | -------------------------------------------------------------------------- |
+| `docker --version`       | 查看 Docker 引擎版本                                                       |
 | `docker compose version` | 查看 Compose 插件版本（V2 用 `docker compose`，不是旧版 `docker-compose`） |
 
 ---
@@ -139,10 +139,10 @@ ls /opt/remember-app/infra/prod/
 
 应看到 `compose.yaml`、`.env.example` 等。
 
-| 命令 | 中文解释 |
-|------|----------|
-| `git archive` | 只打包 Git 跟踪的文件，不含 `node_modules` |
-| `unzip -o ... -d ...` | 解压并覆盖已有文件 |
+| 命令                  | 中文解释                                   |
+| --------------------- | ------------------------------------------ |
+| `git archive`         | 只打包 Git 跟踪的文件，不含 `node_modules` |
+| `unzip -o ... -d ...` | 解压并覆盖已有文件                         |
 
 > **坑：** `git clone` 报 `Failed to connect to github.com port 443` → 用 zip 上传，不是配置写错。
 
@@ -158,10 +158,10 @@ newgrp docker
 docker ps
 ```
 
-| 命令 | 中文解释 |
-|------|----------|
-| `usermod -aG docker ubuntu` | 把用户加入 `docker` 组 |
-| `newgrp docker` | 当前会话立即生效（否则需重新登录 OrcaTerm） |
+| 命令                        | 中文解释                                    |
+| --------------------------- | ------------------------------------------- |
+| `usermod -aG docker ubuntu` | 把用户加入 `docker` 组                      |
+| `newgrp docker`             | 当前会话立即生效（否则需重新登录 OrcaTerm） |
 
 仍不行则 **关闭 OrcaTerm 重新登录**，或临时 `sudo docker compose ...`（不推荐长期）。
 
@@ -191,22 +191,22 @@ nano .env.staging
 
 **必填项对照表：**
 
-| 变量 | Staging 填法 |
-|------|----------------|
-| `COMPOSE_PROJECT_NAME` | `remember-staging` |
-| `POSTGRES_PASSWORD` | 上一步生成的密码 |
-| `API_HOST_PORT` | **`3001`** |
-| `PORT` | **`3000`**（容器内监听，勿与上一行混淆） |
-| `DATABASE_URL` | `postgresql://remember:同上密码@postgres:5432/remember` |
-| `NODE_ENV` | `staging` |
-| `API_PUBLIC_BASE_URL` | `https://api.staging.remember.wehub.top` |
-| 三个 `*_PEPPER` | 上一步生成的 hex |
-| `SMS_MOCK_ENABLED` | `true` |
-| `WECHAT_PAY_MOCK_ENABLED` | `true` |
-| `PACK_DOWNLOAD_MOCK_ENABLED` | `true` |
-| `COS_ENABLED` | `false` |
-| `ADMIN_BOOTSTRAP_LOGIN_NAME` | 自定，如 `admin` |
-| `ADMIN_BOOTSTRAP_PASSWORD` | 自定强密码（牢记，Admin 登录用） |
+| 变量                         | Staging 填法                                            |
+| ---------------------------- | ------------------------------------------------------- |
+| `COMPOSE_PROJECT_NAME`       | `remember-staging`                                      |
+| `POSTGRES_PASSWORD`          | 上一步生成的密码                                        |
+| `API_HOST_PORT`              | **`3001`**                                              |
+| `PORT`                       | **`3000`**（容器内监听，勿与上一行混淆）                |
+| `DATABASE_URL`               | `postgresql://remember:同上密码@postgres:5432/remember` |
+| `NODE_ENV`                   | `staging`                                               |
+| `API_PUBLIC_BASE_URL`        | `https://api.staging.remember.wehub.top`                |
+| 三个 `*_PEPPER`              | 上一步生成的 hex                                        |
+| `SMS_MOCK_ENABLED`           | `true`                                                  |
+| `WECHAT_PAY_MOCK_ENABLED`    | `true`                                                  |
+| `PACK_DOWNLOAD_MOCK_ENABLED` | `true`                                                  |
+| `COS_ENABLED`                | `false`                                                 |
+| `ADMIN_BOOTSTRAP_LOGIN_NAME` | 自定，如 `admin`                                        |
+| `ADMIN_BOOTSTRAP_PASSWORD`   | 自定强密码（牢记，Admin 登录用）                        |
 
 保存：`Ctrl+O` → Enter → `Ctrl+X`。
 
@@ -216,10 +216,10 @@ nano .env.staging
 cp .env.staging .env
 ```
 
-| 命令 | 中文解释 |
-|------|----------|
+| 命令                   | 中文解释                               |
+| ---------------------- | -------------------------------------- |
 | `cp .env.staging .env` | Compose 里 `env_file: .env` 指向此文件 |
-| `nano` | 服务器上的文本编辑器 |
+| `nano`                 | 服务器上的文本编辑器                   |
 
 > **坑 1：** `DATABASE_URL=DATABASE_URL=postgresql://...` 多写一遍变量名 → Prisma 报 `URL must start with postgresql://`。只保留 **一个** `DATABASE_URL=`。  
 > **坑 2：** 行首多空格（` PORT=3000`）→ Docker 可能读不到变量。每行应 **`KEY=value` 顶格写**。  
@@ -250,12 +250,12 @@ docker compose --project-name remember-staging \
   --file infra/prod/compose.yaml up -d --build
 ```
 
-| 参数 | 中文解释 |
-|------|----------|
-| `--project-name remember-staging` | 容器/网络/卷前缀，与 prod 隔离 |
+| 参数                                 | 中文解释                              |
+| ------------------------------------ | ------------------------------------- |
+| `--project-name remember-staging`    | 容器/网络/卷前缀，与 prod 隔离        |
 | `--env-file infra/prod/.env.staging` | 供 Compose 替换 `${API_HOST_PORT}` 等 |
-| `--file infra/prod/compose.yaml` | 服务定义（postgres + api） |
-| `up -d --build` | 后台启动并构建 API 镜像 |
+| `--file infra/prod/compose.yaml`     | 服务定义（postgres + api）            |
+| `up -d --build`                      | 后台启动并构建 API 镜像               |
 
 仅重建 API：
 
@@ -311,12 +311,12 @@ docker compose --project-name remember-staging \
 
 期望含：`Nest application successfully started`。
 
-| 命令 | 中文解释 |
-|------|----------|
-| `curl -s` | 静默模式，只输出 body |
-| `-w "\nHTTP_CODE:%{http_code}\n"` | 额外打印 HTTP 状态码 |
-| `HTTP_CODE:000` | **完全连不上**（多等一会或见下方坑） |
-| `exec api node -e ...` | 在 api 容器内执行 Node 一行脚本 |
+| 命令                              | 中文解释                             |
+| --------------------------------- | ------------------------------------ |
+| `curl -s`                         | 静默模式，只输出 body                |
+| `-w "\nHTTP_CODE:%{http_code}\n"` | 额外打印 HTTP 状态码                 |
+| `HTTP_CODE:000`                   | **完全连不上**（多等一会或见下方坑） |
+| `exec api node -e ...`            | 在 api 容器内执行 Node 一行脚本      |
 
 > **坑：** 容器刚 `Started` 立刻 curl → `HTTP_CODE:000`，API 还在迁移数据库。等半分钟再试。  
 > **坑：** `curl -s` 返回 `{"status":"ok"}` 但和提示符粘在一行，是 **JSON 末尾无换行**，不是失败。  
@@ -355,28 +355,28 @@ curl -s https://api.staging.remember.wehub.top/api/v1/health
 
 期望：`{"status":"ok"}`。
 
-| 配置 | 中文解释 |
-|------|----------|
+| 配置                           | 中文解释                             |
+| ------------------------------ | ------------------------------------ |
 | `reverse_proxy 127.0.0.1:3001` | HTTPS 请求转发到本机 Docker 映射端口 |
-| `127.0.0.1` | 仅本机可直连 API，公网必须走 Caddy |
+| `127.0.0.1`                    | 仅本机可直连 API，公网必须走 Caddy   |
 
 ---
 
 ## 4. 命令速查表
 
-| 命令 | 在哪里 | 一句话 |
-|------|--------|--------|
-| `nslookup api.staging.remember.wehub.top` | 服务器 | 验证 DNS |
-| `git archive -o remember-app.zip BRANCH` | 本机 | 打包源码 |
-| `sed -i 's/\r$//' infra/prod/docker-entrypoint.sh` | 服务器 | 修复 CRLF |
-| `cp .env.example .env.staging` | 服务器 | 创建环境配置 |
-| `cp .env.staging .env` | 服务器 | 给 Compose api 服务用 |
-| `docker compose ... up -d --build` | 服务器 | 构建并启动 |
-| `docker compose ... ps` | 服务器 | 查看容器状态 |
-| `docker compose ... logs api --tail 40` | 服务器 | 查看 API 日志 |
-| `curl -s http://127.0.0.1:3001/api/v1/health` | 服务器 | 本机健康检查 |
-| `curl -s https://api.staging.remember.wehub.top/api/v1/health` | 任意 | 公网健康检查 |
-| `sudo systemctl reload caddy` | 服务器 | 应用 Caddy 配置 |
+| 命令                                                           | 在哪里 | 一句话                |
+| -------------------------------------------------------------- | ------ | --------------------- |
+| `nslookup api.staging.remember.wehub.top`                      | 服务器 | 验证 DNS              |
+| `git archive -o remember-app.zip BRANCH`                       | 本机   | 打包源码              |
+| `sed -i 's/\r$//' infra/prod/docker-entrypoint.sh`             | 服务器 | 修复 CRLF             |
+| `cp .env.example .env.staging`                                 | 服务器 | 创建环境配置          |
+| `cp .env.staging .env`                                         | 服务器 | 给 Compose api 服务用 |
+| `docker compose ... up -d --build`                             | 服务器 | 构建并启动            |
+| `docker compose ... ps`                                        | 服务器 | 查看容器状态          |
+| `docker compose ... logs api --tail 40`                        | 服务器 | 查看 API 日志         |
+| `curl -s http://127.0.0.1:3001/api/v1/health`                  | 服务器 | 本机健康检查          |
+| `curl -s https://api.staging.remember.wehub.top/api/v1/health` | 任意   | 公网健康检查          |
+| `sudo systemctl reload caddy`                                  | 服务器 | 应用 Caddy 配置       |
 
 **完整 compose 前缀（后文缩写为 `$DC`）：**
 
@@ -390,20 +390,20 @@ docker compose --project-name remember-staging \
 
 ## 5. 踩坑汇总（本次实录）
 
-| # | 现象 | 原因 | 处理 |
-|---|------|------|------|
-| 1 | `git clone` 连接 GitHub 443 超时 | 国内服务器访问 GitHub 不稳定 | 本机 `git archive` + OrcaTerm 上传 zip |
-| 2 | `permission denied` docker.sock | ubuntu 不在 docker 组 | `usermod -aG docker ubuntu` + `newgrp docker` |
-| 3 | `exec /entrypoint.sh: no such file or directory` | `docker-entrypoint.sh` 为 CRLF | `sed -i 's/\r$//'` 后 `--build api` |
-| 4 | Prisma `URL must start with postgresql://` | `DATABASE_URL=DATABASE_URL=postgresql://...` 重复 | 改成单个 `DATABASE_URL=postgresql://...` |
-| 5 | `HTTP_CODE:000` | API 尚在 `prisma migrate`；或刚 recreate | 等 30～60 秒；看 `logs api` |
-| 6 | `curl -s`  seemingly 无输出 | 其实有 JSON，与 prompt 粘连 | 用 `curl -v` 或 `-w HTTP_CODE` |
-| 7 | 本机 nslookup 得 `198.18.0.x` | Clash fake-ip | 在**服务器**上 nslookup |
-| 8 | `od$ cp` 报错 | 粘贴多了 shell 提示符字符 | 只输入 `cp .env.staging .env` |
-| 9 | 容器内 `wget`/`ps` 不存在 | API 镜像为 slim | 用 `node -e "fetch(...)"` |
-| 10 | 混淆 `PORT` 与 `API_HOST_PORT` | 映射 3001→3000，进程听 3000 | `PORT=3000`，`API_HOST_PORT=3001` |
-| 11 | `corepack enable` EACCES | 需写 `/usr/bin` | 使用 **`sudo corepack enable`** |
-| 12 | 浏览器访问 API 根路径 404 | API 无 `GET /` | 访问 `/api/v1/health`；404 JSON 仍说明 API 在线 |
+| #   | 现象                                             | 原因                                              | 处理                                            |
+| --- | ------------------------------------------------ | ------------------------------------------------- | ----------------------------------------------- |
+| 1   | `git clone` 连接 GitHub 443 超时                 | 国内服务器访问 GitHub 不稳定                      | 本机 `git archive` + OrcaTerm 上传 zip          |
+| 2   | `permission denied` docker.sock                  | ubuntu 不在 docker 组                             | `usermod -aG docker ubuntu` + `newgrp docker`   |
+| 3   | `exec /entrypoint.sh: no such file or directory` | `docker-entrypoint.sh` 为 CRLF                    | `sed -i 's/\r$//'` 后 `--build api`             |
+| 4   | Prisma `URL must start with postgresql://`       | `DATABASE_URL=DATABASE_URL=postgresql://...` 重复 | 改成单个 `DATABASE_URL=postgresql://...`        |
+| 5   | `HTTP_CODE:000`                                  | API 尚在 `prisma migrate`；或刚 recreate          | 等 30～60 秒；看 `logs api`                     |
+| 6   | `curl -s` seemingly 无输出                       | 其实有 JSON，与 prompt 粘连                       | 用 `curl -v` 或 `-w HTTP_CODE`                  |
+| 7   | 本机 nslookup 得 `198.18.0.x`                    | Clash fake-ip                                     | 在**服务器**上 nslookup                         |
+| 8   | `od$ cp` 报错                                    | 粘贴多了 shell 提示符字符                         | 只输入 `cp .env.staging .env`                   |
+| 9   | 容器内 `wget`/`ps` 不存在                        | API 镜像为 slim                                   | 用 `node -e "fetch(...)"`                       |
+| 10  | 混淆 `PORT` 与 `API_HOST_PORT`                   | 映射 3001→3000，进程听 3000                       | `PORT=3000`，`API_HOST_PORT=3001`               |
+| 11  | `corepack enable` EACCES                         | 需写 `/usr/bin`                                   | 使用 **`sudo corepack enable`**                 |
+| 12  | 浏览器访问 API 根路径 404                        | API 无 `GET /`                                    | 访问 `/api/v1/health`；404 JSON 仍说明 API 在线 |
 
 ---
 
@@ -436,8 +436,8 @@ sudo corepack prepare pnpm@10.33.2 --activate
 pnpm --version    # 期望 10.33.2
 ```
 
-| 命令 | 中文解释 |
-|------|----------|
+| 命令                   | 中文解释                                                     |
+| ---------------------- | ------------------------------------------------------------ |
 | `sudo corepack enable` | corepack 要写 `/usr/bin`，**必须 sudo**（普通用户会 EACCES） |
 
 ### 7.2 安装 API 依赖
@@ -475,11 +475,11 @@ ok code TEST-REDEEM-GRADE3
 
 **写入内容：**
 
-| 项 | 值 |
-|----|-----|
+| 项           | 值                                                           |
+| ------------ | ------------------------------------------------------------ |
 | 管理员登录名 | `.env.staging` 中 `ADMIN_BOOTSTRAP_LOGIN_NAME`（如 `admin`） |
-| 管理员密码 | `.env.staging` 中 `ADMIN_BOOTSTRAP_PASSWORD` |
-| 测试兑换码 | `TEST-REDEEM-001`、`TEST-REDEEM-GRADE3` |
+| 管理员密码   | `.env.staging` 中 `ADMIN_BOOTSTRAP_PASSWORD`                 |
+| 测试兑换码   | `TEST-REDEEM-001`、`TEST-REDEEM-GRADE3`                      |
 
 ---
 
@@ -498,8 +498,8 @@ pnpm --filter @remember/admin build
 
 产物目录：`apps/admin/dist/`（含 `index.html`、`assets/`）。
 
-| 命令 | 中文解释 |
-|------|----------|
+| 命令                                  | 中文解释                   |
+| ------------------------------------- | -------------------------- |
 | `pnpm --filter @remember/admin build` | 只编译 Admin，输出静态文件 |
 
 **通常无需** 设置 `VITE_API_BASE_URL`：Caddy 会把 Admin 域名下的 `/api/*` 转到本机 `127.0.0.1:3001`。
@@ -549,10 +549,10 @@ admin.staging.remember.wehub.top {
 sudo systemctl reload caddy
 ```
 
-| 配置 | 中文解释 |
-|------|----------|
-| `handle /api/*` | Admin 页面发起的 API 请求走 Staging API |
-| `try_files ... /index.html` | 前端路由刷新不 404 |
+| 配置                        | 中文解释                                |
+| --------------------------- | --------------------------------------- |
+| `handle /api/*`             | Admin 页面发起的 API 请求走 Staging API |
+| `try_files ... /index.html` | 前端路由刷新不 404                      |
 
 ### 8.4 验收
 
@@ -575,12 +575,12 @@ OrcaTerm 覆盖上传 `/srv/remember-admin-staging/` → **不用** 重启 Caddy
 
 **不是正式上线（prod）**，也 **不强制** 先完善所有 App 功能。
 
-| 概念 | 含义 |
-|------|------|
-| **Staging 联调** | 在你自己的 Android 手机上装 **测试 APK**，让 App 连接 `https://api.staging.remember.wehub.top`，真人走一遍：登录 → 兑换码 → 下载包 → 学习 |
-| **目的** | 验证「手机 ↔ 云端 API ↔ 数据库 ↔ 下载链」是否打通；发现真机专属问题（网络、证书、权限等） |
-| **与完善 App 的关系** | 可并行：未完善的功能先跳过或记 backlog；已完成的链路应先联调，避免 prod 才第一次真机测 |
-| **正式上线（prod）** | 另搭 `remember-prod`、`.env.prod`、`api.remember.wehub.top` 等；Staging 全绿 + RC 清单后再做 |
+| 概念                  | 含义                                                                                                                                      |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| **Staging 联调**      | 在你自己的 Android 手机上装 **测试 APK**，让 App 连接 `https://api.staging.remember.wehub.top`，真人走一遍：登录 → 兑换码 → 下载包 → 学习 |
+| **目的**              | 验证「手机 ↔ 云端 API ↔ 数据库 ↔ 下载链」是否打通；发现真机专属问题（网络、证书、权限等）                                                 |
+| **与完善 App 的关系** | 可并行：未完善的功能先跳过或记 backlog；已完成的链路应先联调，避免 prod 才第一次真机测                                                    |
+| **正式上线（prod）**  | 另搭 `remember-prod`、`.env.prod`、`api.remember.wehub.top` 等；Staging 全绿 + RC 清单后再做                                              |
 
 **Staging 联调最小步骤（概要）：**
 
@@ -606,13 +606,13 @@ Staging 后端 + Admin（你已完成）
 
 ## 10. 日常运维（按改动类型）
 
-| 改动 | 操作 |
-|------|------|
-| 仅 Admin | 本机 `pnpm --filter @remember/admin build` → 上传 `/srv/remember-admin-staging/` |
-| 仅 API | 更新 `/opt/remember-app` → `sed` 换行符（若 zip 上传）→ `$DC up -d --build api` |
-| 仅介绍站 | 上传 `/srv/remember-site/` |
-| 改 `.env.staging` | 编辑 → `cp .env.staging .env` → `$DC up -d --force-recreate api` |
-| 改 Caddy | `nano /etc/caddy/Caddyfile` → `systemctl reload caddy` |
+| 改动              | 操作                                                                             |
+| ----------------- | -------------------------------------------------------------------------------- |
+| 仅 Admin          | 本机 `pnpm --filter @remember/admin build` → 上传 `/srv/remember-admin-staging/` |
+| 仅 API            | 更新 `/opt/remember-app` → `sed` 换行符（若 zip 上传）→ `$DC up -d --build api`  |
+| 仅介绍站          | 上传 `/srv/remember-site/`                                                       |
+| 改 `.env.staging` | 编辑 → `cp .env.staging .env` → `$DC up -d --force-recreate api`                 |
+| 改 Caddy          | `nano /etc/caddy/Caddyfile` → `systemctl reload caddy`                           |
 
 **查看 API 日志：**
 
