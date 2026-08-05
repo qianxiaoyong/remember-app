@@ -9,16 +9,26 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import {
+  AuthFormCard,
+  AuthHero,
+  AuthScreenHeader,
+  AuthScreenLayout,
+} from '../components/auth/auth-screen-layout';
 import { ScreenScaffold } from '../components/shell/screen-scaffold';
+import { PrimaryButton } from '../components/ui/primary-button';
 import { ApiRequestError } from '../data/api/api-client';
 import { sendSmsCode } from '../use-cases/auth/send-sms-code';
-import { verifySmsLogin } from '../use-cases/auth/verify-sms-login';
+import { verifySmsLogin, schedulePostLoginSync } from '../use-cases/auth/verify-sms-login';
+import { isSafeReturnToPath } from '../use-cases/auth-required-error';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 
 export function LoginScreen(): ReactElement {
   const router = useRouter();
+  const params = useLocalSearchParams<{ returnTo?: string | string[] }>();
+  const returnTo = typeof params.returnTo === 'string' ? params.returnTo : undefined;
   const [phone, setPhone] = useState('');
   const [code, setCode] = useState('');
   const [countdown, setCountdown] = useState(0);
@@ -73,7 +83,12 @@ export function LoginScreen(): ReactElement {
     setIsSubmitting(true);
     try {
       await verifySmsLogin(phone.trim(), code.trim());
-      router.replace('/library');
+      schedulePostLoginSync();
+      if (returnTo && isSafeReturnToPath(returnTo)) {
+        router.replace(returnTo);
+      } else {
+        router.replace('/library');
+      }
     } catch (error) {
       let message = '登录失败，请稍后重试';
       if (error instanceof ApiRequestError) {
@@ -89,71 +104,72 @@ export function LoginScreen(): ReactElement {
     } finally {
       setIsSubmitting(false);
     }
-  }, [code, phone, router]);
+  }, [code, phone, returnTo, router]);
 
   return (
     <ScreenScaffold>
-      <View style={styles.container}>
-        <Text style={styles.title}>手机号登录</Text>
-        <Text style={styles.subtitle}>登录后可同步学习进度到云端</Text>
-
-        <TextInput
-          autoComplete="tel"
-          keyboardType="phone-pad"
-          maxLength={11}
-          onChangeText={setPhone}
-          placeholder="手机号"
-          placeholderTextColor={colors.textMuted}
-          style={styles.input}
-          value={phone}
+      <AuthScreenLayout keyboardAvoiding scroll>
+        <AuthScreenHeader
+          onBackPress={() => {
+            router.back();
+          }}
         />
-
-        <View style={styles.codeRow}>
+        <AuthHero subtitle="登录后可同步学习进度到云端" title="手机号登录" />
+        <AuthFormCard>
           <TextInput
-            keyboardType="number-pad"
-            maxLength={6}
-            onChangeText={setCode}
-            placeholder="验证码"
+            autoComplete="tel"
+            keyboardType="phone-pad"
+            maxLength={11}
+            onChangeText={setPhone}
+            placeholder="手机号"
             placeholderTextColor={colors.textMuted}
-            style={[styles.input, styles.codeInput]}
-            value={code}
+            style={styles.input}
+            value={phone}
           />
-          <Pressable
-            accessibilityRole="button"
-            disabled={isSending || countdown > 0}
-            onPress={() => {
-              void handleSendCode();
-            }}
-            style={[styles.codeButton, countdown > 0 ? styles.codeButtonDisabled : null]}
+          <View style={styles.codeRow}>
+            <TextInput
+              keyboardType="number-pad"
+              maxLength={6}
+              onChangeText={setCode}
+              placeholder="验证码"
+              placeholderTextColor={colors.textMuted}
+              style={[styles.input, styles.codeInput]}
+              value={code}
+            />
+            <Pressable
+              accessibilityRole="button"
+              disabled={isSending || countdown > 0}
+              onPress={() => {
+                void handleSendCode();
+              }}
+            style={[
+              styles.codeButton,
+              isSending || countdown > 0 ? styles.codeButtonDisabled : null,
+            ]}
           >
             {isSending ? (
-              <ActivityIndicator color={colors.accent} size="small" />
+              <ActivityIndicator color={colors.surface} size="small" />
             ) : (
-              <Text style={styles.codeButtonText}>
-                {countdown > 0 ? `${String(countdown)}s` : '获取验证码'}
-              </Text>
-            )}
-          </Pressable>
-        </View>
-
-        <Pressable
-          accessibilityRole="button"
-          disabled={isSubmitting}
+              <Text
+                style={[
+                  styles.codeButtonText,
+                  countdown > 0 ? styles.codeButtonTextDisabled : null,
+                ]}
+              >
+                  {countdown > 0 ? `${String(countdown)}s` : '获取验证码'}
+                </Text>
+              )}
+            </Pressable>
+          </View>
+        </AuthFormCard>
+        <PrimaryButton
+          label="登录"
+          loading={isSubmitting}
           onPress={() => {
             void handleLogin();
           }}
-          style={[styles.primaryButton, isSubmitting ? styles.primaryButtonLoading : null]}
-        >
-          {isSubmitting ? (
-            <View style={styles.primaryButtonLoadingRow}>
-              <ActivityIndicator color={colors.surface} />
-              <Text style={styles.primaryButtonText}>正在恢复进度…</Text>
-            </View>
-          ) : (
-            <Text style={styles.primaryButtonText}>登录</Text>
-          )}
-        </Pressable>
-      </View>
+        />
+      </AuthScreenLayout>
     </ScreenScaffold>
   );
 }
@@ -165,27 +181,11 @@ function isTechnicalErrorMessage(message: string): boolean {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    gap: spacing.md,
-    padding: spacing.lg,
-  },
-  title: {
-    color: colors.textPrimary,
-    fontSize: 24,
-    fontWeight: '700',
-  },
-  subtitle: {
-    color: colors.textSecondary,
-    fontSize: 14,
-    lineHeight: 20,
-    marginBottom: spacing.sm,
-  },
   input: {
-    backgroundColor: colors.surface,
+    backgroundColor: colors.background,
     borderColor: colors.border,
     borderRadius: 12,
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
     color: colors.textPrimary,
     fontSize: 16,
     paddingHorizontal: spacing.md,
@@ -201,41 +201,22 @@ const styles = StyleSheet.create({
   },
   codeButton: {
     alignItems: 'center',
-    backgroundColor: colors.surface,
-    borderColor: colors.accent,
+    backgroundColor: colors.accent,
     borderRadius: 12,
-    borderWidth: 1,
     justifyContent: 'center',
     minWidth: 112,
     paddingHorizontal: spacing.sm,
     paddingVertical: spacing.md,
   },
   codeButtonDisabled: {
-    borderColor: colors.border,
+    backgroundColor: colors.statTileBackground,
   },
   codeButtonText: {
-    color: colors.accent,
+    color: colors.surface,
     fontSize: 14,
     fontWeight: '600',
   },
-  primaryButton: {
-    alignItems: 'center',
-    backgroundColor: colors.accent,
-    borderRadius: 12,
-    marginTop: spacing.md,
-    paddingVertical: spacing.md,
-  },
-  primaryButtonLoading: {
-    opacity: 0.9,
-  },
-  primaryButtonLoadingRow: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    gap: spacing.sm,
-  },
-  primaryButtonText: {
-    color: colors.surface,
-    fontSize: 16,
-    fontWeight: '600',
+  codeButtonTextDisabled: {
+    color: colors.textMuted,
   },
 });

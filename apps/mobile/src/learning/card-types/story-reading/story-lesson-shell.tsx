@@ -4,8 +4,8 @@ import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { StoryReadingContent } from '@remember/contracts';
 import { useStoryAudioPlayer } from '../../../hooks/use-story-audio-player';
+import { AppIcon } from '../../../components/ui/app-icon';
 import { CircleIconButton } from '../../../components/ui/circle-icon-button';
-import { BackChevronIcon, MoreVerticalIcon } from '../../../components/ui/shell-icons';
 import { colors } from '../../../theme/colors';
 import { spacing } from '../../../theme/spacing';
 import { listStoryLessonSummaries } from '../../../use-cases/resolve-story-reader-entry';
@@ -160,13 +160,13 @@ export function StoryLessonShell(props: StoryLessonShellProps): ReactElement {
               props.onHomePress();
             }}
           >
-            <BackChevronIcon size="sm" />
+            <AppIcon color={colors.textPrimary} name="chevron-back" size="sm" />
           </CircleIconButton>
         </View>
 
         <View style={styles.toolbarSide}>
           <CircleIconButton accessibilityLabel="更多" onPress={props.onMorePress}>
-            <MoreVerticalIcon size="sm" />
+            <AppIcon color={colors.textPrimary} name="ellipsis-vertical" size="sm" />
           </CircleIconButton>
         </View>
 

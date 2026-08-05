@@ -7,6 +7,7 @@ export const colors = {
   border: '#E9EAF0',
   borderStrong: '#E2E5EC',
   accent: '#6D70E8',
+  accentSoft: '#EBECFF',
   price: '#EF7058',
   overlay: 'rgba(0, 0, 0, 0.45)',
   tokenLink: '#6D70E8',

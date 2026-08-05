@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { LexiconLookupResult } from '../data/repositories/lexicon-entry-repository';
-import { SpeakerIcon, StarIcon } from './ui/shell-icons';
+import { AppIcon } from './ui/app-icon';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 
@@ -58,7 +58,11 @@ export function LexiconPopup(props: LexiconPopupProps): ReactElement {
                   onPress={onToggleSave}
                   style={styles.starButton}
                 >
-                  <StarIcon filled={isSaved} size="md" />
+                  <AppIcon
+                    color={isSaved ? colors.favoriteStar : colors.textMuted}
+                    name={isSaved ? 'star' : 'star-outline'}
+                    size="md"
+                  />
                 </Pressable>
               </View>
 
@@ -85,7 +89,7 @@ export function LexiconPopup(props: LexiconPopupProps): ReactElement {
                 onPress={onPlayAudio}
                 style={styles.audioButton}
               >
-                <SpeakerIcon color={colors.textPrimary} size="sm" />
+                <AppIcon color={colors.textPrimary} name="volume-high-outline" size="sm" />
                 <Text style={styles.audioLabel}>发音</Text>
               </Pressable>
             </>

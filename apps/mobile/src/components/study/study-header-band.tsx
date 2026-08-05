@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { VocabularyContent } from '@remember/contracts';
 import { CircleIconButton } from '../ui/circle-icon-button';
-import { HomeTabIcon, MoreVerticalIcon, SpeakerIcon, BackChevronIcon } from '../ui/shell-icons';
+import { AppIcon } from '../ui/app-icon';
 import { StudyDefinitionStrip } from './study-definition-strip';
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
@@ -43,7 +43,7 @@ export function StudyHeaderBand(props: StudyHeaderBandProps): ReactElement {
                 props.onBackPress?.();
               }}
             >
-              <BackChevronIcon size="sm" />
+              <AppIcon color={colors.textPrimary} name="chevron-back" size="sm" />
             </CircleIconButton>
             <Text numberOfLines={1} style={styles.previewContext}>
               {props.previewContextLabel ?? '内容预览'}
@@ -53,10 +53,10 @@ export function StudyHeaderBand(props: StudyHeaderBandProps): ReactElement {
         ) : (
           <>
             <CircleIconButton accessibilityLabel="返回首页" onPress={props.onHomePress}>
-              <HomeTabIcon active size="sm" />
+              <AppIcon color={colors.textPrimary} name="home-outline" size="sm" />
             </CircleIconButton>
             <CircleIconButton accessibilityLabel="更多" onPress={props.onMorePress}>
-              <MoreVerticalIcon size="sm" />
+              <AppIcon color={colors.textPrimary} name="ellipsis-vertical" size="sm" />
             </CircleIconButton>
           </>
         )}
@@ -85,7 +85,7 @@ export function StudyHeaderBand(props: StudyHeaderBandProps): ReactElement {
           </>
         ) : null}
         <View style={styles.speakerBadge}>
-          <SpeakerIcon color={colors.studyHeaderBackground} size="sm" />
+          <AppIcon color={colors.studyHeaderBackground} name="volume-high-outline" size="sm" />
         </View>
       </Pressable>
 

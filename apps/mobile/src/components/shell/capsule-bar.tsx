@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
   },
   uploadCircle: {
     alignItems: 'center',
-    backgroundColor: colors.textPrimary,
+    backgroundColor: colors.accent,
     borderRadius: 28,
     height: 56,
     justifyContent: 'center',

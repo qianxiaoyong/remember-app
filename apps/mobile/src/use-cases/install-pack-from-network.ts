@@ -10,7 +10,10 @@ import { installPackFromZipBytes } from '../data/pack/install-pack-from-zip';
 import type { InstalledPackRow } from '../data/repositories/installed-pack-repository';
 import { writeOfflineLicenseExpiry } from '../data/offline-license/offline-license-store';
 import { aliasInstalledPack } from './alias-installed-pack';
+import { AuthRequiredError } from './auth-required-error';
 import { mapPackInstallError } from './map-pack-install-error';
+
+const UNAUTHORIZED_MESSAGE = '请先登录后再安装';
 
 const DOWNLOAD_ERROR_MESSAGES: Record<string, string> = {
   PACK_ACCESS_DENIED: '暂无下载权限，请先购买或兑换',
@@ -18,7 +21,7 @@ const DOWNLOAD_ERROR_MESSAGES: Record<string, string> = {
   PACK_VERSION_NOT_FOUND: '暂无可下载版本',
   PACK_DOWNLOAD_TOKEN_EXPIRED: '下载链接已过期，请重试',
   PACK_DOWNLOAD_TOKEN_INVALID: '下载授权无效，请重试',
-  UNAUTHORIZED: '请先登录后再安装',
+  UNAUTHORIZED: UNAUTHORIZED_MESSAGE,
 };
 
 let activeDownloadPackId: string | null = null;
@@ -30,7 +33,7 @@ export async function installPackFromNetwork(catalogPackId: string): Promise<Ins
 
   const token = await readSessionToken();
   if (!token) {
-    throw new Error(DOWNLOAD_ERROR_MESSAGES.UNAUTHORIZED);
+    throw new AuthRequiredError(UNAUTHORIZED_MESSAGE);
   }
 
   activeDownloadPackId = catalogPackId;

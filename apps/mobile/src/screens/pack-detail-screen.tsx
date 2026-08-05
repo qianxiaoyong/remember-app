@@ -20,6 +20,7 @@ import { PackDetailSampleList } from '../components/pack-detail/pack-detail-samp
 import { ScreenScaffold } from '../components/shell/screen-scaffold';
 import { markLibraryNeedsRefresh } from '../shell/library-refresh-signal';
 import { findCatalogItemOffline } from '../data/catalog/catalog-cache-store';
+import { readSessionToken } from '../data/session/session-store';
 import {
   getPackDetailViewModel,
   getPackDetailViewModelFromCatalogItem,
@@ -28,6 +29,7 @@ import {
 import { installBundledTestPack } from '../use-cases/install-bundled-test-pack';
 import { installPackFromNetwork } from '../use-cases/install-pack-from-network';
 import { mapPackInstallError } from '../use-cases/map-pack-install-error';
+import { isAuthRequiredError } from '../use-cases/auth-required-error';
 import { purchasePackWithMockPayment } from '../use-cases/purchase-pack-with-mock-payment';
 import { isMockPaymentEnabled } from '../config/mock-payment-enabled';
 import { playSamplePreviewAudio } from '../use-cases/play-sample-preview-audio';
@@ -78,6 +80,11 @@ export function PackDetailScreen(props: PackDetailScreenProps): ReactElement {
       }
 
       if (viewModel.actionKind === 'purchase') {
+        const token = await readSessionToken();
+        if (!token) {
+          promptLoginForPackAction('purchase', viewModel.packId, router.push);
+          return;
+        }
         if (isMockPaymentEnabled()) {
           const result = await purchasePackWithMockPayment(viewModel.packId);
           await refresh();
@@ -105,6 +112,10 @@ export function PackDetailScreen(props: PackDetailScreenProps): ReactElement {
 
       router.push(`/study?packId=${viewModel.packId}`);
     } catch (error) {
+      if (isAuthRequiredError(error)) {
+        promptLoginForPackAction(viewModel.actionKind, viewModel.packId, router.push);
+        return;
+      }
       setMessage(mapPackInstallError(error).message);
     } finally {
       setIsBusy(false);
@@ -252,6 +263,31 @@ export function PackDetailScreen(props: PackDetailScreenProps): ReactElement {
         {message ? <Text style={styles.message}>{message}</Text> : null}
       </ScrollView>
     </ScreenScaffold>
+  );
+}
+
+function promptLoginForPackAction(
+  actionKind: PackDetailViewModel['actionKind'],
+  packId: string,
+  pushRoute: (path: string) => void,
+): void {
+  const isPurchase = actionKind === 'purchase';
+  const returnTo = encodeURIComponent(`/pack/${packId}`);
+
+  Alert.alert(
+    '需要登录',
+    isPurchase
+      ? '购买知识库需要先登录账号，登录后可继续购买。'
+      : '安装网络学习包需要先登录账号，登录后可继续安装。',
+    [
+      { text: '取消', style: 'cancel' },
+      {
+        text: '去登录',
+        onPress: () => {
+          pushRoute(`/login?returnTo=${returnTo}`);
+        },
+      },
+    ],
   );
 }
 

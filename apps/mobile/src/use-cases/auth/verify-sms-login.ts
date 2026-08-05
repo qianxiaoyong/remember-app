@@ -2,6 +2,7 @@ import { getOrCreateDeviceId } from '../../data/device/get-or-create-device-id';
 import { verifySmsCodeRequest } from '../../data/api/auth-api';
 import {
   clearSessionKickAlertPending,
+  readSessionToken,
   writeCachedSessionUser,
   writeSessionToken,
 } from '../../data/session/session-store';
@@ -17,9 +18,16 @@ export async function verifySmsLogin(phone: string, code: string): Promise<Sessi
   await writeCachedSessionUser(response.user);
   await clearSessionKickAlertPending();
 
-  await runPostLoginSync(response.token);
-
   return response.user;
+}
+
+export function schedulePostLoginSync(): void {
+  void readSessionToken().then((token) => {
+    if (!token) {
+      return;
+    }
+    void runPostLoginSync(token);
+  });
 }
 
 async function runPostLoginSync(token: string): Promise<void> {

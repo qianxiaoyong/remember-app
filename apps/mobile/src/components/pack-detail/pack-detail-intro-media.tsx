@@ -2,6 +2,7 @@ import type { ReactElement } from 'react';
 import { Image, Linking, Pressable, StyleSheet, Text, View } from 'react-native';
 import type { IntroMediaItem } from '@remember/contracts';
 import { SurfaceCard } from '../ui/surface-card';
+import { AppIcon } from '../ui/app-icon';
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
 
@@ -48,6 +49,7 @@ function IntroMediaRow(props: { item: IntroMediaItem }): ReactElement {
       }}
       style={styles.videoButton}
     >
+      <AppIcon color={colors.accent} name="play-circle-outline" size="md" />
       <Text style={styles.videoLabel}>观看介绍视频</Text>
     </Pressable>
   );
@@ -72,6 +74,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.background,
     borderRadius: spacing.cardRadius,
+    gap: spacing.sm,
     paddingVertical: spacing.lg,
   },
   videoLabel: {

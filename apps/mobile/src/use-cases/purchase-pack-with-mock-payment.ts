@@ -5,17 +5,20 @@ import {
   simulateMockPaymentNotify,
 } from '../data/api/order-api';
 import { ApiRequestError } from '../data/api/api-client';
+import { AuthRequiredError } from './auth-required-error';
+
+const UNAUTHORIZED_MESSAGE = '请先登录后再购买';
 
 const PURCHASE_ERROR_MESSAGES: Record<string, string> = {
   PACK_ALREADY_OWNED: '您已拥有该知识库',
   PACK_NOT_FOUND: '未找到该知识库',
-  UNAUTHORIZED: '请先登录后再购买',
+  UNAUTHORIZED: UNAUTHORIZED_MESSAGE,
 };
 
 export async function purchasePackWithMockPayment(packId: string): Promise<'paid' | 'pending'> {
   const token = await readSessionToken();
   if (!token) {
-    throw new Error(PURCHASE_ERROR_MESSAGES.UNAUTHORIZED);
+    throw new AuthRequiredError(UNAUTHORIZED_MESSAGE);
   }
 
   try {

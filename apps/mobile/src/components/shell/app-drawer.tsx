@@ -44,7 +44,7 @@ export function AppDrawer(props: AppDrawerProps): ReactElement | null {
 
   useLayoutEffect(() => {
     if (props.visible) {
-      void refresh();
+      void refresh({ showLoading: false });
     }
   }, [props.visible, refresh]);
 
@@ -116,7 +116,7 @@ export function AppDrawer(props: AppDrawerProps): ReactElement | null {
     }
 
     if (item.id === 'redeem' && !user) {
-      router.push('/login');
+      router.push('/login?returnTo=%2Fredeem');
       return;
     }
 

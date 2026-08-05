@@ -1,9 +1,10 @@
 import type { ReactElement } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import type { VocabularyContent } from '@remember/contracts';
 import { TokenizedSentence } from '../tokenized-sentence';
 import { StudySectionHeader } from './study-section-header';
-import { SpeakerIcon } from '../ui/shell-icons';
+import { CircleIconButton } from '../ui/circle-icon-button';
+import { AppIcon } from '../ui/app-icon';
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
 
@@ -32,16 +33,14 @@ export function StudyExamplesSection(props: StudyExamplesSectionProps): ReactEle
                 <Text style={styles.zh}>{example.zh}</Text>
               </View>
               {exampleAudio ? (
-                <Pressable
+                <CircleIconButton
                   accessibilityLabel="播放例句"
-                  hitSlop={8}
                   onPress={() => {
                     props.onPlayExampleAudio(exampleAudio);
                   }}
-                  style={styles.audioButton}
                 >
-                  <SpeakerIcon color={colors.accent} size="sm" />
-                </Pressable>
+                  <AppIcon color={colors.accent} name="volume-high-outline" size="sm" />
+                </CircleIconButton>
               ) : null}
             </View>
           );
@@ -71,11 +70,5 @@ const styles = StyleSheet.create({
     color: colors.textSecondary,
     fontSize: 14,
     lineHeight: 20,
-  },
-  audioButton: {
-    alignItems: 'center',
-    height: spacing.touchTarget,
-    justifyContent: 'center',
-    width: spacing.touchTarget,
   },
 });

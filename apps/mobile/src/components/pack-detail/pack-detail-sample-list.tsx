@@ -2,7 +2,8 @@ import type { ReactElement } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import type { PackSamplePreview } from '../../catalog/pack-sample-preview';
 import { SurfaceCard } from '../ui/surface-card';
-import { MusicNoteIcon } from '../ui/shell-icons';
+import { CircleIconButton } from '../ui/circle-icon-button';
+import { AppIcon } from '../ui/app-icon';
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
 
@@ -57,14 +58,9 @@ function SampleRow(props: {
           </Text>
         </View>
       </Pressable>
-      <Pressable
-        accessibilityLabel="试听示例"
-        hitSlop={8}
-        onPress={props.onPlay}
-        style={styles.playButton}
-      >
-        <MusicNoteIcon size="sm" />
-      </Pressable>
+      <CircleIconButton accessibilityLabel="试听示例" onPress={props.onPlay}>
+        <AppIcon color={colors.accent} name="volume-high-outline" size="sm" />
+      </CircleIconButton>
     </View>
   );
 }
@@ -125,11 +121,5 @@ const styles = StyleSheet.create({
     color: colors.textSecondary,
     fontSize: 13,
     lineHeight: 18,
-  },
-  playButton: {
-    alignItems: 'center',
-    height: spacing.touchTarget,
-    justifyContent: 'center',
-    width: spacing.touchTarget,
   },
 });
