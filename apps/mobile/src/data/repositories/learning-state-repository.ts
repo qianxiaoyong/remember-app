@@ -115,6 +115,30 @@ export function getLearningStateByKnowledgeId(
   return row ? mapRow(row) : null;
 }
 
+const KNOWLEDGE_ID_IN_CHUNK_SIZE = 500;
+
+export function listLearningStatesByKnowledgeIds(
+  knowledgeIds: readonly string[],
+  db: SQLiteDatabase = openUserDatabase(),
+): LearningStateRow[] {
+  if (knowledgeIds.length === 0) {
+    return [];
+  }
+
+  const rows: LearningStateRow[] = [];
+  for (let offset = 0; offset < knowledgeIds.length; offset += KNOWLEDGE_ID_IN_CHUNK_SIZE) {
+    const chunk = knowledgeIds.slice(offset, offset + KNOWLEDGE_ID_IN_CHUNK_SIZE);
+    const placeholders = chunk.map(() => '?').join(', ');
+    const chunkRows = db.getAllSync<LearningStateDbRow>(
+      `${LEARNING_STATE_SELECT}
+       WHERE knowledgeId IN (${placeholders})`,
+      [...chunk],
+    );
+    rows.push(...chunkRows.map(mapRow));
+  }
+  return rows;
+}
+
 export function upsertLearningState(
   row: LearningStateRow,
   db: SQLiteDatabase = openUserDatabase(),
@@ -192,7 +216,15 @@ export function countDueReviewPoolItems(
   timeZone: string,
   db: SQLiteDatabase = openUserDatabase(),
 ): number {
-  return listDueReviewPoolItems(now, timeZone, db).length;
+  const endOfDayIso = endOfLocalReviewDay(now, timeZone).toISOString();
+  const row = db.getFirstSync<{ count: number }>(
+    `SELECT COUNT(*) AS count
+     FROM learning_states
+     WHERE inReviewPool = 1
+       AND dueAt <= ?`,
+    [endOfDayIso],
+  );
+  return row?.count ?? 0;
 }
 
 export function buildLearningStateMap(rows: readonly LearningStateRow[]): Map<string, StudyState> {

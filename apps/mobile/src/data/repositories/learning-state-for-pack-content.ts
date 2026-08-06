@@ -1,6 +1,10 @@
 import type { SQLiteDatabase } from 'expo-sqlite';
+import { openUserDatabase } from '../user-db/open-user-database';
 import { listPackCards } from './pack-card-repository';
-import { getLearningState, type LearningStateRow } from './learning-state-repository';
+import {
+  listLearningStatesByKnowledgeIds,
+  type LearningStateRow,
+} from './learning-state-repository';
 
 /** 按包内 card knowledgeId 汇总进度，不受 installed_packs 别名 packId 影响。 */
 export function listLearningStatesForPackContent(
@@ -8,14 +12,12 @@ export function listLearningStatesForPackContent(
   db?: SQLiteDatabase,
 ): LearningStateRow[] {
   const cards = listPackCards(sqlitePath);
-  const states: LearningStateRow[] = [];
-
-  for (const card of cards) {
-    const state = getLearningState(card.knowledgeId, db);
-    if (state) {
-      states.push(state);
-    }
+  if (cards.length === 0) {
+    return [];
   }
 
-  return states;
+  return listLearningStatesByKnowledgeIds(
+    cards.map((card) => card.knowledgeId),
+    db ?? openUserDatabase(),
+  );
 }

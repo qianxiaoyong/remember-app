@@ -4,6 +4,7 @@ import { AppState, type AppStateStatus, Pressable, StyleSheet, Text, View } from
 import { useFocusEffect } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { subscribeReviewPoolChanged } from '../../shell/review-pool-changed-signal';
+import { deferAfterFirstPaint } from '../../lib/defer-after-first-paint';
 import { countDueReviewItems } from '../../use-cases/count-due-review-items';
 import { FolderTabIcon, HomeTabIcon, StarIcon } from '../ui/shell-icons';
 import { colors } from '../../theme/colors';
@@ -27,7 +28,7 @@ export function CapsuleBar(props: CapsuleBarProps): ReactElement {
 
   useFocusEffect(
     useCallback(() => {
-      refreshDueCount();
+      return deferAfterFirstPaint(refreshDueCount);
     }, [refreshDueCount]),
   );
 
@@ -36,11 +37,13 @@ export function CapsuleBar(props: CapsuleBarProps): ReactElement {
       'change',
       (nextState: AppStateStatus) => {
         if (nextState === 'active') {
-          refreshDueCount();
+          deferAfterFirstPaint(refreshDueCount);
         }
       },
     );
-    const unsubscribe = subscribeReviewPoolChanged(refreshDueCount);
+    const unsubscribe = subscribeReviewPoolChanged(() => {
+      deferAfterFirstPaint(refreshDueCount);
+    });
     return () => {
       appStateSubscription.remove();
       unsubscribe();

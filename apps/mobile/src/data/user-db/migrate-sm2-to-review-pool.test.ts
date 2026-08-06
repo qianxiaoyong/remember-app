@@ -39,48 +39,19 @@ describe('mapSm2IntervalToBoxLevel', () => {
 });
 
 describe('runSm2ToReviewPoolMigration', () => {
-  it('按 SM-2 字段更新复习池列', () => {
-    const updates: Record<string, unknown>[] = [];
+  it('用单条 UPDATE 批量迁移复习池列', () => {
+    let executedSql = '';
     const db = {
-      getAllSync: () => [
-        {
-          knowledgeId: 'remember-test-pack:en:word:hello',
-          packId: 'remember-test-pack',
-          repetitions: 2,
-          intervalDays: 6,
-        },
-        {
-          knowledgeId: 'remember-test-pack:en:word:world',
-          packId: 'remember-test-pack',
-          repetitions: 0,
-          intervalDays: 0,
-        },
-      ],
-      runSync: (_sql: string, params?: readonly unknown[]) => {
-        updates.push({
-          inReviewPool: params?.[0],
-          boxLevel: params?.[1],
-          firstAddedFromPackId: params?.[2],
-          knowledgeId: params?.[3],
-        });
+      execSync: (sql: string) => {
+        executedSql = sql;
       },
     };
 
     runSm2ToReviewPoolMigration(db as never);
 
-    expect(updates).toEqual([
-      {
-        inReviewPool: 1,
-        boxLevel: 2,
-        firstAddedFromPackId: 'remember-test-pack',
-        knowledgeId: 'remember-test-pack:en:word:hello',
-      },
-      {
-        inReviewPool: 0,
-        boxLevel: 0,
-        firstAddedFromPackId: 'remember-test-pack',
-        knowledgeId: 'remember-test-pack:en:word:world',
-      },
-    ]);
+    expect(executedSql).toContain('UPDATE learning_states');
+    expect(executedSql).toContain('inReviewPool');
+    expect(executedSql).toContain('boxLevel');
+    expect(executedSql).toContain('firstAddedFromPackId = packId');
   });
 });

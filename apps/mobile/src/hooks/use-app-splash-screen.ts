@@ -25,7 +25,7 @@ async function waitForNextFrames(): Promise<void> {
 
 /**
  * 启动 splash 时序：
- * 1. JS overlay 图片解码并就绪
+ * 1. JS overlay 图片解码并就绪（logo 仅在此层渲染，避免原生层变形）
  * 2. 立刻 hide 原生 splash（无缝切到 overlay，中间不闪白）
  * 3. 等首屏 layout + hold
  * 4. 撤掉 overlay

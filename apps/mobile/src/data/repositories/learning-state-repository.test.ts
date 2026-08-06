@@ -41,6 +41,7 @@ describe('learning-state-repository review pool queries', () => {
           consecutiveLevel3Passes: 0,
         },
       ]),
+      getFirstSync: vi.fn(() => ({ count: 1 })),
     };
 
     const now = new Date('2026-08-06T15:00:00+08:00');
@@ -48,5 +49,9 @@ describe('learning-state-repository review pool queries', () => {
 
     expect(dueItems.map((item) => item.knowledgeId)).toEqual(['pack:en:word:due']);
     expect(countDueReviewPoolItems(now, 'Asia/Shanghai', db as never)).toBe(1);
+    expect(db.getFirstSync).toHaveBeenCalledWith(
+      expect.stringContaining('SELECT COUNT(*) AS count'),
+      expect.arrayContaining([expect.any(String)]),
+    );
   });
 });

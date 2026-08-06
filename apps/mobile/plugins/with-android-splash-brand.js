@@ -65,45 +65,31 @@ function writeSplashscreenDrawable(androidResDir) {
     `<?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
   <item android:drawable="@color/splashscreen_background" />
-  <item>
-    <bitmap android:gravity="fill" android:src="@drawable/splashscreen_logo" />
-  </item>
 </layer-list>
 `,
   );
 }
 
-/** 去掉 Android 12 居中 icon，改为全屏背景图。 */
-function patchSplashStylesContent(content) {
-  if (content.includes('android:windowSplashScreenBehavior">default')) {
-    return content;
-  }
-
-  let next = content.replace(
-    '<item name="windowSplashScreenBackground">@color/splashscreen_background</item>',
-    '<item name="windowSplashScreenBackground">@drawable/splashscreen</item>',
-  );
-  next = next.replace(
-    /\s*<item name="windowSplashScreenAnimatedIcon">@drawable\/splashscreen_logo<\/item>\s*/g,
-    '\n',
-  );
-  next = next.replace(
-    'android:windowSplashScreenBehavior">icon_preferred',
-    'android:windowSplashScreenBehavior">default',
-  );
-  return next;
-}
-
+/** 原生 splash 仅保留底色；logo 统一由 JS overlay 呈现，避免原生层拉伸变形。 */
 function patchSplashStyles(stylesPath) {
   if (!fs.existsSync(stylesPath)) {
     return;
   }
 
-  const content = fs.readFileSync(stylesPath, 'utf8');
-  const next = patchSplashStylesContent(content);
-  if (next !== content) {
-    fs.writeFileSync(stylesPath, next);
-  }
+  let content = fs.readFileSync(stylesPath, 'utf8');
+  content = content.replace(
+    '<item name="windowSplashScreenBackground">@drawable/splashscreen</item>',
+    '<item name="windowSplashScreenBackground">@color/splashscreen_background</item>',
+  );
+  content = content.replace(
+    /\s*<item name="windowSplashScreenAnimatedIcon">@drawable\/splashscreen_logo<\/item>\s*/g,
+    '\n',
+  );
+  content = content.replace(
+    'android:windowSplashScreenBehavior">icon_preferred',
+    'android:windowSplashScreenBehavior">default',
+  );
+  fs.writeFileSync(stylesPath, content);
 }
 
 /** 全屏 cover splash：按屏幕密度生成铺满图，避免居中小图 + 白边。 */
@@ -137,4 +123,3 @@ function withAndroidSplashBrand(config) {
 }
 
 module.exports = withAndroidSplashBrand;
-module.exports.patchSplashStylesContent = patchSplashStylesContent;

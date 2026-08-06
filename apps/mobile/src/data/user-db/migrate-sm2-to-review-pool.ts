@@ -18,32 +18,20 @@ export function mapSm2IntervalToBoxLevel(intervalDays: number): BoxLevel {
   return 3;
 }
 
-interface Sm2LearningStateRow {
-  knowledgeId: string;
-  packId: string;
-  repetitions: number;
-  intervalDays: number;
-}
-
 export function runSm2ToReviewPoolMigration(db: SQLiteDatabase): void {
-  const rows = db.getAllSync<Sm2LearningStateRow>(
-    `SELECT knowledgeId, packId, repetitions, intervalDays FROM learning_states`,
-  );
-
-  for (const row of rows) {
-    db.runSync(
-      `UPDATE learning_states
-       SET inReviewPool = ?,
-           boxLevel = ?,
-           firstAddedFromPackId = ?,
-           consecutiveLevel3Passes = 0
-       WHERE knowledgeId = ?`,
-      [
-        mapSm2ToInReviewPool(row.repetitions, row.intervalDays) ? 1 : 0,
-        mapSm2IntervalToBoxLevel(row.intervalDays),
-        row.packId,
-        row.knowledgeId,
-      ],
-    );
-  }
+  db.execSync(`
+    UPDATE learning_states
+    SET inReviewPool = CASE
+          WHEN repetitions = 0 AND intervalDays = 0 THEN 0
+          ELSE 1
+        END,
+        boxLevel = CASE
+          WHEN intervalDays <= 1 THEN 0
+          WHEN intervalDays <= 3 THEN 1
+          WHEN intervalDays <= 7 THEN 2
+          ELSE 3
+        END,
+        firstAddedFromPackId = packId,
+        consecutiveLevel3Passes = 0
+  `);
 }
