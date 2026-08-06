@@ -190,7 +190,9 @@ export function StoryLessonShell(props: StoryLessonShellProps): ReactElement {
             positionMs={audioPlayer.positionMs}
           />
         ) : null}
-        {activeTab === 'vocab' ? <StoryVocabTab content={props.content} /> : null}
+        {activeTab === 'vocab' ? (
+          <StoryVocabTab content={props.content} packId={props.packId} />
+        ) : null}
       </View>
 
       {activeTab === 'read' ? (

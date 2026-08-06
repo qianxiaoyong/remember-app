@@ -9,6 +9,7 @@ import { tierAccentColor } from './tier-colors';
 
 interface StoryVocabPanelProps {
   sidebar: StorySidebarEntry[];
+  packId?: string;
 }
 
 export function StoryVocabPanel(props: StoryVocabPanelProps): ReactElement {
@@ -49,6 +50,7 @@ export function StoryVocabPanel(props: StoryVocabPanelProps): ReactElement {
           setSheetVisible(false);
           setSelectedEntry(null);
         }}
+        packId={props.packId}
         visible={sheetVisible}
       />
     </View>
