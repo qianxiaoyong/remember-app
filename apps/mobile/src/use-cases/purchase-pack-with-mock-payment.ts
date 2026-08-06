@@ -5,7 +5,7 @@ import {
   simulateMockPaymentNotify,
 } from '../data/api/order-api';
 import { ApiRequestError } from '../data/api/api-client';
-import { AuthRequiredError } from './auth-required-error';
+import { AuthRequiredError, throwIfUnauthorized } from './auth-required-error';
 
 const UNAUTHORIZED_MESSAGE = '请先登录后再购买';
 
@@ -29,6 +29,7 @@ export async function purchasePackWithMockPayment(packId: string): Promise<'paid
     return detail.status === 'paid' ? 'paid' : 'pending';
   } catch (error) {
     if (error instanceof ApiRequestError) {
+      throwIfUnauthorized(error, UNAUTHORIZED_MESSAGE);
       throw new Error(PURCHASE_ERROR_MESSAGES[error.code] ?? error.message, { cause: error });
     }
     throw error;

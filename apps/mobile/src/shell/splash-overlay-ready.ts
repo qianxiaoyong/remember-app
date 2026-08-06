@@ -1,6 +1,9 @@
 let overlayReady = false;
 const listeners = new Set<() => void>();
 
+/** overlay 图片加载失败或异常时，避免启动链永久等待。 */
+export const SPLASH_OVERLAY_READY_TIMEOUT_MS = 5_000;
+
 export function markSplashOverlayReady(): void {
   if (overlayReady) {
     return;
@@ -12,12 +15,23 @@ export function markSplashOverlayReady(): void {
   listeners.clear();
 }
 
-export function waitForSplashOverlayReady(): Promise<void> {
+export function waitForSplashOverlayReady(
+  timeoutMs = SPLASH_OVERLAY_READY_TIMEOUT_MS,
+): Promise<void> {
   if (overlayReady) {
     return Promise.resolve();
   }
   return new Promise((resolve) => {
-    listeners.add(resolve);
+    const onReady = (): void => {
+      clearTimeout(timeoutId);
+      resolve();
+    };
+    const timeoutId = setTimeout(() => {
+      listeners.delete(onReady);
+      markSplashOverlayReady();
+      resolve();
+    }, timeoutMs);
+    listeners.add(onReady);
   });
 }
 

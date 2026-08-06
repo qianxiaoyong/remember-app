@@ -194,7 +194,7 @@ pnpm --filter @remember/api test:integration
 **Files:**
 
 - Create: `apps/mobile/src/screens/login-screen.tsx`
-- Create: `apps/mobile/src/screens/login-guide-screen.tsx`（保留；2026-08 起不再冷启动自动跳转）
+- ~~Create: `apps/mobile/src/screens/login-guide-screen.tsx`~~（已移除；装包/兑换等场景引导登录）
 - Create: `apps/mobile/src/screens/account-screen.tsx`
 - Modify: `apps/mobile/src/components/shell/drawer-account-header.tsx`
 - Modify: 路由 / drawer 点击账号进登录或账号页
