@@ -326,6 +326,7 @@ Copy-Item "D:\r\a\apps\mobile\android\app\build\outputs\apk\release\app-release.
 | `apps/mobile/signing.properties.example`                  | 签名属性模板                  |
 | `apps/mobile/android/gradle.properties`                   | prebuild 生成；构建前可改 ABI |
 | `tools/mobile/gradle-mirror-init.gradle`                  | 可选 Maven 镜像 init-script   |
+| `docs/runbooks/mobile-cold-start-optimization.md`         | 冷启动 / Splash / Standalone APK 优化与踩坑 |
 | `docs/decisions/0004-android-app-identity-and-signing.md` | 身份、指纹、签名 ADR          |
 
 ---
@@ -335,3 +336,4 @@ Copy-Item "D:\r\a\apps\mobile\android\app\build\outputs\apk\release\app-release.
 | 日期       | 说明                                                                |
 | ---------- | ------------------------------------------------------------------- |
 | 2026-07-28 | 首版：记录 Windows 路径踩坑、短路径 `D:\r\a` 成功流程、真机安装验证 |
+| 2026-08-07 | 增加冷启动 / Splash 文档交叉引用                                   |

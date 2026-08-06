@@ -58,7 +58,7 @@ try {
     Write-Step "expo prebuild --platform android --clean"
     pnpm exec expo prebuild --platform android --clean
 
-    Write-Step "Ensure native splash is color-only (logo only in JS overlay)"
+    Write-Step "Ensure native splash matches JS overlay (splash-full.png cover)"
     node (Join-Path $BuildRoot "tools\mobile\patch-android-native-splash.cjs") $androidDir
     if ($LASTEXITCODE -ne 0) {
       throw "patch-android-native-splash.cjs failed with exit code $LASTEXITCODE"

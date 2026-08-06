@@ -60,11 +60,14 @@ async function generateFullScreenSplashImages(projectRoot, sourceImage) {
 function writeSplashscreenDrawable(androidResDir) {
   const drawableDir = path.join(androidResDir, 'drawable');
   fs.mkdirSync(drawableDir, { recursive: true });
+  // Same cover-rendered asset as JS overlay (splash-full.png); per-density PNGs from generateFullScreenSplashImages.
   fs.writeFileSync(
-    path.join(drawableDir, 'splashscreen.xml'),
+    path.join(drawableDir, 'splashscreen_brand.xml'),
     `<?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-  <item android:drawable="@color/splashscreen_background" />
+  <item>
+    <bitmap android:gravity="fill" android:src="@drawable/splashscreen_logo" />
+  </item>
 </layer-list>
 `,
   );
@@ -99,36 +102,33 @@ function patchLauncherBackgroundDrawable(drawablePath) {
   );
 }
 
-/** 原生 splash 仅保留底色；logo 统一由 JS overlay 呈现，避免原生层拉伸变形。 */
+/** 原生 splash 与 JS overlay 同源：cover 预渲染整帧 + #F5F6FA 底色。 */
 function patchSplashStyles(stylesPath) {
   if (!fs.existsSync(stylesPath)) {
     return;
   }
 
   let content = fs.readFileSync(stylesPath, 'utf8');
+  // 必须保留 Theme.SplashScreen 父主题，否则 expo SplashScreenManager 会崩溃。
   content = content.replace(
-    /<item name="android:windowBackground">@drawable\/splashscreen_logo<\/item>/g,
-    '<item name="android:windowBackground">@drawable/splashscreen</item>',
+    /<style name="Theme\.App\.SplashScreen" parent="[^"]+">[\s\S]*?<\/style>/,
+    `<style name="Theme.App.SplashScreen" parent="Theme.SplashScreen">
+    <item name="android:windowBackground">@drawable/splashscreen_brand</item>
+    <item name="windowSplashScreenBackground">@color/splashscreen_background</item>
+    <item name="windowSplashScreenAnimatedIcon">@drawable/splashscreen_empty_icon</item>
+    <item name="postSplashScreenTheme">@style/AppTheme</item>
+    <item name="android:windowSplashScreenBehavior">default</item>
+  </style>`,
   );
-  content = content.replace(
-    '<item name="windowSplashScreenBackground">@drawable/splashscreen</item>',
-    '<item name="windowSplashScreenBackground">@color/splashscreen_background</item>',
-  );
-  content = content.replace(
-    /<item name="windowSplashScreenAnimatedIcon">@drawable\/[^<]+<\/item>/g,
-    '<item name="windowSplashScreenAnimatedIcon">@drawable/splashscreen_empty_icon</item>',
-  );
-  if (!content.includes('windowSplashScreenAnimatedIcon')) {
+  const appThemeBlock = content.match(/<style name="AppTheme"[\s\S]*?<\/style>/);
+  if (appThemeBlock && !appThemeBlock[0].includes('android:windowBackground')) {
     content = content.replace(
-      '<item name="windowSplashScreenBackground">@color/splashscreen_background</item>',
-      `<item name="windowSplashScreenBackground">@color/splashscreen_background</item>
-    <item name="windowSplashScreenAnimatedIcon">@drawable/splashscreen_empty_icon</item>`,
+      '<item name="android:navigationBarColor">@android:color/transparent</item>',
+      `<item name="android:navigationBarColor">@android:color/transparent</item>
+    <item name="android:windowBackground">@color/splashscreen_background</item>`,
+      1,
     );
   }
-  content = content.replace(
-    'android:windowSplashScreenBehavior">icon_preferred',
-    'android:windowSplashScreenBehavior">default',
-  );
   fs.writeFileSync(stylesPath, content);
 }
 
@@ -200,3 +200,6 @@ module.exports.patchSplashStyles = patchSplashStyles;
 module.exports.patchSplashBackgroundColor = patchSplashBackgroundColor;
 module.exports.writeSplashscreenDrawable = writeSplashscreenDrawable;
 module.exports.patchLauncherBackgroundDrawable = patchLauncherBackgroundDrawable;
+module.exports.generateFullScreenSplashImages = generateFullScreenSplashImages;
+module.exports.resolveSplashImagePath = resolveSplashImagePath;
+module.exports.resolveSplashPluginConfig = resolveSplashPluginConfig;
