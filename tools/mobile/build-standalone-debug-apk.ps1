@@ -76,23 +76,9 @@ try {
     pnpm exec expo prebuild --platform android --clean
 
     Write-Step 'Ensure native splash is color-only (logo only in JS overlay)'
-    $stylesFile = Join-Path $androidDir 'app\src\main\res\values\styles.xml'
-    if (Test-Path $stylesFile) {
-      $stylesContent = Get-Content $stylesFile -Raw -Encoding UTF8
-      $stylesContent = [regex]::Replace(
-        $stylesContent,
-        '\s*<item name="windowSplashScreenAnimatedIcon">[^<]+</item>\s*',
-        "`n"
-      )
-      $stylesContent = $stylesContent.Replace(
-        '<item name="windowSplashScreenBackground">@drawable/splashscreen</item>',
-        '<item name="windowSplashScreenBackground">@color/splashscreen_background</item>'
-      )
-      $stylesContent = $stylesContent.Replace(
-        'android:windowSplashScreenBehavior">icon_preferred',
-        'android:windowSplashScreenBehavior">default'
-      )
-      [System.IO.File]::WriteAllText($stylesFile, $stylesContent, [System.Text.UTF8Encoding]::new($false))
+    node (Join-Path $BuildRoot 'tools\mobile\patch-android-native-splash.cjs') $androidDir
+    if ($LASTEXITCODE -ne 0) {
+      throw "patch-android-native-splash.cjs failed with exit code $LASTEXITCODE"
     }
 
     $colorsFile = Join-Path $androidDir 'app\src\main\res\values\colors.xml'

@@ -68,6 +68,35 @@ function writeSplashscreenDrawable(androidResDir) {
 </layer-list>
 `,
   );
+  fs.writeFileSync(
+    path.join(drawableDir, 'splashscreen_empty_icon.xml'),
+    `<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+  <item
+    android:width="1dp"
+    android:height="1dp"
+    android:gravity="center">
+    <shape android:shape="rectangle">
+      <solid android:color="@android:color/transparent" />
+    </shape>
+  </item>
+</layer-list>
+`,
+  );
+}
+
+function patchLauncherBackgroundDrawable(drawablePath) {
+  if (!fs.existsSync(drawablePath)) {
+    return;
+  }
+
+  fs.writeFileSync(
+    drawablePath,
+    `<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:drawable="@color/splashscreen_background"/>
+</layer-list>
+`,
+  );
 }
 
 /** 原生 splash 仅保留底色；logo 统一由 JS overlay 呈现，避免原生层拉伸变形。 */
@@ -78,18 +107,57 @@ function patchSplashStyles(stylesPath) {
 
   let content = fs.readFileSync(stylesPath, 'utf8');
   content = content.replace(
+    /<item name="android:windowBackground">@drawable\/splashscreen_logo<\/item>/g,
+    '<item name="android:windowBackground">@drawable/splashscreen</item>',
+  );
+  content = content.replace(
     '<item name="windowSplashScreenBackground">@drawable/splashscreen</item>',
     '<item name="windowSplashScreenBackground">@color/splashscreen_background</item>',
   );
   content = content.replace(
-    /\s*<item name="windowSplashScreenAnimatedIcon">@drawable\/splashscreen_logo<\/item>\s*/g,
-    '\n',
+    /<item name="windowSplashScreenAnimatedIcon">@drawable\/[^<]+<\/item>/g,
+    '<item name="windowSplashScreenAnimatedIcon">@drawable/splashscreen_empty_icon</item>',
   );
+  if (!content.includes('windowSplashScreenAnimatedIcon')) {
+    content = content.replace(
+      '<item name="windowSplashScreenBackground">@color/splashscreen_background</item>',
+      `<item name="windowSplashScreenBackground">@color/splashscreen_background</item>
+    <item name="windowSplashScreenAnimatedIcon">@drawable/splashscreen_empty_icon</item>`,
+    );
+  }
   content = content.replace(
     'android:windowSplashScreenBehavior">icon_preferred',
     'android:windowSplashScreenBehavior">default',
   );
   fs.writeFileSync(stylesPath, content);
+}
+
+function patchSplashBackgroundColor(colorsPath, backgroundColor) {
+  if (!fs.existsSync(colorsPath) || !backgroundColor) {
+    return;
+  }
+
+  let content = fs.readFileSync(colorsPath, 'utf8');
+  if (content.includes('<root>')) {
+    const match = content.match(/<resources>[\s\S]*?<\/resources>/);
+    if (match) {
+      content = `${match[0]}\n`;
+    }
+  }
+
+  if (content.includes('name="splashscreen_background"')) {
+    content = content.replace(
+      /<color name="splashscreen_background">[^<]+<\/color>/,
+      `<color name="splashscreen_background">${backgroundColor}</color>`,
+    );
+  } else {
+    content = content.replace(
+      '</resources>',
+      `  <color name="splashscreen_background">${backgroundColor}</color>\n</resources>`,
+    );
+  }
+
+  fs.writeFileSync(colorsPath, content);
 }
 
 /** 全屏 cover splash：按屏幕密度生成铺满图，避免居中小图 + 白边。 */
@@ -116,6 +184,11 @@ function withAndroidSplashBrand(config) {
       await generateFullScreenSplashImages(projectRoot, sourceImage);
       writeSplashscreenDrawable(androidResDir);
       patchSplashStyles(path.join(androidResDir, 'values', 'styles.xml'));
+      patchLauncherBackgroundDrawable(path.join(androidResDir, 'drawable', 'ic_launcher_background.xml'));
+      patchSplashBackgroundColor(
+        path.join(androidResDir, 'values', 'colors.xml'),
+        configWithMod.splash?.backgroundColor ?? '#F5F6FA',
+      );
 
       return configWithMod;
     },
@@ -123,3 +196,7 @@ function withAndroidSplashBrand(config) {
 }
 
 module.exports = withAndroidSplashBrand;
+module.exports.patchSplashStyles = patchSplashStyles;
+module.exports.patchSplashBackgroundColor = patchSplashBackgroundColor;
+module.exports.writeSplashscreenDrawable = writeSplashscreenDrawable;
+module.exports.patchLauncherBackgroundDrawable = patchLauncherBackgroundDrawable;

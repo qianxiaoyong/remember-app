@@ -59,40 +59,9 @@ try {
     pnpm exec expo prebuild --platform android --clean
 
     Write-Step "Ensure native splash is color-only (logo only in JS overlay)"
-    $stylesFile = Join-Path $androidDir "app\src\main\res\values\styles.xml"
-    if (Test-Path $stylesFile) {
-      $stylesContent = Get-Content $stylesFile -Raw -Encoding UTF8
-      $stylesContent = [regex]::Replace(
-        $stylesContent,
-        '\s*<item name="windowSplashScreenAnimatedIcon">[^<]+</item>\s*',
-        "`n"
-      )
-      $stylesContent = $stylesContent.Replace(
-        "<item name=`"windowSplashScreenBackground`">@drawable/splashscreen</item>",
-        "<item name=`"windowSplashScreenBackground`">@color/splashscreen_background</item>"
-      )
-      $stylesContent = $stylesContent.Replace(
-        "android:windowSplashScreenBehavior`">icon_preferred",
-        "android:windowSplashScreenBehavior`">default"
-      )
-      [System.IO.File]::WriteAllText($stylesFile, $stylesContent, [System.Text.UTF8Encoding]::new($false))
-    }
-
-    $colorsFile = Join-Path $androidDir "app\src\main\res\values\colors.xml"
-    if (Test-Path $colorsFile) {
-      $colorsContent = Get-Content $colorsFile -Raw -Encoding UTF8
-      if ($colorsContent -match "<root>") {
-        Write-Step "Fix invalid colors.xml (<root> wrapper from expo prebuild)"
-        $resourcesMatch = [regex]::Match($colorsContent, "<resources>[\s\S]*?</resources>")
-        if (-not $resourcesMatch.Success) {
-          throw "colors.xml: could not extract <resources> block"
-        }
-        [System.IO.File]::WriteAllText(
-          $colorsFile,
-          ($resourcesMatch.Value + "`n"),
-          [System.Text.UTF8Encoding]::new($false)
-        )
-      }
+    node (Join-Path $BuildRoot "tools\mobile\patch-android-native-splash.cjs") $androidDir
+    if ($LASTEXITCODE -ne 0) {
+      throw "patch-android-native-splash.cjs failed with exit code $LASTEXITCODE"
     }
 
     $gradlePropsFile = Join-Path $androidDir "gradle.properties"
