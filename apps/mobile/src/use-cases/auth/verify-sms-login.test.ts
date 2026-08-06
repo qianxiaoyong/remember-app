@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 vi.mock('../../data/device/get-or-create-device-id', () => ({
-  getOrCreateDeviceId: vi.fn(async () => 'device-1'),
+  getOrCreateDeviceId: vi.fn(() => Promise.resolve('device-1')),
 }));
 
 vi.mock('../../data/api/auth-api', () => ({
@@ -9,18 +9,18 @@ vi.mock('../../data/api/auth-api', () => ({
 }));
 
 vi.mock('../../data/session/session-store', () => ({
-  clearSessionKickAlertPending: vi.fn(async () => undefined),
-  readSessionToken: vi.fn(async () => 'token-1'),
-  writeCachedSessionUser: vi.fn(async () => undefined),
-  writeSessionToken: vi.fn(async () => undefined),
+  clearSessionKickAlertPending: vi.fn(() => Promise.resolve(undefined)),
+  readSessionToken: vi.fn(() => Promise.resolve('token-1')),
+  writeCachedSessionUser: vi.fn(() => Promise.resolve(undefined)),
+  writeSessionToken: vi.fn(() => Promise.resolve(undefined)),
 }));
 
 vi.mock('../sync/restore-learning-states-from-snapshot', () => ({
-  restoreLearningStatesFromSnapshot: vi.fn(async () => 0),
+  restoreLearningStatesFromSnapshot: vi.fn(() => Promise.resolve(0)),
 }));
 
 vi.mock('../sync/upload-pending-sync-outbox', () => ({
-  uploadPendingSyncOutbox: vi.fn(async () => undefined),
+  uploadPendingSyncOutbox: vi.fn(() => Promise.resolve(undefined)),
 }));
 
 vi.mock('../../shell/library-refresh-signal', () => ({

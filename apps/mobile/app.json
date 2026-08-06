@@ -7,8 +7,8 @@
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/images/icon.png",
-      "resizeMode": "contain",
+      "image": "./assets/images/splash-full.png",
+      "resizeMode": "cover",
       "backgroundColor": "#F5F6FA"
     },
     "android": {
@@ -23,6 +23,14 @@
     "plugins": [
       "expo-router",
       [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash-full.png",
+          "resizeMode": "cover",
+          "backgroundColor": "#F5F6FA"
+        }
+      ],
+      [
         "expo-build-properties",
         {
           "android": {
@@ -33,6 +41,7 @@
       ],
       "./plugins/with-android-release-signing.js",
       "./plugins/with-android-cleartext-release.js",
+      "./plugins/with-android-splash-brand.js",
       "./plugins/with-android-bundle-in-debug.js",
       "expo-audio",
       "expo-secure-store"

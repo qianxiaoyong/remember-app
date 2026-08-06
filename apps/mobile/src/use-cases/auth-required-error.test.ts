@@ -1,9 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import {
-  AuthRequiredError,
-  isAuthRequiredError,
-  isSafeReturnToPath,
-} from './auth-required-error';
+import { AuthRequiredError, isAuthRequiredError, isSafeReturnToPath } from './auth-required-error';
 
 describe('AuthRequiredError', () => {
   it('isAuthRequiredError 识别 AuthRequiredError', () => {

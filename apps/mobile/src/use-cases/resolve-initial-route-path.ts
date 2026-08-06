@@ -1,13 +1,4 @@
-import { resolveAppLaunchTarget } from './resolve-app-launch-target';
-
-function resolveStudyLaunchPath(): string {
-  const launch = resolveAppLaunchTarget();
-  if (launch.kind === 'study') {
-    return `/study?packId=${launch.packId}`;
-  }
-  return '/library';
-}
-
+/** 冷启动一律进入首页（我的知识库），不在启动时跳转学习页。 */
 export function resolveInitialRoutePath(): string {
-  return resolveStudyLaunchPath();
+  return '/library';
 }

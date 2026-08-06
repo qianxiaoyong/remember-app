@@ -1,9 +1,5 @@
 export class AuthRequiredError extends Error {
   override readonly name = 'AuthRequiredError';
-
-  constructor(message: string) {
-    super(message);
-  }
 }
 
 export function isAuthRequiredError(error: unknown): error is AuthRequiredError {

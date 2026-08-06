@@ -43,42 +43,40 @@ export function useAuthSession(): AuthSessionState {
   }, []);
 
   useEffect(() => {
-    let cancelled = false;
+    const abortController = new AbortController();
+    const { signal } = abortController;
 
     void (async () => {
       const cachedUser = await readCachedSessionUser();
-      if (cancelled) {
-        return;
+      if (!signal.aborted) {
+        if (cachedUser) {
+          setUser(cachedUser);
+        }
+        setIsLoading(false);
       }
-      if (cachedUser) {
-        setUser(cachedUser);
-      }
-      setIsLoading(false);
 
       try {
         const sessionUser = await getCurrentSessionUser();
-        if (cancelled) {
-          return;
+        if (!signal.aborted) {
+          setUser(sessionUser);
+          setIsNotMainDevice(false);
         }
-        setUser(sessionUser);
-        setIsNotMainDevice(false);
       } catch (error) {
-        if (cancelled) {
-          return;
+        if (!signal.aborted) {
+          if (error instanceof ApiRequestError && error.code === 'NOT_MAIN_DEVICE') {
+            const cachedUserAfterKick = await readCachedSessionUser();
+            setUser(cachedUserAfterKick);
+            setIsNotMainDevice(true);
+            return;
+          }
+          setUser(null);
+          setIsNotMainDevice(false);
         }
-        if (error instanceof ApiRequestError && error.code === 'NOT_MAIN_DEVICE') {
-          const cachedUserAfterKick = await readCachedSessionUser();
-          setUser(cachedUserAfterKick);
-          setIsNotMainDevice(true);
-          return;
-        }
-        setUser(null);
-        setIsNotMainDevice(false);
       }
     })();
 
     return () => {
-      cancelled = true;
+      abortController.abort();
     };
   }, []);
 

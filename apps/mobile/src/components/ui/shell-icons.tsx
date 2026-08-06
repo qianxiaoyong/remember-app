@@ -43,7 +43,11 @@ export function SearchIcon(props: ShellIconProps): ReactElement {
 
 export function BackChevronIcon(props: ShellIconProps): ReactElement {
   return (
-    <AppIcon color={props.color ?? colors.textPrimary} name="chevron-back" size={props.size ?? 'sm'} />
+    <AppIcon
+      color={props.color ?? colors.textPrimary}
+      name="chevron-back"
+      size={props.size ?? 'sm'}
+    />
   );
 }
 
@@ -72,7 +76,11 @@ export function MoreVerticalIcon(props: ShellIconProps): ReactElement {
 
 export function UploadIcon(props: ShellIconProps): ReactElement {
   return (
-    <AppIcon color={props.color ?? colors.textPrimary} name="download-outline" size={props.size ?? 'md'} />
+    <AppIcon
+      color={props.color ?? colors.textPrimary}
+      name="download-outline"
+      size={props.size ?? 'md'}
+    />
   );
 }
 
@@ -106,6 +114,10 @@ export function SpeakerIcon(props: ShellIconProps): ReactElement {
 
 export function MusicNoteIcon(props: ShellIconProps): ReactElement {
   return (
-    <AppIcon color={props.color ?? colors.accent} name="musical-notes-outline" size={props.size ?? 'sm'} />
+    <AppIcon
+      color={props.color ?? colors.accent}
+      name="musical-notes-outline"
+      size={props.size ?? 'sm'}
+    />
   );
 }

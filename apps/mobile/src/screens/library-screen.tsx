@@ -9,6 +9,7 @@ import { AppHeader } from '../components/shell/app-header';
 import { ScreenScaffold } from '../components/shell/screen-scaffold';
 import { PrimaryButton } from '../components/ui/primary-button';
 import { useShellActions } from '../shell/shell-provider';
+import { useRestoreDrawerOnReturn } from '../hooks/use-restore-drawer-on-return';
 import { consumeLibraryNeedsRefresh } from '../shell/library-refresh-signal';
 import {
   readCatalogDiskCache,
@@ -23,6 +24,7 @@ import { spacing } from '../theme/spacing';
 export function LibraryScreen(): ReactElement {
   const router = useRouter();
   const { openDrawer } = useShellActions();
+  useRestoreDrawerOnReturn();
   const [refreshKey, setRefreshKey] = useState(0);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -36,9 +38,6 @@ export function LibraryScreen(): ReactElement {
 
   useFocusEffect(
     useCallback(() => {
-      void readCatalogDiskCache().then(() => {
-        bumpRefresh();
-      });
       if (consumeLibraryNeedsRefresh()) {
         bumpRefresh();
       }

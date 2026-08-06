@@ -14,6 +14,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import type { DrawerCommonFeatureItem, DrawerMenuItem } from '../../shell/drawer-menu-config';
 import { drawerCommonFeatures, drawerMenuItems } from '../../shell/drawer-menu-config';
+import { markDrawerReturnPending } from '../../shell/drawer-return-intent';
 import { DrawerAccountHeader, DrawerAccountHeaderLoading } from './drawer-account-header';
 import { DrawerCommonFeaturesBlock } from './drawer-common-features-block';
 import { DrawerMenuListBlock } from './drawer-menu-list-block';
@@ -29,6 +30,7 @@ const SLIDE_DURATION_MS = 260;
 interface AppDrawerProps {
   visible: boolean;
   onClose: () => void;
+  onDismiss: () => void;
 }
 
 export function AppDrawer(props: AppDrawerProps): ReactElement | null {
@@ -94,39 +96,44 @@ export function AppDrawer(props: AppDrawerProps): ReactElement | null {
     });
   }, [backdropAnim, panelWidth, props.visible, slideAnim]);
 
-  const handleMenuItemPress = (item: DrawerMenuItem): void => {
-    props.onClose();
+  const navigateFromDrawer = (route: string): void => {
+    markDrawerReturnPending();
+    props.onDismiss();
+    router.push(route);
+  };
 
+  const handleMenuItemPress = (item: DrawerMenuItem): void => {
     if (item.reserved) {
       Alert.alert('敬请期待', item.reservedMessage ?? '功能即将开放');
       return;
     }
 
     if (item.route) {
-      router.push(item.route);
+      navigateFromDrawer(item.route);
     }
   };
 
   const handleCommonFeaturePress = (item: DrawerCommonFeatureItem): void => {
-    props.onClose();
-
     if (item.reserved) {
       Alert.alert('敬请期待', item.reservedMessage ?? '功能即将开放');
       return;
     }
 
     if (item.id === 'redeem' && !user) {
+      markDrawerReturnPending();
+      props.onDismiss();
       router.push('/login?returnTo=%2Fredeem');
       return;
     }
 
     if (item.route) {
-      router.push(item.route);
+      navigateFromDrawer(item.route);
     }
   };
 
   const handleAccountPress = (): void => {
-    props.onClose();
+    markDrawerReturnPending();
+    props.onDismiss();
     if (user) {
       router.push('/account');
       return;

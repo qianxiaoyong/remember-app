@@ -20,9 +20,7 @@ export function DrawerMenuIcon(props: DrawerMenuIconProps): ReactElement {
   const iconName = DRAWER_MENU_ICON[props.itemId];
   return (
     <View style={{ alignItems: 'center', height: 20, justifyContent: 'center', width: 20 }}>
-      {iconName ? (
-        <AppIcon color={colors.textSecondary} name={iconName} size="sm" />
-      ) : null}
+      {iconName ? <AppIcon color={colors.textSecondary} name={iconName} size="sm" /> : null}
     </View>
   );
 }

@@ -1,4 +1,3 @@
-import { packCoverPalette } from '../theme/colors';
 import { listPackCards } from '../data/repositories/pack-card-repository';
 import { listLearningStatesForPackContent } from '../data/repositories/learning-state-for-pack-content';
 import { listInstalledPacks } from '../data/repositories/installed-pack-repository';
@@ -36,7 +35,6 @@ export interface InstalledPackSummary {
   libraryPresentation: LibraryPresentation;
   actionLabel: '开始学习' | '继续学习' | '开始阅读' | '继续阅读';
   statusHint: string;
-  coverColor: string;
 }
 
 export function getLibraryOverview(now: Date = new Date()): LibraryOverview {
@@ -80,7 +78,7 @@ export function listInstalledPackSummaries(now: Date = new Date()): InstalledPac
   const nowIso = now.toISOString();
   const activeSession = findActiveSessionWithPendingItems();
 
-  return listInstalledPacks().map((pack, index) => {
+  return listInstalledPacks().map((pack) => {
     const contentPackId = resolveContentPackId(pack.packId);
     const stats = aggregatePackStats(pack.sqlitePath, nowIso);
     const hasActiveTask = activeSession?.packId === contentPackId;
@@ -119,7 +117,6 @@ export function listInstalledPackSummaries(now: Date = new Date()): InstalledPac
         packId: pack.packId,
         todayTaskCount,
       }),
-      coverColor: packCoverPalette[index % packCoverPalette.length] ?? packCoverPalette[0],
     };
   });
 }

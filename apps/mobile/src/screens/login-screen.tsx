@@ -142,20 +142,20 @@ export function LoginScreen(): ReactElement {
               onPress={() => {
                 void handleSendCode();
               }}
-            style={[
-              styles.codeButton,
-              isSending || countdown > 0 ? styles.codeButtonDisabled : null,
-            ]}
-          >
-            {isSending ? (
-              <ActivityIndicator color={colors.surface} size="small" />
-            ) : (
-              <Text
-                style={[
-                  styles.codeButtonText,
-                  countdown > 0 ? styles.codeButtonTextDisabled : null,
-                ]}
-              >
+              style={[
+                styles.codeButton,
+                isSending || countdown > 0 ? styles.codeButtonDisabled : null,
+              ]}
+            >
+              {isSending ? (
+                <ActivityIndicator color={colors.surface} size="small" />
+              ) : (
+                <Text
+                  style={[
+                    styles.codeButtonText,
+                    countdown > 0 ? styles.codeButtonTextDisabled : null,
+                  ]}
+                >
                   {countdown > 0 ? `${String(countdown)}s` : '获取验证码'}
                 </Text>
               )}

@@ -21,7 +21,11 @@ const patterns = [
   },
   { rule: 'FOCUSED_TEST', value: /\.(?:only|skip)\s*\(/g },
 ];
-const commonJsRequireAllowedPrefixes = ['apps/mobile/plugins/'];
+const commonJsRequireAllowedPrefixes = [
+  'apps/mobile/plugins/',
+  'apps/mobile/index.js',
+  'tools/scripts/patch-android-splash.cjs',
+];
 const sourceLengthExcludedPrefixes = ['tools/pack-builder/scripts/generate-'];
 
 function findLine(text, index) {
