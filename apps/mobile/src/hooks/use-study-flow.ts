@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { normalizeSurfaceForm } from '@remember/contracts';
 import type { LexiconLookupResult } from '../data/repositories/lexicon-entry-repository';
 import type { PackCardSummary } from '../data/repositories/pack-card-repository';
-import { upsertPackBrowseBookmark } from '../data/repositories/pack-browse-bookmark-repository';
+import { upsertPackBrowseBookmark, deletePackBrowseBookmark } from '../data/repositories/pack-browse-bookmark-repository';
 import { getLearningStateByKnowledgeId } from '../data/repositories/learning-state-repository';
 import { getPackCardDetailUseCase } from '../use-cases/get-pack-card-detail';
 import { joinReviewPool } from '../use-cases/join-review-pool';
@@ -12,14 +12,17 @@ import { playPackAssetAudio } from '../use-cases/play-pack-asset-audio';
 import { resolvePackLibraryPresentation } from '../use-cases/resolve-pack-library-presentation';
 import { resolveStoryReaderEntry } from '../use-cases/resolve-story-reader-entry';
 import { resumePackBrowse } from '../use-cases/resume-pack-browse';
+import { deleteStoryReadingBookmark } from '../data/repositories/story-reading-bookmark-repository';
 import { saveStoryReadingBookmark } from '../use-cases/save-story-reading-bookmark';
 import { skipPackCard } from '../use-cases/skip-pack-card';
 import { updateReviewPoolFromPack } from '../use-cases/update-review-pool-from-pack';
+import { getCurrentCardHeadword } from '../use-cases/get-review-interval-labels';
 import {
   isLexiconItemSavedUseCase,
   toggleSavedLexiconItem,
 } from '../use-cases/toggle-saved-lexicon-item';
-import { getCurrentCardHeadword } from '../use-cases/get-review-interval-labels';
+import { getPackBrowseCompleteSummary } from '../use-cases/get-pack-browse-complete-summary';
+import type { PackBrowseCompleteSummary } from '../use-cases/get-pack-browse-complete-summary';
 
 export function useStudyFlow(
   packId: string,
@@ -46,10 +49,16 @@ export function useStudyFlow(
   const [lexiconSaved, setLexiconSaved] = useState(false);
   const [lexiconSelectedSurfaceForm, setLexiconSelectedSurfaceForm] = useState<string | null>(null);
   const [audioMessage, setAudioMessage] = useState<string | null>(null);
+  const [browseCompleteVisible, setBrowseCompleteVisible] = useState(false);
+  const [browseCompleteSummary, setBrowseCompleteSummary] = useState<PackBrowseCompleteSummary | null>(
+    null,
+  );
 
   const startBrowse = useCallback(() => {
     setMessage(null);
     setRevealed(false);
+    setBrowseCompleteVisible(false);
+    setBrowseCompleteSummary(null);
     try {
       const browse = resumePackBrowse({ packId });
       setBrowseCards(browse.cards);
@@ -126,6 +135,8 @@ export function useStudyFlow(
       return;
     }
     setRevealed(false);
+    setBrowseCompleteSummary(getPackBrowseCompleteSummary(packId));
+    setBrowseCompleteVisible(true);
   }, [browseCards, currentIndex, isBrowseMode, packId]);
 
   const handleJoinReview = useCallback(() => {
@@ -261,6 +272,23 @@ export function useStudyFlow(
     });
   }, [lexiconEntry]);
 
+  const restartFromBeginning = useCallback(() => {
+    if (isReaderMode) {
+      deleteStoryReadingBookmark(packId);
+      setReaderEntry(resolveStoryReaderEntry(packId, null));
+      return;
+    }
+    deletePackBrowseBookmark(packId);
+    setCurrentIndex(0);
+    setBrowseCompleteVisible(false);
+    setBrowseCompleteSummary(null);
+    setRevealed(false);
+  }, [isReaderMode, packId]);
+
+  const dismissBrowseComplete = useCallback(() => {
+    setBrowseCompleteVisible(false);
+  }, []);
+
   return {
     isReaderMode,
     isBrowseMode,
@@ -290,6 +318,18 @@ export function useStudyFlow(
     handlePlayAudio,
     handlePlayPrimaryAudio,
     handlePlayExampleAudio,
+    browseCompleteVisible,
+    browseCompleteSummary,
+    restartFromBeginning,
+    dismissBrowseComplete,
+    refreshInReviewPool: () => {
+      if (!currentKnowledgeId) {
+        setInReviewPool(false);
+        return;
+      }
+      const state = getLearningStateByKnowledgeId(currentKnowledgeId);
+      setInReviewPool(state?.inReviewPool ?? false);
+    },
     closeLexicon: () => {
       setLexiconVisible(false);
       setLexiconSelectedSurfaceForm(null);

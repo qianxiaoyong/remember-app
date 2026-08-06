@@ -34,3 +34,10 @@ export function upsertPackBrowseBookmark(
     [input.packId, input.knowledgeId, input.sortOrder, input.updatedAt],
   );
 }
+
+export function deletePackBrowseBookmark(
+  packId: string,
+  db: SQLiteDatabase = openUserDatabase(),
+): void {
+  db.runSync(`DELETE FROM pack_browse_bookmarks WHERE packId = ?`, [packId]);
+}
