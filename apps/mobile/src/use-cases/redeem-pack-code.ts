@@ -1,7 +1,7 @@
 import { readSessionToken } from '../data/session/session-store';
 import { redeemPackCodeRequest } from '../data/api/redemption-api';
 import { ApiNetworkError, ApiRequestError } from '../data/api/api-client';
-import { AuthRequiredError } from './auth-required-error';
+import { AuthRequiredError, throwIfUnauthorized } from './auth-required-error';
 import type { RedeemCodeResponse } from '@remember/contracts';
 
 const UNAUTHORIZED_MESSAGE = '请先登录后再兑换';
@@ -28,6 +28,7 @@ export async function redeemPackCode(code: string): Promise<RedeemCodeResponse> 
       throw new Error('无法连接服务器，请检查网络后重试', { cause: error });
     }
     if (error instanceof ApiRequestError) {
+      throwIfUnauthorized(error, UNAUTHORIZED_MESSAGE);
       const base = REDEMPTION_ERROR_MESSAGES[error.code] ?? error.message;
       if (error.code === 'REDEMPTION_CODE_INVALID') {
         throw new Error(`${base}\n${REDEMPTION_INVALID_HINT}`, { cause: error });

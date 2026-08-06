@@ -17,6 +17,7 @@ export default function RootLayout(): ReactElement {
       {splashVisible ? (
         <View pointerEvents="none" style={styles.splashOverlay}>
           <Image
+            onError={markSplashOverlayReady}
             onLoadEnd={markSplashOverlayReady}
             resizeMode="cover"
             source={splashImage}

@@ -10,7 +10,7 @@ import { installPackFromZipBytes } from '../data/pack/install-pack-from-zip';
 import type { InstalledPackRow } from '../data/repositories/installed-pack-repository';
 import { writeOfflineLicenseExpiry } from '../data/offline-license/offline-license-store';
 import { aliasInstalledPack } from './alias-installed-pack';
-import { AuthRequiredError } from './auth-required-error';
+import { AuthRequiredError, throwIfUnauthorized } from './auth-required-error';
 import { mapPackInstallError } from './map-pack-install-error';
 
 const UNAUTHORIZED_MESSAGE = '请先登录后再安装';
@@ -56,6 +56,7 @@ export async function installPackFromNetwork(catalogPackId: string): Promise<Ins
     return installed;
   } catch (error) {
     if (error instanceof ApiRequestError) {
+      throwIfUnauthorized(error, UNAUTHORIZED_MESSAGE);
       throw new Error(DOWNLOAD_ERROR_MESSAGES[error.code] ?? error.message, { cause: error });
     }
     throw mapPackInstallError(error);

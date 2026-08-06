@@ -14,6 +14,7 @@ import {
 import { useRouter } from 'expo-router';
 import { ScreenScaffold } from '../components/shell/screen-scaffold';
 import { redeemPackCode } from '../use-cases/redeem-pack-code';
+import { isAuthRequiredError } from '../use-cases/auth-required-error';
 import { useAuthSession } from '../hooks/use-auth-session';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
@@ -24,17 +25,21 @@ export function RedeemCodeScreen(): ReactElement {
   const [code, setCode] = useState('');
   const [isBusy, setIsBusy] = useState(false);
 
+  const promptLogin = (): void => {
+    Alert.alert('需要登录', '兑换知识库需要先登录账号，登录后可继续兑换。', [
+      { text: '取消', style: 'cancel' },
+      {
+        text: '去登录',
+        onPress: () => {
+          router.push('/login?returnTo=%2Fredeem');
+        },
+      },
+    ]);
+  };
+
   const handleSubmit = (): void => {
     if (!user) {
-      Alert.alert('需要登录', '兑换知识库需要先登录账号，登录后可继续兑换。', [
-        { text: '取消', style: 'cancel' },
-        {
-          text: '去登录',
-          onPress: () => {
-            router.push('/login?returnTo=%2Fredeem');
-          },
-        },
-      ]);
+      promptLogin();
       return;
     }
 
@@ -55,6 +60,10 @@ export function RedeemCodeScreen(): ReactElement {
         Alert.alert('兑换成功', '知识库已开通，可在市场详情页安装。');
         setCode('');
       } catch (error) {
+        if (isAuthRequiredError(error)) {
+          promptLogin();
+          return;
+        }
         const message = error instanceof Error ? error.message : '兑换失败';
         Alert.alert('兑换失败', message);
       } finally {
