@@ -1,9 +1,14 @@
 import type { ReactElement } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useCallback, useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import { ScreenScaffold } from '../components/shell/screen-scaffold';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { LexiconPopup } from '../components/lexicon-popup';
 import { ReviewOutcomeBar } from '../components/review/review-outcome-bar';
+import { ReviewSettingsSheet } from '../components/review/review-settings-sheet';
 import { ReviewSourcePackLabel } from '../components/review/review-source-pack-label';
+import { ScreenScaffold } from '../components/shell/screen-scaffold';
+import { StudyMoreMenu } from '../components/study/study-more-menu';
 import { PrimaryButton } from '../components/ui/primary-button';
 import { useReviewFlow } from '../hooks/use-review-flow';
 import { VocabularyStudyPanel } from '../learning/card-types/vocabulary/vocabulary-study-panel';
@@ -12,6 +17,7 @@ import { spacing } from '../theme/spacing';
 
 export function ReviewScreen(): ReactElement {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   const {
     session,
     summary,
@@ -19,15 +25,35 @@ export function ReviewScreen(): ReactElement {
     isSubmitting,
     message,
     reviewContext,
+    lexiconEntry,
+    lexiconVisible,
+    lexiconSaved,
+    lexiconSelectedSurfaceForm,
+    audioMessage,
     setRevealed,
     handlePassed,
     handleFailed,
     setDailyReviewLimit,
     startReview,
+    openLexicon,
+    handleToggleSave,
+    handlePlayLexiconAudio,
+    handlePlayPrimaryAudio,
+    handlePlayExampleAudio,
+    closeLexicon,
   } = useReviewFlow();
+
+  const [settingsVisible, setSettingsVisible] = useState(false);
+  const [moreVisible, setMoreVisible] = useState(false);
 
   const hasDueItems = summary.dueTotal > 0;
   const hasSession = Boolean(session?.currentItem && reviewContext?.cardDetail);
+  const moreMenuAnchorTop = insets.top + spacing.sm + spacing.touchTarget + spacing.xs;
+  const moreMenuAnchorRight = spacing.lg;
+
+  const goHome = useCallback((): void => {
+    router.replace('/library');
+  }, [router]);
 
   return (
     <ScreenScaffold
@@ -40,43 +66,14 @@ export function ReviewScreen(): ReactElement {
           />
         ) : null
       }
+      safeAreaEdges={['left', 'right']}
     >
       <View style={styles.root}>
-        <Text style={styles.title}>复习</Text>
-        <Text style={styles.meta}>
-          今日已练 {summary.todayReviewCompleted} / 限额 {summary.dailyReviewLimit}
-        </Text>
-        <Text style={styles.meta}>到期共 {summary.dueTotal} 词</Text>
-        <Text style={styles.meta}>今日新入池 {summary.joinedPoolCountToday} 词</Text>
-
-        <View style={styles.limitRow}>
-          <Pressable
-            accessibilityRole="button"
-            onPress={() => {
-              setDailyReviewLimit(summary.dailyReviewLimit - 1);
-            }}
-            style={styles.stepperButton}
-          >
-            <Text style={styles.stepperLabel}>-</Text>
-          </Pressable>
-          <Text style={styles.limitValue}>每日 {summary.dailyReviewLimit} 词</Text>
-          <Pressable
-            accessibilityRole="button"
-            onPress={() => {
-              setDailyReviewLimit(summary.dailyReviewLimit + 1);
-            }}
-            style={styles.stepperButton}
-          >
-            <Text style={styles.stepperLabel}>+</Text>
-          </Pressable>
-        </View>
-
-        {message ? <Text style={styles.error}>{message}</Text> : null}
+        {message ? <Text style={styles.message}>{message}</Text> : null}
 
         {!hasDueItems ? (
           <View style={styles.empty}>
             <Text style={styles.emptyText}>暂无到期复习词</Text>
-            <Text style={styles.emptyHint}>在学习里把不会的加入复习</Text>
             <PrimaryButton
               label="去学习"
               onPress={() => {
@@ -90,21 +87,23 @@ export function ReviewScreen(): ReactElement {
             <PrimaryButton label="刷新" onPress={startReview} />
           </View>
         ) : reviewContext?.cardDetail?.cardType === 'vocabulary' ? (
-          <View style={styles.cardWrap}>
-            <ReviewSourcePackLabel displayName={reviewContext.sourcePackDisplayName} />
+          <View style={styles.sessionRoot}>
+            <View pointerEvents="none" style={[styles.sourceLabel, { top: insets.top + spacing.xs }]}>
+              <ReviewSourcePackLabel displayName={reviewContext.sourcePackDisplayName} />
+            </View>
             <VocabularyStudyPanel
               content={reviewContext.cardDetail.content}
-              lexiconSelectedSurfaceForm={null}
-              onHomePress={() => {
-                router.replace('/library');
+              lexiconSelectedSurfaceForm={lexiconSelectedSurfaceForm}
+              onHomePress={goHome}
+              onMorePress={() => {
+                setMoreVisible(true);
               }}
-              onMorePress={() => undefined}
-              onPlayExampleAudio={() => undefined}
-              onPlayPrimaryAudio={() => undefined}
+              onPlayExampleAudio={handlePlayExampleAudio}
+              onPlayPrimaryAudio={handlePlayPrimaryAudio}
               onReveal={() => {
                 setRevealed(true);
               }}
-              onTokenPress={() => undefined}
+              onTokenPress={openLexicon}
               revealed={revealed}
             />
           </View>
@@ -112,71 +111,84 @@ export function ReviewScreen(): ReactElement {
           <Text style={styles.emptyHint}>无法加载复习卡片</Text>
         )}
       </View>
+
+      <LexiconPopup
+        audioMessage={audioMessage}
+        entry={lexiconEntry}
+        isSaved={lexiconSaved}
+        onClose={closeLexicon}
+        onPlayAudio={handlePlayLexiconAudio}
+        onToggleSave={handleToggleSave}
+        visible={lexiconVisible}
+      />
+
+      <StudyMoreMenu
+        anchorRight={moreMenuAnchorRight}
+        anchorTop={moreMenuAnchorTop}
+        items={[{ id: 'settings', label: '复习设置' }]}
+        onClose={() => {
+          setMoreVisible(false);
+        }}
+        onItemPress={(itemId) => {
+          setMoreVisible(false);
+          if (itemId === 'settings') {
+            setSettingsVisible(true);
+          }
+        }}
+        visible={moreVisible}
+      />
+
+      <ReviewSettingsSheet
+        dailyReviewLimit={summary.dailyReviewLimit}
+        dueTotal={summary.dueTotal}
+        joinedPoolCountToday={summary.joinedPoolCountToday}
+        onChangeDailyLimit={setDailyReviewLimit}
+        onClose={() => {
+          setSettingsVisible(false);
+        }}
+        todayReviewCompleted={summary.todayReviewCompleted}
+        visible={settingsVisible}
+      />
     </ScreenScaffold>
   );
 }
 
 const styles = StyleSheet.create({
   root: {
+    backgroundColor: colors.background,
     flex: 1,
-    padding: spacing.lg,
   },
-  title: {
-    color: colors.textPrimary,
-    fontSize: 24,
-    fontWeight: '700',
-    marginBottom: spacing.sm,
+  message: {
+    color: colors.studyRatingForgot,
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.sm,
   },
-  meta: {
-    color: colors.textSecondary,
-    fontSize: 14,
-    marginBottom: spacing.xs,
+  sessionRoot: {
+    flex: 1,
   },
-  limitRow: {
+  sourceLabel: {
     alignItems: 'center',
-    flexDirection: 'row',
-    gap: spacing.md,
-    marginBottom: spacing.lg,
-    marginTop: spacing.sm,
-  },
-  stepperButton: {
-    alignItems: 'center',
-    backgroundColor: colors.surface,
-    borderColor: colors.border,
-    borderRadius: 8,
-    borderWidth: 1,
-    height: 36,
-    justifyContent: 'center',
-    width: 36,
-  },
-  stepperLabel: {
-    color: colors.textPrimary,
-    fontSize: 18,
-    fontWeight: '700',
-  },
-  limitValue: {
-    color: colors.textPrimary,
-    fontSize: 15,
-    fontWeight: '600',
+    left: 0,
+    position: 'absolute',
+    right: 0,
+    zIndex: 2,
   },
   empty: {
-    gap: spacing.md,
-    marginTop: spacing.xl,
+    alignItems: 'center',
+    flex: 1,
+    gap: spacing.lg,
+    justifyContent: 'center',
+    paddingHorizontal: spacing.lg,
   },
   emptyText: {
     color: colors.textPrimary,
     fontSize: 18,
     fontWeight: '600',
+    textAlign: 'center',
   },
   emptyHint: {
     color: colors.textSecondary,
     fontSize: 14,
-  },
-  cardWrap: {
-    flex: 1,
-  },
-  error: {
-    color: colors.studyRatingForgot,
-    marginBottom: spacing.sm,
+    padding: spacing.lg,
   },
 });
