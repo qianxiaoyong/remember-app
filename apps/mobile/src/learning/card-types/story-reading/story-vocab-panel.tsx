@@ -9,7 +9,7 @@ import { tierAccentColor } from './tier-colors';
 
 interface StoryVocabPanelProps {
   sidebar: StorySidebarEntry[];
-  packId?: string;
+  packId?: string | undefined;
 }
 
 export function StoryVocabPanel(props: StoryVocabPanelProps): ReactElement {

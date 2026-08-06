@@ -14,7 +14,7 @@ import { tierAccentColor } from './tier-colors';
 interface StoryVocabSheetProps {
   visible: boolean;
   entry: StorySidebarEntry | null;
-  packId?: string;
+  packId?: string | undefined;
   onClose: () => void;
 }
 
