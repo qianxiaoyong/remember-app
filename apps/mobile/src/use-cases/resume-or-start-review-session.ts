@@ -1,9 +1,7 @@
 import { buildReviewSessionPlan, formatLocalReviewDate } from '@remember/domain';
 import { createRecordId } from '../data/create-record-id';
 import { listDueReviewPoolItems } from '../data/repositories/learning-state-repository';
-import {
-  getReviewDailyStats,
-} from '../data/repositories/review-daily-stats-repository';
+import { getReviewDailyStats } from '../data/repositories/review-daily-stats-repository';
 import {
   insertQueueItems,
   insertStudySession,

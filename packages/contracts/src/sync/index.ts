@@ -1,6 +1,5 @@
 export {
   reviewOutcomeSchema,
-  reviewRatingSchema,
   syncLearningStatePayloadSchema,
   type ReviewOutcome,
   type SyncLearningStatePayload,

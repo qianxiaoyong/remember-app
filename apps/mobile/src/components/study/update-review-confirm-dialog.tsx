@@ -16,9 +16,7 @@ export function UpdateReviewConfirmDialog(props: UpdateReviewConfirmDialogProps)
       <View style={styles.backdrop}>
         <View style={styles.card}>
           <Text style={styles.title}>更新复习</Text>
-          <Text style={styles.body}>
-            将用当前学习包的内容替换复习池中的该词，复习进度会清零。
-          </Text>
+          <Text style={styles.body}>将用当前学习包的内容替换复习池中的该词，复习进度会清零。</Text>
           <View style={styles.actions}>
             <Pressable accessibilityRole="button" onPress={props.onCancel} style={styles.cancel}>
               <Text style={styles.cancelLabel}>取消</Text>

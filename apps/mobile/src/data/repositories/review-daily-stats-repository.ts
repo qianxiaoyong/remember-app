@@ -31,24 +31,24 @@ export function getReviewDailyStats(
   };
 }
 
-function upsertReviewDailyStatsCounter(
-  localDate: string,
-  column: 'joinedPoolCount' | 'reviewCompletedCount',
-  updatedAt: string,
-  db: SQLiteDatabase,
-): void {
-  db.runSync(
+function upsertReviewDailyStatsCounter(input: {
+  localDate: string;
+  column: 'joinedPoolCount' | 'reviewCompletedCount';
+  updatedAt: string;
+  db: SQLiteDatabase;
+}): void {
+  input.db.runSync(
     `INSERT INTO review_daily_stats (localDate, joinedPoolCount, reviewCompletedCount, updatedAt)
      VALUES (?, 0, 0, ?)
      ON CONFLICT(localDate) DO NOTHING`,
-    [localDate, updatedAt],
+    [input.localDate, input.updatedAt],
   );
-  db.runSync(
+  input.db.runSync(
     `UPDATE review_daily_stats
-     SET ${column} = ${column} + 1,
+     SET ${input.column} = ${input.column} + 1,
          updatedAt = ?
      WHERE localDate = ?`,
-    [updatedAt, localDate],
+    [input.updatedAt, input.localDate],
   );
 }
 
@@ -57,7 +57,7 @@ export function incrementJoinedPoolCount(
   updatedAt: string,
   db: SQLiteDatabase = openUserDatabase(),
 ): void {
-  upsertReviewDailyStatsCounter(localDate, 'joinedPoolCount', updatedAt, db);
+  upsertReviewDailyStatsCounter({ localDate, column: 'joinedPoolCount', updatedAt, db });
 }
 
 export function incrementReviewCompletedCount(
@@ -65,5 +65,5 @@ export function incrementReviewCompletedCount(
   updatedAt: string,
   db: SQLiteDatabase = openUserDatabase(),
 ): void {
-  upsertReviewDailyStatsCounter(localDate, 'reviewCompletedCount', updatedAt, db);
+  upsertReviewDailyStatsCounter({ localDate, column: 'reviewCompletedCount', updatedAt, db });
 }

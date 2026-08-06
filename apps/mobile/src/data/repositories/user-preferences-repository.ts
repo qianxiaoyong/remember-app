@@ -18,19 +18,20 @@ export function getUserPreference(
   return row?.value ?? defaultValue;
 }
 
-export function setUserPreference(
-  key: string,
-  value: string,
-  updatedAt: string,
-  db: SQLiteDatabase = openUserDatabase(),
-): void {
+export function setUserPreference(input: {
+  key: string;
+  value: string;
+  updatedAt: string;
+  db?: SQLiteDatabase;
+}): void {
+  const db = input.db ?? openUserDatabase();
   db.runSync(
     `INSERT INTO user_preferences (key, value, updatedAt)
      VALUES (?, ?, ?)
      ON CONFLICT(key) DO UPDATE SET
        value = excluded.value,
        updatedAt = excluded.updatedAt`,
-    [key, value, updatedAt],
+    [input.key, input.value, input.updatedAt],
   );
 }
 

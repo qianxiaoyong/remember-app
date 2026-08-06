@@ -29,7 +29,7 @@ export function confirmReviewOutcome(input: {
   const now = input.now ?? new Date();
   const timeZone = getDeviceTimeZone();
   const activeSession = findActiveReviewSession();
-  if (!activeSession || activeSession.sessionId !== input.sessionId) {
+  if (activeSession?.sessionId !== input.sessionId) {
     throw new Error('no active review session');
   }
 

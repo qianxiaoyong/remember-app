@@ -23,7 +23,8 @@ export function prepareShellTabTransitionFromTo(
   fromTab: 'library' | 'review' | 'market',
   toTab: 'library' | 'review' | 'market',
 ): void {
-  pendingTransition = TAB_ORDER[toTab] >= TAB_ORDER[fromTab] ? 'slide_from_right' : 'slide_from_left';
+  pendingTransition =
+    TAB_ORDER[toTab] >= TAB_ORDER[fromTab] ? 'slide_from_right' : 'slide_from_left';
 }
 
 export function consumeShellTabTransition(): ShellTabTransition {

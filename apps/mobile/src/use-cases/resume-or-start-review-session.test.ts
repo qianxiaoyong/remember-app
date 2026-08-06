@@ -36,7 +36,8 @@ vi.mock('../data/repositories/study-session-repository', () => ({
 }));
 
 vi.mock('../data/create-record-id', () => ({
-  createRecordId: vi.fn()
+  createRecordId: vi
+    .fn()
     .mockReturnValueOnce('session-1')
     .mockReturnValueOnce('queue-1')
     .mockReturnValueOnce('queue-2'),

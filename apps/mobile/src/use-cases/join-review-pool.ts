@@ -16,9 +16,7 @@ import { openUserDatabase } from '../data/user-db/open-user-database';
 import { getDeviceTimeZone } from '../lib/get-device-time-zone';
 import { resolveContentPackId } from './resolve-content-pack-id';
 
-export type JoinReviewPoolResult =
-  | { status: 'created' }
-  | { status: 'already_in_pool' };
+export type JoinReviewPoolResult = { status: 'created' } | { status: 'already_in_pool' };
 
 export function buildReviewPoolLearningRow(input: {
   knowledgeId: string;

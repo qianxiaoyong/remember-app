@@ -22,9 +22,10 @@ export function SearchScreen(props: SearchScreenProps): ReactElement {
   const router = useRouter();
   const [query, setQuery] = useState('');
   const [message, setMessage] = useState<string | null>(null);
-  const [updateTarget, setUpdateTarget] = useState<{ knowledgeId: string; headword: string } | null>(
-    null,
-  );
+  const [updateTarget, setUpdateTarget] = useState<{
+    knowledgeId: string;
+    headword: string;
+  } | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
 
   const trimmedQuery = query.trim();

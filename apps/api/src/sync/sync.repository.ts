@@ -102,7 +102,7 @@ export class SyncRepository {
 
 type ApplyResult = 'APPLIED' | 'STALE';
 
-type ExistingLearningState = {
+interface ExistingLearningState {
   clientVersion: number;
   boxLevel: number;
   dueAt: Date;
@@ -114,7 +114,7 @@ type ExistingLearningState = {
   intervalDays: number;
   repetitions: number;
   packId: string;
-};
+}
 
 async function applyLearningStateItem(
   tx: Prisma.TransactionClient,
@@ -132,10 +132,7 @@ async function applyLearningStateItem(
           item.clientVersion >= existing.clientVersion
             ? item.payload.firstAddedFromPackId
             : existing.firstAddedFromPackId,
-        lastSeenInPackId:
-          item.payload.lastSeenInPackId ??
-          existing.lastSeenInPackId ??
-          null,
+        lastSeenInPackId: item.payload.lastSeenInPackId ?? existing.lastSeenInPackId ?? null,
         consecutiveLevel3Passes:
           item.clientVersion >= existing.clientVersion
             ? (item.payload.consecutiveLevel3Passes ?? 0)

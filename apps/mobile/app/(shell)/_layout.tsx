@@ -37,8 +37,7 @@ function ShellCapsuleTabBar(): ReactElement {
       activeTab={activeTab}
       onTabPress={(tab) => {
         closeDrawer();
-        const target =
-          tab === 'market' ? '/market' : tab === 'review' ? '/review' : '/library';
+        const target = tab === 'market' ? '/market' : tab === 'review' ? '/review' : '/library';
         if (pathname.includes(target)) {
           return;
         }

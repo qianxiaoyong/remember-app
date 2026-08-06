@@ -4,10 +4,7 @@ vi.mock('../user-db/open-user-database', () => ({
   openUserDatabase: vi.fn(),
 }));
 
-import {
-  countDueReviewPoolItems,
-  listDueReviewPoolItems,
-} from './learning-state-repository';
+import { countDueReviewPoolItems, listDueReviewPoolItems } from './learning-state-repository';
 
 describe('learning-state-repository review pool queries', () => {
   it('listDueReviewPoolItems 仅返回到期且在池内的词条', () => {

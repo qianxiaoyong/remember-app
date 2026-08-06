@@ -40,7 +40,7 @@ describe('mapSm2IntervalToBoxLevel', () => {
 
 describe('runSm2ToReviewPoolMigration', () => {
   it('按 SM-2 字段更新复习池列', () => {
-    const updates: Array<Record<string, unknown>> = [];
+    const updates: Record<string, unknown>[] = [];
     const db = {
       getAllSync: () => [
         {

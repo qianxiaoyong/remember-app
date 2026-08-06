@@ -9,10 +9,7 @@ export interface PackBrowseState {
   initialIndex: number;
 }
 
-export function resumePackBrowse(input: {
-  packId: string;
-  now?: Date;
-}): PackBrowseState {
+export function resumePackBrowse(input: { packId: string; now?: Date }): PackBrowseState {
   const installedPack = getInstalledPack(input.packId);
   if (!installedPack) {
     throw new Error(`pack not installed: ${input.packId}`);

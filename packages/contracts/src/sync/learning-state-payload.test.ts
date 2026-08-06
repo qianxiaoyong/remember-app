@@ -1,8 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import {
-  reviewOutcomeSchema,
-  syncLearningStatePayloadSchema,
-} from './learning-state-payload.js';
+import { reviewOutcomeSchema, syncLearningStatePayloadSchema } from './learning-state-payload.js';
 
 const sampleV2Payload = {
   inReviewPool: true,

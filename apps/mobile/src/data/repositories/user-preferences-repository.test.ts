@@ -37,8 +37,18 @@ describe('user-preferences-repository', () => {
       }),
     };
 
-    setUserPreference(PREFERENCE_DAILY_REVIEW_LIMIT, '30', '2026-08-06T00:00:00.000Z', db as never);
-    setUserPreference(PREFERENCE_PACK_OPEN_POSITION, 'start', '2026-08-06T00:00:00.000Z', db as never);
+    setUserPreference({
+      key: PREFERENCE_DAILY_REVIEW_LIMIT,
+      value: '30',
+      updatedAt: '2026-08-06T00:00:00.000Z',
+      db: db as never,
+    });
+    setUserPreference({
+      key: PREFERENCE_PACK_OPEN_POSITION,
+      value: 'start',
+      updatedAt: '2026-08-06T00:00:00.000Z',
+      db: db as never,
+    });
 
     expect(getDailyReviewLimit(db as never)).toBe(30);
     expect(getPackOpenPosition(db as never)).toBe('start');

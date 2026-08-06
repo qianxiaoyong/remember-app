@@ -18,10 +18,7 @@ export interface ReviewSessionPlan {
   remainingDueCount: number;
 }
 
-function compareDueItems(
-  left: ReviewSessionDueItem,
-  right: ReviewSessionDueItem,
-): number {
+function compareDueItems(left: ReviewSessionDueItem, right: ReviewSessionDueItem): number {
   const dueCompare = left.dueAt.localeCompare(right.dueAt);
   if (dueCompare !== 0) {
     return dueCompare;
@@ -29,9 +26,7 @@ function compareDueItems(
   return left.knowledgeId.localeCompare(right.knowledgeId);
 }
 
-export function buildReviewSessionPlan(
-  input: BuildReviewSessionPlanInput,
-): ReviewSessionPlan {
+export function buildReviewSessionPlan(input: BuildReviewSessionPlanInput): ReviewSessionPlan {
   const endOfDay = endOfLocalReviewDay(input.now, input.timeZone);
   const endOfDayMs = endOfDay.getTime();
 
@@ -39,13 +34,8 @@ export function buildReviewSessionPlan(
     .filter((item) => new Date(item.dueAt).getTime() <= endOfDayMs)
     .sort(compareDueItems);
 
-  const remainingQuota = Math.max(
-    input.dailyReviewLimit - input.todayReviewCompletedCount,
-    0,
-  );
-  const sessionKnowledgeIds = dueNowItems
-    .slice(0, remainingQuota)
-    .map((item) => item.knowledgeId);
+  const remainingQuota = Math.max(input.dailyReviewLimit - input.todayReviewCompletedCount, 0);
+  const sessionKnowledgeIds = dueNowItems.slice(0, remainingQuota).map((item) => item.knowledgeId);
 
   return {
     sessionKnowledgeIds,

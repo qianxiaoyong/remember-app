@@ -1,11 +1,7 @@
 import { formatLocalReviewDate } from '@remember/domain';
 import { countDueReviewPoolItems } from '../data/repositories/learning-state-repository';
-import {
-  getReviewDailyStats,
-} from '../data/repositories/review-daily-stats-repository';
-import {
-  getDailyReviewLimit,
-} from '../data/repositories/user-preferences-repository';
+import { getReviewDailyStats } from '../data/repositories/review-daily-stats-repository';
+import { getDailyReviewLimit } from '../data/repositories/user-preferences-repository';
 import { getDeviceTimeZone } from '../lib/get-device-time-zone';
 
 export interface ReviewTabSummary {

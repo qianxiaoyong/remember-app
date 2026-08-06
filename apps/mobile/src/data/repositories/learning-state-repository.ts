@@ -184,9 +184,7 @@ export function listDueReviewPoolItems(
      ORDER BY dueAt ASC, knowledgeId ASC`,
   );
 
-  return rows
-    .map(mapRow)
-    .filter((row) => isDueByEndOfLocalDay(row.dueAt, now, timeZone));
+  return rows.map(mapRow).filter((row) => isDueByEndOfLocalDay(row.dueAt, now, timeZone));
 }
 
 export function countDueReviewPoolItems(

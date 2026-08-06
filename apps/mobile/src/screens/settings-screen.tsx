@@ -17,7 +17,11 @@ export function SettingsScreen(): ReactElement {
   const openPosition = getPackOpenPosition();
 
   const handleSelect = (value: PackOpenPosition): void => {
-    setUserPreference(PREFERENCE_PACK_OPEN_POSITION, value, new Date().toISOString());
+    setUserPreference({
+      key: PREFERENCE_PACK_OPEN_POSITION,
+      value,
+      updatedAt: new Date().toISOString(),
+    });
     router.replace('/settings');
   };
 
@@ -53,11 +57,7 @@ export function SettingsScreen(): ReactElement {
   );
 }
 
-function OptionRow(props: {
-  label: string;
-  selected: boolean;
-  onPress: () => void;
-}): ReactElement {
+function OptionRow(props: { label: string; selected: boolean; onPress: () => void }): ReactElement {
   return (
     <Pressable accessibilityRole="button" onPress={props.onPress} style={styles.optionRow}>
       <Text style={styles.optionLabel}>{props.label}</Text>

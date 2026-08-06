@@ -40,10 +40,7 @@ function clampBoxLevel(value: number): BoxLevel {
   return value as BoxLevel;
 }
 
-function passedIntervalDays(
-  previousLevel: BoxLevel,
-  consecutiveLevel3Passes: number,
-): number {
+function passedIntervalDays(previousLevel: BoxLevel, consecutiveLevel3Passes: number): number {
   if (previousLevel < 3) {
     return PASSED_INTERVAL_DAYS[previousLevel as 0 | 1 | 2];
   }
@@ -57,11 +54,7 @@ function passedIntervalDays(
   return 90;
 }
 
-function dueAtAfterPassedDays(
-  now: Date,
-  days: number,
-  timeZone: string,
-): string {
+function dueAtAfterPassedDays(now: Date, days: number, timeZone: string): string {
   const reviewDayStart = startOfLocalReviewDay(now, timeZone);
   const dueDate = addLocalReviewDays(reviewDayStart, days, timeZone);
   return formatLocalIsoDateTime(dueDate, timeZone);
@@ -99,10 +92,7 @@ export function applyBoxReview(input: ApplyBoxReviewInput): ReviewPoolState {
   };
 }
 
-export function formatBoxInterval(
-  boxLevel: BoxLevel,
-  consecutiveLevel3Passes: number,
-): string {
+export function formatBoxInterval(boxLevel: BoxLevel, consecutiveLevel3Passes: number): string {
   if (boxLevel < 3) {
     const days = PASSED_INTERVAL_DAYS[boxLevel as 0 | 1 | 2];
     if (days === 1) {

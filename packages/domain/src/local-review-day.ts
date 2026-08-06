@@ -130,11 +130,7 @@ export function endOfLocalReviewDay(now: Date, timeZone: string): Date {
   );
 }
 
-export function addLocalReviewDays(
-  anchor: Date,
-  days: number,
-  timeZone: string,
-): Date {
+export function addLocalReviewDays(anchor: Date, days: number, timeZone: string): Date {
   const parts = readLocalDateTimeParts(anchor, timeZone);
   const calendarDate = new Date(Date.UTC(parts.year, parts.month - 1, parts.day + days));
 

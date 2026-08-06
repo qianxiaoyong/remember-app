@@ -4,7 +4,10 @@ import { getReviewTabSummary } from '../use-cases/get-review-tab-summary';
 import { resolveReviewCardContext } from '../use-cases/resolve-review-card-context';
 import { resumeOrStartReviewSession } from '../use-cases/resume-or-start-review-session';
 import type { ActiveStudySession } from '../use-cases/study-session-types';
-import { setUserPreference, PREFERENCE_DAILY_REVIEW_LIMIT } from '../data/repositories/user-preferences-repository';
+import {
+  setUserPreference,
+  PREFERENCE_DAILY_REVIEW_LIMIT,
+} from '../data/repositories/user-preferences-repository';
 
 export function useReviewFlow() {
   const [session, setSession] = useState<ActiveStudySession | null>(null);
@@ -70,7 +73,11 @@ export function useReviewFlow() {
   const setDailyReviewLimit = useCallback(
     (value: number) => {
       const clamped = Math.min(Math.max(value, 1), 999);
-      setUserPreference(PREFERENCE_DAILY_REVIEW_LIMIT, String(clamped), new Date().toISOString());
+      setUserPreference({
+        key: PREFERENCE_DAILY_REVIEW_LIMIT,
+        value: String(clamped),
+        updatedAt: new Date().toISOString(),
+      });
       refreshSummary();
       startReview();
     },

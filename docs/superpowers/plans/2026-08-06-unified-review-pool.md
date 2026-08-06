@@ -28,14 +28,14 @@
 
 ## 范围外（defer）
 
-| 项 | 说明 |
-| --- | --- |
-| 学习/复习数据面板 UI | 读 `review_daily_stats`；单独计划 |
-| 词条「复习中」标记（P1） | ADR §4.3 可选 |
-| `reviewMode` enum rename | ADR Q5：不 rename |
-| FSRS / 四按钮 | ADR 非目标 |
-| Admin / 服务端统计 | 本地优先 |
-| 统计字段上传云端 | 后续 ADR |
+| 项                       | 说明                              |
+| ------------------------ | --------------------------------- |
+| 学习/复习数据面板 UI     | 读 `review_daily_stats`；单独计划 |
+| 词条「复习中」标记（P1） | ADR §4.3 可选                     |
+| `reviewMode` enum rename | ADR Q5：不 rename                 |
+| FSRS / 四按钮            | ADR 非目标                        |
+| Admin / 服务端统计       | 本地优先                          |
+| 统计字段上传云端         | 后续 ADR                          |
 
 ## 依赖与实施顺序
 
@@ -138,12 +138,12 @@ apps/api/src/sync/                     # 合并策略 boxLevel/dueAt
 
 **档位间隔（ADR §6.1，写死在 domain 常量）：**
 
-| boxLevel | passed 后间隔 |
-| -------- | ------------- |
-| 0 | +1 天 |
-| 1 | +3 天 |
-| 2 | +7 天 |
-| 3 首次 | +21 天 |
+| boxLevel      | passed 后间隔            |
+| ------------- | ------------------------ |
+| 0             | +1 天                    |
+| 1             | +3 天                    |
+| 2             | +7 天                    |
+| 3 首次        | +21 天                   |
 | 3 再次 passed | +45 天 → 之后 +90 天循环 |
 
 **failed：** `boxLevel = max(boxLevel - 1, 0)`；`dueAt = nextLocalReviewDayAnchor(now)`。
@@ -316,16 +316,16 @@ CREATE TABLE review_daily_stats (
 
 - `runSm2ToReviewPoolMigration(db)` — V4 升级时执行一次：
 
-| 原 SM-2 条件 | 迁移结果 |
-| --- | --- |
-| `repetitions = 0 && intervalDays = 0` | `inReviewPool=0` |
-| 否则 | `inReviewPool=1` |
-| `intervalDays <= 1` | `boxLevel=0` |
-| `intervalDays <= 3` | `boxLevel=1` |
-| `intervalDays <= 7` | `boxLevel=2` |
-| `intervalDays >= 8` | `boxLevel=3` |
-| `packId` | 复制到 `firstAddedFromPackId` |
-| `easiness/repetitions/intervalDays` | **保留列**，只读，不删 |
+| 原 SM-2 条件                          | 迁移结果                      |
+| ------------------------------------- | ----------------------------- |
+| `repetitions = 0 && intervalDays = 0` | `inReviewPool=0`              |
+| 否则                                  | `inReviewPool=1`              |
+| `intervalDays <= 1`                   | `boxLevel=0`                  |
+| `intervalDays <= 3`                   | `boxLevel=1`                  |
+| `intervalDays <= 7`                   | `boxLevel=2`                  |
+| `intervalDays >= 8`                   | `boxLevel=3`                  |
+| `packId`                              | 复制到 `firstAddedFromPackId` |
+| `easiness/repetitions/intervalDays`   | **保留列**，只读，不删        |
 
 - [ ] **Step 1: 写 migration SQL + schema 测试（版本号、表名）**
 
@@ -412,9 +412,7 @@ git commit -m "feat(mobile): repositories for review pool, stats, and preference
 - Produces:
 
 ```typescript
-export type JoinReviewPoolResult =
-  | { status: 'created' }
-  | { status: 'already_in_pool' };
+export type JoinReviewPoolResult = { status: 'created' } | { status: 'already_in_pool' };
 
 export async function joinReviewPool(input: {
   knowledgeId: string;
@@ -561,11 +559,8 @@ git commit -m "feat(mobile): review session resume and tab summary"
 - Produces:
 
 ```typescript
-export async function resumePackBrowse(input: {
-  packId: string;
-  now?: Date;
-}): Promise<{
-  cards: PackCardRef[];       // 全量，不过滤
+export async function resumePackBrowse(input: { packId: string; now?: Date }): Promise<{
+  cards: PackCardRef[]; // 全量，不过滤
   initialKnowledgeId: string; // 由 packOpenPosition + bookmark 决定
 }>;
 ```
@@ -863,12 +858,12 @@ pnpm --filter @remember/mobile android
 
 ## 风险与缓解
 
-| 风险 | 缓解 |
-| --- | --- |
-| Sync payload breaking 旧 APK | DB migration version gate；旧 APK 提示升级 |
+| 风险                                      | 缓解                                                                                  |
+| ----------------------------------------- | ------------------------------------------------------------------------------------- |
+| Sync payload breaking 旧 APK              | DB migration version gate；旧 APK 提示升级                                            |
 | `study_sessions` 复用与 pack session 冲突 | `packId='__review_pool__'` 常量；启动复习前 complete 冲突 session（或互斥规则写测试） |
-| SM-2 映射丢进度 | 映射表保守（偏高 boxLevel）；RC 前用真实测试库验证 |
-| 本地 0:00 切日与旧 UTC SM-2 混用 | 迁移后统一 `local-review-day`；文档注明 |
+| SM-2 映射丢进度                           | 映射表保守（偏高 boxLevel）；RC 前用真实测试库验证                                    |
+| 本地 0:00 切日与旧 UTC SM-2 混用          | 迁移后统一 `local-review-day`；文档注明                                               |
 
 ---
 

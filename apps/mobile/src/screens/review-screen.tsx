@@ -98,13 +98,13 @@ export function ReviewScreen(): ReactElement {
               onHomePress={() => {
                 router.replace('/library');
               }}
-              onMorePress={() => {}}
-              onPlayExampleAudio={() => {}}
-              onPlayPrimaryAudio={() => {}}
+              onMorePress={() => undefined}
+              onPlayExampleAudio={() => undefined}
+              onPlayPrimaryAudio={() => undefined}
               onReveal={() => {
                 setRevealed(true);
               }}
-              onTokenPress={() => {}}
+              onTokenPress={() => undefined}
               revealed={revealed}
             />
           </View>
