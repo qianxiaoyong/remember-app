@@ -95,6 +95,23 @@ try {
       [System.IO.File]::WriteAllText($stylesFile, $stylesContent, [System.Text.UTF8Encoding]::new($false))
     }
 
+    $colorsFile = Join-Path $androidDir 'app\src\main\res\values\colors.xml'
+    if (Test-Path $colorsFile) {
+      $colorsContent = Get-Content $colorsFile -Raw -Encoding UTF8
+      if ($colorsContent -match '<root>') {
+        Write-Step 'Fix invalid colors.xml (<root> wrapper from expo prebuild)'
+        $resourcesMatch = [regex]::Match($colorsContent, '<resources>[\s\S]*?</resources>')
+        if (-not $resourcesMatch.Success) {
+          throw 'colors.xml: could not extract <resources> block'
+        }
+        [System.IO.File]::WriteAllText(
+          $colorsFile,
+          ($resourcesMatch.Value + "`n"),
+          [System.Text.UTF8Encoding]::new($false)
+        )
+      }
+    }
+
     $gradlePropsFile = Join-Path $androidDir 'gradle.properties'
     if (Test-Path $gradlePropsFile) {
       $gradleProps = Get-Content $gradlePropsFile -Raw
