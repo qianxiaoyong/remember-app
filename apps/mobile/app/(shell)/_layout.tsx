@@ -6,6 +6,7 @@ import { CapsuleBar, type CapsuleTab } from '../../src/components/shell/capsule-
 import {
   consumeShellTabTransition,
   navigateShellTab,
+  resolveShellTabFromPathname,
   SHELL_TAB_ANIMATION_DURATION_MS,
 } from '../../src/shell/shell-tab-transition';
 import { ShellProvider, useDrawerOpen, useShellActions } from '../../src/shell/shell-provider';
@@ -29,18 +30,19 @@ function ShellCapsuleTabBar(): ReactElement {
   const pathname = usePathname();
   const router = useRouter();
   const { closeDrawer } = useShellActions();
-  const activeTab: CapsuleTab = pathname.includes('/market') ? 'market' : 'library';
+  const activeTab: CapsuleTab = resolveShellTabFromPathname(pathname);
 
   return (
     <CapsuleBar
       activeTab={activeTab}
       onTabPress={(tab) => {
         closeDrawer();
-        const target = tab === 'market' ? '/market' : '/library';
+        const target =
+          tab === 'market' ? '/market' : tab === 'review' ? '/review' : '/library';
         if (pathname.includes(target)) {
           return;
         }
-        navigateShellTab(router, tab);
+        navigateShellTab(router, tab, activeTab);
       }}
     />
   );
