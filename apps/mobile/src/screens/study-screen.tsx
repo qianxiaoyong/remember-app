@@ -7,7 +7,7 @@ import { LexiconPopup } from '../components/lexicon-popup';
 import { ScreenScaffold } from '../components/shell/screen-scaffold';
 import { JoinReviewBar } from '../components/study/join-review-bar';
 import { PackBrowseCompletePanel } from '../components/study/pack-browse-complete-panel';
-import { ResetPackProgressDialog } from '../components/study/reset-pack-progress-dialog';
+import { ResetBrowseProgressDialog } from '../components/study/reset-browse-progress-dialog';
 import { StudyMoreMenu } from '../components/study/study-more-menu';
 import { UpdateReviewConfirmDialog } from '../components/study/update-review-confirm-dialog';
 import { PrimaryButton } from '../components/ui/primary-button';
@@ -15,10 +15,9 @@ import { useStudyFlow } from '../hooks/use-study-flow';
 import { resolveCardTypeDefinition } from '../learning/card-types/registry';
 import { UnsupportedCardPanel } from '../learning/card-types/unsupported-card-panel';
 import { markLibraryNeedsRefresh } from '../shell/library-refresh-signal';
-import { countInReviewPoolForPack } from '../use-cases/count-in-review-pool-for-pack';
 import { getPackBrowseCompleteSummary } from '../use-cases/get-pack-browse-complete-summary';
 import { listInstalledPacksUseCase } from '../use-cases/list-installed-packs';
-import { resetPackLearningProgress } from '../use-cases/reset-pack-learning-progress';
+import { resetPackBrowseProgress } from '../use-cases/reset-pack-browse-progress';
 import { saveStoryReadingBookmark } from '../use-cases/save-story-reading-bookmark';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
@@ -64,7 +63,6 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
     handlePlayExampleAudio,
     restartFromBeginning,
     dismissBrowseComplete,
-    refreshInReviewPool,
     closeLexicon,
   } = useStudyFlow(
     props.packId,
@@ -73,8 +71,6 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
   const [moreVisible, setMoreVisible] = useState(false);
   const [switchVisible, setSwitchVisible] = useState(false);
   const [resetVisible, setResetVisible] = useState(false);
-  const [resetBrowse, setResetBrowse] = useState(true);
-  const [resetReview, setResetReview] = useState(true);
   const [resetMessage, setResetMessage] = useState<string | null>(null);
 
   const installedPacks = useMemo(() => listInstalledPacksUseCase(), []);
@@ -83,23 +79,11 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
     () => getPackBrowseCompleteSummary(props.packId),
     [props.packId, resetVisible, browseCompleteVisible],
   );
-  const inReviewPoolCount = useMemo(
-    () => countInReviewPoolForPack(props.packId),
-    [props.packId, resetVisible, browseCompleteVisible],
-  );
-
   useEffect(() => {
     if (props.autoStart !== false && isBrowseMode && !browseReady) {
       startBrowse();
     }
   }, [props.autoStart, browseReady, isBrowseMode, props.packId, startBrowse]);
-
-  useEffect(() => {
-    if (resetVisible) {
-      setResetBrowse(true);
-      setResetReview(inReviewPoolCount > 0);
-    }
-  }, [inReviewPoolCount, resetVisible]);
 
   const handleNavigateLesson = useCallback(
     (knowledgeId: string) => {
@@ -130,23 +114,15 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
   const handleConfirmReset = useCallback(() => {
     setResetMessage(null);
     try {
-      resetPackLearningProgress({
-        packId: props.packId,
-        resetBrowse,
-        resetReview,
-      });
+      resetPackBrowseProgress({ packId: props.packId });
       markLibraryNeedsRefresh();
-      if (resetBrowse) {
-        restartFromBeginning();
-      } else {
-        refreshInReviewPool();
-      }
+      restartFromBeginning();
       setResetVisible(false);
       setResetMessage('已重置');
     } catch (error) {
       setResetMessage(error instanceof Error ? error.message : '重置失败');
     }
-  }, [props.packId, refreshInReviewPool, resetBrowse, resetReview, restartFromBeginning]);
+  }, [props.packId, restartFromBeginning]);
 
   const moreItems = [
     { id: 'search', label: '搜索当前知识库' },
@@ -237,25 +213,13 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
         visible={updateReviewVisible}
       />
 
-      <ResetPackProgressDialog
-        inReviewPoolCount={inReviewPoolCount}
+      <ResetBrowseProgressDialog
         isReaderMode={isReaderMode}
         onCancel={() => {
           setResetVisible(false);
         }}
         onConfirm={handleConfirmReset}
-        onToggleBrowse={() => {
-          setResetBrowse((value) => !value);
-        }}
-        onToggleReview={() => {
-          if (inReviewPoolCount === 0) {
-            return;
-          }
-          setResetReview((value) => !value);
-        }}
         packDisplayName={packSummary.packDisplayName}
-        resetBrowse={resetBrowse}
-        resetReview={resetReview}
         visible={resetVisible}
       />
 
