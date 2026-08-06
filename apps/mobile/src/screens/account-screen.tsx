@@ -92,14 +92,13 @@ export function AccountScreen(): ReactElement {
   return (
     <ScreenScaffold>
       <AppHeader
+        centerContent={<Text style={styles.headerTitle}>账号信息</Text>}
         onBackPress={() => {
           router.back();
         }}
         variant="back"
       />
-      <ScrollView contentContainerStyle={styles.content}>
-        <Text style={styles.title}>账号信息</Text>
-
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         {notMainDevice ? (
           <View style={styles.banner}>
             <Text style={styles.bannerText}>账号已在其他设备登录，进度仅保存在本机</Text>
@@ -107,28 +106,32 @@ export function AccountScreen(): ReactElement {
         ) : null}
 
         {user ? (
-          <View style={styles.card}>
-            <Text style={styles.label}>昵称</Text>
-            <Text style={styles.value}>{user.displayName}</Text>
-            <Text style={styles.label}>手机号</Text>
-            <Text style={styles.value}>{user.maskedPhone}</Text>
-            <Text style={styles.label}>最后同步</Text>
-            <Text style={styles.value}>
-              {lastSyncedAt ? formatSyncedAt(lastSyncedAt) : '尚未同步到云端'}
-            </Text>
-            <Text style={styles.restoreHint}>
-              换机或重新登录时，只能恢复到最后一次成功同步到云端的学习进度。
-            </Text>
+          <>
+            <View style={styles.profileCard}>
+              <Text style={styles.displayName}>{user.displayName}</Text>
+              <Text style={styles.maskedPhone}>{user.maskedPhone}</Text>
+            </View>
+
+            <View style={styles.sectionCard}>
+              <Text style={styles.sectionTitle}>云端同步</Text>
+              <InfoRow
+                label="最后同步"
+                value={lastSyncedAt ? formatSyncedAt(lastSyncedAt) : '尚未同步'}
+              />
+              <InfoRow label="待上传" value={`${String(pendingSyncCount)} 条`} />
+              {syncStatusHint ? <Text style={styles.hint}>{syncStatusHint}</Text> : null}
+              <Text style={styles.restoreHint}>
+                换机或重新登录时，只能恢复到最后一次成功同步的进度。
+              </Text>
+            </View>
+
             {__DEV__ ? (
-              <>
-                <Text style={styles.label}>服务器</Text>
-                <Text style={styles.value}>{readApiBaseUrl()}</Text>
-              </>
+              <View style={styles.sectionCard}>
+                <Text style={styles.sectionTitle}>开发信息</Text>
+                <InfoRow label="服务器" value={readApiBaseUrl()} />
+              </View>
             ) : null}
-            <Text style={styles.label}>待上传</Text>
-            <Text style={styles.value}>{`${String(pendingSyncCount)} 条`}</Text>
-            {syncStatusHint ? <Text style={styles.hint}>{syncStatusHint}</Text> : null}
-          </View>
+          </>
         ) : null}
 
         <Pressable
@@ -154,10 +157,24 @@ export function AccountScreen(): ReactElement {
   );
 }
 
+interface InfoRowProps {
+  label: string;
+  value: string;
+}
+
+function InfoRow(props: InfoRowProps): ReactElement {
+  return (
+    <View style={styles.infoRow}>
+      <Text style={styles.infoLabel}>{props.label}</Text>
+      <Text style={styles.infoValue}>{props.value}</Text>
+    </View>
+  );
+}
+
 function formatSyncedAt(isoTimestamp: string): string {
   const date = new Date(isoTimestamp);
   if (Number.isNaN(date.getTime())) {
-    return '尚未同步到云端';
+    return '尚未同步';
   }
   return date.toLocaleString('zh-CN', {
     year: 'numeric',
@@ -198,17 +215,18 @@ function safeReadApiBaseUrl(): string | null {
 
 const styles = StyleSheet.create({
   content: {
-    gap: spacing.md,
+    gap: spacing.lg,
     padding: spacing.lg,
+    paddingBottom: spacing.xxl,
   },
-  title: {
+  headerTitle: {
     color: colors.textPrimary,
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: '600',
   },
   banner: {
     backgroundColor: '#FFF4E5',
-    borderRadius: 12,
+    borderRadius: spacing.cardRadius,
     padding: spacing.md,
   },
   bannerText: {
@@ -216,42 +234,75 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 20,
   },
-  card: {
+  profileCard: {
+    alignItems: 'center',
     backgroundColor: colors.surface,
     borderColor: colors.border,
-    borderRadius: 12,
-    borderWidth: 1,
+    borderRadius: spacing.cardRadius,
+    borderWidth: StyleSheet.hairlineWidth,
     gap: spacing.xs,
-    padding: spacing.md,
+    paddingVertical: spacing.xl,
   },
-  label: {
-    color: colors.textSecondary,
-    fontSize: 12,
-    marginTop: spacing.sm,
-  },
-  value: {
+  displayName: {
     color: colors.textPrimary,
-    fontSize: 16,
+    fontSize: 20,
+    fontWeight: '700',
+  },
+  maskedPhone: {
+    color: colors.textSecondary,
+    fontSize: 15,
+  },
+  sectionCard: {
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+    borderRadius: spacing.cardRadius,
+    borderWidth: StyleSheet.hairlineWidth,
+    gap: spacing.sm,
+    padding: spacing.lg,
+  },
+  sectionTitle: {
+    color: colors.textPrimary,
+    fontSize: 15,
+    fontWeight: '600',
+    marginBottom: spacing.xs,
+  },
+  infoRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: spacing.xs,
+  },
+  infoLabel: {
+    color: colors.textSecondary,
+    fontSize: 14,
+  },
+  infoValue: {
+    color: colors.textPrimary,
+    flexShrink: 1,
+    fontSize: 14,
     fontWeight: '500',
+    marginLeft: spacing.md,
+    textAlign: 'right',
   },
   restoreHint: {
     color: colors.textMuted,
     fontSize: 12,
     lineHeight: 18,
-    marginTop: spacing.xs,
+    marginTop: spacing.sm,
   },
   hint: {
     color: colors.textMuted,
     fontSize: 12,
     lineHeight: 18,
-    marginTop: spacing.md,
+    marginTop: spacing.xs,
   },
   logoutButton: {
     alignItems: 'center',
-    borderColor: colors.borderStrong,
-    borderRadius: 12,
-    borderWidth: 1,
-    marginTop: spacing.lg,
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+    borderRadius: spacing.cardRadius,
+    borderWidth: StyleSheet.hairlineWidth,
+    marginTop: spacing.sm,
     paddingVertical: spacing.md,
   },
   logoutButtonText: {

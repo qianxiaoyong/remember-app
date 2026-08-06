@@ -24,7 +24,7 @@
 
 ## 业务交付（本计划结束时用户能做什么）
 
-1. 首次打开可看到登录引导，可选「稍后」（Q1:B）
+1. 冷启动直接进入书库/学习，不弹登录引导（Q1:B 2026-08 修订）；需账号时再引导
 2. 输入手机号 + 验证码（dev 用 `000000`）完成登录
 3. 抽屉显示脱敏手机号；账号页可登出
 4. 两台手机同一账号登录：后登录者成为主设备，先登录者再调写接口得 403
@@ -194,7 +194,7 @@ pnpm --filter @remember/api test:integration
 **Files:**
 
 - Create: `apps/mobile/src/screens/login-screen.tsx`
-- Create: `apps/mobile/src/screens/login-guide-screen.tsx`（首次「登录 / 稍后」）
+- Create: `apps/mobile/src/screens/login-guide-screen.tsx`（保留；2026-08 起不再冷启动自动跳转）
 - Create: `apps/mobile/src/screens/account-screen.tsx`
 - Modify: `apps/mobile/src/components/shell/drawer-account-header.tsx`
 - Modify: 路由 / drawer 点击账号进登录或账号页
@@ -203,7 +203,7 @@ pnpm --filter @remember/api test:integration
 **UI:**
 
 - 轻量全屏：手机号 + 验证码 + 获取验证码倒计时
-- 首次引导仅展示一次（本地键值标记已跳过或已登录）
+- 首次引导 ~~仅展示一次~~ → **2026-08 修订**：冷启动不弹；需账号操作时再 Alert 引导登录
 - 未登录：抽屉头部进登录；**不阻断**首页与学习
 
 ---

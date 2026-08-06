@@ -1,9 +1,13 @@
 import type { ReactElement, ReactNode } from 'react';
 import { createContext, useCallback, useContext, useMemo, useState } from 'react';
+import { clearDrawerReturnPending } from './drawer-return-intent';
 
 interface ShellActions {
   openDrawer: () => void;
+  /** 关闭抽屉并清除「返回后重新打开」意图（用户主动关闭）。 */
   closeDrawer: () => void;
+  /** 仅关闭抽屉动画，保留返回意图（从抽屉进入子页时）。 */
+  dismissDrawer: () => void;
 }
 
 const ShellActionsContext = createContext<ShellActions | null>(null);
@@ -15,9 +19,16 @@ export function ShellProvider(props: { children: ReactNode }): ReactElement {
     setIsDrawerOpen(true);
   }, []);
   const closeDrawer = useCallback(() => {
+    clearDrawerReturnPending();
     setIsDrawerOpen(false);
   }, []);
-  const actions = useMemo(() => ({ closeDrawer, openDrawer }), [closeDrawer, openDrawer]);
+  const dismissDrawer = useCallback(() => {
+    setIsDrawerOpen(false);
+  }, []);
+  const actions = useMemo(
+    () => ({ closeDrawer, dismissDrawer, openDrawer }),
+    [closeDrawer, dismissDrawer, openDrawer],
+  );
 
   return (
     <ShellActionsContext.Provider value={actions}>

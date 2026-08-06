@@ -1,7 +1,7 @@
 import type { ReactElement, ReactNode } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { CircleIconButton } from '../ui/circle-icon-button';
-import { MenuIcon, SearchIcon } from '../ui/shell-icons';
+import { BackChevronIcon, MenuIcon, SearchIcon } from '../ui/shell-icons';
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
 
@@ -31,14 +31,12 @@ export function AppHeader(props: AppHeaderProps): ReactElement {
           </CircleIconButton>
         ) : null}
         {variant === 'back' ? (
-          <Pressable
-            accessibilityRole="button"
-            hitSlop={8}
-            onPress={onBackPress ?? (() => undefined)}
-            style={styles.backButton}
+          <CircleIconButton
+            accessibilityLabel="返回"
+            {...(onBackPress ? { onPress: onBackPress } : {})}
           >
-            <Text style={styles.backLabel}>返回</Text>
-          </Pressable>
+            <BackChevronIcon size="sm" />
+          </CircleIconButton>
         ) : null}
       </View>
 
@@ -83,16 +81,8 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   center: {
+    alignItems: 'center',
     flex: 1,
-  },
-  backButton: {
-    minHeight: spacing.touchTarget,
-    justifyContent: 'center',
-  },
-  backLabel: {
-    color: colors.textPrimary,
-    fontSize: 15,
-    fontWeight: '600',
   },
   moreButton: {
     minHeight: spacing.touchTarget,

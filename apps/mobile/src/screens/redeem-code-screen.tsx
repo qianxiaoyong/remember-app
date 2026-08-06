@@ -26,7 +26,15 @@ export function RedeemCodeScreen(): ReactElement {
 
   const handleSubmit = (): void => {
     if (!user) {
-      router.push('/login');
+      Alert.alert('需要登录', '兑换知识库需要先登录账号，登录后可继续兑换。', [
+        { text: '取消', style: 'cancel' },
+        {
+          text: '去登录',
+          onPress: () => {
+            router.push('/login?returnTo=%2Fredeem');
+          },
+        },
+      ]);
       return;
     }
 

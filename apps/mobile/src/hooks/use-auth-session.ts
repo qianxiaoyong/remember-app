@@ -8,7 +8,7 @@ interface AuthSessionState {
   user: SessionUser | null;
   isLoading: boolean;
   isNotMainDevice: boolean;
-  refresh: () => Promise<void>;
+  refresh: (options?: { showLoading?: boolean }) => Promise<void>;
 }
 
 export function useAuthSession(): AuthSessionState {
@@ -16,8 +16,12 @@ export function useAuthSession(): AuthSessionState {
   const [isLoading, setIsLoading] = useState(true);
   const [isNotMainDevice, setIsNotMainDevice] = useState(false);
 
-  const refresh = useCallback(async () => {
-    setIsLoading(true);
+  const refresh = useCallback(async (options?: { showLoading?: boolean }) => {
+    const showLoading = options?.showLoading ?? true;
+    if (showLoading) {
+      setIsLoading(true);
+    }
+
     try {
       const sessionUser = await getCurrentSessionUser();
       setUser(sessionUser);
@@ -32,13 +36,49 @@ export function useAuthSession(): AuthSessionState {
       setUser(null);
       setIsNotMainDevice(false);
     } finally {
-      setIsLoading(false);
+      if (showLoading) {
+        setIsLoading(false);
+      }
     }
   }, []);
 
   useEffect(() => {
-    void refresh();
-  }, [refresh]);
+    const abortController = new AbortController();
+    const { signal } = abortController;
+
+    void (async () => {
+      const cachedUser = await readCachedSessionUser();
+      if (!signal.aborted) {
+        if (cachedUser) {
+          setUser(cachedUser);
+        }
+        setIsLoading(false);
+      }
+
+      try {
+        const sessionUser = await getCurrentSessionUser();
+        if (!signal.aborted) {
+          setUser(sessionUser);
+          setIsNotMainDevice(false);
+        }
+      } catch (error) {
+        if (!signal.aborted) {
+          if (error instanceof ApiRequestError && error.code === 'NOT_MAIN_DEVICE') {
+            const cachedUserAfterKick = await readCachedSessionUser();
+            setUser(cachedUserAfterKick);
+            setIsNotMainDevice(true);
+            return;
+          }
+          setUser(null);
+          setIsNotMainDevice(false);
+        }
+      }
+    })();
+
+    return () => {
+      abortController.abort();
+    };
+  }, []);
 
   return { user, isLoading, isNotMainDevice, refresh };
 }

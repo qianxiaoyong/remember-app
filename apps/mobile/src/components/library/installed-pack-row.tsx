@@ -1,5 +1,7 @@
 import type { ReactElement } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { resolveCatalogItemForPack } from '../../catalog/resolve-catalog-item-for-pack';
+import { PackCoverThumbnail, resolvePackCoverAccent } from '../catalog/pack-cover-thumbnail';
 import { ProgressBar } from '../ui/progress-bar';
 import { SurfaceCard } from '../ui/surface-card';
 import type { InstalledPackSummary } from '../../use-cases/get-library-overview';
@@ -14,6 +16,8 @@ interface InstalledPackRowProps {
 
 export function InstalledPackRow(props: InstalledPackRowProps): ReactElement {
   const { pack } = props;
+  const catalogItem = resolveCatalogItemForPack(pack.packId, pack.displayName);
+  const accentColor = resolvePackCoverAccent(catalogItem);
   const progress = pack.totalCards > 0 ? pack.learnedCount / pack.totalCards : 0;
   const showProgress = pack.libraryPresentation === 'study';
 
@@ -21,11 +25,7 @@ export function InstalledPackRow(props: InstalledPackRowProps): ReactElement {
     <SurfaceCard>
       <Pressable accessibilityRole="button" onPress={props.onDetailPress}>
         <View style={styles.topRow}>
-          <View style={[styles.cover, { backgroundColor: pack.coverColor }]}>
-            <Text numberOfLines={3} style={styles.coverText}>
-              {pack.displayName}
-            </Text>
-          </View>
+          <PackCoverThumbnail item={catalogItem} size={72} />
           <View style={styles.content}>
             <Text numberOfLines={2} style={styles.title}>
               {pack.displayName}
@@ -35,7 +35,7 @@ export function InstalledPackRow(props: InstalledPackRowProps): ReactElement {
                 <Text style={styles.progressLabel}>
                   总学习进度 {pack.learnedCount} / {pack.totalCards}
                 </Text>
-                <ProgressBar color={pack.coverColor} progress={progress} />
+                <ProgressBar color={accentColor} progress={progress} />
               </>
             ) : null}
           </View>
@@ -61,21 +61,6 @@ const styles = StyleSheet.create({
   topRow: {
     flexDirection: 'row',
     gap: spacing.md,
-  },
-  cover: {
-    alignItems: 'center',
-    borderRadius: 14,
-    height: 72,
-    justifyContent: 'center',
-    paddingHorizontal: spacing.sm,
-    width: 72,
-  },
-  coverText: {
-    color: colors.surface,
-    fontSize: 11,
-    fontWeight: '600',
-    lineHeight: 15,
-    textAlign: 'center',
   },
   content: {
     flex: 1,

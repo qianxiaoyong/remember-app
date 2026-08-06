@@ -4,6 +4,9 @@ interface ShellTabRouter {
 
 export type ShellTabTransition = 'slide_from_left' | 'slide_from_right';
 
+/** Tab 切换滑动时长（毫秒）；短于默认 Stack 动画以减轻卡顿感。 */
+export const SHELL_TAB_ANIMATION_DURATION_MS = 180;
+
 let pendingTransition: ShellTabTransition = 'slide_from_right';
 
 export function prepareShellTabTransition(nextTab: 'library' | 'market'): void {

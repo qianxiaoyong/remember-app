@@ -1,9 +1,10 @@
 import type { ReactElement } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
+import { AuthHero, AuthScreenLayout } from '../components/auth/auth-screen-layout';
 import { ScreenScaffold } from '../components/shell/screen-scaffold';
+import { PrimaryButton } from '../components/ui/primary-button';
 import { markLoginGuideDismissed } from '../data/session/session-store';
-import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 
 export function LoginGuideScreen(): ReactElement {
@@ -21,75 +22,34 @@ export function LoginGuideScreen(): ReactElement {
 
   return (
     <ScreenScaffold>
-      <View style={styles.container}>
-        <Text style={styles.title}>登录后可同步进度</Text>
-        <Text style={styles.body}>
-          你可以现在登录监护人账号，也可以稍后再说。跳过登录不影响本地学习。
-        </Text>
-        <Text style={styles.body}>
-          登录后可将学习进度同步到云端；换机或重新安装时，只能恢复到最后一次成功同步到云端的学习进度。
-        </Text>
-
-        <Pressable
-          accessibilityRole="button"
-          onPress={() => {
-            void handleLogin();
-          }}
-          style={styles.primaryButton}
-        >
-          <Text style={styles.primaryButtonText}>登录</Text>
-        </Pressable>
-
-        <Pressable
-          accessibilityRole="button"
-          onPress={() => {
-            void handleLater();
-          }}
-          style={styles.secondaryButton}
-        >
-          <Text style={styles.secondaryButtonText}>稍后</Text>
-        </Pressable>
-      </View>
+      <AuthScreenLayout scroll>
+        <AuthHero
+          subtitle="跳过登录不影响本地学习；换机或重装时，可恢复到最后一次成功同步的进度。"
+          title="登录后可同步进度"
+        />
+        <View style={styles.actions}>
+          <PrimaryButton
+            label="登录"
+            onPress={() => {
+              void handleLogin();
+            }}
+          />
+          <PrimaryButton
+            label="稍后再说"
+            onPress={() => {
+              void handleLater();
+            }}
+            variant="secondary"
+          />
+        </View>
+      </AuthScreenLayout>
     </ScreenScaffold>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  actions: {
     gap: spacing.md,
-    justifyContent: 'center',
-    padding: spacing.lg,
-  },
-  title: {
-    color: colors.textPrimary,
-    fontSize: 24,
-    fontWeight: '700',
-  },
-  body: {
-    color: colors.textSecondary,
-    fontSize: 15,
-    lineHeight: 22,
-    marginBottom: spacing.lg,
-  },
-  primaryButton: {
-    alignItems: 'center',
-    backgroundColor: colors.accent,
-    borderRadius: 12,
-    paddingVertical: spacing.md,
-  },
-  primaryButtonText: {
-    color: colors.surface,
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  secondaryButton: {
-    alignItems: 'center',
-    paddingVertical: spacing.md,
-  },
-  secondaryButtonText: {
-    color: colors.textSecondary,
-    fontSize: 15,
-    fontWeight: '500',
+    marginTop: spacing.xl,
   },
 });

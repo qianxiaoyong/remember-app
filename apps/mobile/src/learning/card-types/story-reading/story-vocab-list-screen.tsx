@@ -6,7 +6,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { StorySidebarEntry } from '@remember/contracts';
 import { ScreenScaffold } from '../../../components/shell/screen-scaffold';
 import { CircleIconButton } from '../../../components/ui/circle-icon-button';
-import { BackChevronIcon } from '../../../components/ui/shell-icons';
+import { AppIcon } from '../../../components/ui/app-icon';
 import { StoryVocabPanel } from './story-vocab-panel';
 import { getPackCardDetailUseCase } from '../../../use-cases/get-pack-card-detail';
 import { colors } from '../../../theme/colors';
@@ -44,7 +44,7 @@ export function StoryVocabListScreen(): ReactElement {
             router.back();
           }}
         >
-          <BackChevronIcon size="sm" />
+          <AppIcon color={colors.textPrimary} name="chevron-back" size="sm" />
         </CircleIconButton>
         <Text style={styles.title}>本课 {sidebar.length} 词</Text>
         <View style={styles.headerSpacer} />

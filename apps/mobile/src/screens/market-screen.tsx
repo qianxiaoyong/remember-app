@@ -1,13 +1,6 @@
 import type { ReactElement } from 'react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import {
-  ActivityIndicator,
-  RefreshControl,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
 import type { CatalogPrimaryCategory } from '../catalog/catalog-seed';
 import type { CatalogPackItem } from '../catalog/catalog-seed';
@@ -23,10 +16,12 @@ import { MarketVersionDropdown } from '../components/market/market-version-dropd
 import { AppHeader } from '../components/shell/app-header';
 import { ScreenScaffold } from '../components/shell/screen-scaffold';
 import { useMarketSidebarCollapsed } from '../hooks/use-market-sidebar-collapsed';
+import { useRestoreDrawerOnReturn } from '../hooks/use-restore-drawer-on-return';
 import { consumeMarketSearchSelection } from '../shell/market-search-navigation';
 import { useShellActions } from '../shell/shell-provider';
 import { readApiBaseUrl } from '../data/api/api-client';
 import { ApiNetworkError } from '../data/api/api-errors';
+import { subscribeCatalogCacheUpdates } from '../data/catalog/catalog-cache-store';
 import {
   fetchMarketCatalog,
   readCachedMarketCatalog,
@@ -45,6 +40,7 @@ import { spacing } from '../theme/spacing';
 export function MarketScreen(): ReactElement {
   const router = useRouter();
   const { openDrawer } = useShellActions();
+  useRestoreDrawerOnReturn();
   const { collapsed: sidebarCollapsed, toggleCollapsed: toggleSidebarCollapsed } =
     useMarketSidebarCollapsed();
   const listRef = useRef<ScrollView>(null);
@@ -54,10 +50,10 @@ export function MarketScreen(): ReactElement {
   const [highlightPackId, setHighlightPackId] = useState<string | null>(null);
   const [versionDropdownOpen, setVersionDropdownOpen] = useState(false);
   const [items, setItems] = useState<CatalogPackItem[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [isPullRefreshing, setIsPullRefreshing] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [isFromCache, setIsFromCache] = useState(false);
+  const [cacheHint, setCacheHint] = useState<string | null>(null);
+  const [hasLoadedCache, setHasLoadedCache] = useState(false);
   const [taxonomyRevision, setTaxonomyRevision] = useState(0);
   const [taxonomyError, setTaxonomyError] = useState<string | null>(null);
 
@@ -75,54 +71,54 @@ export function MarketScreen(): ReactElement {
     [primaryCategory, secondaryCategory, versionFilter],
   );
 
-  const loadCatalog = useCallback(
-    async (options: { showInitialSpinner?: boolean; fromPullRefresh?: boolean } = {}) => {
-      const { showInitialSpinner = true, fromPullRefresh = false } = options;
-      if (fromPullRefresh) {
-        setIsPullRefreshing(true);
-      } else if (showInitialSpinner) {
-        setIsLoading(true);
-      }
+  const loadCatalogFromCache = useCallback(async () => {
+    const cachedItems = await readCachedMarketCatalog(catalogQuery);
+    if (cachedItems && cachedItems.length > 0) {
+      setItems(cachedItems);
       setErrorMessage(null);
-      setTaxonomyError(null);
+      setHasLoadedCache(true);
+      return;
+    }
 
-      const cachedItems = await readCachedMarketCatalog(catalogQuery);
-      if (cachedItems && cachedItems.length > 0) {
-        setItems(cachedItems);
-        setIsFromCache(true);
-      } else if (showInitialSpinner && !fromPullRefresh) {
+    setItems([]);
+    setHasLoadedCache(false);
+    setErrorMessage(null);
+  }, [catalogQuery]);
+
+  const refreshCatalogFromNetwork = useCallback(async () => {
+    setIsPullRefreshing(true);
+    setErrorMessage(null);
+    setCacheHint(null);
+    setTaxonomyError(null);
+
+    const cachedItems = await readCachedMarketCatalog(catalogQuery);
+
+    try {
+      const taxonomyUpdated = await refreshCatalogTaxonomyFromNetwork();
+      if (taxonomyUpdated) {
+        setTaxonomyRevision((value) => value + 1);
+      } else if (!readCachedCatalogTaxonomy()) {
+        setTaxonomyError(`分类加载失败，请确认服务器可访问（${readApiBaseUrl()}）`);
+      } else {
+        setTaxonomyError('分类更新失败，版本列表可能不是最新');
+      }
+
+      const nextItems = await fetchMarketCatalog(catalogQuery);
+      setItems(nextItems);
+      setHasLoadedCache(true);
+      setErrorMessage(null);
+    } catch (error) {
+      const hasVisibleItems = cachedItems && cachedItems.length > 0;
+      if (!hasVisibleItems) {
         setItems([]);
+        setErrorMessage(formatMarketLoadError(error));
+      } else {
+        setCacheHint('目录更新失败，当前显示的是上次缓存');
       }
-
-      try {
-        const taxonomyUpdated = await refreshCatalogTaxonomyFromNetwork();
-        if (taxonomyUpdated) {
-          setTaxonomyRevision((value) => value + 1);
-        } else if (!readCachedCatalogTaxonomy()) {
-          setTaxonomyError(`分类加载失败，请确认服务器可访问（${readApiBaseUrl()}）`);
-        } else {
-          setTaxonomyError('分类更新失败，版本列表可能不是最新');
-        }
-
-        const nextItems = await fetchMarketCatalog(catalogQuery);
-        setItems(nextItems);
-        setIsFromCache(false);
-        setErrorMessage(null);
-      } catch (error) {
-        const hasVisibleItems = cachedItems && cachedItems.length > 0;
-        if (!hasVisibleItems) {
-          setItems([]);
-          setErrorMessage(formatMarketLoadError(error));
-        } else {
-          setErrorMessage('目录更新失败，当前显示的是上次缓存');
-        }
-      } finally {
-        setIsLoading(false);
-        setIsPullRefreshing(false);
-      }
-    },
-    [catalogQuery],
-  );
+    } finally {
+      setIsPullRefreshing(false);
+    }
+  }, [catalogQuery]);
 
   useEffect(() => {
     void readCatalogTaxonomyDiskCache().then(() => {
@@ -131,18 +127,17 @@ export function MarketScreen(): ReactElement {
   }, []);
 
   useEffect(() => {
-    void loadCatalog();
-  }, [loadCatalog]);
+    void loadCatalogFromCache();
+  }, [loadCatalogFromCache]);
+
+  useEffect(() => {
+    return subscribeCatalogCacheUpdates(() => {
+      void loadCatalogFromCache();
+    });
+  }, [loadCatalogFromCache]);
 
   useFocusEffect(
     useCallback(() => {
-      void refreshCatalogTaxonomyFromNetwork().then((updated) => {
-        if (updated) {
-          setTaxonomyRevision((value) => value + 1);
-          setTaxonomyError(null);
-        }
-      });
-
       const selection = consumeMarketSearchSelection();
       if (!selection) {
         return;
@@ -160,6 +155,11 @@ export function MarketScreen(): ReactElement {
     () => getSecondaryCategoryOptions(cachedTaxonomy, primaryCategory),
     [cachedTaxonomy, primaryCategory],
   );
+
+  const emptyMessage =
+    !hasLoadedCache && items.length === 0
+      ? '暂无目录缓存，下拉刷新加载最新资料'
+      : '当前筛选下暂无资料';
 
   return (
     <ScreenScaffold withCapsulePadding>
@@ -216,7 +216,7 @@ export function MarketScreen(): ReactElement {
               <RefreshControl
                 colors={[colors.accent]}
                 onRefresh={() => {
-                  void loadCatalog({ showInitialSpinner: false, fromPullRefresh: true });
+                  void refreshCatalogFromNetwork();
                 }}
                 refreshing={isPullRefreshing}
                 tintColor={colors.accent}
@@ -226,21 +226,14 @@ export function MarketScreen(): ReactElement {
             showsVerticalScrollIndicator={false}
             style={styles.listScroll}
           >
-            {isLoading && items.length === 0 ? (
-              <View style={styles.center}>
-                <ActivityIndicator color={colors.accent} />
-              </View>
-            ) : errorMessage && items.length === 0 ? (
+            {errorMessage && items.length === 0 ? (
               <Text style={styles.empty}>{errorMessage}</Text>
             ) : items.length === 0 ? (
-              <Text style={styles.empty}>当前筛选下暂无资料</Text>
+              <Text style={styles.empty}>{emptyMessage}</Text>
             ) : (
               <>
                 {taxonomyError ? <Text style={styles.cacheHint}>{taxonomyError}</Text> : null}
-                {errorMessage ? <Text style={styles.cacheHint}>{errorMessage}</Text> : null}
-                {isFromCache && isLoading ? (
-                  <Text style={styles.cacheHint}>正在更新目录…</Text>
-                ) : null}
+                {cacheHint ? <Text style={styles.cacheHint}>{cacheHint}</Text> : null}
                 {items.map((item) => (
                   <MarketPackCard
                     highlighted={highlightPackId === item.packId}
@@ -304,10 +297,6 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
     padding: spacing.md,
     paddingBottom: spacing.xl,
-  },
-  center: {
-    alignItems: 'center',
-    paddingVertical: spacing.xl,
   },
   empty: {
     color: colors.textSecondary,
