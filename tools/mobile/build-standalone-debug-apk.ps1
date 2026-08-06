@@ -3,7 +3,8 @@
 param(
   [string]$SourceRoot = 'D:\AIcoder\remember-app',
   [string]$BuildRoot = 'D:\r\b',
-  [string]$OutputApk = 'dist\remember-standalone-debug.apk'
+  [string]$OutputApk = 'dist\remember-standalone-debug.apk',
+  [switch]$SkipApiHealthCheck
 )
 
 $ErrorActionPreference = 'Stop'
@@ -33,6 +34,21 @@ if (Test-Path $envFile) {
     if ($lanIp -and $apiUrl -notmatch [regex]::Escape($lanIp)) {
       Write-Warning "apps/mobile/.env API URL may not match current LAN IP ($lanIp). Update .env and rebuild APK."
     }
+    $healthUrl = "$($apiUrl.TrimEnd('/'))/api/v1/health"
+    if ($SkipApiHealthCheck) {
+      Write-Warning "Skipping API health check (-SkipApiHealthCheck). APK will still embed EXPO_PUBLIC_API_BASE_URL=$apiUrl"
+    } else {
+      Write-Step "Verify API connectivity -> $healthUrl"
+      try {
+        $healthResponse = Invoke-WebRequest -Uri $healthUrl -TimeoutSec 8 -UseBasicParsing
+        if ($healthResponse.StatusCode -ne 200) {
+          throw "HTTP $($healthResponse.StatusCode)"
+        }
+        Write-Host "API connectivity OK: $($healthResponse.Content)" -ForegroundColor Green
+      } catch {
+        throw "Cannot reach API at $apiUrl before building APK. Start the API server, fix apps/mobile/.env, or pass -SkipApiHealthCheck. $($_.Exception.Message)"
+      }
+    }
   }
 } else {
   Write-Warning "apps/mobile/.env not found; set EXPO_PUBLIC_* before prebuild"
@@ -59,17 +75,32 @@ try {
     Write-Step 'expo prebuild --platform android --clean'
     pnpm exec expo prebuild --platform android --clean
 
-    Write-Step 'Patch splash styles (full-bleed background, no centered icon)'
+    Write-Step 'Ensure native splash is color-only (logo only in JS overlay)'
     $stylesFile = Join-Path $androidDir 'app\src\main\res\values\styles.xml'
     if (Test-Path $stylesFile) {
-      $stylesContent = Get-Content $stylesFile -Raw
-      $stylesContent = $stylesContent -replace '<item name="windowSplashScreenBackground">@color/splashscreen_background</item>', '<item name="windowSplashScreenBackground">@drawable/splashscreen</item>'
-      $stylesContent = $stylesContent -replace '(?s)\s*<item name="windowSplashScreenAnimatedIcon">@drawable/splashscreen_logo</item>\s*', "`n"
+      $stylesContent = Get-Content $stylesFile -Raw -Encoding UTF8
+      $stylesContent = [regex]::Replace(
+        $stylesContent,
+        '\s*<item name="windowSplashScreenAnimatedIcon">[^<]+</item>\s*',
+        "`n"
+      )
+      $stylesContent = $stylesContent.Replace(
+        '<item name="windowSplashScreenBackground">@drawable/splashscreen</item>',
+        '<item name="windowSplashScreenBackground">@color/splashscreen_background</item>'
+      )
       $stylesContent = $stylesContent.Replace(
         'android:windowSplashScreenBehavior">icon_preferred',
         'android:windowSplashScreenBehavior">default'
       )
-      Set-Content -Path $stylesFile -Value $stylesContent -NoNewline
+      [System.IO.File]::WriteAllText($stylesFile, $stylesContent, [System.Text.UTF8Encoding]::new($false))
+    }
+
+    $gradlePropsFile = Join-Path $androidDir 'gradle.properties'
+    if (Test-Path $gradlePropsFile) {
+      $gradleProps = Get-Content $gradlePropsFile -Raw
+      $gradleProps = $gradleProps -replace 'reactNativeArchitectures=.*', 'reactNativeArchitectures=arm64-v8a'
+      Set-Content -Path $gradlePropsFile -Value $gradleProps -NoNewline
+      Write-Step 'Limited APK to arm64-v8a for faster cold start on device'
     }
 
     $gradleFile = Join-Path $androidDir 'app\build.gradle'
@@ -78,6 +109,22 @@ try {
       throw "build.gradle missing debug bundle config; check plugins/with-android-bundle-in-debug.js"
     }
     Write-Step 'Verified debuggableVariants = [] in build.gradle'
+
+    $mainAppFile = Join-Path $androidDir 'app\src\main\java\com\remember\app\MainApplication.kt'
+    if (-not (Test-Path $mainAppFile)) {
+      throw "MainApplication.kt not found: $mainAppFile"
+    }
+    $mainAppContent = Get-Content $mainAppFile -Raw -Encoding UTF8
+    if ($mainAppContent -notmatch 'useDevSupport\s*=\s*false' -or $mainAppContent -notmatch 'standaloneDebugNoMetro') {
+      Write-Step 'Patch MainApplication: disable Metro/DevSupport for standalone debug'
+      $mainAppContent = $mainAppContent -replace '(ExpoReactHostFactory\.getDefaultReactHost\(\s*\r?\n\s*context = applicationContext,)', @'
+ExpoReactHostFactory.getDefaultReactHost(
+      context = applicationContext,
+      useDevSupport = false, // standaloneDebugNoMetro,
+'@
+      [System.IO.File]::WriteAllText($mainAppFile, $mainAppContent, [System.Text.UTF8Encoding]::new($false))
+    }
+    Write-Step 'Verified useDevSupport = false in MainApplication.kt'
 
     if (-not (Select-String -Path (Join-Path $androidDir 'app\src\main\AndroidManifest.xml') -Pattern 'usesCleartextTraffic' -Quiet)) {
       throw 'AndroidManifest missing usesCleartextTraffic'
