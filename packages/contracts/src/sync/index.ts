@@ -1,6 +1,8 @@
 export {
+  reviewOutcomeSchema,
   reviewRatingSchema,
   syncLearningStatePayloadSchema,
+  type ReviewOutcome,
   type SyncLearningStatePayload,
 } from './learning-state-payload.js';
 export {
