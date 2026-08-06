@@ -1,9 +1,8 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { generateImageAsync } = require('@expo/image-utils');
-const { withAndroidColors, withDangerousMod } = require('@expo/config-plugins');
+const { withDangerousMod } = require('@expo/config-plugins');
 
-const SPLASH_BACKGROUND = '#F5F6FA';
 const IMAGE_CACHE_NAME = 'splash-android-brand';
 const BASE_WIDTH = 360;
 const BASE_HEIGHT = 800;
@@ -53,7 +52,6 @@ async function generateFullScreenSplashImages(projectRoot, sourceImage) {
 
       const outputDir = path.join(androidMainPath, 'res', `drawable-${folder}`);
       await fs.promises.mkdir(outputDir, { recursive: true });
-      // 保留生成逻辑供后续需要时启用；原生 splash 现仅展示底色，logo 由 JS overlay 统一呈现。
       await fs.promises.writeFile(path.join(outputDir, 'splashscreen_logo.png'), source);
     }),
   );
@@ -67,9 +65,33 @@ function writeSplashscreenDrawable(androidResDir) {
     `<?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
   <item android:drawable="@color/splashscreen_background" />
+  <item>
+    <bitmap android:gravity="fill" android:src="@drawable/splashscreen_logo" />
+  </item>
 </layer-list>
 `,
   );
+}
+
+/** 去掉 Android 12 居中 icon，改为全屏背景图。 */
+function patchSplashStylesContent(content) {
+  if (content.includes('android:windowSplashScreenBehavior">default')) {
+    return content;
+  }
+
+  let next = content.replace(
+    '<item name="windowSplashScreenBackground">@color/splashscreen_background</item>',
+    '<item name="windowSplashScreenBackground">@drawable/splashscreen</item>',
+  );
+  next = next.replace(
+    /\s*<item name="windowSplashScreenAnimatedIcon">@drawable\/splashscreen_logo<\/item>\s*/g,
+    '\n',
+  );
+  next = next.replace(
+    'android:windowSplashScreenBehavior">icon_preferred',
+    'android:windowSplashScreenBehavior">default',
+  );
+  return next;
 }
 
 function patchSplashStyles(stylesPath) {
@@ -78,23 +100,14 @@ function patchSplashStyles(stylesPath) {
   }
 
   const content = fs.readFileSync(stylesPath, 'utf8');
-  if (content.includes('@drawable/splashscreen"')) {
-    return;
+  const next = patchSplashStylesContent(content);
+  if (next !== content) {
+    fs.writeFileSync(stylesPath, next);
   }
-
-  fs.writeFileSync(
-    stylesPath,
-    content.replaceAll('@drawable/splashscreen_logo', '@drawable/splashscreen'),
-  );
 }
 
 /** 全屏 cover splash：按屏幕密度生成铺满图，避免居中小图 + 白边。 */
 function withAndroidSplashBrand(config) {
-  config = withAndroidColors(config, (configWithColors) => {
-    configWithColors.modResults.splashscreen_background = SPLASH_BACKGROUND;
-    return configWithColors;
-  });
-
   return withDangerousMod(config, [
     'android',
     async (configWithMod) => {
@@ -124,3 +137,4 @@ function withAndroidSplashBrand(config) {
 }
 
 module.exports = withAndroidSplashBrand;
+module.exports.patchSplashStylesContent = patchSplashStylesContent;

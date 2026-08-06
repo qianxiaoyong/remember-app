@@ -59,6 +59,19 @@ try {
     Write-Step 'expo prebuild --platform android --clean'
     pnpm exec expo prebuild --platform android --clean
 
+    Write-Step 'Patch splash styles (full-bleed background, no centered icon)'
+    $stylesFile = Join-Path $androidDir 'app\src\main\res\values\styles.xml'
+    if (Test-Path $stylesFile) {
+      $stylesContent = Get-Content $stylesFile -Raw
+      $stylesContent = $stylesContent -replace '<item name="windowSplashScreenBackground">@color/splashscreen_background</item>', '<item name="windowSplashScreenBackground">@drawable/splashscreen</item>'
+      $stylesContent = $stylesContent -replace '(?s)\s*<item name="windowSplashScreenAnimatedIcon">@drawable/splashscreen_logo</item>\s*', "`n"
+      $stylesContent = $stylesContent.Replace(
+        'android:windowSplashScreenBehavior">icon_preferred',
+        'android:windowSplashScreenBehavior">default'
+      )
+      Set-Content -Path $stylesFile -Value $stylesContent -NoNewline
+    }
+
     $gradleFile = Join-Path $androidDir 'app\build.gradle'
     $gradle = Get-Content $gradleFile -Raw
     if ($gradle -notmatch 'bundleJsInDebugForStandaloneApk' -or $gradle -notmatch 'debuggableVariants = \[\]') {
