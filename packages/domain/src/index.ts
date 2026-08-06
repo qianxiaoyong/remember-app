@@ -16,3 +16,26 @@ export {
   type QueuePlanItem,
 } from './build-study-queue.js';
 export { isPackVersionOlder } from './compare-pack-version.js';
+export {
+  addLocalReviewDays,
+  endOfLocalReviewDay,
+  formatLocalIsoDateTime,
+  formatLocalReviewDate,
+  nextLocalReviewDayAnchor,
+  startOfLocalReviewDay,
+} from './local-review-day.js';
+export {
+  buildReviewSessionPlan,
+  type BuildReviewSessionPlanInput,
+  type ReviewSessionDueItem,
+  type ReviewSessionPlan,
+} from './build-review-session-plan.js';
+export {
+  applyBoxReview,
+  createInitialReviewPoolState,
+  formatBoxInterval,
+  type ApplyBoxReviewInput,
+  type BoxLevel,
+  type ReviewOutcome,
+  type ReviewPoolState,
+} from './review-box-scheduler.js';
