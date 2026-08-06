@@ -34,7 +34,7 @@ export class SyncRepository {
           },
         });
 
-        if (existing && existing.clientVersion >= item.clientVersion) {
+        if (existing && existing.clientVersion > item.clientVersion) {
           await tx.syncProcessedEvent.create({
             data: {
               eventId: item.eventId,
@@ -125,7 +125,12 @@ async function applyLearningStateItem(
   const incomingDueAt = new Date(item.payload.dueAt);
   const merged = existing
     ? {
-        inReviewPool: item.payload.inReviewPool || existing.inReviewPool,
+        inReviewPool:
+          item.clientVersion > existing.clientVersion
+            ? item.payload.inReviewPool
+            : item.clientVersion < existing.clientVersion
+              ? existing.inReviewPool
+              : item.payload.inReviewPool && existing.inReviewPool,
         boxLevel: Math.min(existing.boxLevel, item.payload.boxLevel),
         dueAt: incomingDueAt.getTime() < existing.dueAt.getTime() ? incomingDueAt : existing.dueAt,
         firstAddedFromPackId:
@@ -178,9 +183,10 @@ async function applyLearningStateItem(
           },
         },
       });
-      if (!raced || raced.clientVersion >= item.clientVersion) {
+      if (!raced || raced.clientVersion > item.clientVersion) {
         return 'STALE';
       }
+      return applyLearningStateItem(tx, userId, item, raced);
     }
   }
 
@@ -188,7 +194,7 @@ async function applyLearningStateItem(
     where: {
       userId,
       knowledgeId: item.knowledgeId,
-      clientVersion: { lt: merged.clientVersion },
+      clientVersion: existing.clientVersion,
     },
     data: merged,
   });
