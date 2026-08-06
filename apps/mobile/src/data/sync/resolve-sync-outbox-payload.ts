@@ -1,19 +1,29 @@
-import { syncLearningStatePayloadSchema, type SyncLearningStatePayload } from '@remember/contracts';
-import { getLearningState } from '../repositories/learning-state-repository';
+import {
+  syncLearningStatePayloadSchema,
+  type ReviewOutcome,
+  type SyncLearningStatePayload,
+} from '@remember/contracts';
+import { getLearningStateByKnowledgeId } from '../repositories/learning-state-repository';
 import type { SyncOutboxRow } from '../repositories/sync-outbox-repository';
 
 export function resolveSyncOutboxPayload(row: SyncOutboxRow): SyncLearningStatePayload | null {
-  const state = getLearningState(row.knowledgeId);
+  const state = getLearningStateByKnowledgeId(row.knowledgeId);
   if (state) {
-    const rating = readOptionalRating(row.payload);
+    const outcome = readOptionalOutcome(row.payload);
     const parsedFromState = syncLearningStatePayloadSchema.safeParse({
-      packId: state.packId,
-      easiness: state.easiness,
-      intervalDays: state.intervalDays,
-      repetitions: state.repetitions,
+      inReviewPool: state.inReviewPool,
+      boxLevel: state.boxLevel,
       dueAt: state.dueAt,
+      firstAddedFromPackId: state.firstAddedFromPackId ?? state.packId,
       updatedAt: state.updatedAt,
-      ...(rating ? { rating } : {}),
+      ...(state.lastSeenInPackId ? { lastSeenInPackId: state.lastSeenInPackId } : {}),
+      ...(state.consecutiveLevel3Passes > 0
+        ? { consecutiveLevel3Passes: state.consecutiveLevel3Passes }
+        : {}),
+      ...(outcome ? { outcome } : {}),
+      legacyEasiness: state.easiness,
+      legacyIntervalDays: state.intervalDays,
+      legacyRepetitions: state.repetitions,
     });
     if (parsedFromState.success) {
       return parsedFromState.data;
@@ -29,11 +39,11 @@ export function resolveSyncOutboxPayload(row: SyncOutboxRow): SyncLearningStateP
   }
 }
 
-function readOptionalRating(payload: string): SyncLearningStatePayload['rating'] | undefined {
+function readOptionalOutcome(payload: string): ReviewOutcome | undefined {
   try {
     const raw = JSON.parse(payload) as Record<string, unknown>;
-    if (raw.rating === 'forgot' || raw.rating === 'hard' || raw.rating === 'good') {
-      return raw.rating;
+    if (raw.outcome === 'passed' || raw.outcome === 'failed') {
+      return raw.outcome;
     }
   } catch {
     // ignore malformed legacy payload

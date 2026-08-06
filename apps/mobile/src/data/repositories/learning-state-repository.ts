@@ -1,12 +1,22 @@
+import type { BoxLevel, StudyState } from '@remember/domain';
+import { endOfLocalReviewDay } from '@remember/domain';
 import type { SQLiteDatabase } from 'expo-sqlite';
-import type { StudyState } from '@remember/domain';
 import { openUserDatabase } from '../user-db/open-user-database';
 
-export interface LearningStateRow extends StudyState {
+export interface LearningStateRow {
   knowledgeId: string;
   packId: string;
+  easiness: number;
+  intervalDays: number;
+  repetitions: number;
+  dueAt: string;
   clientVersion: number;
   updatedAt: string;
+  inReviewPool: boolean;
+  boxLevel: BoxLevel;
+  firstAddedFromPackId: string | null;
+  lastSeenInPackId: string | null;
+  consecutiveLevel3Passes: number;
 }
 
 interface LearningStateDbRow {
@@ -18,6 +28,37 @@ interface LearningStateDbRow {
   dueAt: string;
   clientVersion: number;
   updatedAt: string;
+  inReviewPool: number;
+  boxLevel: number;
+  firstAddedFromPackId: string | null;
+  lastSeenInPackId: string | null;
+  consecutiveLevel3Passes: number;
+}
+
+const LEARNING_STATE_SELECT = `SELECT
+  knowledgeId,
+  packId,
+  easiness,
+  intervalDays,
+  repetitions,
+  dueAt,
+  clientVersion,
+  updatedAt,
+  inReviewPool,
+  boxLevel,
+  firstAddedFromPackId,
+  lastSeenInPackId,
+  consecutiveLevel3Passes
+FROM learning_states`;
+
+function clampBoxLevel(value: number): BoxLevel {
+  if (value <= 0) {
+    return 0;
+  }
+  if (value >= 3) {
+    return 3;
+  }
+  return value as BoxLevel;
 }
 
 function mapRow(row: LearningStateDbRow): LearningStateRow {
@@ -30,7 +71,16 @@ function mapRow(row: LearningStateDbRow): LearningStateRow {
     dueAt: row.dueAt,
     clientVersion: row.clientVersion,
     updatedAt: row.updatedAt,
+    inReviewPool: row.inReviewPool === 1,
+    boxLevel: clampBoxLevel(row.boxLevel),
+    firstAddedFromPackId: row.firstAddedFromPackId,
+    lastSeenInPackId: row.lastSeenInPackId,
+    consecutiveLevel3Passes: row.consecutiveLevel3Passes,
   };
+}
+
+function isDueByEndOfLocalDay(dueAt: string, now: Date, timeZone: string): boolean {
+  return new Date(dueAt).getTime() <= endOfLocalReviewDay(now, timeZone).getTime();
 }
 
 export function listLearningStatesForPack(
@@ -38,8 +88,7 @@ export function listLearningStatesForPack(
   db: SQLiteDatabase = openUserDatabase(),
 ): LearningStateRow[] {
   const rows = db.getAllSync<LearningStateDbRow>(
-    `SELECT knowledgeId, packId, easiness, intervalDays, repetitions, dueAt, clientVersion, updatedAt
-     FROM learning_states
+    `${LEARNING_STATE_SELECT}
      WHERE packId = ?
      ORDER BY dueAt ASC`,
     [packId],
@@ -51,9 +100,15 @@ export function getLearningState(
   knowledgeId: string,
   db: SQLiteDatabase = openUserDatabase(),
 ): LearningStateRow | null {
+  return getLearningStateByKnowledgeId(knowledgeId, db);
+}
+
+export function getLearningStateByKnowledgeId(
+  knowledgeId: string,
+  db: SQLiteDatabase = openUserDatabase(),
+): LearningStateRow | null {
   const row = db.getFirstSync<LearningStateDbRow>(
-    `SELECT knowledgeId, packId, easiness, intervalDays, repetitions, dueAt, clientVersion, updatedAt
-     FROM learning_states
+    `${LEARNING_STATE_SELECT}
      WHERE knowledgeId = ?`,
     [knowledgeId],
   );
@@ -66,8 +121,20 @@ export function upsertLearningState(
 ): void {
   db.runSync(
     `INSERT INTO learning_states (
-       knowledgeId, packId, easiness, intervalDays, repetitions, dueAt, clientVersion, updatedAt
-     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+       knowledgeId,
+       packId,
+       easiness,
+       intervalDays,
+       repetitions,
+       dueAt,
+       clientVersion,
+       updatedAt,
+       inReviewPool,
+       boxLevel,
+       firstAddedFromPackId,
+       lastSeenInPackId,
+       consecutiveLevel3Passes
+     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
      ON CONFLICT(knowledgeId) DO UPDATE SET
        packId = excluded.packId,
        easiness = excluded.easiness,
@@ -75,7 +142,12 @@ export function upsertLearningState(
        repetitions = excluded.repetitions,
        dueAt = excluded.dueAt,
        clientVersion = excluded.clientVersion,
-       updatedAt = excluded.updatedAt`,
+       updatedAt = excluded.updatedAt,
+       inReviewPool = excluded.inReviewPool,
+       boxLevel = excluded.boxLevel,
+       firstAddedFromPackId = excluded.firstAddedFromPackId,
+       lastSeenInPackId = excluded.lastSeenInPackId,
+       consecutiveLevel3Passes = excluded.consecutiveLevel3Passes`,
     [
       row.knowledgeId,
       row.packId,
@@ -85,8 +157,44 @@ export function upsertLearningState(
       row.dueAt,
       row.clientVersion,
       row.updatedAt,
+      row.inReviewPool ? 1 : 0,
+      row.boxLevel,
+      row.firstAddedFromPackId,
+      row.lastSeenInPackId,
+      row.consecutiveLevel3Passes,
     ],
   );
+}
+
+export function upsertReviewPoolState(
+  row: LearningStateRow,
+  db: SQLiteDatabase = openUserDatabase(),
+): void {
+  upsertLearningState(row, db);
+}
+
+export function listDueReviewPoolItems(
+  now: Date,
+  timeZone: string,
+  db: SQLiteDatabase = openUserDatabase(),
+): LearningStateRow[] {
+  const rows = db.getAllSync<LearningStateDbRow>(
+    `${LEARNING_STATE_SELECT}
+     WHERE inReviewPool = 1
+     ORDER BY dueAt ASC, knowledgeId ASC`,
+  );
+
+  return rows
+    .map(mapRow)
+    .filter((row) => isDueByEndOfLocalDay(row.dueAt, now, timeZone));
+}
+
+export function countDueReviewPoolItems(
+  now: Date,
+  timeZone: string,
+  db: SQLiteDatabase = openUserDatabase(),
+): number {
+  return listDueReviewPoolItems(now, timeZone, db).length;
 }
 
 export function buildLearningStateMap(rows: readonly LearningStateRow[]): Map<string, StudyState> {

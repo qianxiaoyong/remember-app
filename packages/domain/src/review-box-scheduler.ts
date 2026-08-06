@@ -45,7 +45,7 @@ function passedIntervalDays(
   consecutiveLevel3Passes: number,
 ): number {
   if (previousLevel < 3) {
-    return PASSED_INTERVAL_DAYS[previousLevel];
+    return PASSED_INTERVAL_DAYS[previousLevel as 0 | 1 | 2];
   }
 
   if (consecutiveLevel3Passes === 0) {
@@ -104,7 +104,7 @@ export function formatBoxInterval(
   consecutiveLevel3Passes: number,
 ): string {
   if (boxLevel < 3) {
-    const days = PASSED_INTERVAL_DAYS[boxLevel];
+    const days = PASSED_INTERVAL_DAYS[boxLevel as 0 | 1 | 2];
     if (days === 1) {
       return '1 天后';
     }

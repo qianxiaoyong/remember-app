@@ -1,19 +1,25 @@
-import type { ReviewRating } from '@remember/domain';
+import type { ReviewOutcome } from '@remember/contracts';
 import { syncLearningStatePayloadSchema } from '@remember/contracts';
 import type { LearningStateRow } from '../repositories/learning-state-repository';
 
 export function buildSyncOutboxPayload(input: {
   row: LearningStateRow;
-  rating?: ReviewRating;
+  outcome?: ReviewOutcome;
 }): string {
   const payload = syncLearningStatePayloadSchema.parse({
-    packId: input.row.packId,
-    easiness: input.row.easiness,
-    intervalDays: input.row.intervalDays,
-    repetitions: input.row.repetitions,
+    inReviewPool: input.row.inReviewPool,
+    boxLevel: input.row.boxLevel,
     dueAt: input.row.dueAt,
+    firstAddedFromPackId: input.row.firstAddedFromPackId ?? input.row.packId,
     updatedAt: input.row.updatedAt,
-    ...(input.rating ? { rating: input.rating } : {}),
+    ...(input.row.lastSeenInPackId ? { lastSeenInPackId: input.row.lastSeenInPackId } : {}),
+    ...(input.row.consecutiveLevel3Passes > 0
+      ? { consecutiveLevel3Passes: input.row.consecutiveLevel3Passes }
+      : {}),
+    ...(input.outcome ? { outcome: input.outcome } : {}),
+    legacyEasiness: input.row.easiness,
+    legacyIntervalDays: input.row.intervalDays,
+    legacyRepetitions: input.row.repetitions,
   });
   return JSON.stringify(payload);
 }
