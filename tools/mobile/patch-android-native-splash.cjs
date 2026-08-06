@@ -1,6 +1,7 @@
 /**
  * Post-prebuild patch: native splash matches JS overlay (splash-full.png cover + #F5F6FA).
  */
+/* eslint-disable @typescript-eslint/no-require-imports -- Node CJS post-prebuild script */
 const path = require('path');
 const {
   writeSplashscreenDrawable,

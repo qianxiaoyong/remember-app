@@ -184,7 +184,9 @@ function withAndroidSplashBrand(config) {
       await generateFullScreenSplashImages(projectRoot, sourceImage);
       writeSplashscreenDrawable(androidResDir);
       patchSplashStyles(path.join(androidResDir, 'values', 'styles.xml'));
-      patchLauncherBackgroundDrawable(path.join(androidResDir, 'drawable', 'ic_launcher_background.xml'));
+      patchLauncherBackgroundDrawable(
+        path.join(androidResDir, 'drawable', 'ic_launcher_background.xml'),
+      );
       patchSplashBackgroundColor(
         path.join(androidResDir, 'values', 'colors.xml'),
         configWithMod.splash?.backgroundColor ?? '#F5F6FA',
