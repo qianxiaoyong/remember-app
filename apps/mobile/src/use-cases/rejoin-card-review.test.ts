@@ -1,15 +1,26 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
-export function shouldSkipRejoinBecauseAlreadyPending(
-  alreadyPending: boolean,
-  addedToQueue: boolean,
-): boolean {
-  return alreadyPending && !addedToQueue;
-}
+vi.mock('./join-review-pool', () => ({
+  joinReviewPool: vi.fn(),
+}));
 
-describe('rejoin-card-review helpers', () => {
-  it('已在队列中的卡片不再重复加入', () => {
-    expect(shouldSkipRejoinBecauseAlreadyPending(true, false)).toBe(true);
-    expect(shouldSkipRejoinBecauseAlreadyPending(false, true)).toBe(false);
+import { joinReviewPool } from './join-review-pool';
+import { rejoinCardReview } from './rejoin-card-review';
+
+describe('rejoinCardReview', () => {
+  it('委托 joinReviewPool 幂等入池', () => {
+    vi.mocked(joinReviewPool).mockReturnValue({ status: 'already_in_pool' });
+
+    const result = rejoinCardReview({
+      packId: 'remember-test-pack',
+      knowledgeId: 'remember-test-pack:en:word:hello',
+    });
+
+    expect(joinReviewPool).toHaveBeenCalledWith({
+      knowledgeId: 'remember-test-pack:en:word:hello',
+      catalogPackId: 'remember-test-pack',
+      now: undefined,
+    });
+    expect(result).toEqual({ status: 'already_in_pool' });
   });
 });
