@@ -1,6 +1,5 @@
 import {
   addLocalReviewDays,
-  formatLocalIsoDateTime,
   nextLocalReviewDayAnchor,
   startOfLocalReviewDay,
 } from './local-review-day.js';
@@ -57,7 +56,7 @@ function passedIntervalDays(previousLevel: BoxLevel, consecutiveLevel3Passes: nu
 function dueAtAfterPassedDays(now: Date, days: number, timeZone: string): string {
   const reviewDayStart = startOfLocalReviewDay(now, timeZone);
   const dueDate = addLocalReviewDays(reviewDayStart, days, timeZone);
-  return formatLocalIsoDateTime(dueDate, timeZone);
+  return dueDate.toISOString();
 }
 
 export function applyBoxReview(input: ApplyBoxReviewInput): ReviewPoolState {

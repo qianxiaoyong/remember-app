@@ -15,7 +15,7 @@ describe('applyBoxReview', () => {
       timeZone: 'Asia/Shanghai',
     });
     expect(next.boxLevel).toBe(1);
-    expect(next.dueAt).toBe('2026-08-07T00:00:00.000+08:00');
+    expect(next.dueAt).toBe('2026-08-06T16:00:00.000Z');
   });
 
   it('failed keeps level 0 and due tomorrow', () => {
@@ -27,7 +27,7 @@ describe('applyBoxReview', () => {
       timeZone: 'Asia/Shanghai',
     });
     expect(next.boxLevel).toBe(0);
-    expect(next.dueAt).toBe('2026-08-07T00:00:00.000+08:00');
+    expect(next.dueAt).toBe('2026-08-06T16:00:00.000Z');
   });
 
   it('passed from level 1 sets due +3 local days', () => {
@@ -39,7 +39,7 @@ describe('applyBoxReview', () => {
       timeZone: 'Asia/Shanghai',
     });
     expect(next.boxLevel).toBe(2);
-    expect(next.dueAt).toBe('2026-08-09T00:00:00.000+08:00');
+    expect(next.dueAt).toBe('2026-08-08T16:00:00.000Z');
   });
 
   it('failed from level 2 drops to level 1 and due tomorrow', () => {
@@ -51,7 +51,7 @@ describe('applyBoxReview', () => {
       timeZone: 'Asia/Shanghai',
     });
     expect(next.boxLevel).toBe(1);
-    expect(next.dueAt).toBe('2026-08-07T00:00:00.000+08:00');
+    expect(next.dueAt).toBe('2026-08-06T16:00:00.000Z');
   });
 
   it('passed at level 3 first time schedules +21 days', () => {
@@ -69,7 +69,7 @@ describe('applyBoxReview', () => {
     });
     expect(next.boxLevel).toBe(3);
     expect(next.consecutiveLevel3Passes).toBe(1);
-    expect(next.dueAt).toBe('2026-08-27T00:00:00.000+08:00');
+    expect(next.dueAt).toBe('2026-08-26T16:00:00.000Z');
   });
 
   it('passed at level 3 second time schedules +45 days', () => {
@@ -86,7 +86,7 @@ describe('applyBoxReview', () => {
       timeZone: 'Asia/Shanghai',
     });
     expect(next.consecutiveLevel3Passes).toBe(2);
-    expect(next.dueAt).toBe('2026-09-20T00:00:00.000+08:00');
+    expect(next.dueAt).toBe('2026-09-19T16:00:00.000Z');
   });
 
   it('passed at level 3 third time schedules +90 days', () => {
@@ -103,7 +103,7 @@ describe('applyBoxReview', () => {
       timeZone: 'Asia/Shanghai',
     });
     expect(next.consecutiveLevel3Passes).toBe(3);
-    expect(next.dueAt).toBe('2026-11-04T00:00:00.000+08:00');
+    expect(next.dueAt).toBe('2026-11-03T16:00:00.000Z');
   });
 });
 
@@ -114,7 +114,7 @@ describe('createInitialReviewPoolState', () => {
     expect(state).toEqual({
       inReviewPool: true,
       boxLevel: 0,
-      dueAt: '2026-08-07T00:00:00.000+08:00',
+      dueAt: '2026-08-06T16:00:00.000Z',
       consecutiveLevel3Passes: 0,
     });
   });

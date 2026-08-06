@@ -151,7 +151,8 @@ export function addLocalReviewDays(anchor: Date, days: number, timeZone: string)
 
 export function nextLocalReviewDayAnchor(now: Date, timeZone: string): string {
   const tomorrowStart = addLocalReviewDays(startOfLocalReviewDay(now, timeZone), 1, timeZone);
-  return formatLocalIsoDateTime(tomorrowStart, timeZone);
+  // UTC ISO（Z）：Hermes 无法可靠解析带 +08:00 的字符串，存库与 sync 统一用 Z。
+  return tomorrowStart.toISOString();
 }
 
 export function formatLocalReviewDate(now: Date, timeZone: string): string {
