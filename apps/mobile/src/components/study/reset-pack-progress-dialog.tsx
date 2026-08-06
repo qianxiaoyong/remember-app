@@ -32,7 +32,9 @@ export function ResetPackProgressDialog(props: ResetPackProgressDialogProps): Re
       <View style={styles.backdrop}>
         <View style={styles.card}>
           <Text style={styles.title}>重置{props.isReaderMode ? '阅读' : '学习'}进度</Text>
-          <Text style={styles.body}>重置《{props.packDisplayName}》的本地进度，此操作不可恢复。</Text>
+          <Text style={styles.body}>
+            重置《{props.packDisplayName}》的本地进度，此操作不可恢复。
+          </Text>
 
           <Pressable
             accessibilityRole="checkbox"
@@ -46,7 +48,10 @@ export function ResetPackProgressDialog(props: ResetPackProgressDialogProps): Re
 
           <Pressable
             accessibilityRole="checkbox"
-            accessibilityState={{ checked: props.resetReview, disabled: props.inReviewPoolCount === 0 }}
+            accessibilityState={{
+              checked: props.resetReview,
+              disabled: props.inReviewPoolCount === 0,
+            }}
             disabled={props.inReviewPoolCount === 0}
             onPress={props.onToggleReview}
             style={[styles.optionRow, props.inReviewPoolCount === 0 ? styles.optionDisabled : null]}

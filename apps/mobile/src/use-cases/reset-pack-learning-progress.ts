@@ -1,7 +1,10 @@
 import { createRecordId } from '../data/create-record-id';
 import { deletePackBrowseBookmark } from '../data/repositories/pack-browse-bookmark-repository';
 import { getInstalledPack } from '../data/repositories/installed-pack-repository';
-import { getLearningStateByKnowledgeId, upsertReviewPoolState } from '../data/repositories/learning-state-repository';
+import {
+  getLearningStateByKnowledgeId,
+  upsertReviewPoolState,
+} from '../data/repositories/learning-state-repository';
 import { listPackCards } from '../data/repositories/pack-card-repository';
 import { deleteStoryReadingBookmark } from '../data/repositories/story-reading-bookmark-repository';
 import { insertSyncOutboxItem } from '../data/repositories/sync-outbox-repository';

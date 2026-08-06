@@ -88,7 +88,10 @@ export function ReviewScreen(): ReactElement {
           </View>
         ) : reviewContext?.cardDetail?.cardType === 'vocabulary' ? (
           <View style={styles.sessionRoot}>
-            <View pointerEvents="none" style={[styles.sourceLabel, { top: insets.top + spacing.xs }]}>
+            <View
+              pointerEvents="none"
+              style={[styles.sourceLabel, { top: insets.top + spacing.xs }]}
+            >
               <ReviewSourcePackLabel displayName={reviewContext.sourcePackDisplayName} />
             </View>
             <VocabularyStudyPanel

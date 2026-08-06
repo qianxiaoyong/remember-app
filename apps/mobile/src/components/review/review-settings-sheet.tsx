@@ -27,7 +27,9 @@ export function ReviewSettingsSheet(props: ReviewSettingsSheetProps): ReactEleme
           style={[styles.sheet, { paddingBottom: Math.max(insets.bottom, spacing.lg) }]}
         >
           <Text style={styles.title}>复习设置</Text>
-          <Text style={styles.meta}>今日已练 {props.todayReviewCompleted} / 限额 {props.dailyReviewLimit}</Text>
+          <Text style={styles.meta}>
+            今日已练 {props.todayReviewCompleted} / 限额 {props.dailyReviewLimit}
+          </Text>
           <Text style={styles.meta}>到期共 {props.dueTotal} 词</Text>
           <Text style={styles.meta}>今日新入池 {props.joinedPoolCountToday} 词</Text>
 

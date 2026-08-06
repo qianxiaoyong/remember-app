@@ -39,10 +39,12 @@ export function PackBrowseCompletePanel(props: PackBrowseCompletePanelProps): Re
       </SurfaceCard>
 
       <View style={styles.actions}>
-        {showReviewAction ? (
-          <PrimaryButton label="去复习" onPress={props.onGoReview} />
-        ) : null}
-        <PrimaryButton label="从头再学" onPress={props.onRestartFromBeginning} variant="secondary" />
+        {showReviewAction ? <PrimaryButton label="去复习" onPress={props.onGoReview} /> : null}
+        <PrimaryButton
+          label="从头再学"
+          onPress={props.onRestartFromBeginning}
+          variant="secondary"
+        />
         <PrimaryButton label="返回首页" onPress={props.onGoHome} variant="secondary" />
       </View>
     </View>

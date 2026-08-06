@@ -2,7 +2,10 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { normalizeSurfaceForm } from '@remember/contracts';
 import type { LexiconLookupResult } from '../data/repositories/lexicon-entry-repository';
 import type { PackCardSummary } from '../data/repositories/pack-card-repository';
-import { upsertPackBrowseBookmark, deletePackBrowseBookmark } from '../data/repositories/pack-browse-bookmark-repository';
+import {
+  upsertPackBrowseBookmark,
+  deletePackBrowseBookmark,
+} from '../data/repositories/pack-browse-bookmark-repository';
 import { getLearningStateByKnowledgeId } from '../data/repositories/learning-state-repository';
 import { getPackCardDetailUseCase } from '../use-cases/get-pack-card-detail';
 import { joinReviewPool } from '../use-cases/join-review-pool';
@@ -50,9 +53,8 @@ export function useStudyFlow(
   const [lexiconSelectedSurfaceForm, setLexiconSelectedSurfaceForm] = useState<string | null>(null);
   const [audioMessage, setAudioMessage] = useState<string | null>(null);
   const [browseCompleteVisible, setBrowseCompleteVisible] = useState(false);
-  const [browseCompleteSummary, setBrowseCompleteSummary] = useState<PackBrowseCompleteSummary | null>(
-    null,
-  );
+  const [browseCompleteSummary, setBrowseCompleteSummary] =
+    useState<PackBrowseCompleteSummary | null>(null);
 
   const startBrowse = useCallback(() => {
     setMessage(null);
