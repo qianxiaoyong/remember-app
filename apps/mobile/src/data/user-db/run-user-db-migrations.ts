@@ -1,4 +1,5 @@
 import type { SQLiteDatabase } from 'expo-sqlite';
+import { runSm2ToReviewPoolMigration } from './migrate-sm2-to-review-pool';
 import { MIGRATIONS, USER_DB_VERSION } from './user-db-schema';
 
 export function runUserDbMigrations(db: SQLiteDatabase): void {
@@ -21,6 +22,9 @@ export function runUserDbMigrations(db: SQLiteDatabase): void {
     try {
       for (const sql of statements) {
         db.execSync(sql);
+      }
+      if (version === 4) {
+        runSm2ToReviewPoolMigration(db);
       }
       db.execSync(`PRAGMA user_version = ${String(version)}`);
       db.execSync('COMMIT');
