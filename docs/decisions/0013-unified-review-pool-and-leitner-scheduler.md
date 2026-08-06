@@ -4,8 +4,6 @@
 状态：**已确认**  
 关联：ADR [0008](./0008-pack-protocol.md)（`knowledgeId`）、[0012](./0012-card-type-registry.md)（`reviewMode` / 书库呈现）；替代/废止移动端 **学习包内 SM-2 三按钮** 产品行为（`packages/domain/review-scheduler.ts` 仍可在迁移期保留，见 §9）
 
-> 本文当前为 **ADR 大纲**；§ 标记「待填」的条目在确认后补全文案与验收用例。
-
 ---
 
 ## 1. 背景
@@ -346,9 +344,9 @@ sessionSize    = min(count(due 且 inReviewPool), max(remainingQuota, 0))
 
 ---
 
-## 13. 相关文档（实施后更新）
+## 13. 相关文档
 
-- `docs/superpowers/specs/2026-07-26-learning-app-mvp-ui-design.md` §8.2
-- `docs/superpowers/plans/2026-07-28-study-scheduler-and-session.md`（废止或重写）
-- `docs/decisions/0012-card-type-registry.md` §2 reviewMode
-- 实施计划：`docs/superpowers/plans/2026-08-06-unified-review-pool.md`
+- 实施计划：[2026-08-06-unified-review-pool.md](../superpowers/plans/2026-08-06-unified-review-pool.md)
+- UI 规范：`docs/superpowers/specs/2026-07-26-learning-app-mvp-ui-design.md` §3.2、§8.2
+- CardType / reviewMode：`docs/decisions/0012-card-type-registry.md` §2
+- 废止计划：[2026-07-28-study-scheduler-and-session.md](../superpowers/plans/2026-07-28-study-scheduler-and-session.md)（Superseded by 2026-08-06-unified-review-pool.md）
