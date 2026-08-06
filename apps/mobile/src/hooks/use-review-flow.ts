@@ -12,11 +12,13 @@ import { playOrCacheLexiconAudio } from '../use-cases/play-or-cache-lexicon-audi
 import { playPackAssetAudio } from '../use-cases/play-pack-asset-audio';
 import { resolveReviewCardContext } from '../use-cases/resolve-review-card-context';
 import { resumeOrStartReviewSession } from '../use-cases/resume-or-start-review-session';
+import { skipUnloadedReviewQueueItem } from '../use-cases/skip-unloaded-review-queue-item';
 import type { ActiveStudySession } from '../use-cases/study-session-types';
 import {
   isLexiconItemSavedUseCase,
   toggleSavedLexiconItem,
 } from '../use-cases/toggle-saved-lexicon-item';
+import { markReviewPoolChanged } from '../shell/review-pool-changed-signal';
 
 export function useReviewFlow() {
   const [session, setSession] = useState<ActiveStudySession | null>(null);
@@ -147,6 +149,7 @@ export function useReviewFlow() {
           knowledgeId: currentKnowledgeId,
           outcome,
         });
+        markReviewPoolChanged();
         const nextSession = resumeOrStartReviewSession();
         setSession(nextSession);
         setRevealed(false);
@@ -159,6 +162,30 @@ export function useReviewFlow() {
     },
     [currentKnowledgeId, refreshSummary, session?.sessionId],
   );
+
+  const handleSkipUnloaded = useCallback(() => {
+    if (!session?.sessionId || !currentKnowledgeId) {
+      return;
+    }
+    setIsSubmitting(true);
+    setMessage(null);
+    setLexiconVisible(false);
+    setLexiconSelectedSurfaceForm(null);
+    try {
+      skipUnloadedReviewQueueItem({
+        sessionId: session.sessionId,
+        knowledgeId: currentKnowledgeId,
+      });
+      const nextSession = resumeOrStartReviewSession();
+      setSession(nextSession);
+      setRevealed(false);
+      refreshSummary();
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : '跳过失败');
+    } finally {
+      setIsSubmitting(false);
+    }
+  }, [currentKnowledgeId, refreshSummary, session?.sessionId]);
 
   const setDailyReviewLimit = useCallback(
     (value: number) => {
@@ -193,6 +220,7 @@ export function useReviewFlow() {
     handleFailed: () => {
       handleOutcome('failed');
     },
+    handleSkipUnloaded,
     setDailyReviewLimit,
     refreshSummary,
     startReview,

@@ -7,7 +7,6 @@ import {
 } from '../data/repositories/learning-state-repository';
 import {
   listPendingQueueItemsForSession,
-  listQueueItemsForSession,
   markQueueItemDone,
   touchSessionUpdatedAt,
   updateSessionStatus,
@@ -19,6 +18,7 @@ import { openUserDatabase } from '../data/user-db/open-user-database';
 import { getDeviceTimeZone } from '../lib/get-device-time-zone';
 import { findActiveReviewSession } from './find-active-review-session';
 import { uploadPendingSyncOutbox } from './sync/upload-pending-sync-outbox';
+import { markReviewPoolChanged } from '../shell/review-pool-changed-signal';
 
 export function confirmReviewOutcome(input: {
   sessionId: string;
@@ -103,5 +103,5 @@ export function confirmReviewOutcome(input: {
   }
 
   void uploadPendingSyncOutbox();
-  void listQueueItemsForSession(activeSession.sessionId);
+  markReviewPoolChanged();
 }

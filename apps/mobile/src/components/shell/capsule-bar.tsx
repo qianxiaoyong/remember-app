@@ -1,7 +1,9 @@
 import type { ReactElement } from 'react';
-import { useEffect, useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useCallback, useEffect, useState } from 'react';
+import { AppState, type AppStateStatus, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useFocusEffect } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { subscribeReviewPoolChanged } from '../../shell/review-pool-changed-signal';
 import { countDueReviewItems } from '../../use-cases/count-due-review-items';
 import { FolderTabIcon, HomeTabIcon, StarIcon } from '../ui/shell-icons';
 import { colors } from '../../theme/colors';
@@ -19,9 +21,31 @@ export function CapsuleBar(props: CapsuleBarProps): ReactElement {
   const insets = useSafeAreaInsets();
   const [dueCount, setDueCount] = useState(0);
 
-  useEffect(() => {
+  const refreshDueCount = useCallback(() => {
     setDueCount(countDueReviewItems());
-  }, [props.activeTab]);
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      refreshDueCount();
+    }, [refreshDueCount]),
+  );
+
+  useEffect(() => {
+    const appStateSubscription = AppState.addEventListener(
+      'change',
+      (nextState: AppStateStatus) => {
+        if (nextState === 'active') {
+          refreshDueCount();
+        }
+      },
+    );
+    const unsubscribe = subscribeReviewPoolChanged(refreshDueCount);
+    return () => {
+      appStateSubscription.remove();
+      unsubscribe();
+    };
+  }, [refreshDueCount]);
 
   return (
     <View pointerEvents="box-none" style={[styles.wrapper, { bottom: insets.bottom + spacing.md }]}>

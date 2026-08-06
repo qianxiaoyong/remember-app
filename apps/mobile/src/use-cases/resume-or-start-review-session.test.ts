@@ -47,6 +47,10 @@ vi.mock('../lib/get-device-time-zone', () => ({
   getDeviceTimeZone: vi.fn(() => 'Asia/Shanghai'),
 }));
 
+vi.mock('./resolve-review-card-context', () => ({
+  resolveReviewCardContext: vi.fn(() => ({ sourcePackId: 'remember-test-pack' })),
+}));
+
 import { listDueReviewPoolItems } from '../data/repositories/learning-state-repository';
 import { insertQueueItems } from '../data/repositories/study-session-repository';
 import { findActiveReviewSession } from './find-active-review-session';

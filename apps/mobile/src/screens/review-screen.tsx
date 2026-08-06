@@ -33,6 +33,7 @@ export function ReviewScreen(): ReactElement {
     setRevealed,
     handlePassed,
     handleFailed,
+    handleSkipUnloaded,
     setDailyReviewLimit,
     startReview,
     openLexicon,
@@ -46,14 +47,67 @@ export function ReviewScreen(): ReactElement {
   const [settingsVisible, setSettingsVisible] = useState(false);
   const [moreVisible, setMoreVisible] = useState(false);
 
-  const hasDueItems = summary.dueTotal > 0;
-  const hasSession = Boolean(session?.currentItem && reviewContext?.cardDetail);
+  const hasCurrentItem = Boolean(session?.currentItem);
+  const canLoadCurrent = Boolean(reviewContext?.cardDetail);
+  const hasSession = hasCurrentItem && canLoadCurrent;
   const moreMenuAnchorTop = insets.top + spacing.sm + spacing.touchTarget + spacing.xs;
   const moreMenuAnchorRight = spacing.lg;
 
   const goHome = useCallback((): void => {
     router.replace('/library');
   }, [router]);
+
+  const renderEmptyState = (): ReactElement => {
+    if (summary.dueTotal === 0) {
+      return (
+        <View style={styles.empty}>
+          <Text style={styles.emptyText}>暂无到期复习词</Text>
+          <PrimaryButton
+            label="去学习"
+            onPress={() => {
+              router.replace('/library');
+            }}
+          />
+        </View>
+      );
+    }
+
+    if (hasCurrentItem && !canLoadCurrent) {
+      return (
+        <View style={styles.empty}>
+          <Text style={styles.emptyText}>无法加载此复习词</Text>
+          <Text style={styles.emptyHint}>来源学习包可能已卸载或内容损坏</Text>
+          <PrimaryButton disabled={isSubmitting} label="跳过" onPress={handleSkipUnloaded} />
+        </View>
+      );
+    }
+
+    if (!hasCurrentItem && summary.remainingQuota === 0) {
+      return (
+        <View style={styles.empty}>
+          <Text style={styles.emptyText}>今日复习配额已用完</Text>
+          <PrimaryButton label="刷新" onPress={startReview} />
+        </View>
+      );
+    }
+
+    if (!hasCurrentItem && summary.remainingQuota > 0) {
+      return (
+        <View style={styles.empty}>
+          <Text style={styles.emptyText}>暂无可复习的词</Text>
+          <Text style={styles.emptyHint}>到期词条可能来自已卸载的学习包</Text>
+          <PrimaryButton label="刷新" onPress={startReview} />
+        </View>
+      );
+    }
+
+    return (
+      <View style={styles.empty}>
+        <Text style={styles.emptyText}>今日复习配额已用完</Text>
+        <PrimaryButton label="刷新" onPress={startReview} />
+      </View>
+    );
+  };
 
   return (
     <ScreenScaffold
@@ -71,22 +125,7 @@ export function ReviewScreen(): ReactElement {
       <View style={styles.root}>
         {message ? <Text style={styles.message}>{message}</Text> : null}
 
-        {!hasDueItems ? (
-          <View style={styles.empty}>
-            <Text style={styles.emptyText}>暂无到期复习词</Text>
-            <PrimaryButton
-              label="去学习"
-              onPress={() => {
-                router.replace('/library');
-              }}
-            />
-          </View>
-        ) : !hasSession ? (
-          <View style={styles.empty}>
-            <Text style={styles.emptyText}>今日复习配额已用完</Text>
-            <PrimaryButton label="刷新" onPress={startReview} />
-          </View>
-        ) : reviewContext?.cardDetail?.cardType === 'vocabulary' ? (
+        {hasSession && reviewContext?.cardDetail?.cardType === 'vocabulary' ? (
           <View style={styles.sessionRoot}>
             <View
               pointerEvents="none"
@@ -111,7 +150,7 @@ export function ReviewScreen(): ReactElement {
             />
           </View>
         ) : (
-          <Text style={styles.emptyHint}>无法加载复习卡片</Text>
+          renderEmptyState()
         )}
       </View>
 
@@ -192,6 +231,7 @@ const styles = StyleSheet.create({
   emptyHint: {
     color: colors.textSecondary,
     fontSize: 14,
-    padding: spacing.lg,
+    lineHeight: 20,
+    textAlign: 'center',
   },
 });

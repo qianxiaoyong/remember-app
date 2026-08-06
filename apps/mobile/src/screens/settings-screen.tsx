@@ -22,7 +22,6 @@ export function SettingsScreen(): ReactElement {
       value,
       updatedAt: new Date().toISOString(),
     });
-    router.replace('/settings');
   };
 
   return (

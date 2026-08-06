@@ -15,6 +15,7 @@ import { getDailyReviewLimit } from '../data/repositories/user-preferences-repos
 import { getDeviceTimeZone } from '../lib/get-device-time-zone';
 import { buildActiveStudySession, type ActiveStudySession } from './study-session-types';
 import { findActiveReviewSession } from './find-active-review-session';
+import { resolveReviewCardContext } from './resolve-review-card-context';
 import { REVIEW_POOL_SESSION_PACK_ID } from './review-session-constants';
 
 export function resumeOrStartReviewSession(now: Date = new Date()): ActiveStudySession {
@@ -52,13 +53,17 @@ export function resumeOrStartReviewSession(now: Date = new Date()): ActiveStudyS
     timeZone,
   });
 
-  if (plan.sessionKnowledgeIds.length === 0) {
+  const loadableKnowledgeIds = plan.sessionKnowledgeIds.filter(
+    (knowledgeId) => resolveReviewCardContext(knowledgeId) !== null,
+  );
+
+  if (loadableKnowledgeIds.length === 0) {
     return buildActiveStudySession('empty', REVIEW_POOL_SESSION_PACK_ID, []);
   }
 
   const sessionId = createRecordId('session');
   const createdAt = now.toISOString();
-  const queueItems: StudyQueueItemRow[] = plan.sessionKnowledgeIds.map((knowledgeId, index) => ({
+  const queueItems: StudyQueueItemRow[] = loadableKnowledgeIds.map((knowledgeId, index) => ({
     itemId: createRecordId('queue'),
     sessionId,
     knowledgeId,

@@ -14,6 +14,7 @@ import { insertSyncOutboxItem } from '../data/repositories/sync-outbox-repositor
 import { buildSyncOutboxPayload } from '../data/sync/build-sync-outbox-payload';
 import { openUserDatabase } from '../data/user-db/open-user-database';
 import { getDeviceTimeZone } from '../lib/get-device-time-zone';
+import { markReviewPoolChanged } from '../shell/review-pool-changed-signal';
 import { resolveContentPackId } from './resolve-content-pack-id';
 
 export type JoinReviewPoolResult = { status: 'created' } | { status: 'already_in_pool' };
@@ -91,5 +92,6 @@ export function joinReviewPool(input: {
     throw error;
   }
 
+  markReviewPoolChanged();
   return { status: 'created' };
 }
