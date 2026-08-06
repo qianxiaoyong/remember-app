@@ -68,9 +68,6 @@ export function resetPackLearningProgress(
     }
 
     for (const row of rowsToSync) {
-      if (!row) {
-        continue;
-      }
       upsertReviewPoolState(row, db);
       insertSyncOutboxItem(
         {

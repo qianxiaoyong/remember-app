@@ -90,7 +90,7 @@ export function useReviewFlow() {
   }, [lexiconEntry, sourcePackId]);
 
   const handlePlayPrimaryAudio = useCallback(() => {
-    if (!reviewContext?.cardDetail || reviewContext.cardDetail.cardType !== 'vocabulary') {
+    if (reviewContext?.cardDetail?.cardType !== 'vocabulary') {
       return;
     }
     void playPackAssetAudio({
