@@ -70,7 +70,12 @@ export function StoryVocabSheet(props: StoryVocabSheetProps): ReactElement {
 
   return (
     <>
-      <Modal animationType="fade" onRequestClose={props.onClose} transparent visible={props.visible}>
+      <Modal
+        animationType="fade"
+        onRequestClose={props.onClose}
+        transparent
+        visible={props.visible}
+      >
         <Pressable accessibilityRole="button" onPress={props.onClose} style={styles.backdrop}>
           <Pressable
             accessibilityRole="none"
