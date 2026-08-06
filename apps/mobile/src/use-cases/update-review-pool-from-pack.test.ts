@@ -35,7 +35,12 @@ vi.mock('./resolve-content-pack-id', () => ({
   resolveContentPackId: vi.fn((packId: string) => packId),
 }));
 
+vi.mock('../shell/review-pool-changed-signal', () => ({
+  markReviewPoolChanged: vi.fn(),
+}));
+
 import { getLearningStateByKnowledgeId } from '../data/repositories/learning-state-repository';
+import { markReviewPoolChanged } from '../shell/review-pool-changed-signal';
 import { incrementJoinedPoolCount } from '../data/repositories/review-daily-stats-repository';
 import { upsertReviewPoolState } from '../data/repositories/learning-state-repository';
 import { updateReviewPoolFromPack } from './update-review-pool-from-pack';
@@ -77,5 +82,6 @@ describe('updateReviewPoolFromPack', () => {
     expect(savedRow?.firstAddedFromPackId).toBe('story-test-pack');
     expect(savedRow?.dueAt).toBe('2026-08-06T16:00:00.000Z');
     expect(incrementJoinedPoolCount).not.toHaveBeenCalled();
+    expect(markReviewPoolChanged).toHaveBeenCalledOnce();
   });
 });

@@ -8,6 +8,7 @@ import { insertSyncOutboxItem } from '../data/repositories/sync-outbox-repositor
 import { buildSyncOutboxPayload } from '../data/sync/build-sync-outbox-payload';
 import { openUserDatabase } from '../data/user-db/open-user-database';
 import { getDeviceTimeZone } from '../lib/get-device-time-zone';
+import { markReviewPoolChanged } from '../shell/review-pool-changed-signal';
 import { buildReviewPoolLearningRow } from './join-review-pool';
 
 export function updateReviewPoolFromPack(input: {
@@ -47,4 +48,6 @@ export function updateReviewPoolFromPack(input: {
     db.execSync('ROLLBACK');
     throw error;
   }
+
+  markReviewPoolChanged();
 }
