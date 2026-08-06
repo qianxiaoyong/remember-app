@@ -17,12 +17,14 @@ const DEVICE_B = '22222222-2222-4222-8222-222222222222';
 const KNOWLEDGE_ID = 'remember-test-pack:en:word:hello';
 
 const samplePayload = {
-  packId: 'remember-test-pack',
-  easiness: 2.5,
-  intervalDays: 1,
-  repetitions: 1,
+  inReviewPool: true,
+  boxLevel: 0,
   dueAt: '2026-07-30T01:00:00.000Z',
+  firstAddedFromPackId: 'remember-test-pack',
   updatedAt: '2026-07-30T00:00:00.000Z',
+  legacyEasiness: 2.5,
+  legacyIntervalDays: 1,
+  legacyRepetitions: 1,
 };
 
 async function sendSmsCode(server: Parameters<typeof request>[0], phone: string): Promise<void> {
@@ -117,7 +119,7 @@ describe('sync learning states integration', () => {
     expect(snapshotBody.items[0]).toMatchObject({
       knowledgeId: KNOWLEDGE_ID,
       clientVersion: 1,
-      packId: samplePayload.packId,
+      firstAddedFromPackId: samplePayload.firstAddedFromPackId,
     });
   });
 
@@ -170,7 +172,7 @@ describe('sync learning states integration', () => {
             eventId: 'sync-event-new',
             knowledgeId: KNOWLEDGE_ID,
             clientVersion: 2,
-            payload: { ...samplePayload, repetitions: 2 },
+            payload: { ...samplePayload, legacyRepetitions: 2 },
           },
         ],
       })
@@ -218,7 +220,7 @@ describe('sync learning states integration', () => {
               eventId: 'sync-event-concurrent-old',
               knowledgeId: KNOWLEDGE_ID,
               clientVersion: 2,
-              payload: { ...samplePayload, repetitions: 2 },
+              payload: { ...samplePayload, legacyRepetitions: 2 },
             },
           ],
         }),
@@ -231,7 +233,7 @@ describe('sync learning states integration', () => {
               eventId: 'sync-event-concurrent-new',
               knowledgeId: KNOWLEDGE_ID,
               clientVersion: 3,
-              payload: { ...samplePayload, repetitions: 3 },
+              payload: { ...samplePayload, legacyRepetitions: 3 },
             },
           ],
         }),
@@ -260,7 +262,7 @@ describe('sync learning states integration', () => {
             eventId: 'sync-event-device-a',
             knowledgeId: KNOWLEDGE_ID,
             clientVersion: 4,
-            payload: { ...samplePayload, repetitions: 4 },
+            payload: { ...samplePayload, legacyRepetitions: 4 },
           },
         ],
       })
