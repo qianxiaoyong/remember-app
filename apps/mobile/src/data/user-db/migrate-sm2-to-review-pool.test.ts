@@ -66,7 +66,7 @@ describe('runSm2ToReviewPoolMigration', () => {
       },
     };
 
-    runSm2ToReviewPoolMigration(db);
+    runSm2ToReviewPoolMigration(db as never);
 
     expect(updates).toEqual([
       {

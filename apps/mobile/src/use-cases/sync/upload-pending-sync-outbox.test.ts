@@ -86,6 +86,11 @@ describe('uploadPendingSyncOutbox', () => {
       repetitions: 1,
       dueAt: '2026-07-30T00:00:00.000Z',
       updatedAt: '2026-07-30T00:00:00.000Z',
+      inReviewPool: true,
+      boxLevel: 1,
+      firstAddedFromPackId: 'remember-test-pack',
+      lastSeenInPackId: null,
+      consecutiveLevel3Passes: 0,
     });
   });
 

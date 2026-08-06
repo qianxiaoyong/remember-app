@@ -10,6 +10,6 @@ export function rejoinCardReview(input: {
   return joinReviewPool({
     knowledgeId: input.knowledgeId,
     catalogPackId: input.packId,
-    now: input.now,
+    ...(input.now ? { now: input.now } : {}),
   });
 }

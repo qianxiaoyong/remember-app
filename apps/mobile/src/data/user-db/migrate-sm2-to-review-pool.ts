@@ -1,4 +1,5 @@
 import type { BoxLevel } from '@remember/domain';
+import type { SQLiteDatabase } from 'expo-sqlite';
 
 export function mapSm2ToInReviewPool(repetitions: number, intervalDays: number): boolean {
   return !(repetitions === 0 && intervalDays === 0);
@@ -24,12 +25,7 @@ interface Sm2LearningStateRow {
   intervalDays: number;
 }
 
-interface MigrationDatabase {
-  getAllSync<T>(sql: string, params?: readonly unknown[]): T[];
-  runSync(sql: string, params?: readonly unknown[]): void;
-}
-
-export function runSm2ToReviewPoolMigration(db: MigrationDatabase): void {
+export function runSm2ToReviewPoolMigration(db: SQLiteDatabase): void {
   const rows = db.getAllSync<Sm2LearningStateRow>(
     `SELECT knowledgeId, packId, repetitions, intervalDays FROM learning_states`,
   );

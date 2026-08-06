@@ -4,10 +4,10 @@ vi.mock('../repositories/learning-state-repository', () => ({
   getLearningStateByKnowledgeId: vi.fn(),
 }));
 
-import { getLearningStateByKnowledgeId } from '../repositories/learning-state-repository';
+import { getLearningStateByKnowledgeId, type LearningStateRow } from '../repositories/learning-state-repository';
 import { resolveSyncOutboxPayload } from './resolve-sync-outbox-payload';
 
-const sampleState = {
+const sampleState: LearningStateRow = {
   knowledgeId: 'remember-test-pack:en:word:hello',
   packId: 'remember-test-pack',
   easiness: 2.5,

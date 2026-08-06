@@ -83,36 +83,84 @@ export class SyncRepository {
 
     return rows.map((row) => ({
       knowledgeId: row.knowledgeId,
-      packId: row.packId,
-      easiness: row.easiness,
-      intervalDays: row.intervalDays,
-      repetitions: row.repetitions,
+      inReviewPool: row.inReviewPool,
+      boxLevel: row.boxLevel,
       dueAt: row.dueAt.toISOString(),
+      firstAddedFromPackId: row.firstAddedFromPackId,
+      ...(row.lastSeenInPackId ? { lastSeenInPackId: row.lastSeenInPackId } : {}),
+      ...(row.consecutiveLevel3Passes > 0
+        ? { consecutiveLevel3Passes: row.consecutiveLevel3Passes }
+        : {}),
       clientVersion: row.clientVersion,
       updatedAt: row.updatedAt.toISOString(),
+      legacyEasiness: row.easiness,
+      legacyIntervalDays: row.intervalDays,
+      legacyRepetitions: row.repetitions,
     }));
   }
 }
 
 type ApplyResult = 'APPLIED' | 'STALE';
 
+type ExistingLearningState = {
+  clientVersion: number;
+  boxLevel: number;
+  dueAt: Date;
+  firstAddedFromPackId: string;
+  lastSeenInPackId: string | null;
+  consecutiveLevel3Passes: number;
+  inReviewPool: boolean;
+  easiness: number;
+  intervalDays: number;
+  repetitions: number;
+  packId: string;
+};
+
 async function applyLearningStateItem(
   tx: Prisma.TransactionClient,
   userId: string,
   item: SyncBatchItem,
-  existing: {
-    clientVersion: number;
-  } | null,
+  existing: ExistingLearningState | null,
 ): Promise<ApplyResult> {
-  const data = {
-    packId: item.payload.packId,
-    easiness: item.payload.easiness,
-    intervalDays: item.payload.intervalDays,
-    repetitions: item.payload.repetitions,
-    dueAt: new Date(item.payload.dueAt),
-    clientVersion: item.clientVersion,
-    updatedAt: new Date(item.payload.updatedAt),
-  };
+  const incomingDueAt = new Date(item.payload.dueAt);
+  const merged = existing
+    ? {
+        inReviewPool: item.payload.inReviewPool || existing.inReviewPool,
+        boxLevel: Math.min(existing.boxLevel, item.payload.boxLevel),
+        dueAt: incomingDueAt.getTime() < existing.dueAt.getTime() ? incomingDueAt : existing.dueAt,
+        firstAddedFromPackId:
+          item.clientVersion >= existing.clientVersion
+            ? item.payload.firstAddedFromPackId
+            : existing.firstAddedFromPackId,
+        lastSeenInPackId:
+          item.payload.lastSeenInPackId ??
+          existing.lastSeenInPackId ??
+          null,
+        consecutiveLevel3Passes:
+          item.clientVersion >= existing.clientVersion
+            ? (item.payload.consecutiveLevel3Passes ?? 0)
+            : existing.consecutiveLevel3Passes,
+        easiness: item.payload.legacyEasiness ?? existing.easiness,
+        intervalDays: item.payload.legacyIntervalDays ?? existing.intervalDays,
+        repetitions: item.payload.legacyRepetitions ?? existing.repetitions,
+        packId: item.payload.firstAddedFromPackId,
+        clientVersion: Math.max(existing.clientVersion, item.clientVersion),
+        updatedAt: new Date(item.payload.updatedAt),
+      }
+    : {
+        inReviewPool: item.payload.inReviewPool,
+        boxLevel: item.payload.boxLevel,
+        dueAt: incomingDueAt,
+        firstAddedFromPackId: item.payload.firstAddedFromPackId,
+        lastSeenInPackId: item.payload.lastSeenInPackId ?? null,
+        consecutiveLevel3Passes: item.payload.consecutiveLevel3Passes ?? 0,
+        easiness: item.payload.legacyEasiness ?? 2.5,
+        intervalDays: item.payload.legacyIntervalDays ?? 0,
+        repetitions: item.payload.legacyRepetitions ?? 0,
+        packId: item.payload.firstAddedFromPackId,
+        clientVersion: item.clientVersion,
+        updatedAt: new Date(item.payload.updatedAt),
+      };
 
   if (!existing) {
     try {
@@ -120,7 +168,7 @@ async function applyLearningStateItem(
         data: {
           userId,
           knowledgeId: item.knowledgeId,
-          ...data,
+          ...merged,
         },
       });
       return 'APPLIED';
@@ -143,9 +191,9 @@ async function applyLearningStateItem(
     where: {
       userId,
       knowledgeId: item.knowledgeId,
-      clientVersion: { lt: item.clientVersion },
+      clientVersion: { lt: merged.clientVersion },
     },
-    data,
+    data: merged,
   });
 
   return updated.count === 1 ? 'APPLIED' : 'STALE';
