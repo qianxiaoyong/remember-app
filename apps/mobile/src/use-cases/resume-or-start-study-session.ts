@@ -21,6 +21,7 @@ import { buildActiveStudySession, type ActiveStudySession } from './study-sessio
 import { resolveContentPackId } from './resolve-content-pack-id';
 import { findActiveStudySessionForInstalledPack } from './find-active-study-session';
 
+/** @deprecated vocabulary 学习包请使用 resumePackBrowse；story 仍可使用本函数。 */
 export function resumeOrStartStudySession(
   packId: string,
   now: Date = new Date(),

@@ -1,23 +1,18 @@
 import type { ReactElement } from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LexiconPopup } from '../components/lexicon-popup';
 import { ScreenScaffold } from '../components/shell/screen-scaffold';
+import { JoinReviewBar } from '../components/study/join-review-bar';
 import { StudyMoreMenu } from '../components/study/study-more-menu';
-import { StudyRatingBar } from '../components/study/study-rating-bar';
-import { StudySessionOutcomePanel } from '../components/study/study-session-outcome-panel';
+import { UpdateReviewConfirmDialog } from '../components/study/update-review-confirm-dialog';
 import { PrimaryButton } from '../components/ui/primary-button';
 import { useStudyFlow } from '../hooks/use-study-flow';
 import { resolveCardTypeDefinition } from '../learning/card-types/registry';
 import { UnsupportedCardPanel } from '../learning/card-types/unsupported-card-panel';
 import { listInstalledPacksUseCase } from '../use-cases/list-installed-packs';
-import {
-  resolveStudyPackDisplayName,
-  resolveStudySessionOutcome,
-} from '../use-cases/resolve-study-session-outcome';
-import { navigateShellTab } from '../shell/shell-tab-transition';
 import { saveStoryReadingBookmark } from '../use-cases/save-story-reading-bookmark';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
@@ -32,21 +27,27 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const {
-    session,
     isReaderMode,
-    readerInitialPositionMs,
-    startSession,
+    isBrowseMode,
+    browseReady,
+    startBrowse,
     revealed,
     isSubmitting,
+    inReviewPool,
+    updateReviewVisible,
     lexiconEntry,
     lexiconVisible,
     lexiconSaved,
     lexiconSelectedSurfaceForm,
     audioMessage,
     cardDetail,
-    intervalLabels,
+    message,
+    readerInitialPositionMs,
     setRevealed,
-    handleReview,
+    handleJoinReview,
+    handleSkip,
+    handleConfirmUpdateReview,
+    setUpdateReviewVisible,
     handleReaderBookmark,
     openLexicon,
     handleToggleSave,
@@ -62,15 +63,13 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
   const [switchVisible, setSwitchVisible] = useState(false);
 
   const installedPacks = useMemo(() => listInstalledPacksUseCase(), []);
-  const sessionOutcome = useMemo(() => resolveStudySessionOutcome(session), [session]);
-  const packDisplayName = useMemo(() => resolveStudyPackDisplayName(props.packId), [props.packId]);
   const cardTypeDefinition = cardDetail ? resolveCardTypeDefinition(cardDetail.cardType) : null;
 
   useEffect(() => {
-    if (props.autoStart !== false && session === null && !isReaderMode) {
-      startSession();
+    if (props.autoStart !== false && isBrowseMode && !browseReady) {
+      startBrowse();
     }
-  }, [props.autoStart, isReaderMode, props.packId, session, startSession]);
+  }, [props.autoStart, browseReady, isBrowseMode, props.packId, startBrowse]);
 
   const handleNavigateLesson = useCallback(
     (knowledgeId: string) => {
@@ -94,8 +93,12 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
     { id: 'settings', label: '基础学习设置' },
   ];
 
-  const showRatingBar =
-    cardTypeDefinition?.reviewMode === 'sm2' && revealed && session?.currentItem && intervalLabels;
+  const showJoinReviewBar =
+    isBrowseMode &&
+    cardTypeDefinition?.reviewMode === 'sm2' &&
+    revealed &&
+    cardDetail &&
+    browseReady;
 
   const moreMenuAnchorTop = insets.top + spacing.sm + spacing.touchTarget + spacing.xs;
   const moreMenuAnchorRight = spacing.lg;
@@ -103,27 +106,26 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
   return (
     <ScreenScaffold
       footer={
-        showRatingBar ? (
-          <StudyRatingBar disabled={isSubmitting} labels={intervalLabels} onRate={handleReview} />
+        showJoinReviewBar ? (
+          <JoinReviewBar
+            disabled={isSubmitting}
+            inReviewPool={inReviewPool}
+            onJoinReview={handleJoinReview}
+            onOpenUpdateReview={() => {
+              setUpdateReviewVisible(true);
+            }}
+            onSkip={handleSkip}
+          />
         ) : null
       }
       safeAreaEdges={['left', 'right']}
     >
       <View style={styles.root}>
-        {!isReaderMode && !session ? (
+        {message ? <Text style={styles.message}>{message}</Text> : null}
+        {isBrowseMode && !browseReady ? (
           <View style={styles.emptyState}>
-            <PrimaryButton label="恢复或开始任务" onPress={startSession} />
+            <PrimaryButton label="打开学习包" onPress={startBrowse} />
           </View>
-        ) : sessionOutcome && session ? (
-          <StudySessionOutcomePanel
-            completedCount={session.completedCount}
-            onBrowseMarket={() => {
-              navigateShellTab(router, 'market');
-            }}
-            onGoHome={goHome}
-            packDisplayName={packDisplayName}
-            variant={sessionOutcome}
-          />
         ) : cardDetail ? (
           cardTypeDefinition ? (
             <cardTypeDefinition.Renderer
@@ -150,10 +152,18 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
           )
         ) : isReaderMode ? (
           <UnsupportedCardPanel message="无法加载此阅读内容" onGoHome={goHome} />
-        ) : session?.currentItem ? (
+        ) : browseReady ? (
           <UnsupportedCardPanel message="无法加载此卡片内容" onGoHome={goHome} />
         ) : null}
       </View>
+
+      <UpdateReviewConfirmDialog
+        onCancel={() => {
+          setUpdateReviewVisible(false);
+        }}
+        onConfirm={handleConfirmUpdateReview}
+        visible={updateReviewVisible}
+      />
 
       <LexiconPopup
         audioMessage={audioMessage}
@@ -216,5 +226,10 @@ const styles = StyleSheet.create({
   },
   emptyState: {
     padding: spacing.lg,
+  },
+  message: {
+    color: colors.studyRatingForgot,
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.sm,
   },
 });
