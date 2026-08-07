@@ -7,21 +7,20 @@ import {
 } from './index.js';
 
 const samplePayload = {
-  packId: 'remember-test-pack',
-  easiness: 2.5,
-  intervalDays: 1,
-  repetitions: 1,
-  dueAt: '2026-07-30T01:00:00.000Z',
-  updatedAt: '2026-07-30T00:00:00.000Z',
+  inReviewPool: true,
+  boxLevel: 1,
+  dueAt: '2026-08-06T16:00:00.000Z',
+  firstAddedFromPackId: 'remember-test-pack',
+  updatedAt: '2026-08-06T07:00:00.000Z',
 };
 
 describe('sync contracts', () => {
-  it('SyncLearningStatePayload 含 SM-2 全字段', () => {
+  it('SyncLearningStatePayload 含复习池全字段', () => {
     const payload = syncLearningStatePayloadSchema.parse({
       ...samplePayload,
-      rating: 'good',
+      outcome: 'passed',
     });
-    expect(payload.repetitions).toBe(1);
+    expect(payload.boxLevel).toBe(1);
   });
 
   it('batch upload round-trip', () => {

@@ -1,0 +1,112 @@
+param(
+  [string]$SourceRoot = "D:\AIcoder\remember-app",
+  [string]$BuildRoot = "D:\r\b",
+  [string]$OutputApk = "dist\remember-standalone-release.apk",
+  [string]$SigningProperties = ""
+)
+
+# Build offline Android release APK (no Metro / DevSupport, __DEV__=false).
+
+$ErrorActionPreference = "Stop"
+
+function Write-Step([string]$Message) {
+  Write-Host "==> $Message" -ForegroundColor Cyan
+}
+
+if (-not $SigningProperties) {
+  $SigningProperties = $env:REMEMBER_ANDROID_SIGNING_PROPERTIES
+}
+if (-not $SigningProperties) {
+  $SigningProperties = "D:\AIcoder\remember-secrets\signing.properties"
+}
+if (-not (Test-Path $SigningProperties)) {
+  throw "Signing properties not found: $SigningProperties. Set REMEMBER_ANDROID_SIGNING_PROPERTIES."
+}
+$env:REMEMBER_ANDROID_SIGNING_PROPERTIES = $SigningProperties
+
+Write-Step "Mirror source -> $BuildRoot (exclude node_modules, android, .expo)"
+New-Item -ItemType Directory -Force -Path $BuildRoot | Out-Null
+robocopy $SourceRoot $BuildRoot /MIR /XD node_modules "apps\mobile\android" "apps\mobile\.expo" ".gradle" /NFL /NDL /NJH /NJS /nc /ns /np | Out-Null
+if ($LASTEXITCODE -ge 8) {
+  throw "robocopy failed with exit code $LASTEXITCODE"
+}
+
+$envFile = Join-Path $SourceRoot "apps\mobile\.env"
+if (Test-Path $envFile) {
+  Copy-Item $envFile (Join-Path $BuildRoot "apps\mobile\.env") -Force
+  Write-Step "Copied apps/mobile/.env"
+}
+
+Push-Location $BuildRoot
+try {
+  Write-Step "pnpm install"
+  pnpm install | Out-Null
+
+  Write-Step "pnpm build:packages"
+  pnpm build:packages
+
+  $mobileDir = Join-Path $BuildRoot "apps\mobile"
+  $androidDir = Join-Path $mobileDir "android"
+
+  if (Test-Path $androidDir) {
+    Write-Step "Remove stale android/"
+    Remove-Item -Recurse -Force $androidDir
+  }
+
+  Push-Location $mobileDir
+  try {
+    Write-Step "expo prebuild --platform android --clean"
+    pnpm exec expo prebuild --platform android --clean
+
+    Write-Step "Ensure native splash matches JS overlay (splash-full.png cover)"
+    node (Join-Path $BuildRoot "tools\mobile\patch-android-native-splash.cjs") $androidDir
+    if ($LASTEXITCODE -ne 0) {
+      throw "patch-android-native-splash.cjs failed with exit code $LASTEXITCODE"
+    }
+
+    $gradlePropsFile = Join-Path $androidDir "gradle.properties"
+    if (Test-Path $gradlePropsFile) {
+      $gradleProps = Get-Content $gradlePropsFile -Raw
+      $gradleProps = $gradleProps -replace "reactNativeArchitectures=.*", "reactNativeArchitectures=arm64-v8a"
+      Set-Content -Path $gradlePropsFile -Value $gradleProps -NoNewline
+      Write-Step "Limited APK to arm64-v8a"
+    }
+
+    $gradleFile = Join-Path $androidDir "app\build.gradle"
+    $gradle = Get-Content $gradleFile -Raw
+    if ($gradle -notmatch "rememberReleaseSigningFromProperties") {
+      throw "build.gradle missing release signing config; set REMEMBER_ANDROID_SIGNING_PROPERTIES"
+    }
+
+    if (-not (Select-String -Path (Join-Path $androidDir "app\src\main\AndroidManifest.xml") -Pattern "usesCleartextTraffic" -Quiet)) {
+      throw "AndroidManifest missing usesCleartextTraffic"
+    }
+
+    Push-Location $androidDir
+    try {
+      Write-Step "gradlew assembleRelease"
+      .\gradlew.bat --stop | Out-Null
+      Start-Sleep -Seconds 2
+      .\gradlew.bat assembleRelease
+    } finally {
+      Pop-Location
+    }
+  } finally {
+    Pop-Location
+  }
+
+  $builtApk = Join-Path $androidDir "app\build\outputs\apk\release\app-release.apk"
+  if (-not (Test-Path $builtApk)) {
+    throw "APK not found: $builtApk"
+  }
+
+  $dest = Join-Path $SourceRoot $OutputApk
+  New-Item -ItemType Directory -Force -Path (Split-Path $dest) | Out-Null
+  Copy-Item $builtApk $dest -Force
+  $apkSizeMb = [math]::Round((Get-Item $dest).Length / 1MB, 1)
+  Write-Step "APK -> $dest ($apkSizeMb MB)"
+} finally {
+  Pop-Location
+}
+
+Write-Host "BUILD OK" -ForegroundColor Green

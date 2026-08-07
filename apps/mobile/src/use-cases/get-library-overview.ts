@@ -1,18 +1,12 @@
-import { listPackCards } from '../data/repositories/pack-card-repository';
+import { getPackCard, listPackCards } from '../data/repositories/pack-card-repository';
 import { listLearningStatesForPackContent } from '../data/repositories/learning-state-for-pack-content';
 import { listInstalledPacks } from '../data/repositories/installed-pack-repository';
-import {
-  findActiveSessionWithPendingItems,
-  listPendingQueueItemsForSession,
-} from '../data/repositories/study-session-repository';
-import { resolveTodayTaskCount } from '../lib/resolve-today-task-count';
-import { sumPackTodayTaskCounts } from '../lib/sum-pack-today-task-counts';
+import { getPackBrowseBookmark } from '../data/repositories/pack-browse-bookmark-repository';
 import { resolvePackDisplayName } from '../catalog/resolve-pack-display-name';
 import { getStoryReadingBookmark } from '../data/repositories/story-reading-bookmark-repository';
 import { getPackCardDetailUseCase } from './get-pack-card-detail';
-import { resolveContentPackId } from './resolve-content-pack-id';
 import { resolvePackLibraryPresentation } from './resolve-pack-library-presentation';
-import { findActiveStudySessionForContentPackId } from './find-active-study-session';
+import { countDueReviewItems } from './count-due-review-items';
 import type { LibraryPresentation } from '../learning/card-types/types';
 
 export interface LibraryOverview {
@@ -33,137 +27,143 @@ export interface InstalledPackSummary {
   todayTaskCount: number;
   hasActiveTask: boolean;
   libraryPresentation: LibraryPresentation;
-  actionLabel: '开始学习' | '继续学习' | '开始阅读' | '继续阅读';
+  actionLabel: '打开学习' | '继续学习' | '开始阅读' | '继续阅读';
   statusHint: string;
 }
 
 export function getLibraryOverview(now: Date = new Date()): LibraryOverview {
-  const installedPacks = listInstalledPacks();
+  return loadLibraryScreenData(now).overview;
+}
+
+export function listInstalledPackSummaries(now: Date = new Date()): InstalledPackSummary[] {
+  return loadLibraryScreenData(now).installedPacks;
+}
+
+export function loadLibraryScreenData(now: Date = new Date()): {
+  overview: LibraryOverview;
+  installedPacks: InstalledPackSummary[];
+} {
+  const installed = listInstalledPacks();
   const nowIso = now.toISOString();
+  const todayTaskCount = countDueReviewItems(now);
+  const statsCache = new Map<string, PackStats>();
+
+  const getStats = (sqlitePath: string): PackStats => {
+    const cached = statsCache.get(sqlitePath);
+    if (cached) {
+      return cached;
+    }
+    const stats = aggregatePackStats(sqlitePath, nowIso);
+    statsCache.set(sqlitePath, stats);
+    return stats;
+  };
+
   let totalCards = 0;
   let learningCount = 0;
   let masteredCount = 0;
-
-  const packTodayTaskCounts = installedPacks.map((pack) => {
-    const contentPackId = resolveContentPackId(pack.packId);
-    const stats = aggregatePackStats(pack.sqlitePath, nowIso);
-    return getTodayTaskCountForContentPack(contentPackId, pack.sqlitePath, stats.sm2DueCount);
-  });
-  const todayTaskCount = sumPackTodayTaskCounts(packTodayTaskCounts);
-
   const aggregatedSqlitePaths = new Set<string>();
-  for (const pack of installedPacks) {
+  for (const pack of installed) {
     if (aggregatedSqlitePaths.has(pack.sqlitePath)) {
       continue;
     }
     aggregatedSqlitePaths.add(pack.sqlitePath);
-    const stats = aggregatePackStats(pack.sqlitePath, nowIso);
+    const stats = getStats(pack.sqlitePath);
     totalCards += stats.totalCards;
     learningCount += stats.learningCount;
     masteredCount += stats.masteredCount;
   }
 
-  const activeSession = findActiveSessionWithPendingItems();
-  return {
+  const overview: LibraryOverview = {
     totalCards,
     todayTaskCount,
     learningCount,
     masteredCount,
-    hasActiveTask: activeSession !== null,
-    activePackId: activeSession?.packId ?? null,
+    hasActiveTask: todayTaskCount > 0,
+    activePackId: null,
   };
+
+  const installedPacks = installed.map((pack) => buildInstalledPackSummary(pack, getStats));
+
+  return { overview, installedPacks };
 }
 
-export function listInstalledPackSummaries(now: Date = new Date()): InstalledPackSummary[] {
-  const nowIso = now.toISOString();
-  const activeSession = findActiveSessionWithPendingItems();
+function buildInstalledPackSummary(
+  pack: ReturnType<typeof listInstalledPacks>[number],
+  getStats: (sqlitePath: string) => PackStats,
+): InstalledPackSummary {
+  const stats = getStats(pack.sqlitePath);
+  const learnedCount = stats.learnedCount;
+  const catalogTitle = resolvePackDisplayName(pack.packId);
+  const displayName =
+    catalogTitle !== pack.packId
+      ? catalogTitle
+      : pack.displayName !== pack.packId
+        ? pack.displayName
+        : pack.packId;
+  const libraryPresentation = resolvePackLibraryPresentation(pack.packId);
+  const browseBookmark = getPackBrowseBookmark(pack.packId);
 
-  return listInstalledPacks().map((pack) => {
-    const contentPackId = resolveContentPackId(pack.packId);
-    const stats = aggregatePackStats(pack.sqlitePath, nowIso);
-    const hasActiveTask = activeSession?.packId === contentPackId;
-    const todayTaskCount = getTodayTaskCountForContentPack(
-      contentPackId,
-      pack.sqlitePath,
-      stats.sm2DueCount,
-    );
-    const learnedCount = stats.learnedCount;
-    const catalogTitle = resolvePackDisplayName(pack.packId);
-    const displayName =
-      catalogTitle !== pack.packId
-        ? catalogTitle
-        : pack.displayName !== pack.packId
-          ? pack.displayName
-          : pack.packId;
-    const libraryPresentation = resolvePackLibraryPresentation(pack.packId);
-
-    return {
-      packId: pack.packId,
-      displayName,
-      packVersion: pack.packVersion,
-      totalCards: stats.totalCards,
-      learnedCount,
-      todayTaskCount,
-      hasActiveTask,
+  return {
+    packId: pack.packId,
+    displayName,
+    packVersion: pack.packVersion,
+    totalCards: stats.totalCards,
+    learnedCount,
+    todayTaskCount: 0,
+    hasActiveTask: false,
+    libraryPresentation,
+    actionLabel: buildActionLabel({
       libraryPresentation,
-      actionLabel: buildActionLabel({
-        libraryPresentation,
-        hasActiveTask,
-        todayTaskCount,
-        hasBookmark: getStoryReadingBookmark(pack.packId) !== null,
-      }),
-      statusHint: buildStatusHint({
-        libraryPresentation,
-        packId: pack.packId,
-        todayTaskCount,
-      }),
-    };
-  });
-}
-
-function getPendingSessionCount(contentPackId: string, sqlitePath: string): number {
-  const session = findActiveStudySessionForContentPackId(contentPackId, sqlitePath);
-  if (!session) {
-    return 0;
-  }
-  return listPendingQueueItemsForSession(session.sessionId).length;
-}
-
-function getTodayTaskCountForContentPack(
-  contentPackId: string,
-  sqlitePath: string,
-  sm2DueCount: number,
-): number {
-  return resolveTodayTaskCount({
-    pendingSessionCount: getPendingSessionCount(contentPackId, sqlitePath),
-    sm2DueCount,
-  });
+      hasBookmark:
+        libraryPresentation === 'reader'
+          ? getStoryReadingBookmark(pack.packId) !== null
+          : browseBookmark !== null,
+    }),
+    statusHint: buildStatusHint({
+      libraryPresentation,
+      packId: pack.packId,
+    }),
+  };
 }
 
 function buildActionLabel(input: {
   libraryPresentation: LibraryPresentation;
-  hasActiveTask: boolean;
-  todayTaskCount: number;
   hasBookmark: boolean;
 }): InstalledPackSummary['actionLabel'] {
   if (input.libraryPresentation === 'reader') {
     return input.hasBookmark ? '继续阅读' : '开始阅读';
   }
-  return input.hasActiveTask || input.todayTaskCount > 0 ? '继续学习' : '开始学习';
+  return input.hasBookmark ? '继续学习' : '打开学习';
 }
 
 function buildStatusHint(input: {
   libraryPresentation: LibraryPresentation;
   packId: string;
-  todayTaskCount: number;
 }): string {
   if (input.libraryPresentation === 'reader') {
     return buildReaderStatusHint(input.packId);
   }
-  if (input.todayTaskCount > 0) {
-    return `今日待复习 ${String(input.todayTaskCount)} 条`;
+  return buildStudyBrowseStatusHint(input.packId);
+}
+
+function buildStudyBrowseStatusHint(packId: string): string {
+  const bookmark = getPackBrowseBookmark(packId);
+  if (!bookmark) {
+    return '尚未开始';
   }
-  return '暂无未完成任务';
+  const card = getPackCard(getInstalledPackSqlitePath(packId), bookmark.knowledgeId);
+  if (!card) {
+    return `上次学到：第 ${String(bookmark.sortOrder)} 词`;
+  }
+  return `上次学到：第 ${String(bookmark.sortOrder)} 词 · ${card.headword}`;
+}
+
+function getInstalledPackSqlitePath(packId: string): string {
+  const pack = listInstalledPacks().find((item) => item.packId === packId);
+  if (!pack) {
+    throw new Error(`pack not installed: ${packId}`);
+  }
+  return pack.sqlitePath;
 }
 
 function buildReaderStatusHint(packId: string): string {
@@ -181,7 +181,6 @@ function buildReaderStatusHint(packId: string): string {
 interface PackStats {
   totalCards: number;
   learnedCount: number;
-  sm2DueCount: number;
   learningCount: number;
   masteredCount: number;
 }
@@ -189,14 +188,14 @@ interface PackStats {
 function aggregatePackStats(sqlitePath: string, nowIso: string): PackStats {
   const totalCards = listPackCards(sqlitePath).length;
   const states = listLearningStatesForPackContent(sqlitePath);
-  let sm2DueCount = 0;
   let learningCount = 0;
   let masteredCount = 0;
 
   for (const state of states) {
-    if (state.dueAt <= nowIso) {
-      sm2DueCount += 1;
-    } else if (state.repetitions >= 3 || state.intervalDays >= 21) {
+    if (!state.inReviewPool) {
+      continue;
+    }
+    if (state.boxLevel >= 3 && state.dueAt > nowIso) {
       masteredCount += 1;
     } else {
       learningCount += 1;
@@ -205,8 +204,7 @@ function aggregatePackStats(sqlitePath: string, nowIso: string): PackStats {
 
   return {
     totalCards,
-    learnedCount: states.length,
-    sm2DueCount,
+    learnedCount: states.filter((state) => state.inReviewPool).length,
     learningCount,
     masteredCount,
   };

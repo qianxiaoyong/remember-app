@@ -3,13 +3,17 @@ import { z } from 'zod';
 export const syncSnapshotItemSchema = z
   .object({
     knowledgeId: z.string().min(1),
-    packId: z.string().min(1),
-    easiness: z.number(),
-    intervalDays: z.number().int().min(0),
-    repetitions: z.number().int().min(0),
+    inReviewPool: z.boolean(),
+    boxLevel: z.number().int().min(0).max(3),
     dueAt: z.iso.datetime(),
+    firstAddedFromPackId: z.string().min(1),
+    lastSeenInPackId: z.string().min(1).optional(),
+    consecutiveLevel3Passes: z.number().int().min(0).optional(),
     clientVersion: z.number().int().min(1),
     updatedAt: z.iso.datetime(),
+    legacyEasiness: z.number().optional(),
+    legacyIntervalDays: z.number().int().min(0).optional(),
+    legacyRepetitions: z.number().int().min(0).optional(),
   })
   .strict();
 

@@ -25,6 +25,7 @@ const commonJsRequireAllowedPrefixes = [
   'apps/mobile/plugins/',
   'apps/mobile/index.js',
   'tools/scripts/patch-android-splash.cjs',
+  'tools/mobile/patch-android-native-splash.cjs',
 ];
 const sourceLengthExcludedPrefixes = ['tools/pack-builder/scripts/generate-'];
 

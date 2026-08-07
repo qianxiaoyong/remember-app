@@ -3,10 +3,13 @@ import { useMemo, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { PackCardSearchResultRow } from '../components/search/pack-card-search-result-row';
+import { UpdateReviewConfirmDialog } from '../components/study/update-review-confirm-dialog';
 import { SearchPageScaffold } from '../components/search/search-page-scaffold';
 import { SearchResultCount } from '../components/search/search-result-count';
 import { SearchTopBar } from '../components/search/search-top-bar';
-import { rejoinCardReview } from '../use-cases/rejoin-card-review';
+import { getLearningStateByKnowledgeId } from '../data/repositories/learning-state-repository';
+import { joinReviewPool } from '../use-cases/join-review-pool';
+import { updateReviewPoolFromPack } from '../use-cases/update-review-pool-from-pack';
 import { searchPackCardsUseCase } from '../use-cases/search-pack-cards';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
@@ -19,6 +22,11 @@ export function SearchScreen(props: SearchScreenProps): ReactElement {
   const router = useRouter();
   const [query, setQuery] = useState('');
   const [message, setMessage] = useState<string | null>(null);
+  const [updateTarget, setUpdateTarget] = useState<{
+    knowledgeId: string;
+    headword: string;
+  } | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const trimmedQuery = query.trim();
   const results = useMemo(() => {
@@ -30,22 +38,41 @@ export function SearchScreen(props: SearchScreenProps): ReactElement {
     } catch {
       return [];
     }
-  }, [props.packId, query, trimmedQuery]);
+  }, [props.packId, query, trimmedQuery, refreshKey]);
 
-  const handleRejoin = (knowledgeId: string, headword: string): void => {
+  const handleJoinReview = (knowledgeId: string, headword: string): void => {
     try {
-      const result = rejoinCardReview({ packId: props.packId, knowledgeId });
-      if (result.alreadyPending) {
-        setMessage(`${headword} 已在当前任务队列中`);
+      const state = getLearningStateByKnowledgeId(knowledgeId);
+      if (state?.inReviewPool) {
+        setUpdateTarget({ knowledgeId, headword });
         return;
       }
-      if (result.addedToQueue) {
-        setMessage(`${headword} 已重新加入复习`);
+      const result = joinReviewPool({ knowledgeId, catalogPackId: props.packId });
+      if (result.status === 'created') {
+        setMessage(`${headword} 已加入复习`);
+        setRefreshKey((value) => value + 1);
         return;
       }
-      setMessage(`${headword} 已设为到期复习`);
+      setUpdateTarget({ knowledgeId, headword });
     } catch (error) {
       setMessage(error instanceof Error ? error.message : '加入复习失败');
+    }
+  };
+
+  const handleConfirmUpdate = (): void => {
+    if (!updateTarget) {
+      return;
+    }
+    try {
+      updateReviewPoolFromPack({
+        knowledgeId: updateTarget.knowledgeId,
+        catalogPackId: props.packId,
+      });
+      setMessage(`${updateTarget.headword} 已更新复习`);
+      setUpdateTarget(null);
+      setRefreshKey((value) => value + 1);
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : '更新复习失败');
     }
   };
 
@@ -77,16 +104,21 @@ export function SearchScreen(props: SearchScreenProps): ReactElement {
               <Text style={styles.empty}>没有找到匹配内容</Text>
             ) : (
               <View style={styles.list}>
-                {results.map((card) => (
-                  <PackCardSearchResultRow
-                    card={card}
-                    key={card.knowledgeId}
-                    keyword={trimmedQuery}
-                    onRejoinPress={() => {
-                      handleRejoin(card.knowledgeId, card.headword);
-                    }}
-                  />
-                ))}
+                {results.map((card) => {
+                  const inReviewPool =
+                    getLearningStateByKnowledgeId(card.knowledgeId)?.inReviewPool ?? false;
+                  return (
+                    <PackCardSearchResultRow
+                      card={card}
+                      inReviewPool={inReviewPool}
+                      key={card.knowledgeId}
+                      keyword={trimmedQuery}
+                      onReviewPress={() => {
+                        handleJoinReview(card.knowledgeId, card.headword);
+                      }}
+                    />
+                  );
+                })}
               </View>
             )}
           </>
@@ -95,6 +127,14 @@ export function SearchScreen(props: SearchScreenProps): ReactElement {
         )}
         {message ? <Text style={styles.message}>{message}</Text> : null}
       </ScrollView>
+
+      <UpdateReviewConfirmDialog
+        onCancel={() => {
+          setUpdateTarget(null);
+        }}
+        onConfirm={handleConfirmUpdate}
+        visible={updateTarget !== null}
+      />
     </SearchPageScaffold>
   );
 }

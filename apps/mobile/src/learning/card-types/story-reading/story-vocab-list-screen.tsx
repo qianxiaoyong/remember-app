@@ -50,7 +50,7 @@ export function StoryVocabListScreen(): ReactElement {
         <View style={styles.headerSpacer} />
       </View>
 
-      <StoryVocabPanel sidebar={sidebar} />
+      <StoryVocabPanel packId={packId} sidebar={sidebar} />
     </ScreenScaffold>
   );
 }

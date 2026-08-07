@@ -1,23 +1,23 @@
 import type { ReactElement } from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LexiconPopup } from '../components/lexicon-popup';
 import { ScreenScaffold } from '../components/shell/screen-scaffold';
+import { JoinReviewBar } from '../components/study/join-review-bar';
+import { PackBrowseCompletePanel } from '../components/study/pack-browse-complete-panel';
+import { ResetBrowseProgressDialog } from '../components/study/reset-browse-progress-dialog';
 import { StudyMoreMenu } from '../components/study/study-more-menu';
-import { StudyRatingBar } from '../components/study/study-rating-bar';
-import { StudySessionOutcomePanel } from '../components/study/study-session-outcome-panel';
+import { UpdateReviewConfirmDialog } from '../components/study/update-review-confirm-dialog';
 import { PrimaryButton } from '../components/ui/primary-button';
 import { useStudyFlow } from '../hooks/use-study-flow';
 import { resolveCardTypeDefinition } from '../learning/card-types/registry';
 import { UnsupportedCardPanel } from '../learning/card-types/unsupported-card-panel';
+import { markLibraryNeedsRefresh } from '../shell/library-refresh-signal';
+import { getPackBrowseCompleteSummary } from '../use-cases/get-pack-browse-complete-summary';
 import { listInstalledPacksUseCase } from '../use-cases/list-installed-packs';
-import {
-  resolveStudyPackDisplayName,
-  resolveStudySessionOutcome,
-} from '../use-cases/resolve-study-session-outcome';
-import { navigateShellTab } from '../shell/shell-tab-transition';
+import { resetPackBrowseProgress } from '../use-cases/reset-pack-browse-progress';
 import { saveStoryReadingBookmark } from '../use-cases/save-story-reading-bookmark';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
@@ -32,27 +32,37 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const {
-    session,
     isReaderMode,
-    readerInitialPositionMs,
-    startSession,
+    isBrowseMode,
+    browseReady,
+    startBrowse,
     revealed,
     isSubmitting,
+    inReviewPool,
+    updateReviewVisible,
     lexiconEntry,
     lexiconVisible,
     lexiconSaved,
     lexiconSelectedSurfaceForm,
     audioMessage,
     cardDetail,
-    intervalLabels,
+    message,
+    readerInitialPositionMs,
+    browseCompleteVisible,
+    browseCompleteSummary,
     setRevealed,
-    handleReview,
+    handleJoinReview,
+    handleSkip,
+    handleConfirmUpdateReview,
+    setUpdateReviewVisible,
     handleReaderBookmark,
     openLexicon,
     handleToggleSave,
     handlePlayAudio,
     handlePlayPrimaryAudio,
     handlePlayExampleAudio,
+    restartFromBeginning,
+    dismissBrowseComplete,
     closeLexicon,
   } = useStudyFlow(
     props.packId,
@@ -60,17 +70,20 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
   );
   const [moreVisible, setMoreVisible] = useState(false);
   const [switchVisible, setSwitchVisible] = useState(false);
+  const [resetVisible, setResetVisible] = useState(false);
+  const [resetMessage, setResetMessage] = useState<string | null>(null);
 
   const installedPacks = useMemo(() => listInstalledPacksUseCase(), []);
-  const sessionOutcome = useMemo(() => resolveStudySessionOutcome(session), [session]);
-  const packDisplayName = useMemo(() => resolveStudyPackDisplayName(props.packId), [props.packId]);
   const cardTypeDefinition = cardDetail ? resolveCardTypeDefinition(cardDetail.cardType) : null;
-
+  const packSummary = useMemo(
+    () => getPackBrowseCompleteSummary(props.packId),
+    [props.packId, resetVisible, browseCompleteVisible],
+  );
   useEffect(() => {
-    if (props.autoStart !== false && session === null && !isReaderMode) {
-      startSession();
+    if (props.autoStart !== false && isBrowseMode && !browseReady) {
+      startBrowse();
     }
-  }, [props.autoStart, isReaderMode, props.packId, session, startSession]);
+  }, [props.autoStart, browseReady, isBrowseMode, props.packId, startBrowse]);
 
   const handleNavigateLesson = useCallback(
     (knowledgeId: string) => {
@@ -85,17 +98,46 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
   );
 
   const goHome = useCallback((): void => {
+    dismissBrowseComplete();
     router.replace('/library');
-  }, [router]);
+  }, [dismissBrowseComplete, router]);
+
+  const handleGoReview = useCallback((): void => {
+    dismissBrowseComplete();
+    router.replace('/review');
+  }, [dismissBrowseComplete, router]);
+
+  const handleRestartFromBeginning = useCallback((): void => {
+    restartFromBeginning();
+  }, [restartFromBeginning]);
+
+  const handleConfirmReset = useCallback(() => {
+    setResetMessage(null);
+    try {
+      resetPackBrowseProgress({ packId: props.packId });
+      markLibraryNeedsRefresh();
+      restartFromBeginning();
+      setResetVisible(false);
+      setResetMessage('已重置');
+    } catch (error) {
+      setResetMessage(error instanceof Error ? error.message : '重置失败');
+    }
+  }, [props.packId, restartFromBeginning]);
 
   const moreItems = [
     { id: 'search', label: '搜索当前知识库' },
     { id: 'switch', label: '切换已安装知识库' },
     { id: 'settings', label: '基础学习设置' },
+    { id: 'reset', label: isReaderMode ? '重置阅读进度' : '重置学习进度' },
   ];
 
-  const showRatingBar =
-    cardTypeDefinition?.reviewMode === 'sm2' && revealed && session?.currentItem && intervalLabels;
+  const showJoinReviewBar =
+    isBrowseMode &&
+    !browseCompleteVisible &&
+    cardTypeDefinition?.reviewMode === 'sm2' &&
+    revealed &&
+    cardDetail &&
+    browseReady;
 
   const moreMenuAnchorTop = insets.top + spacing.sm + spacing.touchTarget + spacing.xs;
   const moreMenuAnchorRight = spacing.lg;
@@ -103,27 +145,35 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
   return (
     <ScreenScaffold
       footer={
-        showRatingBar ? (
-          <StudyRatingBar disabled={isSubmitting} labels={intervalLabels} onRate={handleReview} />
+        showJoinReviewBar ? (
+          <JoinReviewBar
+            disabled={isSubmitting}
+            inReviewPool={inReviewPool}
+            onJoinReview={handleJoinReview}
+            onOpenUpdateReview={() => {
+              setUpdateReviewVisible(true);
+            }}
+            onSkip={handleSkip}
+          />
         ) : null
       }
       safeAreaEdges={['left', 'right']}
     >
       <View style={styles.root}>
-        {!isReaderMode && !session ? (
-          <View style={styles.emptyState}>
-            <PrimaryButton label="恢复或开始任务" onPress={startSession} />
-          </View>
-        ) : sessionOutcome && session ? (
-          <StudySessionOutcomePanel
-            completedCount={session.completedCount}
-            onBrowseMarket={() => {
-              navigateShellTab(router, 'market');
-            }}
+        {message ? <Text style={styles.message}>{message}</Text> : null}
+        {resetMessage ? <Text style={styles.resetMessage}>{resetMessage}</Text> : null}
+
+        {browseCompleteVisible && browseCompleteSummary ? (
+          <PackBrowseCompletePanel
+            {...browseCompleteSummary}
             onGoHome={goHome}
-            packDisplayName={packDisplayName}
-            variant={sessionOutcome}
+            onGoReview={handleGoReview}
+            onRestartFromBeginning={handleRestartFromBeginning}
           />
+        ) : isBrowseMode && !browseReady ? (
+          <View style={styles.emptyState}>
+            <PrimaryButton label="打开学习包" onPress={startBrowse} />
+          </View>
         ) : cardDetail ? (
           cardTypeDefinition ? (
             <cardTypeDefinition.Renderer
@@ -150,10 +200,28 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
           )
         ) : isReaderMode ? (
           <UnsupportedCardPanel message="无法加载此阅读内容" onGoHome={goHome} />
-        ) : session?.currentItem ? (
+        ) : browseReady ? (
           <UnsupportedCardPanel message="无法加载此卡片内容" onGoHome={goHome} />
         ) : null}
       </View>
+
+      <UpdateReviewConfirmDialog
+        onCancel={() => {
+          setUpdateReviewVisible(false);
+        }}
+        onConfirm={handleConfirmUpdateReview}
+        visible={updateReviewVisible}
+      />
+
+      <ResetBrowseProgressDialog
+        isReaderMode={isReaderMode}
+        onCancel={() => {
+          setResetVisible(false);
+        }}
+        onConfirm={handleConfirmReset}
+        packDisplayName={packSummary.packDisplayName}
+        visible={resetVisible}
+      />
 
       <LexiconPopup
         audioMessage={audioMessage}
@@ -184,6 +252,10 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
           }
           if (itemId === 'settings') {
             router.push('/settings');
+            return;
+          }
+          if (itemId === 'reset') {
+            setResetVisible(true);
           }
         }}
         visible={moreVisible}
@@ -216,5 +288,15 @@ const styles = StyleSheet.create({
   },
   emptyState: {
     padding: spacing.lg,
+  },
+  message: {
+    color: colors.studyRatingForgot,
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.sm,
+  },
+  resetMessage: {
+    color: colors.studyHeaderBackground,
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.sm,
   },
 });

@@ -1,4 +1,4 @@
-export const USER_DB_VERSION = 3;
+export const USER_DB_VERSION = 4;
 
 export const USER_DB_TABLE_NAMES = [
   'installed_packs',
@@ -8,6 +8,9 @@ export const USER_DB_TABLE_NAMES = [
   'sync_outbox',
   'saved_lexicon_items',
   'story_reading_bookmarks',
+  'pack_browse_bookmarks',
+  'user_preferences',
+  'review_daily_stats',
 ] as const;
 
 export type UserDbTableName = (typeof USER_DB_TABLE_NAMES)[number];
@@ -83,8 +86,39 @@ export const MIGRATION_V3_SQL: readonly string[] = [
   )`,
 ];
 
+export const MIGRATION_V4_SQL: readonly string[] = [
+  `ALTER TABLE learning_states ADD COLUMN inReviewPool INTEGER NOT NULL DEFAULT 0`,
+  `ALTER TABLE learning_states ADD COLUMN boxLevel INTEGER NOT NULL DEFAULT 0`,
+  `ALTER TABLE learning_states ADD COLUMN firstAddedFromPackId TEXT`,
+  `ALTER TABLE learning_states ADD COLUMN lastSeenInPackId TEXT`,
+  `ALTER TABLE learning_states ADD COLUMN consecutiveLevel3Passes INTEGER NOT NULL DEFAULT 0`,
+  `CREATE INDEX idx_learning_states_in_pool_due ON learning_states (inReviewPool, dueAt)`,
+  `CREATE TABLE pack_browse_bookmarks (
+    packId TEXT NOT NULL PRIMARY KEY,
+    knowledgeId TEXT NOT NULL,
+    sortOrder INTEGER NOT NULL DEFAULT 0,
+    updatedAt TEXT NOT NULL
+  )`,
+  `CREATE TABLE user_preferences (
+    key TEXT NOT NULL PRIMARY KEY,
+    value TEXT NOT NULL,
+    updatedAt TEXT NOT NULL
+  )`,
+  `INSERT OR IGNORE INTO user_preferences (key, value, updatedAt)
+   VALUES ('dailyReviewLimit', '20', datetime('now'))`,
+  `INSERT OR IGNORE INTO user_preferences (key, value, updatedAt)
+   VALUES ('packOpenPosition', 'bookmark', datetime('now'))`,
+  `CREATE TABLE review_daily_stats (
+    localDate TEXT NOT NULL PRIMARY KEY,
+    joinedPoolCount INTEGER NOT NULL DEFAULT 0,
+    reviewCompletedCount INTEGER NOT NULL DEFAULT 0,
+    updatedAt TEXT NOT NULL
+  )`,
+];
+
 export const MIGRATIONS: Readonly<Record<number, readonly string[]>> = {
   1: MIGRATION_V1_SQL,
   2: MIGRATION_V2_SQL,
   3: MIGRATION_V3_SQL,
+  4: MIGRATION_V4_SQL,
 };

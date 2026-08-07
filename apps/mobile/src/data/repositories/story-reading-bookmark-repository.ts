@@ -34,3 +34,10 @@ export function upsertStoryReadingBookmark(
     [input.packId, input.knowledgeId, input.positionMs, input.updatedAt],
   );
 }
+
+export function deleteStoryReadingBookmark(
+  packId: string,
+  db: SQLiteDatabase = openUserDatabase(),
+): void {
+  db.runSync(`DELETE FROM story_reading_bookmarks WHERE packId = ?`, [packId]);
+}

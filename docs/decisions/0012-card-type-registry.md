@@ -26,12 +26,12 @@
 
 每种 cardType 在 mobile registry 声明 `reviewMode`，study 壳层据此决定是否展示 SM-2 三按钮底栏：
 
-| 值                | 含义                         | 本计划             |
-| ----------------- | ---------------------------- | ------------------ |
-| `sm2`             | 揭示后展示间隔复习按钮       | ✅ `vocabulary`    |
-| `none`            | 无 SM-2 底栏（阅读/浏览类）  | ✅ `story_reading` |
-| `lesson_complete` | 滚到底后「我读完了」（预留） | 预留               |
-| `interactive`     | 交互式作答后再评分           | 预留               |
+| 值                | 含义                                                                                                                                               | 本计划             |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| `sm2`             | **Deprecated**（ADR 0013）：registry 仍保留该值；`vocabulary` 学习包改为「加入复习 / 已加复习 / 暂不」浏览底栏，间隔调度在 **复习 Tab** 两按钮完成 | ✅ `vocabulary`    |
+| `none`            | 无 SM-2 底栏（阅读/浏览类）                                                                                                                        | ✅ `story_reading` |
+| `lesson_complete` | 滚到底后「我读完了」（预留）                                                                                                                       | 预留               |
+| `interactive`     | 交互式作答后再评分                                                                                                                                 | 预留               |
 
 ### 2.1 libraryPresentation
 
@@ -54,7 +54,7 @@ apps/mobile            cardTypeRegistry[type].Renderer
 
 - **contracts**：`parsePackCardContent` 为统一入口；`parseCardContentJson` 保留为 vocabulary 别名，避免外部引用一次性断裂。
 - **pack-builder**：经 `@remember/contracts` 校验；未知 `cardType` 抛 `PACK_UNSUPPORTED_CARD_TYPE`。
-- **mobile**：`cardTypeRegistry` 映射 `Renderer` + `reviewMode` + `libraryPresentation`；会话/SM-2 逻辑保留在 `study-screen` 壳层，Renderer 只负责卡片区呈现。
+- **mobile**：`cardTypeRegistry` 映射 `Renderer` + `reviewMode` + `libraryPresentation`；vocabulary 浏览/入池与复习 Tab 逻辑在 study/review 壳层，Renderer 只负责卡片区呈现。
 
 **明确不做：** 运行时插件、远程加载 Renderer、HTML 富文本进 pack、App 直连 LLM。
 

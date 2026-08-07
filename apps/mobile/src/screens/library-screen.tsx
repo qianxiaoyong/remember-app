@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { InstalledPackRow } from '../components/library/installed-pack-row';
@@ -16,10 +16,24 @@ import {
   subscribeCatalogCacheUpdates,
 } from '../data/catalog/catalog-cache-store';
 import { navigateShellTab } from '../shell/shell-tab-transition';
-import { getLibraryOverview, listInstalledPackSummaries } from '../use-cases/get-library-overview';
+import {
+  loadLibraryScreenData,
+  type InstalledPackSummary,
+  type LibraryOverview,
+} from '../use-cases/get-library-overview';
 import { warmCatalogCacheFromNetwork } from '../use-cases/fetch-market-catalog';
+import { deferAfterFirstPaint } from '../lib/defer-after-first-paint';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
+
+const EMPTY_OVERVIEW: LibraryOverview = {
+  totalCards: 0,
+  todayTaskCount: 0,
+  learningCount: 0,
+  masteredCount: 0,
+  hasActiveTask: false,
+  activePackId: null,
+};
 
 export function LibraryScreen(): ReactElement {
   const router = useRouter();
@@ -27,6 +41,9 @@ export function LibraryScreen(): ReactElement {
   useRestoreDrawerOnReturn();
   const [refreshKey, setRefreshKey] = useState(0);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isLibraryLoading, setIsLibraryLoading] = useState(true);
+  const [overview, setOverview] = useState<LibraryOverview>(EMPTY_OVERVIEW);
+  const [installedPacks, setInstalledPacks] = useState<InstalledPackSummary[]>([]);
 
   const bumpRefresh = useCallback(() => {
     setRefreshKey((value) => value + 1);
@@ -44,6 +61,15 @@ export function LibraryScreen(): ReactElement {
     }, [bumpRefresh]),
   );
 
+  useEffect(() => {
+    return deferAfterFirstPaint(() => {
+      const data = loadLibraryScreenData();
+      setOverview(data.overview);
+      setInstalledPacks(data.installedPacks);
+      setIsLibraryLoading(false);
+    });
+  }, [refreshKey]);
+
   const handleRefresh = useCallback(async () => {
     setIsRefreshing(true);
     try {
@@ -54,9 +80,6 @@ export function LibraryScreen(): ReactElement {
       setIsRefreshing(false);
     }
   }, [bumpRefresh]);
-
-  const overview = useMemo(() => getLibraryOverview(), [refreshKey]);
-  const installedPacks = useMemo(() => listInstalledPackSummaries(), [refreshKey]);
 
   return (
     <ScreenScaffold withCapsulePadding>
@@ -82,7 +105,11 @@ export function LibraryScreen(): ReactElement {
       >
         <LibraryOverviewCard overview={overview} />
 
-        {installedPacks.length === 0 ? (
+        {isLibraryLoading ? (
+          <View style={styles.emptyBlock}>
+            <Text style={styles.emptyText}>加载中…</Text>
+          </View>
+        ) : installedPacks.length === 0 ? (
           <View style={styles.emptyBlock}>
             <Text style={styles.emptyText}>还没有安装知识库</Text>
             <PrimaryButton

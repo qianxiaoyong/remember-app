@@ -1,25 +1,31 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import type { ReviewRating } from '@remember/domain';
 import { normalizeSurfaceForm } from '@remember/contracts';
 import type { LexiconLookupResult } from '../data/repositories/lexicon-entry-repository';
-import { confirmCardReview } from '../use-cases/confirm-card-review';
-import { getPackCardDetailUseCase } from '../use-cases/get-pack-card-detail';
+import type { PackCardSummary } from '../data/repositories/pack-card-repository';
 import {
-  getCurrentCardHeadword,
-  getReviewIntervalLabels,
-} from '../use-cases/get-review-interval-labels';
+  upsertPackBrowseBookmark,
+  deletePackBrowseBookmark,
+} from '../data/repositories/pack-browse-bookmark-repository';
+import { getLearningStateByKnowledgeId } from '../data/repositories/learning-state-repository';
+import { getPackCardDetailUseCase } from '../use-cases/get-pack-card-detail';
+import { joinReviewPool } from '../use-cases/join-review-pool';
 import { lookupLexiconToken } from '../use-cases/lookup-lexicon-token';
 import { playOrCacheLexiconAudio } from '../use-cases/play-or-cache-lexicon-audio';
 import { playPackAssetAudio } from '../use-cases/play-pack-asset-audio';
 import { resolvePackLibraryPresentation } from '../use-cases/resolve-pack-library-presentation';
 import { resolveStoryReaderEntry } from '../use-cases/resolve-story-reader-entry';
-import { resumeOrStartStudySession } from '../use-cases/resume-or-start-study-session';
+import { resumePackBrowse } from '../use-cases/resume-pack-browse';
+import { deleteStoryReadingBookmark } from '../data/repositories/story-reading-bookmark-repository';
 import { saveStoryReadingBookmark } from '../use-cases/save-story-reading-bookmark';
-import type { ActiveStudySession } from '../use-cases/study-session-types';
+import { skipPackCard } from '../use-cases/skip-pack-card';
+import { updateReviewPoolFromPack } from '../use-cases/update-review-pool-from-pack';
+import { getCurrentCardHeadword } from '../use-cases/get-review-interval-labels';
 import {
   isLexiconItemSavedUseCase,
   toggleSavedLexiconItem,
 } from '../use-cases/toggle-saved-lexicon-item';
+import { getPackBrowseCompleteSummary } from '../use-cases/get-pack-browse-complete-summary';
+import type { PackBrowseCompleteSummary } from '../use-cases/get-pack-browse-complete-summary';
 
 export function useStudyFlow(
   packId: string,
@@ -28,7 +34,10 @@ export function useStudyFlow(
   },
 ) {
   const isReaderMode = useMemo(() => resolvePackLibraryPresentation(packId) === 'reader', [packId]);
-  const [session, setSession] = useState<ActiveStudySession | null>(null);
+  const isBrowseMode = !isReaderMode;
+  const [browseCards, setBrowseCards] = useState<PackCardSummary[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [browseReady, setBrowseReady] = useState(false);
   const [readerEntry, setReaderEntry] = useState<{
     knowledgeId: string;
     positionMs: number;
@@ -36,28 +45,32 @@ export function useStudyFlow(
   const [revealed, setRevealed] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [updateReviewVisible, setUpdateReviewVisible] = useState(false);
+  const [inReviewPool, setInReviewPool] = useState(false);
   const [lexiconEntry, setLexiconEntry] = useState<LexiconLookupResult | null>(null);
   const [lexiconVisible, setLexiconVisible] = useState(false);
   const [lexiconSaved, setLexiconSaved] = useState(false);
   const [lexiconSelectedSurfaceForm, setLexiconSelectedSurfaceForm] = useState<string | null>(null);
   const [audioMessage, setAudioMessage] = useState<string | null>(null);
+  const [browseCompleteVisible, setBrowseCompleteVisible] = useState(false);
+  const [browseCompleteSummary, setBrowseCompleteSummary] =
+    useState<PackBrowseCompleteSummary | null>(null);
 
-  const startSession = useCallback(() => {
-    if (isReaderMode) {
-      return;
-    }
+  const startBrowse = useCallback(() => {
     setMessage(null);
     setRevealed(false);
+    setBrowseCompleteVisible(false);
+    setBrowseCompleteSummary(null);
     try {
-      const nextSession = resumeOrStartStudySession(packId);
-      setSession(nextSession);
-      if (nextSession.totalCount === 0) {
-        setMessage(null);
-      }
+      const browse = resumePackBrowse({ packId });
+      setBrowseCards(browse.cards);
+      setCurrentIndex(browse.initialIndex);
+      setBrowseReady(true);
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : '无法开始学习');
+      setMessage(error instanceof Error ? error.message : '无法打开学习包');
+      setBrowseReady(false);
     }
-  }, [isReaderMode, packId]);
+  }, [packId]);
 
   useEffect(() => {
     if (!isReaderMode) {
@@ -76,7 +89,16 @@ export function useStudyFlow(
 
   const currentKnowledgeId = isReaderMode
     ? (readerEntry?.knowledgeId ?? null)
-    : (session?.currentItem?.knowledgeId ?? null);
+    : (browseCards[currentIndex]?.knowledgeId ?? null);
+
+  useEffect(() => {
+    if (!currentKnowledgeId || !isBrowseMode) {
+      setInReviewPool(false);
+      return;
+    }
+    const state = getLearningStateByKnowledgeId(currentKnowledgeId);
+    setInReviewPool(state?.inReviewPool ?? false);
+  }, [currentKnowledgeId, isBrowseMode]);
 
   const cardDetail = useMemo(() => {
     if (!currentKnowledgeId) {
@@ -96,36 +118,79 @@ export function useStudyFlow(
     }
   }, [currentKnowledgeId, packId]);
 
-  const intervalLabels = useMemo(() => {
-    if (!currentKnowledgeId || isReaderMode) {
-      return null;
+  const advanceBrowse = useCallback(() => {
+    if (!isBrowseMode || browseCards.length === 0) {
+      return;
     }
-    return getReviewIntervalLabels(currentKnowledgeId);
-  }, [currentKnowledgeId, isReaderMode]);
+    const currentCard = browseCards[currentIndex];
+    if (currentCard) {
+      upsertPackBrowseBookmark({
+        packId,
+        knowledgeId: currentCard.knowledgeId,
+        sortOrder: currentCard.sortOrder,
+        updatedAt: new Date().toISOString(),
+      });
+    }
+    if (currentIndex < browseCards.length - 1) {
+      setCurrentIndex((index) => index + 1);
+      setRevealed(false);
+      return;
+    }
+    setRevealed(false);
+    setBrowseCompleteSummary(getPackBrowseCompleteSummary(packId));
+    setBrowseCompleteVisible(true);
+  }, [browseCards, currentIndex, isBrowseMode, packId]);
 
-  const handleReview = useCallback(
-    (rating: ReviewRating) => {
-      if (!session?.currentItem) {
-        return;
+  const handleJoinReview = useCallback(() => {
+    if (!currentKnowledgeId) {
+      return;
+    }
+    setIsSubmitting(true);
+    setMessage(null);
+    try {
+      const result = joinReviewPool({
+        knowledgeId: currentKnowledgeId,
+        catalogPackId: packId,
+      });
+      if (result.status === 'created') {
+        setInReviewPool(true);
       }
-      setIsSubmitting(true);
-      setMessage(null);
-      try {
-        const nextSession = confirmCardReview({
-          packId,
-          knowledgeId: session.currentItem.knowledgeId,
-          rating,
-        });
-        setSession(nextSession);
-        setRevealed(false);
-      } catch (error) {
-        setMessage(error instanceof Error ? error.message : '保存作答失败');
-      } finally {
-        setIsSubmitting(false);
-      }
-    },
-    [packId, session],
-  );
+      advanceBrowse();
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : '加入复习失败');
+    } finally {
+      setIsSubmitting(false);
+    }
+  }, [advanceBrowse, currentKnowledgeId, packId]);
+
+  const handleConfirmUpdateReview = useCallback(() => {
+    if (!currentKnowledgeId) {
+      return;
+    }
+    setIsSubmitting(true);
+    setMessage(null);
+    try {
+      updateReviewPoolFromPack({
+        knowledgeId: currentKnowledgeId,
+        catalogPackId: packId,
+      });
+      setInReviewPool(true);
+      setUpdateReviewVisible(false);
+      advanceBrowse();
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : '更新复习失败');
+    } finally {
+      setIsSubmitting(false);
+    }
+  }, [advanceBrowse, currentKnowledgeId, packId]);
+
+  const handleSkip = useCallback(() => {
+    if (!currentKnowledgeId) {
+      return;
+    }
+    skipPackCard({ packId, knowledgeId: currentKnowledgeId });
+    advanceBrowse();
+  }, [advanceBrowse, currentKnowledgeId, packId]);
 
   const handleReaderBookmark = useCallback(
     (positionMs: number) => {
@@ -209,13 +274,33 @@ export function useStudyFlow(
     });
   }, [lexiconEntry]);
 
+  const restartFromBeginning = useCallback(() => {
+    if (isReaderMode) {
+      deleteStoryReadingBookmark(packId);
+      setReaderEntry(resolveStoryReaderEntry(packId, null));
+      return;
+    }
+    deletePackBrowseBookmark(packId);
+    setCurrentIndex(0);
+    setBrowseCompleteVisible(false);
+    setBrowseCompleteSummary(null);
+    setRevealed(false);
+  }, [isReaderMode, packId]);
+
+  const dismissBrowseComplete = useCallback(() => {
+    setBrowseCompleteVisible(false);
+  }, []);
+
   return {
-    session,
     isReaderMode,
+    isBrowseMode,
+    browseReady,
     readerInitialPositionMs: readerEntry?.positionMs ?? 0,
     revealed,
     message,
     isSubmitting,
+    inReviewPool,
+    updateReviewVisible,
     lexiconEntry,
     lexiconVisible,
     lexiconSaved,
@@ -223,16 +308,30 @@ export function useStudyFlow(
     audioMessage,
     cardDetail,
     headword,
-    intervalLabels,
-    startSession,
+    startBrowse,
     setRevealed,
-    handleReview,
+    handleJoinReview,
+    handleSkip,
+    handleConfirmUpdateReview,
+    setUpdateReviewVisible,
     handleReaderBookmark,
     openLexicon,
     handleToggleSave,
     handlePlayAudio,
     handlePlayPrimaryAudio,
     handlePlayExampleAudio,
+    browseCompleteVisible,
+    browseCompleteSummary,
+    restartFromBeginning,
+    dismissBrowseComplete,
+    refreshInReviewPool: () => {
+      if (!currentKnowledgeId) {
+        setInReviewPool(false);
+        return;
+      }
+      const state = getLearningStateByKnowledgeId(currentKnowledgeId);
+      setInReviewPool(state?.inReviewPool ?? false);
+    },
     closeLexicon: () => {
       setLexiconVisible(false);
       setLexiconSelectedSurfaceForm(null);

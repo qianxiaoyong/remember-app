@@ -18,6 +18,7 @@
     "test:contract": "pnpm --filter @remember/contracts test",
     "test:integration": "pnpm build:packages && pnpm -r --if-present test:integration",
     "mobile:apk:debug": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/mobile/build-standalone-debug-apk.ps1",
+    "mobile:apk:release": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/mobile/build-standalone-release-apk.ps1",
     "check:deps": "depcruise --config dependency-cruiser.config.mjs apps packages tools",
     "check:secrets": "secretlint \"**/*\"",
     "check:source": "node tools/checks/check-source.mjs",

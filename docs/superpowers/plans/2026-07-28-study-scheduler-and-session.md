@@ -1,5 +1,7 @@
 # Study Scheduler and Session Implementation Plan
 
+> **Superseded by [2026-08-06-unified-review-pool.md](./2026-08-06-unified-review-pool.md)**（ADR [0013](../../decisions/0013-unified-review-pool-and-leitner-scheduler.md)）。学习包内 SM-2 三按钮与按 pack session 调度 **不再实施**；保留本文仅供历史参考。
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement task-by-task.
 
 **Goal:** SM-2 三按钮纯函数 + 单元测试；任务生成/继承（先恢复未完成会话）；作答同事务写入 `learning_states`、`study_queue_items`、`sync_outbox`。

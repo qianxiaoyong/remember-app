@@ -54,16 +54,21 @@ model Session {
 }
 
 model LearningState {
-  userId        String   @map("user_id") @db.Uuid
-  knowledgeId   String   @map("knowledge_id")
-  packId        String   @map("pack_id")
-  easiness      Float
-  intervalDays  Int      @map("interval_days")
-  repetitions   Int
-  dueAt         DateTime @map("due_at") @db.Timestamptz(6)
-  clientVersion Int      @map("client_version")
-  updatedAt     DateTime @map("updated_at") @db.Timestamptz(6)
-  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId                  String   @map("user_id") @db.Uuid
+  knowledgeId             String   @map("knowledge_id")
+  packId                  String   @map("pack_id")
+  easiness                Float
+  intervalDays            Int      @map("interval_days")
+  repetitions             Int
+  dueAt                   DateTime @map("due_at") @db.Timestamptz(6)
+  inReviewPool            Boolean  @default(false) @map("in_review_pool")
+  boxLevel                Int      @default(0) @map("box_level")
+  firstAddedFromPackId    String   @map("first_added_from_pack_id")
+  lastSeenInPackId        String?  @map("last_seen_in_pack_id")
+  consecutiveLevel3Passes Int      @default(0) @map("consecutive_level3_passes")
+  clientVersion           Int      @map("client_version")
+  updatedAt               DateTime @map("updated_at") @db.Timestamptz(6)
+  user                    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, knowledgeId])
   @@index([userId])

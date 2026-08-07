@@ -64,10 +64,15 @@ export function confirmCardReview(input: ConfirmCardReviewInput): ActiveStudySes
     dueAt: nextState.dueAt,
     clientVersion: nextClientVersion,
     updatedAt,
+    inReviewPool: previous?.inReviewPool ?? nextState.repetitions > 0,
+    boxLevel: previous?.boxLevel ?? 0,
+    firstAddedFromPackId: previous?.firstAddedFromPackId ?? contentPackId,
+    lastSeenInPackId: previous?.lastSeenInPackId ?? null,
+    consecutiveLevel3Passes: previous?.consecutiveLevel3Passes ?? 0,
   };
 
   const eventId = createRecordId('sync');
-  const payload = buildSyncOutboxPayload({ row: learningRow, rating });
+  const payload = buildSyncOutboxPayload({ row: learningRow });
 
   const db = openUserDatabase();
   db.execSync('BEGIN IMMEDIATE');

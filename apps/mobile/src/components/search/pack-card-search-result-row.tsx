@@ -9,7 +9,8 @@ import { spacing } from '../../theme/spacing';
 interface PackCardSearchResultRowProps {
   card: PackCardDetail;
   keyword: string;
-  onRejoinPress: () => void;
+  inReviewPool: boolean;
+  onReviewPress: () => void;
 }
 
 function resolveSearchSubtitle(card: PackCardDetail): string {
@@ -39,10 +40,12 @@ export function PackCardSearchResultRow(props: PackCardSearchResultRowProps): Re
         {props.card.cardType === 'vocabulary' ? (
           <Pressable
             accessibilityRole="button"
-            onPress={props.onRejoinPress}
+            onPress={props.onReviewPress}
             style={styles.rejoinButton}
           >
-            <Text style={styles.rejoinLabel}>加入复习 ›</Text>
+            <Text style={styles.rejoinLabel}>
+              {props.inReviewPool ? '已加复习 ›' : '加入复习 ›'}
+            </Text>
           </Pressable>
         ) : null}
       </View>
