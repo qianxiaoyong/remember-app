@@ -2,7 +2,11 @@ import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it, beforeAll } from 'vitest';
 import { getStoryParagraphLengthIssue } from '@remember/contracts';
-import { readPackSource, isStorySourceCard, type PackSource } from '@remember/pack-builder/pack-source';
+import {
+  readPackSource,
+  isStorySourceCard,
+  type PackSource,
+} from '@remember/pack-builder/pack-source';
 import { runsToPlainText } from '../utils/story-runs-markup.js';
 import { getPackBuilderRoot } from './paths.js';
 
