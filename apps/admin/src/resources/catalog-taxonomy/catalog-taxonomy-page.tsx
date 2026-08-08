@@ -21,7 +21,8 @@ import {
   updateVersionTaxonomyNode,
 } from '../../api/catalog-taxonomy-api.js';
 import { AdminApiError } from '../../api/admin-api-client.js';
-import { PrimarySidebar, SecondaryPanel, VersionsPanel } from './catalog-taxonomy-panels.js';
+import { PrimarySidebar, SecondaryPanel } from './catalog-taxonomy-panels.js';
+import { VersionsPanel } from './catalog-taxonomy-versions-panel.js';
 import {
   TaxonomyCreateDialog,
   TaxonomyDeleteDialog,
