@@ -4,6 +4,7 @@ import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native
 import { useFocusEffect, useRouter } from 'expo-router';
 import type { CatalogPrimaryCategory } from '../catalog/catalog-seed';
 import type { CatalogPackItem } from '../catalog/catalog-seed';
+import { CATALOG_ALL_VERSION_LABEL } from '../catalog/catalog-seed';
 import { MarketListSectionHeader } from '../components/market/market-list-section-header';
 import { MarketPackCard } from '../components/market/market-pack-card';
 import { MarketPrimaryTabs } from '../components/market/market-primary-tabs';
@@ -46,7 +47,7 @@ export function MarketScreen(): ReactElement {
   const listRef = useRef<ScrollView>(null);
   const [primaryCategory, setPrimaryCategory] = useState<CatalogPrimaryCategory>('all');
   const [secondaryCategory, setSecondaryCategory] = useState('全部');
-  const [versionFilter, setVersionFilter] = useState<string>('全部版本');
+  const [versionFilter, setVersionFilter] = useState<string>(CATALOG_ALL_VERSION_LABEL);
   const [highlightPackId, setHighlightPackId] = useState<string | null>(null);
   const [versionDropdownOpen, setVersionDropdownOpen] = useState(false);
   const [items, setItems] = useState<CatalogPackItem[]>([]);

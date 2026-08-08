@@ -3,6 +3,7 @@ import { Button, Stack } from '@mui/material';
 import { useNotify, useRecordContext, useRefresh } from 'react-admin';
 import { deletePack } from '../api/packs-api.js';
 import { AdminApiError } from '../api/admin-api-client.js';
+import { AdminMiniConfirmDialog } from '../components/admin-mini-confirm-dialog.js';
 
 interface PackRowRecord {
   packId?: string;
@@ -14,25 +15,20 @@ export function PackRowActions() {
   const notify = useNotify();
   const refresh = useRefresh();
   const [busy, setBusy] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   if (!record?.packId) {
     return null;
   }
 
-  const handleDelete = async (event: MouseEvent) => {
-    event.stopPropagation();
-    const label = record.title ?? record.packId;
-    const confirmed = window.confirm(
-      `确定删除知识库「${label}」？\n` +
-        '将移除目录条目、版本与未兑换的兑换码；已有订单、用户权益或兑换记录的知识库无法删除。',
-    );
-    if (!confirmed) {
-      return;
-    }
+  const packId = record.packId;
+  const label = record.title ?? packId;
 
+  const handleDelete = async () => {
+    setConfirmOpen(false);
     setBusy(true);
     try {
-      await deletePack(record.packId);
+      await deletePack(packId);
       notify('已删除知识库', { type: 'success' });
       refresh();
     } catch (error) {
@@ -49,15 +45,38 @@ export function PackRowActions() {
   };
 
   return (
-    <Stack direction="row" spacing={1} onClick={(event) => event.stopPropagation()}>
-      <Button
-        color="error"
-        disabled={busy}
-        onClick={(event) => void handleDelete(event)}
-        size="small"
+    <>
+      <Stack
+        direction="row"
+        spacing={1}
+        onClick={(event) => {
+          event.stopPropagation();
+        }}
       >
-        删除
-      </Button>
-    </Stack>
+        <Button
+          color="error"
+          disabled={busy}
+          onClick={(event: MouseEvent) => {
+            event.stopPropagation();
+            setConfirmOpen(true);
+          }}
+          size="small"
+        >
+          删除
+        </Button>
+      </Stack>
+      <AdminMiniConfirmDialog
+        confirming={busy}
+        description="将移除目录条目、版本与未兑换的兑换码；已有订单、用户权益或兑换记录的知识库无法删除。"
+        onClose={() => {
+          setConfirmOpen(false);
+        }}
+        onConfirm={() => {
+          void handleDelete();
+        }}
+        open={confirmOpen}
+        title={`确定删除「${label}」？`}
+      />
+    </>
   );
 }

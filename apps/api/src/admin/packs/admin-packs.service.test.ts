@@ -63,14 +63,13 @@ describe('AdminPacksService.deletePack', () => {
     prisma.order.count.mockResolvedValue(0);
     prisma.packAccess.count.mockResolvedValue(0);
     prisma.redemptionEvent.count.mockResolvedValue(0);
-    prisma.$transaction.mockImplementation(async (callback) => {
-      const tx = {
+    prisma.$transaction.mockImplementation(async (callback: (tx: unknown) => Promise<unknown>) =>
+      callback({
         redemptionCode: { deleteMany: vi.fn().mockResolvedValue({ count: 0 }) },
         packVersion: { deleteMany: vi.fn().mockResolvedValue({ count: 0 }) },
         pack: { delete: vi.fn().mockResolvedValue(packRecord) },
-      };
-      return callback(tx);
-    });
+      }),
+    );
 
     await service.deletePack('admin-1', packId);
 

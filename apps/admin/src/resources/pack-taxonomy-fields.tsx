@@ -73,7 +73,7 @@ export function PackTaxonomyFields({ compact = false }: PackTaxonomyFieldsProps)
   const versionSelect = (
     <SelectInput
       source="versionNodeId"
-      label="教材版本"
+      label="页内分类"
       choices={versionChoices}
       fullWidth
       size={inputSize}

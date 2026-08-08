@@ -41,7 +41,7 @@ export class CatalogRepository {
     if (query.secondaryCategory && query.secondaryCategory !== '全部') {
       where.secondaryCategory = query.secondaryCategory;
     }
-    if (query.versionLabel && query.versionLabel !== '全部版本') {
+    if (query.versionLabel && query.versionLabel !== '全部') {
       where.versionLabel = query.versionLabel;
     }
     if (query.keyword?.trim()) {

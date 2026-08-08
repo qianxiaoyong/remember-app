@@ -1,7 +1,11 @@
 import { catalogTaxonomyResponseSchema, type CatalogTaxonomyResponse } from '@remember/contracts';
 import * as SecureStore from 'expo-secure-store';
 import type { CatalogPrimaryCategory } from '../../catalog/catalog-seed';
-import { CATALOG_PRIMARY_OPTIONS, listSecondaryCategories } from '../../catalog/catalog-seed';
+import {
+  CATALOG_ALL_VERSION_LABEL,
+  CATALOG_PRIMARY_OPTIONS,
+  listSecondaryCategories,
+} from '../../catalog/catalog-seed';
 
 const TAXONOMY_CACHE_KEY = 'remember.catalogTaxonomy.v1';
 
@@ -70,9 +74,9 @@ export function getSecondaryCategoryOptions(
 
 export function getVersionFilterOptions(taxonomy: CatalogTaxonomyResponse | null): string[] {
   if (taxonomy && taxonomy.versions.length > 0) {
-    return ['全部版本', ...taxonomy.versions.map((version) => version.label)];
+    return [CATALOG_ALL_VERSION_LABEL, ...taxonomy.versions.map((version) => version.label)];
   }
 
   // 无 API taxonomy 时不臆造版本列表，避免后台新增项被写死 fallback 遮挡。
-  return ['全部版本'];
+  return [CATALOG_ALL_VERSION_LABEL];
 }

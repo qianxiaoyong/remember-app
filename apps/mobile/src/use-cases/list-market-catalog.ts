@@ -1,5 +1,5 @@
 import type { CatalogPackItem, CatalogPrimaryCategory } from '../catalog/catalog-seed';
-import { catalogSeed } from '../catalog/catalog-seed';
+import { CATALOG_ALL_VERSION_LABEL, catalogSeed } from '../catalog/catalog-seed';
 
 export interface MarketCatalogQuery {
   primaryCategory: CatalogPrimaryCategory;
@@ -17,7 +17,7 @@ export function listMarketCatalog(query: MarketCatalogQuery): CatalogPackItem[] 
     if (query.secondaryCategory !== '全部' && item.secondaryCategory !== query.secondaryCategory) {
       return false;
     }
-    if (query.versionFilter !== '全部版本' && item.version !== query.versionFilter) {
+    if (query.versionFilter !== CATALOG_ALL_VERSION_LABEL && item.version !== query.versionFilter) {
       return false;
     }
     if (keyword && !item.title.toLowerCase().includes(keyword)) {
