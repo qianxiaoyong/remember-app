@@ -1,6 +1,7 @@
 import type { ReactElement } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import type { CatalogPackItem } from '../../catalog/catalog-seed';
+import { CATALOG_PACK_ROW_HEIGHT } from '../../catalog/catalog-cover-layout';
 import { MarketPackCover } from './market-pack-cover';
 import { cardShadow } from '../../theme/shadows';
 import { colors } from '../../theme/colors';
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
     borderRadius: spacing.cardRadius,
     borderWidth: StyleSheet.hairlineWidth,
     flexDirection: 'row',
-    minHeight: 100,
+    height: CATALOG_PACK_ROW_HEIGHT,
     overflow: 'hidden',
     ...cardShadow,
   },
@@ -58,10 +59,10 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 1,
+    height: CATALOG_PACK_ROW_HEIGHT,
     justifyContent: 'space-between',
-    minHeight: 100,
     paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm,
+    paddingVertical: spacing.xs,
   },
   infoBlock: {
     gap: spacing.xs,

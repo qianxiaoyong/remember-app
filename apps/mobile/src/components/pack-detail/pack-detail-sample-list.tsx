@@ -13,7 +13,11 @@ interface PackDetailSampleListProps {
   onOpenPreview: (sample: PackSamplePreview) => void;
 }
 
-export function PackDetailSampleList(props: PackDetailSampleListProps): ReactElement {
+export function PackDetailSampleList(props: PackDetailSampleListProps): ReactElement | null {
+  if (props.samples.length === 0) {
+    return null;
+  }
+
   return (
     <SurfaceCard>
       <View style={styles.header}>

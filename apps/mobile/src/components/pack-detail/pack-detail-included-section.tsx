@@ -10,19 +10,12 @@ interface PackDetailIncludedSectionProps {
   highlights: IncludedHighlight[];
 }
 
-const DEFAULT_INCLUDED_ITEMS: IncludedHighlight[] = [
-  {
-    title: '核心词汇',
-    description: '教材单词、音标、释义和真人语音',
-  },
-  {
-    title: '配套例句',
-    description: '短句理解、任意英文单词点词解析',
-  },
-];
-
-export function PackDetailIncludedSection(props: PackDetailIncludedSectionProps): ReactElement {
-  const items = props.highlights.length > 0 ? props.highlights : DEFAULT_INCLUDED_ITEMS;
+export function PackDetailIncludedSection(
+  props: PackDetailIncludedSectionProps,
+): ReactElement | null {
+  if (props.highlights.length === 0) {
+    return null;
+  }
 
   return (
     <SurfaceCard>
@@ -33,7 +26,7 @@ export function PackDetailIncludedSection(props: PackDetailIncludedSectionProps)
         </Text>
       </View>
       <View style={styles.grid}>
-        {items.map((item) => (
+        {props.highlights.map((item) => (
           <View key={item.title} style={styles.itemCard}>
             <Text style={styles.itemTitle}>{item.title}</Text>
             <Text style={styles.itemDescription}>{item.description}</Text>

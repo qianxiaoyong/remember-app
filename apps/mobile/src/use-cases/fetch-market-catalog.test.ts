@@ -212,7 +212,7 @@ describe('fetchMarketCatalog', () => {
     expect(written.some((item) => item.packId === 'demo-primary-grade3')).toBe(false);
   });
 
-  it('merges list refresh without dropping detail-only fields from cache', async () => {
+  it('merges list refresh without preserving stale detail-only fields from cache', async () => {
     readCatalogMemoryCache.mockReturnValue([
       {
         packId: 'en-grade3-v1-rj',
@@ -244,8 +244,8 @@ describe('fetchMarketCatalog', () => {
     });
 
     expect(items[0]?.summary).toBe('列表摘要');
-    expect(items[0]?.samplePreviews).toHaveLength(1);
-    expect(items[0]?.introMedia).toHaveLength(1);
+    expect(items[0]?.samplePreviews).toBeUndefined();
+    expect(items[0]?.introMedia).toBeUndefined();
     expect(items[0]?.includedHighlights).toHaveLength(1);
   });
 });

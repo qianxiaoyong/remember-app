@@ -2,7 +2,8 @@ import { z } from 'zod';
 import { includedHighlightSchema } from './included-highlight.js';
 import { catalogPackTaxonomySchema } from './taxonomy.js';
 
-export const catalogPrimaryCategorySchema = z.enum(['primary', 'junior', 'senior', 'postgraduate']);
+/** 一级 taxonomy slug；旧客户端曾用 primary/junior/senior/postgraduate 四档，现与后台分类节点 slug 对齐。 */
+export const catalogPrimaryCategorySchema = z.string().min(1).max(64);
 
 export const catalogPackSummarySchema = z
   .object({

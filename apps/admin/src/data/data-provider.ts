@@ -1,6 +1,7 @@
 import type { DataProvider, RaRecord } from 'react-admin';
 import { adminCreatePackRequestSchema, adminUpdatePackRequestSchema } from '@remember/contracts';
 import { adminFetchJson } from '../api/admin-api-client.js';
+import { normalizeIntroMediaForSubmit } from '../resources/normalize-pack-form-data.js';
 
 function filterValueToQueryString(value: unknown): string | undefined {
   if (value === undefined || value === null || value === '') {
@@ -93,6 +94,23 @@ function applyPackListFilters(
     }
     return true;
   });
+}
+
+function normalizePackWriteData(data: Record<string, unknown>): Record<string, unknown> {
+  const next = { ...data };
+  if (Array.isArray(next.coverLines)) {
+    const line0 = String(next.coverLines[0] ?? '').trim();
+    const line1 = String(next.coverLines[1] ?? '').trim();
+    if (line0 || line1) {
+      next.coverLines = [line0, line1];
+    } else {
+      delete next.coverLines;
+    }
+  }
+  if ('introMedia' in next) {
+    next.introMedia = normalizeIntroMediaForSubmit(next.introMedia);
+  }
+  return next;
 }
 
 export const dataProvider = {
@@ -192,7 +210,7 @@ export const dataProvider = {
       return { data: { ...first, id: first.id } as RaRecord };
     }
     if (resource === 'packs') {
-      const body = adminCreatePackRequestSchema.parse(params.data);
+      const body = adminCreatePackRequestSchema.parse(normalizePackWriteData(params.data));
       await adminFetchJson('/admin/packs', {
         method: 'POST',
         body: JSON.stringify(body),
@@ -207,17 +225,7 @@ export const dataProvider = {
     if (resource !== 'packs') {
       throw new Error(`不支持更新: ${resource}`);
     }
-    const data = { ...params.data } as Record<string, unknown>;
-    if (Array.isArray(data.coverLines)) {
-      const line0 = String(data.coverLines[0] ?? '').trim();
-      const line1 = String(data.coverLines[1] ?? '').trim();
-      if (line0 || line1) {
-        data.coverLines = [line0, line1];
-      } else {
-        delete data.coverLines;
-      }
-    }
-    const patchData = adminUpdatePackRequestSchema.parse(data);
+    const patchData = adminUpdatePackRequestSchema.parse(normalizePackWriteData(params.data));
     await adminFetchJson(`/admin/packs/${String(params.id)}`, {
       method: 'PATCH',
       body: JSON.stringify(patchData),

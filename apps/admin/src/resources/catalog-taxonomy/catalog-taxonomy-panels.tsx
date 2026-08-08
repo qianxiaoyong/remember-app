@@ -46,6 +46,8 @@ interface PrimarySidebarProps {
   onCreateClick: () => void;
   onRename: (primary: PrimaryTaxonomyNode) => void;
   onDelete: (primary: PrimaryTaxonomyNode) => void;
+  onMoveUp: (primary: PrimaryTaxonomyNode, index: number) => void;
+  onMoveDown: (primary: PrimaryTaxonomyNode, index: number) => void;
 }
 
 export function PrimarySidebar(props: PrimarySidebarProps) {
@@ -66,8 +68,10 @@ export function PrimarySidebar(props: PrimarySidebarProps) {
       }
     >
       <List dense disablePadding sx={{ flex: 1, overflow: 'auto', minHeight: 0 }}>
-        {props.primaries.map((primary) => {
+        {props.primaries.map((primary, index) => {
           const selected = primary.id === props.selectedPrimaryId;
+          const isFirst = index === 0;
+          const isLast = index === props.primaries.length - 1;
           return (
             <ListItemButton
               key={primary.id}
@@ -94,6 +98,26 @@ export function PrimarySidebar(props: PrimarySidebarProps) {
                   event.stopPropagation();
                 }}
               >
+                <Button
+                  size="small"
+                  disabled={isFirst}
+                  sx={{ minWidth: 0, px: 0.25, fontSize: '0.75rem' }}
+                  onClick={() => {
+                    props.onMoveUp(primary, index);
+                  }}
+                >
+                  ↑
+                </Button>
+                <Button
+                  size="small"
+                  disabled={isLast}
+                  sx={{ minWidth: 0, px: 0.25, fontSize: '0.75rem' }}
+                  onClick={() => {
+                    props.onMoveDown(primary, index);
+                  }}
+                >
+                  ↓
+                </Button>
                 <Button
                   size="small"
                   sx={{ minWidth: 0, px: 0.5, fontSize: '0.75rem' }}
@@ -131,6 +155,8 @@ interface SecondaryPanelProps {
   onCreateSecondary: () => void;
   onRename: (secondary: AdminSecondaryTaxonomyNodeResponse) => void;
   onDelete: (secondary: AdminSecondaryTaxonomyNodeResponse) => void;
+  onMoveUp: (secondary: AdminSecondaryTaxonomyNodeResponse, index: number) => void;
+  onMoveDown: (secondary: AdminSecondaryTaxonomyNodeResponse, index: number) => void;
 }
 
 export function SecondaryPanel(props: SecondaryPanelProps) {
@@ -143,6 +169,8 @@ export function SecondaryPanel(props: SecondaryPanelProps) {
       </AdminPanel>
     );
   }
+
+  const secondaries = props.primary.children;
 
   return (
     <AdminPanel title={`二级 · ${props.primary.label}`} padded={false} sx={{ height: '100%' }}>
@@ -192,42 +220,66 @@ export function SecondaryPanel(props: SecondaryPanelProps) {
                 <TableCell>展示名</TableCell>
                 <TableCell>slug</TableCell>
                 <TableCell width={48}>序</TableCell>
-                <TableCell align="right" width={88}>
+                <TableCell align="right" width={120}>
                   操作
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {props.primary.children.map((secondary) => (
-                <TableRow key={secondary.id} hover>
-                  <TableCell>{secondary.label}</TableCell>
-                  <TableCell>
-                    <MonoText variant="caption">{secondary.slug}</MonoText>
-                  </TableCell>
-                  <TableCell>{secondary.sortOrder}</TableCell>
-                  <TableCell align="right">
-                    <Button
-                      size="small"
-                      sx={{ minWidth: 0, px: 0.5, fontSize: '0.75rem' }}
-                      onClick={() => {
-                        props.onRename(secondary);
-                      }}
-                    >
-                      改
-                    </Button>
-                    <Button
-                      size="small"
-                      color="error"
-                      sx={{ minWidth: 0, px: 0.5, fontSize: '0.75rem' }}
-                      onClick={() => {
-                        props.onDelete(secondary);
-                      }}
-                    >
-                      删
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {secondaries.map((secondary, index) => {
+                const isFirst = index === 0;
+                const isLast = index === secondaries.length - 1;
+                return (
+                  <TableRow key={secondary.id} hover>
+                    <TableCell>{secondary.label}</TableCell>
+                    <TableCell>
+                      <MonoText variant="caption">{secondary.slug}</MonoText>
+                    </TableCell>
+                    <TableCell>{secondary.sortOrder}</TableCell>
+                    <TableCell align="right">
+                      <Button
+                        size="small"
+                        disabled={isFirst}
+                        sx={{ minWidth: 0, px: 0.25, fontSize: '0.75rem' }}
+                        onClick={() => {
+                          props.onMoveUp(secondary, index);
+                        }}
+                      >
+                        ↑
+                      </Button>
+                      <Button
+                        size="small"
+                        disabled={isLast}
+                        sx={{ minWidth: 0, px: 0.25, fontSize: '0.75rem' }}
+                        onClick={() => {
+                          props.onMoveDown(secondary, index);
+                        }}
+                      >
+                        ↓
+                      </Button>
+                      <Button
+                        size="small"
+                        sx={{ minWidth: 0, px: 0.5, fontSize: '0.75rem' }}
+                        onClick={() => {
+                          props.onRename(secondary);
+                        }}
+                      >
+                        改
+                      </Button>
+                      <Button
+                        size="small"
+                        color="error"
+                        sx={{ minWidth: 0, px: 0.5, fontSize: '0.75rem' }}
+                        onClick={() => {
+                          props.onDelete(secondary);
+                        }}
+                      >
+                        删
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </Box>
@@ -245,6 +297,8 @@ interface VersionsPanelProps {
   onCreateVersion: () => void;
   onRename: (version: AdminVersionTaxonomyNodeResponse) => void;
   onDelete: (version: AdminVersionTaxonomyNodeResponse) => void;
+  onMoveUp: (version: AdminVersionTaxonomyNodeResponse, index: number) => void;
+  onMoveDown: (version: AdminVersionTaxonomyNodeResponse, index: number) => void;
 }
 
 export function VersionsPanel(props: VersionsPanelProps) {
@@ -297,45 +351,69 @@ export function VersionsPanel(props: VersionsPanelProps) {
                 <TableCell>slug</TableCell>
                 <TableCell width={48}>序</TableCell>
                 <TableCell width={56}>状态</TableCell>
-                <TableCell align="right" width={88}>
+                <TableCell align="right" width={120}>
                   操作
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {props.versions.map((version) => (
-                <TableRow key={version.id} hover>
-                  <TableCell>{version.label}</TableCell>
-                  <TableCell>
-                    <MonoText variant="caption">{version.slug}</MonoText>
-                  </TableCell>
-                  <TableCell>{version.sortOrder}</TableCell>
-                  <TableCell>
-                    <StatusChip status={version.status} />
-                  </TableCell>
-                  <TableCell align="right">
-                    <Button
-                      size="small"
-                      sx={{ minWidth: 0, px: 0.5, fontSize: '0.75rem' }}
-                      onClick={() => {
-                        props.onRename(version);
-                      }}
-                    >
-                      改
-                    </Button>
-                    <Button
-                      size="small"
-                      color="error"
-                      sx={{ minWidth: 0, px: 0.5, fontSize: '0.75rem' }}
-                      onClick={() => {
-                        props.onDelete(version);
-                      }}
-                    >
-                      删
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {props.versions.map((version, index) => {
+                const isFirst = index === 0;
+                const isLast = index === props.versions.length - 1;
+                return (
+                  <TableRow key={version.id} hover>
+                    <TableCell>{version.label}</TableCell>
+                    <TableCell>
+                      <MonoText variant="caption">{version.slug}</MonoText>
+                    </TableCell>
+                    <TableCell>{version.sortOrder}</TableCell>
+                    <TableCell>
+                      <StatusChip status={version.status} />
+                    </TableCell>
+                    <TableCell align="right">
+                      <Button
+                        size="small"
+                        disabled={isFirst}
+                        sx={{ minWidth: 0, px: 0.25, fontSize: '0.75rem' }}
+                        onClick={() => {
+                          props.onMoveUp(version, index);
+                        }}
+                      >
+                        ↑
+                      </Button>
+                      <Button
+                        size="small"
+                        disabled={isLast}
+                        sx={{ minWidth: 0, px: 0.25, fontSize: '0.75rem' }}
+                        onClick={() => {
+                          props.onMoveDown(version, index);
+                        }}
+                      >
+                        ↓
+                      </Button>
+                      <Button
+                        size="small"
+                        sx={{ minWidth: 0, px: 0.5, fontSize: '0.75rem' }}
+                        onClick={() => {
+                          props.onRename(version);
+                        }}
+                      >
+                        改
+                      </Button>
+                      <Button
+                        size="small"
+                        color="error"
+                        sx={{ minWidth: 0, px: 0.5, fontSize: '0.75rem' }}
+                        onClick={() => {
+                          props.onDelete(version);
+                        }}
+                      >
+                        删
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </Box>

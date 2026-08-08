@@ -88,7 +88,7 @@ export function mapPackDetail(pack: PackWithCatalogVersion): CatalogPackDetail {
     ...mapPackSummary(pack),
     summary: pack.summary,
     samplePreviews,
-    ...(introMedia && introMedia.length > 0 ? { introMedia } : {}),
+    introMedia: introMedia ?? [],
   });
 }
 

@@ -34,14 +34,14 @@
 
 ## 背景与现状（2026-08-08 审计）
 
-| 能力 | 后端 | Admin UI | App |
-| ---- | ---- | -------- | --- |
-| 分类 `sortOrder` | ✅ 字段 + PATCH + 查询排序 | ❌ 仅只读「序」列，无拖拽/改序 | ✅ 跟 API 顺序 |
-| 封面 `coverUrl` | ✅ PATCH 存字符串 | ❌ 仅 URL 文本框 | ✅ 渲染 |
-| 内容介绍 `introMedia` | ✅ JSON 字段 | ❌ 仅 URL；无上传 | ✅ 有数据则渲染；**空则隐藏** |
-| 内容标签 `contentTags` | ✅ `string[]` | ❌ 固定 4 项下拉；删 tag 无确认 | ✅ 展示 |
-| 包含内容 `includedHighlights` | ✅ | ✅ 可编辑 | ❌ **空时用写死默认两条** |
-| 内容示例 `samplePreviews` | ✅ + extract API | ✅ 可编辑/抽取 | ❌ **始终显示标题**；无 preview 时用 headword 占位 |
+| 能力                          | 后端                       | Admin UI                        | App                                                |
+| ----------------------------- | -------------------------- | ------------------------------- | -------------------------------------------------- |
+| 分类 `sortOrder`              | ✅ 字段 + PATCH + 查询排序 | ❌ 仅只读「序」列，无拖拽/改序  | ✅ 跟 API 顺序                                     |
+| 封面 `coverUrl`               | ✅ PATCH 存字符串          | ❌ 仅 URL 文本框                | ✅ 渲染                                            |
+| 内容介绍 `introMedia`         | ✅ JSON 字段               | ❌ 仅 URL；无上传               | ✅ 有数据则渲染；**空则隐藏**                      |
+| 内容标签 `contentTags`        | ✅ `string[]`              | ❌ 固定 4 项下拉；删 tag 无确认 | ✅ 展示                                            |
+| 包含内容 `includedHighlights` | ✅                         | ✅ 可编辑                       | ❌ **空时用写死默认两条**                          |
+| 内容示例 `samplePreviews`     | ✅ + extract API           | ✅ 可编辑/抽取                  | ❌ **始终显示标题**；无 preview 时用 headword 占位 |
 
 **用户澄清（本轮范围）：**
 
@@ -56,18 +56,18 @@
 
 ### 复用（分类排序）
 
-| 方法 | 路径 | 说明 |
-| ---- | ---- | ---- |
-| PATCH | `/api/v1/admin/catalog/taxonomy/primaries/:id` | body 可含 `sortOrder` |
-| PATCH | `/api/v1/admin/catalog/taxonomy/secondaries/:id` | 同上 |
-| PATCH | `/api/v1/admin/catalog/taxonomy/versions/:id` | 同上 |
+| 方法  | 路径                                             | 说明                  |
+| ----- | ------------------------------------------------ | --------------------- |
+| PATCH | `/api/v1/admin/catalog/taxonomy/primaries/:id`   | body 可含 `sortOrder` |
+| PATCH | `/api/v1/admin/catalog/taxonomy/secondaries/:id` | 同上                  |
+| PATCH | `/api/v1/admin/catalog/taxonomy/versions/:id`    | 同上                  |
 
 可选优化：新增 `POST .../reorder` 批量更新（同一 scope 内 `{ orderedIds: string[] }`），减少拖拽时 N 次 PATCH。**MVP 可先用逐条 PATCH**。
 
 ### 新增（营销媒体上传）
 
-| 方法 | 路径 | 说明 |
-| ---- | ---- | ---- |
+| 方法 | 路径                         | 说明                                                       |
+| ---- | ---------------------------- | ---------------------------------------------------------- |
 | POST | `/api/v1/admin/media/upload` | `multipart/form-data`，字段 `file`；返回 `{ url: string }` |
 
 **校验：** jpg/jpeg/png/webp；单文件 ≤ 2MB（封面）；intro 图可同限或 5MB（写 runbook 备注即可）。
@@ -101,9 +101,9 @@
 
 **验收：**
 
-- [ ] 调整「初中英语」与「小学英语」顺序 → App 顶栏 Tab 顺序变化
-- [ ] 二级、页内分类同理
-- [ ] `pnpm check` 全绿
+- [x] 调整「初中英语」与「小学英语」顺序 → App 顶栏 Tab 顺序变化
+- [x] 二级、页内分类同理
+- [x] `pnpm check` 全绿
 
 ---
 
@@ -126,9 +126,9 @@
 
 **验收：**
 
-- [ ] curl/集成测试上传 png → 200 + url
-- [ ] 未登录 → 401
-- [ ] 返回 URL 在浏览器可访问（dev）
+- [x] curl/集成测试上传 png → 200 + url
+- [x] 未登录 → 401
+- [x] 返回 URL 在浏览器可访问（dev）
 
 ---
 
@@ -148,8 +148,8 @@
 
 **验收：**
 
-- [ ] 上传封面 → 保存 pack → App 详情 Hero 显示新图
-- [ ] 上传 intro 图 → App「内容介绍」出现图片
+- [x] 上传封面 → 保存 pack → App 详情 Hero 显示新图
+- [x] 上传 intro 图 → App「内容介绍」出现图片
 
 ---
 
@@ -168,8 +168,8 @@
 
 **验收：**
 
-- [ ] 输入「专项」并保存 → 列表/详情可见
-- [ ] 删标签有确认；取消则不删
+- [x] 输入「专项」并保存 → 列表/详情可见
+- [x] 删标签有确认；取消则不删
 
 ---
 
@@ -192,9 +192,9 @@
 
 **验收：**
 
-- [ ] 后台清空「包含内容」「内容示例」「内容介绍」→ App 详情无对应标题
-- [ ] 有数据时正常展示
-- [ ] `pnpm check` 全绿
+- [x] 后台清空「包含内容」「内容示例」「内容介绍」→ App 详情无对应标题
+- [x] 有数据时正常展示
+- [x] `pnpm check` 全绿
 
 ---
 
@@ -207,18 +207,18 @@
 
 **验收：**
 
-- [ ] 全链路：改序 → 上传封面/intro → 自定义标签 → App 空态
-- [ ] 无本轮范围外改动（手机号、COS prod 可 defer 备注）
+- [x] 全链路：改序 → 上传封面/intro → 自定义标签 → App 空态
+- [x] 无本轮范围外改动（手机号、COS prod 可 defer 备注）
 
 ---
 
 ## PR 建议拆分
 
-| PR | 内容 |
-| -- | ---- |
-| 1 | Task 1 分类排序 |
-| 2 | Task 2 + 3 媒体上传 API + Admin UI |
-| 3 | Task 4 + 5 标签 + App 空态 |
+| PR  | 内容                               |
+| --- | ---------------------------------- |
+| 1   | Task 1 分类排序                    |
+| 2   | Task 2 + 3 媒体上传 API + Admin UI |
+| 3   | Task 4 + 5 标签 + App 空态         |
 
 或单分支多 commit，合并前 `pnpm check` 全绿。
 

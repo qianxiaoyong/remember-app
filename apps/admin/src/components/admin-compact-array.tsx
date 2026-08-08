@@ -7,7 +7,7 @@ import { adminColors } from '../theme/admin-colors.js';
 interface CompactArrayBlockProps {
   source: string;
   title: string;
-  defaultItem: Record<string, unknown>;
+  defaultItem: Record<string, unknown> | ((count: number) => Record<string, unknown>);
   headerAction?: ReactNode;
   children: ReactNode;
 }
@@ -20,7 +20,9 @@ export function CompactArrayBlock(props: CompactArrayBlockProps) {
 
   const addItem = () => {
     const current = Array.isArray(items) ? items : [];
-    setValue(props.source, [...current, props.defaultItem], { shouldDirty: true });
+    const nextItem =
+      typeof props.defaultItem === 'function' ? props.defaultItem(current.length) : props.defaultItem;
+    setValue(props.source, [...current, nextItem], { shouldDirty: true });
   };
 
   return (

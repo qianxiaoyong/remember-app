@@ -1,5 +1,4 @@
 import {
-  AutocompleteArrayInput,
   Button,
   NumberInput,
   SelectInput,
@@ -8,14 +7,16 @@ import {
   required,
   useNotify,
   useRecordContext,
+  useInput,
 } from 'react-admin';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { useInput } from 'react-admin';
 import Grid from '@mui/material/Grid2';
 import { Box, TextField as MuiTextField, Typography } from '@mui/material';
 import { useState } from 'react';
 import { extractSamplePreviews } from '../api/packs-api.js';
 import { CompactArrayBlock } from '../components/admin-compact-array.js';
+import { AdminConfirmedRemoveItemButton } from '../components/admin-confirmed-remove-item-button.js';
+import { AdminImageUploadButton } from '../components/admin-image-upload-field.js';
 import {
   AdminFormSection,
   AdminLabeledField,
@@ -28,13 +29,7 @@ import { compactIteratorSx, packFormDensitySx } from '../components/pack-form-se
 import { adminColors } from '../theme/admin-colors.js';
 import { adminPanelTableSx } from '../components/admin-panel.js';
 import { PackTaxonomyFields } from './pack-taxonomy-fields.js';
-
-const CONTENT_TAG_CHOICES = [
-  { id: '词汇', name: '词汇' },
-  { id: '上册', name: '上册' },
-  { id: '下册', name: '下册' },
-  { id: '全册', name: '全册' },
-];
+import { ContentTagsInput } from './content-tags-input.js';
 
 const packStatusChoices = [
   { id: 'draft', name: '草稿' },
@@ -51,6 +46,68 @@ const hiddenLabel = false as unknown as string;
 function normalizeCoverLines(value: unknown): [string, string] {
   const raw = Array.isArray(value) ? value.map((item) => String(item ?? '')) : [];
   return [raw[0] ?? '', raw[1] ?? ''];
+}
+
+function CoverUrlField() {
+  const { field } = useInput({ source: 'coverUrl' });
+  const value = typeof field.value === 'string' ? field.value : '';
+
+  return (
+    <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', width: '100%' }}>
+      <MuiTextField
+        size="small"
+        fullWidth
+        value={value}
+        placeholder="https://..."
+        onChange={(event) => {
+          field.onChange(event.target.value);
+        }}
+      />
+      <AdminImageUploadButton
+        onUploaded={(url) => {
+          field.onChange(url);
+        }}
+      />
+    </Box>
+  );
+}
+
+function IntroMediaUrlField() {
+  const { field: urlField } = useInput({ source: 'url' });
+  const { field: typeField } = useInput({ source: 'type' });
+  const urlValue = typeof urlField.value === 'string' ? urlField.value : '';
+  const isImage = typeField.value === 'image';
+
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        gap: 0.5,
+        flex: 1,
+        minWidth: 120,
+        alignItems: 'center',
+      }}
+    >
+      <MuiTextField
+        size="small"
+        fullWidth
+        value={urlValue}
+        placeholder="https://..."
+        onChange={(event) => {
+          urlField.onChange(event.target.value);
+        }}
+        sx={{ flex: 1 }}
+      />
+      {isImage ? (
+        <AdminImageUploadButton
+          label="上传"
+          onUploaded={(url) => {
+            urlField.onChange(url);
+          }}
+        />
+      ) : null}
+    </Box>
+  );
 }
 
 function CoverPreview() {
@@ -219,7 +276,7 @@ function CoverStripSection() {
         <CoverPreview />
         <Box sx={{ flex: 1, minWidth: 200 }}>
           <AdminLabeledField label="封面 URL">
-            <TextInput source="coverUrl" label={hiddenLabel} fullWidth size="small" />
+            <CoverUrlField />
           </AdminLabeledField>
         </Box>
         <Box sx={{ width: { xs: '100%', md: 88 }, flexShrink: 0 }}>
@@ -241,7 +298,17 @@ function AppDisplaySection() {
         title="包含内容"
         defaultItem={{ title: '', description: '' }}
       >
-        <SimpleFormIterator inline disableReordering sx={compactIteratorSx}>
+        <SimpleFormIterator
+          inline
+          disableReordering
+          sx={compactIteratorSx}
+          removeButton={
+            <AdminConfirmedRemoveItemButton
+              title="删除包含内容？"
+              description="确定删除这条「包含内容」？保存后 App 详情页将不再展示。"
+            />
+          }
+        >
           <TextInput
             source="title"
             label="标题"
@@ -262,32 +329,30 @@ function AppDisplaySection() {
       <CompactArrayBlock
         source="introMedia"
         title="内容介绍"
-        defaultItem={{ type: 'image', sortOrder: 0, url: '' }}
+        defaultItem={(count) => ({ type: 'image', sortOrder: count, url: '' })}
       >
         <Box sx={adminPanelTableSx}>
-          <SimpleFormIterator inline disableReordering sx={compactIteratorSx}>
+          <SimpleFormIterator
+            inline
+            disableReordering
+            sx={compactIteratorSx}
+            removeButton={
+              <AdminConfirmedRemoveItemButton
+                title="删除介绍条目？"
+                description="确定删除这条「内容介绍」？保存后 App 详情页将不再展示。"
+              />
+            }
+          >
             <SelectInput
               source="type"
               label="类型"
               choices={INTRO_MEDIA_TYPE_CHOICES}
+              defaultValue="image"
               helperText={false}
               size="small"
               sx={{ width: 80 }}
             />
-            <NumberInput
-              source="sortOrder"
-              label="序"
-              helperText={false}
-              size="small"
-              sx={{ width: 56 }}
-            />
-            <TextInput
-              source="url"
-              label="URL"
-              helperText={false}
-              size="small"
-              sx={{ flex: 1, minWidth: 120 }}
-            />
+            <IntroMediaUrlField />
           </SimpleFormIterator>
         </Box>
       </CompactArrayBlock>
@@ -299,7 +364,16 @@ function AppDisplaySection() {
         headerAction={<ExtractSamplePreviewsButton />}
       >
         <Box sx={adminPanelTableSx}>
-          <SimpleFormIterator disableReordering sx={compactIteratorSx}>
+          <SimpleFormIterator
+            disableReordering
+            sx={compactIteratorSx}
+            removeButton={
+              <AdminConfirmedRemoveItemButton
+                title="删除内容示例？"
+                description="确定删除这条「内容示例」？保存后 App 详情页将不再展示。"
+              />
+            }
+          >
             <Grid container spacing={1} sx={{ width: '100%' }}>
               <Grid size={{ xs: 6, sm: 3 }}>
                 <TextInput
@@ -356,13 +430,7 @@ function PublishSidebar() {
         <PricePreview />
       </AdminLabeledField>
       <AdminLabeledField label="内容标签">
-        <AutocompleteArrayInput
-          source="contentTags"
-          label={hiddenLabel}
-          choices={CONTENT_TAG_CHOICES}
-          fullWidth
-          size="small"
-        />
+        <ContentTagsInput />
       </AdminLabeledField>
     </AdminFormSection>
   );

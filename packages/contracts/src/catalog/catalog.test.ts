@@ -6,6 +6,27 @@ import {
 } from './index.js';
 
 describe('catalog contracts', () => {
+  it('listCatalogPacks 接受自定义一级 taxonomy slug', () => {
+    const response = listCatalogPacksResponseSchema.parse({
+      items: [
+        {
+          packId: 'custom-pack',
+          title: '课内单词包',
+          primaryCategory: 'kndc',
+          secondaryCategory: '一年级',
+          versionLabel: '全部',
+          contentTags: ['词汇'],
+          cardCount: 10,
+          sizeLabel: '约 5 MB',
+          updatedAt: '2026-08-08T00:00:00.000Z',
+          priceCents: 990,
+          summary: '自定义一级分类',
+        },
+      ],
+    });
+    expect(response.items[0]?.primaryCategory).toBe('kndc');
+  });
+
   it('listCatalogPacks round-trip', () => {
     const response = listCatalogPacksResponseSchema.parse({
       items: [
@@ -62,6 +83,26 @@ describe('catalog contracts', () => {
     });
     expect(detail.samplePreviews[0]?.headword).toBe('apple');
     expect(detail.includedHighlights?.[0]?.title).toBe('核心词汇');
+  });
+
+  it('catalogPackDetail 允许空 samplePreviews', () => {
+    const detail = catalogPackDetailSchema.parse({
+      packId: 'demo-primary-grade3',
+      title: '三年级上册词汇',
+      primaryCategory: 'primary',
+      secondaryCategory: '三年级',
+      versionLabel: '人教版',
+      contentTags: ['词汇'],
+      cardCount: 480,
+      sizeLabel: '约 18 MB',
+      updatedAt: '2026-07-15T00:00:00.000Z',
+      priceCents: 1990,
+      summary: '覆盖教材核心词汇。',
+      samplePreviews: [],
+      introMedia: [],
+    });
+    expect(detail.samplePreviews).toEqual([]);
+    expect(detail.introMedia).toEqual([]);
   });
 
   it('拒绝未知字段', () => {

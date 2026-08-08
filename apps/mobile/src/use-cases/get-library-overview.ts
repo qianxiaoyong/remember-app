@@ -154,9 +154,9 @@ function buildStudyBrowseStatusHint(packId: string): string {
   }
   const card = getPackCard(getInstalledPackSqlitePath(packId), bookmark.knowledgeId);
   if (!card) {
-    return `上次学到：第 ${String(bookmark.sortOrder)} 词`;
+    return `第 ${String(bookmark.sortOrder)} 词`;
   }
-  return `上次学到：第 ${String(bookmark.sortOrder)} 词 · ${card.headword}`;
+  return `第 ${String(bookmark.sortOrder)} 词 · ${card.headword}`;
 }
 
 function getInstalledPackSqlitePath(packId: string): string {
@@ -176,7 +176,7 @@ function buildReaderStatusHint(packId: string): string {
   if (detail?.cardType !== 'story_reading') {
     return '尚未开始';
   }
-  return `上次读到：${detail.content.lesson.code} ${detail.content.lesson.titleZh}`;
+  return `${detail.content.lesson.code} ${detail.content.lesson.titleZh}`;
 }
 
 function getReaderPackProgress(
