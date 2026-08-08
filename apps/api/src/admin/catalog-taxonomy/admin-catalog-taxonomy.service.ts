@@ -12,9 +12,7 @@ import type {
   AdminUpdateVersionTaxonomyNodeRequest,
   AdminVersionTaxonomyNodeResponse,
 } from '@remember/contracts';
-import {
-  adminCatalogTaxonomyResponseSchema,
-} from '@remember/contracts';
+import { adminCatalogTaxonomyResponseSchema } from '@remember/contracts';
 import { PrismaService } from '../../prisma/prisma.service.js';
 import { AdminCatalogTaxonomyRepository } from './admin-catalog-taxonomy.repository.js';
 import {

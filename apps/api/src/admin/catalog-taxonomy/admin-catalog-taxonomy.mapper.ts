@@ -8,11 +8,7 @@ import {
   adminSecondaryTaxonomyNodeResponseSchema,
   adminVersionTaxonomyNodeResponseSchema,
 } from '@remember/contracts';
-import type {
-  CatalogPrimaryNode,
-  CatalogSecondaryNode,
-  CatalogVersionNode,
-} from '@prisma/client';
+import type { CatalogPrimaryNode, CatalogSecondaryNode, CatalogVersionNode } from '@prisma/client';
 
 export function toAdminPrimaryTaxonomyNode(
   node: CatalogPrimaryNode,
