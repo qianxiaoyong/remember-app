@@ -34,9 +34,9 @@ export function AdminLoginPage() {
             color="text.secondary"
             sx={{ display: 'block', mt: 2, lineHeight: 1.6, textAlign: 'left' }}
           >
-            本地开发：用户名 <strong>admin</strong>，密码{' '}
-            <strong>dev-only-admin-password</strong>（与 <code>apps/api/.env</code> 中{' '}
-            <code>ADMIN_BOOTSTRAP_*</code> 一致）。若仍失败，请清空浏览器自动填充后手动输入。
+            本地开发：用户名 <strong>admin</strong>，密码 <strong>dev-only-admin-password</strong>
+            （与 <code>apps/api/.env</code> 中 <code>ADMIN_BOOTSTRAP_*</code>{' '}
+            一致）。若仍失败，请清空浏览器自动填充后手动输入。
           </Typography>
         ) : null}
       </Box>
