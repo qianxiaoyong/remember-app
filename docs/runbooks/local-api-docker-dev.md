@@ -68,6 +68,14 @@ pnpm --filter @remember/admin dev
 - 登录账号见 `apps/api/.env` 的 `ADMIN_BOOTSTRAP_*`（seed 后可用）
 - 若需直连 API，在 `apps/admin/.env` 设置 `VITE_API_BASE_URL=http://127.0.0.1:3000`（需 API 开启 CORS 或仍用代理）
 
+### 目录营销图片上传（封面 / 内容介绍）
+
+- 后台「上传图片」调用 `POST /api/v1/admin/media/upload`（需 Admin 登录）
+- 开发环境文件落盘：`apps/api/data/media/`（可用 `ADMIN_MEDIA_STORAGE_DIR` 覆盖）
+- 公开访问：`GET /api/v1/media/{uuid}.{ext}`（无需登录；返回 URL 写入 `coverUrl` / `introMedia[].url`）
+- `API_PUBLIC_BASE_URL` 需与 Admin / 手机可访问的 API 基址一致（实机联调填局域网 IP）
+- staging/prod 公开前缀接 COS 见 `docs/runbooks/production-deploy.md` §9（本轮 dev 可用即可）
+
 ## 4. 手机实机联调
 
 1. 电脑与手机同一 Wi‑Fi

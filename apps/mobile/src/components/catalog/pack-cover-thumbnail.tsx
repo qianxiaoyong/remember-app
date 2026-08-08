@@ -1,15 +1,18 @@
 import type { ReactElement } from 'react';
 import { ImageBackground, StyleSheet, View } from 'react-native';
 import type { CatalogPackItem } from '../../catalog/catalog-seed';
+import { CATALOG_COVER_WIDTH_HOME, catalogCoverHeight } from '../../catalog/catalog-cover-layout';
 import { resolveCatalogCover } from '../../catalog/resolve-catalog-cover';
 
 interface PackCoverThumbnailProps {
   item: CatalogPackItem;
+  /** 封面宽度；高度按 3:4 推导。 */
   size?: number;
 }
 
 export function PackCoverThumbnail(props: PackCoverThumbnailProps): ReactElement {
-  const size = props.size ?? 72;
+  const width = props.size ?? CATALOG_COVER_WIDTH_HOME;
+  const height = catalogCoverHeight(width);
   const cover = resolveCatalogCover(props.item);
 
   return (
@@ -17,7 +20,7 @@ export function PackCoverThumbnail(props: PackCoverThumbnailProps): ReactElement
       imageStyle={styles.image}
       resizeMode="cover"
       source={cover.imageSource}
-      style={[styles.root, { height: size, width: size }]}
+      style={[styles.root, { height, width }]}
     >
       <View style={styles.scrim} />
     </ImageBackground>

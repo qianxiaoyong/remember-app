@@ -80,6 +80,12 @@ export {
   type AdminPackDetailResponse,
 } from './packs.js';
 export {
+  adminMediaUploadResponseSchema,
+  ADMIN_MEDIA_ALLOWED_MIME_TYPES,
+  MAX_ADMIN_MEDIA_UPLOAD_BYTES,
+  type AdminMediaUploadResponse,
+} from './media.js';
+export {
   adminCatalogTaxonomyResponseSchema,
   adminCreatePrimaryTaxonomyNodeRequestSchema,
   adminCreateSecondaryTaxonomyNodeRequestSchema,

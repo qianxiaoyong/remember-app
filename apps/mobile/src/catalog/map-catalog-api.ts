@@ -53,7 +53,7 @@ export function mapCatalogDetailToItem(detail: CatalogPackDetail): CatalogPackIt
     ...base,
     sampleHeadwords: detail.samplePreviews.map((item) => item.headword),
     samplePreviews: detail.samplePreviews.map(mapSamplePreview),
-    ...(detail.introMedia ? { introMedia: detail.introMedia } : {}),
-    ...(detail.includedHighlights ? { includedHighlights: detail.includedHighlights } : {}),
+    introMedia: detail.introMedia ?? [],
+    includedHighlights: detail.includedHighlights ?? [],
   };
 }

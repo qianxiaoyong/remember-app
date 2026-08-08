@@ -1,7 +1,12 @@
 import type { ReactElement } from 'react';
 import { ImageBackground, Pressable, StyleSheet, Text, View } from 'react-native';
 import type { CatalogPackItem } from '../../catalog/catalog-seed';
+import {
+  CATALOG_COVER_ASPECT_HEIGHT,
+  CATALOG_COVER_ASPECT_WIDTH,
+} from '../../catalog/catalog-cover-layout';
 import { resolveCatalogCover } from '../../catalog/resolve-catalog-cover';
+import { PackCoverBadge } from '../catalog/pack-cover-badge';
 import { HighlightedText } from './highlighted-text';
 import { cardShadow } from '../../theme/shadows';
 import { colors } from '../../theme/colors';
@@ -26,7 +31,9 @@ export function MarketSearchResultCard(props: MarketSearchResultCardProps): Reac
           style={styles.cover}
         >
           <View style={styles.scrim} />
-          <Text style={styles.badge}>{cover.badge}</Text>
+          <View style={styles.badgeSlot}>
+            <PackCoverBadge label={cover.badge} size="xs" />
+          </View>
         </ImageBackground>
         <View style={styles.body}>
           <HighlightedText
@@ -58,9 +65,10 @@ const styles = StyleSheet.create({
     ...cardShadow,
   },
   cover: {
-    height: 96,
-    justifyContent: 'flex-end',
+    aspectRatio: CATALOG_COVER_ASPECT_WIDTH / CATALOG_COVER_ASPECT_HEIGHT,
+    justifyContent: 'flex-start',
     overflow: 'hidden',
+    width: '100%',
   },
   coverImage: {
     height: '100%',
@@ -70,10 +78,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFill,
     backgroundColor: 'rgba(0, 0, 0, 0.18)',
   },
-  badge: {
-    color: colors.surface,
-    fontSize: 10,
-    fontWeight: '700',
+  badgeSlot: {
     padding: spacing.sm,
     zIndex: 1,
   },

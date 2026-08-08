@@ -2,7 +2,8 @@ import type { CatalogPackTaxonomy, IncludedHighlight } from '@remember/contracts
 import type { IntroMediaItem } from '@remember/contracts';
 import type { PackSamplePreview } from './pack-sample-preview';
 
-export type CatalogPrimaryCategory = 'all' | 'primary' | 'junior' | 'senior' | 'postgraduate';
+/** `all` 为筛选 UI；其余值为 taxonomy 一级 slug（含 legacy 四档与后台自定义分类）。 */
+export type CatalogPrimaryCategory = 'all' | (string & {});
 
 export interface CatalogPackItem {
   packId: string;

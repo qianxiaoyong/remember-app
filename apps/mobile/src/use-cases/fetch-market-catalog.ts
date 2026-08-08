@@ -84,16 +84,11 @@ function mergeCatalogItem(
   if (!previous) {
     return fresh;
   }
-  const samplePreviews = fresh.samplePreviews ?? previous.samplePreviews;
-  const introMedia = fresh.introMedia ?? previous.introMedia;
-  const includedHighlights = fresh.includedHighlights ?? previous.includedHighlights;
-  return {
-    ...previous,
-    ...fresh,
-    ...(samplePreviews !== undefined ? { samplePreviews } : {}),
-    ...(introMedia !== undefined ? { introMedia } : {}),
-    ...(includedHighlights !== undefined ? { includedHighlights } : {}),
-  };
+  const { samplePreviews, introMedia, sampleHeadwords, ...previousSummary } = previous;
+  void samplePreviews;
+  void introMedia;
+  void sampleHeadwords;
+  return { ...previousSummary, ...fresh };
 }
 
 /** API 全量列表为成员真源；下架/草稿包不在 fresh 中则从缓存移除。 */

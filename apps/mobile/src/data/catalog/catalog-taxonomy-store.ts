@@ -46,7 +46,7 @@ export function getPrimaryTabOptions(
   return [
     { id: 'all', label: '全部' },
     ...taxonomy.primaries.map((primary) => ({
-      id: primary.slug as CatalogPrimaryCategory,
+      id: primary.slug,
       label: primary.label,
     })),
   ];

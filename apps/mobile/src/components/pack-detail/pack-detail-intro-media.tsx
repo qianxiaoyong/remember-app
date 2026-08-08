@@ -1,4 +1,5 @@
 import type { ReactElement } from 'react';
+import { useEffect, useState } from 'react';
 import { Image, Linking, Pressable, StyleSheet, Text, View } from 'react-native';
 import type { IntroMediaItem } from '@remember/contracts';
 import { SurfaceCard } from '../ui/surface-card';
@@ -9,6 +10,8 @@ import { spacing } from '../../theme/spacing';
 interface PackDetailIntroMediaProps {
   items: IntroMediaItem[];
 }
+
+const INTRO_IMAGE_PLACEHOLDER_ASPECT_RATIO = 16 / 9;
 
 export function PackDetailIntroMedia(props: PackDetailIntroMediaProps): ReactElement | null {
   if (props.items.length === 0) {
@@ -21,24 +24,55 @@ export function PackDetailIntroMedia(props: PackDetailIntroMediaProps): ReactEle
     <SurfaceCard>
       <Text style={styles.title}>内容介绍</Text>
       <View style={styles.list}>
-        {sorted.map((item) => (
-          <IntroMediaRow item={item} key={`${item.type}-${item.url}`} />
+        {sorted.map((item, index) => (
+          <IntroMediaRow
+            item={item}
+            key={`${item.type}-${String(item.sortOrder)}-${String(index)}`}
+          />
         ))}
       </View>
     </SurfaceCard>
   );
 }
 
+function IntroMediaImage(props: { url: string }): ReactElement {
+  const [aspectRatio, setAspectRatio] = useState(INTRO_IMAGE_PLACEHOLDER_ASPECT_RATIO);
+
+  useEffect(() => {
+    let cancelled = false;
+    Image.getSize(
+      props.url,
+      (width, height) => {
+        if (cancelled || width <= 0 || height <= 0) {
+          return;
+        }
+        setAspectRatio(width / height);
+      },
+      () => {
+        if (!cancelled) {
+          setAspectRatio(INTRO_IMAGE_PLACEHOLDER_ASPECT_RATIO);
+        }
+      },
+    );
+
+    return () => {
+      cancelled = true;
+    };
+  }, [props.url]);
+
+  return (
+    <Image
+      accessibilityLabel="介绍图片"
+      resizeMode="contain"
+      source={{ uri: props.url }}
+      style={[styles.image, { aspectRatio }]}
+    />
+  );
+}
+
 function IntroMediaRow(props: { item: IntroMediaItem }): ReactElement {
   if (props.item.type === 'image') {
-    return (
-      <Image
-        accessibilityLabel="介绍图片"
-        resizeMode="cover"
-        source={{ uri: props.item.url }}
-        style={styles.image}
-      />
-    );
+    return <IntroMediaImage url={props.item.url} />;
   }
 
   return (
@@ -66,8 +100,8 @@ const styles = StyleSheet.create({
     gap: spacing.md,
   },
   image: {
+    backgroundColor: colors.statTileBackground,
     borderRadius: spacing.cardRadius,
-    height: 180,
     width: '100%',
   },
   videoButton: {

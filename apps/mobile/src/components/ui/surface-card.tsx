@@ -6,10 +6,12 @@ import { spacing } from '../../theme/spacing';
 
 interface SurfaceCardProps {
   children: ReactNode;
+  /** 首页等紧凑卡片：减小内边距。 */
+  compact?: boolean;
 }
 
 export function SurfaceCard(props: SurfaceCardProps): ReactElement {
-  return <View style={styles.card}>{props.children}</View>;
+  return <View style={[styles.card, props.compact ? styles.compact : null]}>{props.children}</View>;
 }
 
 const styles = StyleSheet.create({
@@ -20,5 +22,8 @@ const styles = StyleSheet.create({
     borderWidth: StyleSheet.hairlineWidth,
     padding: spacing.lg,
     ...cardShadow,
+  },
+  compact: {
+    padding: spacing.sm,
   },
 });

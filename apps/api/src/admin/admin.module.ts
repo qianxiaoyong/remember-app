@@ -19,6 +19,8 @@ import { AdminOrdersService } from './orders/admin-orders.service.js';
 import { AdminPackAccessController } from './pack-access/admin-pack-access.controller.js';
 import { AdminPackAccessRepository } from './pack-access/admin-pack-access.repository.js';
 import { AdminPackAccessService } from './pack-access/admin-pack-access.service.js';
+import { AdminMediaController } from './media/admin-media.controller.js';
+import { AdminMediaService } from './media/admin-media.service.js';
 import { AdminPacksController } from './packs/admin-packs.controller.js';
 import { AdminPackVersionsService } from './packs/admin-pack-versions.service.js';
 import { AdminPacksRepository } from './packs/admin-packs.repository.js';
@@ -45,6 +47,7 @@ import { AdminUsersService } from './users/admin-users.service.js';
     AdminOrdersController,
     AdminPackAccessController,
     AdminPacksController,
+    AdminMediaController,
     AdminCatalogTaxonomyController,
     AdminRefundsController,
     AdminRedemptionController,
@@ -61,6 +64,7 @@ import { AdminUsersService } from './users/admin-users.service.js';
     AdminPacksRepository,
     AdminPacksService,
     AdminPackVersionsService,
+    AdminMediaService,
     AdminCatalogTaxonomyRepository,
     AdminCatalogTaxonomyService,
     AdminRefundsService,

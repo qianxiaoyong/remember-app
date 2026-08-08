@@ -21,7 +21,8 @@ import {
   updateVersionTaxonomyNode,
 } from '../../api/catalog-taxonomy-api.js';
 import { AdminApiError } from '../../api/admin-api-client.js';
-import { PrimarySidebar, SecondaryPanel, VersionsPanel } from './catalog-taxonomy-panels.js';
+import { PrimarySidebar, SecondaryPanel } from './catalog-taxonomy-panels.js';
+import { VersionsPanel } from './catalog-taxonomy-versions-panel.js';
 import {
   TaxonomyCreateDialog,
   TaxonomyDeleteDialog,
@@ -36,6 +37,34 @@ type EditTarget =
   | { kind: 'version'; node: AdminVersionTaxonomyNodeResponse };
 
 type DeleteTarget = EditTarget;
+
+interface SortableNode {
+  id: string;
+  sortOrder: number;
+}
+
+interface SwapSortOrderInput {
+  items: SortableNode[];
+  index: number;
+  direction: 'up' | 'down';
+  updateNode: (id: string, sortOrder: number) => Promise<void>;
+}
+
+async function swapAdjacentSortOrder(input: SwapSortOrderInput): Promise<void> {
+  const targetIndex = input.direction === 'up' ? input.index - 1 : input.index + 1;
+  if (targetIndex < 0 || targetIndex >= input.items.length) {
+    return;
+  }
+  const current = input.items[input.index];
+  const adjacent = input.items[targetIndex];
+  if (!current || !adjacent) {
+    return;
+  }
+  await Promise.all([
+    input.updateNode(current.id, adjacent.sortOrder),
+    input.updateNode(adjacent.id, current.sortOrder),
+  ]);
+}
 
 export function CatalogTaxonomyPage() {
   const [taxonomy, setTaxonomy] = useState<AdminCatalogTaxonomyResponse | null>(null);
@@ -128,6 +157,54 @@ export function CatalogTaxonomyPage() {
     });
   }
 
+  async function handleMovePrimary(index: number, direction: 'up' | 'down') {
+    if (!taxonomy) {
+      return;
+    }
+    await runAction(async () => {
+      await swapAdjacentSortOrder({
+        items: taxonomy.primaries,
+        index,
+        direction,
+        updateNode: async (id, sortOrder) => {
+          await updatePrimaryTaxonomyNode(id, { sortOrder });
+        },
+      });
+    });
+  }
+
+  async function handleMoveSecondary(index: number, direction: 'up' | 'down') {
+    if (!selectedPrimary) {
+      return;
+    }
+    await runAction(async () => {
+      await swapAdjacentSortOrder({
+        items: selectedPrimary.children,
+        index,
+        direction,
+        updateNode: async (id, sortOrder) => {
+          await updateSecondaryTaxonomyNode(id, { sortOrder });
+        },
+      });
+    });
+  }
+
+  async function handleMoveVersion(index: number, direction: 'up' | 'down') {
+    if (!taxonomy) {
+      return;
+    }
+    await runAction(async () => {
+      await swapAdjacentSortOrder({
+        items: taxonomy.versions,
+        index,
+        direction,
+        updateNode: async (id, sortOrder) => {
+          await updateVersionTaxonomyNode(id, { sortOrder });
+        },
+      });
+    });
+  }
+
   return (
     <>
       <Title title="分类管理" />
@@ -153,6 +230,12 @@ export function CatalogTaxonomyPage() {
               }}
               onDelete={(node) => {
                 setDeleteTarget({ kind: 'primary', node });
+              }}
+              onMoveUp={(_node, index) => {
+                void handleMovePrimary(index, 'up');
+              }}
+              onMoveDown={(_node, index) => {
+                void handleMovePrimary(index, 'down');
               }}
             />
           </Grid>
@@ -182,6 +265,12 @@ export function CatalogTaxonomyPage() {
               onDelete={(node) => {
                 setDeleteTarget({ kind: 'secondary', node });
               }}
+              onMoveUp={(_node, index) => {
+                void handleMoveSecondary(index, 'up');
+              }}
+              onMoveDown={(_node, index) => {
+                void handleMoveSecondary(index, 'down');
+              }}
             />
           </Grid>
           <Grid size={{ xs: 12, lg: 4 }} sx={{ height: '100%', minHeight: 0 }}>
@@ -206,6 +295,12 @@ export function CatalogTaxonomyPage() {
               }}
               onDelete={(node) => {
                 setDeleteTarget({ kind: 'version', node });
+              }}
+              onMoveUp={(_node, index) => {
+                void handleMoveVersion(index, 'up');
+              }}
+              onMoveDown={(_node, index) => {
+                void handleMoveVersion(index, 'down');
               }}
             />
           </Grid>

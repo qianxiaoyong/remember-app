@@ -109,13 +109,13 @@ describe('applyBoxReview', () => {
 });
 
 describe('createInitialReviewPoolState', () => {
-  it('sets box level 0 and due tomorrow anchor', () => {
+  it('sets box level 0 and due today anchor', () => {
     const now = new Date('2026-08-06T15:00:00+08:00');
     const state = createInitialReviewPoolState({ now, timeZone: 'Asia/Shanghai' });
     expect(state).toEqual({
       inReviewPool: true,
       boxLevel: 0,
-      dueAt: '2026-08-06T16:00:00.000Z',
+      dueAt: '2026-08-05T16:00:00.000Z',
       consecutiveLevel3Passes: 0,
     });
   });

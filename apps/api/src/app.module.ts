@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module.js';
 import { CatalogModule } from './catalog/catalog.module.js';
 import { HealthController } from './health/health.controller.js';
 import { AppReleaseController } from './app-release/app-release.controller.js';
+import { MediaController } from './media/media.controller.js';
 import { OrderModule } from './order/order.module.js';
 import { PackAccessModule } from './pack-access/pack-access.module.js';
 import { PackDownloadModule } from './pack-download/pack-download.module.js';
@@ -31,6 +32,6 @@ import { StorageModule } from './storage/storage.module.js';
     PaymentModule,
     PackDownloadModule,
   ],
-  controllers: [HealthController, AppReleaseController],
+  controllers: [HealthController, AppReleaseController, MediaController],
 })
 export class AppModule {}

@@ -21,15 +21,7 @@ function mergeBundledLocalPreviews(
 }
 
 export function resolvePackSamplePreviews(item: CatalogPackItem): PackSamplePreview[] {
-  const previews =
-    item.samplePreviews && item.samplePreviews.length > 0
-      ? item.samplePreviews
-      : item.sampleHeadwords.map((headword) => ({
-          headword,
-          zh: '—',
-          exampleEn: '—',
-          initial: headword.charAt(0).toUpperCase(),
-        }));
+  const previews = item.samplePreviews ?? [];
 
   if (item.isBundledTestPack) {
     return mergeBundledLocalPreviews(previews, item.packId);
