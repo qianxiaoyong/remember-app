@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { getStoryParagraphLengthIssue } from '@remember/contracts';
@@ -22,9 +22,11 @@ function loadCanonical(lessonCode: string): CanonicalLesson {
   return JSON.parse(readFileSync(path, 'utf8')) as CanonicalLesson;
 }
 
-describe('primary-1000-stories canonical English', () => {
-  const sourceDir = join(getPackBuilderRoot(), 'source', 'primary-1000-stories');
-  const source = readPackSource(sourceDir);
+const primary1000SourceDir = join(getPackBuilderRoot(), 'source', 'primary-1000-stories');
+const hasPrimary1000StoriesSource = existsSync(join(primary1000SourceDir, 'meta.json'));
+
+describe.skipIf(!hasPrimary1000StoriesSource)('primary-1000-stories canonical English', () => {
+  const source = readPackSource(primary1000SourceDir);
 
   for (const lessonCode of [
     'C1',

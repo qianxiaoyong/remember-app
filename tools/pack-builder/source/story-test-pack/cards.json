@@ -126,7 +126,7 @@
               },
               {
                 "kind": "text",
-                "text": ". Some are too "
+                "text": ", too "
               },
               {
                 "kind": "word",
@@ -137,7 +137,7 @@
               },
               {
                 "kind": "text",
-                "text": " or too "
+                "text": ", or too "
               },
               {
                 "kind": "word",
@@ -581,7 +581,7 @@
               }
             ],
             "audioStartMs": 122980,
-            "audioEndMs": 137561,
+            "audioEndMs": 137535,
             "translationZh": "王子和他的公主把那颗豌豆带到了博物馆。现在所有人都能看见它。"
           }
         ]

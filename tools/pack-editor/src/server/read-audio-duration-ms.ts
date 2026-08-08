@@ -69,6 +69,15 @@ function readFfprobeDurationMs(absolutePath: string): number {
   return Math.round(seconds * 1000);
 }
 
+export function isFfprobeAvailable(): boolean {
+  try {
+    resolveFfprobeExecutable();
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export function readAudioDurationMs(absolutePath: string): number {
   return readFfprobeDurationMs(absolutePath);
 }
