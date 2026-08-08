@@ -1,4 +1,5 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import type {
   AdminCatalogTaxonomyResponse,
   AdminCreatePrimaryTaxonomyNodeRequest,
@@ -13,12 +14,14 @@ import type {
 } from '@remember/contracts';
 import {
   adminCatalogTaxonomyResponseSchema,
-  adminPrimaryTaxonomyNodeResponseSchema,
-  adminSecondaryTaxonomyNodeResponseSchema,
-  adminVersionTaxonomyNodeResponseSchema,
 } from '@remember/contracts';
 import { PrismaService } from '../../prisma/prisma.service.js';
 import { AdminCatalogTaxonomyRepository } from './admin-catalog-taxonomy.repository.js';
+import {
+  toAdminPrimaryTaxonomyNode,
+  toAdminSecondaryTaxonomyNode,
+  toAdminVersionTaxonomyNode,
+} from './admin-catalog-taxonomy.mapper.js';
 
 @Injectable()
 export class AdminCatalogTaxonomyService {
@@ -62,15 +65,19 @@ export class AdminCatalogTaxonomyService {
     input: AdminCreatePrimaryTaxonomyNodeRequest,
   ): Promise<AdminPrimaryTaxonomyNodeResponse> {
     const sortOrder = input.sortOrder ?? (await this.repository.nextPrimarySortOrder());
-    const created = await this.prisma.catalogPrimaryNode.create({
-      data: {
-        slug: input.slug,
-        label: input.label,
-        sortOrder,
-        status: input.status,
-      },
-    });
-    return adminPrimaryTaxonomyNodeResponseSchema.parse(created);
+    try {
+      const created = await this.prisma.catalogPrimaryNode.create({
+        data: {
+          slug: input.slug,
+          label: input.label,
+          sortOrder,
+          status: input.status,
+        },
+      });
+      return toAdminPrimaryTaxonomyNode(created);
+    } catch (error) {
+      throwTaxonomyWriteConflict(error);
+    }
   }
 
   async updatePrimary(
@@ -91,7 +98,7 @@ export class AdminCatalogTaxonomyService {
         ...(input.status !== undefined ? { status: input.status } : {}),
       },
     });
-    return adminPrimaryTaxonomyNodeResponseSchema.parse(updated);
+    return toAdminPrimaryTaxonomyNode(updated);
   }
 
   async deletePrimary(id: string): Promise<void> {
@@ -124,16 +131,20 @@ export class AdminCatalogTaxonomyService {
     }
 
     const sortOrder = input.sortOrder ?? (await this.repository.nextSecondarySortOrder(primaryId));
-    const created = await this.prisma.catalogSecondaryNode.create({
-      data: {
-        primaryId,
-        slug: input.slug,
-        label: input.label,
-        sortOrder,
-        status: input.status,
-      },
-    });
-    return adminSecondaryTaxonomyNodeResponseSchema.parse(created);
+    try {
+      const created = await this.prisma.catalogSecondaryNode.create({
+        data: {
+          primaryId,
+          slug: input.slug,
+          label: input.label,
+          sortOrder,
+          status: input.status,
+        },
+      });
+      return toAdminSecondaryTaxonomyNode(created);
+    } catch (error) {
+      throwTaxonomyWriteConflict(error);
+    }
   }
 
   async updateSecondary(
@@ -154,7 +165,7 @@ export class AdminCatalogTaxonomyService {
         ...(input.status !== undefined ? { status: input.status } : {}),
       },
     });
-    return adminSecondaryTaxonomyNodeResponseSchema.parse(updated);
+    return toAdminSecondaryTaxonomyNode(updated);
   }
 
   async deleteSecondary(id: string): Promise<void> {
@@ -178,15 +189,19 @@ export class AdminCatalogTaxonomyService {
     input: AdminCreateVersionTaxonomyNodeRequest,
   ): Promise<AdminVersionTaxonomyNodeResponse> {
     const sortOrder = input.sortOrder ?? (await this.repository.nextVersionSortOrder());
-    const created = await this.prisma.catalogVersionNode.create({
-      data: {
-        slug: input.slug,
-        label: input.label,
-        sortOrder,
-        status: input.status,
-      },
-    });
-    return adminVersionTaxonomyNodeResponseSchema.parse(created);
+    try {
+      const created = await this.prisma.catalogVersionNode.create({
+        data: {
+          slug: input.slug,
+          label: input.label,
+          sortOrder,
+          status: input.status,
+        },
+      });
+      return toAdminVersionTaxonomyNode(created);
+    } catch (error) {
+      throwTaxonomyWriteConflict(error);
+    }
   }
 
   async updateVersion(
@@ -207,7 +222,7 @@ export class AdminCatalogTaxonomyService {
         ...(input.status !== undefined ? { status: input.status } : {}),
       },
     });
-    return adminVersionTaxonomyNodeResponseSchema.parse(updated);
+    return toAdminVersionTaxonomyNode(updated);
   }
 
   async deleteVersion(id: string): Promise<void> {
@@ -226,4 +241,14 @@ export class AdminCatalogTaxonomyService {
 
     await this.prisma.catalogVersionNode.delete({ where: { id } });
   }
+}
+
+function throwTaxonomyWriteConflict(error: unknown): never {
+  if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+    throw new ConflictException({
+      code: 'TAXONOMY_SLUG_EXISTS',
+      message: 'slug 已存在，请换一个内部标识',
+    });
+  }
+  throw error;
 }
