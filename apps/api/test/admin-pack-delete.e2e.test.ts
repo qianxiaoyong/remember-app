@@ -60,7 +60,7 @@ describe('admin pack delete', () => {
         priceCents: 100,
         status: 'draft',
       })
-      .expect(200);
+      .expect(201);
 
     await request(server)
       .delete('/api/v1/admin/packs/delete-me-pack')
