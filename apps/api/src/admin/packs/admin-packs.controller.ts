@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   Param,
@@ -53,6 +54,13 @@ export class AdminPacksController {
   @Patch(':packId')
   updatePack(@Param('packId') packId: string, @Body() body: unknown) {
     return this.service.updatePack(packId, adminUpdatePackRequestSchema.parse(body));
+  }
+
+  @Delete(':packId')
+  @HttpCode(204)
+  async deletePack(@Req() request: RequestWithAdminAuth, @Param('packId') packId: string) {
+    const admin = requireAdminAuthContext(request);
+    await this.service.deletePack(admin.adminUserId, packId);
   }
 
   @Post(':packId/versions')

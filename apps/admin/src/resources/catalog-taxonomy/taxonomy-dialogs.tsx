@@ -7,6 +7,7 @@ import {
   DialogTitle,
   TextField,
 } from '@mui/material';
+import { AdminMiniConfirmDialog } from '../../components/admin-mini-confirm-dialog.js';
 
 interface TaxonomyLabelDialogProps {
   open: boolean;
@@ -127,15 +128,12 @@ interface TaxonomyDeleteDialogProps {
 
 export function TaxonomyDeleteDialog(props: TaxonomyDeleteDialogProps) {
   return (
-    <Dialog open={props.open} onClose={props.onClose} fullWidth maxWidth="xs">
-      <DialogTitle>{props.title}</DialogTitle>
-      <DialogContent>{props.description}</DialogContent>
-      <DialogActions>
-        <Button onClick={props.onClose}>取消</Button>
-        <Button color="error" variant="contained" onClick={props.onConfirm}>
-          删除
-        </Button>
-      </DialogActions>
-    </Dialog>
+    <AdminMiniConfirmDialog
+      description={props.description}
+      onClose={props.onClose}
+      onConfirm={props.onConfirm}
+      open={props.open}
+      title={props.title}
+    />
   );
 }

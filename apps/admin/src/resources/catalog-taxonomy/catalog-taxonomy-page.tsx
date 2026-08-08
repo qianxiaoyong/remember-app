@@ -131,7 +131,7 @@ export function CatalogTaxonomyPage() {
   return (
     <>
       <Title title="分类管理" />
-      <AdminPageHeader title="分类管理" meta="维护一级 / 二级分类与教材版本，供知识库挂载" />
+      <AdminPageHeader title="分类管理" meta="维护一级 / 二级分类与页内分类，供知识库挂载" />
       <Box sx={{ height: 'calc(100vh - 180px)', display: 'flex', flexDirection: 'column' }}>
         {errorMessage ? (
           <Typography color="error" sx={{ mb: 1, fontSize: '0.875rem' }}>
@@ -235,7 +235,7 @@ export function CatalogTaxonomyPage() {
             ? '修改一级展示名'
             : editTarget?.kind === 'secondary'
               ? '修改二级展示名'
-              : '修改版本展示名'
+              : '修改页内分类展示名'
         }
         label={editTarget?.node.label ?? ''}
         onClose={() => {

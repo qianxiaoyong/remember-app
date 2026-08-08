@@ -32,6 +32,8 @@ import { PackSaveButton } from './pack-save-button.js';
 import { PackTaxonomyFields } from './pack-taxonomy-fields.js';
 import { PackVersionsPanel } from './pack-versions-panel.js';
 import { PackRedemptionCodesPanel } from './pack-redemption-codes-panel.js';
+import { PackDeleteButton } from './pack-delete-button.js';
+import { PackRowActions } from './pack-row-actions.js';
 
 const packChoices = [
   { id: 'primary', name: '小学' },
@@ -94,7 +96,12 @@ function PackEditTabs() {
             embedded
             title={<PackEditTitleRecord />}
             meta={<PackEditSummaryMeta />}
-            actions={<PackSaveButton />}
+            actions={
+              <>
+                <PackDeleteButton />
+                <PackSaveButton />
+              </>
+            }
             tabs={tabs}
           />
           <PackCatalogDetailFields embedded />
@@ -105,7 +112,12 @@ function PackEditTabs() {
 
   return (
     <>
-      <AdminPageHeader title={<PackEditTitleRecord />} meta={<PackEditSummaryMeta />} tabs={tabs} />
+      <AdminPageHeader
+        title={<PackEditTitleRecord />}
+        meta={<PackEditSummaryMeta />}
+        actions={<PackDeleteButton />}
+        tabs={tabs}
+      />
       <Box sx={{ display: tab === 1 ? 'block' : 'none' }}>
         <PackVersionsPanel embedded />
       </Box>
@@ -151,6 +163,7 @@ export function PackList() {
           />
           <TextField source="currentPackVersion" label="当前版本" emptyText="—" />
           <DateField source="updatedAt" label="更新时间" showTime locales="zh-CN" />
+          <FunctionField label="操作" render={() => <PackRowActions />} />
         </Datagrid>
       </List>
     </>

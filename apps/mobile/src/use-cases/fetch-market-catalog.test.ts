@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { CatalogPackSummary } from '@remember/contracts';
 import type { CatalogPackItem } from '../catalog/catalog-seed';
+import { CATALOG_ALL_VERSION_LABEL } from '../catalog/catalog-seed';
 import { fetchMarketCatalog, readCachedMarketCatalog } from './fetch-market-catalog';
 
 const fetchCatalogPacks = vi.fn<() => Promise<CatalogPackSummary[]>>();
@@ -72,7 +73,7 @@ describe('fetchMarketCatalog', () => {
     const items = await fetchMarketCatalog({
       primaryCategory: 'primary',
       secondaryCategory: '三年级',
-      versionFilter: '全部版本',
+      versionFilter: CATALOG_ALL_VERSION_LABEL,
       keyword: '',
     });
 
@@ -105,7 +106,7 @@ describe('fetchMarketCatalog', () => {
     const cached = await readCachedMarketCatalog({
       primaryCategory: 'all',
       secondaryCategory: '全部',
-      versionFilter: '全部版本',
+      versionFilter: CATALOG_ALL_VERSION_LABEL,
       keyword: '',
     });
 
@@ -138,7 +139,7 @@ describe('fetchMarketCatalog', () => {
     const cached = await readCachedMarketCatalog({
       primaryCategory: 'all',
       secondaryCategory: '全部',
-      versionFilter: '全部版本',
+      versionFilter: CATALOG_ALL_VERSION_LABEL,
       keyword: '',
     });
 
@@ -151,7 +152,7 @@ describe('fetchMarketCatalog', () => {
     const items = await fetchMarketCatalog({
       primaryCategory: 'all',
       secondaryCategory: '全部',
-      versionFilter: '全部版本',
+      versionFilter: CATALOG_ALL_VERSION_LABEL,
       keyword: '',
     });
 
@@ -198,7 +199,7 @@ describe('fetchMarketCatalog', () => {
     const items = await fetchMarketCatalog({
       primaryCategory: 'all',
       secondaryCategory: '全部',
-      versionFilter: '全部版本',
+      versionFilter: CATALOG_ALL_VERSION_LABEL,
       keyword: '',
     });
 
@@ -238,7 +239,7 @@ describe('fetchMarketCatalog', () => {
     const items = await fetchMarketCatalog({
       primaryCategory: 'all',
       secondaryCategory: '全部',
-      versionFilter: '全部版本',
+      versionFilter: CATALOG_ALL_VERSION_LABEL,
       keyword: '',
     });
 

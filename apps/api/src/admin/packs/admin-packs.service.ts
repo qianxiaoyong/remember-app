@@ -1,19 +1,26 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { rm } from 'node:fs/promises';
+import { join } from 'node:path';
 import type { AdminCreatePackRequest, AdminUpdatePackRequest } from '@remember/contracts';
 import { adminPackDetailResponseSchema, adminPackListResponseSchema } from '@remember/contracts';
 import {
   resolvePackTaxonomy,
   resolvePackTaxonomyUpdate,
 } from '../../catalog/resolve-pack-taxonomy.js';
+import { AuditService } from '../../audit/audit.service.js';
+import { readAdminPackConfig } from '../../config/read-admin-pack-config.js';
 import { PrismaService } from '../../prisma/prisma.service.js';
 import { toAdminPackSummary, toAdminPackVersion } from './admin-packs.mapper.js';
 import { AdminPacksRepository } from './admin-packs.repository.js';
 
 @Injectable()
 export class AdminPacksService {
+  private readonly packConfig = readAdminPackConfig();
+
   constructor(
     private readonly repository: AdminPacksRepository,
     private readonly prisma: PrismaService,
+    private readonly auditService: AuditService,
   ) {}
 
   async listPacks() {
@@ -143,5 +150,48 @@ export class AdminPacksService {
     });
 
     return this.listPacks();
+  }
+
+  async deletePack(actorAdminUserId: string, packId: string): Promise<void> {
+    const pack = await this.repository.findPackById(packId);
+    if (!pack) {
+      throw new NotFoundException({ code: 'PACK_NOT_FOUND', message: '知识库不存在' });
+    }
+
+    const [orderCount, accessCount, redemptionEventCount] = await Promise.all([
+      this.prisma.order.count({ where: { packId } }),
+      this.prisma.packAccess.count({ where: { packId } }),
+      this.prisma.redemptionEvent.count({ where: { packId } }),
+    ]);
+    if (orderCount > 0 || accessCount > 0 || redemptionEventCount > 0) {
+      throw new ConflictException({
+        code: 'PACK_DELETE_BLOCKED',
+        message: '该知识库已有订单、用户权益或兑换记录，无法删除',
+      });
+    }
+
+    await this.prisma.$transaction(async (tx) => {
+      await tx.redemptionCode.deleteMany({ where: { packId } });
+      await tx.packVersion.deleteMany({ where: { packId } });
+      await tx.pack.delete({ where: { packId } });
+      await this.auditService.writeAuditLog(
+        {
+          actorAdminUserId,
+          action: 'pack.delete',
+          targetType: 'pack',
+          targetId: packId,
+          payloadSummary: {
+            title: pack.title,
+            status: pack.status,
+          },
+          result: 'success',
+        },
+        tx,
+      );
+    });
+
+    await rm(join(this.packConfig.storageDir, packId), { recursive: true, force: true }).catch(
+      () => undefined,
+    );
   }
 }

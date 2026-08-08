@@ -249,7 +249,7 @@ interface VersionsPanelProps {
 
 export function VersionsPanel(props: VersionsPanelProps) {
   return (
-    <AdminPanel title="教材版本" padded={false} sx={{ height: '100%' }}>
+    <AdminPanel title="页内分类" padded={false} sx={{ height: '100%' }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>
         <Box
           sx={{

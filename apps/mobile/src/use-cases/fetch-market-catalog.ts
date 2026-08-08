@@ -3,6 +3,7 @@ import { fetchCatalogPacks, fetchCatalogTaxonomy } from '../data/api/catalog-api
 import { shouldUseOfflineCatalogFallback } from '../data/api/api-errors';
 import { writeCachedCatalogTaxonomy } from '../data/catalog/catalog-taxonomy-store';
 import type { CatalogPackItem } from '../catalog/catalog-seed';
+import { CATALOG_ALL_VERSION_LABEL } from '../catalog/catalog-seed';
 import {
   readCatalogDiskCache,
   readCatalogMemoryCache,
@@ -20,7 +21,7 @@ export type { MarketCatalogQuery };
 const FULL_CATALOG_QUERY: MarketCatalogQuery = {
   primaryCategory: 'all',
   secondaryCategory: '全部',
-  versionFilter: '全部版本',
+  versionFilter: CATALOG_ALL_VERSION_LABEL,
   keyword: '',
 };
 

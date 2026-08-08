@@ -49,7 +49,14 @@ export const CATALOG_PRIMARY_OPTIONS: { id: CatalogPrimaryCategory; label: strin
   { id: 'postgraduate', label: '考研英语' },
 ];
 
-export const CATALOG_VERSION_OPTIONS = ['全部版本', '人教版', '外研版', '译林版'] as const;
+export const CATALOG_ALL_VERSION_LABEL = '全部';
+
+export const CATALOG_VERSION_OPTIONS = [
+  CATALOG_ALL_VERSION_LABEL,
+  '人教版',
+  '外研版',
+  '译林版',
+] as const;
 
 export function listSecondaryCategories(primaryCategory: CatalogPrimaryCategory): string[] {
   if (primaryCategory === 'primary') {
