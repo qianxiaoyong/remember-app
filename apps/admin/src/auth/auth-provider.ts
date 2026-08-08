@@ -64,7 +64,7 @@ export const authProvider: AuthProvider = {
     } catch (error) {
       if (isAuthFailure(error)) {
         clearStoredAdminToken();
-        throw new Error('未登录');
+        throw new Error('未登录', { cause: error });
       }
       // 5xx / 网络错误：保留 token，避免误踢回登录页
       return;
@@ -92,7 +92,7 @@ export const authProvider: AuthProvider = {
     } catch (error) {
       if (isAuthFailure(error)) {
         clearStoredAdminToken();
-        throw new Error('未登录');
+        throw new Error('未登录', { cause: error });
       }
       return {
         id: 'admin',
@@ -106,7 +106,7 @@ export const authProvider: AuthProvider = {
     } catch (error) {
       if (isAuthFailure(error)) {
         clearStoredAdminToken();
-        throw new Error('未登录');
+        throw new Error('未登录', { cause: error });
       }
       return { adminUserId: 'admin', loginName: 'admin', role: 'super_admin' as const };
     }
