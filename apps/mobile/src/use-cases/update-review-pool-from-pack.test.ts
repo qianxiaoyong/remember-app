@@ -80,7 +80,7 @@ describe('updateReviewPoolFromPack', () => {
     expect(savedRow?.boxLevel).toBe(0);
     expect(savedRow?.consecutiveLevel3Passes).toBe(0);
     expect(savedRow?.firstAddedFromPackId).toBe('story-test-pack');
-    expect(savedRow?.dueAt).toBe('2026-08-06T16:00:00.000Z');
+    expect(savedRow?.dueAt).toBe('2026-08-05T16:00:00.000Z');
     expect(incrementJoinedPoolCount).not.toHaveBeenCalled();
     expect(markReviewPoolChanged).toHaveBeenCalledOnce();
   });

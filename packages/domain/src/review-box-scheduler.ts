@@ -154,7 +154,7 @@ export function createInitialReviewPoolState(input: {
   return {
     inReviewPool: true,
     boxLevel: 0,
-    dueAt: nextLocalReviewDayAnchor(input.now, timeZone),
+    dueAt: startOfLocalReviewDay(input.now, timeZone).toISOString(),
     consecutiveLevel3Passes: 0,
   };
 }
