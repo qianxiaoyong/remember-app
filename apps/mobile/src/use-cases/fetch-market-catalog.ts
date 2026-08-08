@@ -10,9 +10,8 @@ import {
   writeCatalogMemoryCache,
 } from '../data/catalog/catalog-cache-store';
 import {
-  filterCatalogItems,
+  filterMarketCatalogItems,
   filterLocalCatalogSeed,
-  injectBundledCatalogSeedItems,
   type MarketCatalogQuery,
 } from './filter-catalog-items';
 
@@ -33,7 +32,7 @@ export async function readCachedMarketCatalog(
   if (!cached || cached.length === 0) {
     return null;
   }
-  return filterCatalogItems(injectBundledCatalogSeedItems(cached), query);
+  return filterMarketCatalogItems(cached, query);
 }
 
 /** App 启动时后台拉全量目录写入缓存；失败静默。 */
@@ -65,10 +64,10 @@ export async function fetchMarketCatalog(query: MarketCatalogQuery): Promise<Cat
     const items = summaries.map(mapCatalogSummaryToItem);
 
     const existing = readCatalogMemoryCache() ?? [];
-    const merged = injectBundledCatalogSeedItems(mergeCatalogCache(existing, items));
+    const merged = mergeCatalogCache(existing, items);
     writeCatalogMemoryCache(merged);
 
-    return filterCatalogItems(merged, query);
+    return filterMarketCatalogItems(merged, query);
   } catch (error) {
     if (shouldUseOfflineCatalogFallback(error)) {
       return resolveOfflineCatalog(query);
@@ -96,15 +95,13 @@ function mergeCatalogItem(
   };
 }
 
+/** API 全量列表为成员真源；下架/草稿包不在 fresh 中则从缓存移除。 */
 function mergeCatalogCache(
   existing: CatalogPackItem[],
   fresh: CatalogPackItem[],
 ): CatalogPackItem[] {
-  const byId = new Map(existing.map((item) => [item.packId, item]));
-  for (const item of fresh) {
-    byId.set(item.packId, mergeCatalogItem(byId.get(item.packId), item));
-  }
-  return [...byId.values()];
+  const existingById = new Map(existing.map((item) => [item.packId, item]));
+  return fresh.map((item) => mergeCatalogItem(existingById.get(item.packId), item));
 }
 
 export { listSecondaryCategories } from '../catalog/catalog-seed';

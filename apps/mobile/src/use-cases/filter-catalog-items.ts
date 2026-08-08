@@ -8,6 +8,11 @@ export interface MarketCatalogQuery {
   keyword: string;
 }
 
+/** 市场/搜索可见：不以 APK 内置 seed 注入；Story 测试包永不展示。 */
+export function isMarketVisibleCatalogItem(item: CatalogPackItem): boolean {
+  return item.packId !== 'story-test-pack';
+}
+
 export function filterCatalogItems(
   items: CatalogPackItem[],
   query: MarketCatalogQuery,
@@ -30,25 +35,20 @@ export function filterCatalogItems(
   });
 }
 
-export function filterLocalCatalogSeed(query: MarketCatalogQuery): CatalogPackItem[] {
-  return filterCatalogItems(catalogSeed, query);
+export function filterMarketCatalogItems(
+  items: CatalogPackItem[],
+  query: MarketCatalogQuery,
+): CatalogPackItem[] {
+  return filterCatalogItems(
+    items.filter(isMarketVisibleCatalogItem),
+    query,
+  );
 }
 
-/** APK 内带独立 zip 的内置包；市场目录在 API 未登记时仍注入。 */
-export const PRIMARY_BUNDLED_CATALOG_PACK_IDS = ['remember-test-pack', 'story-test-pack'] as const;
-
-/** APK 内置测试包：注入市场目录，API 未登记时仍可发现与安装；不覆盖已有 packId。 */
-export function injectBundledCatalogSeedItems(items: CatalogPackItem[]): CatalogPackItem[] {
-  const bundled = catalogSeed.filter(
-    (item) =>
-      item.isBundledTestPack &&
-      (PRIMARY_BUNDLED_CATALOG_PACK_IDS as readonly string[]).includes(item.packId),
+/** 离线且无 API 缓存时的本地 mock；不含 Story 测试包，也不注入内置包。 */
+export function filterLocalCatalogSeed(query: MarketCatalogQuery): CatalogPackItem[] {
+  return filterMarketCatalogItems(
+    catalogSeed.filter((item) => !item.isBundledTestPack),
+    query,
   );
-  const byId = new Map(items.map((item) => [item.packId, item]));
-  for (const item of bundled) {
-    if (!byId.has(item.packId)) {
-      byId.set(item.packId, item);
-    }
-  }
-  return [...byId.values()];
 }
