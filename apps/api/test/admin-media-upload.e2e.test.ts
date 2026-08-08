@@ -53,10 +53,10 @@ describe('admin media upload integration', () => {
 
   it('未登录上传返回 401', async () => {
     const server = app.getHttpServer() as HttpServer;
-    await request(server)
+    const response = await request(server)
       .post('/api/v1/admin/media/upload')
-      .attach('file', TINY_PNG, { filename: 'cover.png', contentType: 'image/png' })
-      .expect(401);
+      .attach('file', TINY_PNG, { filename: 'cover.png', contentType: 'image/png' });
+    expect(response.status).toBe(401);
   });
 
   it('上传 png 返回可访问 URL', async () => {
@@ -85,13 +85,13 @@ describe('admin media upload integration', () => {
     const server = app.getHttpServer() as HttpServer;
     const admin = await adminLogin(server);
 
-    await request(server)
+    const response = await request(server)
       .post('/api/v1/admin/media/upload')
       .set('Authorization', `Bearer ${admin.token}`)
       .attach('file', Buffer.from('not-an-image'), {
         filename: 'bad.txt',
         contentType: 'text/plain',
-      })
-      .expect(400);
+      });
+    expect(response.status).toBe(400);
   });
 });

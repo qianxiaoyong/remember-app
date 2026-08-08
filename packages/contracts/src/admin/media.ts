@@ -7,7 +7,7 @@ export const ADMIN_MEDIA_ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image
 
 export const adminMediaUploadResponseSchema = z
   .object({
-    url: z.string().url(),
+    url: z.url(),
   })
   .strict();
 

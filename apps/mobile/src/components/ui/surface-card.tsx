@@ -11,9 +11,7 @@ interface SurfaceCardProps {
 }
 
 export function SurfaceCard(props: SurfaceCardProps): ReactElement {
-  return (
-    <View style={[styles.card, props.compact ? styles.compact : null]}>{props.children}</View>
-  );
+  return <View style={[styles.card, props.compact ? styles.compact : null]}>{props.children}</View>;
 }
 
 const styles = StyleSheet.create({

@@ -25,7 +25,10 @@ export function PackDetailIntroMedia(props: PackDetailIntroMediaProps): ReactEle
       <Text style={styles.title}>内容介绍</Text>
       <View style={styles.list}>
         {sorted.map((item, index) => (
-          <IntroMediaRow item={item} key={`${item.type}-${item.sortOrder}-${index}`} />
+          <IntroMediaRow
+            item={item}
+            key={`${item.type}-${String(item.sortOrder)}-${String(index)}`}
+          />
         ))}
       </View>
     </SurfaceCard>

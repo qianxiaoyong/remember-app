@@ -1,5 +1,12 @@
 import type { ReactElement } from 'react';
-import { ImageBackground, StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
+import {
+  ImageBackground,
+  StyleSheet,
+  Text,
+  View,
+  type StyleProp,
+  type ViewStyle,
+} from 'react-native';
 import type { CatalogCoverPresentation } from '../../catalog/resolve-catalog-cover';
 import {
   CATALOG_COVER_ASPECT_HEIGHT,

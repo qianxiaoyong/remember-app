@@ -8,7 +8,7 @@ import {
   catalogCoverWidth,
   CATALOG_COVER_WIDTH_DETAIL,
   CATALOG_COVER_WIDTH_HOME,
-  CATALOG_COVER_WIDTH_MARKET,
+  catalogPackRowCoverWidth,
 } from './catalog-cover-layout';
 
 describe('catalogCoverHeight', () => {
@@ -16,7 +16,7 @@ describe('catalogCoverHeight', () => {
     expect(CATALOG_COVER_ASPECT_WIDTH / CATALOG_COVER_ASPECT_HEIGHT).toBe(0.75);
     expect(catalogCoverHeight(CATALOG_COVER_WIDTH_DETAIL)).toBe(128);
     expect(catalogCoverHeight(CATALOG_COVER_WIDTH_HOME)).toBe(96);
-    expect(catalogCoverHeight(CATALOG_COVER_WIDTH_MARKET)).toBe(85);
+    expect(catalogCoverHeight(catalogPackRowCoverWidth())).toBe(CATALOG_PACK_ROW_HEIGHT);
   });
 
   it('derives width from height for fill-height covers', () => {

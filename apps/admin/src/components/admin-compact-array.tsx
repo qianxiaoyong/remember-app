@@ -21,7 +21,9 @@ export function CompactArrayBlock(props: CompactArrayBlockProps) {
   const addItem = () => {
     const current = Array.isArray(items) ? items : [];
     const nextItem =
-      typeof props.defaultItem === 'function' ? props.defaultItem(current.length) : props.defaultItem;
+      typeof props.defaultItem === 'function'
+        ? props.defaultItem(current.length)
+        : props.defaultItem;
     setValue(props.source, [...current, nextItem], { shouldDirty: true });
   };
 

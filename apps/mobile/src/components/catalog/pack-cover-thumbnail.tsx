@@ -1,10 +1,7 @@
 import type { ReactElement } from 'react';
 import { ImageBackground, StyleSheet, View } from 'react-native';
 import type { CatalogPackItem } from '../../catalog/catalog-seed';
-import {
-  CATALOG_COVER_WIDTH_HOME,
-  catalogCoverHeight,
-} from '../../catalog/catalog-cover-layout';
+import { CATALOG_COVER_WIDTH_HOME, catalogCoverHeight } from '../../catalog/catalog-cover-layout';
 import { resolveCatalogCover } from '../../catalog/resolve-catalog-cover';
 
 interface PackCoverThumbnailProps {
