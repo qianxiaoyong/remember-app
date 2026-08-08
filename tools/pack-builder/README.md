@@ -36,6 +36,16 @@ pnpm dev:pack-editor
 
 浏览器打开 http://127.0.0.1:5174 。界面含顶栏面包屑、卡片列表搜索、编辑页双栏表单与 sticky 保存栏。详见 [`docs/runbooks/pack-editor-local.md`](../../docs/runbooks/pack-editor-local.md)。
 
+## vocabulary 单词卡（人教版各年级）
+
+教材词汇表包的解析、例句、助记、TTS、打包与 Admin 发布见 **[`docs/runbooks/vocabulary-pack-production.md`](../../docs/runbooks/vocabulary-pack-production.md)**。新 AI 对话 **@ 该文档** 即可按步骤制作对应年级单词包。
+
+参考包：`source/en-grade3-v1-rj/`（上册）、`source/en-grade3-v2-rj/`（下册，脚本管线金标准）。
+
+## primary-1000-stories（童话 40 课）
+
+正文分段、官方 mp3、Whisper 对齐、验收与打包的完整流程见 **[`docs/runbooks/primary-1000-stories-production.md`](../../docs/runbooks/primary-1000-stories-production.md)**。新 AI 对话可直接读该文档按步骤操作。
+
 ## 签名私钥
 
 测试包默认使用 RFC 8032 测试向量私钥。生产签名设置环境变量 `REMEMBER_PACK_SIGNING_PRIVATE_KEY_HEX`（不进 Git）。

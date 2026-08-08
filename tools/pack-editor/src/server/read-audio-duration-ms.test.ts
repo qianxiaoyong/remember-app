@@ -17,4 +17,18 @@ describe('readAudioDurationMs', () => {
     expect(durationMs).toBeGreaterThan(60_000);
     expect(durationMs).toBeLessThan(180_000);
   });
+
+  it('读取 primary-1000-stories c3.mp3 完整时长（官方 mp3 含坏帧，不能用帧计数）', () => {
+    const audioPath = join(
+      getPackBuilderRoot(),
+      'source',
+      'primary-1000-stories',
+      'assets',
+      'audio',
+      'c3.mp3',
+    );
+    const durationMs = readAudioDurationMs(audioPath);
+    expect(durationMs).toBeGreaterThan(120_000);
+    expect(durationMs).toBeLessThan(140_000);
+  });
 });

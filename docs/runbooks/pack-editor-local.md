@@ -2,6 +2,10 @@
 
 单人本地工具，读写 `tools/pack-builder/source/<packId>/` 下的 JSON，编辑 vocabulary 与 story_reading 卡片，校验后触发 `build:pack`。**不**修改已发布 zip、**不**接 Admin/API/LLM。
 
+**vocabulary 单词卡**（人教版各年级词汇表 + TTS）见专用 runbook：[`vocabulary-pack-production.md`](./vocabulary-pack-production.md)。
+
+**primary-1000-stories**（40 课童话 + Whisper 音频对齐）见专用 runbook：[`primary-1000-stories-production.md`](./primary-1000-stories-production.md)。
+
 ## 启动
 
 **一键（Windows）：** 双击 [`tools/pack-editor/start.bat`](../../tools/pack-editor/start.bat)（会自动编译 pack-builder、启动服务并打开浏览器）。
