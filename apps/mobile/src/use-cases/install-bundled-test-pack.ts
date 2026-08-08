@@ -15,17 +15,21 @@ const STORY_BUNDLED_PACK_ID = 'story-test-pack';
 
 const primaryBundledPackModules: Record<string, number> = {
   [BASE_BUNDLED_PACK_ID]: rememberTestPackModule,
+};
+
+const bundledPackModules: Record<string, number> = {
+  ...primaryBundledPackModules,
   [STORY_BUNDLED_PACK_ID]: storyTestPackModule,
 };
 
 export async function installBundledTestPack(
   catalogPackId: string = BASE_BUNDLED_PACK_ID,
 ): Promise<InstalledPackRow> {
-  if (catalogPackId in primaryBundledPackModules) {
-    return ensurePrimaryBundledPackInstalled(catalogPackId);
+  if (catalogPackId in bundledPackModules) {
+    return ensureBundledPackInstalled(catalogPackId);
   }
 
-  const baseRow = await ensurePrimaryBundledPackInstalled(BASE_BUNDLED_PACK_ID);
+  const baseRow = await ensureBundledPackInstalled(BASE_BUNDLED_PACK_ID);
 
   const catalogItem = findCatalogItem(catalogPackId);
   if (!catalogItem?.isBundledTestPack) {
@@ -38,12 +42,12 @@ export async function installBundledTestPack(
 /** APK 内置包版本高于已安装包时静默重装（不依赖服务器下载）。 */
 export async function upgradePrimaryBundledPacksIfNeeded(): Promise<void> {
   for (const packId of Object.keys(primaryBundledPackModules)) {
-    await ensurePrimaryBundledPackInstalled(packId);
+    await ensureBundledPackInstalled(packId);
   }
 }
 
-async function ensurePrimaryBundledPackInstalled(packId: string): Promise<InstalledPackRow> {
-  const moduleId = primaryBundledPackModules[packId];
+async function ensureBundledPackInstalled(packId: string): Promise<InstalledPackRow> {
+  const moduleId = bundledPackModules[packId];
   if (moduleId === undefined) {
     throw new Error(`unknown primary bundled pack: ${packId}`);
   }

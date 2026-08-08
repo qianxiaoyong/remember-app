@@ -39,6 +39,23 @@ const grade3Pack: CatalogPackSummary = {
   summary: '三年级上册人教版单词表',
 };
 
+const rememberTestPack: CatalogPackItem = {
+  packId: 'remember-test-pack',
+  title: '记得测试包',
+  primaryCategory: 'primary',
+  secondaryCategory: '测试',
+  version: '1.0.0',
+  contentTags: [],
+  cardCount: 10,
+  sizeLabel: '约 1 MB',
+  updatedAt: '2026-07-31',
+  priceCents: 1,
+  priceLabel: '¥0.01',
+  summary: '',
+  sampleHeadwords: [],
+  isBundledTestPack: true,
+};
+
 describe('fetchMarketCatalog', () => {
   beforeEach(() => {
     fetchCatalogPacks.mockReset();
@@ -60,10 +77,8 @@ describe('fetchMarketCatalog', () => {
     });
 
     expect(fetchCatalogPacks).toHaveBeenCalledTimes(1);
-    expect(items).toHaveLength(2);
-    expect(items.map((item) => item.packId).sort()).toEqual(
-      ['en-grade3-v1-rj', 'story-test-pack'].sort(),
-    );
+    expect(items).toHaveLength(1);
+    expect(items[0]?.packId).toBe('en-grade3-v1-rj');
   });
 
   it('returns cached items before network refresh path', async () => {
@@ -84,6 +99,7 @@ describe('fetchMarketCatalog', () => {
         sampleHeadwords: [],
         isBundledTestPack: false,
       },
+      rememberTestPack,
     ]);
 
     const cached = await readCachedMarketCatalog({
@@ -93,13 +109,43 @@ describe('fetchMarketCatalog', () => {
       keyword: '',
     });
 
-    expect(cached).toHaveLength(3);
+    expect(cached).toHaveLength(2);
     expect(cached?.map((item) => item.packId).sort()).toEqual(
-      ['en-grade3-v1-rj', 'remember-test-pack', 'story-test-pack'].sort(),
+      ['en-grade3-v1-rj', 'remember-test-pack'].sort(),
     );
   });
 
-  it('injects bundled test packs missing from API catalog', async () => {
+  it('never shows story-test-pack even when present in cache', async () => {
+    readCatalogDiskCache.mockResolvedValue([
+      {
+        packId: 'story-test-pack',
+        title: 'Story 测试包',
+        primaryCategory: 'primary',
+        secondaryCategory: '测试',
+        version: '1.0.0',
+        contentTags: [],
+        cardCount: 1,
+        sizeLabel: '约 1 MB',
+        updatedAt: '2026-07-31',
+        priceCents: 0,
+        priceLabel: '免费',
+        summary: '',
+        sampleHeadwords: [],
+        isBundledTestPack: true,
+      },
+    ]);
+
+    const cached = await readCachedMarketCatalog({
+      primaryCategory: 'all',
+      secondaryCategory: '全部',
+      versionFilter: '全部版本',
+      keyword: '',
+    });
+
+    expect(cached).toHaveLength(0);
+  });
+
+  it('does not inject bundled test packs missing from API catalog', async () => {
     fetchCatalogPacks.mockResolvedValue([grade3Pack]);
 
     const items = await fetchMarketCatalog({
@@ -109,8 +155,60 @@ describe('fetchMarketCatalog', () => {
       keyword: '',
     });
 
-    expect(items.some((item) => item.packId === 'story-test-pack')).toBe(true);
+    expect(items.some((item) => item.packId === 'story-test-pack')).toBe(false);
     expect(items.some((item) => item.packId === 'en-grade3-v1-rj')).toBe(true);
+  });
+
+  it('drops cached packs when API no longer returns them (draft/unpublished)', async () => {
+    readCatalogMemoryCache.mockReturnValue([
+      {
+        packId: 'demo-primary-grade3',
+        title: '三年级上册词汇',
+        primaryCategory: 'primary',
+        secondaryCategory: '三年级',
+        version: '1.0.0',
+        contentTags: [],
+        cardCount: 100,
+        sizeLabel: '约 1 MB',
+        updatedAt: '2026-07-31',
+        priceCents: 1990,
+        priceLabel: '¥19.90',
+        summary: '',
+        sampleHeadwords: [],
+        isBundledTestPack: false,
+      },
+      rememberTestPack,
+    ]);
+    fetchCatalogPacks.mockResolvedValue([
+      {
+        packId: 'remember-test-pack',
+        title: '记得测试包',
+        primaryCategory: 'primary',
+        secondaryCategory: '测试',
+        versionLabel: '1.0.0',
+        contentTags: [],
+        cardCount: 10,
+        sizeLabel: '约 1 MB',
+        updatedAt: '2026-07-31T06:28:05.287Z',
+        priceCents: 1,
+        summary: '记得测试包',
+      },
+    ]);
+
+    const items = await fetchMarketCatalog({
+      primaryCategory: 'all',
+      secondaryCategory: '全部',
+      versionFilter: '全部版本',
+      keyword: '',
+    });
+
+    expect(items).toHaveLength(1);
+    expect(items[0]?.packId).toBe('remember-test-pack');
+    expect(writeCatalogMemoryCache).toHaveBeenCalledWith(
+      expect.arrayContaining([expect.objectContaining({ packId: 'remember-test-pack' })]),
+    );
+    const written = writeCatalogMemoryCache.mock.calls.at(-1)?.[0] ?? [];
+    expect(written.some((item) => item.packId === 'demo-primary-grade3')).toBe(false);
   });
 
   it('merges list refresh without dropping detail-only fields from cache', async () => {
