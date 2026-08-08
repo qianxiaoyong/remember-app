@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button } from '@mui/material';
-import { useNotify, useRecordContext, useRedirect, useRefresh } from 'react-admin';
+import { useNotify, useRecordContext, useRedirect } from 'react-admin';
 import { deletePack } from '../api/packs-api.js';
 import { AdminApiError } from '../api/admin-api-client.js';
 import { AdminMiniConfirmDialog } from '../components/admin-mini-confirm-dialog.js';
@@ -13,7 +13,6 @@ interface PackDeleteRecord {
 export function PackDeleteButton() {
   const record = useRecordContext<PackDeleteRecord>();
   const notify = useNotify();
-  const refresh = useRefresh();
   const redirect = useRedirect();
   const [busy, setBusy] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -31,8 +30,7 @@ export function PackDeleteButton() {
     try {
       await deletePack(packId);
       notify('已删除知识库', { type: 'success' });
-      refresh();
-      redirect('/packs');
+      redirect('list', 'packs');
     } catch (error) {
       const message =
         error instanceof AdminApiError

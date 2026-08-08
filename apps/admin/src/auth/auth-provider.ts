@@ -73,14 +73,11 @@ export const authProvider: AuthProvider = {
   checkError: (error: unknown) => {
     if (isAuthFailure(error)) {
       clearStoredAdminToken();
+      const rejection = error instanceof Error ? error : new Error('未登录');
+      return Promise.reject(rejection);
     }
-    if (error instanceof AdminApiError) {
-      return Promise.reject(error);
-    }
-    if (error instanceof Error) {
-      return Promise.reject(error);
-    }
-    return Promise.reject(new Error('请求失败'));
+    // 404/409/500 等业务错误：不登出，由页面自行提示
+    return Promise.resolve();
   },
   getIdentity: async () => {
     try {
