@@ -139,7 +139,7 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
     cardDetail &&
     browseReady;
 
-  const moreMenuAnchorTop = insets.top + spacing.sm + spacing.touchTarget + spacing.xs;
+  const moreMenuAnchorTop = insets.top + spacing.xs + spacing.touchTarget + spacing.xs;
   const moreMenuAnchorRight = spacing.lg;
 
   return (

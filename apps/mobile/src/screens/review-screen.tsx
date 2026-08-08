@@ -1,12 +1,12 @@
 import type { ReactElement } from 'react';
 import { useCallback, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { useRouter } from 'expo-router';
+import { BackHandler, StyleSheet, Text, View } from 'react-native';
+import { useFocusEffect, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LexiconPopup } from '../components/lexicon-popup';
 import { ReviewOutcomeBar } from '../components/review/review-outcome-bar';
 import { ReviewSettingsSheet } from '../components/review/review-settings-sheet';
-import { ReviewSourcePackLabel } from '../components/review/review-source-pack-label';
+import { formatReviewSourcePackLabel } from '../components/review/review-source-pack-label';
 import { ScreenScaffold } from '../components/shell/screen-scaffold';
 import { StudyMoreMenu } from '../components/study/study-more-menu';
 import { PrimaryButton } from '../components/ui/primary-button';
@@ -25,6 +25,7 @@ export function ReviewScreen(): ReactElement {
     isSubmitting,
     message,
     reviewContext,
+    outcomeIntervalLabels,
     lexiconEntry,
     lexiconVisible,
     lexiconSaved,
@@ -50,12 +51,38 @@ export function ReviewScreen(): ReactElement {
   const hasCurrentItem = Boolean(session?.currentItem);
   const canLoadCurrent = Boolean(reviewContext?.cardDetail);
   const hasSession = hasCurrentItem && canLoadCurrent;
-  const moreMenuAnchorTop = insets.top + spacing.sm + spacing.touchTarget + spacing.xs;
+  const moreMenuAnchorTop = insets.top + spacing.xs + spacing.touchTarget + spacing.xs;
   const moreMenuAnchorRight = spacing.lg;
 
   const goHome = useCallback((): void => {
     router.replace('/library');
   }, [router]);
+
+  useFocusEffect(
+    useCallback(() => {
+      const onHardwareBackPress = (): boolean => {
+        if (lexiconVisible) {
+          closeLexicon();
+          return true;
+        }
+        if (settingsVisible) {
+          setSettingsVisible(false);
+          return true;
+        }
+        if (moreVisible) {
+          setMoreVisible(false);
+          return true;
+        }
+        goHome();
+        return true;
+      };
+
+      const subscription = BackHandler.addEventListener('hardwareBackPress', onHardwareBackPress);
+      return () => {
+        subscription.remove();
+      };
+    }, [closeLexicon, goHome, lexiconVisible, moreVisible, settingsVisible]),
+  );
 
   const renderEmptyState = (): ReactElement => {
     if (summary.dueTotal === 0) {
@@ -117,6 +144,12 @@ export function ReviewScreen(): ReactElement {
             disabled={isSubmitting}
             onFailed={handleFailed}
             onPassed={handlePassed}
+            {...(outcomeIntervalLabels?.failed !== undefined
+              ? { failedIntervalLabel: outcomeIntervalLabels.failed }
+              : {})}
+            {...(outcomeIntervalLabels?.passed !== undefined
+              ? { passedIntervalLabel: outcomeIntervalLabels.passed }
+              : {})}
           />
         ) : null
       }
@@ -126,29 +159,22 @@ export function ReviewScreen(): ReactElement {
         {message ? <Text style={styles.message}>{message}</Text> : null}
 
         {hasSession && reviewContext?.cardDetail?.cardType === 'vocabulary' ? (
-          <View style={styles.sessionRoot}>
-            <View
-              pointerEvents="none"
-              style={[styles.sourceLabel, { top: insets.top + spacing.xs }]}
-            >
-              <ReviewSourcePackLabel displayName={reviewContext.sourcePackDisplayName} />
-            </View>
-            <VocabularyStudyPanel
-              content={reviewContext.cardDetail.content}
-              lexiconSelectedSurfaceForm={lexiconSelectedSurfaceForm}
-              onHomePress={goHome}
-              onMorePress={() => {
-                setMoreVisible(true);
-              }}
-              onPlayExampleAudio={handlePlayExampleAudio}
-              onPlayPrimaryAudio={handlePlayPrimaryAudio}
-              onReveal={() => {
-                setRevealed(true);
-              }}
-              onTokenPress={openLexicon}
-              revealed={revealed}
-            />
-          </View>
+          <VocabularyStudyPanel
+            content={reviewContext.cardDetail.content}
+            contextLabel={formatReviewSourcePackLabel(reviewContext.sourcePackDisplayName)}
+            lexiconSelectedSurfaceForm={lexiconSelectedSurfaceForm}
+            onHomePress={goHome}
+            onMorePress={() => {
+              setMoreVisible(true);
+            }}
+            onPlayExampleAudio={handlePlayExampleAudio}
+            onPlayPrimaryAudio={handlePlayPrimaryAudio}
+            onReveal={() => {
+              setRevealed(true);
+            }}
+            onTokenPress={openLexicon}
+            revealed={revealed}
+          />
         ) : (
           renderEmptyState()
         )}
@@ -204,16 +230,6 @@ const styles = StyleSheet.create({
     color: colors.studyRatingForgot,
     paddingHorizontal: spacing.lg,
     paddingTop: spacing.sm,
-  },
-  sessionRoot: {
-    flex: 1,
-  },
-  sourceLabel: {
-    alignItems: 'center',
-    left: 0,
-    position: 'absolute',
-    right: 0,
-    zIndex: 2,
   },
   empty: {
     alignItems: 'center',

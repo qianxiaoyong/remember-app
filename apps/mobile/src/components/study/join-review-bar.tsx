@@ -16,7 +16,7 @@ export function JoinReviewBar(props: JoinReviewBarProps): ReactElement {
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={[styles.bar, { paddingBottom: Math.max(insets.bottom, spacing.md) }]}>
+    <View style={[styles.bar, { paddingBottom: Math.max(insets.bottom, spacing.sm) }]}>
       {props.inReviewPool ? (
         <Pressable
           accessibilityRole="button"
@@ -56,30 +56,32 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: spacing.sm,
     paddingHorizontal: spacing.lg,
-    paddingTop: spacing.md,
+    paddingTop: spacing.sm,
   },
   primaryButton: {
     alignItems: 'center',
-    backgroundColor: colors.accent,
-    borderRadius: 12,
+    backgroundColor: colors.studyHeaderBackground,
+    borderRadius: 8,
     flex: 1,
     justifyContent: 'center',
-    minHeight: 52,
+    minHeight: 44,
+    paddingVertical: spacing.xs,
   },
   secondaryButton: {
     alignItems: 'center',
-    backgroundColor: colors.background,
-    borderColor: colors.accent,
-    borderRadius: 12,
+    backgroundColor: colors.surface,
+    borderColor: colors.studyHeaderBackground,
+    borderRadius: 8,
     borderWidth: 1,
     flex: 1,
     justifyContent: 'center',
-    minHeight: 52,
+    minHeight: 44,
+    paddingVertical: spacing.xs,
   },
   ghostButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: 52,
+    minHeight: 44,
     paddingHorizontal: spacing.md,
   },
   disabled: {
@@ -87,12 +89,12 @@ const styles = StyleSheet.create({
   },
   primaryLabel: {
     color: colors.surface,
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '700',
   },
   secondaryLabel: {
-    color: colors.accent,
-    fontSize: 16,
+    color: colors.studyHeaderBackground,
+    fontSize: 15,
     fontWeight: '700',
   },
   ghostLabel: {

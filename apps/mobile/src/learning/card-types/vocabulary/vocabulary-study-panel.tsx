@@ -1,14 +1,14 @@
 import type { ReactElement } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
-import type { VocabularyContent } from '@remember/contracts';
+import { headwordEmphasisSurfaceForms, type VocabularyContent } from '@remember/contracts';
 import { StudyHeaderBand } from '../../../components/study/study-header-band';
 import { StudyRecallPanel } from '../../../components/study/study-recall-panel';
 import { StudyRevealScrollBody } from '../../../components/study/study-reveal-scroll-body';
 import { colors } from '../../../theme/colors';
-import { spacing } from '../../../theme/spacing';
 
 export interface VocabularyStudyPanelProps {
   content: VocabularyContent;
+  contextLabel?: string;
   revealed: boolean;
   lexiconSelectedSurfaceForm: string | null;
   onHomePress: () => void;
@@ -20,10 +20,13 @@ export interface VocabularyStudyPanelProps {
 }
 
 export function VocabularyStudyPanel(props: VocabularyStudyPanelProps): ReactElement {
+  const emphasisSurfaceForms = headwordEmphasisSurfaceForms(props.content.prompt.headword);
+
   return (
     <>
       <StudyHeaderBand
         content={props.content}
+        {...(props.contextLabel !== undefined ? { contextLabel: props.contextLabel } : {})}
         onHomePress={props.onHomePress}
         onMorePress={props.onMorePress}
         onPlayAudio={props.onPlayPrimaryAudio}
@@ -37,6 +40,7 @@ export function VocabularyStudyPanel(props: VocabularyStudyPanelProps): ReactEle
         >
           <StudyRevealScrollBody
             content={props.content}
+            emphasisSurfaceForms={emphasisSurfaceForms}
             highlightSurfaceForm={props.lexiconSelectedSurfaceForm}
             onPlayExampleAudio={props.onPlayExampleAudio}
             onTokenPress={props.onTokenPress}
@@ -55,6 +59,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   revealContent: {
-    paddingBottom: spacing.lg,
+    flexGrow: 1,
   },
 });

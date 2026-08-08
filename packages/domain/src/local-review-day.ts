@@ -159,3 +159,18 @@ export function formatLocalReviewDate(now: Date, timeZone: string): string {
   const parts = readLocalDateTimeParts(now, timeZone);
   return `${String(parts.year)}-${padTwo(parts.month)}-${padTwo(parts.day)}`;
 }
+
+/** 复习底栏间隔预览：仅本地日历天差，不含「约」/小时/分钟。 */
+export function formatReviewDueDayLabel(dueAtIso: string, now: Date, timeZone: string): string {
+  const dueStartMs = startOfLocalReviewDay(new Date(dueAtIso), timeZone).getTime();
+  const nowStartMs = startOfLocalReviewDay(now, timeZone).getTime();
+  const diffDays = Math.round((dueStartMs - nowStartMs) / 86_400_000);
+
+  if (diffDays <= 0) {
+    return '今天';
+  }
+  if (diffDays === 1) {
+    return '明天';
+  }
+  return `${String(diffDays)}天后`;
+}

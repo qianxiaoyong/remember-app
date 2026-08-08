@@ -1,6 +1,6 @@
 import type { ReactElement, ReactNode } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { SurfaceCard } from '../ui/surface-card';
+import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
 
 interface StudySectionCardProps {
@@ -8,15 +8,13 @@ interface StudySectionCardProps {
 }
 
 export function StudySectionCard(props: StudySectionCardProps): ReactElement {
-  return (
-    <View style={styles.wrap}>
-      <SurfaceCard>{props.children}</SurfaceCard>
-    </View>
-  );
+  return <View style={styles.root}>{props.children}</View>;
 }
 
 const styles = StyleSheet.create({
-  wrap: {
+  root: {
+    backgroundColor: colors.surface,
     paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.md,
   },
 });

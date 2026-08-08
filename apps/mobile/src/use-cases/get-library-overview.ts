@@ -92,7 +92,6 @@ function buildInstalledPackSummary(
   getStats: (sqlitePath: string) => PackStats,
 ): InstalledPackSummary {
   const stats = getStats(pack.sqlitePath);
-  const learnedCount = stats.learnedCount;
   const catalogTitle = resolvePackDisplayName(pack.packId);
   const displayName =
     catalogTitle !== pack.packId
@@ -102,13 +101,15 @@ function buildInstalledPackSummary(
         : pack.packId;
   const libraryPresentation = resolvePackLibraryPresentation(pack.packId);
   const browseBookmark = getPackBrowseBookmark(pack.packId);
+  const readerProgress =
+    libraryPresentation === 'reader' ? getReaderPackProgress(pack.packId, pack.sqlitePath) : null;
 
   return {
     packId: pack.packId,
     displayName,
     packVersion: pack.packVersion,
-    totalCards: stats.totalCards,
-    learnedCount,
+    totalCards: readerProgress?.totalCards ?? stats.totalCards,
+    learnedCount: readerProgress?.learnedCount ?? stats.learnedCount,
     todayTaskCount: 0,
     hasActiveTask: false,
     libraryPresentation,
@@ -176,6 +177,30 @@ function buildReaderStatusHint(packId: string): string {
     return '尚未开始';
   }
   return `上次读到：${detail.content.lesson.code} ${detail.content.lesson.titleZh}`;
+}
+
+function getReaderPackProgress(
+  packId: string,
+  sqlitePath: string,
+): { totalCards: number; learnedCount: number } {
+  const cards = listPackCards(sqlitePath);
+  const totalCards = cards.length;
+  if (totalCards === 0) {
+    return { totalCards: 0, learnedCount: 0 };
+  }
+
+  const bookmark = getStoryReadingBookmark(packId);
+  if (!bookmark) {
+    return { totalCards, learnedCount: 0 };
+  }
+
+  const bookmarkCard = cards.find((card) => card.knowledgeId === bookmark.knowledgeId);
+  if (!bookmarkCard) {
+    return { totalCards, learnedCount: 0 };
+  }
+
+  const learnedCount = cards.filter((card) => card.sortOrder <= bookmarkCard.sortOrder).length;
+  return { totalCards, learnedCount };
 }
 
 interface PackStats {

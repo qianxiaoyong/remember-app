@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react';
-import { View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { AppIcon } from './app-icon';
 import { colors } from '../../theme/colors';
 
@@ -30,3 +30,20 @@ export function FolderTabIcon(props: FolderTabIconProps): ReactElement {
     </View>
   );
 }
+
+/** 底部 Tab 复习钮：品牌字母 M。 */
+export function ReviewTabMark(): ReactElement {
+  return <Text style={reviewTabMarkStyles.glyph}>M</Text>;
+}
+
+const reviewTabMarkStyles = StyleSheet.create({
+  glyph: {
+    color: colors.surface,
+    fontSize: 32,
+    fontStyle: 'italic',
+    fontWeight: '700',
+    includeFontPadding: false,
+    lineHeight: 36,
+    textAlign: 'center',
+  },
+});

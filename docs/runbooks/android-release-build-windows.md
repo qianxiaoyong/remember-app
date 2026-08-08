@@ -155,7 +155,7 @@ node tools\mobile\patch-android-native-splash.cjs apps\mobile\android
 1. 按屏幕密度从 `splash-full.png` 生成 cover 预渲染 PNG；
 2. 写入 `drawable/splashscreen_brand.xml`（全屏 bitmap 背景）；
 3. 写入 `drawable/splashscreen_empty_icon.xml`（1dp 透明占位，隐藏系统小 icon）；
-4. 将 `Theme.App.SplashScreen`  patch 为与 JS overlay 同源配置。
+4. 将 `Theme.App.SplashScreen` patch 为与 JS overlay 同源配置。
 
 **打包后验收（构建目录内，装 APK 前必查）：**
 
@@ -228,22 +228,22 @@ Start-Sleep -Seconds 2
 
 **不是。** 局部 UI 重构（例如首页卡片、列表样式）**不必**也**不应**改变冷启动行为。若装新 APK 后启动「看起来变了」，通常是下列原因之一，而非「改了几行 UI 组件」本身：
 
-| 原因 | 表现 | 与 UI 重构的关系 |
-| ---- | ---- | ---------------- |
-| 新 APK 含更多已 merge 功能 | 首屏内容、Tab、角标与旧包不同 | 无关；是**整包版本**差异 |
-| **漏跑 §4.3 Splash 补丁** | 白底 + 居中很小的 ∞ logo | 无关；是**构建步骤**缺失 |
-| 误改 / 回退 Splash 插件 | 原生启动帧与 `splash-full.png` 不一致 | 无关；属于**启动链文件**被碰 |
-| 卸载后重装（签名不一致） | 本地包、进度、书签清空，首屏「像换了 App」 | 无关；是**数据丢失** |
-| 真的改了冷启动路由 | 冷启动不进「我的知识库」 | **有关**；见 §5.2 |
+| 原因                       | 表现                                       | 与 UI 重构的关系             |
+| -------------------------- | ------------------------------------------ | ---------------------------- |
+| 新 APK 含更多已 merge 功能 | 首屏内容、Tab、角标与旧包不同              | 无关；是**整包版本**差异     |
+| **漏跑 §4.3 Splash 补丁**  | 白底 + 居中很小的 ∞ logo                   | 无关；是**构建步骤**缺失     |
+| 误改 / 回退 Splash 插件    | 原生启动帧与 `splash-full.png` 不一致      | 无关；属于**启动链文件**被碰 |
+| 卸载后重装（签名不一致）   | 本地包、进度、书签清空，首屏「像换了 App」 | 无关；是**数据丢失**         |
+| 真的改了冷启动路由         | 冷启动不进「我的知识库」                   | **有关**；见 §5.2            |
 
 ### 5.2 冷启动契约（MVP 冻结，UI 重构默认不得改）
 
-| 项 | 约定 | 关键文件 |
-| ---- | ---- | -------- |
-| 冷启动 landing 页 | 一律 **`/library`（我的知识库）** | `apps/mobile/app/index.tsx`、`apps/mobile/src/use-cases/resolve-initial-route-path.ts` |
-| 不因书签/待复习自动跳转 | 不在启动时进学习页或复习 Tab | 同上；有单测 `resolve-initial-route-path.test.ts` |
-| 原生 Splash 视觉 | 与 **`splash-full.png`** 同图、cover 全屏 | §4.3 补丁 + `with-android-splash-brand.js` |
-| JS Splash overlay | prebuild 后 handoff，首屏 layout 后再撤 overlay | `use-app-splash-screen.ts`、`app/_layout.tsx` |
+| 项                      | 约定                                            | 关键文件                                                                               |
+| ----------------------- | ----------------------------------------------- | -------------------------------------------------------------------------------------- |
+| 冷启动 landing 页       | 一律 **`/library`（我的知识库）**               | `apps/mobile/app/index.tsx`、`apps/mobile/src/use-cases/resolve-initial-route-path.ts` |
+| 不因书签/待复习自动跳转 | 不在启动时进学习页或复习 Tab                    | 同上；有单测 `resolve-initial-route-path.test.ts`                                      |
+| 原生 Splash 视觉        | 与 **`splash-full.png`** 同图、cover 全屏       | §4.3 补丁 + `with-android-splash-brand.js`                                             |
+| JS Splash overlay       | prebuild 后 handoff，首屏 layout 后再撤 overlay | `use-app-splash-screen.ts`、`app/_layout.tsx`                                          |
 
 **UI 重构允许改动的范围（示例）：** `screens/library-*`、`components/library/*`、主题 token。  
 **默认禁止碰（除非任务明确要求「改启动」）：**
@@ -276,14 +276,14 @@ Standalone Debug 包验收启动帧时，同样必须先 patch；见 [mobile-col
 
 ## 6. 2026-07-28 构建时间线（摘要）
 
-| 次序 | 环境                                  | 操作                                                 | 结果                                     |
-| ---- | ------------------------------------- | ---------------------------------------------------- | ---------------------------------------- |
-| 1    | `D:\AIcoder\remember-app`             | `expo prebuild` + `assembleRelease`                  | 失败：路径 > 260 字符                    |
-| 2    | 同上 + `enableLongPaths` + 系统长路径 | 重试                                                 | 失败：同上                               |
-| 3    | `subst R:` 映射短盘符                 | 在 `R:` 下构建                                       | 失败：`different roots`（R: 与 D: 混用） |
-| 4    | 同上                                  | 尝试 `newArchEnabled=false`                          | 失败：RN 0.86 忽略该设置，仍编 C++       |
+| 次序 | 环境                                  | 操作                                                                   | 结果                                     |
+| ---- | ------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------- |
+| 1    | `D:\AIcoder\remember-app`             | `expo prebuild` + `assembleRelease`                                    | 失败：路径 > 260 字符                    |
+| 2    | 同上 + `enableLongPaths` + 系统长路径 | 重试                                                                   | 失败：同上                               |
+| 3    | `subst R:` 映射短盘符                 | 在 `R:` 下构建                                                         | 失败：`different roots`（R: 与 D: 混用） |
+| 4    | 同上                                  | 尝试 `newArchEnabled=false`                                            | 失败：RN 0.86 忽略该设置，仍编 C++       |
 | 5    | **`D:\r\a`**                          | 镜像 → `pnpm install` → prebuild → **Splash 补丁** → `assembleRelease` | **成功**                                 |
-| 6    | 真机                                  | 安装 `app-release.apk`                               | **安装成功**                             |
+| 6    | 真机                                  | 安装 `app-release.apk`                                                 | **安装成功**                             |
 
 ---
 
@@ -428,9 +428,9 @@ Copy-Item "D:\r\a\apps\mobile\android\app\build\outputs\apk\release\app-release.
 | `apps/mobile/plugins/with-android-release-signing.js`     | Release 签名注入                            |
 | `apps/mobile/signing.properties.example`                  | 签名属性模板                                |
 | `apps/mobile/android/gradle.properties`                   | prebuild 生成；构建前可改 ABI               |
-| `tools/mobile/build-standalone-release-apk.ps1`           | 推荐一键 Release（含 Splash 补丁）        |
-| `tools/mobile/patch-android-native-splash.cjs`            | prebuild 后必跑；与 splash-full 对齐      |
-| `apps/mobile/assets/images/splash-full.png`               | JS overlay 与原生预渲染同源图             |
+| `tools/mobile/build-standalone-release-apk.ps1`           | 推荐一键 Release（含 Splash 补丁）          |
+| `tools/mobile/patch-android-native-splash.cjs`            | prebuild 后必跑；与 splash-full 对齐        |
+| `apps/mobile/assets/images/splash-full.png`               | JS overlay 与原生预渲染同源图               |
 | `tools/mobile/gradle-mirror-init.gradle`                  | 可选 Maven 镜像 init-script                 |
 | `docs/runbooks/mobile-cold-start-optimization.md`         | 冷启动 / Splash / Standalone APK 优化与踩坑 |
 | `docs/decisions/0004-android-app-identity-and-signing.md` | 身份、指纹、签名 ADR                        |
@@ -439,8 +439,8 @@ Copy-Item "D:\r\a\apps\mobile\android\app\build\outputs\apk\release\app-release.
 
 ## 12. 变更记录
 
-| 日期       | 说明                                                                                    |
-| ---------- | --------------------------------------------------------------------------------------- |
-| 2026-07-28 | 首版：记录 Windows 路径踩坑、短路径 `D:\r\a` 成功流程、真机安装验证                     |
-| 2026-08-07 | 增加冷启动 / Splash 文档交叉引用                                                        |
+| 日期       | 说明                                                                                  |
+| ---------- | ------------------------------------------------------------------------------------- |
+| 2026-07-28 | 首版：记录 Windows 路径踩坑、短路径 `D:\r\a` 成功流程、真机安装验证                   |
+| 2026-08-07 | 增加冷启动 / Splash 文档交叉引用                                                      |
 | 2026-08-08 | 新增 §4.3 必做 Splash 补丁与 §5 UI 重构/启动验收边界；推荐一键脚本；§8.7 小 logo 排查 |

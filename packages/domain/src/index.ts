@@ -21,6 +21,7 @@ export {
   endOfLocalReviewDay,
   formatLocalIsoDateTime,
   formatLocalReviewDate,
+  formatReviewDueDayLabel,
   nextLocalReviewDayAnchor,
   startOfLocalReviewDay,
 } from './local-review-day.js';
@@ -34,6 +35,7 @@ export {
   applyBoxReview,
   createInitialReviewPoolState,
   formatBoxInterval,
+  previewBoxReviewOutcomes,
   type ApplyBoxReviewInput,
   type BoxLevel,
   type ReviewOutcome,

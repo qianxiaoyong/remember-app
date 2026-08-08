@@ -3,6 +3,7 @@ import {
   applyBoxReview,
   createInitialReviewPoolState,
   formatBoxInterval,
+  previewBoxReviewOutcomes,
 } from './review-box-scheduler';
 
 describe('applyBoxReview', () => {
@@ -128,5 +129,23 @@ describe('formatBoxInterval', () => {
     expect(formatBoxInterval(3, 0)).toBe('21 天后');
     expect(formatBoxInterval(3, 1)).toBe('45 天后');
     expect(formatBoxInterval(3, 2)).toBe('90 天后');
+  });
+});
+
+describe('previewBoxReviewOutcomes', () => {
+  it('returns due labels for passed and failed outcomes', () => {
+    const now = new Date('2026-08-06T15:00:00+08:00');
+    const labels = previewBoxReviewOutcomes(
+      {
+        inReviewPool: true,
+        boxLevel: 1,
+        dueAt: now.toISOString(),
+        consecutiveLevel3Passes: 0,
+      },
+      now,
+      'Asia/Shanghai',
+    );
+    expect(labels.passed).toBe('3天后');
+    expect(labels.failed).toBe('明天');
   });
 });
