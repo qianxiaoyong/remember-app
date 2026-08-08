@@ -368,4 +368,37 @@ describe('admin operations integration', () => {
     expect(catalogDetail.includedHighlights?.[0]?.title).toBe('核心词汇');
     expect(catalogDetail.contentTags).toEqual(['词汇', '上册']);
   });
+
+  it('DELETE 无交易记录的知识库可删除', async () => {
+    const server = app.getHttpServer() as HttpServer;
+    const admin = await adminLogin(server);
+
+    await request(server)
+      .post('/api/v1/admin/packs')
+      .set('Authorization', `Bearer ${admin.token}`)
+      .send({
+        packId: 'delete-me-pack',
+        title: '待删除包',
+        primaryCategory: 'primary',
+        secondaryCategory: '三年级',
+        versionLabel: '人教版',
+        summary: '测试删除',
+        priceCents: 100,
+        status: 'draft',
+      })
+      .expect(200);
+
+    await request(server)
+      .delete('/api/v1/admin/packs/delete-me-pack')
+      .set('Authorization', `Bearer ${admin.token}`)
+      .expect(204);
+
+    await request(server)
+      .get('/api/v1/admin/packs/delete-me-pack')
+      .set('Authorization', `Bearer ${admin.token}`)
+      .expect(404);
+
+    const audits = await prisma.auditLog.findMany({ where: { action: 'pack.delete' } });
+    expect(audits.some((row) => row.targetId === 'delete-me-pack')).toBe(true);
+  });
 });
