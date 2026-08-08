@@ -1,8 +1,8 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, beforeAll } from 'vitest';
 import { getStoryParagraphLengthIssue } from '@remember/contracts';
-import { readPackSource, isStorySourceCard } from '@remember/pack-builder/pack-source';
+import { readPackSource, isStorySourceCard, type PackSource } from '@remember/pack-builder/pack-source';
 import { runsToPlainText } from '../utils/story-runs-markup.js';
 import { getPackBuilderRoot } from './paths.js';
 
@@ -26,7 +26,11 @@ const primary1000SourceDir = join(getPackBuilderRoot(), 'source', 'primary-1000-
 const hasPrimary1000StoriesSource = existsSync(join(primary1000SourceDir, 'meta.json'));
 
 describe.skipIf(!hasPrimary1000StoriesSource)('primary-1000-stories canonical English', () => {
-  const source = readPackSource(primary1000SourceDir);
+  let source: PackSource;
+
+  beforeAll(() => {
+    source = readPackSource(primary1000SourceDir);
+  });
 
   for (const lessonCode of [
     'C1',
