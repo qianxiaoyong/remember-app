@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import type { Prisma } from '@prisma/client';
+import { CATALOG_ALL_VERSION_LABEL } from '@remember/contracts';
 import { PrismaService } from '../prisma/prisma.service.js';
 
 export interface ListPublishedPacksQuery {
@@ -41,8 +42,11 @@ export class CatalogRepository {
     if (query.secondaryCategory && query.secondaryCategory !== '全部') {
       where.secondaryCategory = query.secondaryCategory;
     }
-    if (query.versionLabel && query.versionLabel !== '全部') {
-      where.versionLabel = query.versionLabel;
+    if (query.versionLabel && query.versionLabel !== CATALOG_ALL_VERSION_LABEL) {
+      where.OR = [
+        { versionLabel: query.versionLabel },
+        { versionLabel: CATALOG_ALL_VERSION_LABEL },
+      ];
     }
     if (query.keyword?.trim()) {
       const keyword = query.keyword.trim();

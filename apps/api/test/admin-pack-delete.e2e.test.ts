@@ -55,12 +55,15 @@ describe('admin pack delete', () => {
         title: '待删除包',
         primaryCategory: 'primary',
         secondaryCategory: '三年级',
-        versionLabel: '人教版',
         summary: '测试删除',
         priceCents: 100,
         status: 'draft',
       })
       .expect(201);
+
+    const created = await prisma.pack.findUnique({ where: { packId: 'delete-me-pack' } });
+    expect(created?.versionLabel).toBe('全部');
+    expect(created?.versionNodeId).toBeNull();
 
     await request(server)
       .delete('/api/v1/admin/packs/delete-me-pack')

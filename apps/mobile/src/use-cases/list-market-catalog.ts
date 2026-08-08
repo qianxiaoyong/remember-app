@@ -17,7 +17,11 @@ export function listMarketCatalog(query: MarketCatalogQuery): CatalogPackItem[] 
     if (query.secondaryCategory !== '全部' && item.secondaryCategory !== query.secondaryCategory) {
       return false;
     }
-    if (query.versionFilter !== CATALOG_ALL_VERSION_LABEL && item.version !== query.versionFilter) {
+    if (
+      query.versionFilter !== CATALOG_ALL_VERSION_LABEL &&
+      item.version !== query.versionFilter &&
+      item.version !== CATALOG_ALL_VERSION_LABEL
+    ) {
       return false;
     }
     if (keyword && !item.title.toLowerCase().includes(keyword)) {

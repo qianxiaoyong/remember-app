@@ -75,6 +75,7 @@ export function PackTaxonomyFields({ compact = false }: PackTaxonomyFieldsProps)
       source="versionNodeId"
       label="页内分类"
       choices={versionChoices}
+      emptyText="全部（不限页内分类）"
       fullWidth
       size={inputSize}
     />
