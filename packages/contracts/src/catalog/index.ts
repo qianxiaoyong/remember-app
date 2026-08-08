@@ -1,3 +1,4 @@
+export { CATALOG_ALL_VERSION_LABEL } from './constants.js';
 export {
   catalogPrimaryCategorySchema,
   catalogPackSummarySchema,

@@ -17,6 +17,16 @@ const optionalUrlSchema = z.preprocess(
   z.url().optional(),
 );
 
+const optionalUuidSchema = z.preprocess(
+  (value) => (typeof value === 'string' && value.trim() === '' ? undefined : value),
+  z.uuid().optional(),
+);
+
+const optionalClearableVersionNodeIdSchema = z.preprocess(
+  (value) => (value === '' || value === null ? null : value),
+  z.union([z.uuid(), z.null()]).optional(),
+);
+
 export const adminPackSummarySchema = z
   .object({
     packId: z.string().min(1),
@@ -82,34 +92,30 @@ const adminPackWriteFieldsSchema = z
 function hasTaxonomyNodeIds(value: {
   primaryNodeId?: string | undefined;
   secondaryNodeId?: string | undefined;
-  versionNodeId?: string | undefined;
 }): boolean {
-  return Boolean(value.primaryNodeId && value.secondaryNodeId && value.versionNodeId);
+  return Boolean(value.primaryNodeId && value.secondaryNodeId);
 }
 
 function hasLegacyTaxonomyLabels(value: {
   primaryCategory?: string | undefined;
   secondaryCategory?: string | undefined;
-  versionLabel?: string | undefined;
 }): boolean {
-  return Boolean(value.primaryCategory && value.secondaryCategory && value.versionLabel);
+  return Boolean(value.primaryCategory && value.secondaryCategory);
 }
 
-function hasCompletePackTaxonomy(value: {
+function hasRequiredPackTaxonomy(value: {
   primaryNodeId?: string | undefined;
   secondaryNodeId?: string | undefined;
-  versionNodeId?: string | undefined;
   primaryCategory?: string | undefined;
   secondaryCategory?: string | undefined;
-  versionLabel?: string | undefined;
 }): boolean {
   return hasTaxonomyNodeIds(value) || hasLegacyTaxonomyLabels(value);
 }
 
 export const adminCreatePackRequestSchema = adminPackWriteFieldsSchema.refine(
-  hasCompletePackTaxonomy,
+  hasRequiredPackTaxonomy,
   {
-    message: '请提供完整三级分类',
+    message: '请提供一级与二级分类',
   },
 );
 
@@ -121,9 +127,9 @@ export const adminUpdatePackRequestSchema = z
     primaryCategory: catalogPrimaryCategorySchema.optional(),
     secondaryCategory: z.string().min(1).optional(),
     versionLabel: z.string().min(1).optional(),
-    primaryNodeId: z.uuid().optional(),
-    secondaryNodeId: z.uuid().optional(),
-    versionNodeId: z.uuid().optional(),
+    primaryNodeId: optionalUuidSchema,
+    secondaryNodeId: optionalUuidSchema,
+    versionNodeId: optionalClearableVersionNodeIdSchema,
     contentTags: z.array(z.string()).optional(),
     cardCount: z.number().int().nonnegative().optional(),
     sizeLabel: z.string().min(1).optional(),
