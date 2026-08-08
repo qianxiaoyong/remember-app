@@ -2,6 +2,7 @@ import type { ReactElement } from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ActivityIndicator, Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
+import { headwordEmphasisSurfaceForms } from '@remember/contracts';
 import type { PackSamplePreview } from '../catalog/pack-sample-preview';
 import { ScreenScaffold } from '../components/shell/screen-scaffold';
 import { StudyHeaderBand } from '../components/study/study-header-band';
@@ -54,6 +55,12 @@ export function PackPreviewScreen(props: PackPreviewScreenProps): ReactElement {
   const vocabularyContent = useMemo(
     () => (sample ? mapSamplePreviewToVocabularyContent(sample) : null),
     [sample],
+  );
+
+  const emphasisSurfaceForms = useMemo(
+    () =>
+      vocabularyContent ? headwordEmphasisSurfaceForms(vocabularyContent.prompt.headword) : null,
+    [vocabularyContent],
   );
 
   const handlePlayAudio = (): void => {
@@ -117,6 +124,7 @@ export function PackPreviewScreen(props: PackPreviewScreenProps): ReactElement {
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         <StudyRevealScrollBody
           content={vocabularyContent}
+          emphasisSurfaceForms={emphasisSurfaceForms}
           onPlayExampleAudio={() => {
             Alert.alert('预览暂无例句发音');
           }}

@@ -22,7 +22,12 @@ export {
   slugFromHeadword,
   slugFromLessonCode,
 } from './knowledge-id.js';
-export { normalizeSurfaceForm, tokenizeEnglishSentence } from './normalize.js';
+export {
+  headwordEmphasisSurfaceForms,
+  normalizeSurfaceForm,
+  sentenceContainsHeadwordEmphasis,
+  tokenizeEnglishSentence,
+} from './normalize.js';
 export { assertAllowedPackPath, isAllowedPackPath, normalizeZipEntryPath } from './paths.js';
 export {
   packManifestFileSchema,
@@ -60,6 +65,14 @@ export {
   type StoryTier,
   type StoryWordRun,
 } from './story-reading-content.js';
+export {
+  STORY_PARAGRAPH_MAX_CHARS,
+  STORY_PARAGRAPH_MAX_SENTENCES,
+  countEnglishSentences,
+  formatStoryParagraphLengthMessage,
+  getStoryParagraphLengthIssue,
+  type StoryParagraphLengthIssue,
+} from './story-paragraph-length.js';
 export {
   packCardRowSchema,
   // eslint-disable-next-line @typescript-eslint/no-deprecated -- ADR 0012 保留 vocabulary 别名

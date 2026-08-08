@@ -5,10 +5,12 @@ import { StudyExamplesSection } from './study-examples-section';
 import { StudyInflectionSection } from './study-inflection-section';
 import { StudyMnemonicSection } from './study-mnemonic-section';
 import { StudySectionCard } from './study-section-card';
+import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
 
 interface StudyRevealScrollBodyProps {
   content: VocabularyContent;
+  emphasisSurfaceForms?: readonly string[] | null;
   highlightSurfaceForm?: string | null;
   onPlayExampleAudio: (relativePath: string) => void;
   onTokenPress: (token: string) => void;
@@ -20,6 +22,7 @@ export function StudyRevealScrollBody(props: StudyRevealScrollBodyProps): ReactE
       <StudySectionCard>
         <StudyExamplesSection
           content={props.content}
+          emphasisSurfaceForms={props.emphasisSurfaceForms ?? null}
           highlightSurfaceForm={props.highlightSurfaceForm ?? null}
           onPlayExampleAudio={props.onPlayExampleAudio}
           onTokenPress={props.onTokenPress}
@@ -41,8 +44,8 @@ export function StudyRevealScrollBody(props: StudyRevealScrollBodyProps): ReactE
 
 const styles = StyleSheet.create({
   root: {
+    backgroundColor: colors.background,
     gap: spacing.md,
-    paddingBottom: spacing.lg,
-    paddingTop: spacing.md,
+    paddingVertical: spacing.md,
   },
 });

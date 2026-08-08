@@ -3,6 +3,7 @@ import { CARD_TYPE_VOCABULARY } from './constants.js';
 import type { VocabularyContent } from './vocabulary-content.js';
 import { vocabularyPackCardRowSchema, parseCardContentJson } from './card.js';
 import { knowledgeIdMatchesHeadword } from './knowledge-id.js';
+import { headwordEmphasisSurfaceForms, sentenceContainsHeadwordEmphasis } from './normalize.js';
 import { assertAllowedPackPath } from './paths.js';
 import type { PackCardRow } from './card.js';
 import type { PackCardRecord } from './verify-content.js';
@@ -46,6 +47,22 @@ export function validateVocabularyCard(
   for (const example of content.reveal.examples) {
     if (example.audio) {
       assertAssetReferenced(manifestPaths, example.audio, card.knowledgeId);
+    }
+  }
+
+  const emphasisForms = headwordEmphasisSurfaceForms(content.prompt.headword);
+  if (emphasisForms.length === 0) {
+    throw new PackVerificationError(
+      'PACK_CONTENT_INVALID',
+      `headword has no English tokens for example emphasis: ${card.knowledgeId}`,
+    );
+  }
+  for (const example of content.reveal.examples) {
+    if (!sentenceContainsHeadwordEmphasis(example.en, emphasisForms)) {
+      throw new PackVerificationError(
+        'PACK_CONTENT_INVALID',
+        `example missing headword token (${content.prompt.headword}): ${example.en} (${card.knowledgeId})`,
+      );
     }
   }
 

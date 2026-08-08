@@ -5,12 +5,14 @@ import { colors } from '../theme/colors';
 
 interface TokenizedSentenceProps {
   sentence: string;
+  emphasisSurfaceForms?: readonly string[] | null;
   highlightSurfaceForm?: string | null;
   onTokenPress: (token: string) => void;
 }
 
 export function TokenizedSentence(props: TokenizedSentenceProps): ReactElement {
   const parts = splitSentence(props.sentence);
+  const emphasisSet = new Set(props.emphasisSurfaceForms ?? []);
   const highlightSurfaceForm = props.highlightSurfaceForm ?? null;
 
   return (
@@ -24,8 +26,10 @@ export function TokenizedSentence(props: TokenizedSentenceProps): ReactElement {
           );
         }
 
+        const normalized = normalizeSurfaceForm(part.text);
+        const isEmphasized = normalized !== null && emphasisSet.has(normalized);
         const isHighlighted =
-          highlightSurfaceForm !== null && normalizeSurfaceForm(part.text) === highlightSurfaceForm;
+          !isEmphasized && highlightSurfaceForm !== null && normalized === highlightSurfaceForm;
 
         return (
           <Pressable
@@ -36,7 +40,13 @@ export function TokenizedSentence(props: TokenizedSentenceProps): ReactElement {
             }}
             style={isHighlighted ? styles.tokenHighlightWrap : undefined}
           >
-            <Text style={[styles.token, isHighlighted && styles.tokenHighlighted]}>
+            <Text
+              style={[
+                styles.token,
+                isEmphasized ? styles.tokenEmphasized : null,
+                isHighlighted ? styles.tokenHighlighted : null,
+              ]}
+            >
               {part.text}
             </Text>
           </Pressable>
@@ -89,6 +99,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '400',
     lineHeight: 26,
+  },
+  tokenEmphasized: {
+    color: colors.studyRatingForgot,
+    fontWeight: '700',
   },
   tokenHighlightWrap: {
     backgroundColor: colors.tokenHighlightBackground,

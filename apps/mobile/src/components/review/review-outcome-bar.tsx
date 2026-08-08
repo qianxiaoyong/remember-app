@@ -6,15 +6,17 @@ import { spacing } from '../../theme/spacing';
 
 interface ReviewOutcomeBarProps {
   disabled?: boolean;
+  failedIntervalLabel?: string;
   onPassed: () => void;
   onFailed: () => void;
+  passedIntervalLabel?: string;
 }
 
 export function ReviewOutcomeBar(props: ReviewOutcomeBarProps): ReactElement {
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={[styles.bar, { paddingBottom: Math.max(insets.bottom, spacing.md) }]}>
+    <View style={[styles.bar, { paddingBottom: Math.max(insets.bottom, spacing.sm) }]}>
       <Pressable
         accessibilityRole="button"
         disabled={props.disabled}
@@ -22,6 +24,9 @@ export function ReviewOutcomeBar(props: ReviewOutcomeBarProps): ReactElement {
         style={[styles.failedButton, props.disabled ? styles.disabled : null]}
       >
         <Text style={styles.failedLabel}>还不熟</Text>
+        {props.failedIntervalLabel ? (
+          <Text style={styles.failedInterval}>{props.failedIntervalLabel}</Text>
+        ) : null}
       </Pressable>
       <Pressable
         accessibilityRole="button"
@@ -30,6 +35,9 @@ export function ReviewOutcomeBar(props: ReviewOutcomeBarProps): ReactElement {
         style={[styles.passedButton, props.disabled ? styles.disabled : null]}
       >
         <Text style={styles.passedLabel}>记住了</Text>
+        {props.passedIntervalLabel ? (
+          <Text style={styles.passedInterval}>{props.passedIntervalLabel}</Text>
+        ) : null}
       </Pressable>
     </View>
   );
@@ -43,37 +51,51 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: spacing.sm,
     paddingHorizontal: spacing.lg,
-    paddingTop: spacing.md,
+    paddingTop: spacing.sm,
   },
   failedButton: {
     alignItems: 'center',
-    backgroundColor: colors.background,
-    borderColor: colors.border,
-    borderRadius: 12,
+    backgroundColor: '#FFF0ED',
+    borderColor: colors.studyRatingForgot,
+    borderRadius: 8,
     borderWidth: 1,
     flex: 1,
     justifyContent: 'center',
-    minHeight: 52,
+    minHeight: 44,
+    paddingVertical: spacing.xs,
   },
   passedButton: {
     alignItems: 'center',
-    backgroundColor: colors.accent,
-    borderRadius: 12,
+    backgroundColor: colors.studyHeaderBackground,
+    borderRadius: 8,
     flex: 1,
     justifyContent: 'center',
-    minHeight: 52,
+    minHeight: 44,
+    paddingVertical: spacing.xs,
   },
   disabled: {
     opacity: 0.6,
   },
   failedLabel: {
-    color: colors.textPrimary,
-    fontSize: 16,
+    color: colors.studyRatingForgot,
+    fontSize: 15,
     fontWeight: '700',
+  },
+  failedInterval: {
+    color: colors.studyRatingForgot,
+    fontSize: 12,
+    lineHeight: 16,
+    marginTop: 2,
   },
   passedLabel: {
     color: colors.surface,
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '700',
+  },
+  passedInterval: {
+    color: 'rgba(255, 255, 255, 0.88)',
+    fontSize: 12,
+    lineHeight: 16,
+    marginTop: 2,
   },
 });

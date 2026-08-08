@@ -1,7 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import { buildKnowledgeId, slugFromHeadword } from './knowledge-id.js';
 import { canonicalJson } from './canonical-json.js';
-import { normalizeSurfaceForm, tokenizeEnglishSentence } from './normalize.js';
+import {
+  headwordEmphasisSurfaceForms,
+  normalizeSurfaceForm,
+  sentenceContainsHeadwordEmphasis,
+  tokenizeEnglishSentence,
+} from './normalize.js';
 import { packManifestSchema } from './manifest.js';
 import { vocabularyContentSchema } from './vocabulary-content.js';
 import { isAllowedPackPath } from './paths.js';
@@ -30,6 +35,23 @@ describe('normalizeSurfaceForm', () => {
 
   it('tokenizeEnglishSentence 提取 token', () => {
     expect(tokenizeEnglishSentence('She drew a picture.')).toEqual(['She', 'drew', 'a', 'picture']);
+  });
+});
+
+describe('headwordEmphasisSurfaceForms', () => {
+  it('单词 headword 返回单个 surfaceForm', () => {
+    expect(headwordEmphasisSurfaceForms('Picture')).toEqual(['picture']);
+  });
+
+  it('短语 headword 返回各 token 的 surfaceForm', () => {
+    expect(headwordEmphasisSurfaceForms('take a picture')).toEqual(['take', 'a', 'picture']);
+  });
+
+  it('sentenceContainsHeadwordEmphasis 匹配例句中的 headword token', () => {
+    const forms = headwordEmphasisSurfaceForms('take a picture');
+    expect(sentenceContainsHeadwordEmphasis('Can you take a picture of us?', forms)).toBe(true);
+    expect(sentenceContainsHeadwordEmphasis('She drew a picture.', ['picture'])).toBe(true);
+    expect(sentenceContainsHeadwordEmphasis('Hello world.', forms)).toBe(false);
   });
 });
 

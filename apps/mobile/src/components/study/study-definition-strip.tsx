@@ -24,12 +24,12 @@ export function StudyDefinitionStrip(props: StudyDefinitionStripProps): ReactEle
 const styles = StyleSheet.create({
   root: {
     alignSelf: 'stretch',
-    gap: spacing.xs,
-    paddingTop: spacing.sm,
+    gap: 2,
+    paddingTop: spacing.xs,
   },
   definition: {
     color: colors.surface,
-    fontSize: 16,
-    lineHeight: 24,
+    fontSize: 15,
+    lineHeight: 20,
   },
 });

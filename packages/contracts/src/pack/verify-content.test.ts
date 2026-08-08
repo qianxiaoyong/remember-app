@@ -60,6 +60,55 @@ describe('validatePackCards', () => {
     expect(rows[0]?.cardType).toBe('vocabulary');
   });
 
+  it('拒绝例句中缺少 headword token 的 vocabulary 卡', () => {
+    const badContent = JSON.stringify({
+      prompt: {
+        headword: 'picture',
+        primaryAudio: 'assets/audio/picture.mp3',
+      },
+      reveal: {
+        definitions: [{ text: '图片' }],
+        examples: [{ en: 'She drew a cat.', zh: '她画了一只猫。' }],
+      },
+    });
+    expect(() =>
+      validatePackCards('remember-test-pack', [makeCard({ content: badContent })], manifestPaths),
+    ).toThrow(
+      expect.objectContaining({
+        code: 'PACK_CONTENT_INVALID',
+      } satisfies Partial<PackVerificationError>),
+    );
+  });
+
+  it('接受短语 headword 且例句含对应 token', () => {
+    const phraseContent = JSON.stringify({
+      prompt: {
+        headword: 'take a picture',
+        primaryAudio: 'assets/audio/picture.mp3',
+      },
+      reveal: {
+        definitions: [{ text: '拍照' }],
+        examples: [{ en: 'Can you take a picture of us?', zh: '能给我们拍张照吗？' }],
+      },
+    });
+    const rows = validatePackCards(
+      'remember-test-pack',
+      [
+        makeCard({
+          knowledgeId: 'remember-test-pack:en:phrase:take-a-picture',
+          content: phraseContent,
+        }),
+      ],
+      manifestPaths,
+    );
+    const row = rows[0];
+    expect(row?.cardType).toBe('vocabulary');
+    if (row?.cardType !== 'vocabulary') {
+      throw new Error('expected vocabulary card');
+    }
+    expect(row.content.prompt.headword).toBe('take a picture');
+  });
+
   it('接受 story_reading 行', () => {
     const storyContent = JSON.stringify({
       lesson: {

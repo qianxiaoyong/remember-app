@@ -4,8 +4,8 @@ import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { StoryReadingContent } from '@remember/contracts';
 import { useStoryAudioPlayer } from '../../../hooks/use-story-audio-player';
+import { HeaderIconButton } from '../../../components/ui/header-icon-button';
 import { AppIcon } from '../../../components/ui/app-icon';
-import { CircleIconButton } from '../../../components/ui/circle-icon-button';
 import { colors } from '../../../theme/colors';
 import { spacing } from '../../../theme/spacing';
 import { listStoryLessonSummaries } from '../../../use-cases/resolve-story-reader-entry';
@@ -38,7 +38,7 @@ export function StoryLessonShell(props: StoryLessonShellProps): ReactElement {
   const [loopMode, setLoopMode] = useState<StoryLoopMode>('none');
   const [playbackRate, setPlaybackRate] = useState<StoryPlaybackRate>(1);
   const wordCount = countSidebarWords(props.content);
-  const toolbarTop = insets.top + spacing.sm;
+  const toolbarTop = insets.top + spacing.xs;
   const audioUri = resolvePackAssetUri(props.packId, props.content.lesson.primaryAudio);
   const audioPlayer = useStoryAudioPlayer({
     uri: audioUri,
@@ -146,29 +146,16 @@ export function StoryLessonShell(props: StoryLessonShellProps): ReactElement {
 
   return (
     <View style={styles.root}>
-      <View
-        style={[
-          styles.toolbar,
-          { paddingTop: toolbarTop, minHeight: toolbarTop + spacing.touchTarget },
-        ]}
-      >
-        <View style={styles.toolbarSide}>
-          <CircleIconButton
-            accessibilityLabel="返回书库"
-            onPress={() => {
-              props.onReaderBookmark?.(audioPlayer.positionMs);
-              props.onHomePress();
-            }}
-          >
-            <AppIcon color={colors.textPrimary} name="chevron-back" size="sm" />
-          </CircleIconButton>
-        </View>
-
-        <View style={styles.toolbarSide}>
-          <CircleIconButton accessibilityLabel="更多" onPress={props.onMorePress}>
-            <AppIcon color={colors.textPrimary} name="ellipsis-vertical" size="sm" />
-          </CircleIconButton>
-        </View>
+      <View style={[styles.toolbar, { paddingTop: toolbarTop }]}>
+        <HeaderIconButton
+          accessibilityLabel="返回书库"
+          onPress={() => {
+            props.onReaderBookmark?.(audioPlayer.positionMs);
+            props.onHomePress();
+          }}
+        >
+          <AppIcon color={colors.textPrimary} name="chevron-back" size="sm" />
+        </HeaderIconButton>
 
         <View pointerEvents="box-none" style={[styles.tabsOverlay, { top: toolbarTop }]}>
           <StoryLessonTabs
@@ -178,6 +165,10 @@ export function StoryLessonShell(props: StoryLessonShellProps): ReactElement {
             vocabCount={wordCount}
           />
         </View>
+
+        <HeaderIconButton accessibilityLabel="更多" onPress={props.onMorePress}>
+          <AppIcon color={colors.textPrimary} name="ellipsis-vertical" size="sm" />
+        </HeaderIconButton>
       </View>
 
       <View style={styles.tabContent}>
@@ -234,8 +225,6 @@ export function StoryLessonShell(props: StoryLessonShellProps): ReactElement {
   );
 }
 
-const TOOLBAR_SIDE_WIDTH = spacing.touchTarget;
-
 const styles = StyleSheet.create({
   root: {
     backgroundColor: colors.background,
@@ -245,24 +234,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: spacing.lg,
+    minHeight: spacing.touchTarget,
     paddingBottom: spacing.sm,
+    paddingLeft: spacing.xs,
+    paddingRight: spacing.sm,
     position: 'relative',
-  },
-  toolbarSide: {
-    alignItems: 'center',
-    height: spacing.touchTarget,
-    justifyContent: 'center',
-    width: TOOLBAR_SIDE_WIDTH,
-    zIndex: 2,
   },
   tabsOverlay: {
     alignItems: 'center',
     bottom: spacing.sm,
     justifyContent: 'center',
-    left: spacing.lg + TOOLBAR_SIDE_WIDTH,
+    left: spacing.xs + spacing.touchTarget,
     position: 'absolute',
-    right: spacing.lg + TOOLBAR_SIDE_WIDTH,
+    right: spacing.sm + spacing.touchTarget,
     zIndex: 1,
   },
   tabContent: {

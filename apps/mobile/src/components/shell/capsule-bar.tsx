@@ -1,12 +1,7 @@
 import type { ReactElement } from 'react';
-import { useCallback, useEffect, useState } from 'react';
-import { AppState, type AppStateStatus, Pressable, StyleSheet, Text, View } from 'react-native';
-import { useFocusEffect } from 'expo-router';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { subscribeReviewPoolChanged } from '../../shell/review-pool-changed-signal';
-import { deferAfterFirstPaint } from '../../lib/defer-after-first-paint';
-import { countDueReviewItems } from '../../use-cases/count-due-review-items';
-import { FolderTabIcon, HomeTabIcon, StarIcon } from '../ui/shell-icons';
+import { FolderTabIcon, HomeTabIcon, ReviewTabMark } from '../ui/shell-icons';
 import { colors } from '../../theme/colors';
 import { capsuleShadow } from '../../theme/shadows';
 import { spacing } from '../../theme/spacing';
@@ -20,35 +15,6 @@ interface CapsuleBarProps {
 
 export function CapsuleBar(props: CapsuleBarProps): ReactElement {
   const insets = useSafeAreaInsets();
-  const [dueCount, setDueCount] = useState(0);
-
-  const refreshDueCount = useCallback(() => {
-    setDueCount(countDueReviewItems());
-  }, []);
-
-  useFocusEffect(
-    useCallback(() => {
-      return deferAfterFirstPaint(refreshDueCount);
-    }, [refreshDueCount]),
-  );
-
-  useEffect(() => {
-    const appStateSubscription = AppState.addEventListener(
-      'change',
-      (nextState: AppStateStatus) => {
-        if (nextState === 'active') {
-          deferAfterFirstPaint(refreshDueCount);
-        }
-      },
-    );
-    const unsubscribe = subscribeReviewPoolChanged(() => {
-      deferAfterFirstPaint(refreshDueCount);
-    });
-    return () => {
-      appStateSubscription.remove();
-      unsubscribe();
-    };
-  }, [refreshDueCount]);
 
   return (
     <View pointerEvents="box-none" style={[styles.wrapper, { bottom: insets.bottom + spacing.md }]}>
@@ -62,7 +28,6 @@ export function CapsuleBar(props: CapsuleBarProps): ReactElement {
           renderIcon={(active) => <HomeTabIcon active={active} />}
         />
         <ReviewTabButton
-          badgeCount={dueCount}
           isActive={props.activeTab === 'review'}
           onPress={() => {
             props.onTabPress('review');
@@ -101,11 +66,7 @@ function TabItem(props: {
   );
 }
 
-function ReviewTabButton(props: {
-  isActive: boolean;
-  badgeCount: number;
-  onPress: () => void;
-}): ReactElement {
+function ReviewTabButton(props: { isActive: boolean; onPress: () => void }): ReactElement {
   return (
     <Pressable
       accessibilityLabel="复习"
@@ -115,23 +76,8 @@ function ReviewTabButton(props: {
       style={styles.reviewItem}
     >
       <View style={styles.reviewCircle}>
-        <StarIcon color={colors.surface} filled size="lg" />
-        {props.badgeCount > 0 ? (
-          <View style={styles.badge}>
-            <Text style={styles.badgeText}>
-              {props.badgeCount > 99 ? '99+' : String(props.badgeCount)}
-            </Text>
-          </View>
-        ) : null}
+        <ReviewTabMark />
       </View>
-      <Text
-        style={[
-          styles.itemLabel,
-          { color: props.isActive ? colors.textPrimary : colors.tabInactive },
-        ]}
-      >
-        复习
-      </Text>
     </Pressable>
   );
 }
@@ -172,6 +118,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
     marginTop: -18,
+    minHeight: 52,
     width: 56,
   },
   reviewCircle: {
@@ -182,21 +129,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 56,
     ...capsuleShadow,
-  },
-  badge: {
-    alignItems: 'center',
-    backgroundColor: colors.studyRatingForgot,
-    borderRadius: 10,
-    justifyContent: 'center',
-    minWidth: 20,
-    paddingHorizontal: 4,
-    position: 'absolute',
-    right: -2,
-    top: -2,
-  },
-  badgeText: {
-    color: colors.surface,
-    fontSize: 10,
-    fontWeight: '700',
   },
 });

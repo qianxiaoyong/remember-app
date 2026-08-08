@@ -16,6 +16,8 @@ export const colors = {
   statTileBackground: '#EEF0F5',
   tabInactive: '#A0A4AE',
   studyHeaderBackground: '#5CB88A',
+  studyHeaderGradientStart: '#4DB8A8',
+  studyHeaderGradientEnd: '#3D9470',
   studyRatingForgot: '#E86B5C',
   studyRatingHard: '#F0A04B',
   studyRatingGood: '#5CB88A',

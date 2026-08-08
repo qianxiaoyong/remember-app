@@ -1,5 +1,6 @@
 import {
   addLocalReviewDays,
+  formatReviewDueDayLabel,
   nextLocalReviewDayAnchor,
   startOfLocalReviewDay,
 } from './local-review-day.js';
@@ -108,6 +109,40 @@ export function formatBoxInterval(boxLevel: BoxLevel, consecutiveLevel3Passes: n
     return '45 天后';
   }
   return '90 天后';
+}
+
+export function previewBoxReviewOutcomes(
+  previous: ReviewPoolState | null,
+  now: Date,
+  timeZone?: string,
+): { passed: string; failed: string } {
+  const tz = timeZone ?? DEFAULT_TIME_ZONE;
+  const base =
+    previous ??
+    ({
+      inReviewPool: true,
+      boxLevel: 0 as BoxLevel,
+      dueAt: now.toISOString(),
+      consecutiveLevel3Passes: 0,
+    } satisfies ReviewPoolState);
+
+  const passedState = applyBoxReview({
+    previous: base,
+    outcome: 'passed',
+    now,
+    timeZone: tz,
+  });
+  const failedState = applyBoxReview({
+    previous: base,
+    outcome: 'failed',
+    now,
+    timeZone: tz,
+  });
+
+  return {
+    passed: formatReviewDueDayLabel(passedState.dueAt, now, tz),
+    failed: formatReviewDueDayLabel(failedState.dueAt, now, tz),
+  };
 }
 
 export function createInitialReviewPoolState(input: {

@@ -1,8 +1,9 @@
 import type { ReactElement } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { VocabularyContent } from '@remember/contracts';
-import { CircleIconButton } from '../ui/circle-icon-button';
+import { HeaderIconButton } from '../ui/header-icon-button';
 import { AppIcon } from '../ui/app-icon';
 import { StudyDefinitionStrip } from './study-definition-strip';
 import { colors } from '../../theme/colors';
@@ -14,6 +15,8 @@ interface StudyHeaderBandProps {
   onMorePress: () => void;
   onPlayAudio: () => void;
   revealed: boolean;
+  /** 复习页顶栏居中包名，如「来自《xxx》」 */
+  contextLabel?: string;
   /** 预览页：左侧返回、隐藏更多 */
   toolbarVariant?: 'study' | 'preview';
   onBackPress?: () => void;
@@ -25,116 +28,136 @@ export function StudyHeaderBand(props: StudyHeaderBandProps): ReactElement {
   const { prompt } = props.content;
   const dialectLabel = prompt.phonetic?.dialect === 'uk' ? '英' : '美';
   const isPreview = props.toolbarVariant === 'preview';
+  const centerLabel = isPreview ? props.previewContextLabel : props.contextLabel;
 
   return (
-    <View
+    <LinearGradient
+      colors={[colors.studyHeaderGradientStart, colors.studyHeaderGradientEnd]}
+      end={{ x: 0.5, y: 1 }}
+      start={{ x: 0.5, y: 0 }}
       style={[
         styles.root,
-        { paddingTop: insets.top + spacing.sm },
+        { paddingTop: insets.top + spacing.xs },
         props.revealed ? styles.rootRevealed : null,
       ]}
     >
       <View style={styles.toolbar}>
         {isPreview ? (
-          <>
-            <CircleIconButton
-              accessibilityLabel="返回"
-              onPress={() => {
-                props.onBackPress?.();
-              }}
-            >
-              <AppIcon color={colors.textPrimary} name="chevron-back" size="sm" />
-            </CircleIconButton>
-            <Text numberOfLines={1} style={styles.previewContext}>
-              {props.previewContextLabel ?? '内容预览'}
-            </Text>
-            <View style={styles.toolbarSpacer} />
-          </>
+          <HeaderIconButton
+            accessibilityLabel="返回"
+            onPress={() => {
+              props.onBackPress?.();
+            }}
+          >
+            <AppIcon color={colors.surface} name="chevron-back" size="sm" />
+          </HeaderIconButton>
         ) : (
-          <>
-            <CircleIconButton accessibilityLabel="返回首页" onPress={props.onHomePress}>
-              <AppIcon color={colors.textPrimary} name="home-outline" size="sm" />
-            </CircleIconButton>
-            <CircleIconButton accessibilityLabel="更多" onPress={props.onMorePress}>
-              <AppIcon color={colors.textPrimary} name="ellipsis-vertical" size="sm" />
-            </CircleIconButton>
-          </>
+          <HeaderIconButton accessibilityLabel="返回" onPress={props.onHomePress}>
+            <AppIcon color={colors.surface} name="chevron-back" size="sm" />
+          </HeaderIconButton>
+        )}
+
+        {centerLabel ? (
+          <Text ellipsizeMode="tail" numberOfLines={1} style={styles.contextLabel}>
+            {centerLabel}
+          </Text>
+        ) : (
+          <View style={styles.toolbarCenter} />
+        )}
+
+        {isPreview ? (
+          <View style={styles.toolbarSpacer} />
+        ) : (
+          <HeaderIconButton accessibilityLabel="更多" onPress={props.onMorePress}>
+            <AppIcon color={colors.surface} name="ellipsis-vertical" size="sm" />
+          </HeaderIconButton>
         )}
       </View>
 
-      <Pressable
-        accessibilityRole="button"
-        hitSlop={8}
-        onPress={props.onPlayAudio}
-        style={styles.headwordPressable}
-      >
-        <Text style={styles.headword}>{prompt.headword}</Text>
-      </Pressable>
+      <View style={styles.wordBlock}>
+        <Pressable
+          accessibilityRole="button"
+          hitSlop={8}
+          onPress={props.onPlayAudio}
+          style={styles.headwordPressable}
+        >
+          <Text style={styles.headword}>{prompt.headword}</Text>
+        </Pressable>
 
-      <Pressable
-        accessibilityLabel="播放发音"
-        accessibilityRole="button"
-        hitSlop={8}
-        onPress={props.onPlayAudio}
-        style={styles.phoneticRow}
-      >
-        {prompt.phonetic ? (
-          <>
-            <Text style={styles.dialectBadge}>{dialectLabel}</Text>
-            <Text style={styles.phonetic}>{prompt.phonetic.ipa}</Text>
-          </>
-        ) : null}
-        <View style={styles.speakerBadge}>
-          <AppIcon color={colors.studyHeaderBackground} name="volume-high-outline" size="sm" />
-        </View>
-      </Pressable>
+        <Pressable
+          accessibilityLabel="播放发音"
+          accessibilityRole="button"
+          hitSlop={8}
+          onPress={props.onPlayAudio}
+          style={styles.phoneticRow}
+        >
+          {prompt.phonetic ? (
+            <>
+              <Text style={styles.dialectBadge}>{dialectLabel}</Text>
+              <Text style={styles.phonetic}>{prompt.phonetic.ipa}</Text>
+            </>
+          ) : null}
+          <AppIcon color={colors.surface} name="volume-high-outline" size="sm" />
+        </Pressable>
+      </View>
 
       {props.revealed ? (
         <>
           <View style={styles.definitionDivider} />
-          <StudyDefinitionStrip content={props.content} />
+          <View style={styles.definitionBlock}>
+            <StudyDefinitionStrip content={props.content} />
+          </View>
         </>
       ) : null}
-    </View>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
   root: {
-    alignItems: 'center',
-    backgroundColor: colors.studyHeaderBackground,
-    gap: spacing.md,
-    paddingBottom: spacing.xxl,
-    paddingHorizontal: spacing.lg,
+    alignItems: 'stretch',
+    gap: spacing.sm,
+    paddingBottom: spacing.lg,
   },
   rootRevealed: {
-    paddingBottom: spacing.lg,
+    paddingBottom: spacing.sm,
   },
   toolbar: {
     alignItems: 'center',
     flexDirection: 'row',
-    justifyContent: 'space-between',
     minHeight: spacing.touchTarget,
-    width: '100%',
+    paddingLeft: spacing.xs,
+    paddingRight: spacing.sm,
+  },
+  toolbarCenter: {
+    flex: 1,
   },
   toolbarSpacer: {
     width: spacing.touchTarget,
   },
-  previewContext: {
-    color: 'rgba(255, 255, 255, 0.88)',
+  contextLabel: {
+    color: 'rgba(255, 255, 255, 0.92)',
     flex: 1,
     fontSize: 13,
-    marginHorizontal: spacing.sm,
+    marginHorizontal: spacing.xs,
     textAlign: 'center',
+  },
+  wordBlock: {
+    alignItems: 'center',
+    gap: spacing.sm,
+    paddingHorizontal: spacing.lg,
+  },
+  definitionBlock: {
+    paddingHorizontal: spacing.lg,
   },
   headwordPressable: {
     alignItems: 'center',
   },
   headword: {
     color: colors.surface,
-    fontSize: 34,
+    fontSize: 30,
     fontWeight: '700',
-    lineHeight: 42,
+    lineHeight: 38,
     textAlign: 'center',
   },
   phoneticRow: {
@@ -156,18 +179,10 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 20,
   },
-  speakerBadge: {
-    alignItems: 'center',
-    backgroundColor: colors.surface,
-    borderRadius: 12,
-    height: 24,
-    justifyContent: 'center',
-    width: 24,
-  },
   definitionDivider: {
-    alignSelf: 'stretch',
-    backgroundColor: 'rgba(255, 255, 255, 0.72)',
+    backgroundColor: 'rgba(255, 255, 255, 0.45)',
     height: StyleSheet.hairlineWidth,
     marginTop: spacing.xs,
+    width: '100%',
   },
 });

@@ -18,6 +18,7 @@ import {
   isLexiconItemSavedUseCase,
   toggleSavedLexiconItem,
 } from '../use-cases/toggle-saved-lexicon-item';
+import { getReviewOutcomeIntervalLabels } from '../use-cases/get-review-outcome-interval-labels';
 import { markReviewPoolChanged } from '../shell/review-pool-changed-signal';
 
 export function useReviewFlow() {
@@ -63,6 +64,13 @@ export function useReviewFlow() {
   }, [currentKnowledgeId]);
 
   const sourcePackId = reviewContext?.sourcePackId ?? null;
+
+  const outcomeIntervalLabels = useMemo(() => {
+    if (!currentKnowledgeId) {
+      return null;
+    }
+    return getReviewOutcomeIntervalLabels(currentKnowledgeId);
+  }, [currentKnowledgeId]);
 
   const openLexicon = useCallback(
     (token: string) => {
@@ -208,6 +216,7 @@ export function useReviewFlow() {
     isSubmitting,
     message,
     reviewContext,
+    outcomeIntervalLabels,
     lexiconEntry,
     lexiconVisible,
     lexiconSaved,
