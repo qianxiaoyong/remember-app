@@ -5,11 +5,28 @@ import {
   adminSessionUserSchema,
 } from '@remember/contracts';
 import {
+  AdminApiError,
   adminFetchJson,
   clearStoredAdminToken,
   readStoredAdminToken,
   storeAdminToken,
 } from '../api/admin-api-client.js';
+
+function readErrorStatus(error: unknown): number | undefined {
+  if (error instanceof AdminApiError) {
+    return error.status;
+  }
+  if (typeof error === 'object' && error !== null && 'status' in error) {
+    const status = (error as { status?: unknown }).status;
+    return typeof status === 'number' ? status : undefined;
+  }
+  return undefined;
+}
+
+function isAuthFailure(error: unknown): boolean {
+  const status = readErrorStatus(error);
+  return status === 401 || status === 403;
+}
 
 export const authProvider: AuthProvider = {
   login: async (params: { username?: string; password?: string }) => {
@@ -42,20 +59,56 @@ export const authProvider: AuthProvider = {
     if (!token) {
       throw new Error('未登录');
     }
-    await adminFetchJson('/admin/auth/me');
+    try {
+      await adminFetchJson('/admin/auth/me');
+    } catch (error) {
+      if (isAuthFailure(error)) {
+        clearStoredAdminToken();
+        throw new Error('未登录', { cause: error });
+      }
+      // 5xx / 网络错误：保留 token，避免误踢回登录页
+      return;
+    }
   },
-  checkError: (error: { status?: number }) => {
-    if (error.status === 401 || error.status === 403) {
+  checkError: (error: unknown) => {
+    if (isAuthFailure(error)) {
       clearStoredAdminToken();
     }
-    return Promise.reject(error instanceof Error ? error : new Error('请求失败'));
+    if (error instanceof AdminApiError) {
+      return Promise.reject(error);
+    }
+    if (error instanceof Error) {
+      return Promise.reject(error);
+    }
+    return Promise.reject(new Error('请求失败'));
   },
   getIdentity: async () => {
-    const admin = adminSessionUserSchema.parse(await adminFetchJson('/admin/auth/me'));
-    return {
-      id: admin.adminUserId,
-      fullName: admin.loginName,
-    };
+    try {
+      const admin = adminSessionUserSchema.parse(await adminFetchJson('/admin/auth/me'));
+      return {
+        id: admin.adminUserId,
+        fullName: admin.loginName,
+      };
+    } catch (error) {
+      if (isAuthFailure(error)) {
+        clearStoredAdminToken();
+        throw new Error('未登录', { cause: error });
+      }
+      return {
+        id: 'admin',
+        fullName: '管理员',
+      };
+    }
   },
-  getPermissions: async () => adminSessionUserSchema.parse(await adminFetchJson('/admin/auth/me')),
+  getPermissions: async () => {
+    try {
+      return adminSessionUserSchema.parse(await adminFetchJson('/admin/auth/me'));
+    } catch (error) {
+      if (isAuthFailure(error)) {
+        clearStoredAdminToken();
+        throw new Error('未登录', { cause: error });
+      }
+      return { adminUserId: 'admin', loginName: 'admin', role: 'super_admin' as const };
+    }
+  },
 };

@@ -1,5 +1,5 @@
 import type { DataProvider, RaRecord } from 'react-admin';
-import { adminUpdatePackRequestSchema } from '@remember/contracts';
+import { adminCreatePackRequestSchema, adminUpdatePackRequestSchema } from '@remember/contracts';
 import { adminFetchJson } from '../api/admin-api-client.js';
 
 function filterValueToQueryString(value: unknown): string | undefined {
@@ -192,12 +192,13 @@ export const dataProvider = {
       return { data: { ...first, id: first.id } as RaRecord };
     }
     if (resource === 'packs') {
+      const body = adminCreatePackRequestSchema.parse(params.data);
       await adminFetchJson('/admin/packs', {
         method: 'POST',
-        body: JSON.stringify(params.data),
+        body: JSON.stringify(body),
       });
-      const packId = params.data.packId as string;
-      return { data: { ...params.data, id: packId } as RaRecord };
+      const packId = body.packId;
+      return { data: { ...body, id: packId } as RaRecord };
     }
     throw new Error(`不支持创建: ${resource}`);
   },

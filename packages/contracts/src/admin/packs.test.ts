@@ -25,4 +25,17 @@ describe('adminCreatePackRequestSchema', () => {
     });
     expect(parsed.versionLabel).toBeUndefined();
   });
+
+  it('页内分类空字符串视为未填', () => {
+    const parsed = adminCreatePackRequestSchema.parse({
+      packId: 'empty-version-node-pack',
+      title: '不限页内分类',
+      primaryNodeId: '550e8400-e29b-41d4-a716-446655440001',
+      secondaryNodeId: '550e8400-e29b-41d4-a716-446655440002',
+      versionNodeId: '',
+      summary: '测试',
+      priceCents: 100,
+    });
+    expect(parsed.versionNodeId).toBeUndefined();
+  });
 });

@@ -4,6 +4,8 @@ import Grid from '@mui/material/Grid2';
 import type { AdminCatalogTaxonomyResponse } from '@remember/contracts';
 import { fetchAdminCatalogTaxonomy } from '../api/catalog-taxonomy-api.js';
 
+const ALL_VERSION_CHOICE = { id: '', name: '全部（不限页内分类）' };
+
 function useTaxonomyChoices() {
   const [taxonomy, setTaxonomy] = useState<AdminCatalogTaxonomyResponse | null>(null);
 
@@ -26,7 +28,7 @@ export function PackTaxonomyFields({ compact = false }: PackTaxonomyFieldsProps)
   const taxonomy = useTaxonomyChoices();
   const { field: primaryNodeIdField } = useInput({ source: 'primaryNodeId' });
   const { field: secondaryNodeIdField } = useInput({ source: 'secondaryNodeId' });
-  useInput({ source: 'versionNodeId' });
+  useInput({ source: 'versionNodeId', defaultValue: '' });
 
   const primaryChoices = useMemo(
     () => taxonomy?.primaries.map((node) => ({ id: node.id, name: node.label })) ?? [],
@@ -39,7 +41,10 @@ export function PackTaxonomyFields({ compact = false }: PackTaxonomyFieldsProps)
   }, [taxonomy, primaryNodeIdField.value]);
 
   const versionChoices = useMemo(
-    () => taxonomy?.versions.map((node) => ({ id: node.id, name: node.label })) ?? [],
+    () => [
+      ALL_VERSION_CHOICE,
+      ...(taxonomy?.versions.map((node) => ({ id: node.id, name: node.label })) ?? []),
+    ],
     [taxonomy],
   );
 
@@ -75,7 +80,8 @@ export function PackTaxonomyFields({ compact = false }: PackTaxonomyFieldsProps)
       source="versionNodeId"
       label="页内分类"
       choices={versionChoices}
-      emptyText="全部（不限页内分类）"
+      defaultValue=""
+      helperText="默认「全部」表示不限页内分类"
       fullWidth
       size={inputSize}
     />
