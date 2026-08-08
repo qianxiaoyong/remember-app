@@ -39,10 +39,7 @@ export function filterMarketCatalogItems(
   items: CatalogPackItem[],
   query: MarketCatalogQuery,
 ): CatalogPackItem[] {
-  return filterCatalogItems(
-    items.filter(isMarketVisibleCatalogItem),
-    query,
-  );
+  return filterCatalogItems(items.filter(isMarketVisibleCatalogItem), query);
 }
 
 /** 离线且无 API 缓存时的本地 mock；不含 Story 测试包，也不注入内置包。 */
