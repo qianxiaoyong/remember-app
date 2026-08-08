@@ -2,7 +2,7 @@ import { assertAllowedPackPath, storyReadingContentSchema } from '@remember/cont
 import type { PackSourceStoryCard } from '@remember/pack-builder/pack-source';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { readAudioDurationMs } from './read-audio-duration-ms.js';
+import { isFfprobeAvailable, readAudioDurationMs } from './read-audio-duration-ms.js';
 import type { ValidationIssue } from './validate-pack-source.js';
 import { collectStoryContentIssues } from '../utils/story-content-issues.js';
 
@@ -53,7 +53,7 @@ export function validateStorySourceCard(
 
   let primaryAudioDurationMs: number | undefined;
   const primaryAudioPath = join(sourceDir, content.lesson.primaryAudio);
-  if (existsSync(primaryAudioPath)) {
+  if (existsSync(primaryAudioPath) && isFfprobeAvailable()) {
     try {
       primaryAudioDurationMs = readAudioDurationMs(primaryAudioPath);
     } catch {

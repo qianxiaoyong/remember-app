@@ -4,6 +4,10 @@ import type {
   StorySidebarEntry,
   StoryWordRun,
 } from '@remember/contracts';
+import {
+  formatStoryParagraphLengthMessage,
+  getStoryParagraphLengthIssue,
+} from '@remember/contracts';
 import type { PackSourceStoryCard } from '@remember/pack-builder/pack-source';
 import { findLostWordAnchors } from './story-word-anchors.js';
 import { runsToPlainText } from './story-runs-markup.js';
@@ -13,15 +17,23 @@ export interface StoryContentIssue {
   message: string;
 }
 
+export interface CollectStoryContentIssuesOptions {
+  primaryAudioDurationMs?: number;
+  checkParagraphLength?: boolean;
+}
+
 export function collectStoryContentIssues(
   content: StoryReadingContent,
-  options?: { primaryAudioDurationMs?: number },
+  options?: CollectStoryContentIssuesOptions,
 ): StoryContentIssue[] {
   const issues: StoryContentIssue[] = [];
   issues.push(...collectSidebarIssues(content));
   issues.push(...collectWordAnchorIssues(content));
   issues.push(...collectTimelineIssues(content.story.paragraphs, options?.primaryAudioDurationMs));
   issues.push(...collectTranslationIssues(content.story.paragraphs));
+  if (options?.checkParagraphLength !== false) {
+    issues.push(...collectParagraphLengthIssues(content.story.paragraphs));
+  }
   return issues;
 }
 
@@ -157,6 +169,21 @@ function collectTimelineIssues(
   return issues;
 }
 
+function collectParagraphLengthIssues(paragraphs: StoryParagraph[]): StoryContentIssue[] {
+  const issues: StoryContentIssue[] = [];
+  for (const [index, paragraph] of paragraphs.entries()) {
+    const issue = getStoryParagraphLengthIssue(runsToPlainText(paragraph.runs));
+    if (issue === undefined) {
+      continue;
+    }
+    issues.push({
+      path: `story.paragraphs[${String(index)}]`,
+      message: formatStoryParagraphLengthMessage(issue),
+    });
+  }
+  return issues;
+}
+
 function collectTranslationIssues(paragraphs: StoryParagraph[]): StoryContentIssue[] {
   const issues: StoryContentIssue[] = [];
   const hasAnyTranslation = paragraphs.some((paragraph) => paragraph.translationZh !== undefined);
@@ -182,7 +209,7 @@ function collectTranslationIssues(paragraphs: StoryParagraph[]): StoryContentIss
 
 export function collectStoryCardIssues(
   card: PackSourceStoryCard,
-  options?: { primaryAudioDurationMs?: number },
+  options?: CollectStoryContentIssuesOptions,
 ): StoryContentIssue[] {
   return collectStoryContentIssues(card.content, options);
 }

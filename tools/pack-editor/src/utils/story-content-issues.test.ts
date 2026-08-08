@@ -151,4 +151,28 @@ describe('collectStoryContentIssues', () => {
       true,
     );
   });
+
+  it('paragraph too long', () => {
+    const content = baseContent();
+    const firstParagraph = content.story.paragraphs[0];
+    if (!firstParagraph) {
+      throw new Error('expected first paragraph');
+    }
+    firstParagraph.runs = [{ kind: 'text', text: 'One. Two. Three. Four.' }];
+
+    const issues = collectStoryContentIssues(content);
+    expect(issues.some((issue) => issue.message.includes('paragraph too long'))).toBe(true);
+  });
+
+  it('can skip paragraph length check for pack source validation', () => {
+    const content = baseContent();
+    const firstParagraph = content.story.paragraphs[0];
+    if (!firstParagraph) {
+      throw new Error('expected first paragraph');
+    }
+    firstParagraph.runs = [{ kind: 'text', text: 'One. Two. Three. Four.' }];
+
+    const issues = collectStoryContentIssues(content, { checkParagraphLength: false });
+    expect(issues.some((issue) => issue.message.includes('paragraph too long'))).toBe(false);
+  });
 });

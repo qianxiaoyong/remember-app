@@ -1,19 +1,11 @@
-export interface SegmentPreview {
-  startMs: number;
-  endMs: number;
-}
-
-export interface StoryAudioSnapshot {
-  currentMs: number;
-  isPlaying: boolean;
-  durationMs: number;
-  loadError: string | null;
-  segmentPreview: SegmentPreview | null;
-}
-
-const HAVE_METADATA = 1;
-const SEEK_TOLERANCE_MS = 350;
-const MAX_SEEK_ATTEMPTS = 12;
+export type { SegmentPreview, StoryAudioSnapshot } from './story-audio-engine.types.js';
+import {
+  HAVE_METADATA,
+  MAX_SEEK_ATTEMPTS,
+  SEEK_TOLERANCE_MS,
+  type SegmentPreview,
+  type StoryAudioSnapshot,
+} from './story-audio-engine.types.js';
 
 type Listener = () => void;
 
@@ -69,7 +61,10 @@ export class StoryAudioEngine {
     element.addEventListener('pause', this.onPause);
     element.addEventListener('ended', this.onEnded);
     element.addEventListener('loadedmetadata', this.onLoadedMetadata);
+    element.addEventListener('durationchange', this.onDurationChange);
     element.addEventListener('error', this.onError);
+
+    this.syncDurationFromElement();
 
     const isPlaying = !element.paused;
     if (this.snapshot.isPlaying !== isPlaying) {
@@ -92,6 +87,7 @@ export class StoryAudioEngine {
     element.removeEventListener('pause', this.onPause);
     element.removeEventListener('ended', this.onEnded);
     element.removeEventListener('loadedmetadata', this.onLoadedMetadata);
+    element.removeEventListener('durationchange', this.onDurationChange);
     element.removeEventListener('error', this.onError);
   }
 
@@ -109,6 +105,21 @@ export class StoryAudioEngine {
     this.snapshot = next;
     for (const listener of this.subscribers) {
       listener();
+    }
+  }
+
+  private readElementDurationMs(): number {
+    const element = this.audio;
+    if (!element || !Number.isFinite(element.duration) || element.duration <= 0) {
+      return 0;
+    }
+    return Math.round(element.duration * 1000);
+  }
+
+  private syncDurationFromElement(): void {
+    const elementDurationMs = this.readElementDurationMs();
+    if (elementDurationMs > this.snapshot.durationMs) {
+      this.patch({ durationMs: elementDurationMs });
     }
   }
 
@@ -261,9 +272,14 @@ export class StoryAudioEngine {
   };
 
   private onLoadedMetadata = (): void => {
+    this.syncDurationFromElement();
     if (this.pendingSeekMs !== null) {
       void this.ensureSeekTo(this.pendingSeekMs);
     }
+  };
+
+  private onDurationChange = (): void => {
+    this.syncDurationFromElement();
   };
 
   private onError = (): void => {
