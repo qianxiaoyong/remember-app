@@ -1,19 +1,11 @@
-export interface SegmentPreview {
-  startMs: number;
-  endMs: number;
-}
-
-export interface StoryAudioSnapshot {
-  currentMs: number;
-  isPlaying: boolean;
-  durationMs: number;
-  loadError: string | null;
-  segmentPreview: SegmentPreview | null;
-}
-
-const HAVE_METADATA = 1;
-const SEEK_TOLERANCE_MS = 350;
-const MAX_SEEK_ATTEMPTS = 12;
+export type { SegmentPreview, StoryAudioSnapshot } from './story-audio-engine.types.js';
+import {
+  HAVE_METADATA,
+  MAX_SEEK_ATTEMPTS,
+  SEEK_TOLERANCE_MS,
+  type SegmentPreview,
+  type StoryAudioSnapshot,
+} from './story-audio-engine.types.js';
 
 type Listener = () => void;
 
