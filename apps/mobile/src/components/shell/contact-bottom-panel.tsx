@@ -1,14 +1,6 @@
 import type { ReactElement } from 'react';
 import { useEffect, useRef } from 'react';
-import {
-  Animated,
-  Dimensions,
-  Easing,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Animated, Dimensions, Easing, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
@@ -70,7 +62,10 @@ export function ContactBottomPanel(props: ContactBottomPanelProps): ReactElement
 
   return (
     <View pointerEvents="box-none" style={styles.host}>
-      <Animated.View pointerEvents="box-none" style={[styles.backdropWrap, { opacity: backdropAnim }]}>
+      <Animated.View
+        pointerEvents="box-none"
+        style={[styles.backdropWrap, { opacity: backdropAnim }]}
+      >
         <Pressable accessibilityRole="button" onPress={props.onClose} style={styles.backdrop} />
       </Animated.View>
 

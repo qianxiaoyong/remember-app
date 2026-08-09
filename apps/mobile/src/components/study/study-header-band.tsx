@@ -99,7 +99,10 @@ export function StudyHeaderBand(props: StudyHeaderBandProps): ReactElement {
               <Text style={styles.phonetic}>{prompt.phonetic.ipa}</Text>
             </>
           ) : null}
-          <AnimatedSpeakerIcon color={colors.surface} playing={props.primaryAudioPlaying ?? false} />
+          <AnimatedSpeakerIcon
+            color={colors.surface}
+            playing={props.primaryAudioPlaying ?? false}
+          />
         </Pressable>
       </View>
 

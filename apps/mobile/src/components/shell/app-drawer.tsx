@@ -57,6 +57,8 @@ export function AppDrawer(props: AppDrawerProps): ReactElement | null {
       setContactPanelVisible(false);
     }
   }, [props.visible]);
+
+  useLayoutEffect(() => {
     if (props.visible) {
       setRenderOverlay(true);
       slideAnim.setValue(-panelWidth);
@@ -100,7 +102,7 @@ export function AppDrawer(props: AppDrawerProps): ReactElement | null {
         setRenderOverlay(false);
       }
     });
-  }, [backdropAnim, panelWidth, props.visible, slideAnim]);
+  }, [backdropAnim, panelWidth, props.visible, renderOverlay, slideAnim]);
 
   const navigateFromDrawer = (route: string): void => {
     markDrawerReturnPending();
