@@ -118,19 +118,15 @@ export function useStudyFlow(
     }
   }, [currentKnowledgeId, packId]);
 
-  const {
-    primaryAudioPlaying,
-    playingExampleAudioPath,
-    playPrimaryAudio,
-    playExampleAudio,
-  } = useVocabularyStudyAudio({
-    packId,
-    primaryAudioRelativePath:
-      cardDetail?.cardType === 'vocabulary' ? cardDetail.content.prompt.primaryAudio : null,
-    autoPlayActive:
-      isBrowseMode && !revealed && browseReady && cardDetail?.cardType === 'vocabulary',
-    cardKey: currentKnowledgeId,
-  });
+  const { primaryAudioPlaying, playingExampleAudioPath, playPrimaryAudio, playExampleAudio } =
+    useVocabularyStudyAudio({
+      packId,
+      primaryAudioRelativePath:
+        cardDetail?.cardType === 'vocabulary' ? cardDetail.content.prompt.primaryAudio : null,
+      autoPlayActive:
+        isBrowseMode && !revealed && browseReady && cardDetail?.cardType === 'vocabulary',
+      cardKey: currentKnowledgeId,
+    });
 
   const advanceBrowse = useCallback(() => {
     if (!isBrowseMode || browseCards.length === 0) {

@@ -74,7 +74,11 @@ function parseRecallAutoPlayCount(raw: string): number {
 
 /** 0 表示关闭；开启时为 1、2、3 或 5，缺省 2。 */
 export function getRecallAutoPlayCount(db: SQLiteDatabase = openUserDatabase()): number {
-  const raw = getUserPreference(PREFERENCE_RECALL_AUTO_PLAY, String(DEFAULT_RECALL_AUTO_PLAY_COUNT), db);
+  const raw = getUserPreference(
+    PREFERENCE_RECALL_AUTO_PLAY,
+    String(DEFAULT_RECALL_AUTO_PLAY_COUNT),
+    db,
+  );
   return parseRecallAutoPlayCount(raw);
 }
 

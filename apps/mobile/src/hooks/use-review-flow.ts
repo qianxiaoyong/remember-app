@@ -65,23 +65,17 @@ export function useReviewFlow() {
 
   const sourcePackId = reviewContext?.sourcePackId ?? null;
 
-  const {
-    primaryAudioPlaying,
-    playingExampleAudioPath,
-    playPrimaryAudio,
-    playExampleAudio,
-  } = useVocabularyStudyAudio({
-    packId: sourcePackId,
-    primaryAudioRelativePath:
-      reviewContext?.cardDetail?.cardType === 'vocabulary'
-        ? reviewContext.cardDetail.content.prompt.primaryAudio
-        : null,
-    autoPlayActive:
-      !revealed &&
-      reviewContext?.cardDetail?.cardType === 'vocabulary' &&
-      Boolean(sourcePackId),
-    cardKey: currentKnowledgeId,
-  });
+  const { primaryAudioPlaying, playingExampleAudioPath, playPrimaryAudio, playExampleAudio } =
+    useVocabularyStudyAudio({
+      packId: sourcePackId,
+      primaryAudioRelativePath:
+        reviewContext?.cardDetail?.cardType === 'vocabulary'
+          ? reviewContext.cardDetail.content.prompt.primaryAudio
+          : null,
+      autoPlayActive:
+        !revealed && reviewContext?.cardDetail?.cardType === 'vocabulary' && Boolean(sourcePackId),
+      cardKey: currentKnowledgeId,
+    });
 
   const outcomeIntervalLabels = useMemo(() => {
     if (!currentKnowledgeId) {
