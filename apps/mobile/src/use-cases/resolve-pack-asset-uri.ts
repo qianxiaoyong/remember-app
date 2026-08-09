@@ -5,9 +5,6 @@ export function resolvePackAssetUri(packId: string, relativePath: string): strin
   if (installed?.installStatus !== 'installed') {
     return null;
   }
-  if (!installed) {
-    return null;
-  }
 
   const relative = relativePath.startsWith('assets/')
     ? relativePath.slice('assets/'.length)

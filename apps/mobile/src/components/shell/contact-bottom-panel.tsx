@@ -90,12 +90,12 @@ export function ContactBottomPanel(props: ContactBottomPanelProps): ReactElement
 
 const styles = StyleSheet.create({
   host: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     justifyContent: 'flex-end',
     zIndex: 110,
   },
   backdropWrap: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
   },
   backdrop: {
     backgroundColor: colors.overlay,

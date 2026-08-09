@@ -229,7 +229,8 @@ export function getActivePlaybackToken(): number {
 }
 
 function waitForPlaybackFinished(token: number): Promise<boolean> {
-  if (!sharedPlayer) {
+  const player = sharedPlayer;
+  if (!player) {
     return Promise.resolve(false);
   }
 
@@ -239,7 +240,7 @@ function waitForPlaybackFinished(token: number): Promise<boolean> {
       resolve(token === activePlaybackToken);
     }, 30000);
 
-    const subscription = sharedPlayer!.addListener(PLAYBACK_STATUS_UPDATE, (status) => {
+    const subscription = player.addListener(PLAYBACK_STATUS_UPDATE, (status) => {
       if (token !== activePlaybackToken) {
         clearTimeout(timeout);
         subscription.remove();

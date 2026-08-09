@@ -3,7 +3,6 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import type { VocabularyContent } from '@remember/contracts';
 import { TokenizedSentence } from '../tokenized-sentence';
 import { StudySectionHeader } from './study-section-header';
-import { AppIcon } from '../ui/app-icon';
 import { AnimatedSpeakerIcon } from '../ui/animated-speaker-icon';
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';

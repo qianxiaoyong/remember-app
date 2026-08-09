@@ -164,7 +164,7 @@ export function useStudyFlow(
     if (!getRecallAutoPlayEnabled()) {
       return;
     }
-    if (!cardDetail || cardDetail.cardType !== 'vocabulary') {
+    if (cardDetail?.cardType !== 'vocabulary') {
       return;
     }
 
