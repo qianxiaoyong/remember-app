@@ -2,6 +2,9 @@ import type { PackDownloadAuthorizationResponse } from '@remember/contracts';
 import { packDownloadAuthorizationResponseSchema } from '@remember/contracts';
 import { apiFetchJson } from './api-client';
 
+/** 大包经 staging API 代理下载可能较慢；与 install 验包分离，仅约束 HTTP 下载。 */
+const PACK_DOWNLOAD_TIMEOUT_MS = 600_000;
+
 export async function requestPackDownloadAuthorization(
   sessionToken: string,
   packId: string,
@@ -20,7 +23,7 @@ export async function downloadPackZipBytes(downloadUrl: string): Promise<Uint8Ar
   const controller = new AbortController();
   const timeoutId = setTimeout(() => {
     controller.abort();
-  }, 60_000);
+  }, PACK_DOWNLOAD_TIMEOUT_MS);
 
   try {
     const response = await fetch(downloadUrl, { method: 'GET', signal: controller.signal });
