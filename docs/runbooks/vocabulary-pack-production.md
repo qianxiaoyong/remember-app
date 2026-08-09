@@ -3,6 +3,7 @@
 **用途：** 新开的 Cursor 对话 **直接 @ 本文**（或整篇粘贴），AI 即应按本文流程制作 **vocabulary** 类型学习包，无需重复口述规则。
 
 **适用：** 小学/初中各年级 **教材单词表** 包（一期 cardType 固定 `vocabulary`）。  
+**人教版（PEP）** 与 **闽教版（`-mj`）** 均走统一 Python 管线；闽教版金标准见 §10.2（`en-grade3-v2-mj`）。  
 **不适用：** 童话阅读包 `story_reading` → 见 [`primary-1000-stories-production.md`](./primary-1000-stories-production.md)。
 
 相关文档：
@@ -41,9 +42,24 @@ en-grade{N}-{vol}-rj
 | `en`       | 英语       | 固定                     |
 | `grade{N}` | 年级       | `grade3` = 三年级        |
 | `{vol}`    | 册次       | `v1` = 上册，`v2` = 下册 |
-| `rj`       | 人教版 PEP | 其他版本换后缀，如 `ox`  |
+| `rj`       | 人教版 PEP | 其他版本换后缀，如 `mj`（闽教版）、`ox` |
 
-**已交付参考：**
+闽教版 packId 后缀为 **`mj`**，解析格式为 `vocab_format='minjiao_unit'`（见 `pep_vocab_common.py`）。
+
+**已交付参考（闽教版，金标准：`en-grade3-v2-mj`）：**
+
+| packId            | catalog 标题建议       | 词条数 | 版本  | 管线           |
+| ----------------- | ---------------------- | ------ | ----- | -------------- |
+| `en-grade3-v1-mj` | 三年级上册闽教版单词表 | 178    | 1.0.3 | 统一管线       |
+| `en-grade3-v2-mj` | 三年级下册闽教版单词表 | 135    | 1.0.2 | 统一管线（**金标准**） |
+| `en-grade4-v1-mj` | 四年级上册闽教版单词表 | 111    | 1.0.1 | 统一管线       |
+| `en-grade4-v2-mj` | 四年级下册闽教版单词表 | 99     | 1.0.1 | 统一管线       |
+| `en-grade5-v1-mj` | 五年级上册闽教版单词表 | 95     | 1.0.1 | 统一管线       |
+| `en-grade5-v2-mj` | 五年级下册闽教版单词表 | 106    | 1.0.1 | 统一管线       |
+| `en-grade6-v1-mj` | 六年级上册闽教版单词表 | 100    | 1.0.1 | 统一管线       |
+| `en-grade6-v2-mj` | 六年级下册闽教版单词表 | 71     | 1.0.1 | 统一管线       |
+
+**已交付参考（人教版）：**
 
 | packId            | catalog 标题建议       | 词条数 | 版本  | 管线                         |
 | ----------------- | ---------------------- | ------ | ----- | ---------------------------- |
@@ -105,6 +121,7 @@ en-grade{N}-{vol}-rj
 | **cards / lexicon / meta JSON** | **脚本** `generate`  | `source/<packId>/` 三份 JSON + `content-stats.json`                                        |
 | **TTS 批量 mp3**                | **脚本**             | `generate_pep_vocab_audio.py`（读 cards.json 路径清单）                                    |
 | **zip 打包 + verify**           | **脚本** `build`     | `output/<packId>-<version>.zip`                                                            |
+| **例句 token 预检**             | **脚本** `check-examples` / `generate` / `build` 内置 | 扫 `*_examples_data.py` 或 `cards.json`（见 §4.5.1）                          |
 | **PackConfig / 管线注册**       | **Cursor**           | `pep_vocab_common.py` 的 `PACK_CONFIGS`；`pep_vocab_pipeline.py` 三处模块映射              |
 | **Admin 上传 / git commit**     | **用户明确要求时**   | Cursor 默认不做                                                                            |
 
@@ -229,6 +246,24 @@ en-grade{N}-{vol}-rj
 - 每条例句必须有 `en`、`zh`；`audio` 路径由 generate 写入 `assets/audio/examples/{slug(headword)}-{n}.mp3`
 - 难度与年级一致；禁止超纲复杂从句
 
+#### 4.5.1 例句 token 规则（Admin 同款，写例句时就要满足）
+
+Admin / `verify` 要求：每条英文例句必须包含 headword 的**精确 token**（不做词形变化匹配）。
+
+- **禁止**为过审把复数改单数、动词变形硬改原形等——应**重写句子**，兼顾语法自然 + token 匹配
+- 反例：headword=`apple`，例句 `I like apples.` ❌
+- 正例：headword=`apple`，例句 `I have an apple.` ✅
+- 复合词：headword=`ball` 时句中须有 `ball`，不能只有 `football` ❌
+- 若课文语境自然要用复数，应确认 headword 是否为复数形，而不是改例句词形
+
+**写例句时随时自检：**
+
+```powershell
+python tools/pack-builder/scripts/pep_vocab_pipeline.py <packId> check-examples
+```
+
+`generate` 开始前也会自动扫描 `*_examples_data.py`；`build` 前会再扫 `cards.json` 兜底。
+
 ### 4.6 lexicon（点词）
 
 - **点什么查什么**：`went` 与 `go` 是不同 `surfaceForm`，例句出现就要各写一行
@@ -297,6 +332,9 @@ python tools/pack-builder/scripts/pep_vocab_pipeline.py en-grade5-v2-rj parse
 
 # ② 读 cache + 三件套 → source/<packId>/
 python tools/pack-builder/scripts/pep_vocab_pipeline.py en-grade5-v2-rj generate
+
+# ②′ 写例句过程中随时自检（扫 *_examples_data.py，见 §4.5.1）
+python tools/pack-builder/scripts/pep_vocab_pipeline.py en-grade5-v2-rj check-examples
 
 # ③ TTS（首次或换音色：加 --force；中断后续跑不加 --force 即断点续传）
 python tools/pack-builder/scripts/generate_pep_vocab_audio.py en-grade5-v2-rj
@@ -487,9 +525,37 @@ pnpm --filter @remember/admin dev
 - [ ] `build` + `verify` 零错误
 - [ ] （用户要求时）Admin 上传 + App 抽测
 
+### 9.1 闽教版任务清单（复制给 AI）
+
+制作 **{年级}{册}闽教版单词表** 时，按序勾选（**金标准：`en-grade3-v2-mj`**）：
+
+**脚本 / 配置（Cursor 或人工）**
+
+- [ ] 确认 PDF 路径与「Words and Expressions / 单元词汇表」页（0-based 页码）
+- [ ] 定 packId：`en-grade{N}-v{V}-mj`；`PackConfig.vocab_format='minjiao_unit'`
+- [ ] `pep_vocab_common.py` 注册 `PackConfig`；`pep_vocab_pipeline.py` 注册三件套模块名（文件名带 `_mj` 后缀）
+- [ ] `parse` 跑通；**词条数与 PDF 单元词汇表对齐**
+- [ ] 需要时编写 `grade{N}_vol{V}_mj_vocab_fixes.py` 并注册
+
+**Cursor 内容（必做）**
+
+- [ ] `grade{N}_vol{V}_mj_examples_data.py`：每个 headword 2～3 条例句；写的过程中跑 `check-examples`
+- [ ] `grade{N}_vol{V}_mj_mnemonics.py`：`DEFINITION_OVERRIDES` + `IPA_OVERRIDES` + `POS_OVERRIDES` 全覆盖（闽教 PDF 无 IPA，全靠 override）
+- [ ] 助记：谐音不硬凑；`INFLECTION_NOTES` 补词形
+- [ ] 特殊 headword TTS（如 `a/an`）在 `pack_tts_config.py` 的 `HEADWORD_TTS_SEGMENTS` 配置
+
+**脚本收尾**
+
+- [ ] bump `pack_version` → **`generate`（不可跳过）** → 核对 `content-stats.json`
+- [ ] `generate_pep_vocab_audio.py` 产齐 mp3
+- [ ] `build` + `verify` 零错误；zip 内 `packManifest.packVersion` 与文件名版本一致
+- [ ] （用户要求时）Admin 上传 + App 抽测
+
 ---
 
 ## 10. 给 Cursor 的任务模板（新窗口粘贴）
+
+### 10.1 人教版（PEP）
 
 ```text
 请按 docs/runbooks/vocabulary-pack-production.md 制作 vocabulary 学习包。
@@ -509,13 +575,109 @@ pnpm --filter @remember/admin dev
 
 【要求】
 1. 先 parse 核对 cache 词条数；再写三件套覆盖全部 headword
-2. 助记：谐音不硬凑；definitions 带 pos；补充 inflectionNote
-3. TTS：en-GB-LibbyNeural，dialect uk
-4. build + verify 通过后给出 zip 路径
-5. 不要 commit，不要上传 Admin（除非我要求）
+2. 写例句过程中随时跑 check-examples；禁止为过审改词形硬凑 token
+3. 助记：谐音不硬凑；definitions 带 pos；补充 inflectionNote
+4. bump 版本后必须 generate → TTS → build（禁止只 bump 只 build）
+5. TTS：en-GB-LibbyNeural，dialect uk
+6. build + verify 通过后给出 zip 路径
+7. 不要 commit，不要上传 Admin（除非我要求）
 ```
 
 把 `{}` 内换成实际年级/PDF 即可。
+
+### 10.2 闽教版（金标准：en-grade3-v2-mj）
+
+新窗口 **@ 本文** + 粘贴：
+
+```text
+请按 docs/runbooks/vocabulary-pack-production.md 制作 vocabulary 学习包。
+严格参考金标准包 en-grade3-v2-mj（三年级下册闽教版单词表）。
+
+【必读】
+@docs/runbooks/vocabulary-pack-production.md
+@.cursor/rules/pack-protocol-alignment.mdc
+@.cursor/skills/build-learning-app/SKILL.md
+
+【任务】
+- 年级册：{例如：四年级上册}
+- packId：en-grade{N}-v{V}-mj
+- PDF：imports/最新【闽教版】{N}年级英语课本•{上|下}册.pdf
+- catalog 标题：{N}年级{上|下}册闽教版单词表
+- 金标准参考包：en-grade3-v2-mj（流程、文件结构、内容质量一律对齐）
+
+【金标准文件（照抄结构与写法，不要照抄内容）】
+- 配置：tools/pack-builder/scripts/pep_vocab_common.py → en-grade3-v2-mj 的 PackConfig
+  （vocab_format='minjiao_unit'，vocab_page_indices 为 PDF 0-based 页码）
+- 例句：tools/pack-builder/scripts/grade3_vol2_mj_examples_data.py
+- 助记/释义/音标：tools/pack-builder/scripts/grade3_vol2_mj_mnemonics.py
+- 漏词修复（按需）：tools/pack-builder/scripts/grade3_vol2_mj_vocab_fixes.py
+- 管线注册：tools/pack-builder/scripts/pep_vocab_pipeline.py
+  （HAND_EXAMPLES_MODULES / HAND_MNEMONICS_MODULES / VOCAB_FIXES_MODULES）
+- 已交付产物：tools/pack-builder/source/en-grade3-v2-mj/（135 卡，1.0.2）
+
+【职责分工（必须遵守）】
+- 脚本做：parse → generate → TTS → build → verify
+- Cursor 必写三件套（不要手工编辑 cards.json，不要从 PDF 自动抽例句）：
+  1. grade{N}_vol{V}_mj_examples_data.py   — 每词 2～3 条例句 (en, zh)
+  2. grade{N}_vol{V}_mj_mnemonics.py       — DEFINITION_OVERRIDES + IPA_OVERRIDES + POS_OVERRIDES 全覆盖；mnemonic_for；INFLECTION_NOTES
+  3. grade{N}_vol{V}_mj_vocab_fixes.py     — 仅 parse 漏词/OCR 噪声时需要
+- 在 pep_vocab_common.py 注册 PackConfig；在 pep_vocab_pipeline.py 注册三件套模块名
+
+【制作顺序（逐步执行，每步汇报结果）】
+
+① parse — 从 PDF 抽词表
+   python tools/pack-builder/scripts/pep_vocab_pipeline.py <packId> parse
+   验收：cache 词条数与 PDF「Words and Expressions / 单元词汇表」一致；核对 unitStats
+
+② 写三件套 — 覆盖 cache 全部 headword（1:1，不可漏词）
+   写例句过程中随时自检：
+   python tools/pack-builder/scripts/pep_vocab_pipeline.py <packId> check-examples
+
+③ bump 版本 — 在 pep_vocab_common.py 把 pack_version +1（首版 1.0.0）
+
+④ generate — 生成 source/<packId>/ 三份 JSON
+   python tools/pack-builder/scripts/pep_vocab_pipeline.py <packId> generate
+   （generate 开始前自动 check-examples；通过后才会写 cards.json）
+
+⑤ TTS — 批量生成 mp3
+   python tools/pack-builder/scripts/generate_pep_vocab_audio.py <packId>
+   （换音色或改 TTS 规则后加 --force）
+   音色固定：en-GB-LibbyNeural，dialect uk
+   特殊 headword（如 a/an 含 /）须在 pack_tts_config.py 的 HEADWORD_TTS_SEGMENTS 配置后再生成
+
+⑥ build — 打包 + 验包
+   python tools/pack-builder/scripts/pep_vocab_pipeline.py <packId> build
+   （build 前自动校验 meta.json 版本一致 + cards.json 例句 token）
+   验收：verify 零错误；zip 内 manifest.packVersion 与文件名版本一致
+
+或一条龙：python tools/pack-builder/scripts/pep_vocab_pipeline.py <packId> all
+
+【例句 / 助记 / 音标】见本文 §4.5.1、§4.3、§4.2
+
+【版本 / 上传】
+- 改内容必须：bump pack_version → generate → TTS（若例句/headword 变了）→ build
+- 禁止只 bump 版本只跑 build
+- Admin 版本号须与 zip 内 packManifest.packVersion 一致
+- 默认不要 git commit，不要上传 Admin（除非我明确要求）
+
+【交付汇报】
+1. packId、版本、cardCount、zip 路径
+2. parse 词条数 vs PDF 对比
+3. check-examples / build verify 结果
+4. 若有 vocab_fixes / TTS 特殊配置，说明改了什么
+5. 已知遗留或需人工试听抽查的词（如有）
+```
+
+### 10.3 修订已有闽教版包（非新年级）
+
+```text
+【本次是内容修订，不是新包】
+- 基础包：{packId}（已有）
+- 修订原因：{例：补例句 / 修 TTS / 修 IPA / 修 token 例句}
+- 必须在 pep_vocab_common.py bump pack_version 后跑 generate → TTS（若需）→ build
+- 参考已修复案例：en-grade3-v1-mj 1.0.3（a/an TTS 分段、例句 token 批量修复）
+- 其余流程与 §10.2 相同
+```
 
 ---
 
@@ -551,6 +713,18 @@ A：例句点词会点到；缺条目 App 弹窗显示「未收录」。由 gene
 **Q：verify 过了但 App 安装失败？**  
 A：查 `protocolVersion`、签名 keyId、zip 大小；与 builder/App 版本是否一致。
 
+**Q：Admin 提示 packVersion 已存在 / zip 文件名与 manifest 版本不一致？**  
+A：只 bump 了 `pep_vocab_common.py` 但没跑 `generate`。`meta.json` 仅由 `generate` 写入；必须 **bump → generate → build**，且 Admin 填写的版本与 zip 内 manifest 一致。
+
+**Q：例句 token 校验失败（example missing headword token）？**  
+A：写例句时跑 `check-examples`（见 §4.5.1）。禁止为过审改词形；应重写句子使 headword 精确出现且语法自然。
+
+**Q：TTS 把 a/an 读成怪音？**  
+A：在 `pack_tts_config.py` 的 `HEADWORD_TTS_SEGMENTS` 配置分段读音（如 `a/an` → `['a', 'an']`），再 `--force` 重生成该包音频。
+
+**Q：闽教版与人教版制作有何不同？**  
+A：packId 后缀 `-mj`；`vocab_format='minjiao_unit'`；三件套文件名带 `_mj`；PDF 无 IPA，释义/音标全靠 `*_mnemonics.py` overrides。流程与校验规则相同，金标准见 `en-grade3-v2-mj`（§10.2）。
+
 ---
 
 ## 12. 文件索引
@@ -560,12 +734,17 @@ A：查 `protocolVersion`、签名 keyId、zip 大小；与 builder/App 版本�
 | `docs/runbooks/vocabulary-pack-production.md`                 | **本文** — 新对话入口                                 |
 | `.cursor/rules/pack-protocol-alignment.mdc`                   | pack 协议冻结稿                                       |
 | `tools/pack-builder/scripts/pep_vocab_common.py`              | **统一** PackConfig、PDF/OCR 解析、cards/lexicon 生成 |
-| `tools/pack-builder/scripts/pep_vocab_pipeline.py`            | **统一** CLI：parse / generate / build / all          |
-| `tools/pack-builder/scripts/generate_pep_vocab_audio.py`      | **统一** TTS（四～六年级）                            |
-| `tools/pack-builder/scripts/grade{N}_vol{V}_examples_data.py` | Cursor：例句数据                                      |
-| `tools/pack-builder/scripts/grade{N}_vol{V}_mnemonics.py`     | Cursor：助记 + DEFINITION/IPA/POS overrides           |
-| `tools/pack-builder/scripts/grade{N}_vol{V}_vocab_fixes.py`   | Cursor（可选）：漏词/OCR 清洗                         |
-| `tools/pack-builder/scripts/grade3_vol2_*.py`                 | 三下历史四件套（例句/助记写法参考）                   |
-| `tools/pack-builder/scripts/pack_tts_config.py`               | 共享音色                                              |
+| `tools/pack-builder/scripts/pep_vocab_pipeline.py`            | **统一** CLI：parse / generate / build / all / **check-examples** |
+| `tools/pack-builder/scripts/scan_example_tokens.py`           | 例句 headword token 扫描（check-examples / generate / build 内部调用） |
+| `tools/pack-builder/scripts/generate_pep_vocab_audio.py`      | **统一** TTS                                          |
+| `tools/pack-builder/scripts/grade{N}_vol{V}_examples_data.py` | Cursor：例句数据（人教版）                            |
+| `tools/pack-builder/scripts/grade{N}_vol{V}_mnemonics.py`     | Cursor：助记 + overrides（人教版）                  |
+| `tools/pack-builder/scripts/grade{N}_vol{V}_vocab_fixes.py`   | Cursor（可选）：漏词/OCR 清洗（人教版）               |
+| `tools/pack-builder/scripts/grade{N}_vol{V}_mj_examples_data.py` | Cursor：例句数据（**闽教版**）                     |
+| `tools/pack-builder/scripts/grade{N}_vol{V}_mj_mnemonics.py` | Cursor：助记 + overrides（**闽教版**）               |
+| `tools/pack-builder/scripts/grade{N}_vol{V}_mj_vocab_fixes.py` | Cursor（可选）：漏词清洗（**闽教版**）             |
+| `tools/pack-builder/scripts/grade3_vol2_mj_*.py`              | **闽教版金标准**三件套（三下，`en-grade3-v2-mj`）     |
+| `tools/pack-builder/scripts/grade3_vol2_*.py`                 | 三下历史四件套（人教版例句/助记写法参考）             |
+| `tools/pack-builder/scripts/pack_tts_config.py`               | 共享音色 + `HEADWORD_TTS_SEGMENTS`                    |
 | `tools/pack-builder/docs/llm-system-prompt.md`                | LLM 路线说明                                          |
 | `docs/runbooks/pack-editor-local.md`                          | 本地编辑/打包 UI                                      |
