@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react';
-import { useLocalSearchParams } from 'expo-router';
+import { Redirect, useLocalSearchParams } from 'expo-router';
 import { StudyScreen } from '../src/screens/study-screen';
 
 export default function StudyRoute(): ReactElement {
@@ -11,5 +11,8 @@ export default function StudyRoute(): ReactElement {
   const rawKnowledgeId = params.knowledgeId;
   const packId = Array.isArray(rawPackId) ? rawPackId[0] : rawPackId;
   const knowledgeId = Array.isArray(rawKnowledgeId) ? rawKnowledgeId[0] : rawKnowledgeId;
-  return <StudyScreen knowledgeId={knowledgeId ?? null} packId={packId ?? 'remember-test-pack'} />;
+  if (!packId) {
+    return <Redirect href="/library" />;
+  }
+  return <StudyScreen knowledgeId={knowledgeId ?? null} packId={packId} />;
 }

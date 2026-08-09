@@ -75,77 +75,7 @@ export function listSecondaryCategories(primaryCategory: CatalogPrimaryCategory)
   return ['全部'];
 }
 
-const bundledTestPackBase = {
-  title: '记得测试包',
-  contentTags: ['词汇', '上册'],
-  cardCount: 2,
-  sizeLabel: '约 2 MB',
-  updatedAt: '2026-07-28',
-  priceCents: 1,
-  priceLabel: '¥0.01',
-  summary: '阶段 4 验包与学习闭环用的固定测试知识库。',
-  sampleHeadwords: ['picture', 'take a picture'],
-  samplePreviews: [
-    {
-      headword: 'picture',
-      zh: '图片',
-      exampleEn: 'I take a picture.',
-      initial: 'P',
-      previewAudio: 'assets/audio/picture.mp3',
-    },
-    {
-      headword: 'take a picture',
-      zh: '拍照',
-      exampleEn: 'Let us take a picture.',
-      initial: 'T',
-      previewAudio: 'assets/audio/take-a-picture.mp3',
-    },
-  ] satisfies PackSamplePreview[],
-  isBundledTestPack: true as const,
-};
-
-function bundledTestPackVariant(
-  packId: string,
-  overrides: Partial<CatalogPackItem> = {},
-): CatalogPackItem {
-  return {
-    packId,
-    primaryCategory: 'junior',
-    secondaryCategory: '全部',
-    version: '人教版',
-    ...bundledTestPackBase,
-    ...overrides,
-  };
-}
-
 export const catalogSeed: CatalogPackItem[] = [
-  bundledTestPackVariant('remember-test-pack'),
-  {
-    packId: 'story-test-pack',
-    title: 'Story 阅读测试包',
-    primaryCategory: 'primary',
-    secondaryCategory: '三年级',
-    version: '测试',
-    contentTags: ['阅读', '童话'],
-    cardCount: 1,
-    sizeLabel: '约 1 MB',
-    updatedAt: '2026-08-02',
-    priceCents: 1,
-    priceLabel: '¥0.01',
-    summary: 'story_reading 注释阅读真机验收用内置包（C1 公主与豌豆）。',
-    sampleHeadwords: ['The Princess and the Pea'],
-    isBundledTestPack: true,
-  },
-  bundledTestPackVariant('remember-test-pack-2', { version: '外研版' }),
-  bundledTestPackVariant('remember-test-pack-3', { version: '译林版' }),
-  bundledTestPackVariant('remember-test-pack-4', {
-    secondaryCategory: '七年级',
-    contentTags: ['词汇', '下册'],
-  }),
-  bundledTestPackVariant('remember-test-pack-5', {
-    secondaryCategory: '八年级',
-    contentTags: ['词汇', '上册'],
-  }),
   {
     packId: 'demo-primary-grade1',
     title: '一年级上册词汇',
