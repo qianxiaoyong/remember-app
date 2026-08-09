@@ -30,8 +30,7 @@ export const drawerCommonFeatures: DrawerCommonFeatureItem[] = [
   {
     id: 'guide',
     label: '记得攻略',
-    reserved: true,
-    reservedMessage: '学习攻略将在后续版本开放。',
+    route: '/guide',
   },
   {
     id: 'question-bank',
