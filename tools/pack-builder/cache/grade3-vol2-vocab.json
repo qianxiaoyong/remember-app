@@ -1,0 +1,914 @@
+[
+  {
+    "unit": 1,
+    "headword": "where",
+    "ipa": "/weə(r)/",
+    "definition_zh": "在哪里；到哪里",
+    "page": 4,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "from",
+    "ipa": "/frɒm/",
+    "definition_zh": "（表示来源）来自，从……来",
+    "page": 4,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "about",
+    "ipa": "/əˈbaʊt/",
+    "definition_zh": "大约；左右",
+    "page": 4,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "today",
+    "ipa": "/təˈdeɪ/",
+    "definition_zh": "今天",
+    "page": 5,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "teacher",
+    "ipa": "/ˈtiːtʃə(r)/",
+    "definition_zh": "教师",
+    "page": 5,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "student",
+    "ipa": "/ˈstjuːdnt/",
+    "definition_zh": "学生",
+    "page": 5,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "after",
+    "ipa": "/ˈɑːftə(r)/",
+    "definition_zh": "在……后面",
+    "page": 7,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "who",
+    "ipa": "/huː/",
+    "definition_zh": "谁；什么人",
+    "page": 7,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "girl",
+    "ipa": "/ɡɜːl/",
+    "definition_zh": "女孩",
+    "page": 7,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "neighbour",
+    "ipa": "/ˈneɪbə(r)/",
+    "definition_zh": "邻居",
+    "page": 7,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "boy",
+    "ipa": "/bɔɪ/",
+    "definition_zh": "男孩",
+    "page": 8,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "woman",
+    "ipa": "/ˈwʊmən/",
+    "definition_zh": "成年女子；妇女",
+    "page": 8,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "man",
+    "ipa": "/mæn/",
+    "definition_zh": "成年男子；男人",
+    "page": 8,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "Mr",
+    "ipa": "/ˈmɪstə(r)/",
+    "definition_zh": "（用于男子的姓氏或姓名前）先生",
+    "page": 8,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "classmate",
+    "ipa": "/ˈklɑːsmeɪt/",
+    "definition_zh": "同班同学",
+    "page": 9,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "he",
+    "ipa": "/hiː/",
+    "definition_zh": "他",
+    "page": 9,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "English",
+    "ipa": "/ˈɪŋɡlɪʃ/",
+    "definition_zh": "英语的；英语",
+    "page": 9,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "she",
+    "ipa": "/ʃiː/",
+    "definition_zh": "她",
+    "page": 9,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "very",
+    "ipa": "/ˈveri/",
+    "definition_zh": "很；非常；十分",
+    "page": 9,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "UK",
+    "ipa": "/ˌjuː ˈkeɪ/",
+    "definition_zh": "英国",
+    "page": 4,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "China",
+    "ipa": "/ˈtʃaɪnə/",
+    "definition_zh": "中国",
+    "page": 4,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "Canada",
+    "ipa": "/ˈkænədə/",
+    "definition_zh": "加拿大",
+    "page": 5,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "USA",
+    "ipa": "/ˌjuː es ˈeɪ/",
+    "definition_zh": "美国",
+    "page": 5,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "has",
+    "ipa": "/hæz/",
+    "definition_zh": "（have的第三人称单数形式）具有（某种外表、特性或特征）",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "long",
+    "ipa": "/lɒŋ/",
+    "definition_zh": "（长度或距离）长的",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "body",
+    "ipa": "/ˈbɒdi/",
+    "definition_zh": "身体",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "short",
+    "ipa": "/ʃɔːt/",
+    "definition_zh": "短的；个子矮的",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "leg",
+    "ipa": "/leɡ/",
+    "definition_zh": "腿",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "right",
+    "ipa": "/raɪt/",
+    "definition_zh": "（意见或判断）准确，确切，恰当",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "fat",
+    "ipa": "/fæt/",
+    "definition_zh": "肥的；肥胖的",
+    "page": 17,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "thin",
+    "ipa": "/θɪn/",
+    "definition_zh": "瘦的",
+    "page": 17,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "slow",
+    "ipa": "/sləʊ/",
+    "definition_zh": "缓慢的；慢的",
+    "page": 17,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "love",
+    "ipa": "/lʌv/",
+    "definition_zh": "喜爱；爱",
+    "page": 17,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "tail",
+    "ipa": "/teɪl/",
+    "definition_zh": "尾；尾巴",
+    "page": 17,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "her",
+    "ipa": "/hɜː(r)/",
+    "definition_zh": "她；她的",
+    "page": 19,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "gift",
+    "ipa": "/ɡɪft/",
+    "definition_zh": "礼物",
+    "page": 19,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "picture",
+    "ipa": "/ˈpɪktʃə(r)/",
+    "definition_zh": "图画；绘画",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "card",
+    "ipa": "/kɑːd/",
+    "definition_zh": "贺卡；慰问卡；卡片",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "sing",
+    "ipa": "/sɪŋ/",
+    "definition_zh": "唱（歌）；演唱",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "dance",
+    "ipa": "/dɑːns/",
+    "definition_zh": "跳舞",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "face",
+    "ipa": "/feɪs/",
+    "definition_zh": "脸；面孔",
+    "page": 21,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "all",
+    "ipa": "/ɔːl/",
+    "definition_zh": "所有；全部",
+    "page": 21,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "so",
+    "ipa": "/səʊ/",
+    "definition_zh": "（表示大小或数量）这么，那么",
+    "page": 21,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "talk",
+    "ipa": "/tɔːk/",
+    "definition_zh": "（用某种语言）讲，说；说话",
+    "page": 21,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "song",
+    "ipa": "/sɒŋ/",
+    "definition_zh": "歌；歌曲",
+    "page": 21,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "or",
+    "ipa": "/ɔː(r)/",
+    "definition_zh": "或；或者；还是",
+    "page": 21,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "much",
+    "ipa": "/mʌtʃ/",
+    "definition_zh": "许多；大量",
+    "page": 21,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "eraser",
+    "ipa": "/ɪˈreɪzə(r)/",
+    "definition_zh": "橡皮",
+    "page": 28,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "find",
+    "ipa": "/faɪnd/",
+    "definition_zh": "找到；找回",
+    "page": 28,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "ruler",
+    "ipa": "/ˈruːlə(r)/",
+    "definition_zh": "直尺",
+    "page": 28,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "pen",
+    "ipa": "/pen/",
+    "definition_zh": "钢笔",
+    "page": 29,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "pencil",
+    "ipa": "/ˈpensl/",
+    "definition_zh": "铅笔",
+    "page": 29,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "book",
+    "ipa": "/bʊk/",
+    "definition_zh": "书；书籍",
+    "page": 29,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "bag",
+    "ipa": "/bæɡ/",
+    "definition_zh": "包；袋",
+    "page": 29,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "paper",
+    "ipa": "/ˈpeɪpə(r)/",
+    "definition_zh": "纸",
+    "page": 29,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "these",
+    "ipa": "/ðiːz/",
+    "definition_zh": "这些",
+    "page": 31,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "see",
+    "ipa": "/siː/",
+    "definition_zh": "看见",
+    "page": 32,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "smell",
+    "ipa": "/smel/",
+    "definition_zh": "闻（气味）",
+    "page": 32,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "taste",
+    "ipa": "/teɪst/",
+    "definition_zh": "尝（味道）",
+    "page": 32,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "hear",
+    "ipa": "/hɪə(r)/",
+    "definition_zh": "听见；听到",
+    "page": 32,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "touch",
+    "ipa": "/tʌtʃ/",
+    "definition_zh": "触摸；碰",
+    "page": 32,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "learn",
+    "ipa": "/lɜːn/",
+    "definition_zh": "学；学习",
+    "page": 33,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "nose",
+    "ipa": "/nəʊz/",
+    "definition_zh": "鼻；鼻子",
+    "page": 33,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "tongue",
+    "ipa": "/tʌŋ/",
+    "definition_zh": "舌；舌头",
+    "page": 33,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "class",
+    "ipa": "/klɑːs/",
+    "definition_zh": "课；班级",
+    "page": 33,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "in class",
+    "ipa": "/ɪn klɑːs/",
+    "definition_zh": "在课堂上",
+    "page": 33,
+    "kind": "phrase"
+  },
+  {
+    "unit": 3,
+    "headword": "computer",
+    "ipa": "/kəmˈpjuːtə(r)/",
+    "definition_zh": "计算机；电脑",
+    "page": 33,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "breakfast",
+    "ipa": "/ˈbrekfəst/",
+    "definition_zh": "早餐；早饭",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "time",
+    "ipa": "/taɪm/",
+    "definition_zh": "时间",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "bread",
+    "ipa": "/bred/",
+    "definition_zh": "面包",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "egg",
+    "ipa": "/eɡ/",
+    "definition_zh": "（作食物用的）蛋；鸡蛋",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "milk",
+    "ipa": "/mɪlk/",
+    "definition_zh": "（牛或羊等的）奶",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "noodle",
+    "ipa": "/ˈnuːdl/",
+    "definition_zh": "（常用复数）面条",
+    "page": 41,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "juice",
+    "ipa": "/dʒuːs/",
+    "definition_zh": "果汁",
+    "page": 41,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "rice",
+    "ipa": "/raɪs/",
+    "definition_zh": "大米",
+    "page": 43,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "meat",
+    "ipa": "/miːt/",
+    "definition_zh": "肉",
+    "page": 43,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "vegetable",
+    "ipa": "/ˈvedʒtəbl/",
+    "definition_zh": "蔬菜",
+    "page": 43,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "healthy",
+    "ipa": "/ˈhelθi/",
+    "definition_zh": "健康的",
+    "page": 44,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "plate",
+    "ipa": "/pleɪt/",
+    "definition_zh": "盘子",
+    "page": 44,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "soup",
+    "ipa": "/suːp/",
+    "definition_zh": "汤",
+    "page": 44,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "fruit",
+    "ipa": "/fruːt/",
+    "definition_zh": "水果",
+    "page": 44,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "colourful",
+    "ipa": "/ˈkʌləfl/",
+    "definition_zh": "五彩缤纷的",
+    "page": 45,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "candy",
+    "ipa": "/ˈkændi/",
+    "definition_zh": "糖果",
+    "page": 45,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "yummy",
+    "ipa": "/ˈjʌmi/",
+    "definition_zh": "很好吃的",
+    "page": 45,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "at",
+    "ipa": "/æt/",
+    "definition_zh": "在（某处）",
+    "page": 52,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "boat",
+    "ipa": "/bəʊt/",
+    "definition_zh": "小船；舟",
+    "page": 52,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "cool",
+    "ipa": "/kuːl/",
+    "definition_zh": "（因时髦、漂亮且与众不同而）酷的，绝妙的",
+    "page": 52,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "keep",
+    "ipa": "/kiːp/",
+    "definition_zh": "保有；留着",
+    "page": 52,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "home",
+    "ipa": "/həʊm/",
+    "definition_zh": "家；住所",
+    "page": 53,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "ball",
+    "ipa": "/bɔːl/",
+    "definition_zh": "球",
+    "page": 53,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "doll",
+    "ipa": "/dɒl/",
+    "definition_zh": "玩偶；玩具娃娃",
+    "page": 53,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "car",
+    "ipa": "/kɑː(r)/",
+    "definition_zh": "小汽车；轿车",
+    "page": 53,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "on",
+    "ipa": "/ɒn/",
+    "definition_zh": "（覆盖、附着）在……上",
+    "page": 55,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "shelf",
+    "ipa": "/ʃelf/",
+    "definition_zh": "（复数shelves/ʃelvz/）架子",
+    "page": 55,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "in",
+    "ipa": "/ɪn/",
+    "definition_zh": "在……内；在……中",
+    "page": 55,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "box",
+    "ipa": "/bɒks/",
+    "definition_zh": "盒子",
+    "page": 55,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "cap",
+    "ipa": "/kæp/",
+    "definition_zh": "帽子",
+    "page": 55,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "map",
+    "ipa": "/mæp/",
+    "definition_zh": "地图",
+    "page": 56,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "under",
+    "ipa": "/ˈʌndə(r)/",
+    "definition_zh": "在（或到、通过）……下面",
+    "page": 56,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "still",
+    "ipa": "/stɪl/",
+    "definition_zh": "还是；仍然",
+    "page": 57,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "put",
+    "ipa": "/pʊt/",
+    "definition_zh": "放；安置",
+    "page": 57,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "fifteen",
+    "ipa": "/ˌfɪfˈtiːn/",
+    "definition_zh": "十五",
+    "page": 64,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "twelve",
+    "ipa": "/twelv/",
+    "definition_zh": "十二",
+    "page": 64,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "fourteen",
+    "ipa": "/ˌfɔːˈtiːn/",
+    "definition_zh": "十四",
+    "page": 65,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "thirteen",
+    "ipa": "/ˌθɜːˈtiːn/",
+    "definition_zh": "十三",
+    "page": 65,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "eleven",
+    "ipa": "/ɪˈlevn/",
+    "definition_zh": "十一",
+    "page": 65,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "twenty",
+    "ipa": "/ˈtwenti/",
+    "definition_zh": "二十",
+    "page": 67,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "seventeen",
+    "ipa": "/ˌsevnˈtiːn/",
+    "definition_zh": "十七",
+    "page": 67,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "sixteen",
+    "ipa": "/ˌsɪksˈtiːn/",
+    "definition_zh": "十六",
+    "page": 67,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "eighteen",
+    "ipa": "/ˌeɪˈtiːn/",
+    "definition_zh": "十八",
+    "page": 68,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "nineteen",
+    "ipa": "/ˌnaɪnˈtiːn/",
+    "definition_zh": "十九",
+    "page": 68,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "piggy bank",
+    "ipa": "/ˈpɪɡi bæŋk/",
+    "definition_zh": "猪形储钱罐",
+    "page": 69,
+    "kind": "phrase"
+  },
+  {
+    "unit": 6,
+    "headword": "pay",
+    "ipa": "/peɪ/",
+    "definition_zh": "付费",
+    "page": 69,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "back",
+    "ipa": "/bæk/",
+    "definition_zh": "回到原处",
+    "page": 69,
+    "kind": "word"
+  }
+]

@@ -1,0 +1,882 @@
+[
+  {
+    "unit": 1,
+    "headword": "sorry",
+    "ipa": "/ˈsɒri/",
+    "definition_zh": "对不起",
+    "page": 4,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "hurry",
+    "ipa": "/ˈhʌri/",
+    "definition_zh": "up/ʌp/快点；赶快",
+    "page": 4,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "late",
+    "ipa": "/leɪt/",
+    "definition_zh": "迟到；迟发生",
+    "page": 4,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "class",
+    "ipa": "/klɑːs/",
+    "definition_zh": "课；课程；班；班级",
+    "page": 4,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "ready",
+    "ipa": "/ˈredi/",
+    "definition_zh": "准备好",
+    "page": 4,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "rule",
+    "ipa": "/ruːl/",
+    "definition_zh": "规则；规章",
+    "page": 5,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "classroom",
+    "ipa": "/ˈklɑːsruːm/",
+    "definition_zh": "教室",
+    "page": 5,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "turn",
+    "ipa": "/tɜːn/",
+    "definition_zh": "off/ɒf/关掉",
+    "page": 5,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "light",
+    "ipa": "/laɪt/",
+    "definition_zh": "灯；光",
+    "page": 5,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "blackboard",
+    "ipa": "/ˈblækbɔːd/",
+    "definition_zh": "黑板",
+    "page": 7,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "desk",
+    "ipa": "/desk/",
+    "definition_zh": "书桌；办公桌",
+    "page": 7,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "chair",
+    "ipa": "/tʃeə(r)/",
+    "definition_zh": "椅子",
+    "page": 7,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "tidy",
+    "ipa": "/ˈtaɪdi/",
+    "definition_zh": "整洁的；整齐的；使整洁；整理",
+    "page": 7,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "music",
+    "ipa": "/ˈmjuːzɪk/",
+    "definition_zh": "音乐",
+    "page": 8,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "door",
+    "ipa": "/dɔː(r)/",
+    "definition_zh": "门",
+    "page": 8,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "window",
+    "ipa": "/ˈwɪndəʊ/",
+    "definition_zh": "窗",
+    "page": 8,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "fan",
+    "ipa": "/fæn/",
+    "definition_zh": "风扇",
+    "page": 8,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "when",
+    "ipa": "/wen/",
+    "definition_zh": "当……时；什么时候",
+    "page": 9,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "understand",
+    "ipa": "/ˌʌndəˈstænd/",
+    "definition_zh": "懂；理解",
+    "page": 9,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "wall",
+    "ipa": "/wɔːl/",
+    "definition_zh": "墙；壁",
+    "page": 9,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "newspaper",
+    "ipa": "/ˈnjuːzpeɪpə(r)/",
+    "definition_zh": "报纸",
+    "page": 9,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "hand out",
+    "ipa": "/aʊt/",
+    "definition_zh": "分发",
+    "page": 9,
+    "kind": "phrase"
+  },
+  {
+    "unit": 1,
+    "headword": "workbook",
+    "ipa": "/ˈwɜːkbʊk/",
+    "definition_zh": "练习册；作业本",
+    "page": 9,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "watch",
+    "ipa": "/wɒtʃ/",
+    "definition_zh": "看",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "TV",
+    "ipa": "/ˌtiː ˈviː/",
+    "definition_zh": "电视",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "homework",
+    "ipa": "/ˈhəʊmwɜːk/",
+    "definition_zh": "家庭作业",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "first",
+    "ipa": "/fɜːst/",
+    "definition_zh": "首先；首次；第一",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "wet",
+    "ipa": "/wet/",
+    "definition_zh": "湿的；未干的",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "run",
+    "ipa": "/rʌn/",
+    "definition_zh": "跑；奔跑",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "living",
+    "ipa": "/ˈlɪvɪŋ/",
+    "definition_zh": "room客厅；起居室",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "safe",
+    "ipa": "/seɪf/",
+    "definition_zh": "安全的",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "word",
+    "ipa": "/wɜːd/",
+    "definition_zh": "言语；单词；字",
+    "page": 17,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "wash",
+    "ipa": "/wɒʃ/",
+    "definition_zh": "洗",
+    "page": 17,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "helpful",
+    "ipa": "/ˈhelpfl/",
+    "definition_zh": "有帮助的；有用的",
+    "page": 17,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "loud",
+    "ipa": "/laʊd/",
+    "definition_zh": "说话太大声的；吵闹的",
+    "page": 19,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "sleep",
+    "ipa": "/sliːp/",
+    "definition_zh": "睡觉",
+    "page": 19,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "bedroom",
+    "ipa": "/ˈbedruːm/",
+    "definition_zh": "卧室",
+    "page": 19,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "kitchen",
+    "ipa": "/ˈkɪtʃɪn/",
+    "definition_zh": "厨房",
+    "page": 19,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "study",
+    "ipa": "/ˈstʌdi/",
+    "definition_zh": "书房",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "bathroom",
+    "ipa": "/ˈbɑːθruːm/",
+    "definition_zh": "浴室；洗手间",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "think",
+    "ipa": "/θɪŋk/",
+    "definition_zh": "想；思考",
+    "page": 21,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "work",
+    "ipa": "/wɜːk/",
+    "definition_zh": "（花费时间和精力）做（某事）；工作",
+    "page": 21,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "hard",
+    "ipa": "/hɑːd/",
+    "definition_zh": "努力地；费力地",
+    "page": 21,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "follow",
+    "ipa": "/ˈfɒləʊ/",
+    "definition_zh": "遵循，听从（忠告、指示等）",
+    "page": 21,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "feel",
+    "ipa": "/fiːl/",
+    "definition_zh": "觉得；感到",
+    "page": 21,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "over",
+    "ipa": "/ˈəʊvə(r)/",
+    "definition_zh": "结束（的）",
+    "page": 28,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "kid",
+    "ipa": "/kɪd/",
+    "definition_zh": "小孩",
+    "page": 28,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "dinner",
+    "ipa": "/ˈdɪnə(r)/",
+    "definition_zh": "（中午或晚上吃的）正餐",
+    "page": 28,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "art",
+    "ipa": "/ɑːt/",
+    "definition_zh": "美术；艺术",
+    "page": 29,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "lunch",
+    "ipa": "/lʌntʃ/",
+    "definition_zh": "午餐",
+    "page": 29,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "maths",
+    "ipa": "/mæθs/",
+    "definition_zh": "数学",
+    "page": 29,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "get up",
+    "ipa": "",
+    "definition_zh": "起床",
+    "page": 31,
+    "kind": "phrase"
+  },
+  {
+    "unit": 3,
+    "headword": "go to school",
+    "ipa": "",
+    "definition_zh": "上学",
+    "page": 31,
+    "kind": "phrase"
+  },
+  {
+    "unit": 3,
+    "headword": "go home",
+    "ipa": "",
+    "definition_zh": "回家",
+    "page": 32,
+    "kind": "phrase"
+  },
+  {
+    "unit": 3,
+    "headword": "go to bed",
+    "ipa": "",
+    "definition_zh": "上床睡觉",
+    "page": 32,
+    "kind": "phrase"
+  },
+  {
+    "unit": 3,
+    "headword": "want",
+    "ipa": "/wɒnt/",
+    "definition_zh": "想要",
+    "page": 33,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "clock",
+    "ipa": "/klɒk/",
+    "definition_zh": "时钟",
+    "page": 33,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "just",
+    "ipa": "/dʒʌst/",
+    "definition_zh": "只是；仅仅；正要",
+    "page": 33,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "minute",
+    "ipa": "/ˈmɪnɪt/",
+    "definition_zh": "分钟",
+    "page": 33,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "trousers",
+    "ipa": "/ˈtraʊzəz/",
+    "definition_zh": "裤子",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "clothes",
+    "ipa": "/kləʊðz/",
+    "definition_zh": "衣服；服装",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "those",
+    "ipa": "/ðəʊz/",
+    "definition_zh": "（指较远的人或事物）那些",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "shorts",
+    "ipa": "/ʃɔːts/",
+    "definition_zh": "短裤",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "jacket",
+    "ipa": "/ˈdʒækɪt/",
+    "definition_zh": "夹克衫；短上衣",
+    "page": 41,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "skirt",
+    "ipa": "/skɜːt/",
+    "definition_zh": "裙子",
+    "page": 41,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "dear",
+    "ipa": "/dɪə(r)/",
+    "definition_zh": "亲爱的",
+    "page": 43,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "expensive",
+    "ipa": "/ɪkˈspensɪv/",
+    "definition_zh": "昂贵的；价格高的",
+    "page": 43,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "take",
+    "ipa": "/teɪk/",
+    "definition_zh": "买下",
+    "page": 43,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "cheap",
+    "ipa": "/tʃiːp/",
+    "definition_zh": "便宜的",
+    "page": 44,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "shoe",
+    "ipa": "/ʃuː/",
+    "definition_zh": "鞋",
+    "page": 44,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "beautiful",
+    "ipa": "/ˈbjuːtɪfl/",
+    "definition_zh": "美丽的",
+    "page": 44,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "hat",
+    "ipa": "/hæt/",
+    "definition_zh": "帽子",
+    "page": 44,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "sunglasses",
+    "ipa": "/ˈsʌnɡlɑːsɪz/",
+    "definition_zh": "太阳镜；墨镜",
+    "page": 44,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "free",
+    "ipa": "/friː/",
+    "definition_zh": "免费的",
+    "page": 45,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "large",
+    "ipa": "/lɑːdʒ/",
+    "definition_zh": "（服装、食物、日用品等）大型号的",
+    "page": 45,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "size",
+    "ipa": "/saɪz/",
+    "definition_zh": "尺码；号",
+    "page": 45,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "list",
+    "ipa": "/lɪst/",
+    "definition_zh": "清单；目录",
+    "page": 45,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "try",
+    "ipa": "/traɪ/",
+    "definition_zh": "on试穿",
+    "page": 45,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "any",
+    "ipa": "/ˈeni/",
+    "definition_zh": "任何的；任一的",
+    "page": 45,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "cow",
+    "ipa": "/kaʊ/",
+    "definition_zh": "奶牛",
+    "page": 52,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "horse",
+    "ipa": "/hɔːs/",
+    "definition_zh": "马",
+    "page": 52,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "sheep",
+    "ipa": "/ʃiːp/",
+    "definition_zh": "羊；绵羊",
+    "page": 52,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "pig",
+    "ipa": "/pɪɡ/",
+    "definition_zh": "猪",
+    "page": 52,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "chicken",
+    "ipa": "/ˈtʃɪkɪn/",
+    "definition_zh": "鸡；鸡肉",
+    "page": 52,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "tomato",
+    "ipa": "/təˈmɑːtəʊ/",
+    "definition_zh": "西红柿",
+    "page": 55,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "bee",
+    "ipa": "/biː/",
+    "definition_zh": "蜜蜂",
+    "page": 55,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "mouse",
+    "ipa": "/maʊs/",
+    "definition_zh": "（复数mice/maɪs/）老鼠",
+    "page": 56,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "carrot",
+    "ipa": "/ˈkærət/",
+    "definition_zh": "胡萝卜",
+    "page": 56,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "potato",
+    "ipa": "/pəˈteɪtəʊ/",
+    "definition_zh": "土豆",
+    "page": 56,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "green bean",
+    "ipa": "/biːn/",
+    "definition_zh": "青刀豆；四季豆",
+    "page": 57,
+    "kind": "phrase"
+  },
+  {
+    "unit": 5,
+    "headword": "can",
+    "ipa": "/kæn/",
+    "definition_zh": "（盛食品或饮料的）金属罐",
+    "page": 57,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "a box of",
+    "ipa": "",
+    "definition_zh": "一盒，一箱（东西）",
+    "page": 57,
+    "kind": "phrase"
+  },
+  {
+    "unit": 6,
+    "headword": "feed",
+    "ipa": "/fiːd/",
+    "definition_zh": "给（人或动物）食物；饲养",
+    "page": 64,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "pass",
+    "ipa": "/pɑːs/",
+    "definition_zh": "给；递",
+    "page": 64,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "pick",
+    "ipa": "/pɪk/",
+    "definition_zh": "采；摘",
+    "page": 65,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "milk",
+    "ipa": "/mɪlk/",
+    "definition_zh": "挤奶",
+    "page": 65,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "knife",
+    "ipa": "/naɪf/",
+    "definition_zh": "刀",
+    "page": 67,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "fork",
+    "ipa": "/fɔːk/",
+    "definition_zh": "餐叉",
+    "page": 67,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "chopstick",
+    "ipa": "/ˈtʃɒpstɪk/",
+    "definition_zh": "（常用复数）筷子",
+    "page": 67,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "waste",
+    "ipa": "/weɪst/",
+    "definition_zh": "浪费；废品",
+    "page": 67,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "food",
+    "ipa": "/fuːd/",
+    "definition_zh": "菜肴；食物",
+    "page": 67,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "delicious",
+    "ipa": "/dɪˈlɪʃəs/",
+    "definition_zh": "美味的；可口的",
+    "page": 67,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "clear the table",
+    "ipa": "",
+    "definition_zh": "收拾餐桌",
+    "page": 67,
+    "kind": "phrase"
+  },
+  {
+    "unit": 6,
+    "headword": "set",
+    "ipa": "/set/",
+    "definition_zh": "thetable摆放餐具",
+    "page": 68,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "bowl",
+    "ipa": "/bəʊl/",
+    "definition_zh": "碗",
+    "page": 68,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "spoon",
+    "ipa": "/spuːn/",
+    "definition_zh": "勺；匙；调羹",
+    "page": 68,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "supermarket",
+    "ipa": "/ˈsuːpəmɑːkɪt/",
+    "definition_zh": "超市",
+    "page": 69,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "herself",
+    "ipa": "/hɜːˈself/",
+    "definition_zh": "（用作女性的反身代词）她自己，自己",
+    "page": 69,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "week",
+    "ipa": "/wiːk/",
+    "definition_zh": "周；星期",
+    "page": 69,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "salad",
+    "ipa": "/ˈsæləd/",
+    "definition_zh": "蔬菜沙拉",
+    "page": 69,
+    "kind": "word"
+  }
+]

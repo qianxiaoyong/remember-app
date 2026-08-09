@@ -1,0 +1,866 @@
+[
+  {
+    "unit": 1,
+    "headword": "PE",
+    "ipa": "/ˌpiː ˈiː/",
+    "definition_zh": "体育（课）",
+    "page": 4,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "job",
+    "ipa": "/dʒɒb/",
+    "definition_zh": "工作；职业",
+    "page": 4,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "doctor",
+    "ipa": "/ˈdɒktə(r)/",
+    "definition_zh": "医生",
+    "page": 4,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "farmer",
+    "ipa": "/ˈfɑːmə(r)/",
+    "definition_zh": "农场主；农民",
+    "page": 5,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "nurse",
+    "ipa": "/nɜːs/",
+    "definition_zh": "护士",
+    "page": 5,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "office",
+    "ipa": "/ˈɒfɪs/",
+    "definition_zh": "worker/ˈwɜːkə(r)/公司职员",
+    "page": 5,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "factory",
+    "ipa": "/ˈfæktri/",
+    "definition_zh": "worker工厂工人",
+    "page": 5,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "busy",
+    "ipa": "/ˈbɪzi/",
+    "definition_zh": "忙碌的",
+    "page": 7,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "tired",
+    "ipa": "/ˈtaɪəd/",
+    "definition_zh": "疲倦的",
+    "page": 7,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "chore",
+    "ipa": "/tʃɔː(r)/",
+    "definition_zh": "家庭杂务",
+    "page": 7,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "cook",
+    "ipa": "/kʊk/",
+    "definition_zh": "烹饪；煮；厨师",
+    "page": 7,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "clean",
+    "ipa": "/kliːn/",
+    "definition_zh": "打扫；干净的",
+    "page": 7,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "room",
+    "ipa": "/ruːm/",
+    "definition_zh": "房间",
+    "page": 7,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "look after",
+    "ipa": "",
+    "definition_zh": "照顾",
+    "page": 8,
+    "kind": "phrase"
+  },
+  {
+    "unit": 1,
+    "headword": "sweep",
+    "ipa": "/swiːp/",
+    "definition_zh": "扫",
+    "page": 8,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "floor",
+    "ipa": "/flɔː(r)/",
+    "definition_zh": "地板；地面",
+    "page": 8,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "together",
+    "ipa": "/təˈɡeðə(r)/",
+    "definition_zh": "在一起；共同",
+    "page": 8,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "people",
+    "ipa": "/ˈpiːpl/",
+    "definition_zh": "人；人们",
+    "page": 9,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "child",
+    "ipa": "/tʃaɪld/",
+    "definition_zh": "（复数children/ˈtʃɪldrən/）儿童；小孩",
+    "page": 9,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "his",
+    "ipa": "/hɪz/",
+    "definition_zh": "他的",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "strong",
+    "ipa": "/strɒŋ/",
+    "definition_zh": "强壮的",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "hair",
+    "ipa": "/heə(r)/",
+    "definition_zh": "头发",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "also",
+    "ipa": "/ˈɔːlsəʊ/",
+    "definition_zh": "也",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "kind",
+    "ipa": "/kaɪnd/",
+    "definition_zh": "友好的",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "quiet",
+    "ipa": "/ˈkwaɪət/",
+    "definition_zh": "文静的",
+    "page": 17,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "best",
+    "ipa": "/best/",
+    "definition_zh": "最好的",
+    "page": 19,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "read",
+    "ipa": "/riːd/",
+    "definition_zh": "阅读",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "Chinese",
+    "ipa": "/ˌtʃaɪˈniːz/",
+    "definition_zh": "中文；中国人；中国的",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "play",
+    "ipa": "/pleɪ/",
+    "definition_zh": "玩耍",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "game",
+    "ipa": "/ɡeɪm/",
+    "definition_zh": "游戏",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "football",
+    "ipa": "/ˈfʊtbɔːl/",
+    "definition_zh": "足球运动",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "basketball",
+    "ipa": "/ˈbɑːskɪtbɔːl/",
+    "definition_zh": "篮球运动",
+    "page": 21,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "always",
+    "ipa": "/ˈɔːlweɪz/",
+    "definition_zh": "总是",
+    "page": 21,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "afternoon",
+    "ipa": "/ˌɑːftəˈnuːn/",
+    "definition_zh": "下午",
+    "page": 28,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "there",
+    "ipa": "/ðeə(r)/",
+    "definition_zh": "（表示存在或发生）；在那里",
+    "page": 28,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "playground",
+    "ipa": "/ˈpleɪɡraʊnd/",
+    "definition_zh": "游乐场；操场",
+    "page": 28,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "park",
+    "ipa": "/pɑːk/",
+    "definition_zh": "公园",
+    "page": 28,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "over",
+    "ipa": "/ˈəʊvə(r)/",
+    "definition_zh": "在……的远端（或对面）",
+    "page": 28,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "hospital",
+    "ipa": "/ˈhɒspɪtl/",
+    "definition_zh": "医院",
+    "page": 29,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "shop",
+    "ipa": "/ʃɒp/",
+    "definition_zh": "商店",
+    "page": 29,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "toilet",
+    "ipa": "/ˈtɔɪlət/",
+    "definition_zh": "厕所；卫生间",
+    "page": 29,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "bus",
+    "ipa": "/bʌs/",
+    "definition_zh": "stop/stɒp/公共汽车站",
+    "page": 29,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "library",
+    "ipa": "/ˈlaɪbrəri/",
+    "definition_zh": "图书馆",
+    "page": 31,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "sport",
+    "ipa": "/spɔːt/",
+    "definition_zh": "体育运动",
+    "page": 31,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "walk",
+    "ipa": "/wɔːk/",
+    "definition_zh": "散步；行走",
+    "page": 32,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "community",
+    "ipa": "/kəˈmjuːnəti/",
+    "definition_zh": "社区",
+    "page": 32,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "favourite",
+    "ipa": "/ˈfeɪvərɪt/",
+    "definition_zh": "最喜欢的",
+    "page": 33,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "place",
+    "ipa": "/pleɪs/",
+    "definition_zh": "地方；场所",
+    "page": 33,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "photo",
+    "ipa": "/ˈfəʊtəʊ/",
+    "definition_zh": "照片",
+    "page": 33,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "story",
+    "ipa": "/ˈstɔːri/",
+    "definition_zh": "故事",
+    "page": 33,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "buy",
+    "ipa": "/baɪ/",
+    "definition_zh": "购买",
+    "page": 33,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "firefighter",
+    "ipa": "/ˈfaɪəfaɪtə(r)/",
+    "definition_zh": "消防队员",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "why",
+    "ipa": "/waɪ/",
+    "definition_zh": "为什么",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "driver",
+    "ipa": "/ˈdraɪvə(r)/",
+    "definition_zh": "司机",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "cleaner",
+    "ipa": "/ˈkliːnə(r)/",
+    "definition_zh": "清洁工",
+    "page": 41,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "delivery",
+    "ipa": "/dɪˈlɪvəri/",
+    "definition_zh": "worker快递员",
+    "page": 41,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "police",
+    "ipa": "/pəˈliːs/",
+    "definition_zh": "officer/ˈɒfɪsə(r)/警察；警员",
+    "page": 41,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "a lot",
+    "ipa": "/lɒt/",
+    "definition_zh": "of/əv/大量；许多",
+    "page": 41,
+    "kind": "phrase"
+  },
+  {
+    "unit": 4,
+    "headword": "now",
+    "ipa": "/naʊ/",
+    "definition_zh": "现在",
+    "page": 43,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "make the bed",
+    "ipa": "/bed/",
+    "definition_zh": "铺床",
+    "page": 43,
+    "kind": "phrase"
+  },
+  {
+    "unit": 4,
+    "headword": "old",
+    "ipa": "/əʊld/",
+    "definition_zh": "过去的；年纪大的；老的",
+    "page": 43,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "tell",
+    "ipa": "/tel/",
+    "definition_zh": "讲述；告诉",
+    "page": 43,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "everyone",
+    "ipa": "/ˈevriwʌn/",
+    "definition_zh": "每人",
+    "page": 43,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "Ms",
+    "ipa": "/mɪz/",
+    "definition_zh": "（用于女子的姓氏或姓名前，不指明婚否）女士",
+    "page": 45,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "speak",
+    "ipa": "/spiːk/",
+    "definition_zh": "说话；发言",
+    "page": 52,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "weather",
+    "ipa": "/ˈweðə(r)/",
+    "definition_zh": "天气",
+    "page": 52,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "sunny",
+    "ipa": "/ˈsʌni/",
+    "definition_zh": "阳光充足的",
+    "page": 52,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "hot",
+    "ipa": "/hɒt/",
+    "definition_zh": "热的",
+    "page": 52,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "bad",
+    "ipa": "/bæd/",
+    "definition_zh": "令人不快的；坏的",
+    "page": 52,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "cold",
+    "ipa": "/kəʊld/",
+    "definition_zh": "冷的",
+    "page": 52,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "windy",
+    "ipa": "/ˈwɪndi/",
+    "definition_zh": "多风的",
+    "page": 53,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "cloudy",
+    "ipa": "/ˈklaʊdi/",
+    "definition_zh": "多云的",
+    "page": 53,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "rainy",
+    "ipa": "/ˈreɪni/",
+    "definition_zh": "阴雨的",
+    "page": 53,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "snowy",
+    "ipa": "/ˈsnəʊi/",
+    "definition_zh": "多雪的",
+    "page": 53,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "cool",
+    "ipa": "/kuːl/",
+    "definition_zh": "凉爽的",
+    "page": 53,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "warm",
+    "ipa": "/wɔːm/",
+    "definition_zh": "温暖的",
+    "page": 53,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "tomorrow",
+    "ipa": "/təˈmɒrəʊ/",
+    "definition_zh": "在明天",
+    "page": 53,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "rain",
+    "ipa": "/reɪn/",
+    "definition_zh": "下雨；雨",
+    "page": 55,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "closed",
+    "ipa": "/kləʊzd/",
+    "definition_zh": "关闭的",
+    "page": 55,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "film",
+    "ipa": "/fɪlm/",
+    "definition_zh": "电影",
+    "page": 55,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "idea",
+    "ipa": "/aɪˈdɪə/",
+    "definition_zh": "想法；主意",
+    "page": 55,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "fly",
+    "ipa": "/flaɪ/",
+    "definition_zh": "操纵（飞行器等）；飞",
+    "page": 56,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "kite",
+    "ipa": "/kaɪt/",
+    "definition_zh": "风筝",
+    "page": 56,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "snowman",
+    "ipa": "/ˈsnəʊmæn/",
+    "definition_zh": "雪人",
+    "page": 56,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "fun",
+    "ipa": "/fʌn/",
+    "definition_zh": "享乐；乐趣",
+    "page": 57,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "their",
+    "ipa": "/ðeə(r)/",
+    "definition_zh": "他们的；她们的；它们的",
+    "page": 57,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "swim",
+    "ipa": "/swɪm/",
+    "definition_zh": "游泳",
+    "page": 57,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "Sydney",
+    "ipa": "/ˈsɪdni/",
+    "definition_zh": "悉尼",
+    "page": 52,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "whose",
+    "ipa": "/huːz/",
+    "definition_zh": "谁的",
+    "page": 64,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "sweater",
+    "ipa": "/ˈswetə(r)/",
+    "definition_zh": "毛衣",
+    "page": 64,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "sock",
+    "ipa": "/sɒk/",
+    "definition_zh": "短袜",
+    "page": 64,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "mine",
+    "ipa": "/maɪn/",
+    "definition_zh": "我的",
+    "page": 64,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "wear",
+    "ipa": "/weə(r)/",
+    "definition_zh": "穿；戴",
+    "page": 64,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "shirt",
+    "ipa": "/ʃɜːt/",
+    "definition_zh": "衬衫",
+    "page": 64,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "coat",
+    "ipa": "/kəʊt/",
+    "definition_zh": "大衣；外套",
+    "page": 64,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "dress",
+    "ipa": "/dres/",
+    "definition_zh": "连衣裙",
+    "page": 65,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "which",
+    "ipa": "/wɪtʃ/",
+    "definition_zh": "哪一个；哪一些",
+    "page": 67,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "season",
+    "ipa": "/ˈsiːzn/",
+    "definition_zh": "季节",
+    "page": 67,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "winter",
+    "ipa": "/ˈwɪntə(r)/",
+    "definition_zh": "冬天",
+    "page": 67,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "snow",
+    "ipa": "/snəʊ/",
+    "definition_zh": "下雪；雪",
+    "page": 67,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "get together",
+    "ipa": "",
+    "definition_zh": "聚会",
+    "page": 67,
+    "kind": "phrase"
+  },
+  {
+    "unit": 6,
+    "headword": "spring",
+    "ipa": "/sprɪŋ/",
+    "definition_zh": "春天",
+    "page": 68,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "summer",
+    "ipa": "/ˈsʌmə(r)/",
+    "definition_zh": "夏天",
+    "page": 68,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "autumn",
+    "ipa": "/ˈɔːtəm/",
+    "definition_zh": "秋天",
+    "page": 68,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "T-shirt",
+    "ipa": "/ˈtiːʃɜːt/",
+    "definition_zh": "T恤衫",
+    "page": 69,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "fall",
+    "ipa": "/fɔːl/",
+    "definition_zh": "落下",
+    "page": 69,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "leaf",
+    "ipa": "/liːf/",
+    "definition_zh": "（复数leaves/liːvz/）叶",
+    "page": 69,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "glove",
+    "ipa": "/ɡlʌv/",
+    "definition_zh": "手套",
+    "page": 69,
+    "kind": "word"
+  }
+]

@@ -1,0 +1,5345 @@
+[
+  {
+    "surfaceForm": "a",
+    "displayForm": "a",
+    "definitions": [
+      {
+        "text": "一个；一",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "about",
+    "displayForm": "about",
+    "definitions": [
+      {
+        "text": "与 play 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 play"
+  },
+  {
+    "surfaceForm": "act",
+    "displayForm": "act",
+    "definitions": [
+      {
+        "text": "扮演"
+      }
+    ],
+    "ipa": "/ækt/"
+  },
+  {
+    "surfaceForm": "after",
+    "displayForm": "after",
+    "definitions": [
+      {
+        "text": "在（时间）后",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈɑːftə(r)/"
+  },
+  {
+    "surfaceForm": "afternoon",
+    "displayForm": "afternoon",
+    "definitions": [
+      {
+        "text": "与 go swimming 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 go swimming"
+  },
+  {
+    "surfaceForm": "again",
+    "displayForm": "again",
+    "definitions": [
+      {
+        "text": "与 why 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 why"
+  },
+  {
+    "surfaceForm": "all",
+    "displayForm": "all",
+    "definitions": [
+      {
+        "text": "全；完全",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/ɔːl/"
+  },
+  {
+    "surfaceForm": "also",
+    "displayForm": "also",
+    "definitions": [
+      {
+        "text": "还；也",
+        "pos": "adv."
+      }
+    ],
+    "ipa": "/ˈɔːlsəʊ/"
+  },
+  {
+    "surfaceForm": "always",
+    "displayForm": "always",
+    "definitions": [
+      {
+        "text": "总是；一直",
+        "pos": "adv."
+      }
+    ],
+    "ipa": "/ˈɔːlweɪz/"
+  },
+  {
+    "surfaceForm": "america",
+    "displayForm": "america",
+    "definitions": [
+      {
+        "text": "与 fall 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 fall"
+  },
+  {
+    "surfaceForm": "american",
+    "displayForm": "american",
+    "definitions": [
+      {
+        "text": "美国的"
+      }
+    ],
+    "ipa": "/əˈmerɪkən/"
+  },
+  {
+    "surfaceForm": "an",
+    "displayForm": "an",
+    "definitions": [
+      {
+        "text": "一个；一",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "and",
+    "displayForm": "and",
+    "definitions": [
+      {
+        "text": "和；与",
+        "pos": "conj."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "animal",
+    "displayForm": "animal",
+    "definitions": [
+      {
+        "text": "与 riddle 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 riddle"
+  },
+  {
+    "surfaceForm": "another",
+    "displayForm": "another",
+    "definitions": [
+      {
+        "text": "与 fall 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 fall"
+  },
+  {
+    "surfaceForm": "answer",
+    "displayForm": "answer",
+    "definitions": [
+      {
+        "text": "与 riddle 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 riddle"
+  },
+  {
+    "surfaceForm": "any",
+    "displayForm": "any",
+    "definitions": [
+      {
+        "text": "与 need 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 need"
+  },
+  {
+    "surfaceForm": "anything",
+    "displayForm": "anything",
+    "definitions": [
+      {
+        "text": "任何事物"
+      }
+    ],
+    "ipa": "/ˈeniθɪŋ/"
+  },
+  {
+    "surfaceForm": "apples",
+    "displayForm": "apples",
+    "definitions": [
+      {
+        "text": "与 autumn 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 autumn"
+  },
+  {
+    "surfaceForm": "april",
+    "displayForm": "april",
+    "definitions": [
+      {
+        "text": "四月"
+      }
+    ],
+    "ipa": "/ˈeɪprəl/"
+  },
+  {
+    "surfaceForm": "are",
+    "displayForm": "are",
+    "definitions": [
+      {
+        "text": "是",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "art",
+    "displayForm": "art",
+    "definitions": [
+      {
+        "text": "与 have … class 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 have … class"
+  },
+  {
+    "surfaceForm": "ask",
+    "displayForm": "ask",
+    "definitions": [
+      {
+        "text": "与 riddle 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 riddle"
+  },
+  {
+    "surfaceForm": "asks",
+    "displayForm": "asks",
+    "definitions": [
+      {
+        "text": "与 keep your desk clean 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 keep your desk clean"
+  },
+  {
+    "surfaceForm": "at",
+    "displayForm": "at",
+    "definitions": [
+      {
+        "text": "与 start 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 start"
+  },
+  {
+    "surfaceForm": "august",
+    "displayForm": "august",
+    "definitions": [
+      {
+        "text": "八月"
+      }
+    ],
+    "ipa": "/ˈɔːgəst/"
+  },
+  {
+    "surfaceForm": "autumn",
+    "displayForm": "autumn",
+    "definitions": [
+      {
+        "text": "秋天"
+      }
+    ],
+    "ipa": "/ˈɔːtəm/"
+  },
+  {
+    "surfaceForm": "baby",
+    "displayForm": "baby",
+    "definitions": [
+      {
+        "text": "与 sleeping 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 sleeping"
+  },
+  {
+    "surfaceForm": "back",
+    "displayForm": "back",
+    "definitions": [
+      {
+        "text": "与 February 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 february"
+  },
+  {
+    "surfaceForm": "bag",
+    "displayForm": "bag",
+    "definitions": [
+      {
+        "text": "与 mine 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 mine"
+  },
+  {
+    "surfaceForm": "ball",
+    "displayForm": "ball",
+    "definitions": [
+      {
+        "text": "与 his 相关的课文词形",
+        "pos": "det."
+      }
+    ],
+    "formNote": "词形变化，原形为 his"
+  },
+  {
+    "surfaceForm": "bamboo",
+    "displayForm": "bamboo",
+    "definitions": [
+      {
+        "text": "竹子"
+      }
+    ],
+    "ipa": "/ˌbæmˈbuː/"
+  },
+  {
+    "surfaceForm": "be",
+    "displayForm": "be",
+    "definitions": [
+      {
+        "text": "与 late 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 late"
+  },
+  {
+    "surfaceForm": "beautiful",
+    "displayForm": "beautiful",
+    "definitions": [
+      {
+        "text": "与 autumn 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 autumn"
+  },
+  {
+    "surfaceForm": "because",
+    "displayForm": "because",
+    "definitions": [
+      {
+        "text": "因为",
+        "pos": "conj."
+      }
+    ],
+    "ipa": "/bɪˈkɒz/"
+  },
+  {
+    "surfaceForm": "bed",
+    "displayForm": "bed",
+    "definitions": [
+      {
+        "text": "与 late 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 late"
+  },
+  {
+    "surfaceForm": "before",
+    "displayForm": "before",
+    "definitions": [
+      {
+        "text": "与 do morning exercises 相关的课文词形",
+        "pos": "prep."
+      }
+    ],
+    "formNote": "词形变化，原形为 do morning exercises"
+  },
+  {
+    "surfaceForm": "beijing",
+    "displayForm": "beijing",
+    "definitions": [
+      {
+        "text": "与 live 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 live"
+  },
+  {
+    "surfaceForm": "best",
+    "displayForm": "best",
+    "definitions": [
+      {
+        "text": "最；最高程度地",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/best/"
+  },
+  {
+    "surfaceForm": "better",
+    "displayForm": "better",
+    "definitions": [
+      {
+        "text": "与 exercise 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 exercise"
+  },
+  {
+    "surfaceForm": "big",
+    "displayForm": "big",
+    "definitions": [
+      {
+        "text": "与 snowman 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 snowman"
+  },
+  {
+    "surfaceForm": "birthday",
+    "displayForm": "birthday",
+    "definitions": [
+      {
+        "text": "与 which 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 which"
+  },
+  {
+    "surfaceForm": "bloom",
+    "displayForm": "bloom",
+    "definitions": [
+      {
+        "text": "与 spring 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 spring"
+  },
+  {
+    "surfaceForm": "blue",
+    "displayForm": "blue",
+    "definitions": [
+      {
+        "text": "与 yours 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 yours"
+  },
+  {
+    "surfaceForm": "boat",
+    "displayForm": "boat",
+    "definitions": [
+      {
+        "text": "与 island 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 island"
+  },
+  {
+    "surfaceForm": "book",
+    "displayForm": "book",
+    "definitions": [
+      {
+        "text": "与 leaf 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 leaf"
+  },
+  {
+    "surfaceForm": "books",
+    "displayForm": "books",
+    "definitions": [
+      {
+        "text": "书（复数）",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "boy",
+    "displayForm": "boy",
+    "definitions": [
+      {
+        "text": "与 cave 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 cave"
+  },
+  {
+    "surfaceForm": "breakfast",
+    "displayForm": "breakfast",
+    "definitions": [
+      {
+        "text": "与 do morning exercises 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 do morning exercises"
+  },
+  {
+    "surfaceForm": "bring",
+    "displayForm": "bring",
+    "definitions": [
+      {
+        "text": "与 picnic 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 picnic"
+  },
+  {
+    "surfaceForm": "brown",
+    "displayForm": "brown",
+    "definitions": [
+      {
+        "text": "与 fur 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 fur"
+  },
+  {
+    "surfaceForm": "busy",
+    "displayForm": "busy",
+    "definitions": [
+      {
+        "text": "忙的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/ˈbɪzi/"
+  },
+  {
+    "surfaceForm": "by",
+    "displayForm": "by",
+    "definitions": [
+      {
+        "text": "在……之前",
+        "pos": "prep."
+      }
+    ],
+    "ipa": "/baɪ/"
+  },
+  {
+    "surfaceForm": "call",
+    "displayForm": "call",
+    "definitions": [
+      {
+        "text": "与 busy 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 busy"
+  },
+  {
+    "surfaceForm": "called",
+    "displayForm": "called",
+    "definitions": [
+      {
+        "text": "与 labour 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 labour"
+  },
+  {
+    "surfaceForm": "came",
+    "displayForm": "came",
+    "definitions": [
+      {
+        "text": "来（过去式）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "can",
+    "displayForm": "can",
+    "definitions": [
+      {
+        "text": "可以",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "canadian",
+    "displayForm": "canadian",
+    "definitions": [
+      {
+        "text": "加拿大的"
+      }
+    ],
+    "ipa": "/kəˈneɪdiən/"
+  },
+  {
+    "surfaceForm": "canteen",
+    "displayForm": "canteen",
+    "definitions": [
+      {
+        "text": "与 eating lunch 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 eating lunch"
+  },
+  {
+    "surfaceForm": "carefully",
+    "displayForm": "carefully",
+    "definitions": [
+      {
+        "text": "与 letter 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 letter"
+  },
+  {
+    "surfaceForm": "carrot",
+    "displayForm": "carrot",
+    "definitions": [
+      {
+        "text": "与 snowman 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 snowman"
+  },
+  {
+    "surfaceForm": "cat",
+    "displayForm": "cat",
+    "definitions": [
+      {
+        "text": "与 climbing 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 climbing"
+  },
+  {
+    "surfaceForm": "cave",
+    "displayForm": "cave",
+    "definitions": [
+      {
+        "text": "山洞；洞穴"
+      }
+    ],
+    "ipa": "/keɪv/"
+  },
+  {
+    "surfaceForm": "children",
+    "displayForm": "children",
+    "definitions": [
+      {
+        "text": "孩子们",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "children's",
+    "displayForm": "children's",
+    "definitions": [
+      {
+        "text": "与 June 相关的课文词形"
+      }
+    ],
+    "formNote": "所有格形式，原形为 june"
+  },
+  {
+    "surfaceForm": "christmas",
+    "displayForm": "christmas",
+    "definitions": [
+      {
+        "text": "圣诞节"
+      }
+    ],
+    "ipa": "/ˈkrɪsməs/"
+  },
+  {
+    "surfaceForm": "city",
+    "displayForm": "city",
+    "definitions": [
+      {
+        "text": "与 island 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 island"
+  },
+  {
+    "surfaceForm": "class",
+    "displayForm": "class",
+    "definitions": [
+      {
+        "text": "与 after 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 after"
+  },
+  {
+    "surfaceForm": "classes",
+    "displayForm": "classes",
+    "definitions": [
+      {
+        "text": "与 take 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 take"
+  },
+  {
+    "surfaceForm": "classroom",
+    "displayForm": "classroom",
+    "definitions": [
+      {
+        "text": "与 ours 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 ours"
+  },
+  {
+    "surfaceForm": "clean",
+    "displayForm": "clean",
+    "definitions": [
+      {
+        "text": "与 clean my room 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 clean my room"
+  },
+  {
+    "surfaceForm": "cleans",
+    "displayForm": "cleans",
+    "definitions": [
+      {
+        "text": "与 clean my room 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 clean my room"
+  },
+  {
+    "surfaceForm": "climbing",
+    "displayForm": "climbing",
+    "definitions": [
+      {
+        "text": "（climb 的 -ing 形式）（正在）攀登；攀爬"
+      }
+    ],
+    "ipa": "/ˈklaɪmɪŋ/"
+  },
+  {
+    "surfaceForm": "coat",
+    "displayForm": "coat",
+    "definitions": [
+      {
+        "text": "与 shop 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 shop"
+  },
+  {
+    "surfaceForm": "cold",
+    "displayForm": "cold",
+    "definitions": [
+      {
+        "text": "与 winter 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 winter"
+  },
+  {
+    "surfaceForm": "come",
+    "displayForm": "come",
+    "definitions": [
+      {
+        "text": "来",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "comes",
+    "displayForm": "comes",
+    "definitions": [
+      {
+        "text": "与 April 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 april"
+  },
+  {
+    "surfaceForm": "coming",
+    "displayForm": "coming",
+    "definitions": [
+      {
+        "text": "与 sure 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 sure"
+  },
+  {
+    "surfaceForm": "contest",
+    "displayForm": "contest",
+    "definitions": [
+      {
+        "text": "比赛；竞赛"
+      }
+    ],
+    "ipa": "/ˈkɒntest/"
+  },
+  {
+    "surfaceForm": "cool",
+    "displayForm": "cool",
+    "definitions": [
+      {
+        "text": "与 autumn 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 autumn"
+  },
+  {
+    "surfaceForm": "covers",
+    "displayForm": "covers",
+    "definitions": [
+      {
+        "text": "与 fur 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 fur"
+  },
+  {
+    "surfaceForm": "cute",
+    "displayForm": "cute",
+    "definitions": [
+      {
+        "text": "与 kitten 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 kitten"
+  },
+  {
+    "surfaceForm": "dance",
+    "displayForm": "dance",
+    "definitions": [
+      {
+        "text": "与 also 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 also"
+  },
+  {
+    "surfaceForm": "dancing",
+    "displayForm": "dancing",
+    "definitions": [
+      {
+        "text": "跳舞；舞蹈"
+      }
+    ],
+    "ipa": "/ˈdɑːnsɪŋ/"
+  },
+  {
+    "surfaceForm": "dark",
+    "displayForm": "dark",
+    "definitions": [
+      {
+        "text": "与 cave 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 cave"
+  },
+  {
+    "surfaceForm": "day",
+    "displayForm": "day",
+    "definitions": [
+      {
+        "text": "天",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "days",
+    "displayForm": "days",
+    "definitions": [
+      {
+        "text": "与 thirtieth (30th) 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 thirtieth (30th)"
+  },
+  {
+    "surfaceForm": "december",
+    "displayForm": "december",
+    "definitions": [
+      {
+        "text": "十二月"
+      }
+    ],
+    "ipa": "/dɪˈsembə(r)/"
+  },
+  {
+    "surfaceForm": "desk",
+    "displayForm": "desk",
+    "definitions": [
+      {
+        "text": "与 few 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 few"
+  },
+  {
+    "surfaceForm": "desks",
+    "displayForm": "desks",
+    "definitions": [
+      {
+        "text": "与 keep your desk clean 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 keep your desk clean"
+  },
+  {
+    "surfaceForm": "dialogue",
+    "displayForm": "dialogue",
+    "definitions": [
+      {
+        "text": "与 act out 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 act out"
+  },
+  {
+    "surfaceForm": "diary",
+    "displayForm": "diary",
+    "definitions": [
+      {
+        "text": "日记"
+      }
+    ],
+    "ipa": "/ˈdaɪəri/"
+  },
+  {
+    "surfaceForm": "did",
+    "displayForm": "did",
+    "definitions": [
+      {
+        "text": "做（过去式）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "different",
+    "displayForm": "different",
+    "definitions": [
+      {
+        "text": "与 festival 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 festival"
+  },
+  {
+    "surfaceForm": "dinner",
+    "displayForm": "dinner",
+    "definitions": [
+      {
+        "text": "与 after 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 after"
+  },
+  {
+    "surfaceForm": "do",
+    "displayForm": "do",
+    "definitions": [
+      {
+        "text": "做",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "does",
+    "displayForm": "does",
+    "definitions": [
+      {
+        "text": "做（第三人称单数）",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "dog",
+    "displayForm": "dog",
+    "definitions": [
+      {
+        "text": "与 fur 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 fur"
+  },
+  {
+    "surfaceForm": "doing",
+    "displayForm": "doing",
+    "definitions": [
+      {
+        "text": "与 doing morning exercises 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 doing morning exercises"
+  },
+  {
+    "surfaceForm": "don't",
+    "displayForm": "don't",
+    "definitions": [
+      {
+        "text": "与 late 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 late"
+  },
+  {
+    "surfaceForm": "drinking",
+    "displayForm": "drinking",
+    "definitions": [
+      {
+        "text": "（drink的-ing形式）（正在）喝（水）"
+      }
+    ],
+    "ipa": "/ˈdrɪŋkɪŋ/"
+  },
+  {
+    "surfaceForm": "during",
+    "displayForm": "during",
+    "definitions": [
+      {
+        "text": "与 vacation 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 vacation"
+  },
+  {
+    "surfaceForm": "each",
+    "displayForm": "each",
+    "definitions": [
+      {
+        "text": "每一；各个",
+        "pos": "det."
+      }
+    ],
+    "ipa": "/iːtʃ/"
+  },
+  {
+    "surfaceForm": "easy",
+    "displayForm": "easy",
+    "definitions": [
+      {
+        "text": "与 twenty-third (23rd) 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 twenty-third (23rd)"
+  },
+  {
+    "surfaceForm": "eat",
+    "displayForm": "eat",
+    "definitions": [
+      {
+        "text": "与 eat breakfast 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 eat breakfast"
+  },
+  {
+    "surfaceForm": "eating",
+    "displayForm": "eating",
+    "definitions": [
+      {
+        "text": "（eat的-ing形式）（正在）吃"
+      }
+    ],
+    "ipa": "/ˈiːtɪŋ/"
+  },
+  {
+    "surfaceForm": "eight",
+    "displayForm": "eight",
+    "definitions": [
+      {
+        "text": "与 start 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 start"
+  },
+  {
+    "surfaceForm": "else",
+    "displayForm": "else",
+    "definitions": [
+      {
+        "text": "另外；其他"
+      }
+    ],
+    "ipa": "/els/"
+  },
+  {
+    "surfaceForm": "ends",
+    "displayForm": "ends",
+    "definitions": [
+      {
+        "text": "与 p.m. 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 p.m."
+  },
+  {
+    "surfaceForm": "english",
+    "displayForm": "english",
+    "definitions": [
+      {
+        "text": "与 have … class 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 have … class"
+  },
+  {
+    "surfaceForm": "evening",
+    "displayForm": "evening",
+    "definitions": [
+      {
+        "text": "与 eat dinner 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 eat dinner"
+  },
+  {
+    "surfaceForm": "every",
+    "displayForm": "every",
+    "definitions": [
+      {
+        "text": "每个",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "excited",
+    "displayForm": "excited",
+    "definitions": [
+      {
+        "text": "兴奋的；激动的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/ɪkˈsaɪtɪd/"
+  },
+  {
+    "surfaceForm": "exercise",
+    "displayForm": "exercise",
+    "definitions": [
+      {
+        "text": "活动；运动",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈeksəsaɪz/"
+  },
+  {
+    "surfaceForm": "exercises",
+    "displayForm": "exercises",
+    "definitions": [
+      {
+        "text": "与 do morning exercises 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 do morning exercises"
+  },
+  {
+    "surfaceForm": "exhibition",
+    "displayForm": "exhibition",
+    "definitions": [
+      {
+        "text": "展览"
+      }
+    ],
+    "ipa": "/ˌeksɪˈbɪʃn/"
+  },
+  {
+    "surfaceForm": "fall",
+    "displayForm": "fall",
+    "definitions": [
+      {
+        "text": "落下；【美】秋天"
+      }
+    ],
+    "ipa": "/fɔːl/"
+  },
+  {
+    "surfaceForm": "families",
+    "displayForm": "families",
+    "definitions": [
+      {
+        "text": "与 Thanksgiving 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 thanksgiving"
+  },
+  {
+    "surfaceForm": "family",
+    "displayForm": "family",
+    "definitions": [
+      {
+        "text": "与 live 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 live"
+  },
+  {
+    "surfaceForm": "famous",
+    "displayForm": "famous",
+    "definitions": [
+      {
+        "text": "与 Spain 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 spain"
+  },
+  {
+    "surfaceForm": "far",
+    "displayForm": "far",
+    "definitions": [
+      {
+        "text": "与 island 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 island"
+  },
+  {
+    "surfaceForm": "farm",
+    "displayForm": "farm",
+    "definitions": [
+      {
+        "text": "与 pick apples 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 pick apples"
+  },
+  {
+    "surfaceForm": "fast",
+    "displayForm": "fast",
+    "definitions": [
+      {
+        "text": "与 bamboo 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 bamboo"
+  },
+  {
+    "surfaceForm": "father",
+    "displayForm": "father",
+    "definitions": [
+      {
+        "text": "与 like 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 like"
+  },
+  {
+    "surfaceForm": "favourite",
+    "displayForm": "favourite",
+    "definitions": [
+      {
+        "text": "与 best 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 best"
+  },
+  {
+    "surfaceForm": "february",
+    "displayForm": "february",
+    "definitions": [
+      {
+        "text": "二月"
+      }
+    ],
+    "ipa": "/ˈfebruəri/"
+  },
+  {
+    "surfaceForm": "feel",
+    "displayForm": "feel",
+    "definitions": [
+      {
+        "text": "与 exercise 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 exercise"
+  },
+  {
+    "surfaceForm": "fell",
+    "displayForm": "fell",
+    "definitions": [
+      {
+        "text": "与 leaf 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 leaf"
+  },
+  {
+    "surfaceForm": "fence",
+    "displayForm": "fence",
+    "definitions": [
+      {
+        "text": "与 jumping 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 jumping"
+  },
+  {
+    "surfaceForm": "festival",
+    "displayForm": "festival",
+    "definitions": [
+      {
+        "text": "节日"
+      }
+    ],
+    "ipa": "/ˈfestɪvl/"
+  },
+  {
+    "surfaceForm": "festivals",
+    "displayForm": "festivals",
+    "definitions": [
+      {
+        "text": "与 American 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 american"
+  },
+  {
+    "surfaceForm": "few",
+    "displayForm": "few",
+    "definitions": [
+      {
+        "text": "不多；很少"
+      }
+    ],
+    "ipa": "/fjuː/"
+  },
+  {
+    "surfaceForm": "fifth",
+    "displayForm": "fifth",
+    "definitions": [
+      {
+        "text": "与 Christmas 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 christmas"
+  },
+  {
+    "surfaceForm": "finish",
+    "displayForm": "finish",
+    "definitions": [
+      {
+        "text": "与 also 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 also"
+  },
+  {
+    "surfaceForm": "finished",
+    "displayForm": "finished",
+    "definitions": [
+      {
+        "text": "与 good job 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 good job"
+  },
+  {
+    "surfaceForm": "fireworks",
+    "displayForm": "fireworks",
+    "definitions": [
+      {
+        "text": "与 National Day 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 national day"
+  },
+  {
+    "surfaceForm": "first",
+    "displayForm": "first",
+    "definitions": [
+      {
+        "text": "与 sports meet 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 sports meet"
+  },
+  {
+    "surfaceForm": "fish",
+    "displayForm": "fish",
+    "definitions": [
+      {
+        "text": "与 eating 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 eating"
+  },
+  {
+    "surfaceForm": "five",
+    "displayForm": "five",
+    "definitions": [
+      {
+        "text": "五",
+        "pos": "num."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "flag",
+    "displayForm": "flag",
+    "definitions": [
+      {
+        "text": "与 national 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 national"
+  },
+  {
+    "surfaceForm": "floor",
+    "displayForm": "floor",
+    "definitions": [
+      {
+        "text": "与 third (3rd) 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 third (3rd)"
+  },
+  {
+    "surfaceForm": "flowers",
+    "displayForm": "flowers",
+    "definitions": [
+      {
+        "text": "与 spring 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 spring"
+  },
+  {
+    "surfaceForm": "food",
+    "displayForm": "food",
+    "definitions": [
+      {
+        "text": "食物",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "football",
+    "displayForm": "football",
+    "definitions": [
+      {
+        "text": "与 Spain 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 spain"
+  },
+  {
+    "surfaceForm": "for",
+    "displayForm": "for",
+    "definitions": [
+      {
+        "text": "为了；给",
+        "pos": "prep."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "forget",
+    "displayForm": "forget",
+    "definitions": [
+      {
+        "text": "与 trip 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 trip"
+  },
+  {
+    "surfaceForm": "found",
+    "displayForm": "found",
+    "definitions": [
+      {
+        "text": "找到（过去式）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "four",
+    "displayForm": "four",
+    "definitions": [
+      {
+        "text": "四",
+        "pos": "num."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "fourth",
+    "displayForm": "fourth",
+    "definitions": [
+      {
+        "text": "与 fourth (4th) 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 fourth (4th)"
+  },
+  {
+    "surfaceForm": "friday",
+    "displayForm": "friday",
+    "definitions": [
+      {
+        "text": "与 last 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 last"
+  },
+  {
+    "surfaceForm": "friend",
+    "displayForm": "friend",
+    "definitions": [
+      {
+        "text": "与 letter 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 letter"
+  },
+  {
+    "surfaceForm": "friends",
+    "displayForm": "friends",
+    "definitions": [
+      {
+        "text": "朋友（复数）",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "from",
+    "displayForm": "from",
+    "definitions": [
+      {
+        "text": "与 island 相关的课文词形",
+        "pos": "prep."
+      }
+    ],
+    "formNote": "词形变化，原形为 island"
+  },
+  {
+    "surfaceForm": "full",
+    "displayForm": "full",
+    "definitions": [
+      {
+        "text": "与 noise 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 noise"
+  },
+  {
+    "surfaceForm": "fun",
+    "displayForm": "fun",
+    "definitions": [
+      {
+        "text": "与 picnic 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 picnic"
+  },
+  {
+    "surfaceForm": "funny",
+    "displayForm": "funny",
+    "definitions": [
+      {
+        "text": "与 snowman 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 snowman"
+  },
+  {
+    "surfaceForm": "fur",
+    "displayForm": "fur",
+    "definitions": [
+      {
+        "text": "（某些动物的）浓密的软毛"
+      }
+    ],
+    "ipa": "/fɜː(r)/"
+  },
+  {
+    "surfaceForm": "game",
+    "displayForm": "game",
+    "definitions": [
+      {
+        "text": "游戏",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/geɪm/"
+  },
+  {
+    "surfaceForm": "gate",
+    "displayForm": "gate",
+    "definitions": [
+      {
+        "text": "与 meet 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 meet"
+  },
+  {
+    "surfaceForm": "gently",
+    "displayForm": "gently",
+    "definitions": [
+      {
+        "text": "与 fur 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 fur"
+  },
+  {
+    "surfaceForm": "get",
+    "displayForm": "get",
+    "definitions": [
+      {
+        "text": "与 usually 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 usually"
+  },
+  {
+    "surfaceForm": "gets",
+    "displayForm": "gets",
+    "definitions": [
+      {
+        "text": "与 November 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 november"
+  },
+  {
+    "surfaceForm": "gift",
+    "displayForm": "gift",
+    "definitions": [
+      {
+        "text": "与 special 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 special"
+  },
+  {
+    "surfaceForm": "gifts",
+    "displayForm": "gifts",
+    "definitions": [
+      {
+        "text": "与 each other 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 each other"
+  },
+  {
+    "surfaceForm": "give",
+    "displayForm": "give",
+    "definitions": [
+      {
+        "text": "与 each 相关的课文词形",
+        "pos": "det."
+      }
+    ],
+    "formNote": "词形变化，原形为 each"
+  },
+  {
+    "surfaceForm": "go",
+    "displayForm": "go",
+    "definitions": [
+      {
+        "text": "与 clean my room 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 clean my room"
+  },
+  {
+    "surfaceForm": "goes",
+    "displayForm": "goes",
+    "definitions": [
+      {
+        "text": "去（第三人称单数）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "good",
+    "displayForm": "good",
+    "definitions": [
+      {
+        "text": "好的",
+        "pos": "adj."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "got",
+    "displayForm": "got",
+    "definitions": [
+      {
+        "text": "得到（过去式）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "grade",
+    "displayForm": "grade",
+    "definitions": [
+      {
+        "text": "与 twelfth (12th) 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 twelfth (12th)"
+  },
+  {
+    "surfaceForm": "grandpa",
+    "displayForm": "grandpa",
+    "definitions": [
+      {
+        "text": "与 go for a walk 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 go for a walk"
+  },
+  {
+    "surfaceForm": "grandparents",
+    "displayForm": "grandparents",
+    "definitions": [
+      {
+        "text": "与 July 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 july"
+  },
+  {
+    "surfaceForm": "great",
+    "displayForm": "great",
+    "definitions": [
+      {
+        "text": "与 the Great Wall 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 the great wall"
+  },
+  {
+    "surfaceForm": "green",
+    "displayForm": "green",
+    "definitions": [
+      {
+        "text": "与 spring 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 spring"
+  },
+  {
+    "surfaceForm": "groups",
+    "displayForm": "groups",
+    "definitions": [
+      {
+        "text": "与 act out 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 act out"
+  },
+  {
+    "surfaceForm": "grows",
+    "displayForm": "grows",
+    "definitions": [
+      {
+        "text": "与 bamboo 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 bamboo"
+  },
+  {
+    "surfaceForm": "had",
+    "displayForm": "had",
+    "definitions": [
+      {
+        "text": "有（过去式）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "hallway",
+    "displayForm": "hallway",
+    "definitions": [
+      {
+        "text": "与 keep to the right 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 keep to the right"
+  },
+  {
+    "surfaceForm": "hand",
+    "displayForm": "hand",
+    "definitions": [
+      {
+        "text": "与 twentieth (20th) 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 twentieth (20th)"
+  },
+  {
+    "surfaceForm": "happy",
+    "displayForm": "happy",
+    "definitions": [
+      {
+        "text": "与 year 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 year"
+  },
+  {
+    "surfaceForm": "hard",
+    "displayForm": "hard",
+    "definitions": [
+      {
+        "text": "与 work 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 work"
+  },
+  {
+    "surfaceForm": "has",
+    "displayForm": "has",
+    "definitions": [
+      {
+        "text": "有（第三人称单数）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "have",
+    "displayForm": "have",
+    "definitions": [
+      {
+        "text": "有",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "having",
+    "displayForm": "having",
+    "definitions": [
+      {
+        "text": "与 having … class 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 having … class"
+  },
+  {
+    "surfaceForm": "he",
+    "displayForm": "he",
+    "definitions": [
+      {
+        "text": "与 late 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 late"
+  },
+  {
+    "surfaceForm": "healthy",
+    "displayForm": "healthy",
+    "definitions": [
+      {
+        "text": "与 play sports 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 play sports"
+  },
+  {
+    "surfaceForm": "hear",
+    "displayForm": "hear",
+    "definitions": [
+      {
+        "text": "与 sound 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 sound"
+  },
+  {
+    "surfaceForm": "heard",
+    "displayForm": "heard",
+    "definitions": [
+      {
+        "text": "与 noise 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 noise"
+  },
+  {
+    "surfaceForm": "help",
+    "displayForm": "help",
+    "definitions": [
+      {
+        "text": "与 eat dinner 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 eat dinner"
+  },
+  {
+    "surfaceForm": "her",
+    "displayForm": "her",
+    "definitions": [
+      {
+        "text": "与 clean my room 相关的课文词形",
+        "pos": "pron."
+      }
+    ],
+    "formNote": "词形变化，原形为 clean my room"
+  },
+  {
+    "surfaceForm": "hers",
+    "displayForm": "hers",
+    "definitions": [
+      {
+        "text": "她的"
+      }
+    ],
+    "ipa": "/hɜːz/"
+  },
+  {
+    "surfaceForm": "his",
+    "displayForm": "his",
+    "definitions": [
+      {
+        "text": "他的",
+        "pos": "det."
+      }
+    ],
+    "ipa": "/hɪz/"
+  },
+  {
+    "surfaceForm": "hobby",
+    "displayForm": "hobby",
+    "definitions": [
+      {
+        "text": "与 dancing 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 dancing"
+  },
+  {
+    "surfaceForm": "holiday",
+    "displayForm": "holiday",
+    "definitions": [
+      {
+        "text": "与 American 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 american"
+  },
+  {
+    "surfaceForm": "home",
+    "displayForm": "home",
+    "definitions": [
+      {
+        "text": "与 because 相关的课文词形",
+        "pos": "conj."
+      }
+    ],
+    "formNote": "词形变化，原形为 because"
+  },
+  {
+    "surfaceForm": "homework",
+    "displayForm": "homework",
+    "definitions": [
+      {
+        "text": "与 after 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 after"
+  },
+  {
+    "surfaceForm": "hope",
+    "displayForm": "hope",
+    "definitions": [
+      {
+        "text": "与 win 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 win"
+  },
+  {
+    "surfaceForm": "hot",
+    "displayForm": "hot",
+    "definitions": [
+      {
+        "text": "与 summer 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 summer"
+  },
+  {
+    "surfaceForm": "house",
+    "displayForm": "house",
+    "definitions": [
+      {
+        "text": "与 theirs 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 theirs"
+  },
+  {
+    "surfaceForm": "i",
+    "displayForm": "i",
+    "definitions": [
+      {
+        "text": "我",
+        "pos": "pron."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "i'm",
+    "displayForm": "i'm",
+    "definitions": [
+      {
+        "text": "与 late 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 late"
+  },
+  {
+    "surfaceForm": "in",
+    "displayForm": "in",
+    "definitions": [
+      {
+        "text": "与 Spain 相关的课文词形",
+        "pos": "prep."
+      }
+    ],
+    "formNote": "词形变化，原形为 spain"
+  },
+  {
+    "surfaceForm": "invitation",
+    "displayForm": "invitation",
+    "definitions": [
+      {
+        "text": "与 RSVP 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 rsvp"
+  },
+  {
+    "surfaceForm": "is",
+    "displayForm": "is",
+    "definitions": [
+      {
+        "text": "是",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "island",
+    "displayForm": "island",
+    "definitions": [
+      {
+        "text": "岛"
+      }
+    ],
+    "ipa": "/ˈaɪlənd/"
+  },
+  {
+    "surfaceForm": "it",
+    "displayForm": "it",
+    "definitions": [
+      {
+        "text": "它",
+        "pos": "pron."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "it's",
+    "displayForm": "it's",
+    "definitions": [
+      {
+        "text": "它是"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "its",
+    "displayForm": "its",
+    "definitions": [
+      {
+        "text": "（指事物、动物或幼儿）它的；他的；她的",
+        "pos": "det."
+      }
+    ],
+    "ipa": "/ɪts/"
+  },
+  {
+    "surfaceForm": "january",
+    "displayForm": "january",
+    "definitions": [
+      {
+        "text": "一月"
+      }
+    ],
+    "ipa": "/ˈdʒænjuəri/"
+  },
+  {
+    "surfaceForm": "job",
+    "displayForm": "job",
+    "definitions": [
+      {
+        "text": "与 good job 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 good job"
+  },
+  {
+    "surfaceForm": "july",
+    "displayForm": "july",
+    "definitions": [
+      {
+        "text": "七月"
+      }
+    ],
+    "ipa": "/dʒuˈlaɪ/"
+  },
+  {
+    "surfaceForm": "jumping",
+    "displayForm": "jumping",
+    "definitions": [
+      {
+        "text": "（jump//的-ing形式）（正在）跳"
+      }
+    ],
+    "ipa": "/ˈdʒʌmpɪŋ/"
+  },
+  {
+    "surfaceForm": "june",
+    "displayForm": "june",
+    "definitions": [
+      {
+        "text": "六月"
+      }
+    ],
+    "ipa": "/dʒuːn/"
+  },
+  {
+    "surfaceForm": "keep",
+    "displayForm": "keep",
+    "definitions": [
+      {
+        "text": "保持某种状态",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/kiːp/"
+  },
+  {
+    "surfaceForm": "keeps",
+    "displayForm": "keeps",
+    "definitions": [
+      {
+        "text": "与 play sports 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 play sports"
+  },
+  {
+    "surfaceForm": "kitten",
+    "displayForm": "kitten",
+    "definitions": [
+      {
+        "text": "小猫"
+      }
+    ],
+    "ipa": "/ˈkɪtn/"
+  },
+  {
+    "surfaceForm": "kitten's",
+    "displayForm": "kitten's",
+    "definitions": [
+      {
+        "text": "与 fur 相关的课文词形"
+      }
+    ],
+    "formNote": "所有格形式，原形为 fur"
+  },
+  {
+    "surfaceForm": "labour",
+    "displayForm": "labour",
+    "definitions": [
+      {
+        "text": "劳动"
+      }
+    ],
+    "ipa": "/ˈleɪbə(r)/"
+  },
+  {
+    "surfaceForm": "last",
+    "displayForm": "last",
+    "definitions": [
+      {
+        "text": "上一个的；刚过去的"
+      }
+    ],
+    "ipa": "/lɑːst/"
+  },
+  {
+    "surfaceForm": "late",
+    "displayForm": "late",
+    "definitions": [
+      {
+        "text": "晚；迟",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/leɪt/"
+  },
+  {
+    "surfaceForm": "leaf",
+    "displayForm": "leaf",
+    "definitions": [
+      {
+        "text": "叶子（复数leaves//）"
+      }
+    ],
+    "ipa": "/liːf/"
+  },
+  {
+    "surfaceForm": "learn",
+    "displayForm": "learn",
+    "definitions": [
+      {
+        "text": "与 labour 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 labour"
+  },
+  {
+    "surfaceForm": "leave",
+    "displayForm": "leave",
+    "definitions": [
+      {
+        "text": "与 twenty-third (23rd) 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 twenty-third (23rd)"
+  },
+  {
+    "surfaceForm": "leaves",
+    "displayForm": "leaves",
+    "definitions": [
+      {
+        "text": "与 autumn 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 autumn"
+  },
+  {
+    "surfaceForm": "left",
+    "displayForm": "left",
+    "definitions": [
+      {
+        "text": "与 ours 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 ours"
+  },
+  {
+    "surfaceForm": "let's",
+    "displayForm": "let's",
+    "definitions": [
+      {
+        "text": "让我们"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "letter",
+    "displayForm": "letter",
+    "definitions": [
+      {
+        "text": "信",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈletə(r)/"
+  },
+  {
+    "surfaceForm": "library",
+    "displayForm": "library",
+    "definitions": [
+      {
+        "text": "与 keep 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 keep"
+  },
+  {
+    "surfaceForm": "like",
+    "displayForm": "like",
+    "definitions": [
+      {
+        "text": "像……那样",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/laɪk/"
+  },
+  {
+    "surfaceForm": "likes",
+    "displayForm": "likes",
+    "definitions": [
+      {
+        "text": "与 go shopping 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 go shopping"
+  },
+  {
+    "surfaceForm": "listening",
+    "displayForm": "listening",
+    "definitions": [
+      {
+        "text": "与 listening to music 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 listening to music"
+  },
+  {
+    "surfaceForm": "little",
+    "displayForm": "little",
+    "definitions": [
+      {
+        "text": "与 kitten 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 kitten"
+  },
+  {
+    "surfaceForm": "live",
+    "displayForm": "live",
+    "definitions": [
+      {
+        "text": "居住",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/lɪv/"
+  },
+  {
+    "surfaceForm": "lived",
+    "displayForm": "lived",
+    "definitions": [
+      {
+        "text": "居住（过去式）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "lives",
+    "displayForm": "lives",
+    "definitions": [
+      {
+        "text": "与 Spain 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 spain"
+  },
+  {
+    "surfaceForm": "long",
+    "displayForm": "long",
+    "definitions": [
+      {
+        "text": "与 the Great Wall 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 the great wall"
+  },
+  {
+    "surfaceForm": "look",
+    "displayForm": "look",
+    "definitions": [
+      {
+        "text": "与 snowman 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 snowman"
+  },
+  {
+    "surfaceForm": "looks",
+    "displayForm": "looks",
+    "definitions": [
+      {
+        "text": "与 like 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 like"
+  },
+  {
+    "surfaceForm": "lot",
+    "displayForm": "lot",
+    "definitions": [
+      {
+        "text": "与 work 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 work"
+  },
+  {
+    "surfaceForm": "loud",
+    "displayForm": "loud",
+    "definitions": [
+      {
+        "text": "与 sound 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 sound"
+  },
+  {
+    "surfaceForm": "love",
+    "displayForm": "love",
+    "definitions": [
+      {
+        "text": "与 Christmas 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 christmas"
+  },
+  {
+    "surfaceForm": "lovely",
+    "displayForm": "lovely",
+    "definitions": [
+      {
+        "text": "可爱的；美丽的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/ˈlʌvli/"
+  },
+  {
+    "surfaceForm": "lunch",
+    "displayForm": "lunch",
+    "definitions": [
+      {
+        "text": "与 usually 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 usually"
+  },
+  {
+    "surfaceForm": "m",
+    "displayForm": "m",
+    "definitions": [
+      {
+        "text": "与 a.m. 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 a.m."
+  },
+  {
+    "surfaceForm": "made",
+    "displayForm": "made",
+    "definitions": [
+      {
+        "text": "制作（过去式）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "make",
+    "displayForm": "make",
+    "definitions": [
+      {
+        "text": "与 snow 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 snow"
+  },
+  {
+    "surfaceForm": "makes",
+    "displayForm": "makes",
+    "definitions": [
+      {
+        "text": "与 kitten 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 kitten"
+  },
+  {
+    "surfaceForm": "mall",
+    "displayForm": "mall",
+    "definitions": [
+      {
+        "text": "与 shop 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 shop"
+  },
+  {
+    "surfaceForm": "many",
+    "displayForm": "many",
+    "definitions": [
+      {
+        "text": "许多",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "map",
+    "displayForm": "map",
+    "definitions": [
+      {
+        "text": "与 Canadian 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 canadian"
+  },
+  {
+    "surfaceForm": "march",
+    "displayForm": "march",
+    "definitions": [
+      {
+        "text": "三月"
+      }
+    ],
+    "ipa": "/mɑːtʃ/"
+  },
+  {
+    "surfaceForm": "maths",
+    "displayForm": "maths",
+    "definitions": [
+      {
+        "text": "与 having … class 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 having … class"
+  },
+  {
+    "surfaceForm": "may",
+    "displayForm": "may",
+    "definitions": [
+      {
+        "text": "五月"
+      }
+    ],
+    "ipa": "/meɪ/"
+  },
+  {
+    "surfaceForm": "me",
+    "displayForm": "me",
+    "definitions": [
+      {
+        "text": "我",
+        "pos": "pron."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "meet",
+    "displayForm": "meet",
+    "definitions": [
+      {
+        "text": "集会；开会",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/miːt/"
+  },
+  {
+    "surfaceForm": "mid",
+    "displayForm": "mid",
+    "definitions": [
+      {
+        "text": "与 special 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 special"
+  },
+  {
+    "surfaceForm": "mine",
+    "displayForm": "mine",
+    "definitions": [
+      {
+        "text": "我的"
+      }
+    ],
+    "ipa": "/maɪn/"
+  },
+  {
+    "surfaceForm": "minutes",
+    "displayForm": "minutes",
+    "definitions": [
+      {
+        "text": "与 a few 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 a few"
+  },
+  {
+    "surfaceForm": "monday",
+    "displayForm": "monday",
+    "definitions": [
+      {
+        "text": "与 have … class 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 have … class"
+  },
+  {
+    "surfaceForm": "mondays",
+    "displayForm": "mondays",
+    "definitions": [
+      {
+        "text": "与 take 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 take"
+  },
+  {
+    "surfaceForm": "month",
+    "displayForm": "month",
+    "definitions": [
+      {
+        "text": "与 play 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 play"
+  },
+  {
+    "surfaceForm": "months",
+    "displayForm": "months",
+    "definitions": [
+      {
+        "text": "与 year 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 year"
+  },
+  {
+    "surfaceForm": "more",
+    "displayForm": "more",
+    "definitions": [
+      {
+        "text": "与 exercise 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 exercise"
+  },
+  {
+    "surfaceForm": "morning",
+    "displayForm": "morning",
+    "definitions": [
+      {
+        "text": "与 do morning exercises 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 do morning exercises"
+  },
+  {
+    "surfaceForm": "mother",
+    "displayForm": "mother",
+    "definitions": [
+      {
+        "text": "与 teach 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 teach"
+  },
+  {
+    "surfaceForm": "much",
+    "displayForm": "much",
+    "definitions": [
+      {
+        "text": "与 noise 相关的课文词形",
+        "pos": "det."
+      }
+    ],
+    "formNote": "词形变化，原形为 noise"
+  },
+  {
+    "surfaceForm": "mum",
+    "displayForm": "mum",
+    "definitions": [
+      {
+        "text": "与 eat dinner 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 eat dinner"
+  },
+  {
+    "surfaceForm": "museum",
+    "displayForm": "museum",
+    "definitions": [
+      {
+        "text": "与 show 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 show"
+  },
+  {
+    "surfaceForm": "music",
+    "displayForm": "music",
+    "definitions": [
+      {
+        "text": "与 noise 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 noise"
+  },
+  {
+    "surfaceForm": "my",
+    "displayForm": "my",
+    "definitions": [
+      {
+        "text": "我的",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "myself",
+    "displayForm": "myself",
+    "definitions": [
+      {
+        "text": "与 by 相关的课文词形",
+        "pos": "prep."
+      }
+    ],
+    "formNote": "词形变化，原形为 by"
+  },
+  {
+    "surfaceForm": "national",
+    "displayForm": "national",
+    "definitions": [
+      {
+        "text": "国家的"
+      }
+    ],
+    "ipa": "/ˈnæʃnəl/"
+  },
+  {
+    "surfaceForm": "need",
+    "displayForm": "need",
+    "definitions": [
+      {
+        "text": "需要",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/niːd/"
+  },
+  {
+    "surfaceForm": "new",
+    "displayForm": "new",
+    "definitions": [
+      {
+        "text": "新的",
+        "pos": "adj."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "next",
+    "displayForm": "next",
+    "definitions": [
+      {
+        "text": "与 play 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 play"
+  },
+  {
+    "surfaceForm": "nice",
+    "displayForm": "nice",
+    "definitions": [
+      {
+        "text": "与 sound 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 sound"
+  },
+  {
+    "surfaceForm": "night",
+    "displayForm": "night",
+    "definitions": [
+      {
+        "text": "与 last 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 last"
+  },
+  {
+    "surfaceForm": "nine",
+    "displayForm": "nine",
+    "definitions": [
+      {
+        "text": "与 a.m. 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 a.m."
+  },
+  {
+    "surfaceForm": "noise",
+    "displayForm": "noise",
+    "definitions": [
+      {
+        "text": "声音；响声；噪音"
+      }
+    ],
+    "ipa": "/nɔɪz/"
+  },
+  {
+    "surfaceForm": "nose",
+    "displayForm": "nose",
+    "definitions": [
+      {
+        "text": "与 snowman 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 snowman"
+  },
+  {
+    "surfaceForm": "not",
+    "displayForm": "not",
+    "definitions": [
+      {
+        "text": "不",
+        "pos": "adv."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "november",
+    "displayForm": "november",
+    "definitions": [
+      {
+        "text": "十一月"
+      }
+    ],
+    "ipa": "/nəʊˈvembə(r)/"
+  },
+  {
+    "surfaceForm": "now",
+    "displayForm": "now",
+    "definitions": [
+      {
+        "text": "与 start 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 start"
+  },
+  {
+    "surfaceForm": "o'clock",
+    "displayForm": "o'clock",
+    "definitions": [
+      {
+        "text": "与 start 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 start"
+  },
+  {
+    "surfaceForm": "october",
+    "displayForm": "october",
+    "definitions": [
+      {
+        "text": "十月"
+      }
+    ],
+    "ipa": "/ɒkˈtəʊbə(r)/"
+  },
+  {
+    "surfaceForm": "of",
+    "displayForm": "of",
+    "definitions": [
+      {
+        "text": "与 sound 相关的课文词形",
+        "pos": "prep."
+      }
+    ],
+    "formNote": "词形变化，原形为 sound"
+  },
+  {
+    "surfaceForm": "often",
+    "displayForm": "often",
+    "definitions": [
+      {
+        "text": "经常",
+        "pos": "adv."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "on",
+    "displayForm": "on",
+    "definitions": [
+      {
+        "text": "与 usually 相关的课文词形",
+        "pos": "prep."
+      }
+    ],
+    "formNote": "词形变化，原形为 usually"
+  },
+  {
+    "surfaceForm": "one",
+    "displayForm": "one",
+    "definitions": [
+      {
+        "text": "与 Spain 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 spain"
+  },
+  {
+    "surfaceForm": "only",
+    "displayForm": "only",
+    "definitions": [
+      {
+        "text": "与 few 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 few"
+  },
+  {
+    "surfaceForm": "open",
+    "displayForm": "open",
+    "definitions": [
+      {
+        "text": "开着的",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/ˈəʊpən/"
+  },
+  {
+    "surfaceForm": "opens",
+    "displayForm": "opens",
+    "definitions": [
+      {
+        "text": "与 a.m. 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 a.m."
+  },
+  {
+    "surfaceForm": "other",
+    "displayForm": "other",
+    "definitions": [
+      {
+        "text": "其他"
+      }
+    ],
+    "ipa": "/ˈʌDə(r)/"
+  },
+  {
+    "surfaceForm": "others",
+    "displayForm": "others",
+    "definitions": [
+      {
+        "text": "与 listening to music 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 listening to music"
+  },
+  {
+    "surfaceForm": "our",
+    "displayForm": "our",
+    "definitions": [
+      {
+        "text": "我们的",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "ours",
+    "displayForm": "ours",
+    "definitions": [
+      {
+        "text": "我们的"
+      }
+    ],
+    "ipa": "/ɑːz;ˈaʊəz/"
+  },
+  {
+    "surfaceForm": "out",
+    "displayForm": "out",
+    "definitions": [
+      {
+        "text": "外面",
+        "pos": "adv."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "outside",
+    "displayForm": "outside",
+    "definitions": [
+      {
+        "text": "与 noise 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 noise"
+  },
+  {
+    "surfaceForm": "over",
+    "displayForm": "over",
+    "definitions": [
+      {
+        "text": "与 by 相关的课文词形",
+        "pos": "prep."
+      }
+    ],
+    "formNote": "词形变化，原形为 by"
+  },
+  {
+    "surfaceForm": "p",
+    "displayForm": "p",
+    "definitions": [
+      {
+        "text": "与 p.m. 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 p.m."
+  },
+  {
+    "surfaceForm": "pack",
+    "displayForm": "pack",
+    "definitions": [
+      {
+        "text": "与 thing 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 thing"
+  },
+  {
+    "surfaceForm": "page",
+    "displayForm": "page",
+    "definitions": [
+      {
+        "text": "与 twenty-first (21st) 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 twenty-first (21st)"
+  },
+  {
+    "surfaceForm": "paint",
+    "displayForm": "paint",
+    "definitions": [
+      {
+        "text": "用颜料绘画",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/peɪnt/"
+  },
+  {
+    "surfaceForm": "painting",
+    "displayForm": "painting",
+    "definitions": [
+      {
+        "text": "与 best 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 best"
+  },
+  {
+    "surfaceForm": "pal",
+    "displayForm": "pal",
+    "definitions": [
+      {
+        "text": "与 Spain 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 spain"
+  },
+  {
+    "surfaceForm": "panda",
+    "displayForm": "panda",
+    "definitions": [
+      {
+        "text": "与 climbing 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 climbing"
+  },
+  {
+    "surfaceForm": "pandas",
+    "displayForm": "pandas",
+    "definitions": [
+      {
+        "text": "与 bamboo 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 bamboo"
+  },
+  {
+    "surfaceForm": "parents",
+    "displayForm": "parents",
+    "definitions": [
+      {
+        "text": "与 meet 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 meet"
+  },
+  {
+    "surfaceForm": "park",
+    "displayForm": "park",
+    "definitions": [
+      {
+        "text": "与 go for a walk 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 go for a walk"
+  },
+  {
+    "surfaceForm": "party",
+    "displayForm": "party",
+    "definitions": [
+      {
+        "text": "与 riddle 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 riddle"
+  },
+  {
+    "surfaceForm": "pen",
+    "displayForm": "pen",
+    "definitions": [
+      {
+        "text": "与 Spain 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 spain"
+  },
+  {
+    "surfaceForm": "people",
+    "displayForm": "people",
+    "definitions": [
+      {
+        "text": "人们",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "photo",
+    "displayForm": "photo",
+    "definitions": [
+      {
+        "text": "与 show 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 show"
+  },
+  {
+    "surfaceForm": "piano",
+    "displayForm": "piano",
+    "definitions": [
+      {
+        "text": "与 also 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 also"
+  },
+  {
+    "surfaceForm": "pick",
+    "displayForm": "pick",
+    "definitions": [
+      {
+        "text": "摘；采集",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/pɪk/"
+  },
+  {
+    "surfaceForm": "picking",
+    "displayForm": "picking",
+    "definitions": [
+      {
+        "text": "与 pick apples 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 pick apples"
+  },
+  {
+    "surfaceForm": "picnic",
+    "displayForm": "picnic",
+    "definitions": [
+      {
+        "text": "野餐"
+      }
+    ],
+    "ipa": "/ˈpɪknɪk/"
+  },
+  {
+    "surfaceForm": "picture",
+    "displayForm": "picture",
+    "definitions": [
+      {
+        "text": "与 paint 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 paint"
+  },
+  {
+    "surfaceForm": "pink",
+    "displayForm": "pink",
+    "definitions": [
+      {
+        "text": "粉色；粉色的"
+      }
+    ],
+    "ipa": "/pɪŋk/"
+  },
+  {
+    "surfaceForm": "place",
+    "displayForm": "place",
+    "definitions": [
+      {
+        "text": "与 sports meet 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 sports meet"
+  },
+  {
+    "surfaceForm": "plant",
+    "displayForm": "plant",
+    "definitions": [
+      {
+        "text": "种植",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/plɑːnt/"
+  },
+  {
+    "surfaceForm": "planting",
+    "displayForm": "planting",
+    "definitions": [
+      {
+        "text": "与 plant 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 plant"
+  },
+  {
+    "surfaceForm": "play",
+    "displayForm": "play",
+    "definitions": [
+      {
+        "text": "戏剧；剧本",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/pleɪ/"
+  },
+  {
+    "surfaceForm": "played",
+    "displayForm": "played",
+    "definitions": [
+      {
+        "text": "玩（过去式）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "playground",
+    "displayForm": "playground",
+    "definitions": [
+      {
+        "text": "与 exercise 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 exercise"
+  },
+  {
+    "surfaceForm": "playing",
+    "displayForm": "playing",
+    "definitions": [
+      {
+        "text": "（play的-ing形式）（正在）玩耍"
+      }
+    ],
+    "ipa": "/ˈpleɪɪŋ/"
+  },
+  {
+    "surfaceForm": "please",
+    "displayForm": "please",
+    "definitions": [
+      {
+        "text": "请",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "prize",
+    "displayForm": "prize",
+    "definitions": [
+      {
+        "text": "与 ours 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 ours"
+  },
+  {
+    "surfaceForm": "project",
+    "displayForm": "project",
+    "definitions": [
+      {
+        "text": "与 work 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 work"
+  },
+  {
+    "surfaceForm": "put",
+    "displayForm": "put",
+    "definitions": [
+      {
+        "text": "与 play 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 play"
+  },
+  {
+    "surfaceForm": "question",
+    "displayForm": "question",
+    "definitions": [
+      {
+        "text": "与 twenty-third (23rd) 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 twenty-third (23rd)"
+  },
+  {
+    "surfaceForm": "questions",
+    "displayForm": "questions",
+    "definitions": [
+      {
+        "text": "与 few 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 few"
+  },
+  {
+    "surfaceForm": "quiet",
+    "displayForm": "quiet",
+    "definitions": [
+      {
+        "text": "与 cave 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 cave"
+  },
+  {
+    "surfaceForm": "quietly",
+    "displayForm": "quietly",
+    "definitions": [
+      {
+        "text": "与 listening to music 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 listening to music"
+  },
+  {
+    "surfaceForm": "rabbit",
+    "displayForm": "rabbit",
+    "definitions": [
+      {
+        "text": "与 jumping 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 jumping"
+  },
+  {
+    "surfaceForm": "race",
+    "displayForm": "race",
+    "definitions": [
+      {
+        "text": "与 first (1st) 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 first (1st)"
+  },
+  {
+    "surfaceForm": "rain",
+    "displayForm": "rain",
+    "definitions": [
+      {
+        "text": "与 sound 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 sound"
+  },
+  {
+    "surfaceForm": "raining",
+    "displayForm": "raining",
+    "definitions": [
+      {
+        "text": "与 like 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 like"
+  },
+  {
+    "surfaceForm": "rains",
+    "displayForm": "rains",
+    "definitions": [
+      {
+        "text": "与 April 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 april"
+  },
+  {
+    "surfaceForm": "raised",
+    "displayForm": "raised",
+    "definitions": [
+      {
+        "text": "与 twentieth (20th) 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 twentieth (20th)"
+  },
+  {
+    "surfaceForm": "read",
+    "displayForm": "read",
+    "definitions": [
+      {
+        "text": "与 letter 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 letter"
+  },
+  {
+    "surfaceForm": "reading",
+    "displayForm": "reading",
+    "definitions": [
+      {
+        "text": "与 reading a book 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 reading a book"
+  },
+  {
+    "surfaceForm": "ready",
+    "displayForm": "ready",
+    "definitions": [
+      {
+        "text": "与 sports meet 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 sports meet"
+  },
+  {
+    "surfaceForm": "red",
+    "displayForm": "red",
+    "definitions": [
+      {
+        "text": "与 pick 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 pick"
+  },
+  {
+    "surfaceForm": "rest",
+    "displayForm": "rest",
+    "definitions": [
+      {
+        "text": "与 labour 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 labour"
+  },
+  {
+    "surfaceForm": "restaurant",
+    "displayForm": "restaurant",
+    "definitions": [
+      {
+        "text": "与 sushi 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 sushi"
+  },
+  {
+    "surfaceForm": "riddle",
+    "displayForm": "riddle",
+    "definitions": [
+      {
+        "text": "谜；谜语"
+      }
+    ],
+    "ipa": "/ˈrɪdl/"
+  },
+  {
+    "surfaceForm": "right",
+    "displayForm": "right",
+    "definitions": [
+      {
+        "text": "与 keep to the right 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 keep to the right"
+  },
+  {
+    "surfaceForm": "robinson",
+    "displayForm": "robinson",
+    "definitions": [
+      {
+        "text": "与 island 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 island"
+  },
+  {
+    "surfaceForm": "room",
+    "displayForm": "room",
+    "definitions": [
+      {
+        "text": "与 clean my room 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 clean my room"
+  },
+  {
+    "surfaceForm": "rope",
+    "displayForm": "rope",
+    "definitions": [
+      {
+        "text": "与 jumping 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 jumping"
+  },
+  {
+    "surfaceForm": "rsvp",
+    "displayForm": "rsvp",
+    "definitions": [
+      {
+        "text": "（尤用于请柬）请赐复"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "said",
+    "displayForm": "said",
+    "definitions": [
+      {
+        "text": "说（过去式）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "saturday",
+    "displayForm": "saturday",
+    "definitions": [
+      {
+        "text": "与 usually 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 usually"
+  },
+  {
+    "surfaceForm": "say",
+    "displayForm": "say",
+    "definitions": [
+      {
+        "text": "说；讲",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/seɪ/"
+  },
+  {
+    "surfaceForm": "says",
+    "displayForm": "says",
+    "definitions": [
+      {
+        "text": "说（第三人称单数）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "school",
+    "displayForm": "school",
+    "definitions": [
+      {
+        "text": "与 after 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 after"
+  },
+  {
+    "surfaceForm": "season",
+    "displayForm": "season",
+    "definitions": [
+      {
+        "text": "季节",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈsiːzn/"
+  },
+  {
+    "surfaceForm": "seasons",
+    "displayForm": "seasons",
+    "definitions": [
+      {
+        "text": "与 all 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 all"
+  },
+  {
+    "surfaceForm": "seat",
+    "displayForm": "seat",
+    "definitions": [
+      {
+        "text": "与 mine 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 mine"
+  },
+  {
+    "surfaceForm": "seats",
+    "displayForm": "seats",
+    "definitions": [
+      {
+        "text": "与 theirs 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 theirs"
+  },
+  {
+    "surfaceForm": "second",
+    "displayForm": "second",
+    "definitions": [
+      {
+        "text": "与 second (2nd) 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 second (2nd)"
+  },
+  {
+    "surfaceForm": "see",
+    "displayForm": "see",
+    "definitions": [
+      {
+        "text": "与 all 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 all"
+  },
+  {
+    "surfaceForm": "september",
+    "displayForm": "september",
+    "definitions": [
+      {
+        "text": "九月"
+      }
+    ],
+    "ipa": "/sepˈtembə(r)/"
+  },
+  {
+    "surfaceForm": "seven",
+    "displayForm": "seven",
+    "definitions": [
+      {
+        "text": "与 usually 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 usually"
+  },
+  {
+    "surfaceForm": "she",
+    "displayForm": "she",
+    "definitions": [
+      {
+        "text": "与 Spain 相关的课文词形",
+        "pos": "pron."
+      }
+    ],
+    "formNote": "词形变化，原形为 spain"
+  },
+  {
+    "surfaceForm": "shoes",
+    "displayForm": "shoes",
+    "definitions": [
+      {
+        "text": "与 always 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 always"
+  },
+  {
+    "surfaceForm": "shop",
+    "displayForm": "shop",
+    "definitions": [
+      {
+        "text": "去买东西；购物",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "shopping",
+    "displayForm": "shopping",
+    "definitions": [
+      {
+        "text": "与 go shopping 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 go shopping"
+  },
+  {
+    "surfaceForm": "short",
+    "displayForm": "short",
+    "definitions": [
+      {
+        "text": "与 play 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 play"
+  },
+  {
+    "surfaceForm": "show",
+    "displayForm": "show",
+    "definitions": [
+      {
+        "text": "展览；给人看",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/ʃəʊ/"
+  },
+  {
+    "surfaceForm": "sing",
+    "displayForm": "sing",
+    "definitions": [
+      {
+        "text": "与 Christmas 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 christmas"
+  },
+  {
+    "surfaceForm": "singing",
+    "displayForm": "singing",
+    "definitions": [
+      {
+        "text": "与 also 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 also"
+  },
+  {
+    "surfaceForm": "six",
+    "displayForm": "six",
+    "definitions": [
+      {
+        "text": "六",
+        "pos": "num."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "skip",
+    "displayForm": "skip",
+    "definitions": [
+      {
+        "text": "与 eat breakfast 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 eat breakfast"
+  },
+  {
+    "surfaceForm": "sleeping",
+    "displayForm": "sleeping",
+    "definitions": [
+      {
+        "text": "（sleep//的-ing形式）（正在）睡觉"
+      }
+    ],
+    "ipa": "/ˈsliːpɪŋ/"
+  },
+  {
+    "surfaceForm": "small",
+    "displayForm": "small",
+    "definitions": [
+      {
+        "text": "与 live 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 live"
+  },
+  {
+    "surfaceForm": "snow",
+    "displayForm": "snow",
+    "definitions": [
+      {
+        "text": "雪",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/snəʊ/"
+  },
+  {
+    "surfaceForm": "snowing",
+    "displayForm": "snowing",
+    "definitions": [
+      {
+        "text": "与 because 相关的课文词形",
+        "pos": "conj."
+      }
+    ],
+    "formNote": "词形变化，原形为 because"
+  },
+  {
+    "surfaceForm": "snowman",
+    "displayForm": "snowman",
+    "definitions": [
+      {
+        "text": "雪人"
+      }
+    ],
+    "ipa": "/ˈsnəʊmæn/"
+  },
+  {
+    "surfaceForm": "snows",
+    "displayForm": "snows",
+    "definitions": [
+      {
+        "text": "与 make a snowman 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 make a snowman"
+  },
+  {
+    "surfaceForm": "snowy",
+    "displayForm": "snowy",
+    "definitions": [
+      {
+        "text": "与 winter 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 winter"
+  },
+  {
+    "surfaceForm": "so",
+    "displayForm": "so",
+    "definitions": [
+      {
+        "text": "与 why 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 why"
+  },
+  {
+    "surfaceForm": "sofa",
+    "displayForm": "sofa",
+    "definitions": [
+      {
+        "text": "与 sleeping 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 sleeping"
+  },
+  {
+    "surfaceForm": "soft",
+    "displayForm": "soft",
+    "definitions": [
+      {
+        "text": "与 snow 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 snow"
+  },
+  {
+    "surfaceForm": "some",
+    "displayForm": "some",
+    "definitions": [
+      {
+        "text": "一些",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "songs",
+    "displayForm": "songs",
+    "definitions": [
+      {
+        "text": "与 Christmas 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 christmas"
+  },
+  {
+    "surfaceForm": "sorry",
+    "displayForm": "sorry",
+    "definitions": [
+      {
+        "text": "与 late 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 late"
+  },
+  {
+    "surfaceForm": "sound",
+    "displayForm": "sound",
+    "definitions": [
+      {
+        "text": "听起来好像"
+      }
+    ],
+    "ipa": "/saʊnd/"
+  },
+  {
+    "surfaceForm": "spain",
+    "displayForm": "spain",
+    "definitions": [
+      {
+        "text": "西班牙"
+      }
+    ],
+    "ipa": "/speɪn/"
+  },
+  {
+    "surfaceForm": "spanish",
+    "displayForm": "spanish",
+    "definitions": [
+      {
+        "text": "西班牙的"
+      }
+    ],
+    "ipa": "/ˈspænɪʃ/"
+  },
+  {
+    "surfaceForm": "speaks",
+    "displayForm": "speaks",
+    "definitions": [
+      {
+        "text": "与 Spanish 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 spanish"
+  },
+  {
+    "surfaceForm": "special",
+    "displayForm": "special",
+    "definitions": [
+      {
+        "text": "特殊的；特别的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/ˈspeʃl/"
+  },
+  {
+    "surfaceForm": "sports",
+    "displayForm": "sports",
+    "definitions": [
+      {
+        "text": "与 after 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 after"
+  },
+  {
+    "surfaceForm": "spring",
+    "displayForm": "spring",
+    "definitions": [
+      {
+        "text": "春天",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/sprɪŋ/"
+  },
+  {
+    "surfaceForm": "stage",
+    "displayForm": "stage",
+    "definitions": [
+      {
+        "text": "与 act 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 act"
+  },
+  {
+    "surfaceForm": "stand",
+    "displayForm": "stand",
+    "definitions": [
+      {
+        "text": "与 still 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 still"
+  },
+  {
+    "surfaceForm": "start",
+    "displayForm": "start",
+    "definitions": [
+      {
+        "text": "开始",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/stɑːt/"
+  },
+  {
+    "surfaceForm": "starts",
+    "displayForm": "starts",
+    "definitions": [
+      {
+        "text": "与 a.m. 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 a.m."
+  },
+  {
+    "surfaceForm": "stay",
+    "displayForm": "stay",
+    "definitions": [
+      {
+        "text": "与 few 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 few"
+  },
+  {
+    "surfaceForm": "stayed",
+    "displayForm": "stayed",
+    "definitions": [
+      {
+        "text": "与 cave 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 cave"
+  },
+  {
+    "surfaceForm": "staying",
+    "displayForm": "staying",
+    "definitions": [
+      {
+        "text": "与 like 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 like"
+  },
+  {
+    "surfaceForm": "stays",
+    "displayForm": "stays",
+    "definitions": [
+      {
+        "text": "与 because 相关的课文词形",
+        "pos": "conj."
+      }
+    ],
+    "formNote": "词形变化，原形为 because"
+  },
+  {
+    "surfaceForm": "still",
+    "displayForm": "still",
+    "definitions": [
+      {
+        "text": "仍然；依旧；还是",
+        "pos": "adv."
+      }
+    ],
+    "ipa": "/stɪl/"
+  },
+  {
+    "surfaceForm": "stop",
+    "displayForm": "stop",
+    "definitions": [
+      {
+        "text": "与 playing 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 playing"
+  },
+  {
+    "surfaceForm": "story",
+    "displayForm": "story",
+    "definitions": [
+      {
+        "text": "与 act 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 act"
+  },
+  {
+    "surfaceForm": "strange",
+    "displayForm": "strange",
+    "definitions": [
+      {
+        "text": "与 sound 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 sound"
+  },
+  {
+    "surfaceForm": "student",
+    "displayForm": "student",
+    "definitions": [
+      {
+        "text": "与 fourth (4th) 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 fourth (4th)"
+  },
+  {
+    "surfaceForm": "students",
+    "displayForm": "students",
+    "definitions": [
+      {
+        "text": "与 few 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 few"
+  },
+  {
+    "surfaceForm": "summer",
+    "displayForm": "summer",
+    "definitions": [
+      {
+        "text": "夏天",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈsʌmə(r)/"
+  },
+  {
+    "surfaceForm": "sunday",
+    "displayForm": "sunday",
+    "definitions": [
+      {
+        "text": "与 go shopping 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 go shopping"
+  },
+  {
+    "surfaceForm": "sunny",
+    "displayForm": "sunny",
+    "definitions": [
+      {
+        "text": "与 summer 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 summer"
+  },
+  {
+    "surfaceForm": "sure",
+    "displayForm": "sure",
+    "definitions": [
+      {
+        "text": "（表示同意）当然",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/ʃʊə(r)/"
+  },
+  {
+    "surfaceForm": "sushi",
+    "displayForm": "sushi",
+    "definitions": [
+      {
+        "text": "寿司"
+      }
+    ],
+    "ipa": "/ˈsuːʃi/"
+  },
+  {
+    "surfaceForm": "swimming",
+    "displayForm": "swimming",
+    "definitions": [
+      {
+        "text": "与 go swimming 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 go swimming"
+  },
+  {
+    "surfaceForm": "table",
+    "displayForm": "table",
+    "definitions": [
+      {
+        "text": "与 a few 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 a few"
+  },
+  {
+    "surfaceForm": "tail",
+    "displayForm": "tail",
+    "definitions": [
+      {
+        "text": "与 its 相关的课文词形",
+        "pos": "det."
+      }
+    ],
+    "formNote": "词形变化，原形为 its"
+  },
+  {
+    "surfaceForm": "take",
+    "displayForm": "take",
+    "definitions": [
+      {
+        "text": "学习；上（课）",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/teɪk/"
+  },
+  {
+    "surfaceForm": "takes",
+    "displayForm": "takes",
+    "definitions": [
+      {
+        "text": "与 usually 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 usually"
+  },
+  {
+    "surfaceForm": "talk",
+    "displayForm": "talk",
+    "definitions": [
+      {
+        "text": "与 Thanksgiving 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 thanksgiving"
+  },
+  {
+    "surfaceForm": "tall",
+    "displayForm": "tall",
+    "definitions": [
+      {
+        "text": "与 thirtieth (30th) 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 thirtieth (30th)"
+  },
+  {
+    "surfaceForm": "tea",
+    "displayForm": "tea",
+    "definitions": [
+      {
+        "text": "与 drinking 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 drinking"
+  },
+  {
+    "surfaceForm": "teach",
+    "displayForm": "teach",
+    "definitions": [
+      {
+        "text": "教",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/tiːtʃ/"
+  },
+  {
+    "surfaceForm": "teacher",
+    "displayForm": "teacher",
+    "definitions": [
+      {
+        "text": "与 good job 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 good job"
+  },
+  {
+    "surfaceForm": "teachers",
+    "displayForm": "teachers",
+    "definitions": [
+      {
+        "text": "与 meet 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 meet"
+  },
+  {
+    "surfaceForm": "teachers'",
+    "displayForm": "teachers'",
+    "definitions": [
+      {
+        "text": "与 September 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 september"
+  },
+  {
+    "surfaceForm": "team",
+    "displayForm": "team",
+    "definitions": [
+      {
+        "text": "与 ours 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 ours"
+  },
+  {
+    "surfaceForm": "ten",
+    "displayForm": "ten",
+    "definitions": [
+      {
+        "text": "与 plant 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 plant"
+  },
+  {
+    "surfaceForm": "test",
+    "displayForm": "test",
+    "definitions": [
+      {
+        "text": "与 twentieth (20th) 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 twentieth (20th)"
+  },
+  {
+    "surfaceForm": "thanksgiving",
+    "displayForm": "thanksgiving",
+    "definitions": [
+      {
+        "text": "感恩节"
+      }
+    ],
+    "ipa": "/ˌθæŋksˈgɪvɪŋ/"
+  },
+  {
+    "surfaceForm": "that",
+    "displayForm": "that",
+    "definitions": [
+      {
+        "text": "那；那个",
+        "pos": "pron."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "the",
+    "displayForm": "the",
+    "definitions": [
+      {
+        "text": "这；那（定冠词）",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "their",
+    "displayForm": "their",
+    "definitions": [
+      {
+        "text": "他们的",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "theirs",
+    "displayForm": "theirs",
+    "definitions": [
+      {
+        "text": "他们的；她们的；它们的"
+      }
+    ],
+    "ipa": "/Deəz/"
+  },
+  {
+    "surfaceForm": "there",
+    "displayForm": "there",
+    "definitions": [
+      {
+        "text": "那里",
+        "pos": "adv."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "these",
+    "displayForm": "these",
+    "definitions": [
+      {
+        "text": "与 theirs 相关的课文词形",
+        "pos": "pron."
+      }
+    ],
+    "formNote": "词形变化，原形为 theirs"
+  },
+  {
+    "surfaceForm": "they",
+    "displayForm": "they",
+    "definitions": [
+      {
+        "text": "他们",
+        "pos": "pron."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "thing",
+    "displayForm": "thing",
+    "definitions": [
+      {
+        "text": "事情",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/θɪŋ/"
+  },
+  {
+    "surfaceForm": "things",
+    "displayForm": "things",
+    "definitions": [
+      {
+        "text": "东西（复数）",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "third",
+    "displayForm": "third",
+    "definitions": [
+      {
+        "text": "与 third (3rd) 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 third (3rd)"
+  },
+  {
+    "surfaceForm": "thirtieth",
+    "displayForm": "thirtieth",
+    "definitions": [
+      {
+        "text": "与 thirtieth (30th) 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 thirtieth (30th)"
+  },
+  {
+    "surfaceForm": "thirty",
+    "displayForm": "thirty",
+    "definitions": [
+      {
+        "text": "与 a.m. 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 a.m."
+  },
+  {
+    "surfaceForm": "this",
+    "displayForm": "this",
+    "definitions": [
+      {
+        "text": "这；这个",
+        "pos": "pron."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "time",
+    "displayForm": "time",
+    "definitions": [
+      {
+        "text": "与 need 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 need"
+  },
+  {
+    "surfaceForm": "to",
+    "displayForm": "to",
+    "definitions": [
+      {
+        "text": "与 late 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 late"
+  },
+  {
+    "surfaceForm": "today",
+    "displayForm": "today",
+    "definitions": [
+      {
+        "text": "与 busy 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 busy"
+  },
+  {
+    "surfaceForm": "together",
+    "displayForm": "together",
+    "definitions": [
+      {
+        "text": "与 do morning exercises 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 do morning exercises"
+  },
+  {
+    "surfaceForm": "tom",
+    "displayForm": "tom",
+    "definitions": [
+      {
+        "text": "与 fourth (4th) 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 fourth (4th)"
+  },
+  {
+    "surfaceForm": "too",
+    "displayForm": "too",
+    "definitions": [
+      {
+        "text": "也",
+        "pos": "adv."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "took",
+    "displayForm": "took",
+    "definitions": [
+      {
+        "text": "拿（过去式）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "touched",
+    "displayForm": "touched",
+    "definitions": [
+      {
+        "text": "与 fur 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 fur"
+  },
+  {
+    "surfaceForm": "tourists",
+    "displayForm": "tourists",
+    "definitions": [
+      {
+        "text": "与 the Great Wall 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 the great wall"
+  },
+  {
+    "surfaceForm": "travel",
+    "displayForm": "travel",
+    "definitions": [
+      {
+        "text": "与 August 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 august"
+  },
+  {
+    "surfaceForm": "tree",
+    "displayForm": "tree",
+    "definitions": [
+      {
+        "text": "与 leaf 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 leaf"
+  },
+  {
+    "surfaceForm": "trees",
+    "displayForm": "trees",
+    "definitions": [
+      {
+        "text": "与 because 相关的课文词形",
+        "pos": "conj."
+      }
+    ],
+    "formNote": "词形变化，原形为 because"
+  },
+  {
+    "surfaceForm": "trip",
+    "displayForm": "trip",
+    "definitions": [
+      {
+        "text": "旅行",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/trɪp/"
+  },
+  {
+    "surfaceForm": "turn",
+    "displayForm": "turn",
+    "definitions": [
+      {
+        "text": "顺序",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/tɜːn/"
+  },
+  {
+    "surfaceForm": "turns",
+    "displayForm": "turns",
+    "definitions": [
+      {
+        "text": "与 take turns 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 take turns"
+  },
+  {
+    "surfaceForm": "twelfth",
+    "displayForm": "twelfth",
+    "definitions": [
+      {
+        "text": "与 twelfth (12th) 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 twelfth (12th)"
+  },
+  {
+    "surfaceForm": "twelve",
+    "displayForm": "twelve",
+    "definitions": [
+      {
+        "text": "与 year 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 year"
+  },
+  {
+    "surfaceForm": "twentieth",
+    "displayForm": "twentieth",
+    "definitions": [
+      {
+        "text": "与 twentieth (20th) 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 twentieth (20th)"
+  },
+  {
+    "surfaceForm": "twenty",
+    "displayForm": "twenty",
+    "definitions": [
+      {
+        "text": "与 Christmas 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 christmas"
+  },
+  {
+    "surfaceForm": "two",
+    "displayForm": "two",
+    "definitions": [
+      {
+        "text": "二",
+        "pos": "num."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "under",
+    "displayForm": "under",
+    "definitions": [
+      {
+        "text": "与 sleeping 相关的课文词形",
+        "pos": "prep."
+      }
+    ],
+    "formNote": "词形变化，原形为 sleeping"
+  },
+  {
+    "surfaceForm": "up",
+    "displayForm": "up",
+    "definitions": [
+      {
+        "text": "与 usually 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 usually"
+  },
+  {
+    "surfaceForm": "upstairs",
+    "displayForm": "upstairs",
+    "definitions": [
+      {
+        "text": "与 keep to the right 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 keep to the right"
+  },
+  {
+    "surfaceForm": "us",
+    "displayForm": "us",
+    "definitions": [
+      {
+        "text": "与 play sports 相关的课文词形",
+        "pos": "pron."
+      }
+    ],
+    "formNote": "词形变化，原形为 play sports"
+  },
+  {
+    "surfaceForm": "usually",
+    "displayForm": "usually",
+    "definitions": [
+      {
+        "text": "通常地；惯常地",
+        "pos": "adv."
+      }
+    ],
+    "ipa": "/ˈjuːʒuəli/"
+  },
+  {
+    "surfaceForm": "vacation",
+    "displayForm": "vacation",
+    "definitions": [
+      {
+        "text": "假期"
+      }
+    ],
+    "ipa": "/vəˈkeɪʃn/"
+  },
+  {
+    "surfaceForm": "very",
+    "displayForm": "very",
+    "definitions": [
+      {
+        "text": "与 busy 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 busy"
+  },
+  {
+    "surfaceForm": "visit",
+    "displayForm": "visit",
+    "definitions": [
+      {
+        "text": "与 Spain 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 spain"
+  },
+  {
+    "surfaceForm": "visited",
+    "displayForm": "visited",
+    "definitions": [
+      {
+        "text": "参观（过去式）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "wagged",
+    "displayForm": "wagged",
+    "definitions": [
+      {
+        "text": "与 its 相关的课文词形",
+        "pos": "det."
+      }
+    ],
+    "formNote": "词形变化，原形为 its"
+  },
+  {
+    "surfaceForm": "wait",
+    "displayForm": "wait",
+    "definitions": [
+      {
+        "text": "与 second (2nd) 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 second (2nd)"
+  },
+  {
+    "surfaceForm": "walk",
+    "displayForm": "walk",
+    "definitions": [
+      {
+        "text": "行走",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/wɔːk/"
+  },
+  {
+    "surfaceForm": "wall",
+    "displayForm": "wall",
+    "definitions": [
+      {
+        "text": "与 the Great Wall 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 the great wall"
+  },
+  {
+    "surfaceForm": "want",
+    "displayForm": "want",
+    "definitions": [
+      {
+        "text": "想要",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "wants",
+    "displayForm": "wants",
+    "definitions": [
+      {
+        "text": "与 Spain 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 spain"
+  },
+  {
+    "surfaceForm": "warm",
+    "displayForm": "warm",
+    "definitions": [
+      {
+        "text": "与 spring 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 spring"
+  },
+  {
+    "surfaceForm": "was",
+    "displayForm": "was",
+    "definitions": [
+      {
+        "text": "是（过去式）",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "washed",
+    "displayForm": "washed",
+    "definitions": [
+      {
+        "text": "与 its 相关的课文词形",
+        "pos": "det."
+      }
+    ],
+    "formNote": "词形变化，原形为 its"
+  },
+  {
+    "surfaceForm": "watch",
+    "displayForm": "watch",
+    "definitions": [
+      {
+        "text": "与 national 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 national"
+  },
+  {
+    "surfaceForm": "water",
+    "displayForm": "water",
+    "definitions": [
+      {
+        "text": "与 drinking 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 drinking"
+  },
+  {
+    "surfaceForm": "we",
+    "displayForm": "we",
+    "definitions": [
+      {
+        "text": "我们",
+        "pos": "pron."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "wear",
+    "displayForm": "wear",
+    "definitions": [
+      {
+        "text": "与 winter 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 winter"
+  },
+  {
+    "surfaceForm": "weather",
+    "displayForm": "weather",
+    "definitions": [
+      {
+        "text": "与 May 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 may"
+  },
+  {
+    "surfaceForm": "wednesdays",
+    "displayForm": "wednesdays",
+    "definitions": [
+      {
+        "text": "与 take a dancing class 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 take a dancing class"
+  },
+  {
+    "surfaceForm": "week",
+    "displayForm": "week",
+    "definitions": [
+      {
+        "text": "与 clean my room 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 clean my room"
+  },
+  {
+    "surfaceForm": "weekdays",
+    "displayForm": "weekdays",
+    "definitions": [
+      {
+        "text": "与 busy 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 busy"
+  },
+  {
+    "surfaceForm": "weekend",
+    "displayForm": "weekend",
+    "definitions": [
+      {
+        "text": "与 last 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 last"
+  },
+  {
+    "surfaceForm": "weekends",
+    "displayForm": "weekends",
+    "definitions": [
+      {
+        "text": "与 eat breakfast 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 eat breakfast"
+  },
+  {
+    "surfaceForm": "well",
+    "displayForm": "well",
+    "definitions": [
+      {
+        "text": "与 also 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 also"
+  },
+  {
+    "surfaceForm": "went",
+    "displayForm": "went",
+    "definitions": [
+      {
+        "text": "去（过去式）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "what",
+    "displayForm": "what",
+    "definitions": [
+      {
+        "text": "什么",
+        "pos": "pron."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "when",
+    "displayForm": "when",
+    "definitions": [
+      {
+        "text": "什么时候；何时",
+        "pos": "adv."
+      }
+    ],
+    "ipa": "/wen/"
+  },
+  {
+    "surfaceForm": "where",
+    "displayForm": "where",
+    "definitions": [
+      {
+        "text": "与 live 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 live"
+  },
+  {
+    "surfaceForm": "which",
+    "displayForm": "which",
+    "definitions": [
+      {
+        "text": "哪一个"
+      }
+    ],
+    "ipa": "/wɪtʃ/"
+  },
+  {
+    "surfaceForm": "while",
+    "displayForm": "while",
+    "definitions": [
+      {
+        "text": "与 drinking 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 drinking"
+  },
+  {
+    "surfaceForm": "white",
+    "displayForm": "white",
+    "definitions": [
+      {
+        "text": "与 snow 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 snow"
+  },
+  {
+    "surfaceForm": "why",
+    "displayForm": "why",
+    "definitions": [
+      {
+        "text": "为什么",
+        "pos": "adv."
+      }
+    ],
+    "ipa": "/waɪ/"
+  },
+  {
+    "surfaceForm": "will",
+    "displayForm": "will",
+    "definitions": [
+      {
+        "text": "与 exercise 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 exercise"
+  },
+  {
+    "surfaceForm": "win",
+    "displayForm": "win",
+    "definitions": [
+      {
+        "text": "获胜",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/wɪn/"
+  },
+  {
+    "surfaceForm": "winter",
+    "displayForm": "winter",
+    "definitions": [
+      {
+        "text": "冬天",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈwɪntə(r)/"
+  },
+  {
+    "surfaceForm": "with",
+    "displayForm": "with",
+    "definitions": [
+      {
+        "text": "用；和",
+        "pos": "prep."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "won",
+    "displayForm": "won",
+    "definitions": [
+      {
+        "text": "与 sports meet 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 sports meet"
+  },
+  {
+    "surfaceForm": "word",
+    "displayForm": "word",
+    "definitions": [
+      {
+        "text": "与 fall 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 fall"
+  },
+  {
+    "surfaceForm": "work",
+    "displayForm": "work",
+    "definitions": [
+      {
+        "text": "工作",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/wɜːk/"
+  },
+  {
+    "surfaceForm": "working",
+    "displayForm": "working",
+    "definitions": [
+      {
+        "text": "与 talk quietly 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 talk quietly"
+  },
+  {
+    "surfaceForm": "works",
+    "displayForm": "works",
+    "definitions": [
+      {
+        "text": "与 always 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 always"
+  },
+  {
+    "surfaceForm": "write",
+    "displayForm": "write",
+    "definitions": [
+      {
+        "text": "与 letter 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 letter"
+  },
+  {
+    "surfaceForm": "wrote",
+    "displayForm": "wrote",
+    "definitions": [
+      {
+        "text": "与 play 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 play"
+  },
+  {
+    "surfaceForm": "year",
+    "displayForm": "year",
+    "definitions": [
+      {
+        "text": "年",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/jɪə(r)/"
+  },
+  {
+    "surfaceForm": "yellow",
+    "displayForm": "yellow",
+    "definitions": [
+      {
+        "text": "与 autumn 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 autumn"
+  },
+  {
+    "surfaceForm": "yesterday",
+    "displayForm": "yesterday",
+    "definitions": [
+      {
+        "text": "与 letter 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 letter"
+  },
+  {
+    "surfaceForm": "you",
+    "displayForm": "you",
+    "definitions": [
+      {
+        "text": "与 when 相关的课文词形",
+        "pos": "pron."
+      }
+    ],
+    "formNote": "词形变化，原形为 when"
+  },
+  {
+    "surfaceForm": "your",
+    "displayForm": "your",
+    "definitions": [
+      {
+        "text": "你的；你们的",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "yours",
+    "displayForm": "yours",
+    "definitions": [
+      {
+        "text": "你（们）的"
+      }
+    ],
+    "ipa": "/jɔːz/"
+  },
+  {
+    "surfaceForm": "zoo",
+    "displayForm": "zoo",
+    "definitions": [
+      {
+        "text": "与 trip 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 trip"
+  }
+]

@@ -1,0 +1,3640 @@
+[
+  {
+    "surfaceForm": "a",
+    "displayForm": "a",
+    "definitions": [
+      {
+        "text": "一个；一",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "about",
+    "displayForm": "about",
+    "definitions": [
+      {
+        "text": "与 lesson 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 lesson"
+  },
+  {
+    "surfaceForm": "across",
+    "displayForm": "across",
+    "definitions": [
+      {
+        "text": "与 street 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 street"
+  },
+  {
+    "surfaceForm": "address",
+    "displayForm": "address",
+    "definitions": [
+      {
+        "text": "地址"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "advice",
+    "displayForm": "advice",
+    "definitions": [
+      {
+        "text": "与 a lot of 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 a lot of"
+  },
+  {
+    "surfaceForm": "after",
+    "displayForm": "after",
+    "definitions": [
+      {
+        "text": "与 feel 相关的课文词形",
+        "pos": "prep."
+      }
+    ],
+    "formNote": "词形变化，原形为 feel"
+  },
+  {
+    "surfaceForm": "air",
+    "displayForm": "air",
+    "definitions": [
+      {
+        "text": "与 open 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 open"
+  },
+  {
+    "surfaceForm": "all",
+    "displayForm": "all",
+    "definitions": [
+      {
+        "text": "与 medicine 相关的课文词形",
+        "pos": "det."
+      }
+    ],
+    "formNote": "词形变化，原形为 medicine"
+  },
+  {
+    "surfaceForm": "along",
+    "displayForm": "along",
+    "definitions": [
+      {
+        "text": "沿着"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "already",
+    "displayForm": "already",
+    "definitions": [
+      {
+        "text": "与 miss 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 miss"
+  },
+  {
+    "surfaceForm": "an",
+    "displayForm": "an",
+    "definitions": [
+      {
+        "text": "一个；一",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "and",
+    "displayForm": "and",
+    "definitions": [
+      {
+        "text": "和；与",
+        "pos": "conj."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "anywhere",
+    "displayForm": "anywhere",
+    "definitions": [
+      {
+        "text": "任何地方"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "apples",
+    "displayForm": "apples",
+    "definitions": [
+      {
+        "text": "与 grow 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 grow"
+  },
+  {
+    "surfaceForm": "are",
+    "displayForm": "are",
+    "definitions": [
+      {
+        "text": "是",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "around",
+    "displayForm": "around",
+    "definitions": [
+      {
+        "text": "与 Ice and Snow Festival 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 ice and snow festival"
+  },
+  {
+    "surfaceForm": "as",
+    "displayForm": "as",
+    "definitions": [
+      {
+        "text": "与 restaurant 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 restaurant"
+  },
+  {
+    "surfaceForm": "at",
+    "displayForm": "at",
+    "definitions": [
+      {
+        "text": "与 fat 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 fat"
+  },
+  {
+    "surfaceForm": "ate",
+    "displayForm": "ate",
+    "definitions": [
+      {
+        "text": "与 restaurant 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 restaurant"
+  },
+  {
+    "surfaceForm": "aunt",
+    "displayForm": "aunt",
+    "definitions": [
+      {
+        "text": "与 cook 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 cook"
+  },
+  {
+    "surfaceForm": "awake",
+    "displayForm": "awake",
+    "definitions": [
+      {
+        "text": "与 toothache 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 toothache"
+  },
+  {
+    "surfaceForm": "back",
+    "displayForm": "back",
+    "definitions": [
+      {
+        "text": "与 go back 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 go back"
+  },
+  {
+    "surfaceForm": "bag",
+    "displayForm": "bag",
+    "definitions": [
+      {
+        "text": "与 anywhere 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 anywhere"
+  },
+  {
+    "surfaceForm": "be",
+    "displayForm": "be",
+    "definitions": [
+      {
+        "text": "与 break 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 break"
+  },
+  {
+    "surfaceForm": "beautiful",
+    "displayForm": "beautiful",
+    "definitions": [
+      {
+        "text": "与 dining room 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 dining room"
+  },
+  {
+    "surfaceForm": "become",
+    "displayForm": "become",
+    "definitions": [
+      {
+        "text": "与 scientist 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 scientist"
+  },
+  {
+    "surfaceForm": "bed",
+    "displayForm": "bed",
+    "definitions": [
+      {
+        "text": "与 fever 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 fever"
+  },
+  {
+    "surfaceForm": "been",
+    "displayForm": "been",
+    "definitions": [
+      {
+        "text": "与 ill 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 ill"
+  },
+  {
+    "surfaceForm": "before",
+    "displayForm": "before",
+    "definitions": [
+      {
+        "text": "与 cross 相关的课文词形",
+        "pos": "prep."
+      }
+    ],
+    "formNote": "词形变化，原形为 cross"
+  },
+  {
+    "surfaceForm": "better",
+    "displayForm": "better",
+    "definitions": [
+      {
+        "text": "与 feel 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 feel"
+  },
+  {
+    "surfaceForm": "big",
+    "displayForm": "big",
+    "definitions": [
+      {
+        "text": "与 dining room 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 dining room"
+  },
+  {
+    "surfaceForm": "birds",
+    "displayForm": "birds",
+    "definitions": [
+      {
+        "text": "与 hear 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 hear"
+  },
+  {
+    "surfaceForm": "book",
+    "displayForm": "book",
+    "definitions": [
+      {
+        "text": "与 thin 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 thin"
+  },
+  {
+    "surfaceForm": "books",
+    "displayForm": "books",
+    "definitions": [
+      {
+        "text": "书（复数）",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "both",
+    "displayForm": "both",
+    "definitions": [
+      {
+        "text": "与 cross 相关的课文词形",
+        "pos": "det."
+      }
+    ],
+    "formNote": "词形变化，原形为 cross"
+  },
+  {
+    "surfaceForm": "bottle",
+    "displayForm": "bottle",
+    "definitions": [
+      {
+        "text": "瓶子"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "box",
+    "displayForm": "box",
+    "definitions": [
+      {
+        "text": "与 carry 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 carry"
+  },
+  {
+    "surfaceForm": "boxes",
+    "displayForm": "boxes",
+    "definitions": [
+      {
+        "text": "盒子（复数）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "boy",
+    "displayForm": "boy",
+    "definitions": [
+      {
+        "text": "与 break 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 break"
+  },
+  {
+    "surfaceForm": "break",
+    "displayForm": "break",
+    "definitions": [
+      {
+        "text": "摔断（过去式 broke）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "brother",
+    "displayForm": "brother",
+    "definitions": [
+      {
+        "text": "与 ill 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 ill"
+  },
+  {
+    "surfaceForm": "builds",
+    "displayForm": "builds",
+    "definitions": [
+      {
+        "text": "与 worker 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 worker"
+  },
+  {
+    "surfaceForm": "bus",
+    "displayForm": "bus",
+    "definitions": [
+      {
+        "text": "与 soon 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 soon"
+  },
+  {
+    "surfaceForm": "but",
+    "displayForm": "but",
+    "definitions": [
+      {
+        "text": "与 thin 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 thin"
+  },
+  {
+    "surfaceForm": "by",
+    "displayForm": "by",
+    "definitions": [
+      {
+        "text": "与 hope 相关的课文词形",
+        "pos": "prep."
+      }
+    ],
+    "formNote": "词形变化，原形为 hope"
+  },
+  {
+    "surfaceForm": "can",
+    "displayForm": "can",
+    "definitions": [
+      {
+        "text": "可以",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "cannot",
+    "displayForm": "cannot",
+    "definitions": [
+      {
+        "text": "与 anywhere 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 anywhere"
+  },
+  {
+    "surfaceForm": "careful",
+    "displayForm": "careful",
+    "definitions": [
+      {
+        "text": "与 break 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 break"
+  },
+  {
+    "surfaceForm": "carefully",
+    "displayForm": "carefully",
+    "definitions": [
+      {
+        "text": "与 heavy 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 heavy"
+  },
+  {
+    "surfaceForm": "carry",
+    "displayForm": "carry",
+    "definitions": [
+      {
+        "text": "携带；搬运",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "carrying",
+    "displayForm": "carrying",
+    "definitions": [
+      {
+        "text": "与 feel 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 feel"
+  },
+  {
+    "surfaceForm": "cars",
+    "displayForm": "cars",
+    "definitions": [
+      {
+        "text": "与 street 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 street"
+  },
+  {
+    "surfaceForm": "cat",
+    "displayForm": "cat",
+    "definitions": [
+      {
+        "text": "与 fat 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 fat"
+  },
+  {
+    "surfaceForm": "checked",
+    "displayForm": "checked",
+    "definitions": [
+      {
+        "text": "与 fever 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 fever"
+  },
+  {
+    "surfaceForm": "chemical",
+    "displayForm": "chemical",
+    "definitions": [
+      {
+        "text": "与 bottle 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 bottle"
+  },
+  {
+    "surfaceForm": "chemistry",
+    "displayForm": "chemistry",
+    "definitions": [
+      {
+        "text": "化学"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "children",
+    "displayForm": "children",
+    "definitions": [
+      {
+        "text": "孩子们",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "china",
+    "displayForm": "china",
+    "definitions": [
+      {
+        "text": "与 anywhere 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 anywhere"
+  },
+  {
+    "surfaceForm": "cities",
+    "displayForm": "cities",
+    "definitions": [
+      {
+        "text": "与 along 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 along"
+  },
+  {
+    "surfaceForm": "city",
+    "displayForm": "city",
+    "definitions": [
+      {
+        "text": "与 famous 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 famous"
+  },
+  {
+    "surfaceForm": "class",
+    "displayForm": "class",
+    "definitions": [
+      {
+        "text": "与 ill 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 ill"
+  },
+  {
+    "surfaceForm": "classmates",
+    "displayForm": "classmates",
+    "definitions": [
+      {
+        "text": "与 gave 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 gave"
+  },
+  {
+    "surfaceForm": "classroom",
+    "displayForm": "classroom",
+    "definitions": [
+      {
+        "text": "与 teachers' office 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 teachers' office"
+  },
+  {
+    "surfaceForm": "cold",
+    "displayForm": "cold",
+    "definitions": [
+      {
+        "text": "与 have a cold 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 have a cold"
+  },
+  {
+    "surfaceForm": "come",
+    "displayForm": "come",
+    "definitions": [
+      {
+        "text": "来",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "contact",
+    "displayForm": "contact",
+    "definitions": [
+      {
+        "text": "与 information 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 information"
+  },
+  {
+    "surfaceForm": "cook",
+    "displayForm": "cook",
+    "definitions": [
+      {
+        "text": "厨师",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "cooked",
+    "displayForm": "cooked",
+    "definitions": [
+      {
+        "text": "与 dining room 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 dining room"
+  },
+  {
+    "surfaceForm": "corn",
+    "displayForm": "corn",
+    "definitions": [
+      {
+        "text": "与 grow 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 grow"
+  },
+  {
+    "surfaceForm": "creates",
+    "displayForm": "creates",
+    "definitions": [
+      {
+        "text": "与 inventor 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 inventor"
+  },
+  {
+    "surfaceForm": "cross",
+    "displayForm": "cross",
+    "definitions": [
+      {
+        "text": "横穿"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "cute",
+    "displayForm": "cute",
+    "definitions": [
+      {
+        "text": "与 fat 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 fat"
+  },
+  {
+    "surfaceForm": "dancer",
+    "displayForm": "dancer",
+    "definitions": [
+      {
+        "text": "舞蹈演员"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "day",
+    "displayForm": "day",
+    "definitions": [
+      {
+        "text": "天",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "days",
+    "displayForm": "days",
+    "definitions": [
+      {
+        "text": "与 ill 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 ill"
+  },
+  {
+    "surfaceForm": "delicious",
+    "displayForm": "delicious",
+    "definitions": [
+      {
+        "text": "与 cook 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 cook"
+  },
+  {
+    "surfaceForm": "did",
+    "displayForm": "did",
+    "definitions": [
+      {
+        "text": "做（过去式）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "different",
+    "displayForm": "different",
+    "definitions": [
+      {
+        "text": "与 learn 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 learn"
+  },
+  {
+    "surfaceForm": "dining",
+    "displayForm": "dining",
+    "definitions": [
+      {
+        "text": "与 dining room 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 dining room"
+  },
+  {
+    "surfaceForm": "dinner",
+    "displayForm": "dinner",
+    "definitions": [
+      {
+        "text": "与 dining room 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 dining room"
+  },
+  {
+    "surfaceForm": "do",
+    "displayForm": "do",
+    "definitions": [
+      {
+        "text": "做",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "doctor",
+    "displayForm": "doctor",
+    "definitions": [
+      {
+        "text": "医生"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "dream",
+    "displayForm": "dream",
+    "definitions": [
+      {
+        "text": "与 true 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 true"
+  },
+  {
+    "surfaceForm": "drink",
+    "displayForm": "drink",
+    "definitions": [
+      {
+        "text": "与 a lot of 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 a lot of"
+  },
+  {
+    "surfaceForm": "driver",
+    "displayForm": "driver",
+    "definitions": [
+      {
+        "text": "司机"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "drives",
+    "displayForm": "drives",
+    "definitions": [
+      {
+        "text": "与 driver 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 driver"
+  },
+  {
+    "surfaceForm": "earth",
+    "displayForm": "earth",
+    "definitions": [
+      {
+        "text": "与 geography 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 geography"
+  },
+  {
+    "surfaceForm": "easy",
+    "displayForm": "easy",
+    "definitions": [
+      {
+        "text": "与 thin 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 thin"
+  },
+  {
+    "surfaceForm": "eat",
+    "displayForm": "eat",
+    "definitions": [
+      {
+        "text": "与 fat 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 fat"
+  },
+  {
+    "surfaceForm": "edison",
+    "displayForm": "edison",
+    "definitions": [
+      {
+        "text": "爱迪生"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "email",
+    "displayForm": "email",
+    "definitions": [
+      {
+        "text": "与 address 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 address"
+  },
+  {
+    "surfaceForm": "english",
+    "displayForm": "english",
+    "definitions": [
+      {
+        "text": "与 lesson 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 lesson"
+  },
+  {
+    "surfaceForm": "every",
+    "displayForm": "every",
+    "definitions": [
+      {
+        "text": "每个",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "everyone",
+    "displayForm": "everyone",
+    "definitions": [
+      {
+        "text": "与 year book 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 year book"
+  },
+  {
+    "surfaceForm": "experiments",
+    "displayForm": "experiments",
+    "definitions": [
+      {
+        "text": "与 lab 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 lab"
+  },
+  {
+    "surfaceForm": "factory",
+    "displayForm": "factory",
+    "definitions": [
+      {
+        "text": "与 worker 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 worker"
+  },
+  {
+    "surfaceForm": "famous",
+    "displayForm": "famous",
+    "definitions": [
+      {
+        "text": "著名的",
+        "pos": "adj."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "farm",
+    "displayForm": "farm",
+    "definitions": [
+      {
+        "text": "与 farmer 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 farmer"
+  },
+  {
+    "surfaceForm": "farmer",
+    "displayForm": "farmer",
+    "definitions": [
+      {
+        "text": "农民",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "farmers",
+    "displayForm": "farmers",
+    "definitions": [
+      {
+        "text": "与 grow 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 grow"
+  },
+  {
+    "surfaceForm": "fat",
+    "displayForm": "fat",
+    "definitions": [
+      {
+        "text": "胖的",
+        "pos": "adj."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "father",
+    "displayForm": "father",
+    "definitions": [
+      {
+        "text": "与 restaurant 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 restaurant"
+  },
+  {
+    "surfaceForm": "favorite",
+    "displayForm": "favorite",
+    "definitions": [
+      {
+        "text": "与 chemistry 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 chemistry"
+  },
+  {
+    "surfaceForm": "favourite",
+    "displayForm": "favourite",
+    "definitions": [
+      {
+        "text": "与 subject 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 subject"
+  },
+  {
+    "surfaceForm": "feel",
+    "displayForm": "feel",
+    "definitions": [
+      {
+        "text": "感觉到"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "festival",
+    "displayForm": "festival",
+    "definitions": [
+      {
+        "text": "与 along 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 along"
+  },
+  {
+    "surfaceForm": "fever",
+    "displayForm": "fever",
+    "definitions": [
+      {
+        "text": "发烧"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "find",
+    "displayForm": "find",
+    "definitions": [
+      {
+        "text": "与 anywhere 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 anywhere"
+  },
+  {
+    "surfaceForm": "finish",
+    "displayForm": "finish",
+    "definitions": [
+      {
+        "text": "与 soon 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 soon"
+  },
+  {
+    "surfaceForm": "floor",
+    "displayForm": "floor",
+    "definitions": [
+      {
+        "text": "与 lab 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 lab"
+  },
+  {
+    "surfaceForm": "flowers",
+    "displayForm": "flowers",
+    "definitions": [
+      {
+        "text": "与 grow 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 grow"
+  },
+  {
+    "surfaceForm": "follow",
+    "displayForm": "follow",
+    "definitions": [
+      {
+        "text": "与 driver 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 driver"
+  },
+  {
+    "surfaceForm": "food",
+    "displayForm": "food",
+    "definitions": [
+      {
+        "text": "食物",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "for",
+    "displayForm": "for",
+    "definitions": [
+      {
+        "text": "为了；给",
+        "pos": "prep."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "forever",
+    "displayForm": "forever",
+    "definitions": [
+      {
+        "text": "与 year book 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 year book"
+  },
+  {
+    "surfaceForm": "fresh",
+    "displayForm": "fresh",
+    "definitions": [
+      {
+        "text": "与 open 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 open"
+  },
+  {
+    "surfaceForm": "from",
+    "displayForm": "from",
+    "definitions": [
+      {
+        "text": "与 go back 相关的课文词形",
+        "pos": "prep."
+      }
+    ],
+    "formNote": "词形变化，原形为 go back"
+  },
+  {
+    "surfaceForm": "fun",
+    "displayForm": "fun",
+    "definitions": [
+      {
+        "text": "与 physics 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 physics"
+  },
+  {
+    "surfaceForm": "future",
+    "displayForm": "future",
+    "definitions": [
+      {
+        "text": "与 job 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 job"
+  },
+  {
+    "surfaceForm": "garden",
+    "displayForm": "garden",
+    "definitions": [
+      {
+        "text": "与 grow 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 grow"
+  },
+  {
+    "surfaceForm": "gave",
+    "displayForm": "gave",
+    "definitions": [
+      {
+        "text": "给（过去式）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "geography",
+    "displayForm": "geography",
+    "definitions": [
+      {
+        "text": "地理"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "get",
+    "displayForm": "get",
+    "definitions": [
+      {
+        "text": "与 soon 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 soon"
+  },
+  {
+    "surfaceForm": "give",
+    "displayForm": "give",
+    "definitions": [
+      {
+        "text": "与 headache 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 headache"
+  },
+  {
+    "surfaceForm": "glass",
+    "displayForm": "glass",
+    "definitions": [
+      {
+        "text": "与 break 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 break"
+  },
+  {
+    "surfaceForm": "go",
+    "displayForm": "go",
+    "definitions": [
+      {
+        "text": "与 go back 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 go back"
+  },
+  {
+    "surfaceForm": "good",
+    "displayForm": "good",
+    "definitions": [
+      {
+        "text": "好的",
+        "pos": "adj."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "graduation",
+    "displayForm": "graduation",
+    "definitions": [
+      {
+        "text": "与 leave 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 leave"
+  },
+  {
+    "surfaceForm": "grandfather",
+    "displayForm": "grandfather",
+    "definitions": [
+      {
+        "text": "与 farmer 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 farmer"
+  },
+  {
+    "surfaceForm": "great",
+    "displayForm": "great",
+    "definitions": [
+      {
+        "text": "与 job 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 job"
+  },
+  {
+    "surfaceForm": "grow",
+    "displayForm": "grow",
+    "definitions": [
+      {
+        "text": "种植",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "grows",
+    "displayForm": "grows",
+    "definitions": [
+      {
+        "text": "与 farmer 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 farmer"
+  },
+  {
+    "surfaceForm": "guide",
+    "displayForm": "guide",
+    "definitions": [
+      {
+        "text": "与 show 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 show"
+  },
+  {
+    "surfaceForm": "had",
+    "displayForm": "had",
+    "definitions": [
+      {
+        "text": "有（过去式）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "hand",
+    "displayForm": "hand",
+    "definitions": [
+      {
+        "text": "与 teachers' office 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 teachers' office"
+  },
+  {
+    "surfaceForm": "happy",
+    "displayForm": "happy",
+    "definitions": [
+      {
+        "text": "与 travel 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 travel"
+  },
+  {
+    "surfaceForm": "harbin",
+    "displayForm": "harbin",
+    "definitions": [
+      {
+        "text": "与 famous 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 famous"
+  },
+  {
+    "surfaceForm": "hard",
+    "displayForm": "hard",
+    "definitions": [
+      {
+        "text": "与 farmer 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 farmer"
+  },
+  {
+    "surfaceForm": "has",
+    "displayForm": "has",
+    "definitions": [
+      {
+        "text": "有（第三人称单数）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "have",
+    "displayForm": "have",
+    "definitions": [
+      {
+        "text": "有",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "he",
+    "displayForm": "he",
+    "definitions": [
+      {
+        "text": "与 police officer 相关的课文词形",
+        "pos": "pron."
+      }
+    ],
+    "formNote": "词形变化，原形为 police officer"
+  },
+  {
+    "surfaceForm": "headache",
+    "displayForm": "headache",
+    "definitions": [
+      {
+        "text": "头疼"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "hear",
+    "displayForm": "hear",
+    "definitions": [
+      {
+        "text": "听见",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "heavy",
+    "displayForm": "heavy",
+    "definitions": [
+      {
+        "text": "重的",
+        "pos": "adj."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "helps",
+    "displayForm": "helps",
+    "definitions": [
+      {
+        "text": "与 nurse 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 nurse"
+  },
+  {
+    "surfaceForm": "her",
+    "displayForm": "her",
+    "definitions": [
+      {
+        "text": "与 carry 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 carry"
+  },
+  {
+    "surfaceForm": "here",
+    "displayForm": "here",
+    "definitions": [
+      {
+        "text": "这里",
+        "pos": "adv."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "him",
+    "displayForm": "him",
+    "definitions": [
+      {
+        "text": "与 heavy 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 heavy"
+  },
+  {
+    "surfaceForm": "his",
+    "displayForm": "his",
+    "definitions": [
+      {
+        "text": "与 job 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 job"
+  },
+  {
+    "surfaceForm": "history",
+    "displayForm": "history",
+    "definitions": [
+      {
+        "text": "历史",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "home",
+    "displayForm": "home",
+    "definitions": [
+      {
+        "text": "与 fat 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 fat"
+  },
+  {
+    "surfaceForm": "homework",
+    "displayForm": "homework",
+    "definitions": [
+      {
+        "text": "与 teachers' office 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 teachers' office"
+  },
+  {
+    "surfaceForm": "hope",
+    "displayForm": "hope",
+    "definitions": [
+      {
+        "text": "希望"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "hospital",
+    "displayForm": "hospital",
+    "definitions": [
+      {
+        "text": "与 cross 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 cross"
+  },
+  {
+    "surfaceForm": "hug",
+    "displayForm": "hug",
+    "definitions": [
+      {
+        "text": "与 kiss 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 kiss"
+  },
+  {
+    "surfaceForm": "i",
+    "displayForm": "i",
+    "definitions": [
+      {
+        "text": "我",
+        "pos": "pron."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "ice",
+    "displayForm": "ice",
+    "definitions": [
+      {
+        "text": "与 famous 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 famous"
+  },
+  {
+    "surfaceForm": "if",
+    "displayForm": "if",
+    "definitions": [
+      {
+        "text": "与 fever 相关的课文词形",
+        "pos": "conj."
+      }
+    ],
+    "formNote": "词形变化，原形为 fever"
+  },
+  {
+    "surfaceForm": "ill",
+    "displayForm": "ill",
+    "definitions": [
+      {
+        "text": "不适；生病的"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "in",
+    "displayForm": "in",
+    "definitions": [
+      {
+        "text": "与 anywhere 相关的课文词形",
+        "pos": "prep."
+      }
+    ],
+    "formNote": "词形变化，原形为 anywhere"
+  },
+  {
+    "surfaceForm": "information",
+    "displayForm": "information",
+    "definitions": [
+      {
+        "text": "信息"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "interesting",
+    "displayForm": "interesting",
+    "definitions": [
+      {
+        "text": "与 geography 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 geography"
+  },
+  {
+    "surfaceForm": "inventor",
+    "displayForm": "inventor",
+    "definitions": [
+      {
+        "text": "发明家"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "is",
+    "displayForm": "is",
+    "definitions": [
+      {
+        "text": "是",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "it",
+    "displayForm": "it",
+    "definitions": [
+      {
+        "text": "它",
+        "pos": "pron."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "job",
+    "displayForm": "job",
+    "definitions": [
+      {
+        "text": "工作",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "jobs",
+    "displayForm": "jobs",
+    "definitions": [
+      {
+        "text": "与 lesson 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 lesson"
+  },
+  {
+    "surfaceForm": "keep",
+    "displayForm": "keep",
+    "definitions": [
+      {
+        "text": "与 toothache 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 toothache"
+  },
+  {
+    "surfaceForm": "keeps",
+    "displayForm": "keeps",
+    "definitions": [
+      {
+        "text": "与 police officer 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 police officer"
+  },
+  {
+    "surfaceForm": "kind",
+    "displayForm": "kind",
+    "definitions": [
+      {
+        "text": "种；类",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "kiss",
+    "displayForm": "kiss",
+    "definitions": [
+      {
+        "text": "亲吻"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "kitchen",
+    "displayForm": "kitchen",
+    "definitions": [
+      {
+        "text": "与 cook 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 cook"
+  },
+  {
+    "surfaceForm": "lab",
+    "displayForm": "lab",
+    "definitions": [
+      {
+        "text": "实验室"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "last",
+    "displayForm": "last",
+    "definitions": [
+      {
+        "text": "与 the Yangtze River 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 the yangtze river"
+  },
+  {
+    "surfaceForm": "learn",
+    "displayForm": "learn",
+    "definitions": [
+      {
+        "text": "学习",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "learned",
+    "displayForm": "learned",
+    "definitions": [
+      {
+        "text": "学习（过去式）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "leave",
+    "displayForm": "leave",
+    "definitions": [
+      {
+        "text": "离开",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "leg",
+    "displayForm": "leg",
+    "definitions": [
+      {
+        "text": "与 break 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 break"
+  },
+  {
+    "surfaceForm": "lesson",
+    "displayForm": "lesson",
+    "definitions": [
+      {
+        "text": "功课；课业",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "let",
+    "displayForm": "let",
+    "definitions": [
+      {
+        "text": "让",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "light",
+    "displayForm": "light",
+    "definitions": [
+      {
+        "text": "轻的",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "like",
+    "displayForm": "like",
+    "definitions": [
+      {
+        "text": "喜欢",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "likes",
+    "displayForm": "likes",
+    "definitions": [
+      {
+        "text": "与 job 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 job"
+  },
+  {
+    "surfaceForm": "longest",
+    "displayForm": "longest",
+    "definitions": [
+      {
+        "text": "与 the Yangtze River 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 the yangtze river"
+  },
+  {
+    "surfaceForm": "look",
+    "displayForm": "look",
+    "definitions": [
+      {
+        "text": "与 cross 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 cross"
+  },
+  {
+    "surfaceForm": "looks",
+    "displayForm": "looks",
+    "definitions": [
+      {
+        "text": "与 fat 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 fat"
+  },
+  {
+    "surfaceForm": "lot",
+    "displayForm": "lot",
+    "definitions": [
+      {
+        "text": "与 a lot of 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 a lot of"
+  },
+  {
+    "surfaceForm": "louder",
+    "displayForm": "louder",
+    "definitions": [
+      {
+        "text": "与 hear 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 hear"
+  },
+  {
+    "surfaceForm": "love",
+    "displayForm": "love",
+    "definitions": [
+      {
+        "text": "爱",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "made",
+    "displayForm": "made",
+    "definitions": [
+      {
+        "text": "制作（过去式）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "makes",
+    "displayForm": "makes",
+    "definitions": [
+      {
+        "text": "与 travel 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 travel"
+  },
+  {
+    "surfaceForm": "many",
+    "displayForm": "many",
+    "definitions": [
+      {
+        "text": "许多",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "me",
+    "displayForm": "me",
+    "definitions": [
+      {
+        "text": "我",
+        "pos": "pron."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "meal",
+    "displayForm": "meal",
+    "definitions": [
+      {
+        "text": "与 dining room 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 dining room"
+  },
+  {
+    "surfaceForm": "medicine",
+    "displayForm": "medicine",
+    "definitions": [
+      {
+        "text": "药"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "middle",
+    "displayForm": "middle",
+    "definitions": [
+      {
+        "text": "与 middle school 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 middle school"
+  },
+  {
+    "surfaceForm": "miss",
+    "displayForm": "miss",
+    "definitions": [
+      {
+        "text": "想念",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "model",
+    "displayForm": "model",
+    "definitions": [
+      {
+        "text": "与 made 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 made"
+  },
+  {
+    "surfaceForm": "mom",
+    "displayForm": "mom",
+    "definitions": [
+      {
+        "text": "与 kiss 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 kiss"
+  },
+  {
+    "surfaceForm": "more",
+    "displayForm": "more",
+    "definitions": [
+      {
+        "text": "与 information 相关的课文词形",
+        "pos": "det."
+      }
+    ],
+    "formNote": "词形变化，原形为 information"
+  },
+  {
+    "surfaceForm": "morning",
+    "displayForm": "morning",
+    "definitions": [
+      {
+        "text": "与 hear 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 hear"
+  },
+  {
+    "surfaceForm": "mother",
+    "displayForm": "mother",
+    "definitions": [
+      {
+        "text": "与 dining room 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 dining room"
+  },
+  {
+    "surfaceForm": "mother's",
+    "displayForm": "mother's",
+    "definitions": [
+      {
+        "text": "与 kiss 相关的课文词形"
+      }
+    ],
+    "formNote": "所有格形式，原形为 kiss"
+  },
+  {
+    "surfaceForm": "mouth",
+    "displayForm": "mouth",
+    "definitions": [
+      {
+        "text": "与 open 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 open"
+  },
+  {
+    "surfaceForm": "move",
+    "displayForm": "move",
+    "definitions": [
+      {
+        "text": "与 light 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 light"
+  },
+  {
+    "surfaceForm": "mr",
+    "displayForm": "mr",
+    "definitions": [
+      {
+        "text": "与 teachers' office 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 teachers' office"
+  },
+  {
+    "surfaceForm": "much",
+    "displayForm": "much",
+    "definitions": [
+      {
+        "text": "与 fat 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 fat"
+  },
+  {
+    "surfaceForm": "must",
+    "displayForm": "must",
+    "definitions": [
+      {
+        "text": "必须",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "mustn't",
+    "displayForm": "mustn't",
+    "definitions": [
+      {
+        "text": "与 mustn't = must not 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 mustn't = must not"
+  },
+  {
+    "surfaceForm": "my",
+    "displayForm": "my",
+    "definitions": [
+      {
+        "text": "我的",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "myself",
+    "displayForm": "myself",
+    "definitions": [
+      {
+        "text": "与 hope 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 hope"
+  },
+  {
+    "surfaceForm": "near",
+    "displayForm": "near",
+    "definitions": [
+      {
+        "text": "与 anywhere 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 anywhere"
+  },
+  {
+    "surfaceForm": "need",
+    "displayForm": "need",
+    "definitions": [
+      {
+        "text": "与 toothache 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 toothache"
+  },
+  {
+    "surfaceForm": "needs",
+    "displayForm": "needs",
+    "definitions": [
+      {
+        "text": "与 have a cold 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 have a cold"
+  },
+  {
+    "surfaceForm": "new",
+    "displayForm": "new",
+    "definitions": [
+      {
+        "text": "新的",
+        "pos": "adj."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "news",
+    "displayForm": "news",
+    "definitions": [
+      {
+        "text": "与 hear 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 hear"
+  },
+  {
+    "surfaceForm": "next",
+    "displayForm": "next",
+    "definitions": [
+      {
+        "text": "与 middle school 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 middle school"
+  },
+  {
+    "surfaceForm": "nice",
+    "displayForm": "nice",
+    "definitions": [
+      {
+        "text": "与 restaurant 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 restaurant"
+  },
+  {
+    "surfaceForm": "night",
+    "displayForm": "night",
+    "definitions": [
+      {
+        "text": "与 toothache 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 toothache"
+  },
+  {
+    "surfaceForm": "not",
+    "displayForm": "not",
+    "definitions": [
+      {
+        "text": "不",
+        "pos": "adv."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "now",
+    "displayForm": "now",
+    "definitions": [
+      {
+        "text": "与 teachers' office 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 teachers' office"
+  },
+  {
+    "surfaceForm": "nurse",
+    "displayForm": "nurse",
+    "definitions": [
+      {
+        "text": "护士"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "of",
+    "displayForm": "of",
+    "definitions": [
+      {
+        "text": "与 made 相关的课文词形",
+        "pos": "prep."
+      }
+    ],
+    "formNote": "词形变化，原形为 made"
+  },
+  {
+    "surfaceForm": "office",
+    "displayForm": "office",
+    "definitions": [
+      {
+        "text": "与 teachers' office 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 teachers' office"
+  },
+  {
+    "surfaceForm": "officer",
+    "displayForm": "officer",
+    "definitions": [
+      {
+        "text": "与 police officer 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 police officer"
+  },
+  {
+    "surfaceForm": "on",
+    "displayForm": "on",
+    "definitions": [
+      {
+        "text": "与 the Yangtze River 相关的课文词形",
+        "pos": "prep."
+      }
+    ],
+    "formNote": "词形变化，原形为 the yangtze river"
+  },
+  {
+    "surfaceForm": "one",
+    "displayForm": "one",
+    "definitions": [
+      {
+        "text": "与 scientist 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 scientist"
+  },
+  {
+    "surfaceForm": "open",
+    "displayForm": "open",
+    "definitions": [
+      {
+        "text": "张开；打开",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "our",
+    "displayForm": "our",
+    "definitions": [
+      {
+        "text": "我们的",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "panda",
+    "displayForm": "panda",
+    "definitions": [
+      {
+        "text": "与 fat 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 fat"
+  },
+  {
+    "surfaceForm": "parents",
+    "displayForm": "parents",
+    "definitions": [
+      {
+        "text": "与 learn 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 learn"
+  },
+  {
+    "surfaceForm": "past",
+    "displayForm": "past",
+    "definitions": [
+      {
+        "text": "与 history 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 history"
+  },
+  {
+    "surfaceForm": "patients",
+    "displayForm": "patients",
+    "definitions": [
+      {
+        "text": "与 nurse 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 nurse"
+  },
+  {
+    "surfaceForm": "people",
+    "displayForm": "people",
+    "definitions": [
+      {
+        "text": "人们",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "performs",
+    "displayForm": "performs",
+    "definitions": [
+      {
+        "text": "与 dancer 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 dancer"
+  },
+  {
+    "surfaceForm": "photos",
+    "displayForm": "photos",
+    "definitions": [
+      {
+        "text": "与 show 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 show"
+  },
+  {
+    "surfaceForm": "physics",
+    "displayForm": "physics",
+    "definitions": [
+      {
+        "text": "物理"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "place",
+    "displayForm": "place",
+    "definitions": [
+      {
+        "text": "与 anywhere 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 anywhere"
+  },
+  {
+    "surfaceForm": "places",
+    "displayForm": "places",
+    "definitions": [
+      {
+        "text": "与 show 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 show"
+  },
+  {
+    "surfaceForm": "plan",
+    "displayForm": "plan",
+    "definitions": [
+      {
+        "text": "与 made 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 made"
+  },
+  {
+    "surfaceForm": "play",
+    "displayForm": "play",
+    "definitions": [
+      {
+        "text": "与 street 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 street"
+  },
+  {
+    "surfaceForm": "please",
+    "displayForm": "please",
+    "definitions": [
+      {
+        "text": "请",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "police",
+    "displayForm": "police",
+    "definitions": [
+      {
+        "text": "与 police officer 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 police officer"
+  },
+  {
+    "surfaceForm": "put",
+    "displayForm": "put",
+    "definitions": [
+      {
+        "text": "与 bottle 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 bottle"
+  },
+  {
+    "surfaceForm": "read",
+    "displayForm": "read",
+    "definitions": [
+      {
+        "text": "与 history 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 history"
+  },
+  {
+    "surfaceForm": "red",
+    "displayForm": "red",
+    "definitions": [
+      {
+        "text": "与 cross 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 cross"
+  },
+  {
+    "surfaceForm": "rest",
+    "displayForm": "rest",
+    "definitions": [
+      {
+        "text": "与 have a cold 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 have a cold"
+  },
+  {
+    "surfaceForm": "restaurant",
+    "displayForm": "restaurant",
+    "definitions": [
+      {
+        "text": "餐馆",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "rice",
+    "displayForm": "rice",
+    "definitions": [
+      {
+        "text": "与 grow 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 grow"
+  },
+  {
+    "surfaceForm": "river",
+    "displayForm": "river",
+    "definitions": [
+      {
+        "text": "与 along 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 along"
+  },
+  {
+    "surfaceForm": "rivers",
+    "displayForm": "rivers",
+    "definitions": [
+      {
+        "text": "与 travel 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 travel"
+  },
+  {
+    "surfaceForm": "road",
+    "displayForm": "road",
+    "definitions": [
+      {
+        "text": "与 along 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 along"
+  },
+  {
+    "surfaceForm": "room",
+    "displayForm": "room",
+    "definitions": [
+      {
+        "text": "与 dining room 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 dining room"
+  },
+  {
+    "surfaceForm": "rules",
+    "displayForm": "rules",
+    "definitions": [
+      {
+        "text": "与 driver 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 driver"
+  },
+  {
+    "surfaceForm": "safe",
+    "displayForm": "safe",
+    "definitions": [
+      {
+        "text": "与 police officer 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 police officer"
+  },
+  {
+    "surfaceForm": "said",
+    "displayForm": "said",
+    "definitions": [
+      {
+        "text": "说（过去式）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "sang",
+    "displayForm": "sang",
+    "definitions": [
+      {
+        "text": "与 singer 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 singer"
+  },
+  {
+    "surfaceForm": "school",
+    "displayForm": "school",
+    "definitions": [
+      {
+        "text": "与 soon 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 soon"
+  },
+  {
+    "surfaceForm": "scientist",
+    "displayForm": "scientist",
+    "definitions": [
+      {
+        "text": "科学家"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "sculpture",
+    "displayForm": "sculpture",
+    "definitions": [
+      {
+        "text": "与 made 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 made"
+  },
+  {
+    "surfaceForm": "second",
+    "displayForm": "second",
+    "definitions": [
+      {
+        "text": "与 lab 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 lab"
+  },
+  {
+    "surfaceForm": "see",
+    "displayForm": "see",
+    "definitions": [
+      {
+        "text": "与 doctor 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 doctor"
+  },
+  {
+    "surfaceForm": "she",
+    "displayForm": "she",
+    "definitions": [
+      {
+        "text": "与 made 相关的课文词形",
+        "pos": "pron."
+      }
+    ],
+    "formNote": "词形变化，原形为 made"
+  },
+  {
+    "surfaceForm": "show",
+    "displayForm": "show",
+    "definitions": [
+      {
+        "text": "给……看",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "shows",
+    "displayForm": "shows",
+    "definitions": [
+      {
+        "text": "与 kiss 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 kiss"
+  },
+  {
+    "surfaceForm": "signed",
+    "displayForm": "signed",
+    "definitions": [
+      {
+        "text": "与 year book 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 year book"
+  },
+  {
+    "surfaceForm": "singer",
+    "displayForm": "singer",
+    "definitions": [
+      {
+        "text": "歌唱演员"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "singing",
+    "displayForm": "singing",
+    "definitions": [
+      {
+        "text": "与 hear 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 hear"
+  },
+  {
+    "surfaceForm": "sister",
+    "displayForm": "sister",
+    "definitions": [
+      {
+        "text": "与 dancer 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 dancer"
+  },
+  {
+    "surfaceForm": "snow",
+    "displayForm": "snow",
+    "definitions": [
+      {
+        "text": "与 famous 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 famous"
+  },
+  {
+    "surfaceForm": "some",
+    "displayForm": "some",
+    "definitions": [
+      {
+        "text": "一些",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "something",
+    "displayForm": "something",
+    "definitions": [
+      {
+        "text": "与 wrong 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 wrong"
+  },
+  {
+    "surfaceForm": "song",
+    "displayForm": "song",
+    "definitions": [
+      {
+        "text": "与 singer 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 singer"
+  },
+  {
+    "surfaceForm": "soon",
+    "displayForm": "soon",
+    "definitions": [
+      {
+        "text": "不久"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "speak",
+    "displayForm": "speak",
+    "definitions": [
+      {
+        "text": "与 hear 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 hear"
+  },
+  {
+    "surfaceForm": "stage",
+    "displayForm": "stage",
+    "definitions": [
+      {
+        "text": "与 dancer 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 dancer"
+  },
+  {
+    "surfaceForm": "stay",
+    "displayForm": "stay",
+    "definitions": [
+      {
+        "text": "与 fever 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 fever"
+  },
+  {
+    "surfaceForm": "stayed",
+    "displayForm": "stayed",
+    "definitions": [
+      {
+        "text": "与 fat 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 fat"
+  },
+  {
+    "surfaceForm": "stick",
+    "displayForm": "stick",
+    "definitions": [
+      {
+        "text": "与 break 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 break"
+  },
+  {
+    "surfaceForm": "stomach",
+    "displayForm": "stomach",
+    "definitions": [
+      {
+        "text": "与 wrong 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 wrong"
+  },
+  {
+    "surfaceForm": "street",
+    "displayForm": "street",
+    "definitions": [
+      {
+        "text": "街；街道",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "strong",
+    "displayForm": "strong",
+    "definitions": [
+      {
+        "text": "与 thin 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 thin"
+  },
+  {
+    "surfaceForm": "students",
+    "displayForm": "students",
+    "definitions": [
+      {
+        "text": "与 made 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 made"
+  },
+  {
+    "surfaceForm": "study",
+    "displayForm": "study",
+    "definitions": [
+      {
+        "text": "学习",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "subject",
+    "displayForm": "subject",
+    "definitions": [
+      {
+        "text": "科目",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "subjects",
+    "displayForm": "subjects",
+    "definitions": [
+      {
+        "text": "与 middle school 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 middle school"
+  },
+  {
+    "surfaceForm": "summer",
+    "displayForm": "summer",
+    "definitions": [
+      {
+        "text": "与 the Yangtze River 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 the yangtze river"
+  },
+  {
+    "surfaceForm": "surprise",
+    "displayForm": "surprise",
+    "definitions": [
+      {
+        "text": "惊讶"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "sweets",
+    "displayForm": "sweets",
+    "definitions": [
+      {
+        "text": "与 toothache 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 toothache"
+  },
+  {
+    "surfaceForm": "table",
+    "displayForm": "table",
+    "definitions": [
+      {
+        "text": "与 bottle 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 bottle"
+  },
+  {
+    "surfaceForm": "take",
+    "displayForm": "take",
+    "definitions": [
+      {
+        "text": "与 medicine 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 medicine"
+  },
+  {
+    "surfaceForm": "teacher",
+    "displayForm": "teacher",
+    "definitions": [
+      {
+        "text": "与 gave 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 gave"
+  },
+  {
+    "surfaceForm": "teachers",
+    "displayForm": "teachers",
+    "definitions": [
+      {
+        "text": "与 miss 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 miss"
+  },
+  {
+    "surfaceForm": "teachers'",
+    "displayForm": "teachers'",
+    "definitions": [
+      {
+        "text": "与 teachers' office 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 teachers' office"
+  },
+  {
+    "surfaceForm": "teaches",
+    "displayForm": "teaches",
+    "definitions": [
+      {
+        "text": "与 geography 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 geography"
+  },
+  {
+    "surfaceForm": "teaching",
+    "displayForm": "teaching",
+    "definitions": [
+      {
+        "text": "与 job 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 job"
+  },
+  {
+    "surfaceForm": "tells",
+    "displayForm": "tells",
+    "definitions": [
+      {
+        "text": "与 history 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 history"
+  },
+  {
+    "surfaceForm": "that",
+    "displayForm": "that",
+    "definitions": [
+      {
+        "text": "那；那个",
+        "pos": "pron."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "the",
+    "displayForm": "the",
+    "definitions": [
+      {
+        "text": "这；那（定冠词）",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "their",
+    "displayForm": "their",
+    "definitions": [
+      {
+        "text": "他们的",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "there",
+    "displayForm": "there",
+    "definitions": [
+      {
+        "text": "那里",
+        "pos": "adv."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "thin",
+    "displayForm": "thin",
+    "definitions": [
+      {
+        "text": "瘦的",
+        "pos": "adj."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "things",
+    "displayForm": "things",
+    "definitions": [
+      {
+        "text": "东西（复数）",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "this",
+    "displayForm": "this",
+    "definitions": [
+      {
+        "text": "这；这个",
+        "pos": "pron."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "three",
+    "displayForm": "three",
+    "definitions": [
+      {
+        "text": "三",
+        "pos": "num."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "ticket",
+    "displayForm": "ticket",
+    "definitions": [
+      {
+        "text": "与 show 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 show"
+  },
+  {
+    "surfaceForm": "time",
+    "displayForm": "time",
+    "definitions": [
+      {
+        "text": "与 must 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 must"
+  },
+  {
+    "surfaceForm": "times",
+    "displayForm": "times",
+    "definitions": [
+      {
+        "text": "与 medicine 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 medicine"
+  },
+  {
+    "surfaceForm": "tired",
+    "displayForm": "tired",
+    "definitions": [
+      {
+        "text": "与 heavy 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 heavy"
+  },
+  {
+    "surfaceForm": "to",
+    "displayForm": "to",
+    "definitions": [
+      {
+        "text": "与 along 相关的课文词形",
+        "pos": "prep."
+      }
+    ],
+    "formNote": "词形变化，原形为 along"
+  },
+  {
+    "surfaceForm": "today",
+    "displayForm": "today",
+    "definitions": [
+      {
+        "text": "与 hope 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 hope"
+  },
+  {
+    "surfaceForm": "tomorrow",
+    "displayForm": "tomorrow",
+    "definitions": [
+      {
+        "text": "与 go back 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 go back"
+  },
+  {
+    "surfaceForm": "tonight",
+    "displayForm": "tonight",
+    "definitions": [
+      {
+        "text": "与 dining room 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 dining room"
+  },
+  {
+    "surfaceForm": "too",
+    "displayForm": "too",
+    "definitions": [
+      {
+        "text": "也",
+        "pos": "adv."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "took",
+    "displayForm": "took",
+    "definitions": [
+      {
+        "text": "拿（过去式）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "toothache",
+    "displayForm": "toothache",
+    "definitions": [
+      {
+        "text": "牙疼"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "travel",
+    "displayForm": "travel",
+    "definitions": [
+      {
+        "text": "旅行",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "traveled",
+    "displayForm": "traveled",
+    "definitions": [
+      {
+        "text": "与 the Yangtze River 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 the yangtze river"
+  },
+  {
+    "surfaceForm": "trees",
+    "displayForm": "trees",
+    "definitions": [
+      {
+        "text": "与 grow 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 grow"
+  },
+  {
+    "surfaceForm": "truck",
+    "displayForm": "truck",
+    "definitions": [
+      {
+        "text": "与 carry 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 carry"
+  },
+  {
+    "surfaceForm": "true",
+    "displayForm": "true",
+    "definitions": [
+      {
+        "text": "确实的",
+        "pos": "adj."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "turn",
+    "displayForm": "turn",
+    "definitions": [
+      {
+        "text": "与 light 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 light"
+  },
+  {
+    "surfaceForm": "two",
+    "displayForm": "two",
+    "definitions": [
+      {
+        "text": "二",
+        "pos": "num."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "uncle",
+    "displayForm": "uncle",
+    "definitions": [
+      {
+        "text": "与 worker 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 worker"
+  },
+  {
+    "surfaceForm": "understand",
+    "displayForm": "understand",
+    "definitions": [
+      {
+        "text": "与 chemistry 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 chemistry"
+  },
+  {
+    "surfaceForm": "us",
+    "displayForm": "us",
+    "definitions": [
+      {
+        "text": "与 go back 相关的课文词形",
+        "pos": "pron."
+      }
+    ],
+    "formNote": "词形变化，原形为 go back"
+  },
+  {
+    "surfaceForm": "vegetables",
+    "displayForm": "vegetables",
+    "definitions": [
+      {
+        "text": "与 farmer 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 farmer"
+  },
+  {
+    "surfaceForm": "very",
+    "displayForm": "very",
+    "definitions": [
+      {
+        "text": "与 famous 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 famous"
+  },
+  {
+    "surfaceForm": "walked",
+    "displayForm": "walked",
+    "definitions": [
+      {
+        "text": "走（过去式）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "wang",
+    "displayForm": "wang",
+    "definitions": [
+      {
+        "text": "与 teachers' office 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 teachers' office"
+  },
+  {
+    "surfaceForm": "want",
+    "displayForm": "want",
+    "definitions": [
+      {
+        "text": "想要",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "wants",
+    "displayForm": "wants",
+    "definitions": [
+      {
+        "text": "与 dancer 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 dancer"
+  },
+  {
+    "surfaceForm": "warm",
+    "displayForm": "warm",
+    "definitions": [
+      {
+        "text": "与 have a cold 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 have a cold"
+  },
+  {
+    "surfaceForm": "was",
+    "displayForm": "was",
+    "definitions": [
+      {
+        "text": "是（过去式）",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "water",
+    "displayForm": "water",
+    "definitions": [
+      {
+        "text": "与 a lot of 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 a lot of"
+  },
+  {
+    "surfaceForm": "ways",
+    "displayForm": "ways",
+    "definitions": [
+      {
+        "text": "与 cross 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 cross"
+  },
+  {
+    "surfaceForm": "we",
+    "displayForm": "we",
+    "definitions": [
+      {
+        "text": "我们",
+        "pos": "pron."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "well",
+    "displayForm": "well",
+    "definitions": [
+      {
+        "text": "与 soon 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 soon"
+  },
+  {
+    "surfaceForm": "went",
+    "displayForm": "went",
+    "definitions": [
+      {
+        "text": "去（过去式）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "what",
+    "displayForm": "what",
+    "definitions": [
+      {
+        "text": "什么",
+        "pos": "pron."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "when",
+    "displayForm": "when",
+    "definitions": [
+      {
+        "text": "与 fat 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 fat"
+  },
+  {
+    "surfaceForm": "will",
+    "displayForm": "will",
+    "definitions": [
+      {
+        "text": "与 go back 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 go back"
+  },
+  {
+    "surfaceForm": "window",
+    "displayForm": "window",
+    "definitions": [
+      {
+        "text": "与 open 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 open"
+  },
+  {
+    "surfaceForm": "with",
+    "displayForm": "with",
+    "definitions": [
+      {
+        "text": "用；和",
+        "pos": "prep."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "wonderful",
+    "displayForm": "wonderful",
+    "definitions": [
+      {
+        "text": "与 surprise 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 surprise"
+  },
+  {
+    "surfaceForm": "work",
+    "displayForm": "work",
+    "definitions": [
+      {
+        "text": "与 true 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 true"
+  },
+  {
+    "surfaceForm": "worked",
+    "displayForm": "worked",
+    "definitions": [
+      {
+        "text": "工作（过去式）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "worker",
+    "displayForm": "worker",
+    "definitions": [
+      {
+        "text": "工人"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "works",
+    "displayForm": "works",
+    "definitions": [
+      {
+        "text": "与 cook 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 cook"
+  },
+  {
+    "surfaceForm": "world",
+    "displayForm": "world",
+    "definitions": [
+      {
+        "text": "与 Ice and Snow Festival 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 ice and snow festival"
+  },
+  {
+    "surfaceForm": "write",
+    "displayForm": "write",
+    "definitions": [
+      {
+        "text": "与 address 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 address"
+  },
+  {
+    "surfaceForm": "wrong",
+    "displayForm": "wrong",
+    "definitions": [
+      {
+        "text": "不正常",
+        "pos": "adj."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "yangtze",
+    "displayForm": "yangtze",
+    "definitions": [
+      {
+        "text": "与 along 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 along"
+  },
+  {
+    "surfaceForm": "year",
+    "displayForm": "year",
+    "definitions": [
+      {
+        "text": "与 middle school 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 middle school"
+  },
+  {
+    "surfaceForm": "you",
+    "displayForm": "you",
+    "definitions": [
+      {
+        "text": "与 anywhere 相关的课文词形",
+        "pos": "pron."
+      }
+    ],
+    "formNote": "词形变化，原形为 anywhere"
+  },
+  {
+    "surfaceForm": "your",
+    "displayForm": "your",
+    "definitions": [
+      {
+        "text": "你的；你们的",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "yourself",
+    "displayForm": "yourself",
+    "definitions": [
+      {
+        "text": "与 mustn't = must not 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 mustn't = must not"
+  }
+]

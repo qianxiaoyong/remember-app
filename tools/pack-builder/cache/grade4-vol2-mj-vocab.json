@@ -1,0 +1,794 @@
+[
+  {
+    "unit": 1,
+    "headword": "weekly",
+    "ipa": "",
+    "definition_zh": "每周的",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "activity",
+    "ipa": "",
+    "definition_zh": "活动",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "week",
+    "ipa": "",
+    "definition_zh": "星期，周",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "Sunday",
+    "ipa": "",
+    "definition_zh": "星期日",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "Monday",
+    "ipa": "",
+    "definition_zh": "星期一",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "Tuesday",
+    "ipa": "",
+    "definition_zh": "星期二",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "Wednesday",
+    "ipa": "",
+    "definition_zh": "星期三",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "Thursday",
+    "ipa": "",
+    "definition_zh": "星期四",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "Friday",
+    "ipa": "",
+    "definition_zh": "星期五",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "Saturday",
+    "ipa": "",
+    "definition_zh": "星期六",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "fifty",
+    "ipa": "",
+    "definition_zh": "五十",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "must",
+    "ipa": "",
+    "definition_zh": "必须",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "robot",
+    "ipa": "",
+    "definition_zh": "机器人",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "weekday",
+    "ipa": "",
+    "definition_zh": "工作日",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "piano",
+    "ipa": "",
+    "definition_zh": "钢琴",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "chess",
+    "ipa": "",
+    "definition_zh": "国际象棋",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "every",
+    "ipa": "",
+    "definition_zh": "每个",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "sit",
+    "ipa": "",
+    "definition_zh": "坐",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "door",
+    "ipa": "",
+    "definition_zh": "门",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "helpful",
+    "ipa": "",
+    "definition_zh": "有帮助的；乐于助人的",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "foot",
+    "ipa": "",
+    "definition_zh": "（复数feet）脚",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "tomorrow",
+    "ipa": "",
+    "definition_zh": "明天",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "weekend",
+    "ipa": "",
+    "definition_zh": "周末",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "hooray",
+    "ipa": "",
+    "definition_zh": "（表示高兴、赞许等）好哇",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "film",
+    "ipa": "",
+    "definition_zh": "电影",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "evening",
+    "ipa": "",
+    "definition_zh": "傍晚",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "picnic",
+    "ipa": "",
+    "definition_zh": "野餐",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "subject",
+    "ipa": "",
+    "definition_zh": "科目",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "science",
+    "ipa": "",
+    "definition_zh": "科学",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "math",
+    "ipa": "",
+    "definition_zh": "数学",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "because",
+    "ipa": "",
+    "definition_zh": "因为",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "useful",
+    "ipa": "",
+    "definition_zh": "有用的",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "but",
+    "ipa": "",
+    "definition_zh": "但是",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "worry",
+    "ipa": "",
+    "definition_zh": "担心",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "water",
+    "ipa": "",
+    "definition_zh": "水；浇水",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "poem",
+    "ipa": "",
+    "definition_zh": "诗",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "kind",
+    "ipa": "",
+    "definition_zh": "体贴的；友好的",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "exercise",
+    "ipa": "",
+    "definition_zh": "锻炼",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "fox",
+    "ipa": "",
+    "definition_zh": "狐狸",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "enjoy",
+    "ipa": "",
+    "definition_zh": "欣赏；享受",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "search",
+    "ipa": "",
+    "definition_zh": "搜查；搜寻",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "internet",
+    "ipa": "",
+    "definition_zh": "互联网",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "information",
+    "ipa": "",
+    "definition_zh": "信息",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "tell",
+    "ipa": "",
+    "definition_zh": "告诉",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "story",
+    "ipa": "",
+    "definition_zh": "故事",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "fly",
+    "ipa": "",
+    "definition_zh": "飞；放飞",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "why",
+    "ipa": "",
+    "definition_zh": "为什么",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "slide show",
+    "ipa": "",
+    "definition_zh": "幻灯片放映",
+    "page": 20,
+    "kind": "phrase"
+  },
+  {
+    "unit": 2,
+    "headword": "zero",
+    "ipa": "",
+    "definition_zh": "零",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "feeling",
+    "ipa": "",
+    "definition_zh": "感觉",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "tired",
+    "ipa": "",
+    "definition_zh": "疲倦的",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "excited",
+    "ipa": "",
+    "definition_zh": "激动的",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "over",
+    "ipa": "",
+    "definition_zh": "在……上面",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "nervous",
+    "ipa": "",
+    "definition_zh": "紧张的",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "winner",
+    "ipa": "",
+    "definition_zh": "获胜者",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "proud",
+    "ipa": "",
+    "definition_zh": "自豪的",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "feel",
+    "ipa": "",
+    "definition_zh": "感到；觉得",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "better",
+    "ipa": "",
+    "definition_zh": "较好的；更好的",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "next",
+    "ipa": "",
+    "definition_zh": "下一个的",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "sad",
+    "ipa": "",
+    "definition_zh": "悲伤的",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "him",
+    "ipa": "",
+    "definition_zh": "他（宾格）",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "high",
+    "ipa": "",
+    "definition_zh": "高的",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "angry",
+    "ipa": "",
+    "definition_zh": "愤怒的",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "count",
+    "ipa": "",
+    "definition_zh": "数数；计算",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "parent",
+    "ipa": "",
+    "definition_zh": "父，母；家长",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "farm",
+    "ipa": "",
+    "definition_zh": "农场",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "poor",
+    "ipa": "",
+    "definition_zh": "可怜的；贫穷的",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "duckling",
+    "ipa": "",
+    "definition_zh": "小鸭",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "bored",
+    "ipa": "",
+    "definition_zh": "厌倦的；烦闷的",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "ugly",
+    "ipa": "",
+    "definition_zh": "丑陋的",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "lonely",
+    "ipa": "",
+    "definition_zh": "孤独的；寂寞的",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "thirsty",
+    "ipa": "",
+    "definition_zh": "渴的",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "swan",
+    "ipa": "",
+    "definition_zh": "天鹅",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "by",
+    "ipa": "",
+    "definition_zh": "通过；以……（方式）",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "subway",
+    "ipa": "",
+    "definition_zh": "地铁",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "near",
+    "ipa": "",
+    "definition_zh": "在附近",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "far",
+    "ipa": "",
+    "definition_zh": "遥远的",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "away",
+    "ipa": "",
+    "definition_zh": "去别处；离开",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "dad",
+    "ipa": "",
+    "definition_zh": "爸爸",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "take",
+    "ipa": "",
+    "definition_zh": "带走；拿走；搭乘（交通工具）",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "does",
+    "ipa": "",
+    "definition_zh": "（do 的第三人称单数形式）做",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "work",
+    "ipa": "",
+    "definition_zh": "工作",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "his",
+    "ipa": "",
+    "definition_zh": "他的",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "office",
+    "ipa": "",
+    "definition_zh": "办公室",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "live",
+    "ipa": "",
+    "definition_zh": "生活",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "forty",
+    "ipa": "",
+    "definition_zh": "四十",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "travel",
+    "ipa": "",
+    "definition_zh": "旅游",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "train",
+    "ipa": "",
+    "definition_zh": "火车",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "cheap",
+    "ipa": "",
+    "definition_zh": "便宜的",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "summer",
+    "ipa": "",
+    "definition_zh": "夏天",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "holiday",
+    "ipa": "",
+    "definition_zh": "假期；节日",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "plane",
+    "ipa": "",
+    "definition_zh": "飞机",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "surprise",
+    "ipa": "",
+    "definition_zh": "惊喜",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "turn",
+    "ipa": "",
+    "definition_zh": "转动；转弯",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "will",
+    "ipa": "",
+    "definition_zh": "（构成将来时）将；会",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "I'll=I will",
+    "ipa": "",
+    "definition_zh": "我将会",
+    "page": 40,
+    "kind": "phrase"
+  },
+  {
+    "unit": 4,
+    "headword": "the UK",
+    "ipa": "",
+    "definition_zh": "英国",
+    "page": 40,
+    "kind": "phrase"
+  },
+  {
+    "unit": 4,
+    "headword": "Hong Kong",
+    "ipa": "",
+    "definition_zh": "香港",
+    "page": 40,
+    "kind": "phrase"
+  },
+  {
+    "unit": 4,
+    "headword": "ship",
+    "ipa": "",
+    "definition_zh": "船",
+    "page": 40,
+    "kind": "word"
+  }
+]

@@ -133,14 +133,14 @@ class PackConfig:
 PACK_CONFIGS: dict[str, PackConfig] = {
     'en-grade3-v1-rj': PackConfig(
         pack_id='en-grade3-v1-rj',
-        pack_version='1.0.5',
+        pack_version='1.0.4',
         pdf_rel='imports/最新【人教版】3年级英语课本•上册.pdf',
         cache_name='grade3-vol1-vocab.json',
         vocab_page_indices=[87, 88, 89],
     ),
     'en-grade3-v1-mj': PackConfig(
         pack_id='en-grade3-v1-mj',
-        pack_version='1.0.1',
+        pack_version='1.0.3',
         pdf_rel='imports/最新【闽教版】3年级英语课本•上册.pdf',
         cache_name='grade3-vol1-mj-vocab.json',
         vocab_page_indices=[81, 82, 83, 84],
@@ -148,7 +148,7 @@ PACK_CONFIGS: dict[str, PackConfig] = {
     ),
     'en-grade3-v2-mj': PackConfig(
         pack_id='en-grade3-v2-mj',
-        pack_version='1.0.1',
+        pack_version='1.0.2',
         pdf_rel='imports/最新【闽教版】3年级英语课本•下册.pdf',
         cache_name='grade3-vol2-mj-vocab.json',
         vocab_page_indices=[79, 80, 81],
@@ -156,7 +156,7 @@ PACK_CONFIGS: dict[str, PackConfig] = {
     ),
     'en-grade4-v1-mj': PackConfig(
         pack_id='en-grade4-v1-mj',
-        pack_version='1.0.0',
+        pack_version='1.0.1',
         pdf_rel='imports/最新【闽教版】4年级英语课本•上册.pdf',
         cache_name='grade4-vol1-mj-vocab.json',
         vocab_page_indices=[79, 80, 81],
@@ -164,7 +164,7 @@ PACK_CONFIGS: dict[str, PackConfig] = {
     ),
     'en-grade4-v2-mj': PackConfig(
         pack_id='en-grade4-v2-mj',
-        pack_version='1.0.0',
+        pack_version='1.0.1',
         pdf_rel='imports/最新【闽教版】4年级英语课本•下册.pdf',
         cache_name='grade4-vol2-mj-vocab.json',
         vocab_page_indices=[79, 80, 81],
@@ -172,7 +172,7 @@ PACK_CONFIGS: dict[str, PackConfig] = {
     ),
     'en-grade5-v1-mj': PackConfig(
         pack_id='en-grade5-v1-mj',
-        pack_version='1.0.0',
+        pack_version='1.0.1',
         pdf_rel='imports/最新【闽教版】5年级英语课本•上册.pdf',
         cache_name='grade5-vol1-mj-vocab.json',
         vocab_page_indices=[42],
@@ -180,7 +180,7 @@ PACK_CONFIGS: dict[str, PackConfig] = {
     ),
     'en-grade5-v2-mj': PackConfig(
         pack_id='en-grade5-v2-mj',
-        pack_version='1.0.0',
+        pack_version='1.0.1',
         pdf_rel='imports/最新【闽教版】5年级英语课本•下册.pdf',
         cache_name='grade5-vol2-mj-vocab.json',
         vocab_page_indices=[43],
@@ -188,7 +188,7 @@ PACK_CONFIGS: dict[str, PackConfig] = {
     ),
     'en-grade6-v1-mj': PackConfig(
         pack_id='en-grade6-v1-mj',
-        pack_version='1.0.0',
+        pack_version='1.0.1',
         pdf_rel='imports/最新【闽教版】6年级英语课本•上册.pdf',
         cache_name='grade6-vol1-mj-vocab.json',
         vocab_page_indices=[42],
@@ -196,7 +196,7 @@ PACK_CONFIGS: dict[str, PackConfig] = {
     ),
     'en-grade6-v2-mj': PackConfig(
         pack_id='en-grade6-v2-mj',
-        pack_version='1.0.0',
+        pack_version='1.0.1',
         pdf_rel='imports/最新【闽教版】6年级英语课本•下册.pdf',
         cache_name='grade6-vol2-mj-vocab.json',
         vocab_page_indices=[43],
@@ -204,28 +204,28 @@ PACK_CONFIGS: dict[str, PackConfig] = {
     ),
     'en-grade3-v2-rj': PackConfig(
         pack_id='en-grade3-v2-rj',
-        pack_version='1.0.5',
+        pack_version='1.0.6',
         pdf_rel='imports/最新【人教版】3年级英语课本•下册.pdf',
         cache_name='grade3-vol2-vocab.json',
         vocab_page_indices=[84, 85, 86],
     ),
     'en-grade4-v1-rj': PackConfig(
         pack_id='en-grade4-v1-rj',
-        pack_version='1.0.4',
+        pack_version='1.0.5',
         pdf_rel='imports/最新【人教版】4年级英语课本•上册.pdf',
         cache_name='grade4-vol1-vocab.json',
         vocab_page_indices=[84, 85, 86],
     ),
     'en-grade4-v2-rj': PackConfig(
         pack_id='en-grade4-v2-rj',
-        pack_version='1.0.2',
+        pack_version='1.0.3',
         pdf_rel='imports/最新【人教版】4年级英语课本•下册.pdf',
         cache_name='grade4-vol2-vocab.json',
         vocab_page_indices=[85, 86, 87],
     ),
     'en-grade5-v1-rj': PackConfig(
         pack_id='en-grade5-v1-rj',
-        pack_version='1.0.2',
+        pack_version='1.0.3',
         pdf_rel='imports/最新【人教版】5年级英语课本•上册.pdf',
         cache_name='grade5-vol1-vocab.json',
         use_ocr=True,
@@ -233,14 +233,14 @@ PACK_CONFIGS: dict[str, PackConfig] = {
     ),
     'en-grade5-v2-rj': PackConfig(
         pack_id='en-grade5-v2-rj',
-        pack_version='1.0.4',
+        pack_version='1.0.5',
         pdf_rel='imports/最新【人教版】5年级英语课本•下册.pdf',
         cache_name='grade5-vol2-vocab.json',
         vocab_page_indices=[77, 78, 79],
     ),
     'en-grade6-v1-rj': PackConfig(
         pack_id='en-grade6-v1-rj',
-        pack_version='1.0.2',
+        pack_version='1.0.3',
         pdf_rel='imports/最新【人教版】6年级英语课本•上册.pdf',
         cache_name='grade6-vol1-vocab.json',
         use_ocr=True,
@@ -248,7 +248,7 @@ PACK_CONFIGS: dict[str, PackConfig] = {
     ),
     'en-grade6-v2-rj': PackConfig(
         pack_id='en-grade6-v2-rj',
-        pack_version='1.0.2',
+        pack_version='1.0.3',
         pdf_rel='imports/最新【人教版】6年级英语课本•下册.pdf',
         cache_name='grade6-vol2-vocab.json',
         vocab_page_indices=[59, 60, 61],

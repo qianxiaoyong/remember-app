@@ -1,0 +1,4431 @@
+[
+  {
+    "surfaceForm": "a",
+    "displayForm": "a",
+    "definitions": [
+      {
+        "text": "一个；一",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "about",
+    "displayForm": "about",
+    "definitions": [
+      {
+        "text": "与 cheetah 相关的课文词形",
+        "pos": "prep."
+      }
+    ],
+    "formNote": "词形变化，原形为 cheetah"
+  },
+  {
+    "surfaceForm": "active",
+    "displayForm": "active",
+    "definitions": [
+      {
+        "text": "积极的；活跃的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/ˈæktɪv/"
+  },
+  {
+    "surfaceForm": "add",
+    "displayForm": "add",
+    "definitions": [
+      {
+        "text": "与 kilogram 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 kilogram"
+  },
+  {
+    "surfaceForm": "after",
+    "displayForm": "after",
+    "definitions": [
+      {
+        "text": "与 thinner 相关的课文词形",
+        "pos": "prep."
+      }
+    ],
+    "formNote": "词形变化，原形为 thinner"
+  },
+  {
+    "surfaceForm": "afternoon",
+    "displayForm": "afternoon",
+    "definitions": [
+      {
+        "text": "与 slept 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 slept"
+  },
+  {
+    "surfaceForm": "ago",
+    "displayForm": "ago",
+    "definitions": [
+      {
+        "text": "以前"
+      }
+    ],
+    "ipa": "/əˈgəʊ/"
+  },
+  {
+    "surfaceForm": "all",
+    "displayForm": "all",
+    "definitions": [
+      {
+        "text": "与 slept 相关的课文词形",
+        "pos": "det."
+      }
+    ],
+    "formNote": "词形变化，原形为 slept"
+  },
+  {
+    "surfaceForm": "am",
+    "displayForm": "am",
+    "definitions": [
+      {
+        "text": "是"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "an",
+    "displayForm": "an",
+    "definitions": [
+      {
+        "text": "一个；一",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "and",
+    "displayForm": "and",
+    "definitions": [
+      {
+        "text": "和；与",
+        "pos": "conj."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "animal",
+    "displayForm": "animal",
+    "definitions": [
+      {
+        "text": "与 older 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 older"
+  },
+  {
+    "surfaceForm": "answered",
+    "displayForm": "answered",
+    "definitions": [
+      {
+        "text": "与 smarter 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 smarter"
+  },
+  {
+    "surfaceForm": "any",
+    "displayForm": "any",
+    "definitions": [
+      {
+        "text": "与 older 相关的课文词形",
+        "pos": "det."
+      }
+    ],
+    "formNote": "词形变化，原形为 older"
+  },
+  {
+    "surfaceForm": "anyone",
+    "displayForm": "anyone",
+    "definitions": [
+      {
+        "text": "与 smarter 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 smarter"
+  },
+  {
+    "surfaceForm": "are",
+    "displayForm": "are",
+    "definitions": [
+      {
+        "text": "是",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "at",
+    "displayForm": "at",
+    "definitions": [
+      {
+        "text": "与 smaller 相关的课文词形",
+        "pos": "prep."
+      }
+    ],
+    "formNote": "词形变化，原形为 smaller"
+  },
+  {
+    "surfaceForm": "ate",
+    "displayForm": "ate",
+    "definitions": [
+      {
+        "text": "（eat的过去式）吃"
+      }
+    ],
+    "ipa": "/eɪt/"
+  },
+  {
+    "surfaceForm": "aunt",
+    "displayForm": "aunt",
+    "definitions": [
+      {
+        "text": "与 last 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 last"
+  },
+  {
+    "surfaceForm": "baby",
+    "displayForm": "baby",
+    "definitions": [
+      {
+        "text": "与 slept 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 slept"
+  },
+  {
+    "surfaceForm": "back",
+    "displayForm": "back",
+    "definitions": [
+      {
+        "text": "与 till 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 till"
+  },
+  {
+    "surfaceForm": "bad",
+    "displayForm": "bad",
+    "definitions": [
+      {
+        "text": "与 dream 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 dream"
+  },
+  {
+    "surfaceForm": "badminton",
+    "displayForm": "badminton",
+    "definitions": [
+      {
+        "text": "羽毛球运动"
+      }
+    ],
+    "ipa": "/ˈbædmɪntən/"
+  },
+  {
+    "surfaceForm": "bag",
+    "displayForm": "bag",
+    "definitions": [
+      {
+        "text": "与 kilogram 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 kilogram"
+  },
+  {
+    "surfaceForm": "basket",
+    "displayForm": "basket",
+    "definitions": [
+      {
+        "text": "篮；筐",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈbɑːskɪt/"
+  },
+  {
+    "surfaceForm": "be",
+    "displayForm": "be",
+    "definitions": [
+      {
+        "text": "与 trip 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 trip"
+  },
+  {
+    "surfaceForm": "beach",
+    "displayForm": "beach",
+    "definitions": [
+      {
+        "text": "海滩；沙滩"
+      }
+    ],
+    "ipa": "/biːtʃ/"
+  },
+  {
+    "surfaceForm": "beautiful",
+    "displayForm": "beautiful",
+    "definitions": [
+      {
+        "text": "与 countryside 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 countryside"
+  },
+  {
+    "surfaceForm": "because",
+    "displayForm": "because",
+    "definitions": [
+      {
+        "text": "与 slept 相关的课文词形",
+        "pos": "conj."
+      }
+    ],
+    "formNote": "词形变化，原形为 slept"
+  },
+  {
+    "surfaceForm": "become",
+    "displayForm": "become",
+    "definitions": [
+      {
+        "text": "开始变得；变成",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/bɪˈkʌm/"
+  },
+  {
+    "surfaceForm": "bed",
+    "displayForm": "bed",
+    "definitions": [
+      {
+        "text": "与 had a cold 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 had a cold"
+  },
+  {
+    "surfaceForm": "before",
+    "displayForm": "before",
+    "definitions": [
+      {
+        "text": "在……之前",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/bɪˈfɔː(r)/"
+  },
+  {
+    "surfaceForm": "best",
+    "displayForm": "best",
+    "definitions": [
+      {
+        "text": "与 part 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 part"
+  },
+  {
+    "surfaceForm": "better",
+    "displayForm": "better",
+    "definitions": [
+      {
+        "text": "（well的比较级）更好的"
+      }
+    ],
+    "ipa": "/ˈbetə(r)/"
+  },
+  {
+    "surfaceForm": "big",
+    "displayForm": "big",
+    "definitions": [
+      {
+        "text": "与 shadow 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 shadow"
+  },
+  {
+    "surfaceForm": "bigger",
+    "displayForm": "bigger",
+    "definitions": [
+      {
+        "text": "（big的比较级）更大的"
+      }
+    ],
+    "ipa": "/ˈbɪgə(r)/"
+  },
+  {
+    "surfaceForm": "bike",
+    "displayForm": "bike",
+    "definitions": [
+      {
+        "text": "与 fixed 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 fixed"
+  },
+  {
+    "surfaceForm": "blue",
+    "displayForm": "blue",
+    "definitions": [
+      {
+        "text": "与 both 相关的课文词形",
+        "pos": "det."
+      }
+    ],
+    "formNote": "词形变化，原形为 both"
+  },
+  {
+    "surfaceForm": "book",
+    "displayForm": "book",
+    "definitions": [
+      {
+        "text": "与 thinner 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 thinner"
+  },
+  {
+    "surfaceForm": "boring",
+    "displayForm": "boring",
+    "definitions": [
+      {
+        "text": "与 thought 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 thought"
+  },
+  {
+    "surfaceForm": "both",
+    "displayForm": "both",
+    "definitions": [
+      {
+        "text": "两个都",
+        "pos": "det."
+      }
+    ],
+    "ipa": "/bəʊθ/"
+  },
+  {
+    "surfaceForm": "bought",
+    "displayForm": "bought",
+    "definitions": [
+      {
+        "text": "（buy的过去式）买"
+      }
+    ],
+    "ipa": "/bɔːt/"
+  },
+  {
+    "surfaceForm": "box",
+    "displayForm": "box",
+    "definitions": [
+      {
+        "text": "与 bigger 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 bigger"
+  },
+  {
+    "surfaceForm": "breakfast",
+    "displayForm": "breakfast",
+    "definitions": [
+      {
+        "text": "与 washed 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 washed"
+  },
+  {
+    "surfaceForm": "bright",
+    "displayForm": "bright",
+    "definitions": [
+      {
+        "text": "与 star 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 star"
+  },
+  {
+    "surfaceForm": "broken",
+    "displayForm": "broken",
+    "definitions": [
+      {
+        "text": "破损的"
+      }
+    ],
+    "ipa": "/ˈbrəʊkən/"
+  },
+  {
+    "surfaceForm": "brother",
+    "displayForm": "brother",
+    "definitions": [
+      {
+        "text": "与 than 相关的课文词形",
+        "pos": "conj."
+      }
+    ],
+    "formNote": "词形变化，原形为 than"
+  },
+  {
+    "surfaceForm": "bus",
+    "displayForm": "bus",
+    "definitions": [
+      {
+        "text": "与 bigger 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 bigger"
+  },
+  {
+    "surfaceForm": "busy",
+    "displayForm": "busy",
+    "definitions": [
+      {
+        "text": "与 last 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 last"
+  },
+  {
+    "surfaceForm": "but",
+    "displayForm": "but",
+    "definitions": [
+      {
+        "text": "与 thinner 相关的课文词形",
+        "pos": "conj."
+      }
+    ],
+    "formNote": "词形变化，原形为 thinner"
+  },
+  {
+    "surfaceForm": "by",
+    "displayForm": "by",
+    "definitions": [
+      {
+        "text": "与 camp 相关的课文词形",
+        "pos": "prep."
+      }
+    ],
+    "formNote": "词形变化，原形为 camp"
+  },
+  {
+    "surfaceForm": "camp",
+    "displayForm": "camp",
+    "definitions": [
+      {
+        "text": "野营"
+      }
+    ],
+    "ipa": "/kæmp/"
+  },
+  {
+    "surfaceForm": "camped",
+    "displayForm": "camped",
+    "definitions": [
+      {
+        "text": "与 till 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 till"
+  },
+  {
+    "surfaceForm": "camping",
+    "displayForm": "camping",
+    "definitions": [
+      {
+        "text": "与 went 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 went"
+  },
+  {
+    "surfaceForm": "can",
+    "displayForm": "can",
+    "definitions": [
+      {
+        "text": "可以",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "careful",
+    "displayForm": "careful",
+    "definitions": [
+      {
+        "text": "与 trip 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 trip"
+  },
+  {
+    "surfaceForm": "carried",
+    "displayForm": "carried",
+    "definitions": [
+      {
+        "text": "与 basket 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 basket"
+  },
+  {
+    "surfaceForm": "cast",
+    "displayForm": "cast",
+    "definitions": [
+      {
+        "text": "与 shadow 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 shadow"
+  },
+  {
+    "surfaceForm": "cat",
+    "displayForm": "cat",
+    "definitions": [
+      {
+        "text": "与 smaller 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 smaller"
+  },
+  {
+    "surfaceForm": "caught",
+    "displayForm": "caught",
+    "definitions": [
+      {
+        "text": "与 went fishing 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 went fishing"
+  },
+  {
+    "surfaceForm": "centimeters",
+    "displayForm": "centimeters",
+    "definitions": [
+      {
+        "text": "与 meter 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 meter"
+  },
+  {
+    "surfaceForm": "chair",
+    "displayForm": "chair",
+    "definitions": [
+      {
+        "text": "与 fixed 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 fixed"
+  },
+  {
+    "surfaceForm": "cheetah",
+    "displayForm": "cheetah",
+    "definitions": [
+      {
+        "text": "猎豹"
+      }
+    ],
+    "ipa": "/ˈtʃiːtə/"
+  },
+  {
+    "surfaceForm": "choose",
+    "displayForm": "choose",
+    "definitions": [
+      {
+        "text": "与 smaller 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 smaller"
+  },
+  {
+    "surfaceForm": "class",
+    "displayForm": "class",
+    "definitions": [
+      {
+        "text": "与 went camping 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 went camping"
+  },
+  {
+    "surfaceForm": "classroom",
+    "displayForm": "classroom",
+    "definitions": [
+      {
+        "text": "与 taller 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 taller"
+  },
+  {
+    "surfaceForm": "cleaned",
+    "displayForm": "cleaned",
+    "definitions": [
+      {
+        "text": "（clean的过去式）打扫"
+      }
+    ],
+    "ipa": "/kliːnd/"
+  },
+  {
+    "surfaceForm": "clothes",
+    "displayForm": "clothes",
+    "definitions": [
+      {
+        "text": "与 washed 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 washed"
+  },
+  {
+    "surfaceForm": "club",
+    "displayForm": "club",
+    "definitions": [
+      {
+        "text": "与 cycling 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 cycling"
+  },
+  {
+    "surfaceForm": "cold",
+    "displayForm": "cold",
+    "definitions": [
+      {
+        "text": "与 had a cold 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 had a cold"
+  },
+  {
+    "surfaceForm": "come",
+    "displayForm": "come",
+    "definitions": [
+      {
+        "text": "来",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "compare",
+    "displayForm": "compare",
+    "definitions": [
+      {
+        "text": "与 hall 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 hall"
+  },
+  {
+    "surfaceForm": "could",
+    "displayForm": "could",
+    "definitions": [
+      {
+        "text": "（can的过去式）能",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/kəd;kʊd/"
+  },
+  {
+    "surfaceForm": "countryside",
+    "displayForm": "countryside",
+    "definitions": [
+      {
+        "text": "乡村"
+      }
+    ],
+    "ipa": "/ˈkʌntrisaɪd/"
+  },
+  {
+    "surfaceForm": "cousin",
+    "displayForm": "cousin",
+    "definitions": [
+      {
+        "text": "与 older 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 older"
+  },
+  {
+    "surfaceForm": "cream",
+    "displayForm": "cream",
+    "definitions": [
+      {
+        "text": "与 licked 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 licked"
+  },
+  {
+    "surfaceForm": "cried",
+    "displayForm": "cried",
+    "definitions": [
+      {
+        "text": "与 laughed 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 laughed"
+  },
+  {
+    "surfaceForm": "cycling",
+    "displayForm": "cycling",
+    "definitions": [
+      {
+        "text": "骑自行车运动（或活动）"
+      }
+    ],
+    "ipa": "/ˈsaɪklɪŋ/"
+  },
+  {
+    "surfaceForm": "dad",
+    "displayForm": "dad",
+    "definitions": [
+      {
+        "text": "与 shorter 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 shorter"
+  },
+  {
+    "surfaceForm": "dark",
+    "displayForm": "dark",
+    "definitions": [
+      {
+        "text": "与 become 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 become"
+  },
+  {
+    "surfaceForm": "day",
+    "displayForm": "day",
+    "definitions": [
+      {
+        "text": "天",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "days",
+    "displayForm": "days",
+    "definitions": [
+      {
+        "text": "与 become 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 become"
+  },
+  {
+    "surfaceForm": "dictionary",
+    "displayForm": "dictionary",
+    "definitions": [
+      {
+        "text": "与 thinner 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 thinner"
+  },
+  {
+    "surfaceForm": "did",
+    "displayForm": "did",
+    "definitions": [
+      {
+        "text": "做（过去式）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "different",
+    "displayForm": "different",
+    "definitions": [
+      {
+        "text": "不同的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/ˈdɪfrənt/"
+  },
+  {
+    "surfaceForm": "dining",
+    "displayForm": "dining",
+    "definitions": [
+      {
+        "text": "与 dining hall 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 dining hall"
+  },
+  {
+    "surfaceForm": "dinner",
+    "displayForm": "dinner",
+    "definitions": [
+      {
+        "text": "与 washed 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 washed"
+  },
+  {
+    "surfaceForm": "dinosaur",
+    "displayForm": "dinosaur",
+    "definitions": [
+      {
+        "text": "恐龙"
+      }
+    ],
+    "ipa": "/ˈdaɪnəsɔː(r)/"
+  },
+  {
+    "surfaceForm": "dishes",
+    "displayForm": "dishes",
+    "definitions": [
+      {
+        "text": "与 washed 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 washed"
+  },
+  {
+    "surfaceForm": "do",
+    "displayForm": "do",
+    "definitions": [
+      {
+        "text": "做",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "does",
+    "displayForm": "does",
+    "definitions": [
+      {
+        "text": "做（第三人称单数）",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "dog",
+    "displayForm": "dog",
+    "definitions": [
+      {
+        "text": "与 licked 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 licked"
+  },
+  {
+    "surfaceForm": "down",
+    "displayForm": "down",
+    "definitions": [
+      {
+        "text": "与 fell 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 fell"
+  },
+  {
+    "surfaceForm": "drank",
+    "displayForm": "drank",
+    "definitions": [
+      {
+        "text": "（drink的过去式）喝"
+      }
+    ],
+    "ipa": "/dræŋk/"
+  },
+  {
+    "surfaceForm": "dream",
+    "displayForm": "dream",
+    "definitions": [
+      {
+        "text": "梦"
+      }
+    ],
+    "ipa": "/driːm/"
+  },
+  {
+    "surfaceForm": "early",
+    "displayForm": "early",
+    "definitions": [
+      {
+        "text": "与 slept 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 slept"
+  },
+  {
+    "surfaceForm": "easily",
+    "displayForm": "easily",
+    "definitions": [
+      {
+        "text": "与 race 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 race"
+  },
+  {
+    "surfaceForm": "easy",
+    "displayForm": "easy",
+    "definitions": [
+      {
+        "text": "容易的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/ˈiːzi/"
+  },
+  {
+    "surfaceForm": "eat",
+    "displayForm": "eat",
+    "definitions": [
+      {
+        "text": "与 dining hall 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 dining hall"
+  },
+  {
+    "surfaceForm": "elephant",
+    "displayForm": "elephant",
+    "definitions": [
+      {
+        "text": "与 heavier 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 heavier"
+  },
+  {
+    "surfaceForm": "english",
+    "displayForm": "english",
+    "definitions": [
+      {
+        "text": "与 better 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 better"
+  },
+  {
+    "surfaceForm": "enjoy",
+    "displayForm": "enjoy",
+    "definitions": [
+      {
+        "text": "享受……乐趣；喜爱",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/ɪnˈdʒɔɪ/"
+  },
+  {
+    "surfaceForm": "evening",
+    "displayForm": "evening",
+    "definitions": [
+      {
+        "text": "与 longer 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 longer"
+  },
+  {
+    "surfaceForm": "every",
+    "displayForm": "every",
+    "definitions": [
+      {
+        "text": "每个",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "everyone",
+    "displayForm": "everyone",
+    "definitions": [
+      {
+        "text": "与 laughed 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 laughed"
+  },
+  {
+    "surfaceForm": "exercise",
+    "displayForm": "exercise",
+    "definitions": [
+      {
+        "text": "与 stronger 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 stronger"
+  },
+  {
+    "surfaceForm": "face",
+    "displayForm": "face",
+    "definitions": [
+      {
+        "text": "与 washed 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 washed"
+  },
+  {
+    "surfaceForm": "faster",
+    "displayForm": "faster",
+    "definitions": [
+      {
+        "text": "（fast的比较级）更快的"
+      }
+    ],
+    "ipa": "/ˈfɑːstə(r)/"
+  },
+  {
+    "surfaceForm": "fastest",
+    "displayForm": "fastest",
+    "definitions": [
+      {
+        "text": "与 cheetah 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 cheetah"
+  },
+  {
+    "surfaceForm": "favourite",
+    "displayForm": "favourite",
+    "definitions": [
+      {
+        "text": "与 badminton 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 badminton"
+  },
+  {
+    "surfaceForm": "feel",
+    "displayForm": "feel",
+    "definitions": [
+      {
+        "text": "与 better 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 better"
+  },
+  {
+    "surfaceForm": "feels",
+    "displayForm": "feels",
+    "definitions": [
+      {
+        "text": "与 different 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 different"
+  },
+  {
+    "surfaceForm": "fell",
+    "displayForm": "fell",
+    "definitions": [
+      {
+        "text": "（fall的过去式）摔倒"
+      }
+    ],
+    "ipa": "/fel/"
+  },
+  {
+    "surfaceForm": "felt",
+    "displayForm": "felt",
+    "definitions": [
+      {
+        "text": "（feel的过去式）感觉"
+      }
+    ],
+    "ipa": "/felt/"
+  },
+  {
+    "surfaceForm": "fifty",
+    "displayForm": "fifty",
+    "definitions": [
+      {
+        "text": "与 meter 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 meter"
+  },
+  {
+    "surfaceForm": "film",
+    "displayForm": "film",
+    "definitions": [
+      {
+        "text": "与 saw 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 saw"
+  },
+  {
+    "surfaceForm": "finish",
+    "displayForm": "finish",
+    "definitions": [
+      {
+        "text": "与 faster 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 faster"
+  },
+  {
+    "surfaceForm": "first",
+    "displayForm": "first",
+    "definitions": [
+      {
+        "text": "与 smarter 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 smarter"
+  },
+  {
+    "surfaceForm": "fish",
+    "displayForm": "fish",
+    "definitions": [
+      {
+        "text": "钓鱼；捕鱼",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/fɪʃ/"
+  },
+  {
+    "surfaceForm": "fishing",
+    "displayForm": "fishing",
+    "definitions": [
+      {
+        "text": "与 went fishing 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 went fishing"
+  },
+  {
+    "surfaceForm": "five",
+    "displayForm": "five",
+    "definitions": [
+      {
+        "text": "五",
+        "pos": "num."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "fixed",
+    "displayForm": "fixed",
+    "definitions": [
+      {
+        "text": "（fix//的过去式）修理"
+      }
+    ],
+    "ipa": "/fɪkst/"
+  },
+  {
+    "surfaceForm": "floor",
+    "displayForm": "floor",
+    "definitions": [
+      {
+        "text": "与 gym 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 gym"
+  },
+  {
+    "surfaceForm": "follow",
+    "displayForm": "follow",
+    "definitions": [
+      {
+        "text": "与 dream 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 dream"
+  },
+  {
+    "surfaceForm": "foot",
+    "displayForm": "foot",
+    "definitions": [
+      {
+        "text": "与 hurt 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 hurt"
+  },
+  {
+    "surfaceForm": "football",
+    "displayForm": "football",
+    "definitions": [
+      {
+        "text": "与 watched 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 watched"
+  },
+  {
+    "surfaceForm": "for",
+    "displayForm": "for",
+    "definitions": [
+      {
+        "text": "为了；给",
+        "pos": "prep."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "four",
+    "displayForm": "four",
+    "definitions": [
+      {
+        "text": "四",
+        "pos": "num."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "fresh",
+    "displayForm": "fresh",
+    "definitions": [
+      {
+        "text": "与 ate 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 ate"
+  },
+  {
+    "surfaceForm": "friend",
+    "displayForm": "friend",
+    "definitions": [
+      {
+        "text": "与 faster 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 faster"
+  },
+  {
+    "surfaceForm": "friends",
+    "displayForm": "friends",
+    "definitions": [
+      {
+        "text": "朋友（复数）",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "from",
+    "displayForm": "from",
+    "definitions": [
+      {
+        "text": "与 could 相关的课文词形",
+        "pos": "prep."
+      }
+    ],
+    "formNote": "词形变化，原形为 could"
+  },
+  {
+    "surfaceForm": "fruit",
+    "displayForm": "fruit",
+    "definitions": [
+      {
+        "text": "与 ate 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 ate"
+  },
+  {
+    "surfaceForm": "fun",
+    "displayForm": "fun",
+    "definitions": [
+      {
+        "text": "与 had 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 had"
+  },
+  {
+    "surfaceForm": "funny",
+    "displayForm": "funny",
+    "definitions": [
+      {
+        "text": "与 laughed 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 laughed"
+  },
+  {
+    "surfaceForm": "game",
+    "displayForm": "game",
+    "definitions": [
+      {
+        "text": "与 watched 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 watched"
+  },
+  {
+    "surfaceForm": "get",
+    "displayForm": "get",
+    "definitions": [
+      {
+        "text": "与 better 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 better"
+  },
+  {
+    "surfaceForm": "gift",
+    "displayForm": "gift",
+    "definitions": [
+      {
+        "text": "礼物",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/gɪft/"
+  },
+  {
+    "surfaceForm": "go",
+    "displayForm": "go",
+    "definitions": [
+      {
+        "text": "与 go cycling 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 go cycling"
+  },
+  {
+    "surfaceForm": "good",
+    "displayForm": "good",
+    "definitions": [
+      {
+        "text": "好的",
+        "pos": "adj."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "grandpa",
+    "displayForm": "grandpa",
+    "definitions": [
+      {
+        "text": "与 fish 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 fish"
+  },
+  {
+    "surfaceForm": "grandparents",
+    "displayForm": "grandparents",
+    "definitions": [
+      {
+        "text": "与 countryside 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 countryside"
+  },
+  {
+    "surfaceForm": "grapes",
+    "displayForm": "grapes",
+    "definitions": [
+      {
+        "text": "与 Turpan 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 turpan"
+  },
+  {
+    "surfaceForm": "grass",
+    "displayForm": "grass",
+    "definitions": [
+      {
+        "text": "草坪",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/grɑːs/"
+  },
+  {
+    "surfaceForm": "green",
+    "displayForm": "green",
+    "definitions": [
+      {
+        "text": "与 grass 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 grass"
+  },
+  {
+    "surfaceForm": "ground",
+    "displayForm": "ground",
+    "definitions": [
+      {
+        "text": "与 shadow 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 shadow"
+  },
+  {
+    "surfaceForm": "group",
+    "displayForm": "group",
+    "definitions": [
+      {
+        "text": "与 smarter 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 smarter"
+  },
+  {
+    "surfaceForm": "gym",
+    "displayForm": "gym",
+    "definitions": [
+      {
+        "text": "体育馆",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/dʒɪm/"
+  },
+  {
+    "surfaceForm": "had",
+    "displayForm": "had",
+    "definitions": [
+      {
+        "text": "（have的过去式）患病；得病"
+      }
+    ],
+    "ipa": "/hæd/"
+  },
+  {
+    "surfaceForm": "hair",
+    "displayForm": "hair",
+    "definitions": [
+      {
+        "text": "与 shorter 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 shorter"
+  },
+  {
+    "surfaceForm": "hall",
+    "displayForm": "hall",
+    "definitions": [
+      {
+        "text": "大厅",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/hɔːl/"
+  },
+  {
+    "surfaceForm": "hand",
+    "displayForm": "hand",
+    "definitions": [
+      {
+        "text": "与 hurt 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 hurt"
+  },
+  {
+    "surfaceForm": "hands",
+    "displayForm": "hands",
+    "definitions": [
+      {
+        "text": "与 before 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 before"
+  },
+  {
+    "surfaceForm": "happy",
+    "displayForm": "happy",
+    "definitions": [
+      {
+        "text": "与 felt 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 felt"
+  },
+  {
+    "surfaceForm": "hat",
+    "displayForm": "hat",
+    "definitions": [
+      {
+        "text": "与 off 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 off"
+  },
+  {
+    "surfaceForm": "have",
+    "displayForm": "have",
+    "definitions": [
+      {
+        "text": "有",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "he",
+    "displayForm": "he",
+    "definitions": [
+      {
+        "text": "与 younger 相关的课文词形",
+        "pos": "pron."
+      }
+    ],
+    "formNote": "词形变化，原形为 younger"
+  },
+  {
+    "surfaceForm": "head",
+    "displayForm": "head",
+    "definitions": [
+      {
+        "text": "与 off 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 off"
+  },
+  {
+    "surfaceForm": "heard",
+    "displayForm": "heard",
+    "definitions": [
+      {
+        "text": "与 loud 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 loud"
+  },
+  {
+    "surfaceForm": "heavier",
+    "displayForm": "heavier",
+    "definitions": [
+      {
+        "text": "（heavy/hevi/的比较级）更重的"
+      }
+    ],
+    "ipa": "/ˈheviə(r)/"
+  },
+  {
+    "surfaceForm": "height",
+    "displayForm": "height",
+    "definitions": [
+      {
+        "text": "与 hall 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 hall"
+  },
+  {
+    "surfaceForm": "help",
+    "displayForm": "help",
+    "definitions": [
+      {
+        "text": "与 could 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 could"
+  },
+  {
+    "surfaceForm": "her",
+    "displayForm": "her",
+    "definitions": [
+      {
+        "text": "与 than 相关的课文词形",
+        "pos": "pron."
+      }
+    ],
+    "formNote": "词形变化，原形为 than"
+  },
+  {
+    "surfaceForm": "here",
+    "displayForm": "here",
+    "definitions": [
+      {
+        "text": "这里",
+        "pos": "adv."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "hill",
+    "displayForm": "hill",
+    "definitions": [
+      {
+        "text": "与 could 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 could"
+  },
+  {
+    "surfaceForm": "him",
+    "displayForm": "him",
+    "definitions": [
+      {
+        "text": "与 easy 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 easy"
+  },
+  {
+    "surfaceForm": "his",
+    "displayForm": "his",
+    "definitions": [
+      {
+        "text": "与 washed 相关的课文词形",
+        "pos": "det."
+      }
+    ],
+    "formNote": "词形变化，原形为 washed"
+  },
+  {
+    "surfaceForm": "holiday",
+    "displayForm": "holiday",
+    "definitions": [
+      {
+        "text": "与 Turpan 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 turpan"
+  },
+  {
+    "surfaceForm": "home",
+    "displayForm": "home",
+    "definitions": [
+      {
+        "text": "与 stayed 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 stayed"
+  },
+  {
+    "surfaceForm": "homework",
+    "displayForm": "homework",
+    "definitions": [
+      {
+        "text": "与 faster 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 faster"
+  },
+  {
+    "surfaceForm": "horse",
+    "displayForm": "horse",
+    "definitions": [
+      {
+        "text": "与 heavier 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 heavier"
+  },
+  {
+    "surfaceForm": "horses",
+    "displayForm": "horses",
+    "definitions": [
+      {
+        "text": "与 rode 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 rode"
+  },
+  {
+    "surfaceForm": "hot",
+    "displayForm": "hot",
+    "definitions": [
+      {
+        "text": "与 Turpan 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 turpan"
+  },
+  {
+    "surfaceForm": "hotel",
+    "displayForm": "hotel",
+    "definitions": [
+      {
+        "text": "旅馆"
+      }
+    ],
+    "ipa": "/həʊˈtel/"
+  },
+  {
+    "surfaceForm": "hours",
+    "displayForm": "hours",
+    "definitions": [
+      {
+        "text": "与 slept 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 slept"
+  },
+  {
+    "surfaceForm": "house",
+    "displayForm": "house",
+    "definitions": [
+      {
+        "text": "与 than 相关的课文词形",
+        "pos": "conj."
+      }
+    ],
+    "formNote": "词形变化，原形为 than"
+  },
+  {
+    "surfaceForm": "how",
+    "displayForm": "how",
+    "definitions": [
+      {
+        "text": "怎样；多么",
+        "pos": "adv."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "hurt",
+    "displayForm": "hurt",
+    "definitions": [
+      {
+        "text": "（hurt的过去式）（使）受伤"
+      }
+    ],
+    "ipa": "/hɜːt/"
+  },
+  {
+    "surfaceForm": "i",
+    "displayForm": "i",
+    "definitions": [
+      {
+        "text": "我",
+        "pos": "pron."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "ice",
+    "displayForm": "ice",
+    "definitions": [
+      {
+        "text": "与 licked 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 licked"
+  },
+  {
+    "surfaceForm": "if",
+    "displayForm": "if",
+    "definitions": [
+      {
+        "text": "与 nothing 相关的课文词形",
+        "pos": "conj."
+      }
+    ],
+    "formNote": "词形变化，原形为 nothing"
+  },
+  {
+    "surfaceForm": "impossible",
+    "displayForm": "impossible",
+    "definitions": [
+      {
+        "text": "与 nothing 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 nothing"
+  },
+  {
+    "surfaceForm": "in",
+    "displayForm": "in",
+    "definitions": [
+      {
+        "text": "与 dinosaur 相关的课文词形",
+        "pos": "prep."
+      }
+    ],
+    "formNote": "词形变化，原形为 dinosaur"
+  },
+  {
+    "surfaceForm": "internet",
+    "displayForm": "internet",
+    "definitions": [
+      {
+        "text": "互联网"
+      }
+    ],
+    "ipa": "/ˈɪntənet/"
+  },
+  {
+    "surfaceForm": "is",
+    "displayForm": "is",
+    "definitions": [
+      {
+        "text": "是",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "it",
+    "displayForm": "it",
+    "definitions": [
+      {
+        "text": "它",
+        "pos": "pron."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "jack",
+    "displayForm": "jack",
+    "definitions": [
+      {
+        "text": "与 younger 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 younger"
+  },
+  {
+    "surfaceForm": "john",
+    "displayForm": "john",
+    "definitions": [
+      {
+        "text": "与 taller 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 taller"
+  },
+  {
+    "surfaceForm": "juice",
+    "displayForm": "juice",
+    "definitions": [
+      {
+        "text": "与 drank 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 drank"
+  },
+  {
+    "surfaceForm": "kilogram",
+    "displayForm": "kilogram",
+    "definitions": [
+      {
+        "text": "千克；公斤"
+      }
+    ],
+    "ipa": "/ˈkɪləgræm/"
+  },
+  {
+    "surfaceForm": "kilograms",
+    "displayForm": "kilograms",
+    "definitions": [
+      {
+        "text": "与 heavier 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 heavier"
+  },
+  {
+    "surfaceForm": "lake",
+    "displayForm": "lake",
+    "definitions": [
+      {
+        "text": "与 fish 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 fish"
+  },
+  {
+    "surfaceForm": "lamp",
+    "displayForm": "lamp",
+    "definitions": [
+      {
+        "text": "台灯"
+      }
+    ],
+    "ipa": "/læmp/"
+  },
+  {
+    "surfaceForm": "land",
+    "displayForm": "land",
+    "definitions": [
+      {
+        "text": "与 cheetah 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 cheetah"
+  },
+  {
+    "surfaceForm": "last",
+    "displayForm": "last",
+    "definitions": [
+      {
+        "text": "最近的；上一个的"
+      }
+    ],
+    "ipa": "/lɑːst/"
+  },
+  {
+    "surfaceForm": "late",
+    "displayForm": "late",
+    "definitions": [
+      {
+        "text": "与 till 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 till"
+  },
+  {
+    "surfaceForm": "laughed",
+    "displayForm": "laughed",
+    "definitions": [
+      {
+        "text": "（laugh//的过去式）笑"
+      }
+    ],
+    "ipa": "/lɑːft/"
+  },
+  {
+    "surfaceForm": "learned",
+    "displayForm": "learned",
+    "definitions": [
+      {
+        "text": "学习（过去式）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "leg",
+    "displayForm": "leg",
+    "definitions": [
+      {
+        "text": "与 hurt 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 hurt"
+  },
+  {
+    "surfaceForm": "let",
+    "displayForm": "let",
+    "definitions": [
+      {
+        "text": "让",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "library",
+    "displayForm": "library",
+    "definitions": [
+      {
+        "text": "与 loud 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 loud"
+  },
+  {
+    "surfaceForm": "licked",
+    "displayForm": "licked",
+    "definitions": [
+      {
+        "text": "（lick//的过去式）舔"
+      }
+    ],
+    "ipa": "/lɪkt/"
+  },
+  {
+    "surfaceForm": "life",
+    "displayForm": "life",
+    "definitions": [
+      {
+        "text": "与 Internet 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 internet"
+  },
+  {
+    "surfaceForm": "like",
+    "displayForm": "like",
+    "definitions": [
+      {
+        "text": "喜欢",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "likes",
+    "displayForm": "likes",
+    "definitions": [
+      {
+        "text": "与 fish 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 fish"
+  },
+  {
+    "surfaceForm": "lion",
+    "displayForm": "lion",
+    "definitions": [
+      {
+        "text": "与 cheetah 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 cheetah"
+  },
+  {
+    "surfaceForm": "little",
+    "displayForm": "little",
+    "definitions": [
+      {
+        "text": "与 longer 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 longer"
+  },
+  {
+    "surfaceForm": "live",
+    "displayForm": "live",
+    "definitions": [
+      {
+        "text": "与 countryside 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 countryside"
+  },
+  {
+    "surfaceForm": "lived",
+    "displayForm": "lived",
+    "definitions": [
+      {
+        "text": "居住（过去式）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "long",
+    "displayForm": "long",
+    "definitions": [
+      {
+        "text": "与 dinosaur 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 dinosaur"
+  },
+  {
+    "surfaceForm": "longer",
+    "displayForm": "longer",
+    "definitions": [
+      {
+        "text": "（long的比较级）更长的"
+      }
+    ],
+    "ipa": "/ˈlɒŋgə(r)/"
+  },
+  {
+    "surfaceForm": "look",
+    "displayForm": "look",
+    "definitions": [
+      {
+        "text": "与 shadow 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 shadow"
+  },
+  {
+    "surfaceForm": "looks",
+    "displayForm": "looks",
+    "definitions": [
+      {
+        "text": "与 younger 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 younger"
+  },
+  {
+    "surfaceForm": "loud",
+    "displayForm": "loud",
+    "definitions": [
+      {
+        "text": "喧闹的；大声的"
+      }
+    ],
+    "ipa": "/laʊd/"
+  },
+  {
+    "surfaceForm": "lovely",
+    "displayForm": "lovely",
+    "definitions": [
+      {
+        "text": "与 gift 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 gift"
+  },
+  {
+    "surfaceForm": "lower",
+    "displayForm": "lower",
+    "definitions": [
+      {
+        "text": "（low//的比较级）更低"
+      }
+    ],
+    "ipa": "/ˈləʊə(r)/"
+  },
+  {
+    "surfaceForm": "lunch",
+    "displayForm": "lunch",
+    "definitions": [
+      {
+        "text": "与 ate 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 ate"
+  },
+  {
+    "surfaceForm": "magazine",
+    "displayForm": "magazine",
+    "definitions": [
+      {
+        "text": "杂志"
+      }
+    ],
+    "ipa": "/%mægəˈziːn/"
+  },
+  {
+    "surfaceForm": "magazines",
+    "displayForm": "magazines",
+    "definitions": [
+      {
+        "text": "与 enjoy 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 enjoy"
+  },
+  {
+    "surfaceForm": "makes",
+    "displayForm": "makes",
+    "definitions": [
+      {
+        "text": "与 stronger 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 stronger"
+  },
+  {
+    "surfaceForm": "many",
+    "displayForm": "many",
+    "definitions": [
+      {
+        "text": "许多",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "market",
+    "displayForm": "market",
+    "definitions": [
+      {
+        "text": "与 bought 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 bought"
+  },
+  {
+    "surfaceForm": "me",
+    "displayForm": "me",
+    "definitions": [
+      {
+        "text": "我",
+        "pos": "pron."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "measure",
+    "displayForm": "measure",
+    "definitions": [
+      {
+        "text": "与 meter 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 meter"
+  },
+  {
+    "surfaceForm": "measured",
+    "displayForm": "measured",
+    "definitions": [
+      {
+        "text": "与 both 相关的课文词形",
+        "pos": "det."
+      }
+    ],
+    "formNote": "词形变化，原形为 both"
+  },
+  {
+    "surfaceForm": "met",
+    "displayForm": "met",
+    "definitions": [
+      {
+        "text": "与 ago 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 ago"
+  },
+  {
+    "surfaceForm": "meter",
+    "displayForm": "meter",
+    "definitions": [
+      {
+        "text": "）"
+      }
+    ],
+    "ipa": "/ˈmiːtə(r)/"
+  },
+  {
+    "surfaceForm": "meters",
+    "displayForm": "meters",
+    "definitions": [
+      {
+        "text": "与 hall 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 hall"
+  },
+  {
+    "surfaceForm": "mike",
+    "displayForm": "mike",
+    "definitions": [
+      {
+        "text": "与 taller 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 taller"
+  },
+  {
+    "surfaceForm": "model",
+    "displayForm": "model",
+    "definitions": [
+      {
+        "text": "与 dinosaur 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 dinosaur"
+  },
+  {
+    "surfaceForm": "monday",
+    "displayForm": "monday",
+    "definitions": [
+      {
+        "text": "与 yesterday 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 yesterday"
+  },
+  {
+    "surfaceForm": "more",
+    "displayForm": "more",
+    "definitions": [
+      {
+        "text": "与 active 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 active"
+  },
+  {
+    "surfaceForm": "morning",
+    "displayForm": "morning",
+    "definitions": [
+      {
+        "text": "与 lower 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 lower"
+  },
+  {
+    "surfaceForm": "mountains",
+    "displayForm": "mountains",
+    "definitions": [
+      {
+        "text": "与 camp 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 camp"
+  },
+  {
+    "surfaceForm": "mouse",
+    "displayForm": "mouse",
+    "definitions": [
+      {
+        "text": "与 smaller 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 smaller"
+  },
+  {
+    "surfaceForm": "much",
+    "displayForm": "much",
+    "definitions": [
+      {
+        "text": "与 kilogram 相关的课文词形",
+        "pos": "det."
+      }
+    ],
+    "formNote": "词形变化，原形为 kilogram"
+  },
+  {
+    "surfaceForm": "mule",
+    "displayForm": "mule",
+    "definitions": [
+      {
+        "text": "骡子"
+      }
+    ],
+    "ipa": "/mjuːl/"
+  },
+  {
+    "surfaceForm": "mum",
+    "displayForm": "mum",
+    "definitions": [
+      {
+        "text": "与 bought 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 bought"
+  },
+  {
+    "surfaceForm": "museum",
+    "displayForm": "museum",
+    "definitions": [
+      {
+        "text": "与 dinosaur 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 dinosaur"
+  },
+  {
+    "surfaceForm": "music",
+    "displayForm": "music",
+    "definitions": [
+      {
+        "text": "与 loud 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 loud"
+  },
+  {
+    "surfaceForm": "my",
+    "displayForm": "my",
+    "definitions": [
+      {
+        "text": "我的",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "near",
+    "displayForm": "near",
+    "definitions": [
+      {
+        "text": "与 hotel 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 hotel"
+  },
+  {
+    "surfaceForm": "never",
+    "displayForm": "never",
+    "definitions": [
+      {
+        "text": "与 before 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 before"
+  },
+  {
+    "surfaceForm": "new",
+    "displayForm": "new",
+    "definitions": [
+      {
+        "text": "新的",
+        "pos": "adj."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "night",
+    "displayForm": "night",
+    "definitions": [
+      {
+        "text": "与 watched 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 watched"
+  },
+  {
+    "surfaceForm": "nights",
+    "displayForm": "nights",
+    "definitions": [
+      {
+        "text": "与 stayed 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 stayed"
+  },
+  {
+    "surfaceForm": "no",
+    "displayForm": "no",
+    "definitions": [
+      {
+        "text": "不",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "noise",
+    "displayForm": "noise",
+    "definitions": [
+      {
+        "text": "与 loud 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 loud"
+  },
+  {
+    "surfaceForm": "noon",
+    "displayForm": "noon",
+    "definitions": [
+      {
+        "text": "与 smaller 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 smaller"
+  },
+  {
+    "surfaceForm": "not",
+    "displayForm": "not",
+    "definitions": [
+      {
+        "text": "不",
+        "pos": "adv."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "nothing",
+    "displayForm": "nothing",
+    "definitions": [
+      {
+        "text": "没有什么"
+      }
+    ],
+    "ipa": "/ˈnʌθɪŋ/"
+  },
+  {
+    "surfaceForm": "now",
+    "displayForm": "now",
+    "definitions": [
+      {
+        "text": "与 shorter 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 shorter"
+  },
+  {
+    "surfaceForm": "of",
+    "displayForm": "of",
+    "definitions": [
+      {
+        "text": "与 both 相关的课文词形",
+        "pos": "prep."
+      }
+    ],
+    "formNote": "词形变化，原形为 both"
+  },
+  {
+    "surfaceForm": "off",
+    "displayForm": "off",
+    "definitions": [
+      {
+        "text": "从（某处）落下",
+        "pos": "adv."
+      }
+    ],
+    "ipa": "/ɒf/"
+  },
+  {
+    "surfaceForm": "old",
+    "displayForm": "old",
+    "definitions": [
+      {
+        "text": "旧的",
+        "pos": "adj."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "older",
+    "displayForm": "older",
+    "definitions": [
+      {
+        "text": "（old的比较级）更年长的"
+      }
+    ],
+    "ipa": "/ˈəʊldə(r)/"
+  },
+  {
+    "surfaceForm": "on",
+    "displayForm": "on",
+    "definitions": [
+      {
+        "text": "与 shadow 相关的课文词形",
+        "pos": "prep."
+      }
+    ],
+    "formNote": "词形变化，原形为 shadow"
+  },
+  {
+    "surfaceForm": "one",
+    "displayForm": "one",
+    "definitions": [
+      {
+        "text": "与 meter 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 meter"
+  },
+  {
+    "surfaceForm": "or",
+    "displayForm": "or",
+    "definitions": [
+      {
+        "text": "或者",
+        "pos": "conj."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "our",
+    "displayForm": "our",
+    "definitions": [
+      {
+        "text": "我们的",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "over",
+    "displayForm": "over",
+    "definitions": [
+      {
+        "text": "与 trip 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 trip"
+  },
+  {
+    "surfaceForm": "park",
+    "displayForm": "park",
+    "definitions": [
+      {
+        "text": "与 had 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 had"
+  },
+  {
+    "surfaceForm": "part",
+    "displayForm": "part",
+    "definitions": [
+      {
+        "text": "角色"
+      }
+    ],
+    "ipa": "/pɑːt/"
+  },
+  {
+    "surfaceForm": "party",
+    "displayForm": "party",
+    "definitions": [
+      {
+        "text": "与 drank 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 drank"
+  },
+  {
+    "surfaceForm": "pe",
+    "displayForm": "pe",
+    "definitions": [
+      {
+        "text": "与 gym 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 gym"
+  },
+  {
+    "surfaceForm": "photo",
+    "displayForm": "photo",
+    "definitions": [
+      {
+        "text": "与 younger 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 younger"
+  },
+  {
+    "surfaceForm": "pictures",
+    "displayForm": "pictures",
+    "definitions": [
+      {
+        "text": "与 magazine 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 magazine"
+  },
+  {
+    "surfaceForm": "play",
+    "displayForm": "play",
+    "definitions": [
+      {
+        "text": "与 badminton 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 badminton"
+  },
+  {
+    "surfaceForm": "played",
+    "displayForm": "played",
+    "definitions": [
+      {
+        "text": "玩（过去式）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "player",
+    "displayForm": "player",
+    "definitions": [
+      {
+        "text": "与 star 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 star"
+  },
+  {
+    "surfaceForm": "playground",
+    "displayForm": "playground",
+    "definitions": [
+      {
+        "text": "与 grass 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 grass"
+  },
+  {
+    "surfaceForm": "please",
+    "displayForm": "please",
+    "definitions": [
+      {
+        "text": "请",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "programme",
+    "displayForm": "programme",
+    "definitions": [
+      {
+        "text": "与 watched 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 watched"
+  },
+  {
+    "surfaceForm": "put",
+    "displayForm": "put",
+    "definitions": [
+      {
+        "text": "与 basket 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 basket"
+  },
+  {
+    "surfaceForm": "quickly",
+    "displayForm": "quickly",
+    "definitions": [
+      {
+        "text": "与 licked 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 licked"
+  },
+  {
+    "surfaceForm": "quiet",
+    "displayForm": "quiet",
+    "definitions": [
+      {
+        "text": "与 countryside 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 countryside"
+  },
+  {
+    "surfaceForm": "race",
+    "displayForm": "race",
+    "definitions": [
+      {
+        "text": "赛跑"
+      }
+    ],
+    "ipa": "/reɪs/"
+  },
+  {
+    "surfaceForm": "read",
+    "displayForm": "read",
+    "definitions": [
+      {
+        "text": "（read//的过去式）读",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/red/"
+  },
+  {
+    "surfaceForm": "reading",
+    "displayForm": "reading",
+    "definitions": [
+      {
+        "text": "与 smarter 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 smarter"
+  },
+  {
+    "surfaceForm": "red",
+    "displayForm": "red",
+    "definitions": [
+      {
+        "text": "与 both 相关的课文词形",
+        "pos": "det."
+      }
+    ],
+    "formNote": "词形变化，原形为 both"
+  },
+  {
+    "surfaceForm": "rest",
+    "displayForm": "rest",
+    "definitions": [
+      {
+        "text": "与 better 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 better"
+  },
+  {
+    "surfaceForm": "rice",
+    "displayForm": "rice",
+    "definitions": [
+      {
+        "text": "与 kilogram 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 kilogram"
+  },
+  {
+    "surfaceForm": "ride",
+    "displayForm": "ride",
+    "definitions": [
+      {
+        "text": "与 could 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 could"
+  },
+  {
+    "surfaceForm": "river",
+    "displayForm": "river",
+    "definitions": [
+      {
+        "text": "与 longer 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 longer"
+  },
+  {
+    "surfaceForm": "road",
+    "displayForm": "road",
+    "definitions": [
+      {
+        "text": "与 longer 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 longer"
+  },
+  {
+    "surfaceForm": "rode",
+    "displayForm": "rode",
+    "definitions": [
+      {
+        "text": "（ride//的过去式）骑（马；自行车）"
+      }
+    ],
+    "ipa": "/rəʊd/"
+  },
+  {
+    "surfaceForm": "room",
+    "displayForm": "room",
+    "definitions": [
+      {
+        "text": "与 cleaned 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 cleaned"
+  },
+  {
+    "surfaceForm": "rope",
+    "displayForm": "rope",
+    "definitions": [
+      {
+        "text": "与 thinner 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 thinner"
+  },
+  {
+    "surfaceForm": "rose",
+    "displayForm": "rose",
+    "definitions": [
+      {
+        "text": "与 woke 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 woke"
+  },
+  {
+    "surfaceForm": "running",
+    "displayForm": "running",
+    "definitions": [
+      {
+        "text": "与 thinner 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 thinner"
+  },
+  {
+    "surfaceForm": "runs",
+    "displayForm": "runs",
+    "definitions": [
+      {
+        "text": "与 faster 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 faster"
+  },
+  {
+    "surfaceForm": "salt",
+    "displayForm": "salt",
+    "definitions": [
+      {
+        "text": "与 licked 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 licked"
+  },
+  {
+    "surfaceForm": "sat",
+    "displayForm": "sat",
+    "definitions": [
+      {
+        "text": "与 grass 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 grass"
+  },
+  {
+    "surfaceForm": "saturday",
+    "displayForm": "saturday",
+    "definitions": [
+      {
+        "text": "与 saw 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 saw"
+  },
+  {
+    "surfaceForm": "saw",
+    "displayForm": "saw",
+    "definitions": [
+      {
+        "text": "（see的过去式）看见"
+      }
+    ],
+    "ipa": "/sɔː/"
+  },
+  {
+    "surfaceForm": "school",
+    "displayForm": "school",
+    "definitions": [
+      {
+        "text": "与 show 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 show"
+  },
+  {
+    "surfaceForm": "scientist",
+    "displayForm": "scientist",
+    "definitions": [
+      {
+        "text": "与 become 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 become"
+  },
+  {
+    "surfaceForm": "see",
+    "displayForm": "see",
+    "definitions": [
+      {
+        "text": "与 could 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 could"
+  },
+  {
+    "surfaceForm": "seen",
+    "displayForm": "seen",
+    "definitions": [
+      {
+        "text": "与 before 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 before"
+  },
+  {
+    "surfaceForm": "seven",
+    "displayForm": "seven",
+    "definitions": [
+      {
+        "text": "与 had 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 had"
+  },
+  {
+    "surfaceForm": "shadow",
+    "displayForm": "shadow",
+    "definitions": [
+      {
+        "text": "阴影；影子"
+      }
+    ],
+    "ipa": "/ˈʃædəʊ/"
+  },
+  {
+    "surfaceForm": "shadows",
+    "displayForm": "shadows",
+    "definitions": [
+      {
+        "text": "与 both 相关的课文词形",
+        "pos": "det."
+      }
+    ],
+    "formNote": "词形变化，原形为 both"
+  },
+  {
+    "surfaceForm": "she",
+    "displayForm": "she",
+    "definitions": [
+      {
+        "text": "与 than 相关的课文词形",
+        "pos": "pron."
+      }
+    ],
+    "formNote": "词形变化，原形为 than"
+  },
+  {
+    "surfaceForm": "shirt",
+    "displayForm": "shirt",
+    "definitions": [
+      {
+        "text": "与 both 相关的课文词形",
+        "pos": "det."
+      }
+    ],
+    "formNote": "词形变化，原形为 both"
+  },
+  {
+    "surfaceForm": "shoes",
+    "displayForm": "shoes",
+    "definitions": [
+      {
+        "text": "与 off 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 off"
+  },
+  {
+    "surfaceForm": "shop",
+    "displayForm": "shop",
+    "definitions": [
+      {
+        "text": "与 gift 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 gift"
+  },
+  {
+    "surfaceForm": "shorter",
+    "displayForm": "shorter",
+    "definitions": [
+      {
+        "text": "（short的比较级）更矮的；更短的"
+      }
+    ],
+    "ipa": "/ˈʃɔːtə(r)/"
+  },
+  {
+    "surfaceForm": "show",
+    "displayForm": "show",
+    "definitions": [
+      {
+        "text": "演出",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/ʃəʊ/"
+  },
+  {
+    "surfaceForm": "sister",
+    "displayForm": "sister",
+    "definitions": [
+      {
+        "text": "与 younger 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 younger"
+  },
+  {
+    "surfaceForm": "six",
+    "displayForm": "six",
+    "definitions": [
+      {
+        "text": "六",
+        "pos": "num."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "skate",
+    "displayForm": "skate",
+    "definitions": [
+      {
+        "text": "与 ice-skate 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 ice-skate"
+  },
+  {
+    "surfaceForm": "sky",
+    "displayForm": "sky",
+    "definitions": [
+      {
+        "text": "与 lower 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 lower"
+  },
+  {
+    "surfaceForm": "sleep",
+    "displayForm": "sleep",
+    "definitions": [
+      {
+        "text": "与 before 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 before"
+  },
+  {
+    "surfaceForm": "slept",
+    "displayForm": "slept",
+    "definitions": [
+      {
+        "text": "（sleep的过去式）睡觉"
+      }
+    ],
+    "ipa": "/slept/"
+  },
+  {
+    "surfaceForm": "slowly",
+    "displayForm": "slowly",
+    "definitions": [
+      {
+        "text": "与 mule 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 mule"
+  },
+  {
+    "surfaceForm": "small",
+    "displayForm": "small",
+    "definitions": [
+      {
+        "text": "与 part 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 part"
+  },
+  {
+    "surfaceForm": "smaller",
+    "displayForm": "smaller",
+    "definitions": [
+      {
+        "text": "（small的比较级）更小的"
+      }
+    ],
+    "ipa": "/ˈsmɔːlə(r)/"
+  },
+  {
+    "surfaceForm": "smarter",
+    "displayForm": "smarter",
+    "definitions": [
+      {
+        "text": "（smart//的比较级）更聪明的"
+      }
+    ],
+    "ipa": "/ˈsmɑːtə(r)/"
+  },
+  {
+    "surfaceForm": "so",
+    "displayForm": "so",
+    "definitions": [
+      {
+        "text": "与 loud 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 loud"
+  },
+  {
+    "surfaceForm": "some",
+    "displayForm": "some",
+    "definitions": [
+      {
+        "text": "一些",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "soon",
+    "displayForm": "soon",
+    "definitions": [
+      {
+        "text": "与 become 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 become"
+  },
+  {
+    "surfaceForm": "speak",
+    "displayForm": "speak",
+    "definitions": [
+      {
+        "text": "与 lower 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 lower"
+  },
+  {
+    "surfaceForm": "sport",
+    "displayForm": "sport",
+    "definitions": [
+      {
+        "text": "与 badminton 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 badminton"
+  },
+  {
+    "surfaceForm": "sports",
+    "displayForm": "sports",
+    "definitions": [
+      {
+        "text": "与 active 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 active"
+  },
+  {
+    "surfaceForm": "spring",
+    "displayForm": "spring",
+    "definitions": [
+      {
+        "text": "与 become 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 become"
+  },
+  {
+    "surfaceForm": "stand",
+    "displayForm": "stand",
+    "definitions": [
+      {
+        "text": "与 hall 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 hall"
+  },
+  {
+    "surfaceForm": "star",
+    "displayForm": "star",
+    "definitions": [
+      {
+        "text": "星",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/stɑː(r)/"
+  },
+  {
+    "surfaceForm": "stars",
+    "displayForm": "stars",
+    "definitions": [
+      {
+        "text": "与 saw 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 saw"
+  },
+  {
+    "surfaceForm": "stay",
+    "displayForm": "stay",
+    "definitions": [
+      {
+        "text": "暂住；逗留",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/steɪ/"
+  },
+  {
+    "surfaceForm": "stayed",
+    "displayForm": "stayed",
+    "definitions": [
+      {
+        "text": "（stay的过去式）停留；待"
+      }
+    ],
+    "ipa": "/steɪd/"
+  },
+  {
+    "surfaceForm": "staying",
+    "displayForm": "staying",
+    "definitions": [
+      {
+        "text": "与 enjoy 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 enjoy"
+  },
+  {
+    "surfaceForm": "stick",
+    "displayForm": "stick",
+    "definitions": [
+      {
+        "text": "与 meter 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 meter"
+  },
+  {
+    "surfaceForm": "still",
+    "displayForm": "still",
+    "definitions": [
+      {
+        "text": "与 thinner 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 thinner"
+  },
+  {
+    "surfaceForm": "stone",
+    "displayForm": "stone",
+    "definitions": [
+      {
+        "text": "与 trip 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 trip"
+  },
+  {
+    "surfaceForm": "stop",
+    "displayForm": "stop",
+    "definitions": [
+      {
+        "text": "与 felt 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 felt"
+  },
+  {
+    "surfaceForm": "story",
+    "displayForm": "story",
+    "definitions": [
+      {
+        "text": "与 read 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 read"
+  },
+  {
+    "surfaceForm": "strange",
+    "displayForm": "strange",
+    "definitions": [
+      {
+        "text": "与 woke 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 woke"
+  },
+  {
+    "surfaceForm": "strong",
+    "displayForm": "strong",
+    "definitions": [
+      {
+        "text": "与 thinner 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 thinner"
+  },
+  {
+    "surfaceForm": "stronger",
+    "displayForm": "stronger",
+    "definitions": [
+      {
+        "text": "（strong的比较级）更强壮的"
+      }
+    ],
+    "ipa": "/ˈstrɒŋgə(r)/"
+  },
+  {
+    "surfaceForm": "student",
+    "displayForm": "student",
+    "definitions": [
+      {
+        "text": "与 smarter 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 smarter"
+  },
+  {
+    "surfaceForm": "study",
+    "displayForm": "study",
+    "definitions": [
+      {
+        "text": "与 Internet 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 internet"
+  },
+  {
+    "surfaceForm": "summer",
+    "displayForm": "summer",
+    "definitions": [
+      {
+        "text": "与 countryside 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 countryside"
+  },
+  {
+    "surfaceForm": "sun",
+    "displayForm": "sun",
+    "definitions": [
+      {
+        "text": "与 lower 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 lower"
+  },
+  {
+    "surfaceForm": "sunday",
+    "displayForm": "sunday",
+    "definitions": [
+      {
+        "text": "与 stayed 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 stayed"
+  },
+  {
+    "surfaceForm": "sundays",
+    "displayForm": "sundays",
+    "definitions": [
+      {
+        "text": "与 go cycling 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 go cycling"
+  },
+  {
+    "surfaceForm": "sunny",
+    "displayForm": "sunny",
+    "definitions": [
+      {
+        "text": "与 beach 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 beach"
+  },
+  {
+    "surfaceForm": "sweet",
+    "displayForm": "sweet",
+    "definitions": [
+      {
+        "text": "与 Turpan 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 turpan"
+  },
+  {
+    "surfaceForm": "take",
+    "displayForm": "take",
+    "definitions": [
+      {
+        "text": "与 off 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 off"
+  },
+  {
+    "surfaceForm": "talked",
+    "displayForm": "talked",
+    "definitions": [
+      {
+        "text": "说话（过去式）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "tall",
+    "displayForm": "tall",
+    "definitions": [
+      {
+        "text": "与 dinosaur 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 dinosaur"
+  },
+  {
+    "surfaceForm": "taller",
+    "displayForm": "taller",
+    "definitions": [
+      {
+        "text": "（tall的比较级）更高的"
+      }
+    ],
+    "ipa": "/ˈtɔːlə(r)/"
+  },
+  {
+    "surfaceForm": "tea",
+    "displayForm": "tea",
+    "definitions": [
+      {
+        "text": "与 drank 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 drank"
+  },
+  {
+    "surfaceForm": "team",
+    "displayForm": "team",
+    "definitions": [
+      {
+        "text": "与 star 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 star"
+  },
+  {
+    "surfaceForm": "ten",
+    "displayForm": "ten",
+    "definitions": [
+      {
+        "text": "与 slept 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 slept"
+  },
+  {
+    "surfaceForm": "than",
+    "displayForm": "than",
+    "definitions": [
+      {
+        "text": "比",
+        "pos": "conj."
+      }
+    ],
+    "ipa": "/Dən;Dæn/"
+  },
+  {
+    "surfaceForm": "thank",
+    "displayForm": "thank",
+    "definitions": [
+      {
+        "text": "谢谢"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "that",
+    "displayForm": "that",
+    "definitions": [
+      {
+        "text": "那；那个",
+        "pos": "pron."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "the",
+    "displayForm": "the",
+    "definitions": [
+      {
+        "text": "这；那（定冠词）",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "their",
+    "displayForm": "their",
+    "definitions": [
+      {
+        "text": "他们的",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "them",
+    "displayForm": "them",
+    "definitions": [
+      {
+        "text": "他们（宾格）",
+        "pos": "pron."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "there",
+    "displayForm": "there",
+    "definitions": [
+      {
+        "text": "那里",
+        "pos": "adv."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "they",
+    "displayForm": "they",
+    "definitions": [
+      {
+        "text": "他们",
+        "pos": "pron."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "thinner",
+    "displayForm": "thinner",
+    "definitions": [
+      {
+        "text": "（thin的比较级）更瘦的"
+      }
+    ],
+    "ipa": "/ˈθɪnə(r)/"
+  },
+  {
+    "surfaceForm": "this",
+    "displayForm": "this",
+    "definitions": [
+      {
+        "text": "这；这个",
+        "pos": "pron."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "thought",
+    "displayForm": "thought",
+    "definitions": [
+      {
+        "text": "（think的过去式）想"
+      }
+    ],
+    "ipa": "/θɔːt/"
+  },
+  {
+    "surfaceForm": "three",
+    "displayForm": "three",
+    "definitions": [
+      {
+        "text": "三",
+        "pos": "num."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "till",
+    "displayForm": "till",
+    "definitions": [
+      {
+        "text": "直到"
+      }
+    ],
+    "ipa": "/tɪl/"
+  },
+  {
+    "surfaceForm": "time",
+    "displayForm": "time",
+    "definitions": [
+      {
+        "text": "与 had 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 had"
+  },
+  {
+    "surfaceForm": "tired",
+    "displayForm": "tired",
+    "definitions": [
+      {
+        "text": "与 slept 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 slept"
+  },
+  {
+    "surfaceForm": "to",
+    "displayForm": "to",
+    "definitions": [
+      {
+        "text": "与 become 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 become"
+  },
+  {
+    "surfaceForm": "today",
+    "displayForm": "today",
+    "definitions": [
+      {
+        "text": "与 older 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 older"
+  },
+  {
+    "surfaceForm": "together",
+    "displayForm": "together",
+    "definitions": [
+      {
+        "text": "与 hall 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 hall"
+  },
+  {
+    "surfaceForm": "tom",
+    "displayForm": "tom",
+    "definitions": [
+      {
+        "text": "与 younger 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 younger"
+  },
+  {
+    "surfaceForm": "too",
+    "displayForm": "too",
+    "definitions": [
+      {
+        "text": "也",
+        "pos": "adv."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "took",
+    "displayForm": "took",
+    "definitions": [
+      {
+        "text": "（take的过去式）拍照"
+      }
+    ],
+    "ipa": "/tʊk/"
+  },
+  {
+    "surfaceForm": "toy",
+    "displayForm": "toy",
+    "definitions": [
+      {
+        "text": "与 broken 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 broken"
+  },
+  {
+    "surfaceForm": "travel",
+    "displayForm": "travel",
+    "definitions": [
+      {
+        "text": "与 stay 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 stay"
+  },
+  {
+    "surfaceForm": "tree",
+    "displayForm": "tree",
+    "definitions": [
+      {
+        "text": "与 shorter 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 shorter"
+  },
+  {
+    "surfaceForm": "trip",
+    "displayForm": "trip",
+    "definitions": [
+      {
+        "text": "绊倒",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/trɪp/"
+  },
+  {
+    "surfaceForm": "try",
+    "displayForm": "try",
+    "definitions": [
+      {
+        "text": "与 nothing 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 nothing"
+  },
+  {
+    "surfaceForm": "turn",
+    "displayForm": "turn",
+    "definitions": [
+      {
+        "text": "与 lamp 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 lamp"
+  },
+  {
+    "surfaceForm": "turpan",
+    "displayForm": "turpan",
+    "definitions": [
+      {
+        "text": "吐鲁番"
+      }
+    ],
+    "ipa": "/ˈtʊəˈpɑːn/"
+  },
+  {
+    "surfaceForm": "tv",
+    "displayForm": "tv",
+    "definitions": [
+      {
+        "text": "与 show 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 show"
+  },
+  {
+    "surfaceForm": "twenty",
+    "displayForm": "twenty",
+    "definitions": [
+      {
+        "text": "与 ago 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 ago"
+  },
+  {
+    "surfaceForm": "two",
+    "displayForm": "two",
+    "definitions": [
+      {
+        "text": "二",
+        "pos": "num."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "under",
+    "displayForm": "under",
+    "definitions": [
+      {
+        "text": "与 lamp 相关的课文词形",
+        "pos": "prep."
+      }
+    ],
+    "formNote": "词形变化，原形为 lamp"
+  },
+  {
+    "surfaceForm": "up",
+    "displayForm": "up",
+    "definitions": [
+      {
+        "text": "与 mule 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 mule"
+  },
+  {
+    "surfaceForm": "us",
+    "displayForm": "us",
+    "definitions": [
+      {
+        "text": "与 go cycling 相关的课文词形",
+        "pos": "pron."
+      }
+    ],
+    "formNote": "词形变化，原形为 go cycling"
+  },
+  {
+    "surfaceForm": "use",
+    "displayForm": "use",
+    "definitions": [
+      {
+        "text": "使用",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "very",
+    "displayForm": "very",
+    "definitions": [
+      {
+        "text": "与 last 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 last"
+  },
+  {
+    "surfaceForm": "visited",
+    "displayForm": "visited",
+    "definitions": [
+      {
+        "text": "参观（过去式）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "voice",
+    "displayForm": "voice",
+    "definitions": [
+      {
+        "text": "与 lower 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 lower"
+  },
+  {
+    "surfaceForm": "wait",
+    "displayForm": "wait",
+    "definitions": [
+      {
+        "text": "与 longer 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 longer"
+  },
+  {
+    "surfaceForm": "walk",
+    "displayForm": "walk",
+    "definitions": [
+      {
+        "text": "与 grass 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 grass"
+  },
+  {
+    "surfaceForm": "walked",
+    "displayForm": "walked",
+    "definitions": [
+      {
+        "text": "走（过去式）"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "want",
+    "displayForm": "want",
+    "definitions": [
+      {
+        "text": "想要",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "wants",
+    "displayForm": "wants",
+    "definitions": [
+      {
+        "text": "与 become 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 become"
+  },
+  {
+    "surfaceForm": "warm",
+    "displayForm": "warm",
+    "definitions": [
+      {
+        "text": "与 beach 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 beach"
+  },
+  {
+    "surfaceForm": "was",
+    "displayForm": "was",
+    "definitions": [
+      {
+        "text": "是（过去式）",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "wash",
+    "displayForm": "wash",
+    "definitions": [
+      {
+        "text": "与 before 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 before"
+  },
+  {
+    "surfaceForm": "washed",
+    "displayForm": "washed",
+    "definitions": [
+      {
+        "text": "（wash的过去式）洗"
+      }
+    ],
+    "ipa": "/wɒʃt/"
+  },
+  {
+    "surfaceForm": "watched",
+    "displayForm": "watched",
+    "definitions": [
+      {
+        "text": "（watch的过去式）看"
+      }
+    ],
+    "ipa": "/wɒtʃt/"
+  },
+  {
+    "surfaceForm": "water",
+    "displayForm": "water",
+    "definitions": [
+      {
+        "text": "与 drank 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 drank"
+  },
+  {
+    "surfaceForm": "we",
+    "displayForm": "we",
+    "definitions": [
+      {
+        "text": "我们",
+        "pos": "pron."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "week",
+    "displayForm": "week",
+    "definitions": [
+      {
+        "text": "与 had a cold 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 had a cold"
+  },
+  {
+    "surfaceForm": "weekend",
+    "displayForm": "weekend",
+    "definitions": [
+      {
+        "text": "与 cleaned 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 cleaned"
+  },
+  {
+    "surfaceForm": "weighs",
+    "displayForm": "weighs",
+    "definitions": [
+      {
+        "text": "与 kilogram 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 kilogram"
+  },
+  {
+    "surfaceForm": "well",
+    "displayForm": "well",
+    "definitions": [
+      {
+        "text": "与 better 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 better"
+  },
+  {
+    "surfaceForm": "went",
+    "displayForm": "went",
+    "definitions": [
+      {
+        "text": "（go的过去式）去"
+      }
+    ],
+    "ipa": "/went/"
+  },
+  {
+    "surfaceForm": "were",
+    "displayForm": "were",
+    "definitions": [
+      {
+        "text": "是（过去式复数）",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "what",
+    "displayForm": "what",
+    "definitions": [
+      {
+        "text": "什么",
+        "pos": "pron."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "when",
+    "displayForm": "when",
+    "definitions": [
+      {
+        "text": "与 stay 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 stay"
+  },
+  {
+    "surfaceForm": "which",
+    "displayForm": "which",
+    "definitions": [
+      {
+        "text": "与 bigger 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 bigger"
+  },
+  {
+    "surfaceForm": "who",
+    "displayForm": "who",
+    "definitions": [
+      {
+        "text": "与 taller 相关的课文词形",
+        "pos": "pron."
+      }
+    ],
+    "formNote": "词形变化，原形为 taller"
+  },
+  {
+    "surfaceForm": "will",
+    "displayForm": "will",
+    "definitions": [
+      {
+        "text": "与 become 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 become"
+  },
+  {
+    "surfaceForm": "wind",
+    "displayForm": "wind",
+    "definitions": [
+      {
+        "text": "与 stronger 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 stronger"
+  },
+  {
+    "surfaceForm": "window",
+    "displayForm": "window",
+    "definitions": [
+      {
+        "text": "与 broken 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 broken"
+  },
+  {
+    "surfaceForm": "windows",
+    "displayForm": "windows",
+    "definitions": [
+      {
+        "text": "与 cleaned 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 cleaned"
+  },
+  {
+    "surfaceForm": "winter",
+    "displayForm": "winter",
+    "definitions": [
+      {
+        "text": "与 lower 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 lower"
+  },
+  {
+    "surfaceForm": "with",
+    "displayForm": "with",
+    "definitions": [
+      {
+        "text": "用；和",
+        "pos": "prep."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "woke",
+    "displayForm": "woke",
+    "definitions": [
+      {
+        "text": "（wake的过去式）醒"
+      }
+    ],
+    "ipa": "/wəʊk/"
+  },
+  {
+    "surfaceForm": "won",
+    "displayForm": "won",
+    "definitions": [
+      {
+        "text": "与 race 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 race"
+  },
+  {
+    "surfaceForm": "wonderful",
+    "displayForm": "wonderful",
+    "definitions": [
+      {
+        "text": "与 show 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 show"
+  },
+  {
+    "surfaceForm": "word",
+    "displayForm": "word",
+    "definitions": [
+      {
+        "text": "与 look up 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 look up"
+  },
+  {
+    "surfaceForm": "words",
+    "displayForm": "words",
+    "definitions": [
+      {
+        "text": "与 look up 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 look up"
+  },
+  {
+    "surfaceForm": "woven",
+    "displayForm": "woven",
+    "definitions": [
+      {
+        "text": "与 basket 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 basket"
+  },
+  {
+    "surfaceForm": "year",
+    "displayForm": "year",
+    "definitions": [
+      {
+        "text": "与 stronger 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 stronger"
+  },
+  {
+    "surfaceForm": "years",
+    "displayForm": "years",
+    "definitions": [
+      {
+        "text": "与 older 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 older"
+  },
+  {
+    "surfaceForm": "yesterday",
+    "displayForm": "yesterday",
+    "definitions": [
+      {
+        "text": "昨天",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈjestədeɪ/"
+  },
+  {
+    "surfaceForm": "you",
+    "displayForm": "you",
+    "definitions": [
+      {
+        "text": "与 than 相关的课文词形",
+        "pos": "pron."
+      }
+    ],
+    "formNote": "词形变化，原形为 than"
+  },
+  {
+    "surfaceForm": "younger",
+    "displayForm": "younger",
+    "definitions": [
+      {
+        "text": "（young的比较级）更年轻的"
+      }
+    ],
+    "ipa": "/ˈjʌŋgə(r)/"
+  },
+  {
+    "surfaceForm": "your",
+    "displayForm": "your",
+    "definitions": [
+      {
+        "text": "你的；你们的",
+        "pos": "det."
+      }
+    ]
+  }
+]

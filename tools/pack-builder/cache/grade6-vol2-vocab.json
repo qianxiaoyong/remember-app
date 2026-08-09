@@ -1,0 +1,706 @@
+[
+  {
+    "unit": 1,
+    "headword": "younger",
+    "ipa": "/ˈjʌŋgə(r)/",
+    "definition_zh": "（young的比较级）更年轻的",
+    "page": 5,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "older",
+    "ipa": "/ˈəʊldə(r)/",
+    "definition_zh": "（old的比较级）更年长的",
+    "page": 5,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "taller",
+    "ipa": "/ˈtɔːlə(r)/",
+    "definition_zh": "（tall的比较级）更高的",
+    "page": 5,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "shorter",
+    "ipa": "/ˈʃɔːtə(r)/",
+    "definition_zh": "（short的比较级）更矮的；更短的",
+    "page": 5,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "longer",
+    "ipa": "/ˈlɒŋgə(r)/",
+    "definition_zh": "（long的比较级）更长的",
+    "page": 5,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "thinner",
+    "ipa": "/ˈθɪnə(r)/",
+    "definition_zh": "（thin的比较级）更瘦的",
+    "page": 7,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "heavier",
+    "ipa": "/ˈheviə(r)/",
+    "definition_zh": "（heavy/hevi/的比较级）更重的",
+    "page": 7,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "bigger",
+    "ipa": "/ˈbɪgə(r)/",
+    "definition_zh": "（big的比较级）更大的",
+    "page": 7,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "smaller",
+    "ipa": "/ˈsmɔːlə(r)/",
+    "definition_zh": "（small的比较级）更小的",
+    "page": 7,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "stronger",
+    "ipa": "/ˈstrɒŋgə(r)/",
+    "definition_zh": "（strong的比较级）更强壮的",
+    "page": 7,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "dinosaur",
+    "ipa": "/ˈdaɪnəsɔː(r)/",
+    "definition_zh": "恐龙",
+    "page": 4,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "hall",
+    "ipa": "/hɔːl/",
+    "definition_zh": "大厅",
+    "page": 4,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "meter",
+    "ipa": "/ˈmiːtə(r)/",
+    "definition_zh": "）",
+    "page": 4,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "than",
+    "ipa": "/Dən;Dæn/",
+    "definition_zh": "比",
+    "page": 4,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "both",
+    "ipa": "/bəʊθ/",
+    "definition_zh": "两个都",
+    "page": 4,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "kilogram",
+    "ipa": "/ˈkɪləgræm/",
+    "definition_zh": "千克；公斤",
+    "page": 6,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "countryside",
+    "ipa": "/ˈkʌntrisaɪd/",
+    "definition_zh": "乡村",
+    "page": 8,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "lower",
+    "ipa": "/ˈləʊə(r)/",
+    "definition_zh": "（low//的比较级）更低",
+    "page": 8,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "shadow",
+    "ipa": "/ˈʃædəʊ/",
+    "definition_zh": "阴影；影子",
+    "page": 8,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "smarter",
+    "ipa": "/ˈsmɑːtə(r)/",
+    "definition_zh": "（smart//的比较级）更聪明的",
+    "page": 8,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "become",
+    "ipa": "/bɪˈkʌm/",
+    "definition_zh": "开始变得；变成",
+    "page": 8,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "cleaned",
+    "ipa": "/kliːnd/",
+    "definition_zh": "（clean的过去式）打扫",
+    "page": 15,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "stayed",
+    "ipa": "/steɪd/",
+    "definition_zh": "（stay的过去式）停留；待",
+    "page": 15,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "washed",
+    "ipa": "/wɒʃt/",
+    "definition_zh": "（wash的过去式）洗",
+    "page": 15,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "watched",
+    "ipa": "/wɒtʃt/",
+    "definition_zh": "（watch的过去式）看",
+    "page": 15,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "had",
+    "ipa": "/hæd/",
+    "definition_zh": "（have的过去式）患病；得病",
+    "page": 17,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "had a cold",
+    "ipa": "",
+    "definition_zh": "感冒",
+    "page": 17,
+    "kind": "phrase"
+  },
+  {
+    "unit": 2,
+    "headword": "slept",
+    "ipa": "/slept/",
+    "definition_zh": "（sleep的过去式）睡觉",
+    "page": 17,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "read",
+    "ipa": "/red/",
+    "definition_zh": "（read//的过去式）读",
+    "page": 17,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "saw",
+    "ipa": "/sɔː/",
+    "definition_zh": "（see的过去式）看见",
+    "page": 17,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "last",
+    "ipa": "/lɑːst/",
+    "definition_zh": "最近的；上一个的",
+    "page": 17,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "yesterday",
+    "ipa": "/ˈjestədeɪ/",
+    "definition_zh": "昨天",
+    "page": 17,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "before",
+    "ipa": "/bɪˈfɔː(r)/",
+    "definition_zh": "在……之前",
+    "page": 17,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "drank",
+    "ipa": "/dræŋk/",
+    "definition_zh": "（drink的过去式）喝",
+    "page": 14,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "show",
+    "ipa": "/ʃəʊ/",
+    "definition_zh": "演出",
+    "page": 14,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "magazine",
+    "ipa": "/%mægəˈziːn/",
+    "definition_zh": "杂志",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "better",
+    "ipa": "/ˈbetə(r)/",
+    "definition_zh": "（well的比较级）更好的",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "faster",
+    "ipa": "/ˈfɑːstə(r)/",
+    "definition_zh": "（fast的比较级）更快的",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "hotel",
+    "ipa": "/həʊˈtel/",
+    "definition_zh": "旅馆",
+    "page": 18,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "fixed",
+    "ipa": "/fɪkst/",
+    "definition_zh": "（fix//的过去式）修理",
+    "page": 18,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "broken",
+    "ipa": "/ˈbrəʊkən/",
+    "definition_zh": "破损的",
+    "page": 18,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "lamp",
+    "ipa": "/læmp/",
+    "definition_zh": "台灯",
+    "page": 18,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "loud",
+    "ipa": "/laʊd/",
+    "definition_zh": "喧闹的；大声的",
+    "page": 18,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "enjoy",
+    "ipa": "/ɪnˈdʒɔɪ/",
+    "definition_zh": "享受……乐趣；喜爱",
+    "page": 18,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "stay",
+    "ipa": "/steɪ/",
+    "definition_zh": "暂住；逗留",
+    "page": 18,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "went",
+    "ipa": "/went/",
+    "definition_zh": "（go的过去式）去",
+    "page": 25,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "camp",
+    "ipa": "/kæmp/",
+    "definition_zh": "野营",
+    "page": 25,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "fish",
+    "ipa": "/fɪʃ/",
+    "definition_zh": "钓鱼；捕鱼",
+    "page": 25,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "went fishing",
+    "ipa": "",
+    "definition_zh": "去钓鱼",
+    "page": 25,
+    "kind": "phrase"
+  },
+  {
+    "unit": 3,
+    "headword": "rode",
+    "ipa": "/rəʊd/",
+    "definition_zh": "（ride//的过去式）骑（马；自行车）",
+    "page": 25,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "hurt",
+    "ipa": "/hɜːt/",
+    "definition_zh": "（hurt的过去式）（使）受伤",
+    "page": 25,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "ate",
+    "ipa": "/eɪt/",
+    "definition_zh": "（eat的过去式）吃",
+    "page": 27,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "took",
+    "ipa": "/tʊk/",
+    "definition_zh": "（take的过去式）拍照",
+    "page": 27,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "took pictures",
+    "ipa": "",
+    "definition_zh": "照相",
+    "page": 27,
+    "kind": "phrase"
+  },
+  {
+    "unit": 3,
+    "headword": "bought",
+    "ipa": "/bɔːt/",
+    "definition_zh": "（buy的过去式）买",
+    "page": 27,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "gift",
+    "ipa": "/gɪft/",
+    "definition_zh": "礼物",
+    "page": 27,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "fell",
+    "ipa": "/fel/",
+    "definition_zh": "（fall的过去式）摔倒",
+    "page": 24,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "off",
+    "ipa": "/ɒf/",
+    "definition_zh": "从（某处）落下",
+    "page": 24,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "mule",
+    "ipa": "/mjuːl/",
+    "definition_zh": "骡子",
+    "page": 24,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "Turpan",
+    "ipa": "/ˈtʊəˈpɑːn/",
+    "definition_zh": "吐鲁番",
+    "page": 24,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "could",
+    "ipa": "/kəd;kʊd/",
+    "definition_zh": "（can的过去式）能",
+    "page": 24,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "till",
+    "ipa": "/tɪl/",
+    "definition_zh": "直到",
+    "page": 24,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "beach",
+    "ipa": "/biːtʃ/",
+    "definition_zh": "海滩；沙滩",
+    "page": 26,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "basket",
+    "ipa": "/ˈbɑːskɪt/",
+    "definition_zh": "篮；筐",
+    "page": 28,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "part",
+    "ipa": "/pɑːt/",
+    "definition_zh": "角色",
+    "page": 28,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "licked",
+    "ipa": "/lɪkt/",
+    "definition_zh": "（lick//的过去式）舔",
+    "page": 28,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "laughed",
+    "ipa": "/lɑːft/",
+    "definition_zh": "（laugh//的过去式）笑",
+    "page": 28,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "dining hall",
+    "ipa": "/ˈdaɪnɪŋ%hɔːl/",
+    "definition_zh": "饭厅",
+    "page": 35,
+    "kind": "phrase"
+  },
+  {
+    "unit": 4,
+    "headword": "grass",
+    "ipa": "/grɑːs/",
+    "definition_zh": "草坪",
+    "page": 35,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "gym",
+    "ipa": "/dʒɪm/",
+    "definition_zh": "体育馆",
+    "page": 35,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "ago",
+    "ipa": "/əˈgəʊ/",
+    "definition_zh": "以前",
+    "page": 35,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "cycling",
+    "ipa": "/ˈsaɪklɪŋ/",
+    "definition_zh": "骑自行车运动（或活动）",
+    "page": 37,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "go cycling",
+    "ipa": "",
+    "definition_zh": "去骑自行车",
+    "page": 37,
+    "kind": "phrase"
+  },
+  {
+    "unit": 4,
+    "headword": "ice-skate",
+    "ipa": "/ˈaɪsskeɪt/",
+    "definition_zh": "滑冰",
+    "page": 37,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "badminton",
+    "ipa": "/ˈbædmɪntən/",
+    "definition_zh": "羽毛球运动",
+    "page": 37,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "star",
+    "ipa": "/stɑː(r)/",
+    "definition_zh": "星",
+    "page": 34,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "easy",
+    "ipa": "/ˈiːzi/",
+    "definition_zh": "容易的",
+    "page": 34,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "Internet",
+    "ipa": "/ˈɪntənet/",
+    "definition_zh": "互联网",
+    "page": 34,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "different",
+    "ipa": "/ˈdɪfrənt/",
+    "definition_zh": "不同的",
+    "page": 36,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "active",
+    "ipa": "/ˈæktɪv/",
+    "definition_zh": "积极的；活跃的",
+    "page": 36,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "race",
+    "ipa": "/reɪs/",
+    "definition_zh": "赛跑",
+    "page": 38,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "nothing",
+    "ipa": "/ˈnʌθɪŋ/",
+    "definition_zh": "没有什么",
+    "page": 38,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "thought",
+    "ipa": "/θɔːt/",
+    "definition_zh": "（think的过去式）想",
+    "page": 38,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "felt",
+    "ipa": "/felt/",
+    "definition_zh": "（feel的过去式）感觉",
+    "page": 38,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "cheetah",
+    "ipa": "/ˈtʃiːtə/",
+    "definition_zh": "猎豹",
+    "page": 38,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "trip",
+    "ipa": "/trɪp/",
+    "definition_zh": "绊倒",
+    "page": 38,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "woke",
+    "ipa": "/wəʊk/",
+    "definition_zh": "（wake的过去式）醒",
+    "page": 38,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "dream",
+    "ipa": "/driːm/",
+    "definition_zh": "梦",
+    "page": 38,
+    "kind": "word"
+  }
+]

@@ -1,0 +1,4389 @@
+[
+  {
+    "kind": "word",
+    "sortOrder": 1,
+    "content": {
+      "prompt": {
+        "headword": "where",
+        "primaryAudio": "assets/audio/where.mp3",
+        "phonetic": {
+          "ipa": "/weə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "在哪里；到哪里",
+            "pos": "adv."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Where are you from?",
+            "zh": "你来自哪里？",
+            "audio": "assets/audio/examples/where-1.mp3"
+          },
+          {
+            "en": "Where is my map?",
+            "zh": "我的地图在哪里？",
+            "audio": "assets/audio/examples/where-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Where are you from? 问来自哪里，where 就是在哪里。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 2,
+    "content": {
+      "prompt": {
+        "headword": "from",
+        "primaryAudio": "assets/audio/from.mp3",
+        "phonetic": {
+          "ipa": "/frɒm/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "（表示来源）来自，从……来",
+            "pos": "prep."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I'm from the UK.",
+            "zh": "我来自英国。",
+            "audio": "assets/audio/examples/from-1.mp3"
+          },
+          {
+            "en": "I'm from Shandong, China.",
+            "zh": "我来自中国山东。",
+            "audio": "assets/audio/examples/from-2.mp3"
+          },
+          {
+            "en": "He is from Canada.",
+            "zh": "他来自加拿大。",
+            "audio": "assets/audio/examples/from-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：I am from the UK. 我来自英国，from 表示来自。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 3,
+    "content": {
+      "prompt": {
+        "headword": "about",
+        "primaryAudio": "assets/audio/about.mp3",
+        "phonetic": {
+          "ipa": "/əˈbaʊt/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "大约；左右",
+            "pos": "prep."
+          }
+        ],
+        "examples": [
+          {
+            "en": "It's about four o'clock.",
+            "zh": "现在大约四点了。",
+            "audio": "assets/audio/examples/about-1.mp3"
+          },
+          {
+            "en": "Tell me about your teacher.",
+            "zh": "跟我说说你的老师。",
+            "audio": "assets/audio/examples/about-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：about 可以表示大约，也可以表示关于某事。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 4,
+    "content": {
+      "prompt": {
+        "headword": "today",
+        "primaryAudio": "assets/audio/today.mp3",
+        "phonetic": {
+          "ipa": "/təˈdeɪ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "今天",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "We have two new friends today.",
+            "zh": "我们今天有两个新朋友。",
+            "audio": "assets/audio/examples/today-1.mp3"
+          },
+          {
+            "en": "What do we learn today?",
+            "zh": "我们今天学什么？",
+            "audio": "assets/audio/examples/today-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：We have two new friends today. today 就是今天。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 5,
+    "content": {
+      "prompt": {
+        "headword": "teacher",
+        "primaryAudio": "assets/audio/teacher.mp3",
+        "phonetic": {
+          "ipa": "/ˈtiːtʃə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "教师",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Miss White is my English teacher.",
+            "zh": "怀特老师是我的英语老师。",
+            "audio": "assets/audio/examples/teacher-1.mp3"
+          },
+          {
+            "en": "My teacher is very nice.",
+            "zh": "我的老师非常好。",
+            "audio": "assets/audio/examples/teacher-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Miss White is my English teacher. teacher 是教师。"
+        },
+        "inflectionNote": "复数 teachers"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 6,
+    "content": {
+      "prompt": {
+        "headword": "student",
+        "primaryAudio": "assets/audio/student.mp3",
+        "phonetic": {
+          "ipa": "/ˈstjuːdnt/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "学生",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I am a student.",
+            "zh": "我是一名学生。",
+            "audio": "assets/audio/examples/student-1.mp3"
+          },
+          {
+            "en": "She is a good student.",
+            "zh": "她是一名好学生。",
+            "audio": "assets/audio/examples/student-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：I am a student. 在学校学习的人是 student。"
+        },
+        "inflectionNote": "复数 students"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 7,
+    "content": {
+      "prompt": {
+        "headword": "after",
+        "primaryAudio": "assets/audio/after.mp3",
+        "phonetic": {
+          "ipa": "/ˈɑːftə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "在……后面",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "After you!",
+            "zh": "您先请！",
+            "audio": "assets/audio/examples/after-1.mp3"
+          },
+          {
+            "en": "Come after me.",
+            "zh": "跟我来。",
+            "audio": "assets/audio/examples/after-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：After you! 您先请。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 8,
+    "content": {
+      "prompt": {
+        "headword": "who",
+        "primaryAudio": "assets/audio/who.mp3",
+        "phonetic": {
+          "ipa": "/huː/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "谁；什么人",
+            "pos": "pron."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Who is that girl?",
+            "zh": "那个女孩是谁？",
+            "audio": "assets/audio/examples/who-1.mp3"
+          },
+          {
+            "en": "Who is your English teacher?",
+            "zh": "谁是你的英语老师？",
+            "audio": "assets/audio/examples/who-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：who 读起来接近「胡/hu」，Who is that girl 那个女孩是谁。\n语义联想：Who is that girl? 问「谁」，who 就是谁。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 9,
+    "content": {
+      "prompt": {
+        "headword": "girl",
+        "primaryAudio": "assets/audio/girl.mp3",
+        "phonetic": {
+          "ipa": "/ɡɜːl/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "女孩",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Who's that girl?",
+            "zh": "那个女孩是谁？",
+            "audio": "assets/audio/examples/girl-1.mp3"
+          },
+          {
+            "en": "The girl is my neighbour.",
+            "zh": "那个女孩是我的邻居。",
+            "audio": "assets/audio/examples/girl-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：The girl is my neighbour. girl 是女孩。"
+        },
+        "inflectionNote": "复数 girls"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 10,
+    "content": {
+      "prompt": {
+        "headword": "neighbour",
+        "primaryAudio": "assets/audio/neighbour.mp3",
+        "phonetic": {
+          "ipa": "/ˈneɪbə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "邻居",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "That's our new neighbour, Amy.",
+            "zh": "那是我们的新邻居艾米。",
+            "audio": "assets/audio/examples/neighbour-1.mp3"
+          },
+          {
+            "en": "The boy is my neighbour.",
+            "zh": "那个男孩是我的邻居。",
+            "audio": "assets/audio/examples/neighbour-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：That is our new neighbour, Amy. neighbour 是邻居。"
+        },
+        "inflectionNote": "复数 neighbours"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 11,
+    "content": {
+      "prompt": {
+        "headword": "boy",
+        "primaryAudio": "assets/audio/boy.mp3",
+        "phonetic": {
+          "ipa": "/bɔɪ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "男孩",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The boy is my neighbour.",
+            "zh": "那个男孩是我的邻居。",
+            "audio": "assets/audio/examples/boy-1.mp3"
+          },
+          {
+            "en": "That boy is from the USA.",
+            "zh": "那个男孩来自美国。",
+            "audio": "assets/audio/examples/boy-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：The boy is my neighbour. boy 是男孩。"
+        },
+        "inflectionNote": "复数 boys"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 12,
+    "content": {
+      "prompt": {
+        "headword": "woman",
+        "primaryAudio": "assets/audio/woman.mp3",
+        "phonetic": {
+          "ipa": "/ˈwʊmən/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "成年女子；妇女",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The woman is my neighbour.",
+            "zh": "那位女士是我的邻居。",
+            "audio": "assets/audio/examples/woman-1.mp3"
+          },
+          {
+            "en": "That woman is very nice.",
+            "zh": "那位女士非常好。",
+            "audio": "assets/audio/examples/woman-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：The woman is my neighbour. woman 是成年女子。"
+        },
+        "inflectionNote": "复数 women"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 13,
+    "content": {
+      "prompt": {
+        "headword": "man",
+        "primaryAudio": "assets/audio/man.mp3",
+        "phonetic": {
+          "ipa": "/mæn/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "成年男子；男人",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The man is my neighbour.",
+            "zh": "那位男士是我的邻居。",
+            "audio": "assets/audio/examples/man-1.mp3"
+          },
+          {
+            "en": "That man is my teacher.",
+            "zh": "那位男士是我的老师。",
+            "audio": "assets/audio/examples/man-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：The man is my neighbour. man 是成年男子。"
+        },
+        "inflectionNote": "复数 men"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 14,
+    "content": {
+      "prompt": {
+        "headword": "Mr",
+        "primaryAudio": "assets/audio/mr.mp3",
+        "phonetic": {
+          "ipa": "/ˈmɪstə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "（用于男子的姓氏或姓名前）先生",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Mr Jones is my teacher.",
+            "zh": "琼斯先生是我的老师。",
+            "audio": "assets/audio/examples/mr-1.mp3"
+          },
+          {
+            "en": "Good morning, Mr White.",
+            "zh": "早上好，怀特先生。",
+            "audio": "assets/audio/examples/mr-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Mr 放在男士姓氏前，表示先生。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 15,
+    "content": {
+      "prompt": {
+        "headword": "classmate",
+        "primaryAudio": "assets/audio/classmate.mp3",
+        "phonetic": {
+          "ipa": "/ˈklɑːsmeɪt/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "同班同学",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Mike is my classmate.",
+            "zh": "迈克是我的同班同学。",
+            "audio": "assets/audio/examples/classmate-1.mp3"
+          },
+          {
+            "en": "Amy is my new classmate.",
+            "zh": "艾米是我的新同学。",
+            "audio": "assets/audio/examples/classmate-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：class 班级 + mate 伙伴，classmate 就是同班同学。"
+        },
+        "inflectionNote": "复数 classmates"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 16,
+    "content": {
+      "prompt": {
+        "headword": "he",
+        "primaryAudio": "assets/audio/he.mp3",
+        "phonetic": {
+          "ipa": "/hiː/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "他",
+            "pos": "pron."
+          }
+        ],
+        "examples": [
+          {
+            "en": "He is from Canada.",
+            "zh": "他来自加拿大。",
+            "audio": "assets/audio/examples/he-1.mp3"
+          },
+          {
+            "en": "He is my classmate.",
+            "zh": "他是我的同班同学。",
+            "audio": "assets/audio/examples/he-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：he 读起来接近「嘿/hi」，He is from Canada 他来自加拿大。\n语义联想：He is from Canada. he 指男孩或男士，意思是「他」。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 17,
+    "content": {
+      "prompt": {
+        "headword": "English",
+        "primaryAudio": "assets/audio/english.mp3",
+        "phonetic": {
+          "ipa": "/ˈɪŋɡlɪʃ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "英语的；英语",
+            "pos": "adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Miss White is my English teacher.",
+            "zh": "怀特老师是我的英语老师。",
+            "audio": "assets/audio/examples/english-1.mp3"
+          },
+          {
+            "en": "We have an English class today.",
+            "zh": "我们今天有一节英语课。",
+            "audio": "assets/audio/examples/english-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：English teacher 英语老师，English 表示英语。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 18,
+    "content": {
+      "prompt": {
+        "headword": "she",
+        "primaryAudio": "assets/audio/she.mp3",
+        "phonetic": {
+          "ipa": "/ʃiː/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "她",
+            "pos": "pron."
+          }
+        ],
+        "examples": [
+          {
+            "en": "She is very nice.",
+            "zh": "她非常好。",
+            "audio": "assets/audio/examples/she-1.mp3"
+          },
+          {
+            "en": "She is my English teacher.",
+            "zh": "她是我的英语老师。",
+            "audio": "assets/audio/examples/she-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：she 读起来接近「嘘/she」，She is very nice 她非常友好。\n语义联想：She is very nice. she 指女孩或女士，意思是「她」。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 19,
+    "content": {
+      "prompt": {
+        "headword": "very",
+        "primaryAudio": "assets/audio/very.mp3",
+        "phonetic": {
+          "ipa": "/ˈveri/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "很；非常；十分",
+            "pos": "adv."
+          }
+        ],
+        "examples": [
+          {
+            "en": "She is very nice.",
+            "zh": "她非常好。",
+            "audio": "assets/audio/examples/very-1.mp3"
+          },
+          {
+            "en": "The dog is very slow.",
+            "zh": "这只狗很慢。",
+            "audio": "assets/audio/examples/very-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：She is very nice. very 表示很、非常。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 20,
+    "content": {
+      "prompt": {
+        "headword": "UK",
+        "primaryAudio": "assets/audio/uk.mp3",
+        "phonetic": {
+          "ipa": "/ˌjuː ˈkeɪ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "英国",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I'm from the UK.",
+            "zh": "我来自英国。",
+            "audio": "assets/audio/examples/uk-1.mp3"
+          },
+          {
+            "en": "My friend is from the UK.",
+            "zh": "我的朋友来自英国。",
+            "audio": "assets/audio/examples/uk-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：I am from the UK. UK 是英国。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 21,
+    "content": {
+      "prompt": {
+        "headword": "China",
+        "primaryAudio": "assets/audio/china.mp3",
+        "phonetic": {
+          "ipa": "/ˈtʃaɪnə/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "中国",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I'm from Shandong, China.",
+            "zh": "我来自中国山东。",
+            "audio": "assets/audio/examples/china-1.mp3"
+          },
+          {
+            "en": "China is a big country.",
+            "zh": "中国是一个大国。",
+            "audio": "assets/audio/examples/china-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：I am from Shandong, China. China 是中国。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 22,
+    "content": {
+      "prompt": {
+        "headword": "Canada",
+        "primaryAudio": "assets/audio/canada.mp3",
+        "phonetic": {
+          "ipa": "/ˈkænədə/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "加拿大",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "He is from Canada.",
+            "zh": "他来自加拿大。",
+            "audio": "assets/audio/examples/canada-1.mp3"
+          },
+          {
+            "en": "My classmate is from Canada.",
+            "zh": "我的同学来自加拿大。",
+            "audio": "assets/audio/examples/canada-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：He is from Canada. Canada 是加拿大。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 23,
+    "content": {
+      "prompt": {
+        "headword": "USA",
+        "primaryAudio": "assets/audio/usa.mp3",
+        "phonetic": {
+          "ipa": "/ˌjuː es ˈeɪ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "美国",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I'm from the USA.",
+            "zh": "我来自美国。",
+            "audio": "assets/audio/examples/usa-1.mp3"
+          },
+          {
+            "en": "She is from the USA.",
+            "zh": "她来自美国。",
+            "audio": "assets/audio/examples/usa-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Students from the USA. USA 是美国。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 24,
+    "content": {
+      "prompt": {
+        "headword": "has",
+        "primaryAudio": "assets/audio/has.mp3",
+        "phonetic": {
+          "ipa": "/hæz/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "（have的第三人称单数形式）具有（某种外表、特性或特征）"
+          }
+        ],
+        "examples": [
+          {
+            "en": "It has a long body and short legs.",
+            "zh": "它有长长的身体和短短的腿。",
+            "audio": "assets/audio/examples/has-1.mp3"
+          },
+          {
+            "en": "The dog has a short tail.",
+            "zh": "这只狗有一条短尾巴。",
+            "audio": "assets/audio/examples/has-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：It has a long body. has 表示具有某种特征。"
+        },
+        "inflectionNote": "第三人称单数 have"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 25,
+    "content": {
+      "prompt": {
+        "headword": "long",
+        "primaryAudio": "assets/audio/long.mp3",
+        "phonetic": {
+          "ipa": "/lɒŋ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "（长度或距离）长的",
+            "pos": "adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "It has a long body and short legs.",
+            "zh": "它有长长的身体和短短的腿。",
+            "audio": "assets/audio/examples/long-1.mp3"
+          },
+          {
+            "en": "The snake is very long.",
+            "zh": "这条蛇很长。",
+            "audio": "assets/audio/examples/long-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：a long body 长长的身体，long 是长的。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 26,
+    "content": {
+      "prompt": {
+        "headword": "body",
+        "primaryAudio": "assets/audio/body.mp3",
+        "phonetic": {
+          "ipa": "/ˈbɒdi/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "身体",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "It has a long body and short legs.",
+            "zh": "它有长长的身体和短短的腿。",
+            "audio": "assets/audio/examples/body-1.mp3"
+          },
+          {
+            "en": "Our mouth, face and body can all talk.",
+            "zh": "我们的嘴、脸和身体都能表达。",
+            "audio": "assets/audio/examples/body-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：It has a long body and short legs. body 是身体。"
+        },
+        "inflectionNote": "复数 bodies"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 27,
+    "content": {
+      "prompt": {
+        "headword": "short",
+        "primaryAudio": "assets/audio/short.mp3",
+        "phonetic": {
+          "ipa": "/ʃɔːt/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "短的；个子矮的",
+            "pos": "adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "It has a long body and short legs.",
+            "zh": "它有长长的身体和短短的腿。",
+            "audio": "assets/audio/examples/short-1.mp3"
+          },
+          {
+            "en": "The dog has a short tail.",
+            "zh": "这只狗有一条短尾巴。",
+            "audio": "assets/audio/examples/short-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：short legs 短短的腿，short 是短的。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 28,
+    "content": {
+      "prompt": {
+        "headword": "leg",
+        "primaryAudio": "assets/audio/leg.mp3",
+        "phonetic": {
+          "ipa": "/leɡ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "腿",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Touch your leg.",
+            "zh": "摸摸你的腿。",
+            "audio": "assets/audio/examples/leg-1.mp3"
+          },
+          {
+            "en": "My leg is strong.",
+            "zh": "我的腿很有力。",
+            "audio": "assets/audio/examples/leg-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：short legs 短短的腿，leg 是腿。"
+        },
+        "inflectionNote": "复数 legs"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 29,
+    "content": {
+      "prompt": {
+        "headword": "right",
+        "primaryAudio": "assets/audio/right.mp3",
+        "phonetic": {
+          "ipa": "/raɪt/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "（意见或判断）准确，确切，恰当",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "That's right!",
+            "zh": "没错！",
+            "audio": "assets/audio/examples/right-1.mp3"
+          },
+          {
+            "en": "You are right.",
+            "zh": "你说得对。",
+            "audio": "assets/audio/examples/right-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：That is right. right 在这里表示对的、正确的。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 30,
+    "content": {
+      "prompt": {
+        "headword": "fat",
+        "primaryAudio": "assets/audio/fat.mp3",
+        "phonetic": {
+          "ipa": "/fæt/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "肥的；肥胖的",
+            "pos": "adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The dog is fat.",
+            "zh": "这只狗很胖。",
+            "audio": "assets/audio/examples/fat-1.mp3"
+          },
+          {
+            "en": "It is a fat cat.",
+            "zh": "它是一只胖猫。",
+            "audio": "assets/audio/examples/fat-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：fat 表示胖的，和 thin 是一对反义词。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 31,
+    "content": {
+      "prompt": {
+        "headword": "thin",
+        "primaryAudio": "assets/audio/thin.mp3",
+        "phonetic": {
+          "ipa": "/θɪn/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "瘦的",
+            "pos": "adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The cat is thin.",
+            "zh": "这只猫很瘦。",
+            "audio": "assets/audio/examples/thin-1.mp3"
+          },
+          {
+            "en": "The monkey is thin.",
+            "zh": "这只猴子很瘦。",
+            "audio": "assets/audio/examples/thin-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：The dog is thin. thin 表示瘦的。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 32,
+    "content": {
+      "prompt": {
+        "headword": "slow",
+        "primaryAudio": "assets/audio/slow.mp3",
+        "phonetic": {
+          "ipa": "/sləʊ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "缓慢的；慢的",
+            "pos": "adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The turtle is slow.",
+            "zh": "这只乌龟很慢。",
+            "audio": "assets/audio/examples/slow-1.mp3"
+          },
+          {
+            "en": "The dog is very slow.",
+            "zh": "这只狗很慢。",
+            "audio": "assets/audio/examples/slow-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：slow 表示慢的，想象乌龟走得很 slow。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 33,
+    "content": {
+      "prompt": {
+        "headword": "love",
+        "primaryAudio": "assets/audio/love.mp3",
+        "phonetic": {
+          "ipa": "/lʌv/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "喜爱；爱",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I love my dog.",
+            "zh": "我爱我的狗。",
+            "audio": "assets/audio/examples/love-1.mp3"
+          },
+          {
+            "en": "Dogs are friendly. I love dogs.",
+            "zh": "狗很友好。我爱狗。",
+            "audio": "assets/audio/examples/love-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：I love my dog. love 是喜爱。"
+        },
+        "inflectionNote": "第三人称单数 loves"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 34,
+    "content": {
+      "prompt": {
+        "headword": "tail",
+        "primaryAudio": "assets/audio/tail.mp3",
+        "phonetic": {
+          "ipa": "/teɪl/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "尾；尾巴",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The dog has a short tail.",
+            "zh": "这只狗有一条短尾巴。",
+            "audio": "assets/audio/examples/tail-1.mp3"
+          },
+          {
+            "en": "Look at its long tail.",
+            "zh": "看它的长尾巴。",
+            "audio": "assets/audio/examples/tail-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：tail 是尾巴，狗摇 tail。"
+        },
+        "inflectionNote": "复数 tails"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 35,
+    "content": {
+      "prompt": {
+        "headword": "her",
+        "primaryAudio": "assets/audio/her.mp3",
+        "phonetic": {
+          "ipa": "/hɜː(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "她；她的",
+            "pos": "pron."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I often make her gifts.",
+            "zh": "我经常给她做礼物。",
+            "audio": "assets/audio/examples/her-1.mp3"
+          },
+          {
+            "en": "This is her card.",
+            "zh": "这是她的卡片。",
+            "audio": "assets/audio/examples/her-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：I often make her gifts. her 表示她、她的。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 36,
+    "content": {
+      "prompt": {
+        "headword": "gift",
+        "primaryAudio": "assets/audio/gift.mp3",
+        "phonetic": {
+          "ipa": "/ɡɪft/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "礼物",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I make a gift for her.",
+            "zh": "我给她做一份礼物。",
+            "audio": "assets/audio/examples/gift-1.mp3"
+          },
+          {
+            "en": "This gift is for you.",
+            "zh": "这份礼物是给你的。",
+            "audio": "assets/audio/examples/gift-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：I often make her gifts. gift 是礼物。"
+        },
+        "inflectionNote": "复数 gifts"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 37,
+    "content": {
+      "prompt": {
+        "headword": "picture",
+        "primaryAudio": "assets/audio/picture.mp3",
+        "phonetic": {
+          "ipa": "/ˈpɪktʃə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "图画；绘画",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Draw a picture.",
+            "zh": "画一幅画。",
+            "audio": "assets/audio/examples/picture-1.mp3"
+          },
+          {
+            "en": "This is a nice picture.",
+            "zh": "这是一幅好看的画。",
+            "audio": "assets/audio/examples/picture-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Draw a picture. picture 是图画。"
+        },
+        "inflectionNote": "复数 pictures"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 38,
+    "content": {
+      "prompt": {
+        "headword": "card",
+        "primaryAudio": "assets/audio/card.mp3",
+        "phonetic": {
+          "ipa": "/kɑːd/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "贺卡；慰问卡；卡片",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Make a card.",
+            "zh": "做一张卡片。",
+            "audio": "assets/audio/examples/card-1.mp3"
+          },
+          {
+            "en": "I make a card for Mum.",
+            "zh": "我给妈妈做一张卡片。",
+            "audio": "assets/audio/examples/card-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Make a card. card 是卡片。"
+        },
+        "inflectionNote": "复数 cards"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 39,
+    "content": {
+      "prompt": {
+        "headword": "sing",
+        "primaryAudio": "assets/audio/sing.mp3",
+        "phonetic": {
+          "ipa": "/sɪŋ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "唱（歌）；演唱",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Sing a song.",
+            "zh": "唱一首歌。",
+            "audio": "assets/audio/examples/sing-1.mp3"
+          },
+          {
+            "en": "We sing together.",
+            "zh": "我们一起唱歌。",
+            "audio": "assets/audio/examples/sing-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Sing a song. sing 是唱歌。"
+        },
+        "inflectionNote": "过去式 sang；第三人称单数 sings"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 40,
+    "content": {
+      "prompt": {
+        "headword": "dance",
+        "primaryAudio": "assets/audio/dance.mp3",
+        "phonetic": {
+          "ipa": "/dɑːns/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "跳舞",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Dance together.",
+            "zh": "一起跳舞。",
+            "audio": "assets/audio/examples/dance-1.mp3"
+          },
+          {
+            "en": "Let's sing and dance.",
+            "zh": "我们唱歌跳舞吧。",
+            "audio": "assets/audio/examples/dance-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Dance together. dance 是跳舞。"
+        },
+        "inflectionNote": "第三人称单数 dances"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 41,
+    "content": {
+      "prompt": {
+        "headword": "face",
+        "primaryAudio": "assets/audio/face.mp3",
+        "phonetic": {
+          "ipa": "/feɪs/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "脸；面孔",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Our mouth, face and body can all talk.",
+            "zh": "我们的嘴、脸和身体都能表达。",
+            "audio": "assets/audio/examples/face-1.mp3"
+          },
+          {
+            "en": "She has a happy face.",
+            "zh": "她有一张开心的脸。",
+            "audio": "assets/audio/examples/face-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Our face can talk. face 是脸。"
+        },
+        "inflectionNote": "复数 faces"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 42,
+    "content": {
+      "prompt": {
+        "headword": "all",
+        "primaryAudio": "assets/audio/all.mp3",
+        "phonetic": {
+          "ipa": "/ɔːl/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "所有；全部",
+            "pos": "adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Our mouth, face and body can all talk.",
+            "zh": "我们的嘴、脸和身体都能表达。",
+            "audio": "assets/audio/examples/all-1.mp3"
+          },
+          {
+            "en": "We can all sing and dance.",
+            "zh": "我们都能唱歌跳舞。",
+            "audio": "assets/audio/examples/all-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：We express ourselves in many ways. all 表示全部。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 43,
+    "content": {
+      "prompt": {
+        "headword": "so",
+        "primaryAudio": "assets/audio/so.mp3",
+        "phonetic": {
+          "ipa": "/səʊ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "（表示大小或数量）这么，那么",
+            "pos": "adv."
+          }
+        ],
+        "examples": [
+          {
+            "en": "A smile can say so much!",
+            "zh": "一个微笑能表达这么多！",
+            "audio": "assets/audio/examples/so-1.mp3"
+          },
+          {
+            "en": "The dog is so friendly.",
+            "zh": "这只狗真友好。",
+            "audio": "assets/audio/examples/so-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：A smile can say so much! so 表示这么、那么。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 44,
+    "content": {
+      "prompt": {
+        "headword": "talk",
+        "primaryAudio": "assets/audio/talk.mp3",
+        "phonetic": {
+          "ipa": "/tɔːk/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "（用某种语言）讲，说；说话",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Our mouth, face and body can all talk.",
+            "zh": "我们的嘴、脸和身体都能表达。",
+            "audio": "assets/audio/examples/talk-1.mp3"
+          },
+          {
+            "en": "We talk in English.",
+            "zh": "我们用英语说话。",
+            "audio": "assets/audio/examples/talk-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：We talk to express ourselves. talk 是说话。"
+        },
+        "inflectionNote": "第三人称单数 talks"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 45,
+    "content": {
+      "prompt": {
+        "headword": "song",
+        "primaryAudio": "assets/audio/song.mp3",
+        "phonetic": {
+          "ipa": "/sɒŋ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "歌；歌曲",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Sing a song.",
+            "zh": "唱一首歌。",
+            "audio": "assets/audio/examples/song-1.mp3"
+          },
+          {
+            "en": "This is a nice song.",
+            "zh": "这是一首好听的歌。",
+            "audio": "assets/audio/examples/song-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Sing a song. song 是歌曲。"
+        },
+        "inflectionNote": "复数 songs"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 46,
+    "content": {
+      "prompt": {
+        "headword": "or",
+        "primaryAudio": "assets/audio/or.mp3",
+        "phonetic": {
+          "ipa": "/ɔː(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "或；或者；还是",
+            "pos": "conj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Six yuan, or three for seventeen yuan.",
+            "zh": "六元，或者三个十七元。",
+            "audio": "assets/audio/examples/or-1.mp3"
+          },
+          {
+            "en": "Sing or dance?",
+            "zh": "唱歌还是跳舞？",
+            "audio": "assets/audio/examples/or-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：A or B 二选一，or 是或者。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 47,
+    "content": {
+      "prompt": {
+        "headword": "much",
+        "primaryAudio": "assets/audio/much.mp3",
+        "phonetic": {
+          "ipa": "/mʌtʃ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "许多；大量",
+            "pos": "det."
+          }
+        ],
+        "examples": [
+          {
+            "en": "A smile can say so much!",
+            "zh": "一个微笑能表达这么多！",
+            "audio": "assets/audio/examples/much-1.mp3"
+          },
+          {
+            "en": "Thank you very much!",
+            "zh": "非常感谢！",
+            "audio": "assets/audio/examples/much-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：so much 这么多，much 是许多。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 48,
+    "content": {
+      "prompt": {
+        "headword": "eraser",
+        "primaryAudio": "assets/audio/eraser.mp3",
+        "phonetic": {
+          "ipa": "/ɪˈreɪzə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "橡皮",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Can I use your eraser, please?",
+            "zh": "请问我能用你的橡皮吗？",
+            "audio": "assets/audio/examples/eraser-1.mp3"
+          },
+          {
+            "en": "Here is your eraser.",
+            "zh": "这是你的橡皮。",
+            "audio": "assets/audio/examples/eraser-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Can I use your eraser? eraser 是橡皮。"
+        },
+        "inflectionNote": "复数 erasers"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 49,
+    "content": {
+      "prompt": {
+        "headword": "find",
+        "primaryAudio": "assets/audio/find.mp3",
+        "phonetic": {
+          "ipa": "/faɪnd/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "找到；找回",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I can't find my ruler.",
+            "zh": "我找不到我的直尺了。",
+            "audio": "assets/audio/examples/find-1.mp3"
+          },
+          {
+            "en": "Can you find my pen?",
+            "zh": "你能找到我的钢笔吗？",
+            "audio": "assets/audio/examples/find-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：find 是找到、找回。"
+        },
+        "inflectionNote": "过去式 found；第三人称单数 finds"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 50,
+    "content": {
+      "prompt": {
+        "headword": "ruler",
+        "primaryAudio": "assets/audio/ruler.mp3",
+        "phonetic": {
+          "ipa": "/ˈruːlə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "直尺",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I can't find my ruler.",
+            "zh": "我找不到我的直尺了。",
+            "audio": "assets/audio/examples/ruler-1.mp3"
+          },
+          {
+            "en": "This is my ruler.",
+            "zh": "这是我的直尺。",
+            "audio": "assets/audio/examples/ruler-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Can I use your ruler? ruler 是直尺。"
+        },
+        "inflectionNote": "复数 rulers"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 51,
+    "content": {
+      "prompt": {
+        "headword": "pen",
+        "primaryAudio": "assets/audio/pen.mp3",
+        "phonetic": {
+          "ipa": "/pen/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "钢笔",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Can you find my pen?",
+            "zh": "你能找到我的钢笔吗？",
+            "audio": "assets/audio/examples/pen-1.mp3"
+          },
+          {
+            "en": "I have a blue pen.",
+            "zh": "我有一支蓝色的钢笔。",
+            "audio": "assets/audio/examples/pen-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Can you find my pen? pen 是钢笔。"
+        },
+        "inflectionNote": "复数 pens"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 52,
+    "content": {
+      "prompt": {
+        "headword": "pencil",
+        "primaryAudio": "assets/audio/pencil.mp3",
+        "phonetic": {
+          "ipa": "/ˈpensl/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "铅笔",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "This is my pencil.",
+            "zh": "这是我的铅笔。",
+            "audio": "assets/audio/examples/pencil-1.mp3"
+          },
+          {
+            "en": "I write with my pencil.",
+            "zh": "我用铅笔写字。",
+            "audio": "assets/audio/examples/pencil-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：I can use pencils to learn. pencil 是铅笔。"
+        },
+        "inflectionNote": "复数 pencils"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 53,
+    "content": {
+      "prompt": {
+        "headword": "book",
+        "primaryAudio": "assets/audio/book.mp3",
+        "phonetic": {
+          "ipa": "/bʊk/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "书；书籍",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Open your book.",
+            "zh": "打开你的书。",
+            "audio": "assets/audio/examples/book-1.mp3"
+          },
+          {
+            "en": "This is my book.",
+            "zh": "这是我的书。",
+            "audio": "assets/audio/examples/book-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "形象联想：想象翻开 book 读书，book 就是书。"
+        },
+        "inflectionNote": "复数 books"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 54,
+    "content": {
+      "prompt": {
+        "headword": "bag",
+        "primaryAudio": "assets/audio/bag.mp3",
+        "phonetic": {
+          "ipa": "/bæɡ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "包；袋",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "My bag is on the desk.",
+            "zh": "我的包在课桌上。",
+            "audio": "assets/audio/examples/bag-1.mp3"
+          },
+          {
+            "en": "How much is this bag?",
+            "zh": "这个包多少钱？",
+            "audio": "assets/audio/examples/bag-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "形象联想：想象背着 school bag 去上学，bag 就是包。"
+        },
+        "inflectionNote": "复数 bags"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 55,
+    "content": {
+      "prompt": {
+        "headword": "paper",
+        "primaryAudio": "assets/audio/paper.mp3",
+        "phonetic": {
+          "ipa": "/ˈpeɪpə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "纸",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I can use paper, pencils, books and computers to learn.",
+            "zh": "我可以用纸、铅笔、书和电脑来学习。",
+            "audio": "assets/audio/examples/paper-1.mp3"
+          },
+          {
+            "en": "I need some paper.",
+            "zh": "我需要一些纸。",
+            "audio": "assets/audio/examples/paper-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：I can use paper to learn. paper 是纸。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 56,
+    "content": {
+      "prompt": {
+        "headword": "these",
+        "primaryAudio": "assets/audio/these.mp3",
+        "phonetic": {
+          "ipa": "/ðiːz/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "这些",
+            "pos": "pron."
+          }
+        ],
+        "examples": [
+          {
+            "en": "What are these?",
+            "zh": "这些是什么？",
+            "audio": "assets/audio/examples/these-1.mp3"
+          },
+          {
+            "en": "These are grapes.",
+            "zh": "这些是葡萄。",
+            "audio": "assets/audio/examples/these-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：What are these? these 是这些。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 57,
+    "content": {
+      "prompt": {
+        "headword": "see",
+        "primaryAudio": "assets/audio/see.mp3",
+        "phonetic": {
+          "ipa": "/siː/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "看见",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I see and hear in class.",
+            "zh": "我在课堂上能看能听。",
+            "audio": "assets/audio/examples/see-1.mp3"
+          },
+          {
+            "en": "I can see the grapes.",
+            "zh": "我能看见这些葡萄。",
+            "audio": "assets/audio/examples/see-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：see 读起来接近「西/si」，I see birds 我看见鸟。\n语义联想：I see birds. see 是看见。"
+        },
+        "inflectionNote": "第三人称单数 sees"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 58,
+    "content": {
+      "prompt": {
+        "headword": "smell",
+        "primaryAudio": "assets/audio/smell.mp3",
+        "phonetic": {
+          "ipa": "/smel/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "闻（气味）",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I smell with my nose.",
+            "zh": "我用鼻子闻。",
+            "audio": "assets/audio/examples/smell-1.mp3"
+          },
+          {
+            "en": "I can smell the flowers.",
+            "zh": "我能闻到花的香味。",
+            "audio": "assets/audio/examples/smell-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：I smell flowers. smell 是用鼻子闻。"
+        },
+        "inflectionNote": "第三人称单数 smells"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 59,
+    "content": {
+      "prompt": {
+        "headword": "taste",
+        "primaryAudio": "assets/audio/taste.mp3",
+        "phonetic": {
+          "ipa": "/teɪst/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "尝（味道）",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I taste with my tongue.",
+            "zh": "我用舌头尝。",
+            "audio": "assets/audio/examples/taste-1.mp3"
+          },
+          {
+            "en": "I taste the juice.",
+            "zh": "我尝一尝果汁。",
+            "audio": "assets/audio/examples/taste-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：I taste an apple. taste 是用舌头尝。"
+        },
+        "inflectionNote": "第三人称单数 tastes"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 60,
+    "content": {
+      "prompt": {
+        "headword": "hear",
+        "primaryAudio": "assets/audio/hear.mp3",
+        "phonetic": {
+          "ipa": "/hɪə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "听见；听到",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I see and hear in class.",
+            "zh": "我在课堂上能看能听。",
+            "audio": "assets/audio/examples/hear-1.mp3"
+          },
+          {
+            "en": "I can hear the song.",
+            "zh": "我能听到这首歌。",
+            "audio": "assets/audio/examples/hear-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：I hear birds. hear 是听见。"
+        },
+        "inflectionNote": "第三人称单数 hears"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 61,
+    "content": {
+      "prompt": {
+        "headword": "touch",
+        "primaryAudio": "assets/audio/touch.mp3",
+        "phonetic": {
+          "ipa": "/tʌtʃ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "触摸；碰",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I touch with my hands.",
+            "zh": "我用手触摸。",
+            "audio": "assets/audio/examples/touch-1.mp3"
+          },
+          {
+            "en": "Don't touch it!",
+            "zh": "别碰它！",
+            "audio": "assets/audio/examples/touch-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：I touch the grass. touch 是触摸。"
+        },
+        "inflectionNote": "第三人称单数 touches"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 62,
+    "content": {
+      "prompt": {
+        "headword": "learn",
+        "primaryAudio": "assets/audio/learn.mp3",
+        "phonetic": {
+          "ipa": "/lɜːn/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "学；学习",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I can use paper, pencils, books and computers to learn.",
+            "zh": "我可以用纸、铅笔、书和电脑来学习。",
+            "audio": "assets/audio/examples/learn-1.mp3"
+          },
+          {
+            "en": "We learn in class.",
+            "zh": "我们在课堂上学习。",
+            "audio": "assets/audio/examples/learn-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：We learn in class. learn 是学习。"
+        },
+        "inflectionNote": "第三人称单数 learns"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 63,
+    "content": {
+      "prompt": {
+        "headword": "nose",
+        "primaryAudio": "assets/audio/nose.mp3",
+        "phonetic": {
+          "ipa": "/nəʊz/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "鼻；鼻子",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I smell with my nose.",
+            "zh": "我用鼻子闻。",
+            "audio": "assets/audio/examples/nose-1.mp3"
+          },
+          {
+            "en": "Touch your nose.",
+            "zh": "摸摸你的鼻子。",
+            "audio": "assets/audio/examples/nose-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "形象联想：想象 I smell with my nose，用鼻子闻。"
+        },
+        "inflectionNote": "复数 noses"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 64,
+    "content": {
+      "prompt": {
+        "headword": "tongue",
+        "primaryAudio": "assets/audio/tongue.mp3",
+        "phonetic": {
+          "ipa": "/tʌŋ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "舌；舌头",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I taste with my tongue.",
+            "zh": "我用舌头尝。",
+            "audio": "assets/audio/examples/tongue-1.mp3"
+          },
+          {
+            "en": "The tongue helps us taste.",
+            "zh": "舌头帮我们尝味道。",
+            "audio": "assets/audio/examples/tongue-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "形象联想：想象 I taste with my tongue，用舌头尝。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 65,
+    "content": {
+      "prompt": {
+        "headword": "class",
+        "primaryAudio": "assets/audio/class.mp3",
+        "phonetic": {
+          "ipa": "/klɑːs/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "课；班级",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I see and hear in class.",
+            "zh": "我在课堂上能看能听。",
+            "audio": "assets/audio/examples/class-1.mp3"
+          },
+          {
+            "en": "We have English class today.",
+            "zh": "我们今天有英语课。",
+            "audio": "assets/audio/examples/class-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：in class 在课堂上，class 也是班级。"
+        },
+        "inflectionNote": "复数 classes"
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 66,
+    "content": {
+      "prompt": {
+        "headword": "in class",
+        "primaryAudio": "assets/audio/in-class.mp3",
+        "phonetic": {
+          "ipa": "/ɪn klɑːs/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "在课堂上",
+            "pos": "prep. phrase"
+          }
+        ],
+        "examples": [
+          {
+            "en": "I see and hear in class.",
+            "zh": "我在课堂上能看能听。",
+            "audio": "assets/audio/examples/in-class-1.mp3"
+          },
+          {
+            "en": "Be quiet in class.",
+            "zh": "在课堂上要保持安静。",
+            "audio": "assets/audio/examples/in-class-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：in 在 + class 课堂，in class 就是在课堂上。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 67,
+    "content": {
+      "prompt": {
+        "headword": "computer",
+        "primaryAudio": "assets/audio/computer.mp3",
+        "phonetic": {
+          "ipa": "/kəmˈpjuːtə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "计算机；电脑",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "We have a computer in class.",
+            "zh": "我们课堂上有一台电脑。",
+            "audio": "assets/audio/examples/computer-1.mp3"
+          },
+          {
+            "en": "I use the computer.",
+            "zh": "我使用电脑。",
+            "audio": "assets/audio/examples/computer-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：books and computers help me learn. computer 是电脑。"
+        },
+        "inflectionNote": "复数 computers"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 68,
+    "content": {
+      "prompt": {
+        "headword": "breakfast",
+        "primaryAudio": "assets/audio/breakfast.mp3",
+        "phonetic": {
+          "ipa": "/ˈbrekfəst/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "早餐；早饭",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I'd like some bread and eggs for breakfast, please.",
+            "zh": "早餐请给我一些面包和鸡蛋。",
+            "audio": "assets/audio/examples/breakfast-1.mp3"
+          },
+          {
+            "en": "Breakfast time!",
+            "zh": "早餐时间到了！",
+            "audio": "assets/audio/examples/breakfast-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：break 打破 + fast 禁食，打破一夜禁食就是 breakfast 早餐。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 69,
+    "content": {
+      "prompt": {
+        "headword": "time",
+        "primaryAudio": "assets/audio/time.mp3",
+        "phonetic": {
+          "ipa": "/taɪm/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "时间",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Breakfast time!",
+            "zh": "早餐时间到了！",
+            "audio": "assets/audio/examples/time-1.mp3"
+          },
+          {
+            "en": "It's time for breakfast.",
+            "zh": "该吃早餐了。",
+            "audio": "assets/audio/examples/time-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：It is time for breakfast. time 是时间。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 70,
+    "content": {
+      "prompt": {
+        "headword": "bread",
+        "primaryAudio": "assets/audio/bread.mp3",
+        "phonetic": {
+          "ipa": "/bred/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "面包",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I'd like some bread and eggs, please.",
+            "zh": "请给我一些面包和鸡蛋。",
+            "audio": "assets/audio/examples/bread-1.mp3"
+          },
+          {
+            "en": "Have some bread.",
+            "zh": "吃一些面包吧。",
+            "audio": "assets/audio/examples/bread-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "形象联想：想象早餐盘里的 bread 面包。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 71,
+    "content": {
+      "prompt": {
+        "headword": "egg",
+        "primaryAudio": "assets/audio/egg.mp3",
+        "phonetic": {
+          "ipa": "/eɡ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "（作食物用的）蛋；鸡蛋",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I have an egg for breakfast.",
+            "zh": "我早餐吃一个鸡蛋。",
+            "audio": "assets/audio/examples/egg-1.mp3"
+          },
+          {
+            "en": "I'd like an egg, please.",
+            "zh": "请给我一个鸡蛋。",
+            "audio": "assets/audio/examples/egg-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "形象联想：想象 bread and eggs 里的 egg 鸡蛋。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 72,
+    "content": {
+      "prompt": {
+        "headword": "milk",
+        "primaryAudio": "assets/audio/milk.mp3",
+        "phonetic": {
+          "ipa": "/mɪlk/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "（牛或羊等的）奶",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Have some milk too.",
+            "zh": "也喝一些牛奶吧。",
+            "audio": "assets/audio/examples/milk-1.mp3"
+          },
+          {
+            "en": "I like milk.",
+            "zh": "我喜欢牛奶。",
+            "audio": "assets/audio/examples/milk-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Have some milk too. milk 是牛奶。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 73,
+    "content": {
+      "prompt": {
+        "headword": "noodle",
+        "primaryAudio": "assets/audio/noodle.mp3",
+        "phonetic": {
+          "ipa": "/ˈnuːdl/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "（常用复数）面条",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I'd like a bowl of noodle.",
+            "zh": "请给我一碗面条。",
+            "audio": "assets/audio/examples/noodle-1.mp3"
+          },
+          {
+            "en": "This noodle is yummy.",
+            "zh": "这碗面条很好吃。",
+            "audio": "assets/audio/examples/noodle-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Would you like some noodles? noodle 是面条。"
+        },
+        "inflectionNote": "常用复数 noodles"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 74,
+    "content": {
+      "prompt": {
+        "headword": "juice",
+        "primaryAudio": "assets/audio/juice.mp3",
+        "phonetic": {
+          "ipa": "/dʒuːs/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "果汁",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Would you like some juice?",
+            "zh": "你想要一些果汁吗？",
+            "audio": "assets/audio/examples/juice-1.mp3"
+          },
+          {
+            "en": "The juice is yummy.",
+            "zh": "果汁很好喝。",
+            "audio": "assets/audio/examples/juice-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Have some juice. juice 是果汁。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 75,
+    "content": {
+      "prompt": {
+        "headword": "rice",
+        "primaryAudio": "assets/audio/rice.mp3",
+        "phonetic": {
+          "ipa": "/raɪs/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "大米",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Would you like some rice and meat?",
+            "zh": "你想要一些米饭和肉吗？",
+            "audio": "assets/audio/examples/rice-1.mp3"
+          },
+          {
+            "en": "Eat some rice every day!",
+            "zh": "每天吃一些米饭！",
+            "audio": "assets/audio/examples/rice-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：rice and meat 米饭和肉，rice 是大米。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 76,
+    "content": {
+      "prompt": {
+        "headword": "meat",
+        "primaryAudio": "assets/audio/meat.mp3",
+        "phonetic": {
+          "ipa": "/miːt/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "肉",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Would you like some rice and meat?",
+            "zh": "你想要一些米饭和肉吗？",
+            "audio": "assets/audio/examples/meat-1.mp3"
+          },
+          {
+            "en": "Eat some meat every day!",
+            "zh": "每天吃一些肉！",
+            "audio": "assets/audio/examples/meat-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Would you like some rice and meat? meat 是肉。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 77,
+    "content": {
+      "prompt": {
+        "headword": "vegetable",
+        "primaryAudio": "assets/audio/vegetable.mp3",
+        "phonetic": {
+          "ipa": "/ˈvedʒtəbl/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "蔬菜",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Eat a vegetable every day!",
+            "zh": "每天吃一种蔬菜！",
+            "audio": "assets/audio/examples/vegetable-1.mp3"
+          },
+          {
+            "en": "This vegetable is green.",
+            "zh": "这种蔬菜是绿色的。",
+            "audio": "assets/audio/examples/vegetable-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Eat some vegetables every day. vegetable 是蔬菜。"
+        },
+        "inflectionNote": "复数 vegetables"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 78,
+    "content": {
+      "prompt": {
+        "headword": "healthy",
+        "primaryAudio": "assets/audio/healthy.mp3",
+        "phonetic": {
+          "ipa": "/ˈhelθi/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "健康的",
+            "pos": "adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "This is my healthy plate.",
+            "zh": "这是我的健康餐盘。",
+            "audio": "assets/audio/examples/healthy-1.mp3"
+          },
+          {
+            "en": "Fruit and vegetables are colourful and healthy.",
+            "zh": "水果和蔬菜五彩缤纷，有益健康。",
+            "audio": "assets/audio/examples/healthy-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：This is my healthy plate. healthy 是健康的。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 79,
+    "content": {
+      "prompt": {
+        "headword": "plate",
+        "primaryAudio": "assets/audio/plate.mp3",
+        "phonetic": {
+          "ipa": "/pleɪt/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "盘子",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "This is my healthy plate.",
+            "zh": "这是我的健康餐盘。",
+            "audio": "assets/audio/examples/plate-1.mp3"
+          },
+          {
+            "en": "Put the bread on the plate.",
+            "zh": "把面包放在盘子上。",
+            "audio": "assets/audio/examples/plate-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：This is my healthy plate. plate 是盘子。"
+        },
+        "inflectionNote": "复数 plates"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 80,
+    "content": {
+      "prompt": {
+        "headword": "soup",
+        "primaryAudio": "assets/audio/soup.mp3",
+        "phonetic": {
+          "ipa": "/suːp/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "汤",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I'd like some soup, please.",
+            "zh": "请给我一些汤。",
+            "audio": "assets/audio/examples/soup-1.mp3"
+          },
+          {
+            "en": "The soup is hot.",
+            "zh": "汤很烫。",
+            "audio": "assets/audio/examples/soup-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Water, soup, milk and juice. soup 是汤。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 81,
+    "content": {
+      "prompt": {
+        "headword": "fruit",
+        "primaryAudio": "assets/audio/fruit.mp3",
+        "phonetic": {
+          "ipa": "/fruːt/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "水果",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Fruit and vegetables are colourful and healthy.",
+            "zh": "水果和蔬菜五彩缤纷，有益健康。",
+            "audio": "assets/audio/examples/fruit-1.mp3"
+          },
+          {
+            "en": "I like fruit.",
+            "zh": "我喜欢水果。",
+            "audio": "assets/audio/examples/fruit-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Fruit and vegetables are healthy. fruit 是水果。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 82,
+    "content": {
+      "prompt": {
+        "headword": "colourful",
+        "primaryAudio": "assets/audio/colourful.mp3",
+        "phonetic": {
+          "ipa": "/ˈkʌləfl/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "五彩缤纷的"
+          }
+        ],
+        "examples": [
+          {
+            "en": "Fruit and vegetables are colourful and healthy.",
+            "zh": "水果和蔬菜五彩缤纷，有益健康。",
+            "audio": "assets/audio/examples/colourful-1.mp3"
+          },
+          {
+            "en": "The plate is colourful.",
+            "zh": "这个盘子色彩缤纷。",
+            "audio": "assets/audio/examples/colourful-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：colour 颜色 + ful，colourful 就是五彩缤纷的。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 83,
+    "content": {
+      "prompt": {
+        "headword": "candy",
+        "primaryAudio": "assets/audio/candy.mp3",
+        "phonetic": {
+          "ipa": "/ˈkændi/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "糖果",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Candy and cake are yummy.",
+            "zh": "糖果和蛋糕很好吃。",
+            "audio": "assets/audio/examples/candy-1.mp3"
+          },
+          {
+            "en": "Don't eat too much candy.",
+            "zh": "不要吃太多糖果。",
+            "audio": "assets/audio/examples/candy-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Candy is yummy. candy 是糖果。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 84,
+    "content": {
+      "prompt": {
+        "headword": "yummy",
+        "primaryAudio": "assets/audio/yummy.mp3",
+        "phonetic": {
+          "ipa": "/ˈjʌmi/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "很好吃的",
+            "pos": "adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Candy and cake are yummy.",
+            "zh": "糖果和蛋糕很好吃。",
+            "audio": "assets/audio/examples/yummy-1.mp3"
+          },
+          {
+            "en": "The noodles are yummy.",
+            "zh": "面条很好吃。",
+            "audio": "assets/audio/examples/yummy-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Candy and cake are yummy. yummy 是很好吃的。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 85,
+    "content": {
+      "prompt": {
+        "headword": "at",
+        "primaryAudio": "assets/audio/at.mp3",
+        "phonetic": {
+          "ipa": "/æt/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "在（某处）",
+            "pos": "prep."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Look at my boat.",
+            "zh": "看看我的小船。",
+            "audio": "assets/audio/examples/at-1.mp3"
+          },
+          {
+            "en": "I'm at home.",
+            "zh": "我在家。",
+            "audio": "assets/audio/examples/at-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：at home 在家，at 表示在（某处）。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 86,
+    "content": {
+      "prompt": {
+        "headword": "boat",
+        "primaryAudio": "assets/audio/boat.mp3",
+        "phonetic": {
+          "ipa": "/bəʊt/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "小船；舟",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "This boat is cool.",
+            "zh": "这只小船真酷。",
+            "audio": "assets/audio/examples/boat-1.mp3"
+          },
+          {
+            "en": "Look at my boat.",
+            "zh": "看看我的小船。",
+            "audio": "assets/audio/examples/boat-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：This boat is cool. boat 是小船。"
+        },
+        "inflectionNote": "复数 boats"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 87,
+    "content": {
+      "prompt": {
+        "headword": "cool",
+        "primaryAudio": "assets/audio/cool.mp3",
+        "phonetic": {
+          "ipa": "/kuːl/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "（因时髦、漂亮且与众不同而）酷的，绝妙的",
+            "pos": "adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "This boat is cool.",
+            "zh": "这只小船真酷。",
+            "audio": "assets/audio/examples/cool-1.mp3"
+          },
+          {
+            "en": "Your doll is cool.",
+            "zh": "你的玩偶真酷。",
+            "audio": "assets/audio/examples/cool-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：This boat is cool. cool 表示酷、很棒。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 88,
+    "content": {
+      "prompt": {
+        "headword": "keep",
+        "primaryAudio": "assets/audio/keep.mp3",
+        "phonetic": {
+          "ipa": "/kiːp/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "保有；留着",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "You can keep it.",
+            "zh": "你可以留着它。",
+            "audio": "assets/audio/examples/keep-1.mp3"
+          },
+          {
+            "en": "Keep your room tidy.",
+            "zh": "保持你的房间整洁。",
+            "audio": "assets/audio/examples/keep-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：You can keep it. keep 是留着。"
+        },
+        "inflectionNote": "第三人称单数 keeps"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 89,
+    "content": {
+      "prompt": {
+        "headword": "home",
+        "primaryAudio": "assets/audio/home.mp3",
+        "phonetic": {
+          "ipa": "/həʊm/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "家；住所",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I'm at home.",
+            "zh": "我在家。",
+            "audio": "assets/audio/examples/home-1.mp3"
+          },
+          {
+            "en": "Let's go home.",
+            "zh": "我们回家吧。",
+            "audio": "assets/audio/examples/home-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Do you have old things at home? home 是家。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 90,
+    "content": {
+      "prompt": {
+        "headword": "ball",
+        "primaryAudio": "assets/audio/ball.mp3",
+        "phonetic": {
+          "ipa": "/bɔːl/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "球",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Put your books under the ball.",
+            "zh": "把你的书放在球下面。",
+            "audio": "assets/audio/examples/ball-1.mp3"
+          },
+          {
+            "en": "The ball is on the shelf.",
+            "zh": "球在架子上。",
+            "audio": "assets/audio/examples/ball-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "形象联想：想象 under the ball 下面的 ball 球。"
+        },
+        "inflectionNote": "复数 balls"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 91,
+    "content": {
+      "prompt": {
+        "headword": "doll",
+        "primaryAudio": "assets/audio/doll.mp3",
+        "phonetic": {
+          "ipa": "/dɒl/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "玩偶；玩具娃娃",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "This is my doll.",
+            "zh": "这是我的玩偶。",
+            "audio": "assets/audio/examples/doll-1.mp3"
+          },
+          {
+            "en": "Your doll is cool.",
+            "zh": "你的玩偶真酷。",
+            "audio": "assets/audio/examples/doll-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "形象联想：想象 shelf 上的 doll 玩偶。"
+        },
+        "inflectionNote": "复数 dolls"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 92,
+    "content": {
+      "prompt": {
+        "headword": "car",
+        "primaryAudio": "assets/audio/car.mp3",
+        "phonetic": {
+          "ipa": "/kɑː(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "小汽车；轿车",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "This is my toy car.",
+            "zh": "这是我的玩具小汽车。",
+            "audio": "assets/audio/examples/car-1.mp3"
+          },
+          {
+            "en": "The car is in the box.",
+            "zh": "小汽车在盒子里。",
+            "audio": "assets/audio/examples/car-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：I have some old cars. car 是小汽车。"
+        },
+        "inflectionNote": "复数 cars"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 93,
+    "content": {
+      "prompt": {
+        "headword": "on",
+        "primaryAudio": "assets/audio/on.mp3",
+        "phonetic": {
+          "ipa": "/ɒn/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "（覆盖、附着）在……上",
+            "pos": "prep."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Is it on the shelf?",
+            "zh": "它在架子上吗？",
+            "audio": "assets/audio/examples/on-1.mp3"
+          },
+          {
+            "en": "The ball is on the shelf.",
+            "zh": "球在架子上。",
+            "audio": "assets/audio/examples/on-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：on the shelf 在架子上，on 表示在……上。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 94,
+    "content": {
+      "prompt": {
+        "headword": "shelf",
+        "primaryAudio": "assets/audio/shelf.mp3",
+        "phonetic": {
+          "ipa": "/ʃelf/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "（复数shelves/ʃelvz/）架子",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Is it on the shelf?",
+            "zh": "它在架子上吗？",
+            "audio": "assets/audio/examples/shelf-1.mp3"
+          },
+          {
+            "en": "The doll is on the shelf.",
+            "zh": "玩偶在架子上。",
+            "audio": "assets/audio/examples/shelf-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Is it on the shelf? shelf 是架子。"
+        },
+        "inflectionNote": "复数 shelves"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 95,
+    "content": {
+      "prompt": {
+        "headword": "in",
+        "primaryAudio": "assets/audio/in.mp3",
+        "phonetic": {
+          "ipa": "/ɪn/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "在……内；在……中",
+            "pos": "prep."
+          }
+        ],
+        "examples": [
+          {
+            "en": "It's in the box.",
+            "zh": "它在盒子里。",
+            "audio": "assets/audio/examples/in-1.mp3"
+          },
+          {
+            "en": "The car is in the box.",
+            "zh": "小汽车在盒子里。",
+            "audio": "assets/audio/examples/in-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：It is in the box. in 表示在……里面。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 96,
+    "content": {
+      "prompt": {
+        "headword": "box",
+        "primaryAudio": "assets/audio/box.mp3",
+        "phonetic": {
+          "ipa": "/bɒks/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "盒子",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "It's in the box.",
+            "zh": "它在盒子里。",
+            "audio": "assets/audio/examples/box-1.mp3"
+          },
+          {
+            "en": "It's under the box.",
+            "zh": "它在盒子下面。",
+            "audio": "assets/audio/examples/box-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "形象联想：想象 It is in the box，东西在盒子里。"
+        },
+        "inflectionNote": "复数 boxes"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 97,
+    "content": {
+      "prompt": {
+        "headword": "cap",
+        "primaryAudio": "assets/audio/cap.mp3",
+        "phonetic": {
+          "ipa": "/kæp/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "帽子",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "My cap is on the shelf.",
+            "zh": "我的帽子在架子上。",
+            "audio": "assets/audio/examples/cap-1.mp3"
+          },
+          {
+            "en": "Put your cap in the box.",
+            "zh": "把你的帽子放进盒子里。",
+            "audio": "assets/audio/examples/cap-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Where is my cap? cap 是帽子。"
+        },
+        "inflectionNote": "复数 caps"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 98,
+    "content": {
+      "prompt": {
+        "headword": "map",
+        "primaryAudio": "assets/audio/map.mp3",
+        "phonetic": {
+          "ipa": "/mæp/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "地图",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Where is my map?",
+            "zh": "我的地图在哪里？",
+            "audio": "assets/audio/examples/map-1.mp3"
+          },
+          {
+            "en": "The map is under the box.",
+            "zh": "地图在盒子下面。",
+            "audio": "assets/audio/examples/map-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "形象联想：想象 Where is my map? 找地图。"
+        },
+        "inflectionNote": "复数 maps"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 99,
+    "content": {
+      "prompt": {
+        "headword": "under",
+        "primaryAudio": "assets/audio/under.mp3",
+        "phonetic": {
+          "ipa": "/ˈʌndə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "在（或到、通过）……下面",
+            "pos": "prep."
+          }
+        ],
+        "examples": [
+          {
+            "en": "It's under the box.",
+            "zh": "它在盒子下面。",
+            "audio": "assets/audio/examples/under-1.mp3"
+          },
+          {
+            "en": "Put your books under the ball.",
+            "zh": "把你的书放在球下面。",
+            "audio": "assets/audio/examples/under-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：It is under the box. under 是在……下面。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 100,
+    "content": {
+      "prompt": {
+        "headword": "still",
+        "primaryAudio": "assets/audio/still.mp3",
+        "phonetic": {
+          "ipa": "/stɪl/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "还是；仍然",
+            "pos": "adv."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I still can't find my map.",
+            "zh": "我还是找不到我的地图。",
+            "audio": "assets/audio/examples/still-1.mp3"
+          },
+          {
+            "en": "It is still in the box.",
+            "zh": "它还在盒子里。",
+            "audio": "assets/audio/examples/still-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：They are still good. still 表示仍然。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 101,
+    "content": {
+      "prompt": {
+        "headword": "put",
+        "primaryAudio": "assets/audio/put.mp3",
+        "phonetic": {
+          "ipa": "/pʊt/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "放；安置",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Put your books under the ball.",
+            "zh": "把你的书放在球下面。",
+            "audio": "assets/audio/examples/put-1.mp3"
+          },
+          {
+            "en": "Put your cap in the box.",
+            "zh": "把你的帽子放进盒子里。",
+            "audio": "assets/audio/examples/put-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Put your books on the shelf. put 是放。"
+        },
+        "inflectionNote": "过去式 put（拼写不变）；第三人称单数 puts"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 102,
+    "content": {
+      "prompt": {
+        "headword": "fifteen",
+        "primaryAudio": "assets/audio/fifteen.mp3",
+        "phonetic": {
+          "ipa": "/ˌfɪfˈtiːn/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "十五",
+            "pos": "num."
+          }
+        ],
+        "examples": [
+          {
+            "en": "We have fifteen books.",
+            "zh": "我们有十五本书。",
+            "audio": "assets/audio/examples/fifteen-1.mp3"
+          },
+          {
+            "en": "How many books do we have? We have fifteen books.",
+            "zh": "我们有多少本书？我们有十五本书。",
+            "audio": "assets/audio/examples/fifteen-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：fifteen 是十五，We have fifteen books."
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 103,
+    "content": {
+      "prompt": {
+        "headword": "twelve",
+        "primaryAudio": "assets/audio/twelve.mp3",
+        "phonetic": {
+          "ipa": "/twelv/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "十二",
+            "pos": "num."
+          }
+        ],
+        "examples": [
+          {
+            "en": "We have twelve pencils.",
+            "zh": "我们有十二支铅笔。",
+            "audio": "assets/audio/examples/twelve-1.mp3"
+          },
+          {
+            "en": "I can count to twelve.",
+            "zh": "我能数到十二。",
+            "audio": "assets/audio/examples/twelve-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：twelve 是十二，特殊拼写要记。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 104,
+    "content": {
+      "prompt": {
+        "headword": "fourteen",
+        "primaryAudio": "assets/audio/fourteen.mp3",
+        "phonetic": {
+          "ipa": "/ˌfɔːˈtiːn/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "十四",
+            "pos": "num."
+          }
+        ],
+        "examples": [
+          {
+            "en": "We have fourteen rulers.",
+            "zh": "我们有十四把直尺。",
+            "audio": "assets/audio/examples/fourteen-1.mp3"
+          },
+          {
+            "en": "Fourteen and one is fifteen.",
+            "zh": "十四加一等于十五。",
+            "audio": "assets/audio/examples/fourteen-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：fourteen 是十四，four + teen。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 105,
+    "content": {
+      "prompt": {
+        "headword": "thirteen",
+        "primaryAudio": "assets/audio/thirteen.mp3",
+        "phonetic": {
+          "ipa": "/ˌθɜːˈtiːn/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "十三",
+            "pos": "num."
+          }
+        ],
+        "examples": [
+          {
+            "en": "We have thirteen pens.",
+            "zh": "我们有十三支钢笔。",
+            "audio": "assets/audio/examples/thirteen-1.mp3"
+          },
+          {
+            "en": "Thirteen comes after twelve.",
+            "zh": "十三在十二后面。",
+            "audio": "assets/audio/examples/thirteen-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：thirteen 是十三，thir + teen。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 106,
+    "content": {
+      "prompt": {
+        "headword": "eleven",
+        "primaryAudio": "assets/audio/eleven.mp3",
+        "phonetic": {
+          "ipa": "/ɪˈlevn/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "十一",
+            "pos": "num."
+          }
+        ],
+        "examples": [
+          {
+            "en": "We have eleven books.",
+            "zh": "我们有十一本书。",
+            "audio": "assets/audio/examples/eleven-1.mp3"
+          },
+          {
+            "en": "Eleven comes before twelve.",
+            "zh": "十一在十二前面。",
+            "audio": "assets/audio/examples/eleven-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：eleven 是十一，特殊拼写要记。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 107,
+    "content": {
+      "prompt": {
+        "headword": "twenty",
+        "primaryAudio": "assets/audio/twenty.mp3",
+        "phonetic": {
+          "ipa": "/ˈtwenti/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "二十",
+            "pos": "num."
+          }
+        ],
+        "examples": [
+          {
+            "en": "It's twenty yuan.",
+            "zh": "二十元。",
+            "audio": "assets/audio/examples/twenty-1.mp3"
+          },
+          {
+            "en": "How much is this bag? It's twenty yuan.",
+            "zh": "这个包多少钱？二十元。",
+            "audio": "assets/audio/examples/twenty-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：twenty 是二十，two + ty。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 108,
+    "content": {
+      "prompt": {
+        "headword": "seventeen",
+        "primaryAudio": "assets/audio/seventeen.mp3",
+        "phonetic": {
+          "ipa": "/ˌsevnˈtiːn/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "十七",
+            "pos": "num."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Six yuan, or three for seventeen yuan.",
+            "zh": "六元，或者三个十七元。",
+            "audio": "assets/audio/examples/seventeen-1.mp3"
+          },
+          {
+            "en": "It is seventeen yuan.",
+            "zh": "十七元。",
+            "audio": "assets/audio/examples/seventeen-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：seventeen 是十七，seven + teen。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 109,
+    "content": {
+      "prompt": {
+        "headword": "sixteen",
+        "primaryAudio": "assets/audio/sixteen.mp3",
+        "phonetic": {
+          "ipa": "/ˌsɪksˈtiːn/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "十六",
+            "pos": "num."
+          }
+        ],
+        "examples": [
+          {
+            "en": "It is sixteen yuan.",
+            "zh": "十六元。",
+            "audio": "assets/audio/examples/sixteen-1.mp3"
+          },
+          {
+            "en": "Sixteen and one is seventeen.",
+            "zh": "十六加一等于十七。",
+            "audio": "assets/audio/examples/sixteen-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：sixteen 是十六，six + teen。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 110,
+    "content": {
+      "prompt": {
+        "headword": "eighteen",
+        "primaryAudio": "assets/audio/eighteen.mp3",
+        "phonetic": {
+          "ipa": "/ˌeɪˈtiːn/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "十八",
+            "pos": "num."
+          }
+        ],
+        "examples": [
+          {
+            "en": "It is eighteen yuan.",
+            "zh": "十八元。",
+            "audio": "assets/audio/examples/eighteen-1.mp3"
+          },
+          {
+            "en": "Eighteen comes after seventeen.",
+            "zh": "十八在十七后面。",
+            "audio": "assets/audio/examples/eighteen-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：eighteen 是十八，eight + teen。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 111,
+    "content": {
+      "prompt": {
+        "headword": "nineteen",
+        "primaryAudio": "assets/audio/nineteen.mp3",
+        "phonetic": {
+          "ipa": "/ˌnaɪnˈtiːn/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "十九",
+            "pos": "num."
+          }
+        ],
+        "examples": [
+          {
+            "en": "It is nineteen yuan.",
+            "zh": "十九元。",
+            "audio": "assets/audio/examples/nineteen-1.mp3"
+          },
+          {
+            "en": "Nineteen and one is twenty.",
+            "zh": "十九加一等于二十。",
+            "audio": "assets/audio/examples/nineteen-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：nineteen 是十九，nine + teen。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 112,
+    "content": {
+      "prompt": {
+        "headword": "piggy bank",
+        "primaryAudio": "assets/audio/piggy-bank.mp3",
+        "phonetic": {
+          "ipa": "/ˈpɪɡi bæŋk/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "猪形储钱罐",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Put the money in your piggy bank.",
+            "zh": "把钱放进你的储钱罐。",
+            "audio": "assets/audio/examples/piggy-bank-1.mp3"
+          },
+          {
+            "en": "My piggy bank is full.",
+            "zh": "我的储钱罐满了。",
+            "audio": "assets/audio/examples/piggy-bank-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：piggy 小猪 + bank 银行/储蓄，piggy bank 是猪形储钱罐。"
+        },
+        "inflectionNote": "复数 piggy banks"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 113,
+    "content": {
+      "prompt": {
+        "headword": "pay",
+        "primaryAudio": "assets/audio/pay.mp3",
+        "phonetic": {
+          "ipa": "/peɪ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "付费",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "How much do I pay?",
+            "zh": "我要付多少钱？",
+            "audio": "assets/audio/examples/pay-1.mp3"
+          },
+          {
+            "en": "I pay twenty yuan.",
+            "zh": "我付二十元。",
+            "audio": "assets/audio/examples/pay-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：How much is this bag? pay 是付费。"
+        },
+        "inflectionNote": "过去式 paid；第三人称单数 pays"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 114,
+    "content": {
+      "prompt": {
+        "headword": "back",
+        "primaryAudio": "assets/audio/back.mp3",
+        "phonetic": {
+          "ipa": "/bæk/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "回到原处",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Come back!",
+            "zh": "回来！",
+            "audio": "assets/audio/examples/back-1.mp3"
+          },
+          {
+            "en": "Give me back my book.",
+            "zh": "把我的书还给我。",
+            "audio": "assets/audio/examples/back-2.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Come back! back 是回来。"
+        }
+      }
+    }
+  }
+]

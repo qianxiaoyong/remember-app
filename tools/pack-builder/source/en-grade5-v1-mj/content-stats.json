@@ -1,0 +1,59 @@
+{
+  "packId": "en-grade5-v1-mj",
+  "packVersion": "1.0.1",
+  "cardCount": 95,
+  "wordCardCount": 78,
+  "phraseCardCount": 17,
+  "exampleCount": 285,
+  "lexiconEntryCount": 277,
+  "unitStats": [
+    {
+      "unit": "Unit 1",
+      "cardCount": 8,
+      "wordCount": 8,
+      "phraseCount": 0
+    },
+    {
+      "unit": "Unit 2",
+      "cardCount": 14,
+      "wordCount": 12,
+      "phraseCount": 2
+    },
+    {
+      "unit": "Unit 3",
+      "cardCount": 15,
+      "wordCount": 12,
+      "phraseCount": 3
+    },
+    {
+      "unit": "Unit 4",
+      "cardCount": 13,
+      "wordCount": 9,
+      "phraseCount": 4
+    },
+    {
+      "unit": "Unit 5",
+      "cardCount": 12,
+      "wordCount": 12,
+      "phraseCount": 0
+    },
+    {
+      "unit": "Unit 6",
+      "cardCount": 15,
+      "wordCount": 9,
+      "phraseCount": 6
+    },
+    {
+      "unit": "Unit 7",
+      "cardCount": 13,
+      "wordCount": 12,
+      "phraseCount": 1
+    },
+    {
+      "unit": "Unit 8",
+      "cardCount": 5,
+      "wordCount": 4,
+      "phraseCount": 1
+    }
+  ]
+}
