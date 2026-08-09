@@ -1,9 +1,19 @@
-import { Autocomplete, TextField } from '@mui/material';
-import { useState, type ReactElement, type SyntheticEvent } from 'react';
+import { Autocomplete, Box, Button, TextField } from '@mui/material';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactElement,
+  type SyntheticEvent,
+} from 'react';
 import { useInput } from 'react-admin';
 import { AdminMiniConfirmDialog } from '../components/admin-mini-confirm-dialog.js';
-
-const CONTENT_TAG_SUGGESTIONS = ['词汇', '上册', '下册', '全册'];
+import {
+  fetchAdminContentTagVocabulary,
+  upsertAdminContentTagVocabulary,
+} from '../api/content-tags-api.js';
+import { ContentTagVocabularyDialog } from './content-tag-vocabulary-dialog.js';
 
 function normalizeTags(values: string[]): string[] {
   const seen = new Set<string>();
@@ -27,7 +37,37 @@ interface PendingRemoval {
 export function ContentTagsInput(): ReactElement {
   const { field } = useInput({ source: 'contentTags' });
   const tags = normalizeTags(Array.isArray(field.value) ? field.value.map(String) : []);
+  const [options, setOptions] = useState<string[]>([]);
   const [pendingRemoval, setPendingRemoval] = useState<PendingRemoval | null>(null);
+  const [vocabularyOpen, setVocabularyOpen] = useState(false);
+
+  const loadOptions = useCallback(async () => {
+    try {
+      const response = await fetchAdminContentTagVocabulary();
+      setOptions(response.items.map((item) => item.label));
+    } catch {
+      setOptions([]);
+    }
+  }, []);
+
+  useEffect(() => {
+    void loadOptions();
+  }, [loadOptions]);
+
+  const dropdownOptions = useMemo(() => normalizeTags([...options, ...tags]), [options, tags]);
+
+  const persistNewTags = useCallback(
+    (added: string[]) => {
+      if (added.length === 0) {
+        return;
+      }
+      setOptions((current) => normalizeTags([...current, ...added]));
+      void upsertAdminContentTagVocabulary(added).catch(() => {
+        void loadOptions();
+      });
+    },
+    [loadOptions],
+  );
 
   function handleChange(_event: SyntheticEvent, newValue: string[]) {
     const nextTags = normalizeTags(newValue);
@@ -38,7 +78,10 @@ export function ContentTagsInput(): ReactElement {
         return;
       }
     }
+
+    const added = nextTags.filter((tag) => !tags.includes(tag));
     field.onChange(nextTags);
+    persistNewTags(added);
   }
 
   return (
@@ -46,7 +89,8 @@ export function ContentTagsInput(): ReactElement {
       <Autocomplete
         multiple
         freeSolo
-        options={CONTENT_TAG_SUGGESTIONS}
+        filterSelectedOptions={false}
+        options={dropdownOptions}
         value={tags}
         onChange={handleChange}
         renderInput={(params) => (
@@ -64,6 +108,27 @@ export function ContentTagsInput(): ReactElement {
         )}
         size="small"
         sx={{ width: '100%' }}
+      />
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 0.5 }}>
+        <Button
+          size="small"
+          variant="text"
+          sx={{ minWidth: 0, px: 0.5, fontSize: 12 }}
+          onClick={() => {
+            setVocabularyOpen(true);
+          }}
+        >
+          管理词库
+        </Button>
+      </Box>
+      <ContentTagVocabularyDialog
+        open={vocabularyOpen}
+        onClose={() => {
+          setVocabularyOpen(false);
+        }}
+        onChanged={() => {
+          void loadOptions();
+        }}
       />
       <AdminMiniConfirmDialog
         open={pendingRemoval !== null}

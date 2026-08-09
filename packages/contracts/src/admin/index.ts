@@ -108,6 +108,14 @@ export {
   type AdminVersionTaxonomyNodeResponse,
 } from './catalog-taxonomy.js';
 export {
+  adminContentTagVocabularyItemSchema,
+  adminContentTagVocabularyListResponseSchema,
+  adminUpsertContentTagVocabularyRequestSchema,
+  type AdminContentTagVocabularyItem,
+  type AdminContentTagVocabularyListResponse,
+  type AdminUpsertContentTagVocabularyRequest,
+} from './content-tags.js';
+export {
   adminAuditLogListResponseSchema,
   adminListAuditLogsQuerySchema,
   type AdminListAuditLogsQuery,

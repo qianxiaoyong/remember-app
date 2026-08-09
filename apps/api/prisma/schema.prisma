@@ -323,3 +323,11 @@ model AuditLog {
   @@index([action])
   @@map("audit_logs")
 }
+
+model ContentTagVocabulary {
+  label     String   @id
+  sortOrder Int      @default(0) @map("sort_order")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@map("content_tag_vocabulary")
+}

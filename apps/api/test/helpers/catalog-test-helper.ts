@@ -17,6 +17,7 @@ export async function resetCommerceTables(prisma: PrismaClient): Promise<void> {
   await prisma.order.deleteMany();
   await prisma.packVersion.deleteMany();
   await prisma.pack.deleteMany();
+  await prisma.contentTagVocabulary.deleteMany();
   await prisma.catalogSecondaryNode.deleteMany();
   await prisma.catalogVersionNode.deleteMany();
   await prisma.catalogPrimaryNode.deleteMany();
