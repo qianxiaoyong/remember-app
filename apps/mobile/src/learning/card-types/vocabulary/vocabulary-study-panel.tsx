@@ -17,6 +17,8 @@ export interface VocabularyStudyPanelProps {
   onPlayExampleAudio: (relativePath: string) => void;
   onTokenPress: (token: string) => void;
   onReveal: () => void;
+  primaryAudioPlaying?: boolean;
+  playingExampleAudioPath?: string | null;
 }
 
 export function VocabularyStudyPanel(props: VocabularyStudyPanelProps): ReactElement {
@@ -30,6 +32,7 @@ export function VocabularyStudyPanel(props: VocabularyStudyPanelProps): ReactEle
         onHomePress={props.onHomePress}
         onMorePress={props.onMorePress}
         onPlayAudio={props.onPlayPrimaryAudio}
+        primaryAudioPlaying={props.primaryAudioPlaying ?? false}
         revealed={props.revealed}
       />
       {props.revealed ? (
@@ -44,6 +47,7 @@ export function VocabularyStudyPanel(props: VocabularyStudyPanelProps): ReactEle
             highlightSurfaceForm={props.lexiconSelectedSurfaceForm}
             onPlayExampleAudio={props.onPlayExampleAudio}
             onTokenPress={props.onTokenPress}
+            playingExampleAudioPath={props.playingExampleAudioPath ?? null}
           />
         </ScrollView>
       ) : (

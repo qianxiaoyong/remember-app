@@ -72,8 +72,6 @@ export const drawerMenuSections: DrawerMenuSection[] = [
       {
         id: 'contact',
         label: '联系我们',
-        reserved: true,
-        reservedMessage: '客服与反馈渠道将在后续版本开放。',
       },
     ],
   },

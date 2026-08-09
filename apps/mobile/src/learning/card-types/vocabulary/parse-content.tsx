@@ -19,6 +19,8 @@ export function VocabularyCardRenderer(props: CardRendererProps) {
         props.setRevealed(true);
       }}
       onTokenPress={props.onTokenPress}
+      playingExampleAudioPath={props.playingExampleAudioPath ?? null}
+      primaryAudioPlaying={props.primaryAudioPlaying ?? false}
       revealed={props.revealed}
     />
   );

@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LexiconPopup } from '../components/lexicon-popup';
 import { ScreenScaffold } from '../components/shell/screen-scaffold';
@@ -19,6 +19,7 @@ import { getPackBrowseCompleteSummary } from '../use-cases/get-pack-browse-compl
 import { listInstalledPacksUseCase } from '../use-cases/list-installed-packs';
 import { resetPackBrowseProgress } from '../use-cases/reset-pack-browse-progress';
 import { saveStoryReadingBookmark } from '../use-cases/save-story-reading-bookmark';
+import { touchInstalledPackLastOpenedUseCase } from '../use-cases/touch-installed-pack-last-opened';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 
@@ -61,6 +62,8 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
     handlePlayAudio,
     handlePlayPrimaryAudio,
     handlePlayExampleAudio,
+    primaryAudioPlaying,
+    playingExampleAudioPath,
     restartFromBeginning,
     dismissBrowseComplete,
     closeLexicon,
@@ -84,6 +87,15 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
       startBrowse();
     }
   }, [props.autoStart, browseReady, isBrowseMode, props.packId, startBrowse]);
+
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        touchInstalledPackLastOpenedUseCase(props.packId);
+        markLibraryNeedsRefresh();
+      };
+    }, [props.packId]),
+  );
 
   const handleNavigateLesson = useCallback(
     (knowledgeId: string) => {
@@ -189,6 +201,8 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
               onPlayPrimaryAudio={handlePlayPrimaryAudio}
               onTokenPress={openLexicon}
               packId={props.packId}
+              playingExampleAudioPath={playingExampleAudioPath}
+              primaryAudioPlaying={primaryAudioPlaying}
               revealed={revealed}
               setRevealed={setRevealed}
               sortOrder={cardDetail.sortOrder}

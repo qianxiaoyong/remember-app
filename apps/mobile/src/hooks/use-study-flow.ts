@@ -11,7 +11,9 @@ import { getPackCardDetailUseCase } from '../use-cases/get-pack-card-detail';
 import { joinReviewPool } from '../use-cases/join-review-pool';
 import { lookupLexiconToken } from '../use-cases/lookup-lexicon-token';
 import { playOrCacheLexiconAudio } from '../use-cases/play-or-cache-lexicon-audio';
-import { playPackAssetAudio } from '../use-cases/play-pack-asset-audio';
+import { getPackBrowseCompleteSummary } from '../use-cases/get-pack-browse-complete-summary';
+import type { PackBrowseCompleteSummary } from '../use-cases/get-pack-browse-complete-summary';
+import { useVocabularyStudyAudio } from './use-vocabulary-study-audio';
 import { resolvePackLibraryPresentation } from '../use-cases/resolve-pack-library-presentation';
 import { resolveStoryReaderEntry } from '../use-cases/resolve-story-reader-entry';
 import { resumePackBrowse } from '../use-cases/resume-pack-browse';
@@ -24,8 +26,6 @@ import {
   isLexiconItemSavedUseCase,
   toggleSavedLexiconItem,
 } from '../use-cases/toggle-saved-lexicon-item';
-import { getPackBrowseCompleteSummary } from '../use-cases/get-pack-browse-complete-summary';
-import type { PackBrowseCompleteSummary } from '../use-cases/get-pack-browse-complete-summary';
 
 export function useStudyFlow(
   packId: string,
@@ -117,6 +117,16 @@ export function useStudyFlow(
       return currentKnowledgeId;
     }
   }, [currentKnowledgeId, packId]);
+
+  const { primaryAudioPlaying, playingExampleAudioPath, playPrimaryAudio, playExampleAudio } =
+    useVocabularyStudyAudio({
+      packId,
+      primaryAudioRelativePath:
+        cardDetail?.cardType === 'vocabulary' ? cardDetail.content.prompt.primaryAudio : null,
+      autoPlayActive:
+        isBrowseMode && !revealed && browseReady && cardDetail?.cardType === 'vocabulary',
+      cardKey: currentKnowledgeId,
+    });
 
   const advanceBrowse = useCallback(() => {
     if (!isBrowseMode || browseCards.length === 0) {
@@ -238,20 +248,14 @@ export function useStudyFlow(
       cardDetail.cardType === 'vocabulary'
         ? cardDetail.content.prompt.primaryAudio
         : cardDetail.content.lesson.primaryAudio;
-    void playPackAssetAudio({
-      packId,
-      relativePath,
-    });
-  }, [cardDetail, packId]);
+    playPrimaryAudio(relativePath);
+  }, [cardDetail, playPrimaryAudio]);
 
   const handlePlayExampleAudio = useCallback(
     (relativePath: string) => {
-      void playPackAssetAudio({
-        packId,
-        relativePath,
-      });
+      playExampleAudio(relativePath);
     },
-    [packId],
+    [playExampleAudio],
   );
 
   const handlePlayAudio = useCallback(() => {
@@ -320,6 +324,8 @@ export function useStudyFlow(
     handlePlayAudio,
     handlePlayPrimaryAudio,
     handlePlayExampleAudio,
+    primaryAudioPlaying,
+    playingExampleAudioPath,
     browseCompleteVisible,
     browseCompleteSummary,
     restartFromBeginning,

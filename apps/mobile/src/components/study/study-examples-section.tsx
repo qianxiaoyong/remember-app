@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import type { VocabularyContent } from '@remember/contracts';
 import { TokenizedSentence } from '../tokenized-sentence';
 import { StudySectionHeader } from './study-section-header';
-import { AppIcon } from '../ui/app-icon';
+import { AnimatedSpeakerIcon } from '../ui/animated-speaker-icon';
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
 
@@ -13,6 +13,7 @@ interface StudyExamplesSectionProps {
   highlightSurfaceForm?: string | null;
   onPlayExampleAudio: (relativePath: string) => void;
   onTokenPress: (token: string) => void;
+  playingExampleAudioPath?: string | null;
 }
 
 export function StudyExamplesSection(props: StudyExamplesSectionProps): ReactElement {
@@ -47,10 +48,9 @@ export function StudyExamplesSection(props: StudyExamplesSectionProps): ReactEle
                 }}
                 style={styles.speakerButton}
               >
-                <AppIcon
+                <AnimatedSpeakerIcon
                   color={hasAudio ? colors.accent : colors.textMuted}
-                  name="volume-high-outline"
-                  size="sm"
+                  playing={hasAudio && props.playingExampleAudioPath === exampleAudio}
                 />
               </Pressable>
             </View>

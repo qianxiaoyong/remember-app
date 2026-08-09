@@ -2,14 +2,14 @@ import type { ReactElement } from 'react';
 import { useEffect, useState } from 'react';
 import { useSyncWorker } from '../../hooks/use-sync-worker';
 import { useCatalogCacheWarmup } from '../../hooks/use-catalog-cache-warmup';
-import { useBundledPackUpgrade } from '../../hooks/use-bundled-pack-upgrade';
+import { usePurgeLegacyBundledPacks } from '../../hooks/use-purge-legacy-bundled-packs';
 import { useSessionRefresh } from '../../hooks/use-session-refresh';
 
 function ShellSyncEffects(): null {
   useSessionRefresh();
   useSyncWorker();
   useCatalogCacheWarmup();
-  useBundledPackUpgrade();
+  usePurgeLegacyBundledPacks();
   return null;
 }
 

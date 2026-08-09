@@ -24,6 +24,8 @@ export type AppIconName =
   | 'ellipsis-vertical'
   | 'star'
   | 'star-outline'
+  | 'volume-low-outline'
+  | 'volume-medium-outline'
   | 'volume-high-outline'
   | 'musical-notes-outline'
   | 'play'
@@ -59,6 +61,8 @@ const ICON_MAP: Record<AppIconName, IoniconName> = {
   'ellipsis-vertical': 'ellipsis-vertical',
   star: 'star',
   'star-outline': 'star-outline',
+  'volume-low-outline': 'volume-low-outline',
+  'volume-medium-outline': 'volume-medium-outline',
   'volume-high-outline': 'volume-high-outline',
   'musical-notes-outline': 'musical-notes-outline',
   play: 'play',

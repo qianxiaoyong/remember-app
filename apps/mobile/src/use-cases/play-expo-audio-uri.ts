@@ -7,6 +7,7 @@ const PLAYBACK_WAIT_MS = 3000;
 
 let sharedPlayer: ReturnType<typeof createAudioPlayer> | null = null;
 let audioModeConfigured = false;
+let activePlaybackToken = 0;
 
 export async function ensureExpoAudioMode(): Promise<void> {
   await ensureAudioMode();
@@ -176,6 +177,8 @@ export async function playExpoAudioUri(uri: string): Promise<'played' | 'failed'
 
     if (!sharedPlayer) {
       sharedPlayer = createAudioPlayer({ uri: playbackUri }, { updateInterval: 100 });
+      positionListenerAttached = false;
+      attachPositionListener();
     } else {
       sharedPlayer.replace({ uri: playbackUri });
       await sharedPlayer.seekTo(0);
@@ -183,10 +186,80 @@ export async function playExpoAudioUri(uri: string): Promise<'played' | 'failed'
 
     sharedPlayer.play();
     const ready = await waitForPlayback(sharedPlayer);
+    notifyPositionListeners();
     return ready === 'ready' ? 'played' : 'failed';
   } catch {
     return 'failed';
   }
+}
+
+export function cancelExpoAudioPlayback(): void {
+  activePlaybackToken += 1;
+  sharedPlayer?.pause();
+  notifyPositionListeners();
+}
+
+export async function playExpoAudioUriRepeated(
+  uri: string,
+  times: number,
+  token: number,
+): Promise<void> {
+  for (let index = 0; index < times; index += 1) {
+    if (token !== activePlaybackToken) {
+      return;
+    }
+    const result = await playExpoAudioUri(uri);
+    if (result !== 'played' || token !== activePlaybackToken) {
+      return;
+    }
+    const finished = await waitForPlaybackFinished(token);
+    if (!finished) {
+      return;
+    }
+  }
+}
+
+export function beginPrimaryAudioPlayback(): number {
+  activePlaybackToken += 1;
+  return activePlaybackToken;
+}
+
+export function getActivePlaybackToken(): number {
+  return activePlaybackToken;
+}
+
+function waitForPlaybackFinished(token: number): Promise<boolean> {
+  const player = sharedPlayer;
+  if (!player) {
+    return Promise.resolve(false);
+  }
+
+  return new Promise((resolve) => {
+    const timeout = setTimeout(() => {
+      subscription.remove();
+      resolve(token === activePlaybackToken);
+    }, 30000);
+
+    const subscription = player.addListener(PLAYBACK_STATUS_UPDATE, (status) => {
+      if (token !== activePlaybackToken) {
+        clearTimeout(timeout);
+        subscription.remove();
+        resolve(false);
+        return;
+      }
+      if (status.error) {
+        clearTimeout(timeout);
+        subscription.remove();
+        resolve(false);
+        return;
+      }
+      if (status.isLoaded && !status.playing && status.currentTime > 0) {
+        clearTimeout(timeout);
+        subscription.remove();
+        resolve(true);
+      }
+    });
+  });
 }
 
 /** 测试专用：重置播放器单例。 */
@@ -194,6 +267,7 @@ export function resetExpoAudioPlayerForTests(): void {
   sharedPlayer?.remove();
   sharedPlayer = null;
   audioModeConfigured = false;
+  activePlaybackToken = 0;
   positionListeners.clear();
   positionListenerAttached = false;
 }

@@ -103,13 +103,18 @@ function buildInstalledPackSummary(
   const browseBookmark = getPackBrowseBookmark(pack.packId);
   const readerProgress =
     libraryPresentation === 'reader' ? getReaderPackProgress(pack.packId, pack.sqlitePath) : null;
+  const vocabularyProgress =
+    libraryPresentation !== 'reader'
+      ? getVocabularyBrowseProgress(pack.packId, pack.sqlitePath)
+      : null;
 
   return {
     packId: pack.packId,
     displayName,
     packVersion: pack.packVersion,
-    totalCards: readerProgress?.totalCards ?? stats.totalCards,
-    learnedCount: readerProgress?.learnedCount ?? stats.learnedCount,
+    totalCards: readerProgress?.totalCards ?? vocabularyProgress?.totalCards ?? stats.totalCards,
+    learnedCount:
+      readerProgress?.learnedCount ?? vocabularyProgress?.learnedCount ?? stats.learnedCount,
     todayTaskCount: 0,
     hasActiveTask: false,
     libraryPresentation,
@@ -201,6 +206,29 @@ function getReaderPackProgress(
 
   const learnedCount = cards.filter((card) => card.sortOrder <= bookmarkCard.sortOrder).length;
   return { totalCards, learnedCount };
+}
+
+function getVocabularyBrowseProgress(
+  packId: string,
+  sqlitePath: string,
+): { totalCards: number; learnedCount: number } {
+  const cards = listPackCards(sqlitePath);
+  const totalCards = cards.length;
+  if (totalCards === 0) {
+    return { totalCards: 0, learnedCount: 0 };
+  }
+
+  const bookmark = getPackBrowseBookmark(packId);
+  if (!bookmark) {
+    return { totalCards, learnedCount: 0 };
+  }
+
+  const bookmarkCard = cards.find((card) => card.knowledgeId === bookmark.knowledgeId);
+  if (!bookmarkCard) {
+    return { totalCards, learnedCount: bookmark.sortOrder };
+  }
+
+  return { totalCards, learnedCount: bookmarkCard.sortOrder };
 }
 
 interface PackStats {

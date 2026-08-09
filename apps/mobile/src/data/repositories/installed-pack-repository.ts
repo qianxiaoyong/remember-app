@@ -44,7 +44,7 @@ export function listInstalledPacks(db: SQLiteDatabase = openUserDatabase()): Ins
             installStatus, installedAt, lastOpenedAt
      FROM installed_packs
      WHERE installStatus = 'installed'
-     ORDER BY installedAt DESC`,
+     ORDER BY COALESCE(lastOpenedAt, installedAt) DESC, installedAt DESC`,
   );
   return rows.map(mapRow);
 }

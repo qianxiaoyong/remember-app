@@ -26,7 +26,6 @@ import {
   getPackDetailViewModelFromCatalogItem,
   type PackDetailViewModel,
 } from '../use-cases/get-pack-detail-view-model';
-import { installBundledTestPack } from '../use-cases/install-bundled-test-pack';
 import { installPackFromNetwork } from '../use-cases/install-pack-from-network';
 import { mapPackInstallError } from '../use-cases/map-pack-install-error';
 import { isAuthRequiredError } from '../use-cases/auth-required-error';
@@ -96,14 +95,7 @@ export function PackDetailScreen(props: PackDetailScreenProps): ReactElement {
       }
 
       if (viewModel.actionKind === 'install' || viewModel.actionKind === 'update') {
-        if (!viewModel.isBundledTestPack) {
-          await installPackFromNetwork(viewModel.packId);
-          markLibraryNeedsRefresh();
-          await refresh();
-          setMessage(viewModel.actionKind === 'update' ? '更新成功' : '安装成功');
-          return;
-        }
-        await installBundledTestPack(viewModel.packId);
+        await installPackFromNetwork(viewModel.packId);
         markLibraryNeedsRefresh();
         await refresh();
         setMessage(viewModel.actionKind === 'update' ? '更新成功' : '安装成功');

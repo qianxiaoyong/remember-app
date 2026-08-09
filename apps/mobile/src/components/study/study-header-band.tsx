@@ -5,6 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { VocabularyContent } from '@remember/contracts';
 import { HeaderIconButton } from '../ui/header-icon-button';
 import { AppIcon } from '../ui/app-icon';
+import { AnimatedSpeakerIcon } from '../ui/animated-speaker-icon';
 import { StudyDefinitionStrip } from './study-definition-strip';
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
@@ -15,6 +16,7 @@ interface StudyHeaderBandProps {
   onMorePress: () => void;
   onPlayAudio: () => void;
   revealed: boolean;
+  primaryAudioPlaying?: boolean;
   /** 复习页顶栏居中包名，如「来自《xxx》」 */
   contextLabel?: string;
   /** 预览页：左侧返回、隐藏更多 */
@@ -97,7 +99,10 @@ export function StudyHeaderBand(props: StudyHeaderBandProps): ReactElement {
               <Text style={styles.phonetic}>{prompt.phonetic.ipa}</Text>
             </>
           ) : null}
-          <AppIcon color={colors.surface} name="volume-high-outline" size="sm" />
+          <AnimatedSpeakerIcon
+            color={colors.surface}
+            playing={props.primaryAudioPlaying ?? false}
+          />
         </Pressable>
       </View>
 

@@ -14,6 +14,7 @@ interface StudyRevealScrollBodyProps {
   highlightSurfaceForm?: string | null;
   onPlayExampleAudio: (relativePath: string) => void;
   onTokenPress: (token: string) => void;
+  playingExampleAudioPath?: string | null;
 }
 
 export function StudyRevealScrollBody(props: StudyRevealScrollBodyProps): ReactElement {
@@ -26,6 +27,7 @@ export function StudyRevealScrollBody(props: StudyRevealScrollBodyProps): ReactE
           highlightSurfaceForm={props.highlightSurfaceForm ?? null}
           onPlayExampleAudio={props.onPlayExampleAudio}
           onTokenPress={props.onTokenPress}
+          playingExampleAudioPath={props.playingExampleAudioPath ?? null}
         />
       </StudySectionCard>
       {props.content.reveal.mnemonic ? (
