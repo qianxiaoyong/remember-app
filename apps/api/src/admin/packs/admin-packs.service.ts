@@ -10,6 +10,7 @@ import {
 import { AuditService } from '../../audit/audit.service.js';
 import { readAdminPackConfig } from '../../config/read-admin-pack-config.js';
 import { PrismaService } from '../../prisma/prisma.service.js';
+import { AdminContentTagsService } from '../content-tags/admin-content-tags.service.js';
 import { toAdminPackSummary, toAdminPackVersion } from './admin-packs.mapper.js';
 import { AdminPacksRepository } from './admin-packs.repository.js';
 
@@ -21,6 +22,7 @@ export class AdminPacksService {
     private readonly repository: AdminPacksRepository,
     private readonly prisma: PrismaService,
     private readonly auditService: AuditService,
+    private readonly contentTagsService: AdminContentTagsService,
   ) {}
 
   async listPacks() {
@@ -93,6 +95,8 @@ export class AdminPacksService {
       },
     });
 
+    await this.contentTagsService.upsertLabels(input.contentTags);
+
     return this.listPacks();
   }
 
@@ -148,6 +152,10 @@ export class AdminPacksService {
         ...(input.status !== undefined ? { status: input.status } : {}),
       },
     });
+
+    if (input.contentTags !== undefined) {
+      await this.contentTagsService.upsertLabels(input.contentTags);
+    }
 
     return this.listPacks();
   }

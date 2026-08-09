@@ -26,11 +26,15 @@ describe('AdminPacksService.deletePack', () => {
   const auditService = {
     writeAuditLog: vi.fn(),
   };
+  const contentTagsService = {
+    upsertLabels: vi.fn(),
+  };
 
   const service = new AdminPacksService(
     repository as never,
     prisma as never,
     auditService as never,
+    contentTagsService as never,
   );
 
   beforeEach(() => {

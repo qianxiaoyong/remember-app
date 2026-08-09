@@ -1,19 +1,17 @@
 import type { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import type { PrismaClient } from '@prisma/client';
-import { adminLoginResponseSchema, verifySmsCodeResponseSchema } from '@remember/contracts';
+import { verifySmsCodeResponseSchema } from '@remember/contracts';
 import request from 'supertest';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
-import { hashAdminPassword } from '../src/admin-auth/admin-password.js';
 import { AppModule } from '../src/app.module.js';
 import { AuditService } from '../src/audit/audit.service.js';
+import { ADMIN_LOGIN, adminLogin, seedAdminUser } from './helpers/admin-test-helper.js';
 import { applyIntegrationTestEnv } from './helpers/integration-env.js';
 import { createIntegrationPrismaClient, resetAuthTables } from './helpers/db-test-helper.js';
 
 const TEST_PHONE = '13800138000';
 const DEVICE_A = '11111111-1111-4111-8111-111111111111';
-const ADMIN_LOGIN = 'admin';
-const ADMIN_PASSWORD = 'integration-admin-password';
 
 function requireDatabaseUrl(): string {
   const databaseUrl = process.env.DATABASE_URL?.trim();
@@ -21,39 +19,6 @@ function requireDatabaseUrl(): string {
     throw new Error('DATABASE_URL must be set for integration tests');
   }
   return databaseUrl;
-}
-
-async function seedAdminUser(prisma: PrismaClient): Promise<{ adminUserId: string }> {
-  const passwordHash = await hashAdminPassword(ADMIN_PASSWORD);
-  const adminUser = await prisma.adminUser.upsert({
-    where: { loginName: ADMIN_LOGIN },
-    create: {
-      loginName: ADMIN_LOGIN,
-      passwordHash,
-    },
-    update: {
-      passwordHash,
-      status: 'active',
-    },
-  });
-  return { adminUserId: adminUser.id };
-}
-
-async function adminLogin(
-  server: Parameters<typeof request>[0],
-  loginName = ADMIN_LOGIN,
-  password = ADMIN_PASSWORD,
-): Promise<{ token: string; adminUserId: string }> {
-  const response = await request(server)
-    .post('/api/v1/admin/auth/login')
-    .send({ loginName, password })
-    .expect(200);
-
-  const body = adminLoginResponseSchema.parse(response.body);
-  return {
-    token: body.token,
-    adminUserId: body.admin.adminUserId,
-  };
 }
 
 async function appUserLogin(server: Parameters<typeof request>[0]): Promise<string> {

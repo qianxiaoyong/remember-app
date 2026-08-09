@@ -10,6 +10,8 @@ import { AdminAuditLogsService } from './audit-logs/admin-audit-logs.service.js'
 import { AdminCatalogTaxonomyController } from './catalog-taxonomy/admin-catalog-taxonomy.controller.js';
 import { AdminCatalogTaxonomyRepository } from './catalog-taxonomy/admin-catalog-taxonomy.repository.js';
 import { AdminCatalogTaxonomyService } from './catalog-taxonomy/admin-catalog-taxonomy.service.js';
+import { AdminContentTagsController } from './content-tags/admin-content-tags.controller.js';
+import { AdminContentTagsService } from './content-tags/admin-content-tags.service.js';
 import { AdminDashboardController } from './dashboard/admin-dashboard.controller.js';
 import { AdminDashboardRepository } from './dashboard/admin-dashboard.repository.js';
 import { AdminDashboardService } from './dashboard/admin-dashboard.service.js';
@@ -49,6 +51,7 @@ import { AdminUsersService } from './users/admin-users.service.js';
     AdminPacksController,
     AdminMediaController,
     AdminCatalogTaxonomyController,
+    AdminContentTagsController,
     AdminRefundsController,
     AdminRedemptionController,
     AdminAuditLogsController,
@@ -67,6 +70,7 @@ import { AdminUsersService } from './users/admin-users.service.js';
     AdminMediaService,
     AdminCatalogTaxonomyRepository,
     AdminCatalogTaxonomyService,
+    AdminContentTagsService,
     AdminRefundsService,
     AdminRedemptionService,
     AdminAuditLogsService,

@@ -96,6 +96,32 @@ async function upsertDevPacks(): Promise<void> {
   });
 }
 
+async function upsertDevContentTagVocabulary(): Promise<void> {
+  const packs = await prisma.pack.findMany({ select: { contentTags: true } });
+  const labels = new Set<string>();
+
+  for (const pack of packs) {
+    if (!Array.isArray(pack.contentTags)) {
+      continue;
+    }
+    for (const tag of pack.contentTags) {
+      if (typeof tag === 'string' && tag.trim()) {
+        labels.add(tag.trim());
+      }
+    }
+  }
+
+  let sortOrder = 10;
+  for (const label of [...labels].sort()) {
+    await prisma.contentTagVocabulary.upsert({
+      where: { label },
+      create: { label, sortOrder },
+      update: {},
+    });
+    sortOrder += 10;
+  }
+}
+
 async function upsertVersion(packId: string, packVersion: string): Promise<void> {
   const row = await prisma.packVersion.upsert({
     where: { packId_packVersion: { packId, packVersion } },
@@ -154,6 +180,9 @@ async function main(): Promise<void> {
 
   await upsertDevPacks();
   console.log('ok dev catalog packs');
+
+  await upsertDevContentTagVocabulary();
+  console.log('ok dev content tag vocabulary');
 
   await upsertDevAdminUser();
 
