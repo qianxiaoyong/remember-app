@@ -1,0 +1,570 @@
+[
+  {
+    "unit": 5,
+    "headword": "farmer",
+    "ipa": "",
+    "definition_zh": "农民",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "cook",
+    "ipa": "",
+    "definition_zh": "厨师",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "worker",
+    "ipa": "",
+    "definition_zh": "工人",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "grow",
+    "ipa": "",
+    "definition_zh": "种植",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "police officer",
+    "ipa": "",
+    "definition_zh": "警察",
+    "page": 50,
+    "kind": "phrase"
+  },
+  {
+    "unit": 5,
+    "headword": "nurse",
+    "ipa": "",
+    "definition_zh": "护士",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "job",
+    "ipa": "",
+    "definition_zh": "工作",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "dancer",
+    "ipa": "",
+    "definition_zh": "舞蹈演员",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "singer",
+    "ipa": "",
+    "definition_zh": "歌唱演员",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "true",
+    "ipa": "",
+    "definition_zh": "确实的",
+    "page": 60,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "driver",
+    "ipa": "",
+    "definition_zh": "司机",
+    "page": 60,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "scientist",
+    "ipa": "",
+    "definition_zh": "科学家",
+    "page": 60,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "learn",
+    "ipa": "",
+    "definition_zh": "学习",
+    "page": 60,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "middle school",
+    "ipa": "",
+    "definition_zh": "中学",
+    "page": 70,
+    "kind": "phrase"
+  },
+  {
+    "unit": 7,
+    "headword": "teachers' office",
+    "ipa": "",
+    "definition_zh": "教师办公室",
+    "page": 70,
+    "kind": "phrase"
+  },
+  {
+    "unit": 7,
+    "headword": "study",
+    "ipa": "",
+    "definition_zh": "学习",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "physics",
+    "ipa": "",
+    "definition_zh": "物理",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "lab",
+    "ipa": "",
+    "definition_zh": "实验室",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "chemistry",
+    "ipa": "",
+    "definition_zh": "化学",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "bottle",
+    "ipa": "",
+    "definition_zh": "瓶子",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "Edison",
+    "ipa": "",
+    "definition_zh": "爱迪生",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "inventor",
+    "ipa": "",
+    "definition_zh": "发明家",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "subject",
+    "ipa": "",
+    "definition_zh": "科目",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "history",
+    "ipa": "",
+    "definition_zh": "历史",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "geography",
+    "ipa": "",
+    "definition_zh": "地理",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 8,
+    "headword": "miss",
+    "ipa": "",
+    "definition_zh": "想念",
+    "page": 80,
+    "kind": "word"
+  },
+  {
+    "unit": 8,
+    "headword": "year book",
+    "ipa": "",
+    "definition_zh": "毕业留念册",
+    "page": 80,
+    "kind": "phrase"
+  },
+  {
+    "unit": 8,
+    "headword": "address",
+    "ipa": "",
+    "definition_zh": "地址",
+    "page": 80,
+    "kind": "word"
+  },
+  {
+    "unit": 8,
+    "headword": "information",
+    "ipa": "",
+    "definition_zh": "信息",
+    "page": 80,
+    "kind": "word"
+  },
+  {
+    "unit": 8,
+    "headword": "gave",
+    "ipa": "",
+    "definition_zh": "give的过去式",
+    "page": 80,
+    "kind": "word"
+  },
+  {
+    "unit": 8,
+    "headword": "*leave",
+    "ipa": "",
+    "definition_zh": "离开",
+    "page": 80,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "anywhere",
+    "ipa": "",
+    "definition_zh": "任何地方",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "famous",
+    "ipa": "",
+    "definition_zh": "著名的",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "travel",
+    "ipa": "",
+    "definition_zh": "旅行",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "along",
+    "ipa": "",
+    "definition_zh": "沿着",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "the Yangtze River",
+    "ipa": "",
+    "definition_zh": "长江",
+    "page": 10,
+    "kind": "phrase"
+  },
+  {
+    "unit": 1,
+    "headword": "go back",
+    "ipa": "",
+    "definition_zh": "回到",
+    "page": 10,
+    "kind": "phrase"
+  },
+  {
+    "unit": 1,
+    "headword": "made",
+    "ipa": "",
+    "definition_zh": "make的过去式",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "show",
+    "ipa": "",
+    "definition_zh": "给……看",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "fat",
+    "ipa": "",
+    "definition_zh": "胖的",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "thin",
+    "ipa": "",
+    "definition_zh": "瘦的",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "Ice",
+    "ipa": "",
+    "definition_zh": "and Snow Festival冰雪节",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "break",
+    "ipa": "",
+    "definition_zh": "（过去式 broke）摔断",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "hear",
+    "ipa": "",
+    "definition_zh": "听见",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "lesson",
+    "ipa": "",
+    "definition_zh": "功课；课业",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "heavy",
+    "ipa": "",
+    "definition_zh": "重的",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "carry",
+    "ipa": "",
+    "definition_zh": "携带；搬运",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "light",
+    "ipa": "",
+    "definition_zh": "轻的",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "feel",
+    "ipa": "",
+    "definition_zh": "感觉到",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "hope",
+    "ipa": "",
+    "definition_zh": "希望",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "soon",
+    "ipa": "",
+    "definition_zh": "不久",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "ill",
+    "ipa": "",
+    "definition_zh": "不适；生病的",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "wrong",
+    "ipa": "",
+    "definition_zh": "不正常",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "headache",
+    "ipa": "",
+    "definition_zh": "头疼",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "have a cold",
+    "ipa": "",
+    "definition_zh": "感冒",
+    "page": 30,
+    "kind": "phrase"
+  },
+  {
+    "unit": 3,
+    "headword": "toothache",
+    "ipa": "",
+    "definition_zh": "牙疼",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "fever",
+    "ipa": "",
+    "definition_zh": "发烧",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "open",
+    "ipa": "",
+    "definition_zh": "张开；打开",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "must",
+    "ipa": "",
+    "definition_zh": "必须",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "mustn't = must not",
+    "ipa": "",
+    "definition_zh": "不允许",
+    "page": 30,
+    "kind": "phrase"
+  },
+  {
+    "unit": 3,
+    "headword": "a lot of",
+    "ipa": "",
+    "definition_zh": "大量的",
+    "page": 30,
+    "kind": "phrase"
+  },
+  {
+    "unit": 3,
+    "headword": "medicine",
+    "ipa": "",
+    "definition_zh": "药",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "doctor",
+    "ipa": "",
+    "definition_zh": "医生",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "cross",
+    "ipa": "",
+    "definition_zh": "横穿",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "street",
+    "ipa": "",
+    "definition_zh": "街；街道",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "kiss",
+    "ipa": "",
+    "definition_zh": "亲吻",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "love",
+    "ipa": "",
+    "definition_zh": "爱",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "surprise",
+    "ipa": "",
+    "definition_zh": "惊讶",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "kind",
+    "ipa": "",
+    "definition_zh": "种；类",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "dining room",
+    "ipa": "",
+    "definition_zh": "餐厅",
+    "page": 40,
+    "kind": "phrase"
+  },
+  {
+    "unit": 4,
+    "headword": "*restaurant",
+    "ipa": "",
+    "definition_zh": "餐馆",
+    "page": 40,
+    "kind": "word"
+  }
+]

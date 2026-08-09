@@ -1,0 +1,35 @@
+{
+  "packId": "en-grade3-v1-mj",
+  "packVersion": "1.0.3",
+  "cardCount": 178,
+  "wordCardCount": 166,
+  "phraseCardCount": 12,
+  "exampleCount": 534,
+  "lexiconEntryCount": 266,
+  "unitStats": [
+    {
+      "unit": "Unit 1",
+      "cardCount": 52,
+      "wordCount": 49,
+      "phraseCount": 3
+    },
+    {
+      "unit": "Unit 2",
+      "cardCount": 48,
+      "wordCount": 41,
+      "phraseCount": 7
+    },
+    {
+      "unit": "Unit 3",
+      "cardCount": 43,
+      "wordCount": 42,
+      "phraseCount": 1
+    },
+    {
+      "unit": "Unit 4",
+      "cardCount": 35,
+      "wordCount": 34,
+      "phraseCount": 1
+    }
+  ]
+}

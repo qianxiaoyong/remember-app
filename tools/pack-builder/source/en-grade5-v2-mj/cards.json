@@ -1,0 +1,4598 @@
+[
+  {
+    "kind": "word",
+    "sortOrder": 1,
+    "content": {
+      "prompt": {
+        "headword": "China",
+        "primaryAudio": "assets/audio/china.mp3",
+        "phonetic": {
+          "ipa": "/ˈtʃaɪnə/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "中国",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I went to China with my parent.",
+            "zh": "我和家长一起去了中国。",
+            "audio": "assets/audio/examples/china-1.mp3"
+          },
+          {
+            "en": "Sun Moon Lake is in China.",
+            "zh": "日月潭在中国。",
+            "audio": "assets/audio/examples/china-2.mp3"
+          },
+          {
+            "en": "We took a tour in China.",
+            "zh": "我们在中国旅行。",
+            "audio": "assets/audio/examples/china-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：China 音近「chai 呐」，chai 呐代表中国 China。\n形象联想：想象 China 中国地图上的 Sun Moon Lake。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 2,
+    "content": {
+      "prompt": {
+        "headword": "did",
+        "primaryAudio": "assets/audio/did.mp3",
+        "phonetic": {
+          "ipa": "/dɪd, dəd/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "做（过去式）",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "What did you do on the tour?",
+            "zh": "旅行中你做了什么？",
+            "audio": "assets/audio/examples/did-1.mp3"
+          },
+          {
+            "en": "I did my homework before the trip.",
+            "zh": "出发前我做了作业。",
+            "audio": "assets/audio/examples/did-2.mp3"
+          },
+          {
+            "en": "We did many fun things at the lake.",
+            "zh": "我们在湖边做了很多有趣的事。",
+            "audio": "assets/audio/examples/did-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：What did you do? did 是 do 的过去式，做了。"
+        },
+        "inflectionNote": "do 的过去式"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 3,
+    "content": {
+      "prompt": {
+        "headword": "hometown",
+        "primaryAudio": "assets/audio/hometown.mp3",
+        "phonetic": {
+          "ipa": "/ˈhəʊmtaʊn/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "故乡",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I went back to my hometown.",
+            "zh": "我回了故乡。",
+            "audio": "assets/audio/examples/hometown-1.mp3"
+          },
+          {
+            "en": "My hometown has a beautiful lake.",
+            "zh": "我故乡有一个美丽的湖。",
+            "audio": "assets/audio/examples/hometown-2.mp3"
+          },
+          {
+            "en": "We took a tour near my hometown.",
+            "zh": "我们在故乡附近旅行。",
+            "audio": "assets/audio/examples/hometown-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：hometown 音近「厚姆汤」，厚姆汤回 hometown 故乡。\n语义联想：把「故乡」和英文 hometown 配对记忆。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 4,
+    "content": {
+      "prompt": {
+        "headword": "lake",
+        "primaryAudio": "assets/audio/lake.mp3",
+        "phonetic": {
+          "ipa": "/leɪk/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "湖",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The lake is very beautiful.",
+            "zh": "这个湖非常美。",
+            "audio": "assets/audio/examples/lake-1.mp3"
+          },
+          {
+            "en": "We swam in the lake.",
+            "zh": "我们在湖里游泳。",
+            "audio": "assets/audio/examples/lake-2.mp3"
+          },
+          {
+            "en": "Sun Moon Lake is a famous lake.",
+            "zh": "日月潭是一个著名的湖。",
+            "audio": "assets/audio/examples/lake-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：lake 音近「雷克」，雷克在 lake 湖边。\n形象联想：想象 Sun Moon Lake 日月潭的 lake 湖。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 5,
+    "content": {
+      "prompt": {
+        "headword": "parent",
+        "primaryAudio": "assets/audio/parent.mp3",
+        "phonetic": {
+          "ipa": "/ˈpeərənt, ˈpærənt/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "父，母；家长",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "My parent took me to the lake.",
+            "zh": "我的家长带我去湖边。",
+            "audio": "assets/audio/examples/parent-1.mp3"
+          },
+          {
+            "en": "I went to China with my parent.",
+            "zh": "我和家长一起去了中国。",
+            "audio": "assets/audio/examples/parent-2.mp3"
+          },
+          {
+            "en": "My parent was on the tour with me.",
+            "zh": "我的家长和我一起旅行。",
+            "audio": "assets/audio/examples/parent-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：parent 音近「佩润特」，佩润特是 parent 家长。\n语义联想：把「父」和英文 parent 配对记忆。"
+        },
+        "inflectionNote": "复数 parents"
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 6,
+    "content": {
+      "prompt": {
+        "headword": "Sun Moon Lake",
+        "primaryAudio": "assets/audio/sun-moon-lake.mp3",
+        "phonetic": {
+          "ipa": "/ˌsʌn muːn ˈleɪk/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "日月潭",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Sun Moon Lake is in China.",
+            "zh": "日月潭在中国。",
+            "audio": "assets/audio/examples/sun-moon-lake-1.mp3"
+          },
+          {
+            "en": "We went to Sun Moon Lake last summer.",
+            "zh": "我们去年夏天去了日月潭。",
+            "audio": "assets/audio/examples/sun-moon-lake-2.mp3"
+          },
+          {
+            "en": "I swam near Sun Moon Lake.",
+            "zh": "我在日月潭附近游泳。",
+            "audio": "assets/audio/examples/sun-moon-lake-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：Sun 日 + Moon 月 + Lake 湖，Sun Moon Lake 是日月潭。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 7,
+    "content": {
+      "prompt": {
+        "headword": "swam",
+        "primaryAudio": "assets/audio/swam.mp3",
+        "phonetic": {
+          "ipa": "/swæm/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "游泳（过去式）",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I swam in the lake.",
+            "zh": "我在湖里游泳。",
+            "audio": "assets/audio/examples/swam-1.mp3"
+          },
+          {
+            "en": "We swam near Sun Moon Lake.",
+            "zh": "我们在日月潭附近游泳。",
+            "audio": "assets/audio/examples/swam-2.mp3"
+          },
+          {
+            "en": "She swam with her parent.",
+            "zh": "她和家长一起游泳。",
+            "audio": "assets/audio/examples/swam-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：swam 音近「斯旺姆」，斯旺姆 swam 游泳。\n语义联想：把「游泳（过去式）」和英文 swam 配对记忆。"
+        },
+        "inflectionNote": "swim 的过去式"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 8,
+    "content": {
+      "prompt": {
+        "headword": "took",
+        "primaryAudio": "assets/audio/took.mp3",
+        "phonetic": {
+          "ipa": "/tʊk/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "拿；带（过去式）",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "We took a tour to Sun Moon Lake.",
+            "zh": "我们去日月潭旅行。",
+            "audio": "assets/audio/examples/took-1.mp3"
+          },
+          {
+            "en": "My parent took many photos.",
+            "zh": "我的家长拍了很多照片。",
+            "audio": "assets/audio/examples/took-2.mp3"
+          },
+          {
+            "en": "I took a boat on the lake.",
+            "zh": "我在湖上坐了船。",
+            "audio": "assets/audio/examples/took-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：We took a tour. took 是 take 的过去式，带了、拿了。"
+        },
+        "inflectionNote": "take 的过去式"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 9,
+    "content": {
+      "prompt": {
+        "headword": "tour",
+        "primaryAudio": "assets/audio/tour.mp3",
+        "phonetic": {
+          "ipa": "/tʊə(r), tɔː(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "旅行；旅游",
+            "pos": "n./v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "We had a tour in China.",
+            "zh": "我们在中国旅行。",
+            "audio": "assets/audio/examples/tour-1.mp3"
+          },
+          {
+            "en": "The tour to Sun Moon Lake was fun.",
+            "zh": "日月潭之旅很有趣。",
+            "audio": "assets/audio/examples/tour-2.mp3"
+          },
+          {
+            "en": "I went on a tour with my parent.",
+            "zh": "我和家长一起旅行。",
+            "audio": "assets/audio/examples/tour-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：tour 音近「图尔」，图尔去 tour 旅行。\n语义联想：把「旅行」和英文 tour 配对记忆。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 10,
+    "content": {
+      "prompt": {
+        "headword": "was",
+        "primaryAudio": "assets/audio/was.mp3",
+        "phonetic": {
+          "ipa": "/wɒz, wəz/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "是（过去式）",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I was in China last summer.",
+            "zh": "我去年夏天在中国。",
+            "audio": "assets/audio/examples/was-1.mp3"
+          },
+          {
+            "en": "She was happy on the tour.",
+            "zh": "她在旅行中很开心。",
+            "audio": "assets/audio/examples/was-2.mp3"
+          },
+          {
+            "en": "It was a beautiful lake.",
+            "zh": "那是一个很美的湖。",
+            "audio": "assets/audio/examples/was-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：I was in China. was 是 am/is 的过去式，曾经是。"
+        },
+        "inflectionNote": "am/is 的过去式；复数过去式 were"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 11,
+    "content": {
+      "prompt": {
+        "headword": "went",
+        "primaryAudio": "assets/audio/went.mp3",
+        "phonetic": {
+          "ipa": "/went/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "去（过去式）",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "We went to Sun Moon Lake.",
+            "zh": "我们去了日月潭。",
+            "audio": "assets/audio/examples/went-1.mp3"
+          },
+          {
+            "en": "I went to my hometown.",
+            "zh": "我回了故乡。",
+            "audio": "assets/audio/examples/went-2.mp3"
+          },
+          {
+            "en": "They went on a tour in China.",
+            "zh": "他们在中国旅行。",
+            "audio": "assets/audio/examples/went-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：We went to the lake. went 是 go 的过去式，去了。"
+        },
+        "inflectionNote": "go 的过去式"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 12,
+    "content": {
+      "prompt": {
+        "headword": "were",
+        "primaryAudio": "assets/audio/were.mp3",
+        "phonetic": {
+          "ipa": "/wə(r), wɜː(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "是（过去式）",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "We were at Sun Moon Lake.",
+            "zh": "我们在日月潭。",
+            "audio": "assets/audio/examples/were-1.mp3"
+          },
+          {
+            "en": "My parents were in my hometown.",
+            "zh": "我父母在我的故乡。",
+            "audio": "assets/audio/examples/were-2.mp3"
+          },
+          {
+            "en": "They were tired after the tour.",
+            "zh": "旅行后他们很累。",
+            "audio": "assets/audio/examples/were-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：We were at the lake. were 是 are 的过去式，曾是。"
+        },
+        "inflectionNote": "are 的过去式"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 13,
+    "content": {
+      "prompt": {
+        "headword": "animal",
+        "primaryAudio": "assets/audio/animal.mp3",
+        "phonetic": {
+          "ipa": "/ˈænɪml/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "动物",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Look at the animal!",
+            "zh": "看那只动物！",
+            "audio": "assets/audio/examples/animal-1.mp3"
+          },
+          {
+            "en": "We saw an animal at the zoo.",
+            "zh": "我们在动物园看见很多动物。",
+            "audio": "assets/audio/examples/animal-2.mp3"
+          },
+          {
+            "en": "The elephant is a big animal.",
+            "zh": "大象是一种大型动物。",
+            "audio": "assets/audio/examples/animal-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "形象联想：想象 zoo 里各种 animal 动物。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 14,
+    "content": {
+      "prompt": {
+        "headword": "any",
+        "primaryAudio": "assets/audio/any.mp3",
+        "phonetic": {
+          "ipa": "/ˈeni/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "任何的；若干",
+            "pos": "det./pron."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Do you have any food?",
+            "zh": "你有任何食物吗？",
+            "audio": "assets/audio/examples/any-1.mp3"
+          },
+          {
+            "en": "Are there any animals over there?",
+            "zh": "那边有任何动物吗？",
+            "audio": "assets/audio/examples/any-2.mp3"
+          },
+          {
+            "en": "I did not see any elephants.",
+            "zh": "我没有看见任何大象。",
+            "audio": "assets/audio/examples/any-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Do you have any food? any 是任何的。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 15,
+    "content": {
+      "prompt": {
+        "headword": "ate",
+        "primaryAudio": "assets/audio/ate.mp3",
+        "phonetic": {
+          "ipa": "/et, eɪt/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "吃（过去式）",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "We ate lunch at the zoo.",
+            "zh": "我们在动物园吃了午饭。",
+            "audio": "assets/audio/examples/ate-1.mp3"
+          },
+          {
+            "en": "The elephant ate grass.",
+            "zh": "大象吃了草。",
+            "audio": "assets/audio/examples/ate-2.mp3"
+          },
+          {
+            "en": "I ate an apple when I was hungry.",
+            "zh": "我饿的时候吃了一个苹果。",
+            "audio": "assets/audio/examples/ate-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：ate 音近「埃特」，埃特 ate 吃了饭。\n语义联想：把「吃（过去式）」和英文 ate 配对记忆。"
+        },
+        "inflectionNote": "eat 的过去式"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 16,
+    "content": {
+      "prompt": {
+        "headword": "elephant",
+        "primaryAudio": "assets/audio/elephant.mp3",
+        "phonetic": {
+          "ipa": "/ˈelɪfənt/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "大象",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Look at the elephant!",
+            "zh": "看那头大象！",
+            "audio": "assets/audio/examples/elephant-1.mp3"
+          },
+          {
+            "en": "The elephant is over there.",
+            "zh": "大象在那边。",
+            "audio": "assets/audio/examples/elephant-2.mp3"
+          },
+          {
+            "en": "We saw a big elephant at the zoo.",
+            "zh": "我们在动物园看见一头大象。",
+            "audio": "assets/audio/examples/elephant-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：elephant 音近「艾里芳特」，艾里芳特是 elephant 大象。\n形象联想：想象 elephant 大象在 zoo over there。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 17,
+    "content": {
+      "prompt": {
+        "headword": "hill",
+        "primaryAudio": "assets/audio/hill.mp3",
+        "phonetic": {
+          "ipa": "/hɪl/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "小山",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "There is a hill in the zoo.",
+            "zh": "动物园里有一座小山。",
+            "audio": "assets/audio/examples/hill-1.mp3"
+          },
+          {
+            "en": "We climbed the small hill.",
+            "zh": "我们爬了那座小山。",
+            "audio": "assets/audio/examples/hill-2.mp3"
+          },
+          {
+            "en": "The animal lives on the hill.",
+            "zh": "动物住在小山上。",
+            "audio": "assets/audio/examples/hill-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：hill 音近「希欧」，希欧爬 hill 小山。\n语义联想：把「小山」和英文 hill 配对记忆。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 18,
+    "content": {
+      "prompt": {
+        "headword": "hungry",
+        "primaryAudio": "assets/audio/hungry.mp3",
+        "phonetic": {
+          "ipa": "/ˈhʌŋɡri/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "饿的",
+            "pos": "adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The animal is hungry.",
+            "zh": "这只动物饿了。",
+            "audio": "assets/audio/examples/hungry-1.mp3"
+          },
+          {
+            "en": "I am hungry. Can I eat?",
+            "zh": "我饿了。我能吃吗？",
+            "audio": "assets/audio/examples/hungry-2.mp3"
+          },
+          {
+            "en": "We were hungry after the tour.",
+            "zh": "旅行后我们饿了。",
+            "audio": "assets/audio/examples/hungry-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：hungry 音近「汉格瑞」，汉格瑞 feel hungry 饿了。\n语义联想：看到「饿的」的事物时，就想到 hungry。"
+        },
+        "inflectionNote": "比较级 hungrier；最高级 hungriest"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 19,
+    "content": {
+      "prompt": {
+        "headword": "map",
+        "primaryAudio": "assets/audio/map.mp3",
+        "phonetic": {
+          "ipa": "/mæp/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "地图",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Look at the map of the zoo.",
+            "zh": "看动物园的地图。",
+            "audio": "assets/audio/examples/map-1.mp3"
+          },
+          {
+            "en": "The elephant is on the map.",
+            "zh": "大象在地图上。",
+            "audio": "assets/audio/examples/map-2.mp3"
+          },
+          {
+            "en": "We found the hill on the map.",
+            "zh": "我们在地图上找到了小山。",
+            "audio": "assets/audio/examples/map-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：map 音近「麦普」，麦普看 map 地图。\n形象联想：想象 map 地图上标着 elephant 和 hill。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 20,
+    "content": {
+      "prompt": {
+        "headword": "next to",
+        "primaryAudio": "assets/audio/next-to.mp3",
+        "phonetic": {
+          "ipa": "/ˌnekst tuː, ˌnekst tə/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "紧挨着",
+            "pos": "prep. phr."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The hill is next to the lake.",
+            "zh": "小山紧挨着湖。",
+            "audio": "assets/audio/examples/next-to-1.mp3"
+          },
+          {
+            "en": "Sit next to me, please.",
+            "zh": "请坐在我旁边。",
+            "audio": "assets/audio/examples/next-to-2.mp3"
+          },
+          {
+            "en": "The elephant is next to the gate.",
+            "zh": "大象紧挨着大门。",
+            "audio": "assets/audio/examples/next-to-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：next 下一个 + to 到，next to 是紧挨着。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 21,
+    "content": {
+      "prompt": {
+        "headword": "over there",
+        "primaryAudio": "assets/audio/over-there.mp3",
+        "phonetic": {
+          "ipa": "/ˌəʊvə ˈðeə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "在那边",
+            "pos": "adv. phr."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The elephant is over there.",
+            "zh": "大象在那边。",
+            "audio": "assets/audio/examples/over-there-1.mp3"
+          },
+          {
+            "en": "Look! An animal is over there.",
+            "zh": "看！那边有一只动物。",
+            "audio": "assets/audio/examples/over-there-2.mp3"
+          },
+          {
+            "en": "The hill is over there, next to the lake.",
+            "zh": "小山在那边，紧挨着湖。",
+            "audio": "assets/audio/examples/over-there-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：over 越过 + there 那里，over there 是在那边。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 22,
+    "content": {
+      "prompt": {
+        "headword": "saw",
+        "primaryAudio": "assets/audio/saw.mp3",
+        "phonetic": {
+          "ipa": "/sɔː/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "看见（过去式）",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "We saw an elephant at the zoo.",
+            "zh": "我们在动物园看见一头大象。",
+            "audio": "assets/audio/examples/saw-1.mp3"
+          },
+          {
+            "en": "I saw a hungry animal over there.",
+            "zh": "我在那边看见一只饿的动物。",
+            "audio": "assets/audio/examples/saw-2.mp3"
+          },
+          {
+            "en": "She saw the hill on the map.",
+            "zh": "她在地图上看见了小山。",
+            "audio": "assets/audio/examples/saw-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：We saw an elephant. saw 是 see 的过去式，看见了。"
+        },
+        "inflectionNote": "see 的过去式"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 23,
+    "content": {
+      "prompt": {
+        "headword": "under",
+        "primaryAudio": "assets/audio/under.mp3",
+        "phonetic": {
+          "ipa": "/ˈʌndə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "在……下面",
+            "pos": "prep./adv."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The cat is under the tree.",
+            "zh": "猫在树下面。",
+            "audio": "assets/audio/examples/under-1.mp3"
+          },
+          {
+            "en": "We saw animals under the hill.",
+            "zh": "我们在小山下面看见了动物。",
+            "audio": "assets/audio/examples/under-2.mp3"
+          },
+          {
+            "en": "Put the map under the book.",
+            "zh": "把地图放在书下面。",
+            "audio": "assets/audio/examples/under-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：The cat is under the tree. under 是在……下面。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 24,
+    "content": {
+      "prompt": {
+        "headword": "award",
+        "primaryAudio": "assets/audio/award.mp3",
+        "phonetic": {
+          "ipa": "/əˈwɔːd/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "授予；奖励",
+            "pos": "v./n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "They award the hero a medal.",
+            "zh": "他们授予英雄一枚勋章。",
+            "audio": "assets/audio/examples/award-1.mp3"
+          },
+          {
+            "en": "The doctor got an award.",
+            "zh": "这位医生获得了荣誉。",
+            "audio": "assets/audio/examples/award-2.mp3"
+          },
+          {
+            "en": "She won an award for her work.",
+            "zh": "她因工作获奖。",
+            "audio": "assets/audio/examples/award-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：They award the hero a medal. award 是授予、奖励。"
+        },
+        "inflectionNote": "第三人称单数 awards；过去式 awarded"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 25,
+    "content": {
+      "prompt": {
+        "headword": "Covid-19",
+        "primaryAudio": "assets/audio/covid-19.mp3",
+        "phonetic": {
+          "ipa": "/ˌkəʊvɪd ˌnaɪnˈtiːn/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "新型冠状病毒感染",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Doctors fight Covid-19.",
+            "zh": "医生与新冠病毒作斗争。",
+            "audio": "assets/audio/examples/covid-19-1.mp3"
+          },
+          {
+            "en": "We learn about Covid-19 at school.",
+            "zh": "我们在学校了解新冠病毒。",
+            "audio": "assets/audio/examples/covid-19-2.mp3"
+          },
+          {
+            "en": "Many heroes helped during Covid-19.",
+            "zh": "许多英雄在疫情期间提供了帮助。",
+            "audio": "assets/audio/examples/covid-19-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：COVID 冠状病毒 + 19 年，Covid-19 是新冠病毒。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 26,
+    "content": {
+      "prompt": {
+        "headword": "doctor",
+        "primaryAudio": "assets/audio/doctor.mp3",
+        "phonetic": {
+          "ipa": "/ˈdɒktə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "医生",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The doctor is a hero.",
+            "zh": "这位医生是英雄。",
+            "audio": "assets/audio/examples/doctor-1.mp3"
+          },
+          {
+            "en": "Dr. Li is a good doctor.",
+            "zh": "李医生是一位好医生。",
+            "audio": "assets/audio/examples/doctor-2.mp3"
+          },
+          {
+            "en": "The doctor serves people every day.",
+            "zh": "医生每天为人们服务。",
+            "audio": "assets/audio/examples/doctor-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：doctor 音近「道克特」，道克特是 doctor 医生。\n语义联想：把「医生」和英文 doctor 配对记忆。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 27,
+    "content": {
+      "prompt": {
+        "headword": "Dr.",
+        "primaryAudio": "assets/audio/dr.mp3",
+        "phonetic": {
+          "ipa": "/ˈdɒktə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "医生；博士",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Dr. Li is a hero.",
+            "zh": "李博士是一位英雄。",
+            "audio": "assets/audio/examples/dr-1.mp3"
+          },
+          {
+            "en": "We thank Dr. Zhong.",
+            "zh": "我们感谢钟博士。",
+            "audio": "assets/audio/examples/dr-2.mp3"
+          },
+          {
+            "en": "Dr. Wang is still at work.",
+            "zh": "王医生仍然在工作。",
+            "audio": "assets/audio/examples/dr-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Dr. Li is a hero. Dr. 是医生、博士。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 28,
+    "content": {
+      "prompt": {
+        "headword": "fight",
+        "primaryAudio": "assets/audio/fight.mp3",
+        "phonetic": {
+          "ipa": "/faɪt/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "战斗；与……作斗争",
+            "pos": "v./n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Doctors fight Covid-19.",
+            "zh": "医生与新冠病毒作斗争。",
+            "audio": "assets/audio/examples/fight-1.mp3"
+          },
+          {
+            "en": "Heroes fight for our country.",
+            "zh": "英雄们为祖国战斗。",
+            "audio": "assets/audio/examples/fight-2.mp3"
+          },
+          {
+            "en": "We must fight hard together.",
+            "zh": "我们必须一起努力斗争。",
+            "audio": "assets/audio/examples/fight-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Doctors fight Covid-19. fight 是战斗、斗争。"
+        },
+        "inflectionNote": "第三人称单数 fights；过去式 fought"
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 29,
+    "content": {
+      "prompt": {
+        "headword": "grow up",
+        "primaryAudio": "assets/audio/grow-up.mp3",
+        "phonetic": {
+          "ipa": "/ɡrəʊ ʌp/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "长大",
+            "pos": "v. phr."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I want to be a doctor when I grow up.",
+            "zh": "我长大后想当医生。",
+            "audio": "assets/audio/examples/grow-up-1.mp3"
+          },
+          {
+            "en": "Heroes grow up and serve people.",
+            "zh": "英雄们长大为人民服务。",
+            "audio": "assets/audio/examples/grow-up-2.mp3"
+          },
+          {
+            "en": "What do you want to do when you grow up?",
+            "zh": "你长大后想做什么？",
+            "audio": "assets/audio/examples/grow-up-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：grow 生长 + up 向上，grow up 是长大。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 30,
+    "content": {
+      "prompt": {
+        "headword": "hard",
+        "primaryAudio": "assets/audio/hard.mp3",
+        "phonetic": {
+          "ipa": "/hɑːd/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "努力",
+            "pos": "adv./adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Doctors work hard.",
+            "zh": "医生工作很努力。",
+            "audio": "assets/audio/examples/hard-1.mp3"
+          },
+          {
+            "en": "We must learn hard.",
+            "zh": "我们必须努力学习。",
+            "audio": "assets/audio/examples/hard-2.mp3"
+          },
+          {
+            "en": "She fights hard against Covid-19.",
+            "zh": "她与新冠病毒顽强斗争。",
+            "audio": "assets/audio/examples/hard-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Work hard. hard 是努力地、努力的。"
+        },
+        "inflectionNote": "比较级 harder；最高级 hardest"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 31,
+    "content": {
+      "prompt": {
+        "headword": "hero",
+        "primaryAudio": "assets/audio/hero.mp3",
+        "phonetic": {
+          "ipa": "/ˈhɪərəʊ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "英雄",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The doctor is a hero.",
+            "zh": "这位医生是英雄。",
+            "audio": "assets/audio/examples/hero-1.mp3"
+          },
+          {
+            "en": "We learn about a hero in class.",
+            "zh": "我们在课上了解英雄。",
+            "audio": "assets/audio/examples/hero-2.mp3"
+          },
+          {
+            "en": "She is a hero of our time.",
+            "zh": "她是我们的时代英雄。",
+            "audio": "assets/audio/examples/hero-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "形象联想：想象 doctor 医生是 fight Covid-19 的 hero。"
+        },
+        "inflectionNote": "复数 heroes"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 32,
+    "content": {
+      "prompt": {
+        "headword": "honor",
+        "primaryAudio": "assets/audio/honor.mp3",
+        "phonetic": {
+          "ipa": "/ˈɒnə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "荣誉",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "It is a great honor.",
+            "zh": "这是极大的荣誉。",
+            "audio": "assets/audio/examples/honor-1.mp3"
+          },
+          {
+            "en": "We honor our heroes.",
+            "zh": "我们向英雄致敬。",
+            "audio": "assets/audio/examples/honor-2.mp3"
+          },
+          {
+            "en": "The medal is an honor for the doctor.",
+            "zh": "这枚勋章是医生的荣誉。",
+            "audio": "assets/audio/examples/honor-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：It is a great honor. honor 是荣誉。"
+        },
+        "inflectionNote": "复数 honors（英式 honour）"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 33,
+    "content": {
+      "prompt": {
+        "headword": "information",
+        "primaryAudio": "assets/audio/information.mp3",
+        "phonetic": {
+          "ipa": "/ˌɪnfəˈmeɪʃn/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "信息",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "We need more information.",
+            "zh": "我们需要更多信息。",
+            "audio": "assets/audio/examples/information-1.mp3"
+          },
+          {
+            "en": "This information is about our heroes.",
+            "zh": "这条信息是关于我们的英雄的。",
+            "audio": "assets/audio/examples/information-2.mp3"
+          },
+          {
+            "en": "Search for information about Dr. Zhong.",
+            "zh": "搜索关于钟博士的信息。",
+            "audio": "assets/audio/examples/information-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：We need information. information 是信息。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 34,
+    "content": {
+      "prompt": {
+        "headword": "learn",
+        "primaryAudio": "assets/audio/learn.mp3",
+        "phonetic": {
+          "ipa": "/lɜːn/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "学习",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "We learn from heroes.",
+            "zh": "我们向英雄学习。",
+            "audio": "assets/audio/examples/learn-1.mp3"
+          },
+          {
+            "en": "I learn hard at school.",
+            "zh": "我在学校努力学习。",
+            "audio": "assets/audio/examples/learn-2.mp3"
+          },
+          {
+            "en": "Young Pioneers learn to serve people.",
+            "zh": "少先队员学习为人民服务。",
+            "audio": "assets/audio/examples/learn-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Learn from heroes. learn 是学习。"
+        },
+        "inflectionNote": "第三人称单数 learns；过去式 learned/learnt"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 35,
+    "content": {
+      "prompt": {
+        "headword": "love",
+        "primaryAudio": "assets/audio/love.mp3",
+        "phonetic": {
+          "ipa": "/lʌv/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "爱",
+            "pos": "v./n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "We love our heroes.",
+            "zh": "我们爱我们的英雄。",
+            "audio": "assets/audio/examples/love-1.mp3"
+          },
+          {
+            "en": "People love the doctors.",
+            "zh": "人们爱这些医生。",
+            "audio": "assets/audio/examples/love-2.mp3"
+          },
+          {
+            "en": "I love my country.",
+            "zh": "我爱我的祖国。",
+            "audio": "assets/audio/examples/love-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：love 音近「拉夫」，拉夫 love 爱。\n语义联想：把「爱」和英文 love 配对记忆。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 36,
+    "content": {
+      "prompt": {
+        "headword": "Medal of the Republic",
+        "primaryAudio": "assets/audio/medal-of-the-republic.mp3",
+        "phonetic": {
+          "ipa": "/ˌmedl əv ðə rɪˈpʌblɪk/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "共和国勋章",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "He got the Medal of the Republic.",
+            "zh": "他获得了共和国勋章。",
+            "audio": "assets/audio/examples/medal-of-the-republic-1.mp3"
+          },
+          {
+            "en": "The Medal of the Republic is a great honor.",
+            "zh": "共和国勋章是极高的荣誉。",
+            "audio": "assets/audio/examples/medal-of-the-republic-2.mp3"
+          },
+          {
+            "en": "We learn about the Medal of the Republic.",
+            "zh": "我们了解共和国勋章。",
+            "audio": "assets/audio/examples/medal-of-the-republic-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：Medal 勋章 + Republic 共和国，Medal of the Republic 是共和国勋章。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 37,
+    "content": {
+      "prompt": {
+        "headword": "member",
+        "primaryAudio": "assets/audio/member.mp3",
+        "phonetic": {
+          "ipa": "/ˈmembə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "成员",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "She is a member of the team.",
+            "zh": "她是团队成员。",
+            "audio": "assets/audio/examples/member-1.mp3"
+          },
+          {
+            "en": "Every member works hard.",
+            "zh": "每个成员都很努力。",
+            "audio": "assets/audio/examples/member-2.mp3"
+          },
+          {
+            "en": "He is a member of the medical team.",
+            "zh": "他是医疗队成员。",
+            "audio": "assets/audio/examples/member-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：She is a member of the team. member 是成员。"
+        },
+        "inflectionNote": "复数 members"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 38,
+    "content": {
+      "prompt": {
+        "headword": "people",
+        "primaryAudio": "assets/audio/people.mp3",
+        "phonetic": {
+          "ipa": "/ˈpiːpl/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "人；人们",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Many people love the heroes.",
+            "zh": "许多人爱这些英雄。",
+            "audio": "assets/audio/examples/people-1.mp3"
+          },
+          {
+            "en": "Doctors serve people.",
+            "zh": "医生为人们服务。",
+            "audio": "assets/audio/examples/people-2.mp3"
+          },
+          {
+            "en": "People clap for the medical team.",
+            "zh": "人们为医疗队鼓掌。",
+            "audio": "assets/audio/examples/people-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Doctors serve people. people 是人、人们。"
+        },
+        "inflectionNote": "复数仍为 people；表「民族」时为 peoples"
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 39,
+    "content": {
+      "prompt": {
+        "headword": "search for",
+        "primaryAudio": "assets/audio/search-for.mp3",
+        "phonetic": {
+          "ipa": "/sɜːtʃ fɔː(r), sɜːtʃ fə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "搜索；查找",
+            "pos": "v. phr."
+          }
+        ],
+        "examples": [
+          {
+            "en": "We search for information about heroes.",
+            "zh": "我们搜索关于英雄的信息。",
+            "audio": "assets/audio/examples/search-for-1.mp3"
+          },
+          {
+            "en": "Search for Covid-19 news online.",
+            "zh": "在网上搜索新冠相关消息。",
+            "audio": "assets/audio/examples/search-for-2.mp3"
+          },
+          {
+            "en": "I search for my homework on the internet.",
+            "zh": "我在网上查找作业资料。",
+            "audio": "assets/audio/examples/search-for-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：search 搜索 + for 为了，search for 是搜索。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 40,
+    "content": {
+      "prompt": {
+        "headword": "serve",
+        "primaryAudio": "assets/audio/serve.mp3",
+        "phonetic": {
+          "ipa": "/sɜːv/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "服务",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Doctors serve people.",
+            "zh": "医生为人民服务。",
+            "audio": "assets/audio/examples/serve-1.mp3"
+          },
+          {
+            "en": "Heroes serve our country.",
+            "zh": "英雄们为祖国服务。",
+            "audio": "assets/audio/examples/serve-2.mp3"
+          },
+          {
+            "en": "I want to serve people when I grow up.",
+            "zh": "我长大后想为人民服务。",
+            "audio": "assets/audio/examples/serve-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：serve 音近「瑟夫」，瑟夫 serve 服务。\n语义联想：把「服务」和英文 serve 配对记忆。"
+        },
+        "inflectionNote": "第三人称单数 serves；过去式 served"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 41,
+    "content": {
+      "prompt": {
+        "headword": "still",
+        "primaryAudio": "assets/audio/still.mp3",
+        "phonetic": {
+          "ipa": "/stɪl/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "还是；仍然",
+            "pos": "adv."
+          }
+        ],
+        "examples": [
+          {
+            "en": "She is tired but still at work.",
+            "zh": "她很累但仍然在工作。",
+            "audio": "assets/audio/examples/still-1.mp3"
+          },
+          {
+            "en": "The doctor is still in the hospital.",
+            "zh": "医生仍在医院。",
+            "audio": "assets/audio/examples/still-2.mp3"
+          },
+          {
+            "en": "We still love our heroes.",
+            "zh": "我们仍然爱我们的英雄。",
+            "audio": "assets/audio/examples/still-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：She is still at work. still 是还是、仍然。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 42,
+    "content": {
+      "prompt": {
+        "headword": "team",
+        "primaryAudio": "assets/audio/team.mp3",
+        "phonetic": {
+          "ipa": "/tiːm/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "（体育的）队",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The medical team is a hero team.",
+            "zh": "医疗队是英雄团队。",
+            "audio": "assets/audio/examples/team-1.mp3"
+          },
+          {
+            "en": "Every team member works hard.",
+            "zh": "每个队员都很努力。",
+            "audio": "assets/audio/examples/team-2.mp3"
+          },
+          {
+            "en": "Our team won an award.",
+            "zh": "我们的团队获奖了。",
+            "audio": "assets/audio/examples/team-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：team 音近「提姆」，提姆在 team 队里。\n语义联想：把「（体育的）队」和英文 team 配对记忆。"
+        },
+        "inflectionNote": "复数 teams"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 43,
+    "content": {
+      "prompt": {
+        "headword": "tired",
+        "primaryAudio": "assets/audio/tired.mp3",
+        "phonetic": {
+          "ipa": "/ˈtaɪəd/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "疲倦的",
+            "pos": "adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The doctors were very tired.",
+            "zh": "医生们非常疲倦。",
+            "audio": "assets/audio/examples/tired-1.mp3"
+          },
+          {
+            "en": "I feel tired after work.",
+            "zh": "工作后我感到疲倦。",
+            "audio": "assets/audio/examples/tired-2.mp3"
+          },
+          {
+            "en": "She is tired but still at work.",
+            "zh": "她很累但仍然在工作。",
+            "audio": "assets/audio/examples/tired-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：tired 音近「泰尔德」，泰尔德 feel tired 疲倦。\n语义联想：看到「疲倦的」的事物时，就想到 tired。"
+        },
+        "inflectionNote": "比较级 more tired"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 44,
+    "content": {
+      "prompt": {
+        "headword": "wife",
+        "primaryAudio": "assets/audio/wife.mp3",
+        "phonetic": {
+          "ipa": "/waɪf/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "妻子",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The hero and his wife serve people.",
+            "zh": "英雄和他的妻子为人民服务。",
+            "audio": "assets/audio/examples/wife-1.mp3"
+          },
+          {
+            "en": "Dr. Li and his wife are both doctors.",
+            "zh": "李医生和他的妻子都是医生。",
+            "audio": "assets/audio/examples/wife-2.mp3"
+          },
+          {
+            "en": "His wife is a member of the team.",
+            "zh": "他的妻子是团队成员。",
+            "audio": "assets/audio/examples/wife-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：wife 音近「外夫」，外夫和 wife 妻子。\n语义联想：把「妻子」和英文 wife 配对记忆。"
+        },
+        "inflectionNote": "复数 wives（不规则变化）"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 45,
+    "content": {
+      "prompt": {
+        "headword": "women",
+        "primaryAudio": "assets/audio/women.mp3",
+        "phonetic": {
+          "ipa": "/ˈwɪmɪn/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "成年女子；妇女",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Many women are heroes.",
+            "zh": "许多妇女是英雄。",
+            "audio": "assets/audio/examples/women-1.mp3"
+          },
+          {
+            "en": "Women doctors fight Covid-19.",
+            "zh": "女医生与新冠病毒作斗争。",
+            "audio": "assets/audio/examples/women-2.mp3"
+          },
+          {
+            "en": "We honor women heroes.",
+            "zh": "我们向女英雄致敬。",
+            "audio": "assets/audio/examples/women-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Many women are heroes. women 是成年女子、妇女。"
+        },
+        "inflectionNote": "woman 的复数形式"
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 46,
+    "content": {
+      "prompt": {
+        "headword": "Young Pioneer",
+        "primaryAudio": "assets/audio/young-pioneer.mp3",
+        "phonetic": {
+          "ipa": "/ˌjʌŋ ˌpaɪəˈnɪə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "少先队员",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I am a Young Pioneer.",
+            "zh": "我是一名少先队员。",
+            "audio": "assets/audio/examples/young-pioneer-1.mp3"
+          },
+          {
+            "en": "Young Pioneers learn from heroes.",
+            "zh": "少先队员向英雄学习。",
+            "audio": "assets/audio/examples/young-pioneer-2.mp3"
+          },
+          {
+            "en": "Every Young Pioneer should work hard.",
+            "zh": "每个少先队员都应该努力。",
+            "audio": "assets/audio/examples/young-pioneer-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：Young 少年 + Pioneer 先锋，Young Pioneer 是少先队员。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 47,
+    "content": {
+      "prompt": {
+        "headword": "camera",
+        "primaryAudio": "assets/audio/camera.mp3",
+        "phonetic": {
+          "ipa": "/ˈkæmərə/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "照相机",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I took my camera on the spring outing.",
+            "zh": "春游我带了照相机。",
+            "audio": "assets/audio/examples/camera-1.mp3"
+          },
+          {
+            "en": "Take a photo with the camera.",
+            "zh": "用照相机拍张照片。",
+            "audio": "assets/audio/examples/camera-2.mp3"
+          },
+          {
+            "en": "She has a new camera.",
+            "zh": "她有一台新照相机。",
+            "audio": "assets/audio/examples/camera-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：camera 音近「凯姆拉」，凯姆拉用 camera 拍照。\n形象联想：想象 spring outing 用 camera 拍照。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 48,
+    "content": {
+      "prompt": {
+        "headword": "climb",
+        "primaryAudio": "assets/audio/climb.mp3",
+        "phonetic": {
+          "ipa": "/klaɪm/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "攀爬",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "We climb the mountain.",
+            "zh": "我们爬山。",
+            "audio": "assets/audio/examples/climb-1.mp3"
+          },
+          {
+            "en": "Can you climb to the top?",
+            "zh": "你能爬到顶部吗？",
+            "audio": "assets/audio/examples/climb-2.mp3"
+          },
+          {
+            "en": "I climb the hill on the spring outing.",
+            "zh": "春游时我爬小山。",
+            "audio": "assets/audio/examples/climb-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：We climb the mountain. climb 是攀爬。"
+        },
+        "inflectionNote": "第三人称单数 climbs；过去式 climbed"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 49,
+    "content": {
+      "prompt": {
+        "headword": "cloud",
+        "primaryAudio": "assets/audio/cloud.mp3",
+        "phonetic": {
+          "ipa": "/klaʊd/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "云",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "There is a white cloud in the sky.",
+            "zh": "天空中有一朵白云。",
+            "audio": "assets/audio/examples/cloud-1.mp3"
+          },
+          {
+            "en": "A cloud is on the mountain top.",
+            "zh": "山顶有云。",
+            "audio": "assets/audio/examples/cloud-2.mp3"
+          },
+          {
+            "en": "Look at the cloud over there.",
+            "zh": "看那边的那朵云。",
+            "audio": "assets/audio/examples/cloud-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：cloud 音近「克劳德」，克劳德看 cloud 云。\n形象联想：想象 white cloud 云在 sky 天空。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 50,
+    "content": {
+      "prompt": {
+        "headword": "farmhouse",
+        "primaryAudio": "assets/audio/farmhouse.mp3",
+        "phonetic": {
+          "ipa": "/ˈfɑːmhaʊs/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "农舍",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "We eat a meal at the farmhouse.",
+            "zh": "我们在农舍吃了一顿饭。",
+            "audio": "assets/audio/examples/farmhouse-1.mp3"
+          },
+          {
+            "en": "The farmhouse is in the village.",
+            "zh": "农舍在村里。",
+            "audio": "assets/audio/examples/farmhouse-2.mp3"
+          },
+          {
+            "en": "The hard-working family lives in the farmhouse.",
+            "zh": "这户勤劳的人家住在农舍里。",
+            "audio": "assets/audio/examples/farmhouse-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "形象联想：想象 village 村里有 farmhouse 农舍。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 51,
+    "content": {
+      "prompt": {
+        "headword": "gate",
+        "primaryAudio": "assets/audio/gate.mp3",
+        "phonetic": {
+          "ipa": "/ɡeɪt/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "大门",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "We meet at the school gate.",
+            "zh": "我们在校门口见面。",
+            "audio": "assets/audio/examples/gate-1.mp3"
+          },
+          {
+            "en": "Get on the bus at the gate.",
+            "zh": "在大门处上车。",
+            "audio": "assets/audio/examples/gate-2.mp3"
+          },
+          {
+            "en": "The gate of the village is open.",
+            "zh": "村口的大门开着。",
+            "audio": "assets/audio/examples/gate-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：gate 音近「盖特」，盖特从 gate 大门进。\n语义联想：把「大门」和英文 gate 配对记忆。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 52,
+    "content": {
+      "prompt": {
+        "headword": "get on",
+        "primaryAudio": "assets/audio/get-on.mp3",
+        "phonetic": {
+          "ipa": "/ɡet ɒn/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "上车",
+            "pos": "v. phr."
+          }
+        ],
+        "examples": [
+          {
+            "en": "We get on the bus at the gate.",
+            "zh": "我们在大门处上车。",
+            "audio": "assets/audio/examples/get-on-1.mp3"
+          },
+          {
+            "en": "Get on the bus, please.",
+            "zh": "请上车。",
+            "audio": "assets/audio/examples/get-on-2.mp3"
+          },
+          {
+            "en": "We get on the bus for our spring outing.",
+            "zh": "我们上车去春游。",
+            "audio": "assets/audio/examples/get-on-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：get 上 + on 到……上，get on 是上车。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 53,
+    "content": {
+      "prompt": {
+        "headword": "hard-working",
+        "primaryAudio": "assets/audio/hard-working.mp3",
+        "phonetic": {
+          "ipa": "/ˌhɑːd ˈwɜːkɪŋ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "努力工作的",
+            "pos": "adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The farmers are hard-working.",
+            "zh": "农民们很努力。",
+            "audio": "assets/audio/examples/hard-working-1.mp3"
+          },
+          {
+            "en": "She is a hard-working student.",
+            "zh": "她是一名努力的学生。",
+            "audio": "assets/audio/examples/hard-working-2.mp3"
+          },
+          {
+            "en": "Hard-working people grow good food.",
+            "zh": "勤劳的人们种出好粮食。",
+            "audio": "assets/audio/examples/hard-working-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：hard 努力 + working 工作，hard-working 是努力工作的。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 54,
+    "content": {
+      "prompt": {
+        "headword": "meal",
+        "primaryAudio": "assets/audio/meal.mp3",
+        "phonetic": {
+          "ipa": "/miːl/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "一顿饭",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "We had a big meal at the farmhouse.",
+            "zh": "我们在农舍吃了一顿大餐。",
+            "audio": "assets/audio/examples/meal-1.mp3"
+          },
+          {
+            "en": "The meal was really good.",
+            "zh": "这顿饭真的很好。",
+            "audio": "assets/audio/examples/meal-2.mp3"
+          },
+          {
+            "en": "We eat a meal after climbing.",
+            "zh": "爬山后我们吃了一顿饭。",
+            "audio": "assets/audio/examples/meal-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：meal 音近「米尔」，米尔吃 meal 一顿饭。\n语义联想：把「一顿饭」和英文 meal 配对记忆。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 55,
+    "content": {
+      "prompt": {
+        "headword": "mountain",
+        "primaryAudio": "assets/audio/mountain.mp3",
+        "phonetic": {
+          "ipa": "/ˈmaʊntən/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "山",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The mountain is very high.",
+            "zh": "这座山很高。",
+            "audio": "assets/audio/examples/mountain-1.mp3"
+          },
+          {
+            "en": "We climb the mountain together.",
+            "zh": "我们一起爬山。",
+            "audio": "assets/audio/examples/mountain-2.mp3"
+          },
+          {
+            "en": "There are clouds on the mountain top.",
+            "zh": "山顶有云。",
+            "audio": "assets/audio/examples/mountain-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：mountain 音近「毛恩腾」，毛恩腾爬 mountain 山。\n形象联想：想象 spring outing 爬 mountain 山到 top 顶部。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 56,
+    "content": {
+      "prompt": {
+        "headword": "pick",
+        "primaryAudio": "assets/audio/pick.mp3",
+        "phonetic": {
+          "ipa": "/pɪk/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "采；摘",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "We pick flowers in the village.",
+            "zh": "我们在村里采花。",
+            "audio": "assets/audio/examples/pick-1.mp3"
+          },
+          {
+            "en": "Pick an apple from the tree.",
+            "zh": "从树上摘一个苹果。",
+            "audio": "assets/audio/examples/pick-2.mp3"
+          },
+          {
+            "en": "Do not pick flowers in the park.",
+            "zh": "不要在公园里摘花。",
+            "audio": "assets/audio/examples/pick-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：pick 音近「皮克」，皮克 pick 摘苹果。\n语义联想：把「采」和英文 pick 配对记忆。"
+        },
+        "inflectionNote": "第三人称单数 picks；过去式 picked"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 57,
+    "content": {
+      "prompt": {
+        "headword": "really",
+        "primaryAudio": "assets/audio/really.mp3",
+        "phonetic": {
+          "ipa": "/ˈriːəli, ˈrɪəli/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "确实地；的确",
+            "pos": "adv."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The spring outing was really fun.",
+            "zh": "春游真的很有趣。",
+            "audio": "assets/audio/examples/really-1.mp3"
+          },
+          {
+            "en": "I am really thirsty.",
+            "zh": "我真的渴了。",
+            "audio": "assets/audio/examples/really-2.mp3"
+          },
+          {
+            "en": "The mountain is really high.",
+            "zh": "这座山真的很高。",
+            "audio": "assets/audio/examples/really-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：It was really fun. really 是确实地、的确。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 58,
+    "content": {
+      "prompt": {
+        "headword": "sky",
+        "primaryAudio": "assets/audio/sky.mp3",
+        "phonetic": {
+          "ipa": "/skaɪ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "天空",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The sky is blue today.",
+            "zh": "今天天空是蓝色的。",
+            "audio": "assets/audio/examples/sky-1.mp3"
+          },
+          {
+            "en": "Look at the clouds in the sky.",
+            "zh": "看天空中的云。",
+            "audio": "assets/audio/examples/sky-2.mp3"
+          },
+          {
+            "en": "The sky is beautiful on the mountain.",
+            "zh": "山上的天空很美。",
+            "audio": "assets/audio/examples/sky-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：sky 音近「斯凯」，斯凯看 sky 天空。\n语义联想：把「天空」和英文 sky 配对记忆。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 59,
+    "content": {
+      "prompt": {
+        "headword": "spring outing",
+        "primaryAudio": "assets/audio/spring-outing.mp3",
+        "phonetic": {
+          "ipa": "/ˌsprɪŋ ˈaʊtɪŋ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "春游",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "We had a spring outing yesterday.",
+            "zh": "我们昨天去春游了。",
+            "audio": "assets/audio/examples/spring-outing-1.mp3"
+          },
+          {
+            "en": "Our spring outing was fun.",
+            "zh": "我们的春游很有趣。",
+            "audio": "assets/audio/examples/spring-outing-2.mp3"
+          },
+          {
+            "en": "We climb mountains on the spring outing.",
+            "zh": "春游时我们爬山。",
+            "audio": "assets/audio/examples/spring-outing-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：spring 春 + outing 外出，spring outing 是春游。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 60,
+    "content": {
+      "prompt": {
+        "headword": "thirsty",
+        "primaryAudio": "assets/audio/thirsty.mp3",
+        "phonetic": {
+          "ipa": "/ˈθɜːsti/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "渴的",
+            "pos": "adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I am thirsty after climbing.",
+            "zh": "爬山后我渴了。",
+            "audio": "assets/audio/examples/thirsty-1.mp3"
+          },
+          {
+            "en": "We were thirsty on the mountain.",
+            "zh": "我们在山上渴了。",
+            "audio": "assets/audio/examples/thirsty-2.mp3"
+          },
+          {
+            "en": "Drink water when you are thirsty.",
+            "zh": "渴了就喝水。",
+            "audio": "assets/audio/examples/thirsty-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：I am thirsty. thirsty 是渴的。"
+        },
+        "inflectionNote": "比较级 thirstier；最高级 thirstiest"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 61,
+    "content": {
+      "prompt": {
+        "headword": "top",
+        "primaryAudio": "assets/audio/top.mp3",
+        "phonetic": {
+          "ipa": "/tɒp/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "顶部",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "We climb to the top of the mountain.",
+            "zh": "我们爬到山顶。",
+            "audio": "assets/audio/examples/top-1.mp3"
+          },
+          {
+            "en": "The view from the top is great.",
+            "zh": "从顶部看风景很棒。",
+            "audio": "assets/audio/examples/top-2.mp3"
+          },
+          {
+            "en": "Clouds are on the top of the hill.",
+            "zh": "山顶有云。",
+            "audio": "assets/audio/examples/top-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：We climbed to the top of the mountain. top 是顶部。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 62,
+    "content": {
+      "prompt": {
+        "headword": "village",
+        "primaryAudio": "assets/audio/village.mp3",
+        "phonetic": {
+          "ipa": "/ˈvɪlɪdʒ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "乡村；村庄",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "We visit a small village.",
+            "zh": "我们参观一个小村庄。",
+            "audio": "assets/audio/examples/village-1.mp3"
+          },
+          {
+            "en": "The village is near the mountain.",
+            "zh": "村庄在山附近。",
+            "audio": "assets/audio/examples/village-2.mp3"
+          },
+          {
+            "en": "There is a farmhouse in the village.",
+            "zh": "村里有一间农舍。",
+            "audio": "assets/audio/examples/village-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：village 音近「维里奇」，维里奇 visit village 村庄。\n语义联想：把「乡村」和英文 village 配对记忆。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 63,
+    "content": {
+      "prompt": {
+        "headword": "water",
+        "primaryAudio": "assets/audio/water.mp3",
+        "phonetic": {
+          "ipa": "/ˈwɔːtə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "水",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I need some water.",
+            "zh": "我需要一些水。",
+            "audio": "assets/audio/examples/water-1.mp3"
+          },
+          {
+            "en": "We drink water on the mountain.",
+            "zh": "我们在山上喝水。",
+            "audio": "assets/audio/examples/water-2.mp3"
+          },
+          {
+            "en": "The lake has clean water.",
+            "zh": "湖里有干净的水。",
+            "audio": "assets/audio/examples/water-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：water 音近「沃特」，沃特喝 water 水。\n语义联想：把「水」和英文 water 配对记忆。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 64,
+    "content": {
+      "prompt": {
+        "headword": "busy",
+        "primaryAudio": "assets/audio/busy.mp3",
+        "phonetic": {
+          "ipa": "/ˈbɪzi/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "忙的",
+            "pos": "adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Sports Day is very busy.",
+            "zh": "运动会非常忙碌。",
+            "audio": "assets/audio/examples/busy-1.mp3"
+          },
+          {
+            "en": "We are busy on Sports Day.",
+            "zh": "运动会那天我们很忙。",
+            "audio": "assets/audio/examples/busy-2.mp3"
+          },
+          {
+            "en": "The teachers are busy today.",
+            "zh": "老师们今天很忙。",
+            "audio": "assets/audio/examples/busy-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Sports Day is busy. busy 是忙的。"
+        },
+        "inflectionNote": "比较级 busier；最高级 busiest"
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 65,
+    "content": {
+      "prompt": {
+        "headword": "fall down",
+        "primaryAudio": "assets/audio/fall-down.mp3",
+        "phonetic": {
+          "ipa": "/fɔːl daʊn/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "跌倒；跌下",
+            "pos": "v. phr."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Be careful! Do not fall down.",
+            "zh": "小心！别摔倒。",
+            "audio": "assets/audio/examples/fall-down-1.mp3"
+          },
+          {
+            "en": "He fell down but got up.",
+            "zh": "他摔倒了但站了起来。",
+            "audio": "assets/audio/examples/fall-down-2.mp3"
+          },
+          {
+            "en": "Try again if you fall down.",
+            "zh": "摔倒了就再试一次。",
+            "audio": "assets/audio/examples/fall-down-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：fall 跌倒 + down 向下，fall down 是跌倒。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 66,
+    "content": {
+      "prompt": {
+        "headword": "fast",
+        "primaryAudio": "assets/audio/fast.mp3",
+        "phonetic": {
+          "ipa": "/fɑːst/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "快",
+            "pos": "adj./adv."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Run fast!",
+            "zh": "快跑！",
+            "audio": "assets/audio/examples/fast-1.mp3"
+          },
+          {
+            "en": "He runs very fast.",
+            "zh": "他跑得很快。",
+            "audio": "assets/audio/examples/fast-2.mp3"
+          },
+          {
+            "en": "She is fast in the race.",
+            "zh": "她在赛跑中很快。",
+            "audio": "assets/audio/examples/fast-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：fast 音近「法斯特」，法斯特 run fast 跑得很快。\n语义联想：Run fast! fast 是快地、快的。"
+        },
+        "inflectionNote": "比较级 faster；最高级 fastest"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 67,
+    "content": {
+      "prompt": {
+        "headword": "grass",
+        "primaryAudio": "assets/audio/grass.mp3",
+        "phonetic": {
+          "ipa": "/ɡrɑːs/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "草",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "We ran on the grass.",
+            "zh": "我们在草地上跑。",
+            "audio": "assets/audio/examples/grass-1.mp3"
+          },
+          {
+            "en": "Sit on the grass, please.",
+            "zh": "请坐在草地上。",
+            "audio": "assets/audio/examples/grass-2.mp3"
+          },
+          {
+            "en": "The grass is green on Sports Day.",
+            "zh": "运动会那天草是绿的。",
+            "audio": "assets/audio/examples/grass-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "形象联想：想象 Sports Day 在 green grass 上跑步。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 68,
+    "content": {
+      "prompt": {
+        "headword": "high jump",
+        "primaryAudio": "assets/audio/high-jump.mp3",
+        "phonetic": {
+          "ipa": "/ˌhaɪ ˈdʒʌmp/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "跳高",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "He tries the high jump.",
+            "zh": "他尝试跳高。",
+            "audio": "assets/audio/examples/high-jump-1.mp3"
+          },
+          {
+            "en": "The high jump is difficult.",
+            "zh": "跳高很难。",
+            "audio": "assets/audio/examples/high-jump-2.mp3"
+          },
+          {
+            "en": "We shout for the high jump.",
+            "zh": "我们为跳高喊加油。",
+            "audio": "assets/audio/examples/high-jump-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：high 高 + jump 跳，high jump 是跳高。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 69,
+    "content": {
+      "prompt": {
+        "headword": "long jump",
+        "primaryAudio": "assets/audio/long-jump.mp3",
+        "phonetic": {
+          "ipa": "/ˌlɒŋ ˈdʒʌmp/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "跳远",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I try the long jump.",
+            "zh": "我尝试跳远。",
+            "audio": "assets/audio/examples/long-jump-1.mp3"
+          },
+          {
+            "en": "She is good at the long jump.",
+            "zh": "她擅长跳远。",
+            "audio": "assets/audio/examples/long-jump-2.mp3"
+          },
+          {
+            "en": "The long jump is on Sports Day.",
+            "zh": "运动会有跳远项目。",
+            "audio": "assets/audio/examples/long-jump-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：long 远 + jump 跳，long jump 是跳远。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 70,
+    "content": {
+      "prompt": {
+        "headword": "meter",
+        "primaryAudio": "assets/audio/meter.mp3",
+        "phonetic": {
+          "ipa": "/ˈmiːtə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "米",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The race is one hundred meter long.",
+            "zh": "赛跑是一百米。",
+            "audio": "assets/audio/examples/meter-1.mp3"
+          },
+          {
+            "en": "He ran fifty meter fast.",
+            "zh": "他快跑五十米。",
+            "audio": "assets/audio/examples/meter-2.mp3"
+          },
+          {
+            "en": "The long jump is three meter.",
+            "zh": "跳远跳了三米。",
+            "audio": "assets/audio/examples/meter-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：meter 音近「米特」，米特量 meter 米。\n语义联想：把「米」和英文 meter 配对记忆。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 71,
+    "content": {
+      "prompt": {
+        "headword": "proud",
+        "primaryAudio": "assets/audio/proud.mp3",
+        "phonetic": {
+          "ipa": "/praʊd/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "自豪的；骄傲的",
+            "pos": "adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I am proud of our team.",
+            "zh": "我为我们的队感到自豪。",
+            "audio": "assets/audio/examples/proud-1.mp3"
+          },
+          {
+            "en": "My parent is proud of me.",
+            "zh": "我的家长为我感到骄傲。",
+            "audio": "assets/audio/examples/proud-2.mp3"
+          },
+          {
+            "en": "We are proud of the winner.",
+            "zh": "我们为获胜者感到自豪。",
+            "audio": "assets/audio/examples/proud-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：proud 音近「普劳德」，普劳德 feel proud 自豪。\n语义联想：看到「自豪的」的事物时，就想到 proud。"
+        },
+        "inflectionNote": "比较级 prouder；最高级 proudest"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 72,
+    "content": {
+      "prompt": {
+        "headword": "ran",
+        "primaryAudio": "assets/audio/ran.mp3",
+        "phonetic": {
+          "ipa": "/ræn/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "跑（过去式）",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I ran fast in the race.",
+            "zh": "我在赛跑中跑得很快。",
+            "audio": "assets/audio/examples/ran-1.mp3"
+          },
+          {
+            "en": "He ran one hundred meters.",
+            "zh": "他跑了一百米。",
+            "audio": "assets/audio/examples/ran-2.mp3"
+          },
+          {
+            "en": "We ran on the grass.",
+            "zh": "我们在草地上跑。",
+            "audio": "assets/audio/examples/ran-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：ran 音近「润」，润 ran 跑过终点。\n语义联想：把「跑（过去式）」和英文 ran 配对记忆。"
+        },
+        "inflectionNote": "run 的过去式"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 73,
+    "content": {
+      "prompt": {
+        "headword": "shout",
+        "primaryAudio": "assets/audio/shout.mp3",
+        "phonetic": {
+          "ipa": "/ʃaʊt/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "喊叫",
+            "pos": "v./n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "We shout for our team.",
+            "zh": "我们为自己的队喊加油。",
+            "audio": "assets/audio/examples/shout-1.mp3"
+          },
+          {
+            "en": "Do not shout in class.",
+            "zh": "不要在课堂上喊叫。",
+            "audio": "assets/audio/examples/shout-2.mp3"
+          },
+          {
+            "en": "They shout \"Go! Go!\" on Sports Day.",
+            "zh": "运动会上他们喊\"加油！加油！\"",
+            "audio": "assets/audio/examples/shout-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：shout 音近「绍特」，绍特 shout 喊叫。\n语义联想：把「喊叫」和英文 shout 配对记忆。"
+        },
+        "inflectionNote": "第三人称单数 shouts；过去式 shouted"
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 74,
+    "content": {
+      "prompt": {
+        "headword": "Sports Day",
+        "primaryAudio": "assets/audio/sports-day.mp3",
+        "phonetic": {
+          "ipa": "/ˈspɔːts deɪ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "运动会",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Today is our Sports Day.",
+            "zh": "今天是我们的运动会。",
+            "audio": "assets/audio/examples/sports-day-1.mp3"
+          },
+          {
+            "en": "We have races on Sports Day.",
+            "zh": "运动会上我们有赛跑。",
+            "audio": "assets/audio/examples/sports-day-2.mp3"
+          },
+          {
+            "en": "Sports Day is busy and fun.",
+            "zh": "运动会忙碌又有趣。",
+            "audio": "assets/audio/examples/sports-day-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：sports 运动 + day 日，Sports Day 是运动会。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 75,
+    "content": {
+      "prompt": {
+        "headword": "try",
+        "primaryAudio": "assets/audio/try.mp3",
+        "phonetic": {
+          "ipa": "/traɪ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "尝试",
+            "pos": "v./n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Try the high jump!",
+            "zh": "试试跳高！",
+            "audio": "assets/audio/examples/try-1.mp3"
+          },
+          {
+            "en": "I try my best on Sports Day.",
+            "zh": "运动会上我尽力而为。",
+            "audio": "assets/audio/examples/try-2.mp3"
+          },
+          {
+            "en": "Try again if you fall down.",
+            "zh": "摔倒了就再试一次。",
+            "audio": "assets/audio/examples/try-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：try 音近「揣」，揣一 try 试一试。\n语义联想：把「尝试」和英文 try 配对记忆。"
+        },
+        "inflectionNote": "第三人称单数 tries；过去式 tried"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 76,
+    "content": {
+      "prompt": {
+        "headword": "well",
+        "primaryAudio": "assets/audio/well.mp3",
+        "phonetic": {
+          "ipa": "/wel/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "好",
+            "pos": "adv./adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "She jumps very well.",
+            "zh": "她跳得很好。",
+            "audio": "assets/audio/examples/well-1.mp3"
+          },
+          {
+            "en": "You did well on Sports Day.",
+            "zh": "你在运动会上表现得很好。",
+            "audio": "assets/audio/examples/well-2.mp3"
+          },
+          {
+            "en": "He runs fast and well.",
+            "zh": "他跑得又快又好。",
+            "audio": "assets/audio/examples/well-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：well 音近「威尔」，威尔 do well 做得好。\n语义联想：把「好」和英文 well 配对记忆。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 77,
+    "content": {
+      "prompt": {
+        "headword": "angry",
+        "primaryAudio": "assets/audio/angry.mp3",
+        "phonetic": {
+          "ipa": "/ˈæŋɡri/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "生气的",
+            "pos": "adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Do not be angry.",
+            "zh": "别生气。",
+            "audio": "assets/audio/examples/angry-1.mp3"
+          },
+          {
+            "en": "He is angry about the race.",
+            "zh": "他对赛跑结果很生气。",
+            "audio": "assets/audio/examples/angry-2.mp3"
+          },
+          {
+            "en": "She looks angry but not sad.",
+            "zh": "她看起来生气但并不难过。",
+            "audio": "assets/audio/examples/angry-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Do not be angry. angry 是生气的。"
+        },
+        "inflectionNote": "比较级 angrier；最高级 angriest"
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 78,
+    "content": {
+      "prompt": {
+        "headword": "cheer up",
+        "primaryAudio": "assets/audio/cheer-up.mp3",
+        "phonetic": {
+          "ipa": "/tʃɪə ʌp/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "振作起来",
+            "pos": "v. phr."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Cheer up! You did well.",
+            "zh": "振作起来！你表现得很好。",
+            "audio": "assets/audio/examples/cheer-up-1.mp3"
+          },
+          {
+            "en": "Cheer up! Try again next time.",
+            "zh": "振作起来！下次再试。",
+            "audio": "assets/audio/examples/cheer-up-2.mp3"
+          },
+          {
+            "en": "We cheer up our sad friend.",
+            "zh": "我们让难过的好友振作起来。",
+            "audio": "assets/audio/examples/cheer-up-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：cheer 欢呼 + up 起来，cheer up 是振作起来。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 79,
+    "content": {
+      "prompt": {
+        "headword": "drink",
+        "primaryAudio": "assets/audio/drink.mp3",
+        "phonetic": {
+          "ipa": "/drɪŋk/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "喝",
+            "pos": "v./n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Drink some water after the race.",
+            "zh": "赛跑后喝点水。",
+            "audio": "assets/audio/examples/drink-1.mp3"
+          },
+          {
+            "en": "I drink water when I am thirsty.",
+            "zh": "我渴了就喝水。",
+            "audio": "assets/audio/examples/drink-2.mp3"
+          },
+          {
+            "en": "Do not drink too fast.",
+            "zh": "别喝太快。",
+            "audio": "assets/audio/examples/drink-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Drink some water. drink 是喝。"
+        },
+        "inflectionNote": "第三人称单数 drinks；过去式 drank"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 80,
+    "content": {
+      "prompt": {
+        "headword": "first",
+        "primaryAudio": "assets/audio/first.mp3",
+        "phonetic": {
+          "ipa": "/fɜːst/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "第一",
+            "pos": "num./adv."
+          }
+        ],
+        "examples": [
+          {
+            "en": "She came first in the race.",
+            "zh": "她在赛跑中获得第一。",
+            "audio": "assets/audio/examples/first-1.mp3"
+          },
+          {
+            "en": "I was first on Sports Day.",
+            "zh": "运动会上我是第一。",
+            "audio": "assets/audio/examples/first-2.mp3"
+          },
+          {
+            "en": "First place is great!",
+            "zh": "第一名太棒了！",
+            "audio": "assets/audio/examples/first-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：She came first. first 是第一。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 81,
+    "content": {
+      "prompt": {
+        "headword": "fourth",
+        "primaryAudio": "assets/audio/fourth.mp3",
+        "phonetic": {
+          "ipa": "/fɔːθ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "第四",
+            "pos": "num./adv."
+          }
+        ],
+        "examples": [
+          {
+            "en": "He came fourth in the race.",
+            "zh": "他在赛跑中获得第四。",
+            "audio": "assets/audio/examples/fourth-1.mp3"
+          },
+          {
+            "en": "Fourth is still good.",
+            "zh": "第四仍然不错。",
+            "audio": "assets/audio/examples/fourth-2.mp3"
+          },
+          {
+            "en": "I was fourth on Sports Day.",
+            "zh": "运动会上我是第四。",
+            "audio": "assets/audio/examples/fourth-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：He came fourth. fourth 是第四。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 82,
+    "content": {
+      "prompt": {
+        "headword": "only",
+        "primaryAudio": "assets/audio/only.mp3",
+        "phonetic": {
+          "ipa": "/ˈəʊnli/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "仅仅",
+            "pos": "adv./adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I only came fourth.",
+            "zh": "我只获得第四。",
+            "audio": "assets/audio/examples/only-1.mp3"
+          },
+          {
+            "en": "She is only a little sad.",
+            "zh": "她只是有点难过。",
+            "audio": "assets/audio/examples/only-2.mp3"
+          },
+          {
+            "en": "We have only one race left.",
+            "zh": "我们只剩一场赛跑了。",
+            "audio": "assets/audio/examples/only-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：I only came fourth. only 是仅仅。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 83,
+    "content": {
+      "prompt": {
+        "headword": "program",
+        "primaryAudio": "assets/audio/program.mp3",
+        "phonetic": {
+          "ipa": "/ˈprəʊɡræm/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "节目",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The program is on TV tonight.",
+            "zh": "今晚电视有这个节目。",
+            "audio": "assets/audio/examples/program-1.mp3"
+          },
+          {
+            "en": "We watch a program after dinner.",
+            "zh": "晚饭后我们看节目。",
+            "audio": "assets/audio/examples/program-2.mp3"
+          },
+          {
+            "en": "The Sports Day program is fun.",
+            "zh": "运动会节目很有趣。",
+            "audio": "assets/audio/examples/program-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Watch a program. program 是节目。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 84,
+    "content": {
+      "prompt": {
+        "headword": "race",
+        "primaryAudio": "assets/audio/race.mp3",
+        "phonetic": {
+          "ipa": "/reɪs/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "赛跑",
+            "pos": "n./v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The race starts now.",
+            "zh": "赛跑现在开始了。",
+            "audio": "assets/audio/examples/race-1.mp3"
+          },
+          {
+            "en": "I am in the race.",
+            "zh": "我参加了赛跑。",
+            "audio": "assets/audio/examples/race-2.mp3"
+          },
+          {
+            "en": "Who won the race?",
+            "zh": "谁赢了赛跑？",
+            "audio": "assets/audio/examples/race-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：race 音近「瑞斯」，瑞斯 run a race 赛跑。\n形象联想：想象 Sports Day 上 run a race 赛跑。"
+        },
+        "inflectionNote": "第三人称单数 races；过去式 raced"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 85,
+    "content": {
+      "prompt": {
+        "headword": "sad",
+        "primaryAudio": "assets/audio/sad.mp3",
+        "phonetic": {
+          "ipa": "/sæd/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "难过的",
+            "pos": "adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "He is sad because he lost the race.",
+            "zh": "他因为输了赛跑而难过。",
+            "audio": "assets/audio/examples/sad-1.mp3"
+          },
+          {
+            "en": "Do not be sad.",
+            "zh": "别难过。",
+            "audio": "assets/audio/examples/sad-2.mp3"
+          },
+          {
+            "en": "She looks sad today.",
+            "zh": "她今天看起来很难过。",
+            "audio": "assets/audio/examples/sad-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：sad 音近「赛的」，赛的 feel sad 感到难过。\n语义联想：看到「难过的」的事物时，就想到 sad。"
+        },
+        "inflectionNote": "比较级 sadder；最高级 saddest"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 86,
+    "content": {
+      "prompt": {
+        "headword": "second",
+        "primaryAudio": "assets/audio/second.mp3",
+        "phonetic": {
+          "ipa": "/ˈsekənd/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "第二",
+            "pos": "num./adv."
+          }
+        ],
+        "examples": [
+          {
+            "en": "He came second in the race.",
+            "zh": "他在赛跑中获得第二。",
+            "audio": "assets/audio/examples/second-1.mp3"
+          },
+          {
+            "en": "Second is also good.",
+            "zh": "第二也很好。",
+            "audio": "assets/audio/examples/second-2.mp3"
+          },
+          {
+            "en": "She was second on Sports Day.",
+            "zh": "运动会上她是第二。",
+            "audio": "assets/audio/examples/second-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：He came second. second 是第二。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 87,
+    "content": {
+      "prompt": {
+        "headword": "third",
+        "primaryAudio": "assets/audio/third.mp3",
+        "phonetic": {
+          "ipa": "/θɜːd/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "第三",
+            "pos": "num./adv."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Our team came third.",
+            "zh": "我们的队获得第三。",
+            "audio": "assets/audio/examples/third-1.mp3"
+          },
+          {
+            "en": "Third place is not bad.",
+            "zh": "第三名也不错。",
+            "audio": "assets/audio/examples/third-2.mp3"
+          },
+          {
+            "en": "He finished third in the race.",
+            "zh": "他在赛跑中获得第三。",
+            "audio": "assets/audio/examples/third-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Our team came third. third 是第三。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 88,
+    "content": {
+      "prompt": {
+        "headword": "also",
+        "primaryAudio": "assets/audio/also.mp3",
+        "phonetic": {
+          "ipa": "/ˈɔːlsəʊ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "也",
+            "pos": "adv."
+          }
+        ],
+        "examples": [
+          {
+            "en": "My grandfather also lives here.",
+            "zh": "我祖父也住在这里。",
+            "audio": "assets/audio/examples/also-1.mp3"
+          },
+          {
+            "en": "We also visit our neighbor.",
+            "zh": "我们也拜访邻居。",
+            "audio": "assets/audio/examples/also-2.mp3"
+          },
+          {
+            "en": "She is on the twelfth floor and also on the fifteenth.",
+            "zh": "她在第十二层，也在第十五层。",
+            "audio": "assets/audio/examples/also-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：My grandfather also lives here. also 是也。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 89,
+    "content": {
+      "prompt": {
+        "headword": "bridge",
+        "primaryAudio": "assets/audio/bridge.mp3",
+        "phonetic": {
+          "ipa": "/brɪdʒ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "桥",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "There is a bridge over the river.",
+            "zh": "河上有一座桥。",
+            "audio": "assets/audio/examples/bridge-1.mp3"
+          },
+          {
+            "en": "We walk on the bridge.",
+            "zh": "我们在桥上走。",
+            "audio": "assets/audio/examples/bridge-2.mp3"
+          },
+          {
+            "en": "The bridge is near our building.",
+            "zh": "桥在我们建筑物附近。",
+            "audio": "assets/audio/examples/bridge-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "形象联想：想象 bridge 桥横跨 river 河。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 90,
+    "content": {
+      "prompt": {
+        "headword": "building",
+        "primaryAudio": "assets/audio/building.mp3",
+        "phonetic": {
+          "ipa": "/ˈbɪldɪŋ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "建筑物",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Our school building is tall.",
+            "zh": "我们的教学楼很高。",
+            "audio": "assets/audio/examples/building-1.mp3"
+          },
+          {
+            "en": "The building has twelve floors.",
+            "zh": "这栋建筑物有十二层。",
+            "audio": "assets/audio/examples/building-2.mp3"
+          },
+          {
+            "en": "There is a bridge near the building.",
+            "zh": "建筑物附近有一座桥。",
+            "audio": "assets/audio/examples/building-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "形象联想：想象 tall building 有很多 floor 楼层。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 91,
+    "content": {
+      "prompt": {
+        "headword": "fifteenth",
+        "primaryAudio": "assets/audio/fifteenth.mp3",
+        "phonetic": {
+          "ipa": "/ˌfɪfˈtiːnθ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "第十五",
+            "pos": "num."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The fifteenth floor is very high.",
+            "zh": "第十五层很高。",
+            "audio": "assets/audio/examples/fifteenth-1.mp3"
+          },
+          {
+            "en": "Fifteenth comes after fourteenth.",
+            "zh": "第十五在第十四之后。",
+            "audio": "assets/audio/examples/fifteenth-2.mp3"
+          },
+          {
+            "en": "Our neighbor lives on the fifteenth floor.",
+            "zh": "我们的邻居住在第十五层。",
+            "audio": "assets/audio/examples/fifteenth-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "形象联想：想象 fifteenth 第十五 的名次牌，边指边记住它。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 92,
+    "content": {
+      "prompt": {
+        "headword": "floor",
+        "primaryAudio": "assets/audio/floor.mp3",
+        "phonetic": {
+          "ipa": "/flɔː(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "楼层",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Our classroom is on the third floor.",
+            "zh": "我们的教室在三楼。",
+            "audio": "assets/audio/examples/floor-1.mp3"
+          },
+          {
+            "en": "Which floor is the living room on?",
+            "zh": "客厅在几楼？",
+            "audio": "assets/audio/examples/floor-2.mp3"
+          },
+          {
+            "en": "The building has one floor for our class.",
+            "zh": "这栋建筑物有十五层。",
+            "audio": "assets/audio/examples/floor-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Which floor? floor 是楼层。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 93,
+    "content": {
+      "prompt": {
+        "headword": "grandfather",
+        "primaryAudio": "assets/audio/grandfather.mp3",
+        "phonetic": {
+          "ipa": "/ˈɡrænfɑːðə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "祖父；外公",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "My grandfather also lives here.",
+            "zh": "我祖父也住在这里。",
+            "audio": "assets/audio/examples/grandfather-1.mp3"
+          },
+          {
+            "en": "Grandfather walks on the bridge.",
+            "zh": "祖父在桥上散步。",
+            "audio": "assets/audio/examples/grandfather-2.mp3"
+          },
+          {
+            "en": "I visit my grandfather every week.",
+            "zh": "我每周看望祖父。",
+            "audio": "assets/audio/examples/grandfather-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：My grandfather lives here. grandfather 是祖父、外公。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 94,
+    "content": {
+      "prompt": {
+        "headword": "grandmother",
+        "primaryAudio": "assets/audio/grandmother.mp3",
+        "phonetic": {
+          "ipa": "/ˈɡrænmʌðə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "祖母；外婆",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "My grandmother lives with us.",
+            "zh": "我祖母和我们住在一起。",
+            "audio": "assets/audio/examples/grandmother-1.mp3"
+          },
+          {
+            "en": "Grandmother sits in the living room.",
+            "zh": "祖母坐在客厅里。",
+            "audio": "assets/audio/examples/grandmother-2.mp3"
+          },
+          {
+            "en": "I love my grandmother.",
+            "zh": "我爱我的祖母。",
+            "audio": "assets/audio/examples/grandmother-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：My grandmother sits here. grandmother 是祖母、外婆。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 95,
+    "content": {
+      "prompt": {
+        "headword": "living room",
+        "primaryAudio": "assets/audio/living-room.mp3",
+        "phonetic": {
+          "ipa": "/ˈlɪvɪŋ ruːm/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "客厅；起居室",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "We watch TV in the living room.",
+            "zh": "我们在客厅看电视。",
+            "audio": "assets/audio/examples/living-room-1.mp3"
+          },
+          {
+            "en": "The living room is on the second floor.",
+            "zh": "客厅在二楼。",
+            "audio": "assets/audio/examples/living-room-2.mp3"
+          },
+          {
+            "en": "My grandmother sits in the living room.",
+            "zh": "我祖母坐在客厅里。",
+            "audio": "assets/audio/examples/living-room-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：living 生活 + room 房间，living room 是客厅。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 96,
+    "content": {
+      "prompt": {
+        "headword": "neighbor",
+        "primaryAudio": "assets/audio/neighbor.mp3",
+        "phonetic": {
+          "ipa": "/ˈneɪbə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "邻居",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Our neighbor is very kind.",
+            "zh": "我们的邻居很友好。",
+            "audio": "assets/audio/examples/neighbor-1.mp3"
+          },
+          {
+            "en": "I visit my neighbor after school.",
+            "zh": "放学后我去拜访邻居。",
+            "audio": "assets/audio/examples/neighbor-2.mp3"
+          },
+          {
+            "en": "The neighbor lives on the fifteenth floor.",
+            "zh": "邻居住在第十五层。",
+            "audio": "assets/audio/examples/neighbor-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Our neighbor is kind. neighbor 是邻居。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 97,
+    "content": {
+      "prompt": {
+        "headword": "river",
+        "primaryAudio": "assets/audio/river.mp3",
+        "phonetic": {
+          "ipa": "/ˈrɪvə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "河",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "There is a river near our building.",
+            "zh": "我们建筑物附近有一条河。",
+            "audio": "assets/audio/examples/river-1.mp3"
+          },
+          {
+            "en": "We walk by the river.",
+            "zh": "我们沿着河走。",
+            "audio": "assets/audio/examples/river-2.mp3"
+          },
+          {
+            "en": "The bridge is over the river.",
+            "zh": "桥在河上方。",
+            "audio": "assets/audio/examples/river-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "形象联想：想象 river 河上有 bridge 桥。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 98,
+    "content": {
+      "prompt": {
+        "headword": "twelfth",
+        "primaryAudio": "assets/audio/twelfth.mp3",
+        "phonetic": {
+          "ipa": "/twelfθ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "第十二",
+            "pos": "num."
+          }
+        ],
+        "examples": [
+          {
+            "en": "My classroom is on the twelfth floor.",
+            "zh": "我的教室在第十二层。",
+            "audio": "assets/audio/examples/twelfth-1.mp3"
+          },
+          {
+            "en": "Twelfth is after eleventh.",
+            "zh": "第十二在第十一之后。",
+            "audio": "assets/audio/examples/twelfth-2.mp3"
+          },
+          {
+            "en": "The twelfth floor has a big window.",
+            "zh": "第十二层有一扇大窗。",
+            "audio": "assets/audio/examples/twelfth-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：The twelfth floor. twelfth 是第十二。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 99,
+    "content": {
+      "prompt": {
+        "headword": "would",
+        "primaryAudio": "assets/audio/would.mp3",
+        "phonetic": {
+          "ipa": "/wʊd, wəd/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "会；愿意（表较合意愿）",
+            "pos": "v. modal"
+          }
+        ],
+        "examples": [
+          {
+            "en": "I would like to visit the river.",
+            "zh": "我想去参观那条河。",
+            "audio": "assets/audio/examples/would-1.mp3"
+          },
+          {
+            "en": "Would you like to see the bridge?",
+            "zh": "你想看看那座桥吗？",
+            "audio": "assets/audio/examples/would-2.mp3"
+          },
+          {
+            "en": "We would like to meet our neighbor.",
+            "zh": "我们想见见邻居。",
+            "audio": "assets/audio/examples/would-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：I would like to visit. would 是会、愿意。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 100,
+    "content": {
+      "prompt": {
+        "headword": "before",
+        "primaryAudio": "assets/audio/before.mp3",
+        "phonetic": {
+          "ipa": "/bɪˈfɔː(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "在……之前",
+            "pos": "prep./adv."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Wash your hands before dinner.",
+            "zh": "晚饭前洗手。",
+            "audio": "assets/audio/examples/before-1.mp3"
+          },
+          {
+            "en": "Before Sports Day, we practice hard.",
+            "zh": "运动会前我们努力练习。",
+            "audio": "assets/audio/examples/before-2.mp3"
+          },
+          {
+            "en": "Guess before you look at the calendar.",
+            "zh": "看日历之前先猜一猜。",
+            "audio": "assets/audio/examples/before-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Wash hands before dinner. before 是在……之前。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 101,
+    "content": {
+      "prompt": {
+        "headword": "calendar",
+        "primaryAudio": "assets/audio/calendar.mp3",
+        "phonetic": {
+          "ipa": "/ˈkælɪndə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "日历",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Look at the calendar.",
+            "zh": "看日历。",
+            "audio": "assets/audio/examples/calendar-1.mp3"
+          },
+          {
+            "en": "The date is on the calendar.",
+            "zh": "日期在日历上。",
+            "audio": "assets/audio/examples/calendar-2.mp3"
+          },
+          {
+            "en": "Circle the date on the calendar.",
+            "zh": "在日历上圈出日期。",
+            "audio": "assets/audio/examples/calendar-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "形象联想：想象 calendar 日历上圈出 date 日期。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 102,
+    "content": {
+      "prompt": {
+        "headword": "date",
+        "primaryAudio": "assets/audio/date.mp3",
+        "phonetic": {
+          "ipa": "/deɪt/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "日期",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "What is the date today?",
+            "zh": "今天是什么日期？",
+            "audio": "assets/audio/examples/date-1.mp3"
+          },
+          {
+            "en": "Write the date on your book.",
+            "zh": "把日期写在你的书上。",
+            "audio": "assets/audio/examples/date-2.mp3"
+          },
+          {
+            "en": "The date is on the calendar.",
+            "zh": "日期在日历上。",
+            "audio": "assets/audio/examples/date-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：What is the date today? date 是日期。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 103,
+    "content": {
+      "prompt": {
+        "headword": "difficult",
+        "primaryAudio": "assets/audio/difficult.mp3",
+        "phonetic": {
+          "ipa": "/ˈdɪfɪkəlt/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "困难的",
+            "pos": "adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "This question is difficult.",
+            "zh": "这个问题很难。",
+            "audio": "assets/audio/examples/difficult-1.mp3"
+          },
+          {
+            "en": "It is difficult to guess the date.",
+            "zh": "猜日期很难。",
+            "audio": "assets/audio/examples/difficult-2.mp3"
+          },
+          {
+            "en": "Math is difficult for me.",
+            "zh": "数学对我来说很难。",
+            "audio": "assets/audio/examples/difficult-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：This is difficult. difficult 是困难的。"
+        },
+        "inflectionNote": "比较级 more difficult；最高级 most difficult"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 104,
+    "content": {
+      "prompt": {
+        "headword": "guess",
+        "primaryAudio": "assets/audio/guess.mp3",
+        "phonetic": {
+          "ipa": "/ɡes/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "猜",
+            "pos": "v./n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Guess the date!",
+            "zh": "猜猜日期！",
+            "audio": "assets/audio/examples/guess-1.mp3"
+          },
+          {
+            "en": "Can you guess the answer?",
+            "zh": "你能猜出答案吗？",
+            "audio": "assets/audio/examples/guess-2.mp3"
+          },
+          {
+            "en": "Guess what is on the calendar.",
+            "zh": "猜猜日历上是什么。",
+            "audio": "assets/audio/examples/guess-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：guess 音近「盖斯」，盖斯 guess 猜一猜。\n语义联想：把「猜」和英文 guess 配对记忆。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 105,
+    "content": {
+      "prompt": {
+        "headword": "lucky",
+        "primaryAudio": "assets/audio/lucky.mp3",
+        "phonetic": {
+          "ipa": "/ˈlʌki/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "幸运的",
+            "pos": "adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "You are lucky today!",
+            "zh": "你今天很幸运！",
+            "audio": "assets/audio/examples/lucky-1.mp3"
+          },
+          {
+            "en": "I feel lucky on my birthday.",
+            "zh": "生日那天我感到很幸运。",
+            "audio": "assets/audio/examples/lucky-2.mp3"
+          },
+          {
+            "en": "Guess my lucky number!",
+            "zh": "猜猜我的幸运数字！",
+            "audio": "assets/audio/examples/lucky-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：You are lucky! lucky 是幸运的。"
+        },
+        "inflectionNote": "比较级 luckier；最高级 luckiest"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 106,
+    "content": {
+      "prompt": {
+        "headword": "Mrs.",
+        "primaryAudio": "assets/audio/mrs.mp3",
+        "phonetic": {
+          "ipa": "/ˈmɪsɪz/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "夫人；太太",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Good morning, Mrs. Wang!",
+            "zh": "早上好，王太太！",
+            "audio": "assets/audio/examples/mrs-1.mp3"
+          },
+          {
+            "en": "Mrs. Li is our neighbor.",
+            "zh": "李夫人是我们的邻居。",
+            "audio": "assets/audio/examples/mrs-2.mp3"
+          },
+          {
+            "en": "Say hello to Mrs. Chen.",
+            "zh": "向陈太太问好。",
+            "audio": "assets/audio/examples/mrs-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Good morning, Mrs. Wang! Mrs. 是夫人、太太。"
+        }
+      }
+    }
+  }
+]

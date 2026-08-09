@@ -1,0 +1,4106 @@
+[
+  {
+    "kind": "word",
+    "sortOrder": 1,
+    "content": {
+      "prompt": {
+        "headword": "Australia",
+        "primaryAudio": "assets/audio/australia.mp3",
+        "phonetic": {
+          "ipa": "/ɒˈstreɪliə, ɔːˈstreɪliə/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "澳大利亚",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Australia is far away.",
+            "zh": "澳大利亚很远。",
+            "audio": "assets/audio/examples/australia-1.mp3"
+          },
+          {
+            "en": "My uncle lives in Australia.",
+            "zh": "我叔叔住在澳大利亚。",
+            "audio": "assets/audio/examples/australia-2.mp3"
+          },
+          {
+            "en": "We learn about Australia in class.",
+            "zh": "我们在课上了解澳大利亚。",
+            "audio": "assets/audio/examples/australia-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "形象联想：想象 Australia 澳大利亚有袋鼠和考拉。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 2,
+    "content": {
+      "prompt": {
+        "headword": "behind",
+        "primaryAudio": "assets/audio/behind.mp3",
+        "phonetic": {
+          "ipa": "/bɪˈhaɪnd/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "在……的后面",
+            "pos": "prep./adv."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The cat is behind the door.",
+            "zh": "猫在门后面。",
+            "audio": "assets/audio/examples/behind-1.mp3"
+          },
+          {
+            "en": "Stand behind me.",
+            "zh": "站在我后面。",
+            "audio": "assets/audio/examples/behind-2.mp3"
+          },
+          {
+            "en": "The school is behind the park.",
+            "zh": "学校在公园后面。",
+            "audio": "assets/audio/examples/behind-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：The cat is behind the door. behind 是在……后面。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 3,
+    "content": {
+      "prompt": {
+        "headword": "beside",
+        "primaryAudio": "assets/audio/beside.mp3",
+        "phonetic": {
+          "ipa": "/bɪˈsaɪd/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "在……的旁边",
+            "pos": "prep."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Sit beside me, please.",
+            "zh": "请坐在我旁边。",
+            "audio": "assets/audio/examples/beside-1.mp3"
+          },
+          {
+            "en": "The cat is beside the chair.",
+            "zh": "猫在椅子旁边。",
+            "audio": "assets/audio/examples/beside-2.mp3"
+          },
+          {
+            "en": "She stands beside her mother.",
+            "zh": "她站在妈妈旁边。",
+            "audio": "assets/audio/examples/beside-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：beside 音近「比赛的」，比赛的选手 beside 在旁边。\n语义联想：把「在……的旁边」和英文 beside 配对记忆。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 4,
+    "content": {
+      "prompt": {
+        "headword": "hair",
+        "primaryAudio": "assets/audio/hair.mp3",
+        "phonetic": {
+          "ipa": "/heə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "头发",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Her hair is long and black.",
+            "zh": "她的头发又长又黑。",
+            "audio": "assets/audio/examples/hair-1.mp3"
+          },
+          {
+            "en": "Touch your hair.",
+            "zh": "摸摸你的头发。",
+            "audio": "assets/audio/examples/hair-2.mp3"
+          },
+          {
+            "en": "The pupil has short hair.",
+            "zh": "这名小学生留着短发。",
+            "audio": "assets/audio/examples/hair-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：hair 音近「海尔」，海尔的 hair 头发。\n语义联想：She has long hair. hair 是头发。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 5,
+    "content": {
+      "prompt": {
+        "headword": "long",
+        "primaryAudio": "assets/audio/long.mp3",
+        "phonetic": {
+          "ipa": "/lɒŋ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "长的",
+            "pos": "adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "She has long hair.",
+            "zh": "她留着长发。",
+            "audio": "assets/audio/examples/long-1.mp3"
+          },
+          {
+            "en": "The river is very long.",
+            "zh": "这条河很长。",
+            "audio": "assets/audio/examples/long-2.mp3"
+          },
+          {
+            "en": "Wait a minute. It will not take long.",
+            "zh": "等一下，不会很久。",
+            "audio": "assets/audio/examples/long-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：She has long hair. long 是长的。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 6,
+    "content": {
+      "prompt": {
+        "headword": "pupil",
+        "primaryAudio": "assets/audio/pupil.mp3",
+        "phonetic": {
+          "ipa": "/ˈpjuːpl/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "小学生",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I am a pupil.",
+            "zh": "我是一名小学生。",
+            "audio": "assets/audio/examples/pupil-1.mp3"
+          },
+          {
+            "en": "The pupil has long hair.",
+            "zh": "这名小学生留着长发。",
+            "audio": "assets/audio/examples/pupil-2.mp3"
+          },
+          {
+            "en": "Every pupil is in the classroom.",
+            "zh": "每个小学生都在教室里。",
+            "audio": "assets/audio/examples/pupil-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：pupil 音近「皮优尔」，皮优尔是 pupil 小学生。\n语义联想：把「小学生」和英文 pupil 配对记忆。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 7,
+    "content": {
+      "prompt": {
+        "headword": "short",
+        "primaryAudio": "assets/audio/short.mp3",
+        "phonetic": {
+          "ipa": "/ʃɔːt/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "短的；矮的",
+            "pos": "adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "He is short but strong.",
+            "zh": "他矮但很强壮。",
+            "audio": "assets/audio/examples/short-1.mp3"
+          },
+          {
+            "en": "She has short hair.",
+            "zh": "她留着短发。",
+            "audio": "assets/audio/examples/short-2.mp3"
+          },
+          {
+            "en": "It is a short story.",
+            "zh": "这是一个短故事。",
+            "audio": "assets/audio/examples/short-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：He is short. short 是短的、矮的。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 8,
+    "content": {
+      "prompt": {
+        "headword": "tall",
+        "primaryAudio": "assets/audio/tall.mp3",
+        "phonetic": {
+          "ipa": "/tɔːl/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "高的",
+            "pos": "adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The boy is tall.",
+            "zh": "这个男孩很高。",
+            "audio": "assets/audio/examples/tall-1.mp3"
+          },
+          {
+            "en": "She has a tall friend.",
+            "zh": "她有一个很高的朋友。",
+            "audio": "assets/audio/examples/tall-2.mp3"
+          },
+          {
+            "en": "My brother is tall and strong.",
+            "zh": "我哥哥又高又壮。",
+            "audio": "assets/audio/examples/tall-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：tall 音近「套」，套着 tall 高个子的衣服。\n语义联想：The boy is tall. tall 是高的。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 9,
+    "content": {
+      "prompt": {
+        "headword": "flower",
+        "primaryAudio": "assets/audio/flower.mp3",
+        "phonetic": {
+          "ipa": "/ˈflaʊə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "花；花朵",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "This flower is lovely.",
+            "zh": "这朵花很可爱。",
+            "audio": "assets/audio/examples/flower-1.mp3"
+          },
+          {
+            "en": "We give a flower to our teacher.",
+            "zh": "我们给老师送花。",
+            "audio": "assets/audio/examples/flower-2.mp3"
+          },
+          {
+            "en": "The flower is on the paper.",
+            "zh": "花在纸上。",
+            "audio": "assets/audio/examples/flower-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：flower 音近「弗劳尔」，弗劳尔送 flower 花。\n形象联想：想象 Teachers' Day 送 flower 花给老师。"
+        },
+        "inflectionNote": "复数 flowers"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 10,
+    "content": {
+      "prompt": {
+        "headword": "kind",
+        "primaryAudio": "assets/audio/kind.mp3",
+        "phonetic": {
+          "ipa": "/kaɪnd/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "亲切的；和蔼的",
+            "pos": "adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Our teacher is very kind.",
+            "zh": "我们的老师很亲切。",
+            "audio": "assets/audio/examples/kind-1.mp3"
+          },
+          {
+            "en": "She is kind to every pupil.",
+            "zh": "她对每个小学生都很和蔼。",
+            "audio": "assets/audio/examples/kind-2.mp3"
+          },
+          {
+            "en": "Thank you for your kind help.",
+            "zh": "谢谢你亲切的帮助。",
+            "audio": "assets/audio/examples/kind-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Our teacher is kind. kind 是亲切的、和蔼的。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 11,
+    "content": {
+      "prompt": {
+        "headword": "lovely",
+        "primaryAudio": "assets/audio/lovely.mp3",
+        "phonetic": {
+          "ipa": "/ˈlʌvli/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "可爱的",
+            "pos": "adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The panda is lovely.",
+            "zh": "熊猫很可爱。",
+            "audio": "assets/audio/examples/lovely-1.mp3"
+          },
+          {
+            "en": "What a lovely flower!",
+            "zh": "多漂亮的花啊！",
+            "audio": "assets/audio/examples/lovely-2.mp3"
+          },
+          {
+            "en": "She has a lovely smile.",
+            "zh": "她有着可爱的微笑。",
+            "audio": "assets/audio/examples/lovely-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：The panda is lovely. lovely 是可爱的。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 12,
+    "content": {
+      "prompt": {
+        "headword": "near",
+        "primaryAudio": "assets/audio/near.mp3",
+        "phonetic": {
+          "ipa": "/nɪə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "在附近",
+            "pos": "adv./prep./adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The school is near my home.",
+            "zh": "学校在我家附近。",
+            "audio": "assets/audio/examples/near-1.mp3"
+          },
+          {
+            "en": "Sit near the window.",
+            "zh": "坐在窗户附近。",
+            "audio": "assets/audio/examples/near-2.mp3"
+          },
+          {
+            "en": "Is there a cinema near here?",
+            "zh": "这附近有电影院吗？",
+            "audio": "assets/audio/examples/near-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：near 音近「尼尔」，尼尔住 near 附近。\n语义联想：把「在附近」和英文 near 配对记忆。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 13,
+    "content": {
+      "prompt": {
+        "headword": "panda",
+        "primaryAudio": "assets/audio/panda.mp3",
+        "phonetic": {
+          "ipa": "/ˈpændə/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "熊猫",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Look at the lovely panda!",
+            "zh": "看那只可爱的熊猫！",
+            "audio": "assets/audio/examples/panda-1.mp3"
+          },
+          {
+            "en": "The panda is near the tree.",
+            "zh": "熊猫在树附近。",
+            "audio": "assets/audio/examples/panda-2.mp3"
+          },
+          {
+            "en": "I like the panda very much.",
+            "zh": "我非常喜欢熊猫。",
+            "audio": "assets/audio/examples/panda-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：panda 音近「潘达」，潘达就是 panda 熊猫。\n形象联想：想象 lovely panda 可爱的熊猫。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 14,
+    "content": {
+      "prompt": {
+        "headword": "paper",
+        "primaryAudio": "assets/audio/paper.mp3",
+        "phonetic": {
+          "ipa": "/ˈpeɪpə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "纸",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I need some paper.",
+            "zh": "我需要一些纸。",
+            "audio": "assets/audio/examples/paper-1.mp3"
+          },
+          {
+            "en": "Draw a picture on the paper.",
+            "zh": "在纸上画一幅画。",
+            "audio": "assets/audio/examples/paper-2.mp3"
+          },
+          {
+            "en": "The card is made of paper.",
+            "zh": "这张卡片是用纸做的。",
+            "audio": "assets/audio/examples/paper-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：paper 音近「佩珀」，佩珀拿 paper 纸。\n语义联想：把「纸」和英文 paper 配对记忆。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 15,
+    "content": {
+      "prompt": {
+        "headword": "photo",
+        "primaryAudio": "assets/audio/photo.mp3",
+        "phonetic": {
+          "ipa": "/ˈfəʊtəʊ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "照片",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "This is a photo of my class.",
+            "zh": "这是我们班的照片。",
+            "audio": "assets/audio/examples/photo-1.mp3"
+          },
+          {
+            "en": "Take a photo of the panda.",
+            "zh": "给熊猫拍张照片。",
+            "audio": "assets/audio/examples/photo-2.mp3"
+          },
+          {
+            "en": "I put the photo in my book.",
+            "zh": "我把照片放在书里。",
+            "audio": "assets/audio/examples/photo-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：photo 音近「佛头」，佛头拍 photo 照片。\n形象联想：想象 take a photo of the panda 给熊猫拍照。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 16,
+    "content": {
+      "prompt": {
+        "headword": "picture",
+        "primaryAudio": "assets/audio/picture.mp3",
+        "phonetic": {
+          "ipa": "/ˈpɪktʃə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "照片；图画",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "This is a picture of a panda.",
+            "zh": "这是一张熊猫的照片。",
+            "audio": "assets/audio/examples/picture-1.mp3"
+          },
+          {
+            "en": "Draw a picture for Teachers' Day.",
+            "zh": "为教师节画一幅画。",
+            "audio": "assets/audio/examples/picture-2.mp3"
+          },
+          {
+            "en": "Look at the picture on the wall.",
+            "zh": "看墙上的图画。",
+            "audio": "assets/audio/examples/picture-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "形象联想：想象 picture 图画挂在 sitting room 客厅。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 17,
+    "content": {
+      "prompt": {
+        "headword": "September",
+        "primaryAudio": "assets/audio/september.mp3",
+        "phonetic": {
+          "ipa": "/sepˈtembə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "九月",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "September is cool.",
+            "zh": "九月很凉爽。",
+            "audio": "assets/audio/examples/september-1.mp3"
+          },
+          {
+            "en": "Teachers' Day is in September.",
+            "zh": "教师节在九月。",
+            "audio": "assets/audio/examples/september-2.mp3"
+          },
+          {
+            "en": "School starts in September.",
+            "zh": "九月开学。",
+            "audio": "assets/audio/examples/september-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Teachers' Day is in September. September 是九月。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 18,
+    "content": {
+      "prompt": {
+        "headword": "sitting room",
+        "primaryAudio": "assets/audio/sitting-room.mp3",
+        "phonetic": {
+          "ipa": "/ˈsɪtɪŋ ruːm/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "客厅",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "We watch TV in the sitting room.",
+            "zh": "我们在客厅看电视。",
+            "audio": "assets/audio/examples/sitting-room-1.mp3"
+          },
+          {
+            "en": "The sitting room is lovely.",
+            "zh": "客厅很可爱。",
+            "audio": "assets/audio/examples/sitting-room-2.mp3"
+          },
+          {
+            "en": "Come to the sitting room, please.",
+            "zh": "请到客厅来。",
+            "audio": "assets/audio/examples/sitting-room-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：sitting 坐 + room 房间，sitting room 是客厅。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 19,
+    "content": {
+      "prompt": {
+        "headword": "smile",
+        "primaryAudio": "assets/audio/smile.mp3",
+        "phonetic": {
+          "ipa": "/smaɪl/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "微笑",
+            "pos": "v./n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "She has a lovely smile.",
+            "zh": "她有着可爱的微笑。",
+            "audio": "assets/audio/examples/smile-1.mp3"
+          },
+          {
+            "en": "Smile, please!",
+            "zh": "请微笑！",
+            "audio": "assets/audio/examples/smile-2.mp3"
+          },
+          {
+            "en": "The teacher can smile at us.",
+            "zh": "老师对我们微笑。",
+            "audio": "assets/audio/examples/smile-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：She has a lovely smile. smile 是微笑。"
+        },
+        "inflectionNote": "第三人称单数 smiles"
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 20,
+    "content": {
+      "prompt": {
+        "headword": "Teachers' Day",
+        "primaryAudio": "assets/audio/teachers-day.mp3",
+        "phonetic": {
+          "ipa": "/ˈtiːtʃəz deɪ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "教师节",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Happy Teachers' Day!",
+            "zh": "教师节快乐！",
+            "audio": "assets/audio/examples/teachers-day-1.mp3"
+          },
+          {
+            "en": "We give flowers on Teachers' Day.",
+            "zh": "我们在教师节送花。",
+            "audio": "assets/audio/examples/teachers-day-2.mp3"
+          },
+          {
+            "en": "Teachers' Day is in September.",
+            "zh": "教师节在九月。",
+            "audio": "assets/audio/examples/teachers-day-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：teacher 老师 + day 日，Teachers' Day 是教师节。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 21,
+    "content": {
+      "prompt": {
+        "headword": "tomorrow",
+        "primaryAudio": "assets/audio/tomorrow.mp3",
+        "phonetic": {
+          "ipa": "/təˈmɒrəʊ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "明天",
+            "pos": "adv./n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "See you tomorrow.",
+            "zh": "明天见。",
+            "audio": "assets/audio/examples/tomorrow-1.mp3"
+          },
+          {
+            "en": "Tomorrow is Teachers' Day.",
+            "zh": "明天是教师节。",
+            "audio": "assets/audio/examples/tomorrow-2.mp3"
+          },
+          {
+            "en": "We will make cards tomorrow.",
+            "zh": "我们明天做卡片。",
+            "audio": "assets/audio/examples/tomorrow-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：tomorrow 音近「特毛柔」，特毛柔说明天 tomorrow。\n语义联想：把「明天」和英文 tomorrow 配对记忆。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 22,
+    "content": {
+      "prompt": {
+        "headword": "where",
+        "primaryAudio": "assets/audio/where.mp3",
+        "phonetic": {
+          "ipa": "/weə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "哪里",
+            "pos": "adv."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Where is the panda?",
+            "zh": "熊猫在哪里？",
+            "audio": "assets/audio/examples/where-1.mp3"
+          },
+          {
+            "en": "Where do you sit?",
+            "zh": "你坐在哪里？",
+            "audio": "assets/audio/examples/where-2.mp3"
+          },
+          {
+            "en": "Where is the sitting room?",
+            "zh": "客厅在哪里？",
+            "audio": "assets/audio/examples/where-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：where 音近「威尔」，威尔问 where 哪里。\n语义联想：把「哪里」和英文 where 配对记忆。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 23,
+    "content": {
+      "prompt": {
+        "headword": "about",
+        "primaryAudio": "assets/audio/about.mp3",
+        "phonetic": {
+          "ipa": "/əˈbaʊt/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "关于",
+            "pos": "prep./adv."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Tell me about National Day.",
+            "zh": "告诉我关于国庆节的事。",
+            "audio": "assets/audio/examples/about-1.mp3"
+          },
+          {
+            "en": "We learn about Australia.",
+            "zh": "我们了解澳大利亚。",
+            "audio": "assets/audio/examples/about-2.mp3"
+          },
+          {
+            "en": "What about tomorrow?",
+            "zh": "明天怎么样？",
+            "audio": "assets/audio/examples/about-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Tell me about National Day. about 是关于。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 24,
+    "content": {
+      "prompt": {
+        "headword": "August",
+        "primaryAudio": "assets/audio/august.mp3",
+        "phonetic": {
+          "ipa": "/ˈɔːɡəst/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "八月",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "August is a summer month.",
+            "zh": "八月是一个夏季月份。",
+            "audio": "assets/audio/examples/august-1.mp3"
+          },
+          {
+            "en": "School starts after August.",
+            "zh": "八月过后开学。",
+            "audio": "assets/audio/examples/august-2.mp3"
+          },
+          {
+            "en": "It is very hot in August.",
+            "zh": "八月非常热。",
+            "audio": "assets/audio/examples/august-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：August is hot. August 是八月。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 25,
+    "content": {
+      "prompt": {
+        "headword": "find",
+        "primaryAudio": "assets/audio/find.mp3",
+        "phonetic": {
+          "ipa": "/faɪnd/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "找到；发现",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I can't find my photo.",
+            "zh": "我找不到我的照片了。",
+            "audio": "assets/audio/examples/find-1.mp3"
+          },
+          {
+            "en": "Find your book on page ten.",
+            "zh": "在第十页找到你的书。",
+            "audio": "assets/audio/examples/find-2.mp3"
+          },
+          {
+            "en": "Let us find the way to the museum.",
+            "zh": "让我们找到去博物馆的路。",
+            "audio": "assets/audio/examples/find-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Find your book. find 是找到、发现。"
+        },
+        "inflectionNote": "第三人称单数 finds；过去式 found"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 26,
+    "content": {
+      "prompt": {
+        "headword": "holiday",
+        "primaryAudio": "assets/audio/holiday.mp3",
+        "phonetic": {
+          "ipa": "/ˈhɒlədeɪ, ˈhɒlədi/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "假日",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "We have a long holiday in October.",
+            "zh": "十月我们有一个长假期。",
+            "audio": "assets/audio/examples/holiday-1.mp3"
+          },
+          {
+            "en": "National Day is a holiday.",
+            "zh": "国庆节是一个假日。",
+            "audio": "assets/audio/examples/holiday-2.mp3"
+          },
+          {
+            "en": "I will tell you about my holiday.",
+            "zh": "我会告诉你我的假期情况。",
+            "audio": "assets/audio/examples/holiday-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：holi 神圣 + day 日，holiday 是假日。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 27,
+    "content": {
+      "prompt": {
+        "headword": "Internet",
+        "primaryAudio": "assets/audio/internet.mp3",
+        "phonetic": {
+          "ipa": "/ˈɪntənet/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "因特网",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I find pictures on the Internet.",
+            "zh": "我在网上找图片。",
+            "audio": "assets/audio/examples/internet-1.mp3"
+          },
+          {
+            "en": "Turn on the computer to use the Internet.",
+            "zh": "打开电脑使用因特网。",
+            "audio": "assets/audio/examples/internet-2.mp3"
+          },
+          {
+            "en": "The Internet is useful.",
+            "zh": "因特网很有用。",
+            "audio": "assets/audio/examples/internet-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：inter 之间 + net 网，internet 是因特网。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 28,
+    "content": {
+      "prompt": {
+        "headword": "July",
+        "primaryAudio": "assets/audio/july.mp3",
+        "phonetic": {
+          "ipa": "/dʒuˈlaɪ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "七月",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "My birthday is in July.",
+            "zh": "我的生日在七月。",
+            "audio": "assets/audio/examples/july-1.mp3"
+          },
+          {
+            "en": "July is hot.",
+            "zh": "七月很热。",
+            "audio": "assets/audio/examples/july-2.mp3"
+          },
+          {
+            "en": "We visit my uncle in July.",
+            "zh": "我们七月去看望叔叔。",
+            "audio": "assets/audio/examples/july-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：We visit my uncle in July. July 是七月。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 29,
+    "content": {
+      "prompt": {
+        "headword": "mount",
+        "primaryAudio": "assets/audio/mount.mp3",
+        "phonetic": {
+          "ipa": "/maʊnt/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "山",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "There is a mount near the city.",
+            "zh": "城市附近有一座山。",
+            "audio": "assets/audio/examples/mount-1.mp3"
+          },
+          {
+            "en": "We can see the mount from here.",
+            "zh": "我们从这里能看到那座山。",
+            "audio": "assets/audio/examples/mount-2.mp3"
+          },
+          {
+            "en": "The mount is very high.",
+            "zh": "这座山很高。",
+            "audio": "assets/audio/examples/mount-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "形象联想：想象 mount 山在 far away 远方。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 30,
+    "content": {
+      "prompt": {
+        "headword": "National Day",
+        "primaryAudio": "assets/audio/national-day.mp3",
+        "phonetic": {
+          "ipa": "/ˈnæʃnəl deɪ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "国庆节",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "National Day is in October.",
+            "zh": "国庆节在十月。",
+            "audio": "assets/audio/examples/national-day-1.mp3"
+          },
+          {
+            "en": "We have a holiday on National Day.",
+            "zh": "国庆节我们放假。",
+            "audio": "assets/audio/examples/national-day-2.mp3"
+          },
+          {
+            "en": "Happy National Day!",
+            "zh": "国庆节快乐！",
+            "audio": "assets/audio/examples/national-day-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：national 国家的 + day 日，National Day 是国庆节。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 31,
+    "content": {
+      "prompt": {
+        "headword": "October",
+        "primaryAudio": "assets/audio/october.mp3",
+        "phonetic": {
+          "ipa": "/ɒkˈtəʊbə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "十月",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "National Day is in October.",
+            "zh": "国庆节在十月。",
+            "audio": "assets/audio/examples/october-1.mp3"
+          },
+          {
+            "en": "October is a cool month.",
+            "zh": "十月是一个凉爽的月份。",
+            "audio": "assets/audio/examples/october-2.mp3"
+          },
+          {
+            "en": "We have a holiday in October.",
+            "zh": "十月我们放假。",
+            "audio": "assets/audio/examples/october-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：National Day is in October. October 是十月。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 32,
+    "content": {
+      "prompt": {
+        "headword": "tell",
+        "primaryAudio": "assets/audio/tell.mp3",
+        "phonetic": {
+          "ipa": "/tel/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "告诉",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Tell me about your holiday.",
+            "zh": "告诉我你的假期情况。",
+            "audio": "assets/audio/examples/tell-1.mp3"
+          },
+          {
+            "en": "Let me tell you a story.",
+            "zh": "让我给你讲个故事。",
+            "audio": "assets/audio/examples/tell-2.mp3"
+          },
+          {
+            "en": "Please tell the truth.",
+            "zh": "请说实话。",
+            "audio": "assets/audio/examples/tell-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：tell 音近「泰尔」，泰尔 tell 告诉你。\n语义联想：把「告诉」和英文 tell 配对记忆。"
+        },
+        "inflectionNote": "第三人称单数 tells；过去式 told"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 33,
+    "content": {
+      "prompt": {
+        "headword": "there",
+        "primaryAudio": "assets/audio/there.mp3",
+        "phonetic": {
+          "ipa": "/ðeə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "那里",
+            "pos": "adv."
+          }
+        ],
+        "examples": [
+          {
+            "en": "There is a mount over there.",
+            "zh": "那边有一座山。",
+            "audio": "assets/audio/examples/there-1.mp3"
+          },
+          {
+            "en": "Put the book there, please.",
+            "zh": "请把书放在那里。",
+            "audio": "assets/audio/examples/there-2.mp3"
+          },
+          {
+            "en": "There are many flowers there.",
+            "zh": "那里有很多花。",
+            "audio": "assets/audio/examples/there-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：There is a mount over there. there 是那里。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 34,
+    "content": {
+      "prompt": {
+        "headword": "thing",
+        "primaryAudio": "assets/audio/thing.mp3",
+        "phonetic": {
+          "ipa": "/θɪŋ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "东西",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Put your thing in the bag.",
+            "zh": "把你的东西放进包里。",
+            "audio": "assets/audio/examples/thing-1.mp3"
+          },
+          {
+            "en": "What is this thing?",
+            "zh": "这是什么东西？",
+            "audio": "assets/audio/examples/thing-2.mp3"
+          },
+          {
+            "en": "I find an interesting thing on the Internet.",
+            "zh": "我在网上发现很多有趣的东西。",
+            "audio": "assets/audio/examples/thing-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Put your things in the bag. thing 是东西。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 35,
+    "content": {
+      "prompt": {
+        "headword": "turn on",
+        "primaryAudio": "assets/audio/turn-on.mp3",
+        "phonetic": {
+          "ipa": "/tɜːn ɒn/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "打开",
+            "pos": "v. phr."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Turn on the light, please.",
+            "zh": "请开灯。",
+            "audio": "assets/audio/examples/turn-on-1.mp3"
+          },
+          {
+            "en": "Turn on the TV.",
+            "zh": "打开电视。",
+            "audio": "assets/audio/examples/turn-on-2.mp3"
+          },
+          {
+            "en": "Don't turn on the computer now.",
+            "zh": "现在不要开电脑。",
+            "audio": "assets/audio/examples/turn-on-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：turn 转 + on 开，turn on 是打开。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 36,
+    "content": {
+      "prompt": {
+        "headword": "uncle",
+        "primaryAudio": "assets/audio/uncle.mp3",
+        "phonetic": {
+          "ipa": "/ˈʌŋkl/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "叔叔；伯伯",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "My uncle lives in Australia.",
+            "zh": "我叔叔住在澳大利亚。",
+            "audio": "assets/audio/examples/uncle-1.mp3"
+          },
+          {
+            "en": "Uncle Wang is very kind.",
+            "zh": "王叔叔很亲切。",
+            "audio": "assets/audio/examples/uncle-2.mp3"
+          },
+          {
+            "en": "I visit my uncle in July.",
+            "zh": "我七月去看望叔叔。",
+            "audio": "assets/audio/examples/uncle-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：My uncle lives in Australia. uncle 是叔叔、伯伯。"
+        },
+        "inflectionNote": "复数 uncles"
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 37,
+    "content": {
+      "prompt": {
+        "headword": "won't = will not",
+        "primaryAudio": "assets/audio/wont-=-will-not.mp3",
+        "phonetic": {
+          "ipa": "/wəʊnt/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "将不",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I won't forget National Day.",
+            "zh": "我不会忘记国庆节。",
+            "audio": "assets/audio/examples/wont-=-will-not-1.mp3"
+          },
+          {
+            "en": "It won't rain tomorrow.",
+            "zh": "明天不会下雨。",
+            "audio": "assets/audio/examples/wont-=-will-not-2.mp3"
+          },
+          {
+            "en": "We won't be late.",
+            "zh": "我们不会迟到。",
+            "audio": "assets/audio/examples/wont-=-will-not-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：will 将 + not 不，won't 就是「将不」。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 38,
+    "content": {
+      "prompt": {
+        "headword": "afraid",
+        "primaryAudio": "assets/audio/afraid.mp3",
+        "phonetic": {
+          "ipa": "/əˈfreɪd/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "害怕",
+            "pos": "adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Don't be afraid.",
+            "zh": "别害怕。",
+            "audio": "assets/audio/examples/afraid-1.mp3"
+          },
+          {
+            "en": "I am afraid of the dark.",
+            "zh": "我害怕黑暗。",
+            "audio": "assets/audio/examples/afraid-2.mp3"
+          },
+          {
+            "en": "The film is not scary. Don't be afraid.",
+            "zh": "这部电影不吓人，别害怕。",
+            "audio": "assets/audio/examples/afraid-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "形象联想：想象看 scary film 时 afraid 害怕。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 39,
+    "content": {
+      "prompt": {
+        "headword": "chess",
+        "primaryAudio": "assets/audio/chess.mp3",
+        "phonetic": {
+          "ipa": "/tʃes/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "国际象棋",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Do you like chess?",
+            "zh": "你喜欢国际象棋吗？",
+            "audio": "assets/audio/examples/chess-1.mp3"
+          },
+          {
+            "en": "Chess is an interesting game.",
+            "zh": "国际象棋是一种有趣的游戏。",
+            "audio": "assets/audio/examples/chess-2.mp3"
+          },
+          {
+            "en": "My father plays chess well.",
+            "zh": "我爸爸下国际象棋下得好。",
+            "audio": "assets/audio/examples/chess-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "形象联想：想象黑白棋子在 chess 棋盘上。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 40,
+    "content": {
+      "prompt": {
+        "headword": "cinema",
+        "primaryAudio": "assets/audio/cinema.mp3",
+        "phonetic": {
+          "ipa": "/ˈsɪnəmə/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "电影院",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Let us go to the cinema.",
+            "zh": "我们去电影院吧。",
+            "audio": "assets/audio/examples/cinema-1.mp3"
+          },
+          {
+            "en": "The cinema is near the museum.",
+            "zh": "电影院在博物馆附近。",
+            "audio": "assets/audio/examples/cinema-2.mp3"
+          },
+          {
+            "en": "We watch a film at the cinema.",
+            "zh": "我们在电影院看电影。",
+            "audio": "assets/audio/examples/cinema-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：cinema 音近「西呢嘛」，西呢嘛去 cinema 看电影。\n形象联想：想象 go to the cinema 看电影。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 41,
+    "content": {
+      "prompt": {
+        "headword": "come on",
+        "primaryAudio": "assets/audio/come-on.mp3",
+        "phonetic": {
+          "ipa": "/kʌm ɒn/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "来吧",
+            "pos": "v. phr."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Come on! Let us go to the cinema.",
+            "zh": "来吧！我们去电影院。",
+            "audio": "assets/audio/examples/come-on-1.mp3"
+          },
+          {
+            "en": "Come on! Play chess with me.",
+            "zh": "来吧！跟我下国际象棋。",
+            "audio": "assets/audio/examples/come-on-2.mp3"
+          },
+          {
+            "en": "Come on! Sit down, please.",
+            "zh": "来吧！请坐下。",
+            "audio": "assets/audio/examples/come-on-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Come on! Let us go. come on 是来吧。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 42,
+    "content": {
+      "prompt": {
+        "headword": "cook",
+        "primaryAudio": "assets/audio/cook.mp3",
+        "phonetic": {
+          "ipa": "/kʊk/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "烹调",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "My mother can cook.",
+            "zh": "我妈妈会做饭。",
+            "audio": "assets/audio/examples/cook-1.mp3"
+          },
+          {
+            "en": "Let us cook dinner together.",
+            "zh": "我们一起做晚饭吧。",
+            "audio": "assets/audio/examples/cook-2.mp3"
+          },
+          {
+            "en": "Uncle Wang likes to cook.",
+            "zh": "王叔叔喜欢烹调。",
+            "audio": "assets/audio/examples/cook-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：My mother can cook. cook 是烹调。"
+        },
+        "inflectionNote": "第三人称单数 cooks"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 43,
+    "content": {
+      "prompt": {
+        "headword": "film",
+        "primaryAudio": "assets/audio/film.mp3",
+        "phonetic": {
+          "ipa": "/fɪlm/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "电影",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The film is interesting.",
+            "zh": "这部电影很有意思。",
+            "audio": "assets/audio/examples/film-1.mp3"
+          },
+          {
+            "en": "We watch a film at the cinema.",
+            "zh": "我们在电影院看电影。",
+            "audio": "assets/audio/examples/film-2.mp3"
+          },
+          {
+            "en": "Do you like this film?",
+            "zh": "你喜欢这部电影吗？",
+            "audio": "assets/audio/examples/film-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：We watch a film at the cinema. film 是电影。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 44,
+    "content": {
+      "prompt": {
+        "headword": "glasses",
+        "primaryAudio": "assets/audio/glasses.mp3",
+        "phonetic": {
+          "ipa": "/ˈɡlɑːsɪz/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "眼镜",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Put on your glasses.",
+            "zh": "戴上你的眼镜。",
+            "audio": "assets/audio/examples/glasses-1.mp3"
+          },
+          {
+            "en": "My glasses are on the desk.",
+            "zh": "我的眼镜在书桌上。",
+            "audio": "assets/audio/examples/glasses-2.mp3"
+          },
+          {
+            "en": "I can't see without my glasses.",
+            "zh": "不戴眼镜我看不清。",
+            "audio": "assets/audio/examples/glasses-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "形象联想：想象 put on glasses 戴眼镜看电影。"
+        },
+        "inflectionNote": "形式不变（通常用复数）"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 45,
+    "content": {
+      "prompt": {
+        "headword": "museum",
+        "primaryAudio": "assets/audio/museum.mp3",
+        "phonetic": {
+          "ipa": "/mjuːˈziːəm/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "博物馆",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Welcome to the museum.",
+            "zh": "欢迎参观博物馆。",
+            "audio": "assets/audio/examples/museum-1.mp3"
+          },
+          {
+            "en": "The museum is near the cinema.",
+            "zh": "博物馆在电影院附近。",
+            "audio": "assets/audio/examples/museum-2.mp3"
+          },
+          {
+            "en": "We see many old things in the museum.",
+            "zh": "我们在博物馆里看到很多古老的东西。",
+            "audio": "assets/audio/examples/museum-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：museum 音近「缪兹恩」，缪兹恩参观 museum 博物馆。\n形象联想：想象 museum 博物馆里有很多 old things。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 46,
+    "content": {
+      "prompt": {
+        "headword": "play chess",
+        "primaryAudio": "assets/audio/play-chess.mp3",
+        "phonetic": {
+          "ipa": "/pleɪ tʃes/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "下国际象棋",
+            "pos": "v. phr."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Let us play chess.",
+            "zh": "我们下国际象棋吧。",
+            "audio": "assets/audio/examples/play-chess-1.mp3"
+          },
+          {
+            "en": "My uncle likes to play chess.",
+            "zh": "我叔叔喜欢下国际象棋。",
+            "audio": "assets/audio/examples/play-chess-2.mp3"
+          },
+          {
+            "en": "Come on! Play chess with me.",
+            "zh": "来吧！跟我下国际象棋。",
+            "audio": "assets/audio/examples/play-chess-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：play 下 + chess 象棋，play chess 是下国际象棋。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 47,
+    "content": {
+      "prompt": {
+        "headword": "player",
+        "primaryAudio": "assets/audio/player.mp3",
+        "phonetic": {
+          "ipa": "/ˈpleɪə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "球员",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "He is a good player.",
+            "zh": "他是一名好球员。",
+            "audio": "assets/audio/examples/player-1.mp3"
+          },
+          {
+            "en": "The player is young and strong.",
+            "zh": "这名球员年轻又强壮。",
+            "audio": "assets/audio/examples/player-2.mp3"
+          },
+          {
+            "en": "Every player works hard.",
+            "zh": "每个球员都很努力。",
+            "audio": "assets/audio/examples/player-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：He is a good player. player 是球员。"
+        },
+        "inflectionNote": "复数 players"
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 48,
+    "content": {
+      "prompt": {
+        "headword": "put on",
+        "primaryAudio": "assets/audio/put-on.mp3",
+        "phonetic": {
+          "ipa": "/pʊt ɒn/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "戴上；穿上",
+            "pos": "v. phr."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Put on your glasses.",
+            "zh": "戴上你的眼镜。",
+            "audio": "assets/audio/examples/put-on-1.mp3"
+          },
+          {
+            "en": "Put on your coat. It is cold.",
+            "zh": "穿上外套，天很冷。",
+            "audio": "assets/audio/examples/put-on-2.mp3"
+          },
+          {
+            "en": "Put on your shoes, please.",
+            "zh": "请穿上鞋子。",
+            "audio": "assets/audio/examples/put-on-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：put 放 + on 上，put on 是戴上、穿上。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 49,
+    "content": {
+      "prompt": {
+        "headword": "sit down",
+        "primaryAudio": "assets/audio/sit-down.mp3",
+        "phonetic": {
+          "ipa": "/sɪt daʊn/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "坐下",
+            "pos": "v. phr."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Sit down, please.",
+            "zh": "请坐下。",
+            "audio": "assets/audio/examples/sit-down-1.mp3"
+          },
+          {
+            "en": "Sit down and watch the film.",
+            "zh": "坐下看电影。",
+            "audio": "assets/audio/examples/sit-down-2.mp3"
+          },
+          {
+            "en": "Please sit down near me.",
+            "zh": "请坐在我附近。",
+            "audio": "assets/audio/examples/sit-down-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：sit 坐 + down 下，sit down 是坐下。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 50,
+    "content": {
+      "prompt": {
+        "headword": "welcome",
+        "primaryAudio": "assets/audio/welcome.mp3",
+        "phonetic": {
+          "ipa": "/ˈwelkəm/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "欢迎",
+            "pos": "v./adj./interj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Welcome to our school!",
+            "zh": "欢迎来到我们学校！",
+            "audio": "assets/audio/examples/welcome-1.mp3"
+          },
+          {
+            "en": "Welcome to the museum.",
+            "zh": "欢迎参观博物馆。",
+            "audio": "assets/audio/examples/welcome-2.mp3"
+          },
+          {
+            "en": "You are welcome here.",
+            "zh": "欢迎你到这里来。",
+            "audio": "assets/audio/examples/welcome-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Welcome to our school! welcome 是欢迎。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 51,
+    "content": {
+      "prompt": {
+        "headword": "April",
+        "primaryAudio": "assets/audio/april.mp3",
+        "phonetic": {
+          "ipa": "/ˈeɪprəl/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "四月",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "My birthday is in April.",
+            "zh": "我的生日在四月。",
+            "audio": "assets/audio/examples/april-1.mp3"
+          },
+          {
+            "en": "April is a spring month.",
+            "zh": "四月是一个春季月份。",
+            "audio": "assets/audio/examples/april-2.mp3"
+          },
+          {
+            "en": "Do you remember April?",
+            "zh": "你记得四月吗？",
+            "audio": "assets/audio/examples/april-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：April is a spring month. April 是四月。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 52,
+    "content": {
+      "prompt": {
+        "headword": "December",
+        "primaryAudio": "assets/audio/december.mp3",
+        "phonetic": {
+          "ipa": "/dɪˈsembə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "十二月",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "December is very cold.",
+            "zh": "十二月非常冷。",
+            "audio": "assets/audio/examples/december-1.mp3"
+          },
+          {
+            "en": "Christmas is in December.",
+            "zh": "圣诞节在十二月。",
+            "audio": "assets/audio/examples/december-2.mp3"
+          },
+          {
+            "en": "December is the last month.",
+            "zh": "十二月是最后一个月。",
+            "audio": "assets/audio/examples/december-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：December is cold. December 是十二月。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 53,
+    "content": {
+      "prompt": {
+        "headword": "easy",
+        "primaryAudio": "assets/audio/easy.mp3",
+        "phonetic": {
+          "ipa": "/ˈiːzi/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "容易的",
+            "pos": "adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "This game is easy.",
+            "zh": "这个游戏很容易。",
+            "audio": "assets/audio/examples/easy-1.mp3"
+          },
+          {
+            "en": "It is easy to remember the months.",
+            "zh": "记住月份很容易。",
+            "audio": "assets/audio/examples/easy-2.mp3"
+          },
+          {
+            "en": "English is not easy, but I like it.",
+            "zh": "英语不容易，但我喜欢。",
+            "audio": "assets/audio/examples/easy-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：This game is easy. easy 是容易的。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 54,
+    "content": {
+      "prompt": {
+        "headword": "February",
+        "primaryAudio": "assets/audio/february.mp3",
+        "phonetic": {
+          "ipa": "/ˈfebruəri, ˈfebrueri/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "二月",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "February is short.",
+            "zh": "二月很短。",
+            "audio": "assets/audio/examples/february-1.mp3"
+          },
+          {
+            "en": "Spring Festival is often in February.",
+            "zh": "春节常常在二月。",
+            "audio": "assets/audio/examples/february-2.mp3"
+          },
+          {
+            "en": "February comes after January.",
+            "zh": "二月在一月之后。",
+            "audio": "assets/audio/examples/february-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：February is short. February 是二月。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 55,
+    "content": {
+      "prompt": {
+        "headword": "January",
+        "primaryAudio": "assets/audio/january.mp3",
+        "phonetic": {
+          "ipa": "/ˈdʒænjuəri, ˈdʒænjueri/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "一月",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "January is the first month.",
+            "zh": "一月是第一个月份。",
+            "audio": "assets/audio/examples/january-1.mp3"
+          },
+          {
+            "en": "It is cold in January.",
+            "zh": "一月很冷。",
+            "audio": "assets/audio/examples/january-2.mp3"
+          },
+          {
+            "en": "New Year is in January.",
+            "zh": "新年在一月。",
+            "audio": "assets/audio/examples/january-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：January is the first month. January 是一月。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 56,
+    "content": {
+      "prompt": {
+        "headword": "June",
+        "primaryAudio": "assets/audio/june.mp3",
+        "phonetic": {
+          "ipa": "/dʒuːn/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "六月",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "June is a summer month.",
+            "zh": "六月是一个夏季月份。",
+            "audio": "assets/audio/examples/june-1.mp3"
+          },
+          {
+            "en": "School ends in June.",
+            "zh": "六月放学。",
+            "audio": "assets/audio/examples/june-2.mp3"
+          },
+          {
+            "en": "Children's Day is in June.",
+            "zh": "儿童节在六月。",
+            "audio": "assets/audio/examples/june-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：June is a summer month. June 是六月。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 57,
+    "content": {
+      "prompt": {
+        "headword": "March",
+        "primaryAudio": "assets/audio/march.mp3",
+        "phonetic": {
+          "ipa": "/mɑːtʃ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "三月",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "March comes before April.",
+            "zh": "三月在四月之前。",
+            "audio": "assets/audio/examples/march-1.mp3"
+          },
+          {
+            "en": "It is windy in March.",
+            "zh": "三月风很大。",
+            "audio": "assets/audio/examples/march-2.mp3"
+          },
+          {
+            "en": "March is the third month.",
+            "zh": "三月是第三个月份。",
+            "audio": "assets/audio/examples/march-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：March comes before April. March 是三月。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 58,
+    "content": {
+      "prompt": {
+        "headword": "May",
+        "primaryAudio": "assets/audio/may.mp3",
+        "phonetic": {
+          "ipa": "/meɪ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "五月",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "May is a lovely month.",
+            "zh": "五月是一个可爱的月份。",
+            "audio": "assets/audio/examples/may-1.mp3"
+          },
+          {
+            "en": "It is warm in May.",
+            "zh": "五月很温暖。",
+            "audio": "assets/audio/examples/may-2.mp3"
+          },
+          {
+            "en": "May comes after April.",
+            "zh": "五月在四月之后。",
+            "audio": "assets/audio/examples/may-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：May is warm. May 是五月。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 59,
+    "content": {
+      "prompt": {
+        "headword": "month",
+        "primaryAudio": "assets/audio/month.mp3",
+        "phonetic": {
+          "ipa": "/mʌnθ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "月份",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Which month is it?",
+            "zh": "现在是几月份？",
+            "audio": "assets/audio/examples/month-1.mp3"
+          },
+          {
+            "en": "October is my favorite month.",
+            "zh": "十月是我最喜欢的月份。",
+            "audio": "assets/audio/examples/month-2.mp3"
+          },
+          {
+            "en": "March is my favourite month.",
+            "zh": "一年有十二个月份。",
+            "audio": "assets/audio/examples/month-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Which month is it? month 是月份。"
+        },
+        "inflectionNote": "复数 months"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 60,
+    "content": {
+      "prompt": {
+        "headword": "November",
+        "primaryAudio": "assets/audio/november.mp3",
+        "phonetic": {
+          "ipa": "/nəʊˈvembə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "十一月",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "November is cool.",
+            "zh": "十一月很凉爽。",
+            "audio": "assets/audio/examples/november-1.mp3"
+          },
+          {
+            "en": "November comes before December.",
+            "zh": "十一月在十二月之前。",
+            "audio": "assets/audio/examples/november-2.mp3"
+          },
+          {
+            "en": "November is the eleventh month.",
+            "zh": "它是第十一个月份。",
+            "audio": "assets/audio/examples/november-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：November is cool. November 是十一月。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 61,
+    "content": {
+      "prompt": {
+        "headword": "or",
+        "primaryAudio": "assets/audio/or.mp3",
+        "phonetic": {
+          "ipa": "/ɔː(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "或者",
+            "pos": "conj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Is it March or April?",
+            "zh": "是三月还是四月？",
+            "audio": "assets/audio/examples/or-1.mp3"
+          },
+          {
+            "en": "Turn left or right?",
+            "zh": "向左还是向右？",
+            "audio": "assets/audio/examples/or-2.mp3"
+          },
+          {
+            "en": "Tea or juice?",
+            "zh": "茶还是果汁？",
+            "audio": "assets/audio/examples/or-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：March or April? or 是或者。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 62,
+    "content": {
+      "prompt": {
+        "headword": "remember",
+        "primaryAudio": "assets/audio/remember.mp3",
+        "phonetic": {
+          "ipa": "/rɪˈmembə(r)/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "记住",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Remember to say thank you.",
+            "zh": "记得说谢谢。",
+            "audio": "assets/audio/examples/remember-1.mp3"
+          },
+          {
+            "en": "I remember all the months.",
+            "zh": "我记住了所有月份。",
+            "audio": "assets/audio/examples/remember-2.mp3"
+          },
+          {
+            "en": "Do you remember April?",
+            "zh": "你记得四月吗？",
+            "audio": "assets/audio/examples/remember-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Remember the months. remember 是记住。"
+        },
+        "inflectionNote": "第三人称单数 remembers"
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 63,
+    "content": {
+      "prompt": {
+        "headword": "bus stop",
+        "primaryAudio": "assets/audio/bus-stop.mp3",
+        "phonetic": {
+          "ipa": "/bʌs stɒp/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "公交车站",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Wait at the bus stop.",
+            "zh": "在公交车站等候。",
+            "audio": "assets/audio/examples/bus-stop-1.mp3"
+          },
+          {
+            "en": "The bus stop is nearby.",
+            "zh": "公交站在附近。",
+            "audio": "assets/audio/examples/bus-stop-2.mp3"
+          },
+          {
+            "en": "Turn right at the bus stop.",
+            "zh": "在公交车站向右转。",
+            "audio": "assets/audio/examples/bus-stop-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：bus 公共汽车 + stop 停，bus stop 是公交车站。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 64,
+    "content": {
+      "prompt": {
+        "headword": "Excuse me.",
+        "primaryAudio": "assets/audio/excuse-me.mp3",
+        "phonetic": {
+          "ipa": "/ɪkˈskjuːs miː/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "请问；劳驾",
+            "pos": "phrase"
+          }
+        ],
+        "examples": [
+          {
+            "en": "Excuse me. Where is the station?",
+            "zh": "请问，车站在哪里？",
+            "audio": "assets/audio/examples/excuse-me-1.mp3"
+          },
+          {
+            "en": "Excuse me. Is there a hospital nearby?",
+            "zh": "劳驾，附近有医院吗？",
+            "audio": "assets/audio/examples/excuse-me-2.mp3"
+          },
+          {
+            "en": "Excuse me. How can I get to the museum?",
+            "zh": "请问，我怎么去博物馆？",
+            "audio": "assets/audio/examples/excuse-me-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Excuse me. Where is the station? Excuse me. 是请问、劳驾。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 65,
+    "content": {
+      "prompt": {
+        "headword": "far away",
+        "primaryAudio": "assets/audio/far-away.mp3",
+        "phonetic": {
+          "ipa": "/fɑː(r) əˈweɪ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "很远",
+            "pos": "adv. phr."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The hospital is far away.",
+            "zh": "医院很远。",
+            "audio": "assets/audio/examples/far-away-1.mp3"
+          },
+          {
+            "en": "Australia is far away.",
+            "zh": "澳大利亚很远。",
+            "audio": "assets/audio/examples/far-away-2.mp3"
+          },
+          {
+            "en": "Is the station far away?",
+            "zh": "车站很远吗？",
+            "audio": "assets/audio/examples/far-away-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：far 远 + away 离开，far away 是很远。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 66,
+    "content": {
+      "prompt": {
+        "headword": "get to",
+        "primaryAudio": "assets/audio/get-to.mp3",
+        "phonetic": {
+          "ipa": "/ɡet tuː, ɡet tə/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "到达",
+            "pos": "v. phr."
+          }
+        ],
+        "examples": [
+          {
+            "en": "How can I get to the station?",
+            "zh": "我怎么到达车站？",
+            "audio": "assets/audio/examples/get-to-1.mp3"
+          },
+          {
+            "en": "We get to the hospital by taxi.",
+            "zh": "我们乘出租车到达医院。",
+            "audio": "assets/audio/examples/get-to-2.mp3"
+          },
+          {
+            "en": "It is easy to get to the city.",
+            "zh": "到达城市很容易。",
+            "audio": "assets/audio/examples/get-to-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：get 到达 + to 到，get to 是到达。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 67,
+    "content": {
+      "prompt": {
+        "headword": "go straight",
+        "primaryAudio": "assets/audio/go-straight.mp3",
+        "phonetic": {
+          "ipa": "/ɡəʊ streɪt/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "一直往前走",
+            "pos": "v. phr."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Go straight. Then turn right.",
+            "zh": "一直往前走，然后向右转。",
+            "audio": "assets/audio/examples/go-straight-1.mp3"
+          },
+          {
+            "en": "Go straight to the station.",
+            "zh": "一直往前走到车站。",
+            "audio": "assets/audio/examples/go-straight-2.mp3"
+          },
+          {
+            "en": "Go straight. The hospital is on your left.",
+            "zh": "一直往前走，医院在你左边。",
+            "audio": "assets/audio/examples/go-straight-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：go 走 + straight 直，go straight 是一直往前走。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 68,
+    "content": {
+      "prompt": {
+        "headword": "hospital",
+        "primaryAudio": "assets/audio/hospital.mp3",
+        "phonetic": {
+          "ipa": "/ˈhɒspɪtl/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "医院",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The hospital is nearby.",
+            "zh": "医院在附近。",
+            "audio": "assets/audio/examples/hospital-1.mp3"
+          },
+          {
+            "en": "Go straight. The hospital is on the right.",
+            "zh": "一直往前走，医院在右边。",
+            "audio": "assets/audio/examples/hospital-2.mp3"
+          },
+          {
+            "en": "Is there a hospital near here?",
+            "zh": "这附近有医院吗？",
+            "audio": "assets/audio/examples/hospital-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：hospital 音近「好斯皮头」，好斯皮头去医院 hospital。\n形象联想：想象 hospital 医院红十字标志。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 69,
+    "content": {
+      "prompt": {
+        "headword": "left",
+        "primaryAudio": "assets/audio/left.mp3",
+        "phonetic": {
+          "ipa": "/left/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "左边的",
+            "pos": "adj./adv./n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Turn left at the station.",
+            "zh": "在车站向左转。",
+            "audio": "assets/audio/examples/left-1.mp3"
+          },
+          {
+            "en": "The bus stop is on the left.",
+            "zh": "公交站在左边。",
+            "audio": "assets/audio/examples/left-2.mp3"
+          },
+          {
+            "en": "Go straight. Then turn left.",
+            "zh": "一直走，然后向左转。",
+            "audio": "assets/audio/examples/left-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Turn left, please. left 是左边的。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 70,
+    "content": {
+      "prompt": {
+        "headword": "man",
+        "primaryAudio": "assets/audio/man.mp3",
+        "phonetic": {
+          "ipa": "/mæn/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "男人",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The young man is tall.",
+            "zh": "这个年轻男人很高。",
+            "audio": "assets/audio/examples/man-1.mp3"
+          },
+          {
+            "en": "A kind man helps me.",
+            "zh": "一位亲切的男人帮助我。",
+            "audio": "assets/audio/examples/man-2.mp3"
+          },
+          {
+            "en": "The man waits at the bus stop.",
+            "zh": "这个男人在公交车站等候。",
+            "audio": "assets/audio/examples/man-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：The young man is tall. man 是男人。"
+        },
+        "inflectionNote": "复数 men（不规则变化）"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 71,
+    "content": {
+      "prompt": {
+        "headword": "nearby",
+        "primaryAudio": "assets/audio/nearby.mp3",
+        "phonetic": {
+          "ipa": "/ˌnɪəˈbaɪ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "附近",
+            "pos": "adv./adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "There is a bus stop nearby.",
+            "zh": "附近有一个公交车站。",
+            "audio": "assets/audio/examples/nearby-1.mp3"
+          },
+          {
+            "en": "The hospital is nearby.",
+            "zh": "医院在附近。",
+            "audio": "assets/audio/examples/nearby-2.mp3"
+          },
+          {
+            "en": "Is there a cinema nearby?",
+            "zh": "附近有电影院吗？",
+            "audio": "assets/audio/examples/nearby-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：The hospital is nearby. nearby 是附近。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 72,
+    "content": {
+      "prompt": {
+        "headword": "right",
+        "primaryAudio": "assets/audio/right.mp3",
+        "phonetic": {
+          "ipa": "/raɪt/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "右边的",
+            "pos": "adj./adv./n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Turn right at the corner.",
+            "zh": "在拐角向右转。",
+            "audio": "assets/audio/examples/right-1.mp3"
+          },
+          {
+            "en": "The hospital is on the right.",
+            "zh": "医院在右边。",
+            "audio": "assets/audio/examples/right-2.mp3"
+          },
+          {
+            "en": "Go straight. Then turn right.",
+            "zh": "一直走，然后向右转。",
+            "audio": "assets/audio/examples/right-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Turn right at the corner. right 是右边的。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 73,
+    "content": {
+      "prompt": {
+        "headword": "station",
+        "primaryAudio": "assets/audio/station.mp3",
+        "phonetic": {
+          "ipa": "/ˈsteɪʃn/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "车站",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The bus stop is near the station.",
+            "zh": "公交站在车站附近。",
+            "audio": "assets/audio/examples/station-1.mp3"
+          },
+          {
+            "en": "Excuse me. Where is the station?",
+            "zh": "请问，车站在哪里？",
+            "audio": "assets/audio/examples/station-2.mp3"
+          },
+          {
+            "en": "We wait at the station.",
+            "zh": "我们在车站等候。",
+            "audio": "assets/audio/examples/station-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Where is the station? station 是车站。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 74,
+    "content": {
+      "prompt": {
+        "headword": "taxi",
+        "primaryAudio": "assets/audio/taxi.mp3",
+        "phonetic": {
+          "ipa": "/ˈtæksi/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "的士",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Let us take a taxi.",
+            "zh": "我们打的士吧。",
+            "audio": "assets/audio/examples/taxi-1.mp3"
+          },
+          {
+            "en": "We get to the hospital by taxi.",
+            "zh": "我们乘出租车到达医院。",
+            "audio": "assets/audio/examples/taxi-2.mp3"
+          },
+          {
+            "en": "The taxi is near the station.",
+            "zh": "出租车在车站附近。",
+            "audio": "assets/audio/examples/taxi-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：taxi 音近「泰克西」，泰克西坐 taxi 的士。\n形象联想：想象 take a taxi 到 station 车站。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 75,
+    "content": {
+      "prompt": {
+        "headword": "turn",
+        "primaryAudio": "assets/audio/turn.mp3",
+        "phonetic": {
+          "ipa": "/tɜːn/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "转向；转弯",
+            "pos": "v./n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Turn right at the bus stop.",
+            "zh": "在公交车站向右转。",
+            "audio": "assets/audio/examples/turn-1.mp3"
+          },
+          {
+            "en": "Turn left, please.",
+            "zh": "请向左转。",
+            "audio": "assets/audio/examples/turn-2.mp3"
+          },
+          {
+            "en": "Go straight and then turn.",
+            "zh": "一直走然后转弯。",
+            "audio": "assets/audio/examples/turn-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：turn 音近「特恩」，特恩 turn 转弯。\n语义联想：把「转向」和英文 turn 配对记忆。"
+        },
+        "inflectionNote": "第三人称单数 turns"
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 76,
+    "content": {
+      "prompt": {
+        "headword": "You're welcome.",
+        "primaryAudio": "assets/audio/youre-welcome.mp3",
+        "phonetic": {
+          "ipa": "/jɔː(r) ˈwelkəm/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "不用谢",
+            "pos": "phrase"
+          }
+        ],
+        "examples": [
+          {
+            "en": "Thank you! — You're welcome.",
+            "zh": "谢谢你！——不用谢。",
+            "audio": "assets/audio/examples/youre-welcome-1.mp3"
+          },
+          {
+            "en": "You're welcome. Come again.",
+            "zh": "不用谢，欢迎再来。",
+            "audio": "assets/audio/examples/youre-welcome-2.mp3"
+          },
+          {
+            "en": "You're welcome. I am happy to help.",
+            "zh": "不用谢，我很乐意帮忙。",
+            "audio": "assets/audio/examples/youre-welcome-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：you're 你是 + welcome 欢迎，You're welcome. 是「不用谢」。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 77,
+    "content": {
+      "prompt": {
+        "headword": "young",
+        "primaryAudio": "assets/audio/young.mp3",
+        "phonetic": {
+          "ipa": "/jʌŋ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "年轻的",
+            "pos": "adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "The young man is a player.",
+            "zh": "这个年轻男人是一名球员。",
+            "audio": "assets/audio/examples/young-1.mp3"
+          },
+          {
+            "en": "She is young and kind.",
+            "zh": "她年轻又亲切。",
+            "audio": "assets/audio/examples/young-2.mp3"
+          },
+          {
+            "en": "The young pupil smiles at me.",
+            "zh": "这名年轻的小学生对我微笑。",
+            "audio": "assets/audio/examples/young-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：The young man is a player. young 是年轻的。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 78,
+    "content": {
+      "prompt": {
+        "headword": "call",
+        "primaryAudio": "assets/audio/call.mp3",
+        "phonetic": {
+          "ipa": "/kɔːl/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "呼叫；打电话",
+            "pos": "v./n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Call me on my mobile, please.",
+            "zh": "请打我的手机。",
+            "audio": "assets/audio/examples/call-1.mp3"
+          },
+          {
+            "en": "I call my classmate every day.",
+            "zh": "我每天都给同班同学打电话。",
+            "audio": "assets/audio/examples/call-2.mp3"
+          },
+          {
+            "en": "Sorry, wrong call.",
+            "zh": "对不起，打错了。",
+            "audio": "assets/audio/examples/call-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Call me on my mobile. call 是打电话。"
+        },
+        "inflectionNote": "第三人称单数 calls"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 79,
+    "content": {
+      "prompt": {
+        "headword": "city",
+        "primaryAudio": "assets/audio/city.mp3",
+        "phonetic": {
+          "ipa": "/ˈsɪti/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "城市",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I live in a big city.",
+            "zh": "我住在一个大城市。",
+            "audio": "assets/audio/examples/city-1.mp3"
+          },
+          {
+            "en": "The museum is in the city.",
+            "zh": "博物馆在这座城市里。",
+            "audio": "assets/audio/examples/city-2.mp3"
+          },
+          {
+            "en": "Welcome to our city!",
+            "zh": "欢迎来到我们的城市！",
+            "audio": "assets/audio/examples/city-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：I live in a big city. city 是城市。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 80,
+    "content": {
+      "prompt": {
+        "headword": "minute",
+        "primaryAudio": "assets/audio/minute.mp3",
+        "phonetic": {
+          "ipa": "/ˈmɪnɪt/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "分钟",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Wait a minute, please.",
+            "zh": "请等一下。",
+            "audio": "assets/audio/examples/minute-1.mp3"
+          },
+          {
+            "en": "Wait one minute, please.",
+            "zh": "需要五分钟。",
+            "audio": "assets/audio/examples/minute-2.mp3"
+          },
+          {
+            "en": "One minute, please.",
+            "zh": "请等一分钟。",
+            "audio": "assets/audio/examples/minute-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：minute 音近「米尼特」，米尼特等 minute 分钟。\n语义联想：把「分钟」和英文 minute 配对记忆。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 81,
+    "content": {
+      "prompt": {
+        "headword": "mobile",
+        "primaryAudio": "assets/audio/mobile.mp3",
+        "phonetic": {
+          "ipa": "/ˈməʊbaɪl/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "手机",
+            "pos": "n./adj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "This is my mobile.",
+            "zh": "这是我的手机。",
+            "audio": "assets/audio/examples/mobile-1.mp3"
+          },
+          {
+            "en": "Call me on my mobile.",
+            "zh": "打我的手机。",
+            "audio": "assets/audio/examples/mobile-2.mp3"
+          },
+          {
+            "en": "Do you have a mobile?",
+            "zh": "你有手机吗？",
+            "audio": "assets/audio/examples/mobile-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：This is my mobile. mobile 是手机。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 82,
+    "content": {
+      "prompt": {
+        "headword": "on my way",
+        "primaryAudio": "assets/audio/on-my-way.mp3",
+        "phonetic": {
+          "ipa": "/ɒn maɪ weɪ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "在我去……的路上",
+            "pos": "phrase"
+          }
+        ],
+        "examples": [
+          {
+            "en": "I am on my way to school.",
+            "zh": "我在去学校的路上。",
+            "audio": "assets/audio/examples/on-my-way-1.mp3"
+          },
+          {
+            "en": "Wait a minute. I am on my way.",
+            "zh": "等一下，我在路上。",
+            "audio": "assets/audio/examples/on-my-way-2.mp3"
+          },
+          {
+            "en": "Call me when you are on your way.",
+            "zh": "你在路上时给我打电话。",
+            "audio": "assets/audio/examples/on-my-way-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：on 在 + my 我的 + way 路，on my way 是在我去……的路上。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 83,
+    "content": {
+      "prompt": {
+        "headword": "page",
+        "primaryAudio": "assets/audio/page.mp3",
+        "phonetic": {
+          "ipa": "/peɪdʒ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "页",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Open your book at page ten.",
+            "zh": "把书翻到第十页。",
+            "audio": "assets/audio/examples/page-1.mp3"
+          },
+          {
+            "en": "Write the word on page five.",
+            "zh": "在第五页写这个词。",
+            "audio": "assets/audio/examples/page-2.mp3"
+          },
+          {
+            "en": "Read page three, please.",
+            "zh": "请读第三页。",
+            "audio": "assets/audio/examples/page-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Open your book at page ten. page 是页。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 84,
+    "content": {
+      "prompt": {
+        "headword": "sorry",
+        "primaryAudio": "assets/audio/sorry.mp3",
+        "phonetic": {
+          "ipa": "/ˈsɒri/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "对不起",
+            "pos": "adj./interj."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Sorry, I am late.",
+            "zh": "对不起，我迟到了。",
+            "audio": "assets/audio/examples/sorry-1.mp3"
+          },
+          {
+            "en": "I am sorry. Wait a minute.",
+            "zh": "对不起，请等一下。",
+            "audio": "assets/audio/examples/sorry-2.mp3"
+          },
+          {
+            "en": "Sorry, wrong number.",
+            "zh": "对不起，打错了。",
+            "audio": "assets/audio/examples/sorry-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：sorry 音近「扫瑞」，扫瑞说 sorry 对不起。\n语义联想：看到「对不起」的事物时，就想到 sorry。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 85,
+    "content": {
+      "prompt": {
+        "headword": "speak",
+        "primaryAudio": "assets/audio/speak.mp3",
+        "phonetic": {
+          "ipa": "/spiːk/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "说话；讲话",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Can I speak to Lily?",
+            "zh": "我能和莉莉说话吗？",
+            "audio": "assets/audio/examples/speak-1.mp3"
+          },
+          {
+            "en": "Please speak slowly.",
+            "zh": "请慢慢说。",
+            "audio": "assets/audio/examples/speak-2.mp3"
+          },
+          {
+            "en": "We speak English in class.",
+            "zh": "我们在课上说英语。",
+            "audio": "assets/audio/examples/speak-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Can I speak to Lily? speak 是说话。"
+        },
+        "inflectionNote": "第三人称单数 speaks；过去式 spoke"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 86,
+    "content": {
+      "prompt": {
+        "headword": "time",
+        "primaryAudio": "assets/audio/time.mp3",
+        "phonetic": {
+          "ipa": "/taɪm/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "时间；次数",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "What time is it?",
+            "zh": "现在几点了？",
+            "audio": "assets/audio/examples/time-1.mp3"
+          },
+          {
+            "en": "Wait a minute. It is time to go.",
+            "zh": "等一下，该走了。",
+            "audio": "assets/audio/examples/time-2.mp3"
+          },
+          {
+            "en": "This is the first time.",
+            "zh": "这是第一次。",
+            "audio": "assets/audio/examples/time-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：What time is it? time 是时间、次数。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 87,
+    "content": {
+      "prompt": {
+        "headword": "wait",
+        "primaryAudio": "assets/audio/wait.mp3",
+        "phonetic": {
+          "ipa": "/weɪt/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "等候；等待",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Wait a minute, please.",
+            "zh": "请等一下。",
+            "audio": "assets/audio/examples/wait-1.mp3"
+          },
+          {
+            "en": "Wait at the bus stop.",
+            "zh": "在公交车站等候。",
+            "audio": "assets/audio/examples/wait-2.mp3"
+          },
+          {
+            "en": "Please wait. I am on my way.",
+            "zh": "请等一下，我在路上。",
+            "audio": "assets/audio/examples/wait-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Wait a minute, please. wait 是等候、等待。"
+        },
+        "inflectionNote": "第三人称单数 waits"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 88,
+    "content": {
+      "prompt": {
+        "headword": "way",
+        "primaryAudio": "assets/audio/way.mp3",
+        "phonetic": {
+          "ipa": "/weɪ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "路；方向",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Which way is the hospital?",
+            "zh": "去医院走哪条路？",
+            "audio": "assets/audio/examples/way-1.mp3"
+          },
+          {
+            "en": "Tell me the way to the station.",
+            "zh": "告诉我去车站的路。",
+            "audio": "assets/audio/examples/way-2.mp3"
+          },
+          {
+            "en": "This way, please.",
+            "zh": "请走这边。",
+            "audio": "assets/audio/examples/way-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Which way is the hospital? way 是路、方向。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 89,
+    "content": {
+      "prompt": {
+        "headword": "word",
+        "primaryAudio": "assets/audio/word.mp3",
+        "phonetic": {
+          "ipa": "/wɜːd/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "词",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Read this word, please.",
+            "zh": "请读这个词。",
+            "audio": "assets/audio/examples/word-1.mp3"
+          },
+          {
+            "en": "Write the new word five times.",
+            "zh": "把这个新词写五遍。",
+            "audio": "assets/audio/examples/word-2.mp3"
+          },
+          {
+            "en": "Do you know this word?",
+            "zh": "你认识这个词吗？",
+            "audio": "assets/audio/examples/word-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：Read this word, please. word 是词。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 90,
+    "content": {
+      "prompt": {
+        "headword": "write",
+        "primaryAudio": "assets/audio/write.mp3",
+        "phonetic": {
+          "ipa": "/raɪt/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "写字",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "Write your name, please.",
+            "zh": "请写下你的名字。",
+            "audio": "assets/audio/examples/write-1.mp3"
+          },
+          {
+            "en": "Write the word on the page.",
+            "zh": "在页上写这个词。",
+            "audio": "assets/audio/examples/write-2.mp3"
+          },
+          {
+            "en": "I write a card for Teachers' Day.",
+            "zh": "我为教师节写一张卡片。",
+            "audio": "assets/audio/examples/write-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "谐音联想：write 音近「瑞特」，瑞特 write 写字。\n语义联想：把「写字」和英文 write 配对记忆。"
+        },
+        "inflectionNote": "第三人称单数 writes；过去式 wrote"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 91,
+    "content": {
+      "prompt": {
+        "headword": "classmate",
+        "primaryAudio": "assets/audio/classmate.mp3",
+        "phonetic": {
+          "ipa": "/ˈklɑːsmeɪt/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "同班同学",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "She is my classmate.",
+            "zh": "她是我的同班同学。",
+            "audio": "assets/audio/examples/classmate-1.mp3"
+          },
+          {
+            "en": "My classmate is from the USA.",
+            "zh": "我的同班同学来自美国。",
+            "audio": "assets/audio/examples/classmate-2.mp3"
+          },
+          {
+            "en": "I call my classmate every day.",
+            "zh": "我每天都给同班同学打电话。",
+            "audio": "assets/audio/examples/classmate-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：class 班 + mate 伙伴，classmate 是同班同学。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 92,
+    "content": {
+      "prompt": {
+        "headword": "know",
+        "primaryAudio": "assets/audio/know.mp3",
+        "phonetic": {
+          "ipa": "/nəʊ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "知道",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I know the way to the city.",
+            "zh": "我知道去城市的路。",
+            "audio": "assets/audio/examples/know-1.mp3"
+          },
+          {
+            "en": "Do you know this word?",
+            "zh": "你认识这个词吗？",
+            "audio": "assets/audio/examples/know-2.mp3"
+          },
+          {
+            "en": "I know my classmate well.",
+            "zh": "我很了解我的同班同学。",
+            "audio": "assets/audio/examples/know-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：I know the way. know 是知道。"
+        },
+        "inflectionNote": "第三人称单数 knows；过去式 knew"
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 93,
+    "content": {
+      "prompt": {
+        "headword": "see",
+        "primaryAudio": "assets/audio/see.mp3",
+        "phonetic": {
+          "ipa": "/siː/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "看见；明白",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I see. Thank you.",
+            "zh": "我明白了，谢谢。",
+            "audio": "assets/audio/examples/see-1.mp3"
+          },
+          {
+            "en": "See you tomorrow.",
+            "zh": "明天见。",
+            "audio": "assets/audio/examples/see-2.mp3"
+          },
+          {
+            "en": "I see the museum on the right.",
+            "zh": "我看到博物馆在右边。",
+            "audio": "assets/audio/examples/see-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：I see. Thank you. see 是明白、看见。"
+        },
+        "inflectionNote": "第三人称单数 sees；过去式 saw"
+      }
+    }
+  },
+  {
+    "kind": "phrase",
+    "sortOrder": 94,
+    "content": {
+      "prompt": {
+        "headword": "the USA",
+        "primaryAudio": "assets/audio/the-usa.mp3",
+        "phonetic": {
+          "ipa": "/ðə ˌjuː es ˈeɪ/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "美国",
+            "pos": "n."
+          }
+        ],
+        "examples": [
+          {
+            "en": "My classmate is from the USA.",
+            "zh": "我的同班同学来自美国。",
+            "audio": "assets/audio/examples/the-usa-1.mp3"
+          },
+          {
+            "en": "The USA is far away.",
+            "zh": "美国很远。",
+            "audio": "assets/audio/examples/the-usa-2.mp3"
+          },
+          {
+            "en": "We learn about the USA in class.",
+            "zh": "我们在课上了解美国。",
+            "audio": "assets/audio/examples/the-usa-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "拆词联想：the 这个 + USA 美国，the USA 是美国。"
+        }
+      }
+    }
+  },
+  {
+    "kind": "word",
+    "sortOrder": 95,
+    "content": {
+      "prompt": {
+        "headword": "understand",
+        "primaryAudio": "assets/audio/understand.mp3",
+        "phonetic": {
+          "ipa": "/ˌʌndəˈstænd/",
+          "dialect": "uk"
+        }
+      },
+      "reveal": {
+        "definitions": [
+          {
+            "text": "理解；明白",
+            "pos": "v."
+          }
+        ],
+        "examples": [
+          {
+            "en": "I understand you.",
+            "zh": "我明白你的意思。",
+            "audio": "assets/audio/examples/understand-1.mp3"
+          },
+          {
+            "en": "Do you understand this word?",
+            "zh": "你理解这个词吗？",
+            "audio": "assets/audio/examples/understand-2.mp3"
+          },
+          {
+            "en": "Sorry, I don't understand.",
+            "zh": "对不起，我不明白。",
+            "audio": "assets/audio/examples/understand-3.mp3"
+          }
+        ],
+        "mnemonic": {
+          "kind": "association",
+          "text": "语义联想：I understand you. understand 是理解、明白。"
+        },
+        "inflectionNote": "第三人称单数 understands；过去式 understood"
+      }
+    }
+  }
+]

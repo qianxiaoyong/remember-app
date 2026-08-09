@@ -1,0 +1,826 @@
+[
+  {
+    "unit": 1,
+    "headword": "name",
+    "ipa": "/neɪm/",
+    "definition_zh": "名字",
+    "page": 4,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "nice",
+    "ipa": "/naɪs/",
+    "definition_zh": "令人愉快的；友好的",
+    "page": 4,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "ear",
+    "ipa": "/ɪə(r)/",
+    "definition_zh": "耳朵",
+    "page": 5,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "hand",
+    "ipa": "/hænd/",
+    "definition_zh": "手",
+    "page": 5,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "eye",
+    "ipa": "/aɪ/",
+    "definition_zh": "眼睛",
+    "page": 5,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "mouth",
+    "ipa": "/maʊθ/",
+    "definition_zh": "嘴",
+    "page": 5,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "arm",
+    "ipa": "/ɑːm/",
+    "definition_zh": "胳膊",
+    "page": 5,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "can",
+    "ipa": "/kən, kæn/",
+    "definition_zh": "可以",
+    "page": 7,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "share",
+    "ipa": "/ʃeə(r)/",
+    "definition_zh": "分享",
+    "page": 7,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "smile",
+    "ipa": "/smaɪl/",
+    "definition_zh": "微笑；笑",
+    "page": 8,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "listen",
+    "ipa": "/ˈlɪsn/",
+    "definition_zh": "听；倾听",
+    "page": 8,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "help",
+    "ipa": "/help/",
+    "definition_zh": "帮助",
+    "page": 8,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "say",
+    "ipa": "/seɪ/",
+    "definition_zh": "说；讲",
+    "page": 9,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "friend",
+    "ipa": "/frend/",
+    "definition_zh": "朋友",
+    "page": 9,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "good",
+    "ipa": "/ɡʊd/",
+    "definition_zh": "好的",
+    "page": 9,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "mum",
+    "ipa": "/mʌm/",
+    "definition_zh": "（口语）妈妈",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "dad",
+    "ipa": "/dæd/",
+    "definition_zh": "（口语）爸爸；爹爹",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "grandma",
+    "ipa": "/ˈɡrænmɑː/",
+    "definition_zh": "奶奶；姥姥",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "grandpa",
+    "ipa": "/ˈɡrænpɑː/",
+    "definition_zh": "爷爷；姥爷",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "mother",
+    "ipa": "/ˈmʌðə(r)/",
+    "definition_zh": "母亲；妈妈",
+    "page": 17,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "father",
+    "ipa": "/ˈfɑːðə(r)/",
+    "definition_zh": "父亲；爸爸",
+    "page": 17,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "me",
+    "ipa": "/miː/",
+    "definition_zh": "我",
+    "page": 17,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "sister",
+    "ipa": "/ˈsɪstə(r)/",
+    "definition_zh": "姐；妹",
+    "page": 17,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "family",
+    "ipa": "/ˈfæməli/",
+    "definition_zh": "家；家庭",
+    "page": 17,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "have",
+    "ipa": "/hæv/",
+    "definition_zh": "有",
+    "page": 19,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "big",
+    "ipa": "/bɪɡ/",
+    "definition_zh": "大的",
+    "page": 19,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "cousin",
+    "ipa": "/ˈkʌzn/",
+    "definition_zh": "堂（表）兄弟；堂（表）姐妹",
+    "page": 19,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "brother",
+    "ipa": "/ˈbrʌðə(r)/",
+    "definition_zh": "哥；弟",
+    "page": 19,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "baby",
+    "ipa": "/ˈbeɪbi/",
+    "definition_zh": "婴儿",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "uncle",
+    "ipa": "/ˈʌŋkl/",
+    "definition_zh": "伯父；叔父；舅父；姑父；姨父",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "aunt",
+    "ipa": "/ɑːnt/",
+    "definition_zh": "伯母；婶母；舅母；姑母；姨母",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "small",
+    "ipa": "/smɔːl/",
+    "definition_zh": "小的",
+    "page": 21,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "like",
+    "ipa": "/laɪk/",
+    "definition_zh": "喜欢",
+    "page": 28,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "dog",
+    "ipa": "/dɒɡ/",
+    "definition_zh": "狗",
+    "page": 28,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "pet",
+    "ipa": "/pet/",
+    "definition_zh": "宠物",
+    "page": 28,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "cat",
+    "ipa": "/kæt/",
+    "definition_zh": "猫",
+    "page": 28,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "fish",
+    "ipa": "/fɪʃ/",
+    "definition_zh": "鱼；鱼肉",
+    "page": 29,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "bird",
+    "ipa": "/bɜːd/",
+    "definition_zh": "鸟",
+    "page": 29,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "rabbit",
+    "ipa": "/ˈræbɪt/",
+    "definition_zh": "兔",
+    "page": 29,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "go",
+    "ipa": "/ɡəʊ/",
+    "definition_zh": "去；走",
+    "page": 31,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "zoo",
+    "ipa": "/zuː/",
+    "definition_zh": "动物园",
+    "page": 31,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "fox",
+    "ipa": "/fɒks/",
+    "definition_zh": "狐狸",
+    "page": 31,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "Miss",
+    "ipa": "/mɪs/",
+    "definition_zh": "（学生对女教师的称呼）老师；女士",
+    "page": 31,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "panda",
+    "ipa": "/ˈpændə/",
+    "definition_zh": "大熊猫",
+    "page": 31,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "red",
+    "ipa": "/red/",
+    "definition_zh": "panda小熊猫；红色；红色的",
+    "page": 31,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "cute",
+    "ipa": "/kjuːt/",
+    "definition_zh": "可爱的",
+    "page": 31,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "monkey",
+    "ipa": "/ˈmʌŋki/",
+    "definition_zh": "猴子",
+    "page": 32,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "tiger",
+    "ipa": "/ˈtaɪɡə(r)/",
+    "definition_zh": "老虎",
+    "page": 32,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "elephant",
+    "ipa": "/ˈelɪfənt/",
+    "definition_zh": "大象",
+    "page": 32,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "lion",
+    "ipa": "/ˈlaɪən/",
+    "definition_zh": "狮；狮子",
+    "page": 32,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "animal",
+    "ipa": "/ˈænɪml/",
+    "definition_zh": "动物",
+    "page": 33,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "giraffe",
+    "ipa": "/dʒəˈrɑːf/",
+    "definition_zh": "长颈鹿",
+    "page": 33,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "tall",
+    "ipa": "/tɔːl/",
+    "definition_zh": "高的",
+    "page": 33,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "fast",
+    "ipa": "/fɑːst/",
+    "definition_zh": "快的",
+    "page": 33,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "apple",
+    "ipa": "/ˈæpl/",
+    "definition_zh": "苹果",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "banana",
+    "ipa": "/bəˈnɑːnə/",
+    "definition_zh": "香蕉",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "farm",
+    "ipa": "/fɑːm/",
+    "definition_zh": "农场",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "air",
+    "ipa": "/eə(r)/",
+    "definition_zh": "空气",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "orange",
+    "ipa": "/ˈɒrɪndʒ/",
+    "definition_zh": "橙子；柑橘；橙红色；橙红色的",
+    "page": 41,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "grape",
+    "ipa": "/ɡreɪp/",
+    "definition_zh": "葡萄",
+    "page": 41,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "school",
+    "ipa": "/skuːl/",
+    "definition_zh": "学校",
+    "page": 43,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "garden",
+    "ipa": "/ˈɡɑːdn/",
+    "definition_zh": "花园",
+    "page": 43,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "need",
+    "ipa": "/niːd/",
+    "definition_zh": "需要",
+    "page": 43,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "water",
+    "ipa": "/ˈwɔːtə(r)/",
+    "definition_zh": "给……浇水；水",
+    "page": 43,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "flower",
+    "ipa": "/ˈflaʊə(r)/",
+    "definition_zh": "花；花朵",
+    "page": 43,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "grass",
+    "ipa": "/ɡrɑːs/",
+    "definition_zh": "草；草地",
+    "page": 43,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "plant",
+    "ipa": "/plɑːnt/",
+    "definition_zh": "种植；植物",
+    "page": 43,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "new",
+    "ipa": "/njuː/",
+    "definition_zh": "新的",
+    "page": 43,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "tree",
+    "ipa": "/triː/",
+    "definition_zh": "树",
+    "page": 43,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "sun",
+    "ipa": "/sʌn/",
+    "definition_zh": "阳光；太阳",
+    "page": 44,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "give",
+    "ipa": "/ɡɪv/",
+    "definition_zh": "给",
+    "page": 45,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "them",
+    "ipa": "/ðəm, ðem/",
+    "definition_zh": "它们；他们；她们",
+    "page": 45,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "colour",
+    "ipa": "/ˈkʌlə(r)/",
+    "definition_zh": "颜色",
+    "page": 52,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "green",
+    "ipa": "/ɡriːn/",
+    "definition_zh": "绿色；绿色的",
+    "page": 52,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "blue",
+    "ipa": "/bluː/",
+    "definition_zh": "蓝色；蓝色的",
+    "page": 52,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "make",
+    "ipa": "/meɪk/",
+    "definition_zh": "使出现；做",
+    "page": 52,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "purple",
+    "ipa": "/ˈpɜːpl/",
+    "definition_zh": "紫色；紫色的",
+    "page": 52,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "brown",
+    "ipa": "/braʊn/",
+    "definition_zh": "棕色；棕色的",
+    "page": 53,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "bear",
+    "ipa": "/beə(r)/",
+    "definition_zh": "熊",
+    "page": 53,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "yellow",
+    "ipa": "/ˈjeləʊ/",
+    "definition_zh": "黄色；黄色的",
+    "page": 53,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "duck",
+    "ipa": "/dʌk/",
+    "definition_zh": "鸭",
+    "page": 53,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "sea",
+    "ipa": "/siː/",
+    "definition_zh": "海；海洋",
+    "page": 53,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "some",
+    "ipa": "/səm, sʌm/",
+    "definition_zh": "一些",
+    "page": 55,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "pink",
+    "ipa": "/pɪŋk/",
+    "definition_zh": "粉色；粉色的",
+    "page": 55,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "draw",
+    "ipa": "/drɔː/",
+    "definition_zh": "画",
+    "page": 55,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "white",
+    "ipa": "/waɪt/",
+    "definition_zh": "白色；白色的",
+    "page": 56,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "black",
+    "ipa": "/blæk/",
+    "definition_zh": "黑色；黑色的",
+    "page": 56,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "old",
+    "ipa": "/əʊld/",
+    "definition_zh": "（多少）岁；年纪；旧的",
+    "page": 64,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "five",
+    "ipa": "/faɪv/",
+    "definition_zh": "五",
+    "page": 64,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "year",
+    "ipa": "/jɪə(r)/",
+    "definition_zh": "年纪；年",
+    "page": 64,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "one",
+    "ipa": "/wʌn/",
+    "definition_zh": "一",
+    "page": 65,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "two",
+    "ipa": "/tuː/",
+    "definition_zh": "二",
+    "page": 65,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "three",
+    "ipa": "/θriː/",
+    "definition_zh": "三",
+    "page": 65,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "four",
+    "ipa": "/fɔː(r)/",
+    "definition_zh": "四",
+    "page": 65,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "ten",
+    "ipa": "/ten/",
+    "definition_zh": "十",
+    "page": 67,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "six",
+    "ipa": "/sɪks/",
+    "definition_zh": "六",
+    "page": 67,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "seven",
+    "ipa": "/ˈsevn/",
+    "definition_zh": "七",
+    "page": 68,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "eight",
+    "ipa": "/eɪt/",
+    "definition_zh": "八",
+    "page": 68,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "nine",
+    "ipa": "/naɪn/",
+    "definition_zh": "九",
+    "page": 68,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "o'clock",
+    "ipa": "/əˈklɒk/",
+    "definition_zh": "（表示整点）……点钟",
+    "page": 69,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "cut",
+    "ipa": "/kʌt/",
+    "definition_zh": "切块",
+    "page": 69,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "eat",
+    "ipa": "/iːt/",
+    "definition_zh": "吃",
+    "page": 69,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "cake",
+    "ipa": "/keɪk/",
+    "definition_zh": "蛋糕",
+    "page": 69,
+    "kind": "word"
+  }
+]

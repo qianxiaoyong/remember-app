@@ -1,0 +1,674 @@
+[
+  {
+    "unit": 1,
+    "headword": "game",
+    "ipa": "",
+    "definition_zh": "游戏；比赛",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "Olympic Games",
+    "ipa": "",
+    "definition_zh": "奥林匹克运动会",
+    "page": 10,
+    "kind": "phrase"
+  },
+  {
+    "unit": 1,
+    "headword": "take place",
+    "ipa": "",
+    "definition_zh": "举行",
+    "page": 10,
+    "kind": "phrase"
+  },
+  {
+    "unit": 1,
+    "headword": "Summer Olympics",
+    "ipa": "",
+    "definition_zh": "夏季奥运会",
+    "page": 10,
+    "kind": "phrase"
+  },
+  {
+    "unit": 1,
+    "headword": "Winter Olympics",
+    "ipa": "",
+    "definition_zh": "冬季奥运会",
+    "page": 10,
+    "kind": "phrase"
+  },
+  {
+    "unit": 1,
+    "headword": "ring",
+    "ipa": "",
+    "definition_zh": "环",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "answer",
+    "ipa": "",
+    "definition_zh": "回答",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "hold",
+    "ipa": "",
+    "definition_zh": "举办",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "something",
+    "ipa": "",
+    "definition_zh": "某事物",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "began",
+    "ipa": "",
+    "definition_zh": "（begin的过去式）开始",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "slogan",
+    "ipa": "",
+    "definition_zh": "口号",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "world",
+    "ipa": "",
+    "definition_zh": "世界",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "dream",
+    "ipa": "",
+    "definition_zh": "梦想",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "strong",
+    "ipa": "",
+    "definition_zh": "强壮的",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "together",
+    "ipa": "",
+    "definition_zh": "一起",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "*continent",
+    "ipa": "",
+    "definition_zh": "大陆，洲",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "between",
+    "ipa": "",
+    "definition_zh": "在……（两者）之间",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "woman",
+    "ipa": "",
+    "definition_zh": "（复数 women）妇女",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "healthy",
+    "ipa": "",
+    "definition_zh": "健康的",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "exercise",
+    "ipa": "",
+    "definition_zh": "锻炼",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "always",
+    "ipa": "",
+    "definition_zh": "总是",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "often",
+    "ipa": "",
+    "definition_zh": "经常",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "sometimes",
+    "ipa": "",
+    "definition_zh": "有时",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "pass",
+    "ipa": "",
+    "definition_zh": "传递",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "ball",
+    "ipa": "",
+    "definition_zh": "球",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "catch",
+    "ipa": "",
+    "definition_zh": "接住",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "cry",
+    "ipa": "",
+    "definition_zh": "喊叫",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "cheer",
+    "ipa": "",
+    "definition_zh": "欢呼",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "their",
+    "ipa": "",
+    "definition_zh": "他们的",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "team",
+    "ipa": "",
+    "definition_zh": "（体育的）队",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "bring",
+    "ipa": "",
+    "definition_zh": "带来",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "basket",
+    "ipa": "",
+    "definition_zh": "篮子",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "glass",
+    "ipa": "",
+    "definition_zh": "玻璃杯",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "candy",
+    "ipa": "",
+    "definition_zh": "糖果",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "bad",
+    "ipa": "",
+    "definition_zh": "坏的",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "teeth",
+    "ipa": "",
+    "definition_zh": "（单数 tooth）牙齿（复数）",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "keep",
+    "ipa": "",
+    "definition_zh": "保持",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "body",
+    "ipa": "",
+    "definition_zh": "身体",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "food",
+    "ipa": "",
+    "definition_zh": "食物",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "menu",
+    "ipa": "",
+    "definition_zh": "菜单",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "delicious",
+    "ipa": "",
+    "definition_zh": "美味的",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "any",
+    "ipa": "",
+    "definition_zh": "任何的；任何一个",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "problem",
+    "ipa": "",
+    "definition_zh": "问题",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "usually",
+    "ipa": "",
+    "definition_zh": "通常地",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "salad",
+    "ipa": "",
+    "definition_zh": "色拉",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "daughter",
+    "ipa": "",
+    "definition_zh": "女儿",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "son",
+    "ipa": "",
+    "definition_zh": "儿子",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "dress",
+    "ipa": "",
+    "definition_zh": "连衣裙",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "pair",
+    "ipa": "",
+    "definition_zh": "一双；一副",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "shorts",
+    "ipa": "",
+    "definition_zh": "短裤",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "cap",
+    "ipa": "",
+    "definition_zh": "帽子",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "try it on",
+    "ipa": "",
+    "definition_zh": "试穿",
+    "page": 40,
+    "kind": "phrase"
+  },
+  {
+    "unit": 4,
+    "headword": "trousers",
+    "ipa": "",
+    "definition_zh": "裤子",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "clothes",
+    "ipa": "",
+    "definition_zh": "衣服",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "boring",
+    "ipa": "",
+    "definition_zh": "单调乏味的",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "*go shopping",
+    "ipa": "",
+    "definition_zh": "购物",
+    "page": 40,
+    "kind": "phrase"
+  },
+  {
+    "unit": 5,
+    "headword": "housework",
+    "ipa": "",
+    "definition_zh": "家务",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "those",
+    "ipa": "",
+    "definition_zh": "那些",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "dirty",
+    "ipa": "",
+    "definition_zh": "脏的",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "sock",
+    "ipa": "",
+    "definition_zh": "短袜",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "think",
+    "ipa": "",
+    "definition_zh": "想",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "washing machine",
+    "ipa": "",
+    "definition_zh": "洗衣机",
+    "page": 50,
+    "kind": "phrase"
+  },
+  {
+    "unit": 5,
+    "headword": "box",
+    "ipa": "",
+    "definition_zh": "盒子",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "bedroom",
+    "ipa": "",
+    "definition_zh": "卧室",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "floor",
+    "ipa": "",
+    "definition_zh": "地板",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "water",
+    "ipa": "",
+    "definition_zh": "浇水",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "plant",
+    "ipa": "",
+    "definition_zh": "植物",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "a piece of cake",
+    "ipa": "",
+    "definition_zh": "形容极其容易",
+    "page": 50,
+    "kind": "phrase"
+  },
+  {
+    "unit": 5,
+    "headword": "toilet",
+    "ipa": "",
+    "definition_zh": "卫生间",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "half",
+    "ipa": "",
+    "definition_zh": "半；一半",
+    "page": 60,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "past",
+    "ipa": "",
+    "definition_zh": "晚于；迟于",
+    "page": 60,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "hour",
+    "ipa": "",
+    "definition_zh": "小时",
+    "page": 60,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "walk",
+    "ipa": "",
+    "definition_zh": "步行",
+    "page": 60,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "get to school",
+    "ipa": "",
+    "definition_zh": "到达学校",
+    "page": 60,
+    "kind": "phrase"
+  },
+  {
+    "unit": 6,
+    "headword": "seat",
+    "ipa": "",
+    "definition_zh": "座位",
+    "page": 60,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "last",
+    "ipa": "",
+    "definition_zh": "上一个；刚过去的",
+    "page": 60,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "last night",
+    "ipa": "",
+    "definition_zh": "昨晚",
+    "page": 60,
+    "kind": "phrase"
+  },
+  {
+    "unit": 6,
+    "headword": "little",
+    "ipa": "",
+    "definition_zh": "小的",
+    "page": 60,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "fan",
+    "ipa": "",
+    "definition_zh": "迷；爱好者",
+    "page": 60,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "Thanksgiving",
+    "ipa": "",
+    "definition_zh": "感恩节",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "American",
+    "ipa": "",
+    "definition_zh": "美国的；美国人",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "invite",
+    "ipa": "",
+    "definition_zh": "邀请",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "join",
+    "ipa": "",
+    "definition_zh": "参加；加入",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "yourselves",
+    "ipa": "",
+    "definition_zh": "你们自己",
+    "page": 70,
+    "kind": "word"
+  }
+]

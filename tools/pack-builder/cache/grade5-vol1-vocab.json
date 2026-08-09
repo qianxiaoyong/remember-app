@@ -1,0 +1,778 @@
+[
+  {
+    "unit": 1,
+    "headword": "team",
+    "ipa": "/tizm/",
+    "definition_zh": "(游戏或运动的)KA;(一起工作的)组,，班o",
+    "page": 4,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "player",
+    "ipa": "/pleta(r)/",
+    "definition_zh": "运动员;参赛选手",
+    "page": 4,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "him",
+    "ipa": "/him/",
+    "definition_zh": "他",
+    "page": 4,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "lovely",
+    "ipa": "/lavli/",
+    "definition_zh": "美丽的;HAA",
+    "page": 5,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "clever",
+    "ipa": "/kleva(r)/",
+    "definition_zh": "聪明的;聪颖的",
+    "page": 5,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "young",
+    "ipa": "/jan/",
+    "definition_zh": "幼小的;年轻的",
+    "page": 5,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "hard-working",
+    "ipa": "/,ha:d ws:km/",
+    "definition_zh": "工作努力的;辛勤的",
+    "page": 5,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "robot",
+    "ipa": "/reubpt/",
+    "definition_zh": "机器人",
+    "page": 7,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "jump",
+    "ipa": "/dzamp/",
+    "definition_zh": "b;跃",
+    "page": 8,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "rope",
+    "ipa": "/raup/",
+    "definition_zh": ";#128",
+    "page": 8,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "piano",
+    "ipa": "/pi'enau/",
+    "definition_zh": "钢琴",
+    "page": 8,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "chess",
+    "ipa": "/tfes/",
+    "definition_zh": "国际象棋",
+    "page": 8,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "front",
+    "ipa": "/frant/",
+    "definition_zh": "前部",
+    "page": 9,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "easy",
+    "ipa": "/i:zi/",
+    "definition_zh": "容易的;轻易的",
+    "page": 9,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "star",
+    "ipa": "/sta:/",
+    "definition_zh": "KS(或表演)明星",
+    "page": 9,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "wonderful",
+    "ipa": "/wandofl/",
+    "definition_zh": "精彩的;绝妙的",
+    "page": 9,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "Australia",
+    "ipa": "/v'streilia/",
+    "definition_zh": "澳大利亚achunit汇表辣只要求在语填中理解",
+    "page": 4,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "matter",
+    "ipa": "/meta(r)/",
+    "definition_zh": "事情;问题",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "project",
+    "ipa": "/prodzekt/",
+    "definition_zh": "HA;方案",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "centre",
+    "ipa": "/senta(r)/",
+    "definition_zh": "中心",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "agree",
+    "ipa": "/a'gri:/",
+    "definition_zh": "同意;赞成",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "finish",
+    "ipa": "/finif/",
+    "definition_zh": "完成;做好",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "worried",
+    "ipa": "/warid/",
+    "definition_zh": "担心的;担忧的",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "both",
+    "ipa": "/bav0/",
+    "definition_zh": "两者",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "excited",
+    "ipa": "/ik'saitid/",
+    "definition_zh": "激动的;兴奋的",
+    "page": 17,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "wrong",
+    "ipa": "/ron/",
+    "definition_zh": "错误的",
+    "page": 17,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "afraid",
+    "ipa": "/a'freid/",
+    "definition_zh": "担心;害怕",
+    "page": 19,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "parent",
+    "ipa": "/pearent/",
+    "definition_zh": "父亲;母亲",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "ask",
+    "ipa": "/a:sk/",
+    "definition_zh": "问;询问",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "move",
+    "ipa": "/mu:v/",
+    "definition_zh": "搬家;移动",
+    "page": 21,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "subject",
+    "ipa": "/sabdzikt/",
+    "definition_zh": "科目;学科Monday/mAander星期一",
+    "page": 16,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "Tuesday",
+    "ipa": "/tju:zder/",
+    "definition_zh": "星期二Friday/frarder星期五",
+    "page": 2,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "because",
+    "ipa": "/brkopz/",
+    "definition_zh": "因为",
+    "page": 2,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "start",
+    "ipa": "/sta:t/",
+    "definition_zh": "开始",
+    "page": 2,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "usually",
+    "ipa": "/ju:guali/",
+    "definition_zh": "通常地;经常地",
+    "page": 31,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "weekend",
+    "ipa": "/,wi:k'end/",
+    "definition_zh": "周末",
+    "page": 31,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "sometimes",
+    "ipa": "/samtaimz/",
+    "definition_zh": "有时;间或",
+    "page": 31,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "Saturday",
+    "ipa": "/saeteder/",
+    "definition_zh": "星期六Sunday/sander星期日p.3]",
+    "page": 31,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "lesson",
+    "ipa": "/lesn/",
+    "definition_zh": "ik;一节课p",
+    "page": 31,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "answer",
+    "ipa": "/a:nsa/",
+    "definition_zh": "答复;回答",
+    "page": 33,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "ping-pong",
+    "ipa": "/pm pon/",
+    "definition_zh": "%",
+    "page": 3,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "night",
+    "ipa": "/nait/",
+    "definition_zh": "夜;夜晚",
+    "page": 33,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "visit",
+    "ipa": "/vizit/",
+    "definition_zh": "看望;拜访;参观",
+    "page": 33,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "grandparent",
+    "ipa": "/graenpesrent/",
+    "definition_zh": "祖父;祖母;外祖父;外祖母",
+    "page": 32,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "stay",
+    "ipa": "/ster/",
+    "definition_zh": "待;保持;继续是",
+    "page": 4,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "should",
+    "ipa": "/fud/",
+    "definition_zh": "(提出或征询建议)BH,TU",
+    "page": 4,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "else",
+    "ipa": "/els/",
+    "definition_zh": "其他的;别的",
+    "page": 4,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "enough",
+    "ipa": "/1'naf/",
+    "definition_zh": "足够的;充足的;充分的",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "if",
+    "ipa": "/if/",
+    "definition_zh": "如果;假若;倘若",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "habit",
+    "ipa": "/hebit/",
+    "definition_zh": "习惯",
+    "page": 41,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "show",
+    "ipa": "/Jeu/",
+    "definition_zh": "(电视或广播)节目",
+    "page": 43,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "phone",
+    "ipa": "/faun/",
+    "definition_zh": "电话;电话机",
+    "page": 43,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "then",
+    "ipa": "/den/",
+    "definition_zh": "ABA;因此;既然如此",
+    "page": 43,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "rest",
+    "ipa": "/rest/",
+    "definition_zh": "休息;放松",
+    "page": 43,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "check",
+    "ipa": "/tfek/",
+    "definition_zh": "查看;查明",
+    "page": 44,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "less",
+    "ipa": "/les/",
+    "definition_zh": "(与不可数名词连用)较少的，更少的",
+    "page": 44,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "brush",
+    "ipa": "/braf/",
+    "definition_zh": "(用刷子)4,刷亮，刷平顺",
+    "page": 44,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "tooth",
+    "ipa": "/tu:6/",
+    "definition_zh": "(24teeth/ti:6/)牙;此",
+    "page": 44,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "twice",
+    "ipa": "/twais/",
+    "definition_zh": "HK;两遍",
+    "page": 44,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "hour",
+    "ipa": "/ava(r)/",
+    "definition_zh": "小时",
+    "page": 45,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "hungry",
+    "ipa": "/hangri/",
+    "definition_zh": "感到饿的",
+    "page": 52,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "beef",
+    "ipa": "/bi:f/",
+    "definition_zh": "+A",
+    "page": 52,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "ice cream",
+    "ipa": "/,ais'kri:zm/",
+    "definition_zh": "(一份)冰激凌",
+    "page": 52,
+    "kind": "phrase"
+  },
+  {
+    "unit": 5,
+    "headword": "tea",
+    "ipa": "/ti:/",
+    "definition_zh": "茶叶;茶;茶水",
+    "page": 53,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "hamburger",
+    "ipa": "/hembs:ga(r)/",
+    "definition_zh": "汉堡包;汉堡牛肉饼",
+    "page": 53,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "Mrs",
+    "ipa": "/misiz/",
+    "definition_zh": "(JT&FMER或姓名前)KK,RA",
+    "page": 55,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "coconut",
+    "ipa": "/keukenAt/",
+    "definition_zh": "k-F",
+    "page": 55,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "seed",
+    "ipa": "/si:d/",
+    "definition_zh": "种子;4",
+    "page": 56,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "pull",
+    "ipa": "/pul/",
+    "definition_zh": "拔出;抽出",
+    "page": 56,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "stem",
+    "ipa": "/stem/",
+    "definition_zh": "(723244)2;(花或叶的)AR,FH",
+    "page": 56,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "root",
+    "ipa": "/ru:t/",
+    "definition_zh": "根;根茎",
+    "page": 56,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "lotus",
+    "ipa": "/leutes/",
+    "definition_zh": "莲属植物",
+    "page": 57,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "lake",
+    "ipa": "/letk/",
+    "definition_zh": ";湖泊",
+    "page": 57,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "world",
+    "ipa": "/wa:ld/",
+    "definition_zh": "世界;地球;天下",
+    "page": 57,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "different",
+    "ipa": "/difrant/",
+    "definition_zh": "不同的;ARR;有差异的",
+    "page": 57,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "way",
+    "ipa": "/wer/",
+    "definition_zh": "方法;手段;途径;方式",
+    "page": 57,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "river",
+    "ipa": "/riva(r)/",
+    "definition_zh": "河;i=",
+    "page": 64,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "nature",
+    "ipa": "/neitfa(r)/",
+    "definition_zh": "自然界;大自然",
+    "page": 64,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "forest",
+    "ipa": "/forist/",
+    "definition_zh": "森林;林区",
+    "page": 64,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "famous",
+    "ipa": "/fermas/",
+    "definition_zh": "著名的;出名的",
+    "page": 64,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "mountain",
+    "ipa": "/maunten/",
+    "definition_zh": "高山;be",
+    "page": 64,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "wind",
+    "ipa": "/wind/",
+    "definition_zh": ";气流",
+    "page": 67,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "trip",
+    "ipa": "/trImp/",
+    "definition_zh": "〈尤指短程往返的)旅行，旅游，出行",
+    "page": 67,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "dangerous",
+    "ipa": "/demndzaras/",
+    "definition_zh": "有危险的;不安全的",
+    "page": 67,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "heavy",
+    "ipa": "/hevi/",
+    "definition_zh": "程度大的;严重的",
+    "page": 67,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "hotel",
+    "ipa": "/hau'tel/",
+    "definition_zh": "旅馆;ak#~~",
+    "page": 67,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "close",
+    "ipa": "/klauz/",
+    "definition_zh": "K;关闭;闭上",
+    "page": 67,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "umbrella",
+    "ipa": "/am'brela/",
+    "definition_zh": ";雨伞",
+    "page": 67,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "raincoat",
+    "ipa": "/reinkeut/",
+    "definition_zh": "雨衣",
+    "page": 67,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "worry",
+    "ipa": "/wari/",
+    "definition_zh": "担心;担忧;RAE",
+    "page": 67,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "fine",
+    "ipa": "/fain/",
+    "definition_zh": "晴朗的",
+    "page": 67,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "fog",
+    "ipa": "/fog/",
+    "definition_zh": "F",
+    "page": 68,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "flood",
+    "ipa": "/flad/",
+    "definition_zh": "洪水;KR",
+    "page": 68,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "fire",
+    "ipa": "/faia(r)/",
+    "definition_zh": "K;Ke",
+    "page": 68,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "know",
+    "ipa": "/nau/",
+    "definition_zh": "知道;了解",
+    "page": 69,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "before",
+    "ipa": "/bi'fo:(r)/",
+    "definition_zh": "在……之前",
+    "page": 69,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "bring",
+    "ipa": "/brin/",
+    "definition_zh": "带……到某处;带来;BUR",
+    "page": 69,
+    "kind": "word"
+  }
+]

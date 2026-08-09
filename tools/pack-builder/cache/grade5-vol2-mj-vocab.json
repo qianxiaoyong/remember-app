@@ -1,0 +1,834 @@
+[
+  {
+    "unit": 1,
+    "headword": "was",
+    "ipa": "",
+    "definition_zh": "am、is 的过去式",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "were",
+    "ipa": "",
+    "definition_zh": "are 的过去式",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "China",
+    "ipa": "",
+    "definition_zh": "中国",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "went",
+    "ipa": "",
+    "definition_zh": "go 的过去式",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "parent",
+    "ipa": "",
+    "definition_zh": "父，母；家长",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "hometown",
+    "ipa": "",
+    "definition_zh": "故乡",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "took",
+    "ipa": "",
+    "definition_zh": "take 的过去式",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "tour",
+    "ipa": "",
+    "definition_zh": "旅行；旅游",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "Sun Moon Lake",
+    "ipa": "",
+    "definition_zh": "日月潭",
+    "page": 10,
+    "kind": "phrase"
+  },
+  {
+    "unit": 1,
+    "headword": "lake",
+    "ipa": "",
+    "definition_zh": "湖",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "did",
+    "ipa": "",
+    "definition_zh": "do 的过去式",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "*swam",
+    "ipa": "",
+    "definition_zh": "swim 的过去式",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "elephant",
+    "ipa": "",
+    "definition_zh": "大象",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "map",
+    "ipa": "",
+    "definition_zh": "地图",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "over there",
+    "ipa": "",
+    "definition_zh": "在那边",
+    "page": 20,
+    "kind": "phrase"
+  },
+  {
+    "unit": 2,
+    "headword": "hill",
+    "ipa": "",
+    "definition_zh": "小山",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "under",
+    "ipa": "",
+    "definition_zh": "在……下面",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "next to",
+    "ipa": "",
+    "definition_zh": "紧挨着",
+    "page": 20,
+    "kind": "phrase"
+  },
+  {
+    "unit": 2,
+    "headword": "animal",
+    "ipa": "",
+    "definition_zh": "动物",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "saw",
+    "ipa": "",
+    "definition_zh": "see 的过去式",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "hungry",
+    "ipa": "",
+    "definition_zh": "饿的",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "ate",
+    "ipa": "",
+    "definition_zh": "eat 的过去式",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "any",
+    "ipa": "",
+    "definition_zh": "任何的；若干",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "doctor",
+    "ipa": "",
+    "definition_zh": "医生",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "search for",
+    "ipa": "",
+    "definition_zh": "搜索；查找",
+    "page": 30,
+    "kind": "phrase"
+  },
+  {
+    "unit": 3,
+    "headword": "information",
+    "ipa": "",
+    "definition_zh": "信息",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "tired",
+    "ipa": "",
+    "definition_zh": "疲倦的",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "fight",
+    "ipa": "",
+    "definition_zh": "战斗，与……作斗争新型冠状病毒感染",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "love",
+    "ipa": "",
+    "definition_zh": "爱",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "people",
+    "ipa": "",
+    "definition_zh": "人；人们",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "hero",
+    "ipa": "",
+    "definition_zh": "英雄",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "award",
+    "ipa": "",
+    "definition_zh": "授予；奖励",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "Medal",
+    "ipa": "",
+    "definition_zh": "of the Republic共和国勋章",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "honor",
+    "ipa": "",
+    "definition_zh": "荣誉",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "Young Pioneer",
+    "ipa": "",
+    "definition_zh": "少先队员",
+    "page": 30,
+    "kind": "phrase"
+  },
+  {
+    "unit": 3,
+    "headword": "learn",
+    "ipa": "",
+    "definition_zh": "学习",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "hard",
+    "ipa": "",
+    "definition_zh": "努力",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "serve",
+    "ipa": "",
+    "definition_zh": "服务",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "grow up",
+    "ipa": "",
+    "definition_zh": "长大",
+    "page": 30,
+    "kind": "phrase"
+  },
+  {
+    "unit": 3,
+    "headword": "*Dr.",
+    "ipa": "",
+    "definition_zh": "医生；博士",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "*still",
+    "ipa": "",
+    "definition_zh": "还是；仍然",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "*wife",
+    "ipa": "",
+    "definition_zh": "妻子",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "*member",
+    "ipa": "",
+    "definition_zh": "成员成年女子；妇女",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "spring outing",
+    "ipa": "",
+    "definition_zh": "春游",
+    "page": 40,
+    "kind": "phrase"
+  },
+  {
+    "unit": 4,
+    "headword": "climb",
+    "ipa": "",
+    "definition_zh": "攀爬",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "mountain",
+    "ipa": "",
+    "definition_zh": "山",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "water",
+    "ipa": "",
+    "definition_zh": "水",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "thirsty",
+    "ipa": "",
+    "definition_zh": "渴的",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "camera",
+    "ipa": "",
+    "definition_zh": "照相机",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "sky",
+    "ipa": "",
+    "definition_zh": "天空",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "cloud",
+    "ipa": "",
+    "definition_zh": "云",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "get on",
+    "ipa": "",
+    "definition_zh": "上车",
+    "page": 40,
+    "kind": "phrase"
+  },
+  {
+    "unit": 4,
+    "headword": "gate",
+    "ipa": "",
+    "definition_zh": "大门",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "pick",
+    "ipa": "",
+    "definition_zh": "采；摘",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "village",
+    "ipa": "",
+    "definition_zh": "乡村；村庄",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "*hard-working",
+    "ipa": "",
+    "definition_zh": "努力工作的",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "*top",
+    "ipa": "",
+    "definition_zh": "顶部",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "Review",
+    "ipa": "",
+    "definition_zh": "1",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "*farmhouse",
+    "ipa": "",
+    "definition_zh": "农舍",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "*really",
+    "ipa": "",
+    "definition_zh": "确实地；的确",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "*meal",
+    "ipa": "",
+    "definition_zh": "一顿饭",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "Sports Day",
+    "ipa": "",
+    "definition_zh": "运动会",
+    "page": 50,
+    "kind": "phrase"
+  },
+  {
+    "unit": 5,
+    "headword": "meter",
+    "ipa": "",
+    "definition_zh": "米",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "fast",
+    "ipa": "",
+    "definition_zh": "快",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "long jump",
+    "ipa": "",
+    "definition_zh": "跳远",
+    "page": 50,
+    "kind": "phrase"
+  },
+  {
+    "unit": 5,
+    "headword": "try",
+    "ipa": "",
+    "definition_zh": "尝试",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "high jump",
+    "ipa": "",
+    "definition_zh": "跳高",
+    "page": 50,
+    "kind": "phrase"
+  },
+  {
+    "unit": 5,
+    "headword": "shout",
+    "ipa": "",
+    "definition_zh": "喊叫",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "proud",
+    "ipa": "",
+    "definition_zh": "自豪的；骄傲的",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "fall down",
+    "ipa": "",
+    "definition_zh": "跌倒；跌下",
+    "page": 50,
+    "kind": "phrase"
+  },
+  {
+    "unit": 5,
+    "headword": "well",
+    "ipa": "",
+    "definition_zh": "好",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "busy",
+    "ipa": "",
+    "definition_zh": "忙的",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "*ran",
+    "ipa": "",
+    "definition_zh": "run 的过去式",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "*grass",
+    "ipa": "",
+    "definition_zh": "草",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "race",
+    "ipa": "",
+    "definition_zh": "赛跑",
+    "page": 60,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "first",
+    "ipa": "",
+    "definition_zh": "第一",
+    "page": 60,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "second",
+    "ipa": "",
+    "definition_zh": "第二",
+    "page": 60,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "third",
+    "ipa": "",
+    "definition_zh": "第三",
+    "page": 60,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "drink",
+    "ipa": "",
+    "definition_zh": "喝",
+    "page": 60,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "sad",
+    "ipa": "",
+    "definition_zh": "难过的",
+    "page": 60,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "cheer up",
+    "ipa": "",
+    "definition_zh": "振作起来",
+    "page": 60,
+    "kind": "phrase"
+  },
+  {
+    "unit": 6,
+    "headword": "only",
+    "ipa": "",
+    "definition_zh": "仅仅",
+    "page": 60,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "fourth",
+    "ipa": "",
+    "definition_zh": "第四",
+    "page": 60,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "angry",
+    "ipa": "",
+    "definition_zh": "生气的",
+    "page": 60,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "program",
+    "ipa": "",
+    "definition_zh": "节目",
+    "page": 60,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "building",
+    "ipa": "",
+    "definition_zh": "建筑物",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "floor",
+    "ipa": "",
+    "definition_zh": "楼层",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "twelfth",
+    "ipa": "",
+    "definition_zh": "第十二",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "would",
+    "ipa": "",
+    "definition_zh": "表达较合意愿的做法",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "living room",
+    "ipa": "",
+    "definition_zh": "客厅；起居室",
+    "page": 70,
+    "kind": "phrase"
+  },
+  {
+    "unit": 7,
+    "headword": "bridge",
+    "ipa": "",
+    "definition_zh": "桥",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "also",
+    "ipa": "",
+    "definition_zh": "也",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "fifteenth",
+    "ipa": "",
+    "definition_zh": "第十五",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "neighbor",
+    "ipa": "",
+    "definition_zh": "邻居",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "*river",
+    "ipa": "",
+    "definition_zh": "河",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "*grandmother",
+    "ipa": "",
+    "definition_zh": "祖母；外婆",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "*grandfather",
+    "ipa": "",
+    "definition_zh": "祖父；外公",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 8,
+    "headword": "date",
+    "ipa": "",
+    "definition_zh": "日期",
+    "page": 80,
+    "kind": "word"
+  },
+  {
+    "unit": 8,
+    "headword": "lucky",
+    "ipa": "",
+    "definition_zh": "幸运的",
+    "page": 80,
+    "kind": "word"
+  },
+  {
+    "unit": 8,
+    "headword": "guess",
+    "ipa": "",
+    "definition_zh": "猜",
+    "page": 80,
+    "kind": "word"
+  },
+  {
+    "unit": 8,
+    "headword": "difficult",
+    "ipa": "",
+    "definition_zh": "困难的",
+    "page": 80,
+    "kind": "word"
+  },
+  {
+    "unit": 8,
+    "headword": "calendar",
+    "ipa": "",
+    "definition_zh": "日历",
+    "page": 80,
+    "kind": "word"
+  },
+  {
+    "unit": 8,
+    "headword": "before",
+    "ipa": "",
+    "definition_zh": "在……之前",
+    "page": 80,
+    "kind": "word"
+  },
+  {
+    "unit": 8,
+    "headword": "Mrs.",
+    "ipa": "",
+    "definition_zh": "夫人；太太",
+    "page": 80,
+    "kind": "word"
+  }
+]

@@ -1,0 +1,3175 @@
+[
+  {
+    "surfaceForm": "a",
+    "displayForm": "a",
+    "definitions": [
+      {
+        "text": "一个；一",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "after",
+    "displayForm": "after",
+    "definitions": [
+      {
+        "text": "与 watch 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 watch"
+  },
+  {
+    "surfaceForm": "an",
+    "displayForm": "an",
+    "definitions": [
+      {
+        "text": "一个；一",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "and",
+    "displayForm": "and",
+    "definitions": [
+      {
+        "text": "和；与",
+        "pos": "conj."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "animals",
+    "displayForm": "animals",
+    "definitions": [
+      {
+        "text": "与 feed 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 feed"
+  },
+  {
+    "surfaceForm": "answer",
+    "displayForm": "answer",
+    "definitions": [
+      {
+        "text": "与 think 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 think"
+  },
+  {
+    "surfaceForm": "any",
+    "displayForm": "any",
+    "definitions": [
+      {
+        "text": "任何的；任一的",
+        "pos": "det."
+      }
+    ],
+    "ipa": "/ˈeni/"
+  },
+  {
+    "surfaceForm": "are",
+    "displayForm": "are",
+    "definitions": [
+      {
+        "text": "是",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "art",
+    "displayForm": "art",
+    "definitions": [
+      {
+        "text": "美术；艺术",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ɑːt/"
+  },
+  {
+    "surfaceForm": "at",
+    "displayForm": "at",
+    "definitions": [
+      {
+        "text": "与 blackboard 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 blackboard"
+  },
+  {
+    "surfaceForm": "bathroom",
+    "displayForm": "bathroom",
+    "definitions": [
+      {
+        "text": "浴室；洗手间"
+      }
+    ],
+    "ipa": "/ˈbɑːθruːm/"
+  },
+  {
+    "surfaceForm": "be",
+    "displayForm": "be",
+    "definitions": [
+      {
+        "text": "与 class 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 class"
+  },
+  {
+    "surfaceForm": "beans",
+    "displayForm": "beans",
+    "definitions": [
+      {
+        "text": "与 can 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 can"
+  },
+  {
+    "surfaceForm": "beautiful",
+    "displayForm": "beautiful",
+    "definitions": [
+      {
+        "text": "美丽的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/ˈbjuːtɪfl/"
+  },
+  {
+    "surfaceForm": "bed",
+    "displayForm": "bed",
+    "definitions": [
+      {
+        "text": "与 go to bed 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 go to bed"
+  },
+  {
+    "surfaceForm": "bedroom",
+    "displayForm": "bedroom",
+    "definitions": [
+      {
+        "text": "卧室",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈbedruːm/"
+  },
+  {
+    "surfaceForm": "bee",
+    "displayForm": "bee",
+    "definitions": [
+      {
+        "text": "蜜蜂",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/biː/"
+  },
+  {
+    "surfaceForm": "before",
+    "displayForm": "before",
+    "definitions": [
+      {
+        "text": "与 homework 相关的课文词形",
+        "pos": "prep."
+      }
+    ],
+    "formNote": "词形变化，原形为 homework"
+  },
+  {
+    "surfaceForm": "big",
+    "displayForm": "big",
+    "definitions": [
+      {
+        "text": "与 classroom 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 classroom"
+  },
+  {
+    "surfaceForm": "blackboard",
+    "displayForm": "blackboard",
+    "definitions": [
+      {
+        "text": "黑板",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈblækbɔːd/"
+  },
+  {
+    "surfaceForm": "book",
+    "displayForm": "book",
+    "definitions": [
+      {
+        "text": "与 kid 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 kid"
+  },
+  {
+    "surfaceForm": "books",
+    "displayForm": "books",
+    "definitions": [
+      {
+        "text": "书（复数）",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "bowl",
+    "displayForm": "bowl",
+    "definitions": [
+      {
+        "text": "碗"
+      }
+    ],
+    "ipa": "/bəʊl/"
+  },
+  {
+    "surfaceForm": "box",
+    "displayForm": "box",
+    "definitions": [
+      {
+        "text": "与 a box of 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 a box of"
+  },
+  {
+    "surfaceForm": "bright",
+    "displayForm": "bright",
+    "definitions": [
+      {
+        "text": "与 classroom 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 classroom"
+  },
+  {
+    "surfaceForm": "buy",
+    "displayForm": "buy",
+    "definitions": [
+      {
+        "text": "与 jacket 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 jacket"
+  },
+  {
+    "surfaceForm": "buys",
+    "displayForm": "buys",
+    "definitions": [
+      {
+        "text": "与 a box of 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 a box of"
+  },
+  {
+    "surfaceForm": "by",
+    "displayForm": "by",
+    "definitions": [
+      {
+        "text": "与 window 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 window"
+  },
+  {
+    "surfaceForm": "can",
+    "displayForm": "can",
+    "definitions": [
+      {
+        "text": "（盛食品或饮料的）金属罐",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/kæn/"
+  },
+  {
+    "surfaceForm": "carrot",
+    "displayForm": "carrot",
+    "definitions": [
+      {
+        "text": "胡萝卜"
+      }
+    ],
+    "ipa": "/ˈkærət/"
+  },
+  {
+    "surfaceForm": "chair",
+    "displayForm": "chair",
+    "definitions": [
+      {
+        "text": "椅子",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/tʃeə(r)/"
+  },
+  {
+    "surfaceForm": "cheap",
+    "displayForm": "cheap",
+    "definitions": [
+      {
+        "text": "便宜的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/tʃiːp/"
+  },
+  {
+    "surfaceForm": "chicken",
+    "displayForm": "chicken",
+    "definitions": [
+      {
+        "text": "鸡；鸡肉",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈtʃɪkɪn/"
+  },
+  {
+    "surfaceForm": "chickens",
+    "displayForm": "chickens",
+    "definitions": [
+      {
+        "text": "与 feed 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 feed"
+  },
+  {
+    "surfaceForm": "chips",
+    "displayForm": "chips",
+    "definitions": [
+      {
+        "text": "与 potato 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 potato"
+  },
+  {
+    "surfaceForm": "chopstick",
+    "displayForm": "chopstick",
+    "definitions": [
+      {
+        "text": "（常用复数）筷子"
+      }
+    ],
+    "ipa": "/ˈtʃɒpstɪk/"
+  },
+  {
+    "surfaceForm": "chopsticks",
+    "displayForm": "chopsticks",
+    "definitions": [
+      {
+        "text": "与 pick 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 pick"
+  },
+  {
+    "surfaceForm": "class",
+    "displayForm": "class",
+    "definitions": [
+      {
+        "text": "课；课程；班；班级",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/klɑːs/"
+  },
+  {
+    "surfaceForm": "classroom",
+    "displayForm": "classroom",
+    "definitions": [
+      {
+        "text": "教室",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈklɑːsruːm/"
+  },
+  {
+    "surfaceForm": "clear",
+    "displayForm": "clear",
+    "definitions": [
+      {
+        "text": "与 clear the table 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 clear the table"
+  },
+  {
+    "surfaceForm": "clock",
+    "displayForm": "clock",
+    "definitions": [
+      {
+        "text": "时钟",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/klɒk/"
+  },
+  {
+    "surfaceForm": "close",
+    "displayForm": "close",
+    "definitions": [
+      {
+        "text": "与 door 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 door"
+  },
+  {
+    "surfaceForm": "clothes",
+    "displayForm": "clothes",
+    "definitions": [
+      {
+        "text": "衣服；服装",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/kləʊðz/"
+  },
+  {
+    "surfaceForm": "cooking",
+    "displayForm": "cooking",
+    "definitions": [
+      {
+        "text": "与 kitchen 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 kitchen"
+  },
+  {
+    "surfaceForm": "cooks",
+    "displayForm": "cooks",
+    "definitions": [
+      {
+        "text": "与 herself 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 herself"
+  },
+  {
+    "surfaceForm": "cow",
+    "displayForm": "cow",
+    "definitions": [
+      {
+        "text": "奶牛",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/kaʊ/"
+  },
+  {
+    "surfaceForm": "crayons",
+    "displayForm": "crayons",
+    "definitions": [
+      {
+        "text": "与 a box of 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 a box of"
+  },
+  {
+    "surfaceForm": "day",
+    "displayForm": "day",
+    "definitions": [
+      {
+        "text": "天",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "days",
+    "displayForm": "days",
+    "definitions": [
+      {
+        "text": "与 sunglasses 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 sunglasses"
+  },
+  {
+    "surfaceForm": "dear",
+    "displayForm": "dear",
+    "definitions": [
+      {
+        "text": "亲爱的",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/dɪə(r)/"
+  },
+  {
+    "surfaceForm": "delicious",
+    "displayForm": "delicious",
+    "definitions": [
+      {
+        "text": "美味的；可口的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/dɪˈlɪʃəs/"
+  },
+  {
+    "surfaceForm": "desk",
+    "displayForm": "desk",
+    "definitions": [
+      {
+        "text": "书桌；办公桌",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/desk/"
+  },
+  {
+    "surfaceForm": "dinner",
+    "displayForm": "dinner",
+    "definitions": [
+      {
+        "text": "（中午或晚上吃的）正餐",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈdɪnə(r)/"
+  },
+  {
+    "surfaceForm": "do",
+    "displayForm": "do",
+    "definitions": [
+      {
+        "text": "做",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "don't",
+    "displayForm": "don't",
+    "definitions": [
+      {
+        "text": "与 late 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 late"
+  },
+  {
+    "surfaceForm": "door",
+    "displayForm": "door",
+    "definitions": [
+      {
+        "text": "门",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/dɔː(r)/"
+  },
+  {
+    "surfaceForm": "early",
+    "displayForm": "early",
+    "definitions": [
+      {
+        "text": "与 sleep 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 sleep"
+  },
+  {
+    "surfaceForm": "eat",
+    "displayForm": "eat",
+    "definitions": [
+      {
+        "text": "与 sheep 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 sheep"
+  },
+  {
+    "surfaceForm": "eggs",
+    "displayForm": "eggs",
+    "definitions": [
+      {
+        "text": "与 chicken 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 chicken"
+  },
+  {
+    "surfaceForm": "eight",
+    "displayForm": "eight",
+    "definitions": [
+      {
+        "text": "与 go to school 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 go to school"
+  },
+  {
+    "surfaceForm": "english",
+    "displayForm": "english",
+    "definitions": [
+      {
+        "text": "与 class 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 class"
+  },
+  {
+    "surfaceForm": "evening",
+    "displayForm": "evening",
+    "definitions": [
+      {
+        "text": "与 clear the table 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 clear the table"
+  },
+  {
+    "surfaceForm": "every",
+    "displayForm": "every",
+    "definitions": [
+      {
+        "text": "每个",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "expensive",
+    "displayForm": "expensive",
+    "definitions": [
+      {
+        "text": "昂贵的；价格高的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/ɪkˈspensɪv/"
+  },
+  {
+    "surfaceForm": "face",
+    "displayForm": "face",
+    "definitions": [
+      {
+        "text": "与 wash 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 wash"
+  },
+  {
+    "surfaceForm": "family",
+    "displayForm": "family",
+    "definitions": [
+      {
+        "text": "与 hard 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 hard"
+  },
+  {
+    "surfaceForm": "fan",
+    "displayForm": "fan",
+    "definitions": [
+      {
+        "text": "风扇",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/fæn/"
+  },
+  {
+    "surfaceForm": "farm",
+    "displayForm": "farm",
+    "definitions": [
+      {
+        "text": "与 chicken 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 chicken"
+  },
+  {
+    "surfaceForm": "fast",
+    "displayForm": "fast",
+    "definitions": [
+      {
+        "text": "与 horse 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 horse"
+  },
+  {
+    "surfaceForm": "fat",
+    "displayForm": "fat",
+    "definitions": [
+      {
+        "text": "与 pig 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 pig"
+  },
+  {
+    "surfaceForm": "feed",
+    "displayForm": "feed",
+    "definitions": [
+      {
+        "text": "给（人或动物）食物；饲养"
+      }
+    ],
+    "ipa": "/fiːd/"
+  },
+  {
+    "surfaceForm": "feel",
+    "displayForm": "feel",
+    "definitions": [
+      {
+        "text": "觉得；感到"
+      }
+    ],
+    "ipa": "/fiːl/"
+  },
+  {
+    "surfaceForm": "field",
+    "displayForm": "field",
+    "definitions": [
+      {
+        "text": "与 mouse 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 mouse"
+  },
+  {
+    "surfaceForm": "finish",
+    "displayForm": "finish",
+    "definitions": [
+      {
+        "text": "与 homework 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 homework"
+  },
+  {
+    "surfaceForm": "first",
+    "displayForm": "first",
+    "definitions": [
+      {
+        "text": "首先；首次；第一",
+        "pos": "num."
+      }
+    ],
+    "ipa": "/fɜːst/"
+  },
+  {
+    "surfaceForm": "five",
+    "displayForm": "five",
+    "definitions": [
+      {
+        "text": "五",
+        "pos": "num."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "floor",
+    "displayForm": "floor",
+    "definitions": [
+      {
+        "text": "与 run 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 run"
+  },
+  {
+    "surfaceForm": "follow",
+    "displayForm": "follow",
+    "definitions": [
+      {
+        "text": "遵循，听从（忠告、指示等）"
+      }
+    ],
+    "ipa": "/ˈfɒləʊ/"
+  },
+  {
+    "surfaceForm": "food",
+    "displayForm": "food",
+    "definitions": [
+      {
+        "text": "菜肴；食物",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/fuːd/"
+  },
+  {
+    "surfaceForm": "for",
+    "displayForm": "for",
+    "definitions": [
+      {
+        "text": "为了；给",
+        "pos": "prep."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "fork",
+    "displayForm": "fork",
+    "definitions": [
+      {
+        "text": "餐叉"
+      }
+    ],
+    "ipa": "/fɔːk/"
+  },
+  {
+    "surfaceForm": "four",
+    "displayForm": "four",
+    "definitions": [
+      {
+        "text": "四",
+        "pos": "num."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "free",
+    "displayForm": "free",
+    "definitions": [
+      {
+        "text": "免费的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/friː/"
+  },
+  {
+    "surfaceForm": "fresh",
+    "displayForm": "fresh",
+    "definitions": [
+      {
+        "text": "与 milk 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 milk"
+  },
+  {
+    "surfaceForm": "friday",
+    "displayForm": "friday",
+    "definitions": [
+      {
+        "text": "与 music 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 music"
+  },
+  {
+    "surfaceForm": "from",
+    "displayForm": "from",
+    "definitions": [
+      {
+        "text": "与 go to school 相关的课文词形",
+        "pos": "prep."
+      }
+    ],
+    "formNote": "词形变化，原形为 go to school"
+  },
+  {
+    "surfaceForm": "garden",
+    "displayForm": "garden",
+    "definitions": [
+      {
+        "text": "与 green bean 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 green bean"
+  },
+  {
+    "surfaceForm": "get",
+    "displayForm": "get",
+    "definitions": [
+      {
+        "text": "与 get up 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 get up"
+  },
+  {
+    "surfaceForm": "gives",
+    "displayForm": "gives",
+    "definitions": [
+      {
+        "text": "与 cow 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 cow"
+  },
+  {
+    "surfaceForm": "glass",
+    "displayForm": "glass",
+    "definitions": [
+      {
+        "text": "与 milk 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 milk"
+  },
+  {
+    "surfaceForm": "go",
+    "displayForm": "go",
+    "definitions": [
+      {
+        "text": "与 ready 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 ready"
+  },
+  {
+    "surfaceForm": "good",
+    "displayForm": "good",
+    "definitions": [
+      {
+        "text": "好的",
+        "pos": "adj."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "grass",
+    "displayForm": "grass",
+    "definitions": [
+      {
+        "text": "与 sheep 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 sheep"
+  },
+  {
+    "surfaceForm": "green",
+    "displayForm": "green",
+    "definitions": [
+      {
+        "text": "与 green bean 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 green bean"
+  },
+  {
+    "surfaceForm": "grow",
+    "displayForm": "grow",
+    "definitions": [
+      {
+        "text": "与 potato 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 potato"
+  },
+  {
+    "surfaceForm": "hair",
+    "displayForm": "hair",
+    "definitions": [
+      {
+        "text": "与 wet 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 wet"
+  },
+  {
+    "surfaceForm": "hand",
+    "displayForm": "hand",
+    "definitions": [
+      {
+        "text": "与 hand out 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 hand out"
+  },
+  {
+    "surfaceForm": "hands",
+    "displayForm": "hands",
+    "definitions": [
+      {
+        "text": "与 hand out 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 hand out"
+  },
+  {
+    "surfaceForm": "hard",
+    "displayForm": "hard",
+    "definitions": [
+      {
+        "text": "努力地；费力地",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/hɑːd/"
+  },
+  {
+    "surfaceForm": "hat",
+    "displayForm": "hat",
+    "definitions": [
+      {
+        "text": "帽子",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/hæt/"
+  },
+  {
+    "surfaceForm": "hats",
+    "displayForm": "hats",
+    "definitions": [
+      {
+        "text": "与 any 相关的课文词形",
+        "pos": "det."
+      }
+    ],
+    "formNote": "词形变化，原形为 any"
+  },
+  {
+    "surfaceForm": "have",
+    "displayForm": "have",
+    "definitions": [
+      {
+        "text": "有",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "help",
+    "displayForm": "help",
+    "definitions": [
+      {
+        "text": "与 understand 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 understand"
+  },
+  {
+    "surfaceForm": "helpful",
+    "displayForm": "helpful",
+    "definitions": [
+      {
+        "text": "有帮助的；有用的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/ˈhelpfl/"
+  },
+  {
+    "surfaceForm": "here",
+    "displayForm": "here",
+    "definitions": [
+      {
+        "text": "这里",
+        "pos": "adv."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "herself",
+    "displayForm": "herself",
+    "definitions": [
+      {
+        "text": "（用作女性的反身代词）她自己，自己"
+      }
+    ],
+    "ipa": "/hɜːˈself/"
+  },
+  {
+    "surfaceForm": "home",
+    "displayForm": "home",
+    "definitions": [
+      {
+        "text": "与 newspaper 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 newspaper"
+  },
+  {
+    "surfaceForm": "homework",
+    "displayForm": "homework",
+    "definitions": [
+      {
+        "text": "家庭作业"
+      }
+    ],
+    "ipa": "/ˈhəʊmwɜːk/"
+  },
+  {
+    "surfaceForm": "honey",
+    "displayForm": "honey",
+    "definitions": [
+      {
+        "text": "与 bee 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 bee"
+  },
+  {
+    "surfaceForm": "horse",
+    "displayForm": "horse",
+    "definitions": [
+      {
+        "text": "马",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/hɔːs/"
+  },
+  {
+    "surfaceForm": "hot",
+    "displayForm": "hot",
+    "definitions": [
+      {
+        "text": "与 fan 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 fan"
+  },
+  {
+    "surfaceForm": "house",
+    "displayForm": "house",
+    "definitions": [
+      {
+        "text": "与 run 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 run"
+  },
+  {
+    "surfaceForm": "how",
+    "displayForm": "how",
+    "definitions": [
+      {
+        "text": "怎样；多么",
+        "pos": "adv."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "hurry",
+    "displayForm": "hurry",
+    "definitions": [
+      {
+        "text": "与 hurry up 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 hurry up"
+  },
+  {
+    "surfaceForm": "i",
+    "displayForm": "i",
+    "definitions": [
+      {
+        "text": "我",
+        "pos": "pron."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "i'd",
+    "displayForm": "i'd",
+    "definitions": [
+      {
+        "text": "与 potato 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 potato"
+  },
+  {
+    "surfaceForm": "i'll",
+    "displayForm": "i'll",
+    "definitions": [
+      {
+        "text": "与 take 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 take"
+  },
+  {
+    "surfaceForm": "i'm",
+    "displayForm": "i'm",
+    "definitions": [
+      {
+        "text": "与 late 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 late"
+  },
+  {
+    "surfaceForm": "important",
+    "displayForm": "important",
+    "definitions": [
+      {
+        "text": "与 rule 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 rule"
+  },
+  {
+    "surfaceForm": "in",
+    "displayForm": "in",
+    "definitions": [
+      {
+        "text": "与 class 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 class"
+  },
+  {
+    "surfaceForm": "is",
+    "displayForm": "is",
+    "definitions": [
+      {
+        "text": "是",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "it's",
+    "displayForm": "it's",
+    "definitions": [
+      {
+        "text": "它是"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "jacket",
+    "displayForm": "jacket",
+    "definitions": [
+      {
+        "text": "夹克衫；短上衣"
+      }
+    ],
+    "ipa": "/ˈdʒækɪt/"
+  },
+  {
+    "surfaceForm": "just",
+    "displayForm": "just",
+    "definitions": [
+      {
+        "text": "只是；仅仅；正要",
+        "pos": "adv."
+      }
+    ],
+    "ipa": "/dʒʌst/"
+  },
+  {
+    "surfaceForm": "keep",
+    "displayForm": "keep",
+    "definitions": [
+      {
+        "text": "与 classroom 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 classroom"
+  },
+  {
+    "surfaceForm": "kid",
+    "displayForm": "kid",
+    "definitions": [
+      {
+        "text": "小孩",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/kɪd/"
+  },
+  {
+    "surfaceForm": "kitchen",
+    "displayForm": "kitchen",
+    "definitions": [
+      {
+        "text": "厨房",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈkɪtʃɪn/"
+  },
+  {
+    "surfaceForm": "knife",
+    "displayForm": "knife",
+    "definitions": [
+      {
+        "text": "刀",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/naɪf/"
+  },
+  {
+    "surfaceForm": "large",
+    "displayForm": "large",
+    "definitions": [
+      {
+        "text": "（服装、食物、日用品等）大型号的"
+      }
+    ],
+    "ipa": "/lɑːdʒ/"
+  },
+  {
+    "surfaceForm": "late",
+    "displayForm": "late",
+    "definitions": [
+      {
+        "text": "迟到；迟发生",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/leɪt/"
+  },
+  {
+    "surfaceForm": "lays",
+    "displayForm": "lays",
+    "definitions": [
+      {
+        "text": "与 chicken 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 chicken"
+  },
+  {
+    "surfaceForm": "learn",
+    "displayForm": "learn",
+    "definitions": [
+      {
+        "text": "与 word 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 word"
+  },
+  {
+    "surfaceForm": "let's",
+    "displayForm": "let's",
+    "definitions": [
+      {
+        "text": "让我们"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "light",
+    "displayForm": "light",
+    "definitions": [
+      {
+        "text": "灯；光",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/laɪt/"
+  },
+  {
+    "surfaceForm": "like",
+    "displayForm": "like",
+    "definitions": [
+      {
+        "text": "喜欢",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "list",
+    "displayForm": "list",
+    "definitions": [
+      {
+        "text": "清单；目录",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/lɪst/"
+  },
+  {
+    "surfaceForm": "living",
+    "displayForm": "living",
+    "definitions": [
+      {
+        "text": "与 living room 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 living room"
+  },
+  {
+    "surfaceForm": "long",
+    "displayForm": "long",
+    "definitions": [
+      {
+        "text": "与 trousers 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 trousers"
+  },
+  {
+    "surfaceForm": "look",
+    "displayForm": "look",
+    "definitions": [
+      {
+        "text": "与 blackboard 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 blackboard"
+  },
+  {
+    "surfaceForm": "loud",
+    "displayForm": "loud",
+    "definitions": [
+      {
+        "text": "说话太大声的；吵闹的"
+      }
+    ],
+    "ipa": "/laʊd/"
+  },
+  {
+    "surfaceForm": "love",
+    "displayForm": "love",
+    "definitions": [
+      {
+        "text": "与 dear 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 dear"
+  },
+  {
+    "surfaceForm": "lunch",
+    "displayForm": "lunch",
+    "definitions": [
+      {
+        "text": "午餐",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/lʌntʃ/"
+  },
+  {
+    "surfaceForm": "make",
+    "displayForm": "make",
+    "definitions": [
+      {
+        "text": "与 list 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 list"
+  },
+  {
+    "surfaceForm": "makes",
+    "displayForm": "makes",
+    "definitions": [
+      {
+        "text": "与 bee 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 bee"
+  },
+  {
+    "surfaceForm": "many",
+    "displayForm": "many",
+    "definitions": [
+      {
+        "text": "许多",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "maths",
+    "displayForm": "maths",
+    "definitions": [
+      {
+        "text": "数学",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/mæθs/"
+  },
+  {
+    "surfaceForm": "me",
+    "displayForm": "me",
+    "definitions": [
+      {
+        "text": "我",
+        "pos": "pron."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "milk",
+    "displayForm": "milk",
+    "definitions": [
+      {
+        "text": "挤奶",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/mɪlk/"
+  },
+  {
+    "surfaceForm": "minute",
+    "displayForm": "minute",
+    "definitions": [
+      {
+        "text": "分钟",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈmɪnɪt/"
+  },
+  {
+    "surfaceForm": "monday",
+    "displayForm": "monday",
+    "definitions": [
+      {
+        "text": "与 go to school 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 go to school"
+  },
+  {
+    "surfaceForm": "morning",
+    "displayForm": "morning",
+    "definitions": [
+      {
+        "text": "与 class 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 class"
+  },
+  {
+    "surfaceForm": "mouse",
+    "displayForm": "mouse",
+    "definitions": [
+      {
+        "text": "（复数mice/maɪs/）老鼠"
+      }
+    ],
+    "ipa": "/maʊs/"
+  },
+  {
+    "surfaceForm": "much",
+    "displayForm": "much",
+    "definitions": [
+      {
+        "text": "与 music 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 music"
+  },
+  {
+    "surfaceForm": "mum",
+    "displayForm": "mum",
+    "definitions": [
+      {
+        "text": "与 kitchen 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 kitchen"
+  },
+  {
+    "surfaceForm": "music",
+    "displayForm": "music",
+    "definitions": [
+      {
+        "text": "音乐",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈmjuːzɪk/"
+  },
+  {
+    "surfaceForm": "my",
+    "displayForm": "my",
+    "definitions": [
+      {
+        "text": "我的",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "near",
+    "displayForm": "near",
+    "definitions": [
+      {
+        "text": "与 desk 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 desk"
+  },
+  {
+    "surfaceForm": "need",
+    "displayForm": "need",
+    "definitions": [
+      {
+        "text": "与 clothes 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 clothes"
+  },
+  {
+    "surfaceForm": "new",
+    "displayForm": "new",
+    "definitions": [
+      {
+        "text": "新的",
+        "pos": "adj."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "newspaper",
+    "displayForm": "newspaper",
+    "definitions": [
+      {
+        "text": "报纸"
+      }
+    ],
+    "ipa": "/ˈnjuːzpeɪpə(r)/"
+  },
+  {
+    "surfaceForm": "next",
+    "displayForm": "next",
+    "definitions": [
+      {
+        "text": "与 chair 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 chair"
+  },
+  {
+    "surfaceForm": "nice",
+    "displayForm": "nice",
+    "definitions": [
+      {
+        "text": "与 clothes 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 clothes"
+  },
+  {
+    "surfaceForm": "nine",
+    "displayForm": "nine",
+    "definitions": [
+      {
+        "text": "与 go to bed 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 go to bed"
+  },
+  {
+    "surfaceForm": "o'clock",
+    "displayForm": "o'clock",
+    "definitions": [
+      {
+        "text": "与 dinner 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 dinner"
+  },
+  {
+    "surfaceForm": "of",
+    "displayForm": "of",
+    "definitions": [
+      {
+        "text": "与 trousers 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 trousers"
+  },
+  {
+    "surfaceForm": "off",
+    "displayForm": "off",
+    "definitions": [
+      {
+        "text": "与 turn off 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 turn off"
+  },
+  {
+    "surfaceForm": "on",
+    "displayForm": "on",
+    "definitions": [
+      {
+        "text": "与 light 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 light"
+  },
+  {
+    "surfaceForm": "once",
+    "displayForm": "once",
+    "definitions": [
+      {
+        "text": "与 week 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 week"
+  },
+  {
+    "surfaceForm": "one",
+    "displayForm": "one",
+    "definitions": [
+      {
+        "text": "与 minute 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 minute"
+  },
+  {
+    "surfaceForm": "open",
+    "displayForm": "open",
+    "definitions": [
+      {
+        "text": "与 door 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 door"
+  },
+  {
+    "surfaceForm": "or",
+    "displayForm": "or",
+    "definitions": [
+      {
+        "text": "或者",
+        "pos": "conj."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "orange",
+    "displayForm": "orange",
+    "definitions": [
+      {
+        "text": "与 carrot 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 carrot"
+  },
+  {
+    "surfaceForm": "our",
+    "displayForm": "our",
+    "definitions": [
+      {
+        "text": "我们的",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "out",
+    "displayForm": "out",
+    "definitions": [
+      {
+        "text": "外面",
+        "pos": "adv."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "over",
+    "displayForm": "over",
+    "definitions": [
+      {
+        "text": "结束（的）",
+        "pos": "prep."
+      }
+    ],
+    "ipa": "/ˈəʊvə(r)/"
+  },
+  {
+    "surfaceForm": "pair",
+    "displayForm": "pair",
+    "definitions": [
+      {
+        "text": "与 trousers 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 trousers"
+  },
+  {
+    "surfaceForm": "parents",
+    "displayForm": "parents",
+    "definitions": [
+      {
+        "text": "与 hard 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 hard"
+  },
+  {
+    "surfaceForm": "pass",
+    "displayForm": "pass",
+    "definitions": [
+      {
+        "text": "给；递"
+      }
+    ],
+    "ipa": "/pɑːs/"
+  },
+  {
+    "surfaceForm": "pick",
+    "displayForm": "pick",
+    "definitions": [
+      {
+        "text": "采；摘",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/pɪk/"
+  },
+  {
+    "surfaceForm": "pig",
+    "displayForm": "pig",
+    "definitions": [
+      {
+        "text": "猪",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/pɪɡ/"
+  },
+  {
+    "surfaceForm": "pink",
+    "displayForm": "pink",
+    "definitions": [
+      {
+        "text": "与 pig 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 pig"
+  },
+  {
+    "surfaceForm": "play",
+    "displayForm": "play",
+    "definitions": [
+      {
+        "text": "与 want 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 want"
+  },
+  {
+    "surfaceForm": "please",
+    "displayForm": "please",
+    "definitions": [
+      {
+        "text": "请",
+        "pos": "n."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "potato",
+    "displayForm": "potato",
+    "definitions": [
+      {
+        "text": "土豆",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/pəˈteɪtəʊ/"
+  },
+  {
+    "surfaceForm": "put",
+    "displayForm": "put",
+    "definitions": [
+      {
+        "text": "与 desk 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 desk"
+  },
+  {
+    "surfaceForm": "quiet",
+    "displayForm": "quiet",
+    "definitions": [
+      {
+        "text": "与 class 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 class"
+  },
+  {
+    "surfaceForm": "rabbits",
+    "displayForm": "rabbits",
+    "definitions": [
+      {
+        "text": "与 carrot 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 carrot"
+  },
+  {
+    "surfaceForm": "raise",
+    "displayForm": "raise",
+    "definitions": [
+      {
+        "text": "与 when 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 when"
+  },
+  {
+    "surfaceForm": "read",
+    "displayForm": "read",
+    "definitions": [
+      {
+        "text": "与 newspaper 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 newspaper"
+  },
+  {
+    "surfaceForm": "reading",
+    "displayForm": "reading",
+    "definitions": [
+      {
+        "text": "与 kid 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 kid"
+  },
+  {
+    "surfaceForm": "ready",
+    "displayForm": "ready",
+    "definitions": [
+      {
+        "text": "准备好",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/ˈredi/"
+  },
+  {
+    "surfaceForm": "red",
+    "displayForm": "red",
+    "definitions": [
+      {
+        "text": "与 skirt 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 skirt"
+  },
+  {
+    "surfaceForm": "right",
+    "displayForm": "right",
+    "definitions": [
+      {
+        "text": "与 size 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 size"
+  },
+  {
+    "surfaceForm": "room",
+    "displayForm": "room",
+    "definitions": [
+      {
+        "text": "与 living room 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 living room"
+  },
+  {
+    "surfaceForm": "rule",
+    "displayForm": "rule",
+    "definitions": [
+      {
+        "text": "规则；规章",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ruːl/"
+  },
+  {
+    "surfaceForm": "rules",
+    "displayForm": "rules",
+    "definitions": [
+      {
+        "text": "与 safe 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 safe"
+  },
+  {
+    "surfaceForm": "run",
+    "displayForm": "run",
+    "definitions": [
+      {
+        "text": "跑；奔跑",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/rʌn/"
+  },
+  {
+    "surfaceForm": "runs",
+    "displayForm": "runs",
+    "definitions": [
+      {
+        "text": "与 horse 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 horse"
+  },
+  {
+    "surfaceForm": "safe",
+    "displayForm": "safe",
+    "definitions": [
+      {
+        "text": "安全的",
+        "pos": "adj."
+      }
+    ],
+    "ipa": "/seɪf/"
+  },
+  {
+    "surfaceForm": "salad",
+    "displayForm": "salad",
+    "definitions": [
+      {
+        "text": "蔬菜沙拉",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈsæləd/"
+  },
+  {
+    "surfaceForm": "school",
+    "displayForm": "school",
+    "definitions": [
+      {
+        "text": "与 feel 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 feel"
+  },
+  {
+    "surfaceForm": "seconds",
+    "displayForm": "seconds",
+    "definitions": [
+      {
+        "text": "与 minute 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 minute"
+  },
+  {
+    "surfaceForm": "see",
+    "displayForm": "see",
+    "definitions": [
+      {
+        "text": "与 horse 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 horse"
+  },
+  {
+    "surfaceForm": "set",
+    "displayForm": "set",
+    "definitions": [
+      {
+        "text": "与 set the table 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 set the table"
+  },
+  {
+    "surfaceForm": "sets",
+    "displayForm": "sets",
+    "definitions": [
+      {
+        "text": "与 set the table 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 set the table"
+  },
+  {
+    "surfaceForm": "seven",
+    "displayForm": "seven",
+    "definitions": [
+      {
+        "text": "与 get up 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 get up"
+  },
+  {
+    "surfaceForm": "she",
+    "displayForm": "she",
+    "definitions": [
+      {
+        "text": "与 skirt 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 skirt"
+  },
+  {
+    "surfaceForm": "sheep",
+    "displayForm": "sheep",
+    "definitions": [
+      {
+        "text": "羊；绵羊",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ʃiːp/"
+  },
+  {
+    "surfaceForm": "shoe",
+    "displayForm": "shoe",
+    "definitions": [
+      {
+        "text": "鞋",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ʃuː/"
+  },
+  {
+    "surfaceForm": "shoes",
+    "displayForm": "shoes",
+    "definitions": [
+      {
+        "text": "与 those 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 those"
+  },
+  {
+    "surfaceForm": "shopping",
+    "displayForm": "shopping",
+    "definitions": [
+      {
+        "text": "与 list 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 list"
+  },
+  {
+    "surfaceForm": "shorts",
+    "displayForm": "shorts",
+    "definitions": [
+      {
+        "text": "短裤",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ʃɔːts/"
+  },
+  {
+    "surfaceForm": "should",
+    "displayForm": "should",
+    "definitions": [
+      {
+        "text": "与 kid 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 kid"
+  },
+  {
+    "surfaceForm": "shower",
+    "displayForm": "shower",
+    "definitions": [
+      {
+        "text": "与 wet 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 wet"
+  },
+  {
+    "surfaceForm": "sit",
+    "displayForm": "sit",
+    "definitions": [
+      {
+        "text": "与 chair 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 chair"
+  },
+  {
+    "surfaceForm": "six",
+    "displayForm": "six",
+    "definitions": [
+      {
+        "text": "六",
+        "pos": "num."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "sixty",
+    "displayForm": "sixty",
+    "definitions": [
+      {
+        "text": "与 minute 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 minute"
+  },
+  {
+    "surfaceForm": "size",
+    "displayForm": "size",
+    "definitions": [
+      {
+        "text": "尺码；号"
+      }
+    ],
+    "ipa": "/saɪz/"
+  },
+  {
+    "surfaceForm": "skirt",
+    "displayForm": "skirt",
+    "definitions": [
+      {
+        "text": "裙子",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/skɜːt/"
+  },
+  {
+    "surfaceForm": "sleep",
+    "displayForm": "sleep",
+    "definitions": [
+      {
+        "text": "睡觉",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/sliːp/"
+  },
+  {
+    "surfaceForm": "small",
+    "displayForm": "small",
+    "definitions": [
+      {
+        "text": "与 shorts 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 shorts"
+  },
+  {
+    "surfaceForm": "so",
+    "displayForm": "so",
+    "definitions": [
+      {
+        "text": "与 loud 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 loud"
+  },
+  {
+    "surfaceForm": "some",
+    "displayForm": "some",
+    "definitions": [
+      {
+        "text": "一些",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "sorry",
+    "displayForm": "sorry",
+    "definitions": [
+      {
+        "text": "对不起"
+      }
+    ],
+    "ipa": "/ˈsɒri/"
+  },
+  {
+    "surfaceForm": "soup",
+    "displayForm": "soup",
+    "definitions": [
+      {
+        "text": "与 tomato 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 tomato"
+  },
+  {
+    "surfaceForm": "spoon",
+    "displayForm": "spoon",
+    "definitions": [
+      {
+        "text": "勺；匙；调羹"
+      }
+    ],
+    "ipa": "/spuːn/"
+  },
+  {
+    "surfaceForm": "starting",
+    "displayForm": "starting",
+    "definitions": [
+      {
+        "text": "与 hurry up 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 hurry up"
+  },
+  {
+    "surfaceForm": "stay",
+    "displayForm": "stay",
+    "definitions": [
+      {
+        "text": "与 safe 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 safe"
+  },
+  {
+    "surfaceForm": "study",
+    "displayForm": "study",
+    "definitions": [
+      {
+        "text": "书房",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/ˈstʌdi/"
+  },
+  {
+    "surfaceForm": "summer",
+    "displayForm": "summer",
+    "definitions": [
+      {
+        "text": "与 shorts 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 shorts"
+  },
+  {
+    "surfaceForm": "sunglasses",
+    "displayForm": "sunglasses",
+    "definitions": [
+      {
+        "text": "太阳镜；墨镜"
+      }
+    ],
+    "ipa": "/ˈsʌnɡlɑːsɪz/"
+  },
+  {
+    "surfaceForm": "sunny",
+    "displayForm": "sunny",
+    "definitions": [
+      {
+        "text": "与 sunglasses 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 sunglasses"
+  },
+  {
+    "surfaceForm": "supermarket",
+    "displayForm": "supermarket",
+    "definitions": [
+      {
+        "text": "超市",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈsuːpəmɑːkɪt/"
+  },
+  {
+    "surfaceForm": "table",
+    "displayForm": "table",
+    "definitions": [
+      {
+        "text": "与 can 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 can"
+  },
+  {
+    "surfaceForm": "take",
+    "displayForm": "take",
+    "definitions": [
+      {
+        "text": "买下",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/teɪk/"
+  },
+  {
+    "surfaceForm": "talk",
+    "displayForm": "talk",
+    "definitions": [
+      {
+        "text": "与 loud 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 loud"
+  },
+  {
+    "surfaceForm": "teacher",
+    "displayForm": "teacher",
+    "definitions": [
+      {
+        "text": "与 blackboard 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 blackboard"
+  },
+  {
+    "surfaceForm": "the",
+    "displayForm": "the",
+    "definitions": [
+      {
+        "text": "这；那（定冠词）",
+        "pos": "det."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "them",
+    "displayForm": "them",
+    "definitions": [
+      {
+        "text": "他们（宾格）",
+        "pos": "pron."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "there",
+    "displayForm": "there",
+    "definitions": [
+      {
+        "text": "那里",
+        "pos": "adv."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "these",
+    "displayForm": "these",
+    "definitions": [
+      {
+        "text": "与 clothes 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 clothes"
+  },
+  {
+    "surfaceForm": "think",
+    "displayForm": "think",
+    "definitions": [
+      {
+        "text": "想；思考",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/θɪŋk/"
+  },
+  {
+    "surfaceForm": "this",
+    "displayForm": "this",
+    "definitions": [
+      {
+        "text": "这；这个",
+        "pos": "pron."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "those",
+    "displayForm": "those",
+    "definitions": [
+      {
+        "text": "（指较远的人或事物）那些"
+      }
+    ],
+    "ipa": "/ðəʊz/"
+  },
+  {
+    "surfaceForm": "tidy",
+    "displayForm": "tidy",
+    "definitions": [
+      {
+        "text": "整洁的；整齐的；使整洁；整理"
+      }
+    ],
+    "ipa": "/ˈtaɪdi/"
+  },
+  {
+    "surfaceForm": "time",
+    "displayForm": "time",
+    "definitions": [
+      {
+        "text": "与 lunch 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 lunch"
+  },
+  {
+    "surfaceForm": "times",
+    "displayForm": "times",
+    "definitions": [
+      {
+        "text": "与 word 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 word"
+  },
+  {
+    "surfaceForm": "tired",
+    "displayForm": "tired",
+    "definitions": [
+      {
+        "text": "与 feel 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 feel"
+  },
+  {
+    "surfaceForm": "to",
+    "displayForm": "to",
+    "definitions": [
+      {
+        "text": "与 chair 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 chair"
+  },
+  {
+    "surfaceForm": "today",
+    "displayForm": "today",
+    "definitions": [
+      {
+        "text": "与 late 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 late"
+  },
+  {
+    "surfaceForm": "together",
+    "displayForm": "together",
+    "definitions": [
+      {
+        "text": "与 tidy 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 tidy"
+  },
+  {
+    "surfaceForm": "tomato",
+    "displayForm": "tomato",
+    "definitions": [
+      {
+        "text": "西红柿",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/təˈmɑːtəʊ/"
+  },
+  {
+    "surfaceForm": "tomatoes",
+    "displayForm": "tomatoes",
+    "definitions": [
+      {
+        "text": "与 a box of 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 a box of"
+  },
+  {
+    "surfaceForm": "tomorrow",
+    "displayForm": "tomorrow",
+    "definitions": [
+      {
+        "text": "与 go to bed 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 go to bed"
+  },
+  {
+    "surfaceForm": "tonight",
+    "displayForm": "tonight",
+    "definitions": [
+      {
+        "text": "与 dinner 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 dinner"
+  },
+  {
+    "surfaceForm": "too",
+    "displayForm": "too",
+    "definitions": [
+      {
+        "text": "也",
+        "pos": "adv."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "touch",
+    "displayForm": "touch",
+    "definitions": [
+      {
+        "text": "与 bee 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 bee"
+  },
+  {
+    "surfaceForm": "trousers",
+    "displayForm": "trousers",
+    "definitions": [
+      {
+        "text": "裤子",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈtraʊzəz/"
+  },
+  {
+    "surfaceForm": "try",
+    "displayForm": "try",
+    "definitions": [
+      {
+        "text": "与 take 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 take"
+  },
+  {
+    "surfaceForm": "turn",
+    "displayForm": "turn",
+    "definitions": [
+      {
+        "text": "与 light 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 light"
+  },
+  {
+    "surfaceForm": "tv",
+    "displayForm": "tv",
+    "definitions": [
+      {
+        "text": "电视",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˌtiː ˈviː/"
+  },
+  {
+    "surfaceForm": "twice",
+    "displayForm": "twice",
+    "definitions": [
+      {
+        "text": "与 week 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 week"
+  },
+  {
+    "surfaceForm": "understand",
+    "displayForm": "understand",
+    "definitions": [
+      {
+        "text": "懂；理解"
+      }
+    ],
+    "ipa": "/ˌʌndəˈstænd/"
+  },
+  {
+    "surfaceForm": "up",
+    "displayForm": "up",
+    "definitions": [
+      {
+        "text": "与 hurry up 相关的课文词形",
+        "pos": "adv."
+      }
+    ],
+    "formNote": "词形变化，原形为 hurry up"
+  },
+  {
+    "surfaceForm": "us",
+    "displayForm": "us",
+    "definitions": [
+      {
+        "text": "与 cow 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 cow"
+  },
+  {
+    "surfaceForm": "use",
+    "displayForm": "use",
+    "definitions": [
+      {
+        "text": "使用",
+        "pos": "v."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "vegetables",
+    "displayForm": "vegetables",
+    "definitions": [
+      {
+        "text": "与 pick 相关的课文词形",
+        "pos": "v."
+      }
+    ],
+    "formNote": "词形变化，原形为 pick"
+  },
+  {
+    "surfaceForm": "very",
+    "displayForm": "very",
+    "definitions": [
+      {
+        "text": "与 music 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 music"
+  },
+  {
+    "surfaceForm": "wait",
+    "displayForm": "wait",
+    "definitions": [
+      {
+        "text": "与 safe 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 safe"
+  },
+  {
+    "surfaceForm": "wall",
+    "displayForm": "wall",
+    "definitions": [
+      {
+        "text": "墙；壁",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/wɔːl/"
+  },
+  {
+    "surfaceForm": "want",
+    "displayForm": "want",
+    "definitions": [
+      {
+        "text": "想要",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/wɒnt/"
+  },
+  {
+    "surfaceForm": "wash",
+    "displayForm": "wash",
+    "definitions": [
+      {
+        "text": "洗",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/wɒʃ/"
+  },
+  {
+    "surfaceForm": "waste",
+    "displayForm": "waste",
+    "definitions": [
+      {
+        "text": "浪费；废品"
+      }
+    ],
+    "ipa": "/weɪst/"
+  },
+  {
+    "surfaceForm": "watch",
+    "displayForm": "watch",
+    "definitions": [
+      {
+        "text": "看",
+        "pos": "v."
+      }
+    ],
+    "ipa": "/wɒtʃ/"
+  },
+  {
+    "surfaceForm": "water",
+    "displayForm": "water",
+    "definitions": [
+      {
+        "text": "与 waste 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 waste"
+  },
+  {
+    "surfaceForm": "we",
+    "displayForm": "we",
+    "definitions": [
+      {
+        "text": "我们",
+        "pos": "pron."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "wear",
+    "displayForm": "wear",
+    "definitions": [
+      {
+        "text": "与 shorts 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 shorts"
+  },
+  {
+    "surfaceForm": "wears",
+    "displayForm": "wears",
+    "definitions": [
+      {
+        "text": "与 skirt 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 skirt"
+  },
+  {
+    "surfaceForm": "wednesday",
+    "displayForm": "wednesday",
+    "definitions": [
+      {
+        "text": "与 art 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 art"
+  },
+  {
+    "surfaceForm": "week",
+    "displayForm": "week",
+    "definitions": [
+      {
+        "text": "周；星期",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/wiːk/"
+  },
+  {
+    "surfaceForm": "well",
+    "displayForm": "well",
+    "definitions": [
+      {
+        "text": "与 hard 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 hard"
+  },
+  {
+    "surfaceForm": "wet",
+    "displayForm": "wet",
+    "definitions": [
+      {
+        "text": "湿的；未干的"
+      }
+    ],
+    "ipa": "/wet/"
+  },
+  {
+    "surfaceForm": "what",
+    "displayForm": "what",
+    "definitions": [
+      {
+        "text": "什么",
+        "pos": "pron."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "what's",
+    "displayForm": "what's",
+    "definitions": [
+      {
+        "text": "是什么"
+      }
+    ]
+  },
+  {
+    "surfaceForm": "when",
+    "displayForm": "when",
+    "definitions": [
+      {
+        "text": "当……时；什么时候",
+        "pos": "adv."
+      }
+    ],
+    "ipa": "/wen/"
+  },
+  {
+    "surfaceForm": "will",
+    "displayForm": "will",
+    "definitions": [
+      {
+        "text": "与 hard 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 hard"
+  },
+  {
+    "surfaceForm": "window",
+    "displayForm": "window",
+    "definitions": [
+      {
+        "text": "窗",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/ˈwɪndəʊ/"
+  },
+  {
+    "surfaceForm": "with",
+    "displayForm": "with",
+    "definitions": [
+      {
+        "text": "用；和",
+        "pos": "prep."
+      }
+    ]
+  },
+  {
+    "surfaceForm": "word",
+    "displayForm": "word",
+    "definitions": [
+      {
+        "text": "言语；单词；字",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/wɜːd/"
+  },
+  {
+    "surfaceForm": "words",
+    "displayForm": "words",
+    "definitions": [
+      {
+        "text": "与 workbook 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 workbook"
+  },
+  {
+    "surfaceForm": "work",
+    "displayForm": "work",
+    "definitions": [
+      {
+        "text": "（花费时间和精力）做（某事）；工作",
+        "pos": "n."
+      }
+    ],
+    "ipa": "/wɜːk/"
+  },
+  {
+    "surfaceForm": "workbook",
+    "displayForm": "workbook",
+    "definitions": [
+      {
+        "text": "练习册；作业本"
+      }
+    ],
+    "ipa": "/ˈwɜːkbʊk/"
+  },
+  {
+    "surfaceForm": "workbooks",
+    "displayForm": "workbooks",
+    "definitions": [
+      {
+        "text": "与 hand out 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 hand out"
+  },
+  {
+    "surfaceForm": "write",
+    "displayForm": "write",
+    "definitions": [
+      {
+        "text": "与 wall 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 wall"
+  },
+  {
+    "surfaceForm": "writes",
+    "displayForm": "writes",
+    "definitions": [
+      {
+        "text": "与 blackboard 相关的课文词形",
+        "pos": "n."
+      }
+    ],
+    "formNote": "词形变化，原形为 blackboard"
+  },
+  {
+    "surfaceForm": "wrong",
+    "displayForm": "wrong",
+    "definitions": [
+      {
+        "text": "与 waste 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 waste"
+  },
+  {
+    "surfaceForm": "you",
+    "displayForm": "you",
+    "definitions": [
+      {
+        "text": "与 ready 相关的课文词形",
+        "pos": "adj."
+      }
+    ],
+    "formNote": "词形变化，原形为 ready"
+  },
+  {
+    "surfaceForm": "you'll",
+    "displayForm": "you'll",
+    "definitions": [
+      {
+        "text": "与 hurry up 相关的课文词形"
+      }
+    ],
+    "formNote": "词形变化，原形为 hurry up"
+  },
+  {
+    "surfaceForm": "your",
+    "displayForm": "your",
+    "definitions": [
+      {
+        "text": "你的；你们的",
+        "pos": "det."
+      }
+    ]
+  }
+]

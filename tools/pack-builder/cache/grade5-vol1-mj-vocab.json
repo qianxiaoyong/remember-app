@@ -1,0 +1,762 @@
+[
+  {
+    "unit": 1,
+    "headword": "tall",
+    "ipa": "",
+    "definition_zh": "高的",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "beside",
+    "ipa": "",
+    "definition_zh": "在……的旁边",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "pupil",
+    "ipa": "",
+    "definition_zh": "小学生",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "Australia",
+    "ipa": "",
+    "definition_zh": "澳大利亚",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "behind",
+    "ipa": "",
+    "definition_zh": "在……的后面",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "short",
+    "ipa": "",
+    "definition_zh": "短的；矮的",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "long",
+    "ipa": "",
+    "definition_zh": "长的",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 1,
+    "headword": "hair",
+    "ipa": "",
+    "definition_zh": "头发",
+    "page": 10,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "where",
+    "ipa": "",
+    "definition_zh": "哪里",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "sitting room",
+    "ipa": "",
+    "definition_zh": "客厅",
+    "page": 20,
+    "kind": "phrase"
+  },
+  {
+    "unit": 2,
+    "headword": "lovely",
+    "ipa": "",
+    "definition_zh": "可爱的",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "panda",
+    "ipa": "",
+    "definition_zh": "熊猫",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "September",
+    "ipa": "",
+    "definition_zh": "九月",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "tomorrow",
+    "ipa": "",
+    "definition_zh": "明天",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "Teachers' Day",
+    "ipa": "",
+    "definition_zh": "教师节",
+    "page": 20,
+    "kind": "phrase"
+  },
+  {
+    "unit": 2,
+    "headword": "kind",
+    "ipa": "",
+    "definition_zh": "亲切的；和蔼的",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "near",
+    "ipa": "",
+    "definition_zh": "附近",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "flower",
+    "ipa": "",
+    "definition_zh": "花；花朵",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "paper",
+    "ipa": "",
+    "definition_zh": "纸",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "picture",
+    "ipa": "",
+    "definition_zh": "照片；图画",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "photo",
+    "ipa": "",
+    "definition_zh": "照片",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 2,
+    "headword": "smile",
+    "ipa": "",
+    "definition_zh": "微笑",
+    "page": 20,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "National Day",
+    "ipa": "",
+    "definition_zh": "国庆节",
+    "page": 30,
+    "kind": "phrase"
+  },
+  {
+    "unit": 3,
+    "headword": "holiday",
+    "ipa": "",
+    "definition_zh": "假日",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "uncle",
+    "ipa": "",
+    "definition_zh": "叔叔；伯伯",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "won't = will not",
+    "ipa": "",
+    "definition_zh": "将不",
+    "page": 30,
+    "kind": "phrase"
+  },
+  {
+    "unit": 3,
+    "headword": "mount",
+    "ipa": "",
+    "definition_zh": "山",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "tell",
+    "ipa": "",
+    "definition_zh": "告诉",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "about",
+    "ipa": "",
+    "definition_zh": "关于",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "July",
+    "ipa": "",
+    "definition_zh": "七月",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "August",
+    "ipa": "",
+    "definition_zh": "八月",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "October",
+    "ipa": "",
+    "definition_zh": "十月",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "there",
+    "ipa": "",
+    "definition_zh": "那里",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "turn on",
+    "ipa": "",
+    "definition_zh": "打开",
+    "page": 30,
+    "kind": "phrase"
+  },
+  {
+    "unit": 3,
+    "headword": "find",
+    "ipa": "",
+    "definition_zh": "找到；发现",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "thing",
+    "ipa": "",
+    "definition_zh": "东西",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 3,
+    "headword": "Internet",
+    "ipa": "",
+    "definition_zh": "因特网",
+    "page": 30,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "cinema",
+    "ipa": "",
+    "definition_zh": "电影院",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "sit down",
+    "ipa": "",
+    "definition_zh": "坐下",
+    "page": 40,
+    "kind": "phrase"
+  },
+  {
+    "unit": 4,
+    "headword": "put on",
+    "ipa": "",
+    "definition_zh": "戴上",
+    "page": 40,
+    "kind": "phrase"
+  },
+  {
+    "unit": 4,
+    "headword": "glasses",
+    "ipa": "",
+    "definition_zh": "眼镜",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "film",
+    "ipa": "",
+    "definition_zh": "电影",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "afraid",
+    "ipa": "",
+    "definition_zh": "害怕",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "welcome",
+    "ipa": "",
+    "definition_zh": "欢迎",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "museum",
+    "ipa": "",
+    "definition_zh": "博物馆",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "cook",
+    "ipa": "",
+    "definition_zh": "烹调",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "player",
+    "ipa": "",
+    "definition_zh": "球员",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "chess",
+    "ipa": "",
+    "definition_zh": "国际象棋",
+    "page": 40,
+    "kind": "word"
+  },
+  {
+    "unit": 4,
+    "headword": "play chess",
+    "ipa": "",
+    "definition_zh": "下国际象棋",
+    "page": 40,
+    "kind": "phrase"
+  },
+  {
+    "unit": 4,
+    "headword": "come on",
+    "ipa": "",
+    "definition_zh": "来吧",
+    "page": 40,
+    "kind": "phrase"
+  },
+  {
+    "unit": 5,
+    "headword": "April",
+    "ipa": "",
+    "definition_zh": "四月",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "March",
+    "ipa": "",
+    "definition_zh": "三月",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "June",
+    "ipa": "",
+    "definition_zh": "六月",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "May",
+    "ipa": "",
+    "definition_zh": "五月",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "month",
+    "ipa": "",
+    "definition_zh": "月份",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "December",
+    "ipa": "",
+    "definition_zh": "十二月",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "January",
+    "ipa": "",
+    "definition_zh": "一月",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "easy",
+    "ipa": "",
+    "definition_zh": "容易的",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "remember",
+    "ipa": "",
+    "definition_zh": "记住",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "November",
+    "ipa": "",
+    "definition_zh": "十一月",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "February",
+    "ipa": "",
+    "definition_zh": "二月",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 5,
+    "headword": "or",
+    "ipa": "",
+    "definition_zh": "或者",
+    "page": 50,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "Excuse me.",
+    "ipa": "",
+    "definition_zh": "请问/劳驾。",
+    "page": 60,
+    "kind": "phrase"
+  },
+  {
+    "unit": 6,
+    "headword": "get to",
+    "ipa": "",
+    "definition_zh": "到达",
+    "page": 60,
+    "kind": "phrase"
+  },
+  {
+    "unit": 6,
+    "headword": "station",
+    "ipa": "",
+    "definition_zh": "车站",
+    "page": 60,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "far away",
+    "ipa": "",
+    "definition_zh": "很远",
+    "page": 60,
+    "kind": "phrase"
+  },
+  {
+    "unit": 6,
+    "headword": "taxi",
+    "ipa": "",
+    "definition_zh": "的士",
+    "page": 60,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "young",
+    "ipa": "",
+    "definition_zh": "年轻的",
+    "page": 60,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "man",
+    "ipa": "",
+    "definition_zh": "（复数men） 男人",
+    "page": 60,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "You're welcome.",
+    "ipa": "",
+    "definition_zh": "不用谢。",
+    "page": 60,
+    "kind": "phrase"
+  },
+  {
+    "unit": 6,
+    "headword": "hospital",
+    "ipa": "",
+    "definition_zh": "医院",
+    "page": 60,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "nearby",
+    "ipa": "",
+    "definition_zh": "附近",
+    "page": 60,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "go straight",
+    "ipa": "",
+    "definition_zh": "一直往前走",
+    "page": 60,
+    "kind": "phrase"
+  },
+  {
+    "unit": 6,
+    "headword": "turn",
+    "ipa": "",
+    "definition_zh": "朝向；翻转",
+    "page": 60,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "right",
+    "ipa": "",
+    "definition_zh": "右边的",
+    "page": 60,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "left",
+    "ipa": "",
+    "definition_zh": "左边的",
+    "page": 60,
+    "kind": "word"
+  },
+  {
+    "unit": 6,
+    "headword": "bus stop",
+    "ipa": "",
+    "definition_zh": "公交车站",
+    "page": 60,
+    "kind": "phrase"
+  },
+  {
+    "unit": 7,
+    "headword": "speak",
+    "ipa": "",
+    "definition_zh": "说话；讲话",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "wait",
+    "ipa": "",
+    "definition_zh": "等候；等待",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "minute",
+    "ipa": "",
+    "definition_zh": "分钟",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "page",
+    "ipa": "",
+    "definition_zh": "页",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "write",
+    "ipa": "",
+    "definition_zh": "写字",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "word",
+    "ipa": "",
+    "definition_zh": "词",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "sorry",
+    "ipa": "",
+    "definition_zh": "对不起",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "time",
+    "ipa": "",
+    "definition_zh": "次数",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "call",
+    "ipa": "",
+    "definition_zh": "呼叫",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "mobile",
+    "ipa": "",
+    "definition_zh": "手机",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "way",
+    "ipa": "",
+    "definition_zh": "路",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "on",
+    "ipa": "",
+    "definition_zh": "my way在我去……的路上",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 7,
+    "headword": "city",
+    "ipa": "",
+    "definition_zh": "城市",
+    "page": 70,
+    "kind": "word"
+  },
+  {
+    "unit": 8,
+    "headword": "the USA",
+    "ipa": "",
+    "definition_zh": "美国",
+    "page": 80,
+    "kind": "phrase"
+  },
+  {
+    "unit": 8,
+    "headword": "classmate",
+    "ipa": "",
+    "definition_zh": "同班同学",
+    "page": 80,
+    "kind": "word"
+  },
+  {
+    "unit": 8,
+    "headword": "understand",
+    "ipa": "",
+    "definition_zh": "理解；明白",
+    "page": 80,
+    "kind": "word"
+  },
+  {
+    "unit": 8,
+    "headword": "know",
+    "ipa": "",
+    "definition_zh": "知道",
+    "page": 80,
+    "kind": "word"
+  },
+  {
+    "unit": 8,
+    "headword": "see",
+    "ipa": "",
+    "definition_zh": "明白",
+    "page": 80,
+    "kind": "word"
+  }
+]
