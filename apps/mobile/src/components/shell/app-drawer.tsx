@@ -18,6 +18,7 @@ import { markDrawerReturnPending } from '../../shell/drawer-return-intent';
 import { DrawerAccountHeader, DrawerAccountHeaderLoading } from './drawer-account-header';
 import { DrawerCommonFeaturesBlock } from './drawer-common-features-block';
 import { DrawerMenuListBlock } from './drawer-menu-list-block';
+import { ContactBottomPanel } from './contact-bottom-panel';
 import { drawerContentPaddingTop } from '../../theme/drawer-styles';
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
@@ -41,14 +42,15 @@ export function AppDrawer(props: AppDrawerProps): ReactElement | null {
   const contentPaddingTop = drawerContentPaddingTop(insets.top);
   const panelWidth = Dimensions.get('window').width * DRAWER_WIDTH_RATIO;
   const [renderOverlay, setRenderOverlay] = useState(props.visible);
+  const [contactPanelVisible, setContactPanelVisible] = useState(false);
   const slideAnim = useRef(new Animated.Value(-panelWidth)).current;
   const backdropAnim = useRef(new Animated.Value(0)).current;
 
   useLayoutEffect(() => {
-    if (props.visible) {
-      void refresh({ showLoading: false });
+    if (!props.visible) {
+      setContactPanelVisible(false);
     }
-  }, [props.visible, refresh]);
+  }, [props.visible]);
 
   useLayoutEffect(() => {
     if (props.visible) {
@@ -103,6 +105,11 @@ export function AppDrawer(props: AppDrawerProps): ReactElement | null {
   };
 
   const handleMenuItemPress = (item: DrawerMenuItem): void => {
+    if (item.id === 'contact') {
+      setContactPanelVisible(true);
+      return;
+    }
+
     if (item.reserved) {
       Alert.alert('敬请期待', item.reservedMessage ?? '功能即将开放');
       return;
