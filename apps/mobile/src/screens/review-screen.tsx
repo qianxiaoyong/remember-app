@@ -42,6 +42,8 @@ export function ReviewScreen(): ReactElement {
     handlePlayLexiconAudio,
     handlePlayPrimaryAudio,
     handlePlayExampleAudio,
+    primaryAudioPlaying,
+    playingExampleAudioPath,
     closeLexicon,
   } = useReviewFlow();
 
@@ -173,6 +175,8 @@ export function ReviewScreen(): ReactElement {
               setRevealed(true);
             }}
             onTokenPress={openLexicon}
+            playingExampleAudioPath={playingExampleAudioPath}
+            primaryAudioPlaying={primaryAudioPlaying}
             revealed={revealed}
           />
         ) : (

@@ -9,7 +9,6 @@ import { confirmReviewOutcome } from '../use-cases/confirm-review-outcome';
 import { getReviewTabSummary } from '../use-cases/get-review-tab-summary';
 import { lookupLexiconToken } from '../use-cases/lookup-lexicon-token';
 import { playOrCacheLexiconAudio } from '../use-cases/play-or-cache-lexicon-audio';
-import { playPackAssetAudio } from '../use-cases/play-pack-asset-audio';
 import { resolveReviewCardContext } from '../use-cases/resolve-review-card-context';
 import { resumeOrStartReviewSession } from '../use-cases/resume-or-start-review-session';
 import { skipUnloadedReviewQueueItem } from '../use-cases/skip-unloaded-review-queue-item';
@@ -20,6 +19,7 @@ import {
 } from '../use-cases/toggle-saved-lexicon-item';
 import { getReviewOutcomeIntervalLabels } from '../use-cases/get-review-outcome-interval-labels';
 import { markReviewPoolChanged } from '../shell/review-pool-changed-signal';
+import { useVocabularyStudyAudio } from './use-vocabulary-study-audio';
 
 export function useReviewFlow() {
   const [session, setSession] = useState<ActiveStudySession | null>(null);
@@ -65,6 +65,24 @@ export function useReviewFlow() {
 
   const sourcePackId = reviewContext?.sourcePackId ?? null;
 
+  const {
+    primaryAudioPlaying,
+    playingExampleAudioPath,
+    playPrimaryAudio,
+    playExampleAudio,
+  } = useVocabularyStudyAudio({
+    packId: sourcePackId,
+    primaryAudioRelativePath:
+      reviewContext?.cardDetail?.cardType === 'vocabulary'
+        ? reviewContext.cardDetail.content.prompt.primaryAudio
+        : null,
+    autoPlayActive:
+      !revealed &&
+      reviewContext?.cardDetail?.cardType === 'vocabulary' &&
+      Boolean(sourcePackId),
+    cardKey: currentKnowledgeId,
+  });
+
   const outcomeIntervalLabels = useMemo(() => {
     if (!currentKnowledgeId) {
       return null;
@@ -103,23 +121,14 @@ export function useReviewFlow() {
     if (reviewContext?.cardDetail?.cardType !== 'vocabulary') {
       return;
     }
-    void playPackAssetAudio({
-      packId: reviewContext.sourcePackId,
-      relativePath: reviewContext.cardDetail.content.prompt.primaryAudio,
-    });
-  }, [reviewContext]);
+    playPrimaryAudio(reviewContext.cardDetail.content.prompt.primaryAudio);
+  }, [playPrimaryAudio, reviewContext]);
 
   const handlePlayExampleAudio = useCallback(
     (relativePath: string) => {
-      if (!sourcePackId) {
-        return;
-      }
-      void playPackAssetAudio({
-        packId: sourcePackId,
-        relativePath,
-      });
+      playExampleAudio(relativePath);
     },
-    [sourcePackId],
+    [playExampleAudio],
   );
 
   const handlePlayLexiconAudio = useCallback(() => {
@@ -238,6 +247,8 @@ export function useReviewFlow() {
     handlePlayLexiconAudio,
     handlePlayPrimaryAudio,
     handlePlayExampleAudio,
+    primaryAudioPlaying,
+    playingExampleAudioPath,
     closeLexicon: () => {
       setLexiconVisible(false);
       setLexiconSelectedSurfaceForm(null);

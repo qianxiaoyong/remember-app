@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { normalizeSurfaceForm } from '@remember/contracts';
 import type { LexiconLookupResult } from '../data/repositories/lexicon-entry-repository';
 import type { PackCardSummary } from '../data/repositories/pack-card-repository';
@@ -11,15 +11,9 @@ import { getPackCardDetailUseCase } from '../use-cases/get-pack-card-detail';
 import { joinReviewPool } from '../use-cases/join-review-pool';
 import { lookupLexiconToken } from '../use-cases/lookup-lexicon-token';
 import { playOrCacheLexiconAudio } from '../use-cases/play-or-cache-lexicon-audio';
-import { getRecallAutoPlayEnabled } from '../data/repositories/user-preferences-repository';
-import { playPackAssetAudio } from '../use-cases/play-pack-asset-audio';
-import {
-  beginPrimaryAudioPlayback,
-  cancelExpoAudioPlayback,
-  playExpoAudioUriRepeated,
-  subscribeExpoAudioPosition,
-} from '../use-cases/play-expo-audio-uri';
-import { resolvePackAssetUri } from '../use-cases/resolve-pack-asset-uri';
+import { getPackBrowseCompleteSummary } from '../use-cases/get-pack-browse-complete-summary';
+import type { PackBrowseCompleteSummary } from '../use-cases/get-pack-browse-complete-summary';
+import { useVocabularyStudyAudio } from './use-vocabulary-study-audio';
 import { resolvePackLibraryPresentation } from '../use-cases/resolve-pack-library-presentation';
 import { resolveStoryReaderEntry } from '../use-cases/resolve-story-reader-entry';
 import { resumePackBrowse } from '../use-cases/resume-pack-browse';
@@ -32,8 +26,6 @@ import {
   isLexiconItemSavedUseCase,
   toggleSavedLexiconItem,
 } from '../use-cases/toggle-saved-lexicon-item';
-import { getPackBrowseCompleteSummary } from '../use-cases/get-pack-browse-complete-summary';
-import type { PackBrowseCompleteSummary } from '../use-cases/get-pack-browse-complete-summary';
 
 export function useStudyFlow(
   packId: string,
@@ -63,10 +55,6 @@ export function useStudyFlow(
   const [browseCompleteVisible, setBrowseCompleteVisible] = useState(false);
   const [browseCompleteSummary, setBrowseCompleteSummary] =
     useState<PackBrowseCompleteSummary | null>(null);
-  const recallAutoPlayTokenRef = useRef(0);
-  const activeStudyAudioRef = useRef<'primary' | { kind: 'example'; path: string } | null>(null);
-  const [primaryAudioPlaying, setPrimaryAudioPlaying] = useState(false);
-  const [playingExampleAudioPath, setPlayingExampleAudioPath] = useState<string | null>(null);
 
   const startBrowse = useCallback(() => {
     setMessage(null);
@@ -130,73 +118,19 @@ export function useStudyFlow(
     }
   }, [currentKnowledgeId, packId]);
 
-  const cancelRecallAutoPlay = useCallback(() => {
-    recallAutoPlayTokenRef.current += 1;
-    activeStudyAudioRef.current = null;
-    cancelExpoAudioPlayback();
-    setPrimaryAudioPlaying(false);
-    setPlayingExampleAudioPath(null);
-  }, []);
-
-  useEffect(() => {
-    return subscribeExpoAudioPosition((state) => {
-      const active = activeStudyAudioRef.current;
-      if (!active) {
-        setPrimaryAudioPlaying(false);
-        setPlayingExampleAudioPath(null);
-        return;
-      }
-      if (active === 'primary') {
-        setPrimaryAudioPlaying(state.playing);
-        setPlayingExampleAudioPath(null);
-        return;
-      }
-      setPrimaryAudioPlaying(false);
-      setPlayingExampleAudioPath(state.playing ? active.path : null);
-    });
-  }, []);
-
-  useEffect(() => {
-    if (!isBrowseMode || revealed || !browseReady) {
-      cancelRecallAutoPlay();
-      return;
-    }
-    if (!getRecallAutoPlayEnabled()) {
-      return;
-    }
-    if (cardDetail?.cardType !== 'vocabulary') {
-      return;
-    }
-
-    const relativePath = cardDetail.content.prompt.primaryAudio;
-    const uri = resolvePackAssetUri(packId, relativePath);
-    if (!uri) {
-      return;
-    }
-
-    const token = beginPrimaryAudioPlayback();
-    recallAutoPlayTokenRef.current = token;
-    activeStudyAudioRef.current = 'primary';
-    void playExpoAudioUriRepeated(uri, 3, token).finally(() => {
-      if (recallAutoPlayTokenRef.current === token) {
-        activeStudyAudioRef.current = null;
-      }
-    });
-
-    return () => {
-      if (recallAutoPlayTokenRef.current === token) {
-        cancelRecallAutoPlay();
-      }
-    };
-  }, [
-    browseReady,
-    cancelRecallAutoPlay,
-    cardDetail,
-    currentKnowledgeId,
-    isBrowseMode,
+  const {
+    primaryAudioPlaying,
+    playingExampleAudioPath,
+    playPrimaryAudio,
+    playExampleAudio,
+  } = useVocabularyStudyAudio({
     packId,
-    revealed,
-  ]);
+    primaryAudioRelativePath:
+      cardDetail?.cardType === 'vocabulary' ? cardDetail.content.prompt.primaryAudio : null,
+    autoPlayActive:
+      isBrowseMode && !revealed && browseReady && cardDetail?.cardType === 'vocabulary',
+    cardKey: currentKnowledgeId,
+  });
 
   const advanceBrowse = useCallback(() => {
     if (!isBrowseMode || browseCards.length === 0) {
@@ -314,28 +248,18 @@ export function useStudyFlow(
     if (!cardDetail) {
       return;
     }
-    cancelRecallAutoPlay();
-    activeStudyAudioRef.current = 'primary';
     const relativePath =
       cardDetail.cardType === 'vocabulary'
         ? cardDetail.content.prompt.primaryAudio
         : cardDetail.content.lesson.primaryAudio;
-    void playPackAssetAudio({
-      packId,
-      relativePath,
-    });
-  }, [cancelRecallAutoPlay, cardDetail, packId]);
+    playPrimaryAudio(relativePath);
+  }, [cardDetail, playPrimaryAudio]);
 
   const handlePlayExampleAudio = useCallback(
     (relativePath: string) => {
-      cancelRecallAutoPlay();
-      activeStudyAudioRef.current = { kind: 'example', path: relativePath };
-      void playPackAssetAudio({
-        packId,
-        relativePath,
-      });
+      playExampleAudio(relativePath);
     },
-    [cancelRecallAutoPlay, packId],
+    [playExampleAudio],
   );
 
   const handlePlayAudio = useCallback(() => {

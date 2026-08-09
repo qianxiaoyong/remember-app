@@ -6,11 +6,13 @@ import { AppHeader } from '../components/shell/app-header';
 import { ScreenScaffold } from '../components/shell/screen-scaffold';
 import {
   getPackOpenPosition,
-  getRecallAutoPlayEnabled,
+  getRecallAutoPlayCount,
   PREFERENCE_PACK_OPEN_POSITION,
   PREFERENCE_RECALL_AUTO_PLAY,
+  RECALL_AUTO_PLAY_COUNTS,
   setUserPreference,
   type PackOpenPosition,
+  type RecallAutoPlayCount,
 } from '../data/repositories/user-preferences-repository';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
@@ -18,7 +20,7 @@ import { spacing } from '../theme/spacing';
 export function SettingsScreen(): ReactElement {
   const router = useRouter();
   const [openPosition, setOpenPosition] = useState<PackOpenPosition>(() => getPackOpenPosition());
-  const [recallAutoPlay, setRecallAutoPlay] = useState(() => getRecallAutoPlayEnabled());
+  const [recallAutoPlayCount, setRecallAutoPlayCount] = useState(() => getRecallAutoPlayCount());
 
   const handleSelectOpenPosition = (value: PackOpenPosition): void => {
     setUserPreference({
@@ -29,14 +31,16 @@ export function SettingsScreen(): ReactElement {
     setOpenPosition(value);
   };
 
-  const handleSelectRecallAutoPlay = (enabled: boolean): void => {
+  const handleSelectRecallAutoPlayCount = (count: number): void => {
     setUserPreference({
       key: PREFERENCE_RECALL_AUTO_PLAY,
-      value: enabled ? 'true' : 'false',
+      value: String(count),
       updatedAt: new Date().toISOString(),
     });
-    setRecallAutoPlay(enabled);
+    setRecallAutoPlayCount(count);
   };
+
+  const recallAutoPlayEnabled = recallAutoPlayCount > 0;
 
   return (
     <ScreenScaffold>
@@ -67,18 +71,40 @@ export function SettingsScreen(): ReactElement {
         </View>
         <Text style={styles.sectionTitle}>回忆页自动发音</Text>
         <View style={styles.optionGroup}>
-          <OptionRow
-            label="开启（每张词自动读 3 遍）"
-            selected={recallAutoPlay}
-            onPress={() => {
-              handleSelectRecallAutoPlay(true);
-            }}
-          />
+          <View style={styles.optionBlock}>
+            <OptionRow
+              embedded
+              label="开启"
+              selected={recallAutoPlayEnabled}
+              onPress={() => {
+                if (!recallAutoPlayEnabled) {
+                  handleSelectRecallAutoPlayCount(2);
+                }
+              }}
+            />
+            {recallAutoPlayEnabled ? (
+              <View style={styles.countRow}>
+                <Text style={styles.countLabel}>发音次数</Text>
+                <View style={styles.countChips}>
+                  {RECALL_AUTO_PLAY_COUNTS.map((count) => (
+                    <CountChip
+                      key={count}
+                      count={count}
+                      selected={recallAutoPlayCount === count}
+                      onPress={() => {
+                        handleSelectRecallAutoPlayCount(count);
+                      }}
+                    />
+                  ))}
+                </View>
+              </View>
+            ) : null}
+          </View>
           <OptionRow
             label="关闭"
-            selected={!recallAutoPlay}
+            selected={!recallAutoPlayEnabled}
             onPress={() => {
-              handleSelectRecallAutoPlay(false);
+              handleSelectRecallAutoPlayCount(0);
             }}
           />
         </View>
@@ -87,11 +113,39 @@ export function SettingsScreen(): ReactElement {
   );
 }
 
-function OptionRow(props: { label: string; selected: boolean; onPress: () => void }): ReactElement {
+function OptionRow(props: {
+  label: string;
+  selected: boolean;
+  onPress: () => void;
+  embedded?: boolean;
+}): ReactElement {
   return (
-    <Pressable accessibilityRole="button" onPress={props.onPress} style={styles.optionRow}>
+    <Pressable
+      accessibilityRole="button"
+      onPress={props.onPress}
+      style={[styles.optionRow, props.embedded ? null : styles.optionRowStandalone]}
+    >
       <Text style={styles.optionLabel}>{props.label}</Text>
       <Text style={styles.optionMark}>{props.selected ? '●' : '○'}</Text>
+    </Pressable>
+  );
+}
+
+function CountChip(props: {
+  count: RecallAutoPlayCount;
+  selected: boolean;
+  onPress: () => void;
+}): ReactElement {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityState={{ selected: props.selected }}
+      onPress={props.onPress}
+      style={[styles.countChip, props.selected ? styles.countChipSelected : null]}
+    >
+      <Text style={[styles.countChipText, props.selected ? styles.countChipTextSelected : null]}>
+        {props.count}
+      </Text>
     </Pressable>
   );
 }
@@ -116,16 +170,25 @@ const styles = StyleSheet.create({
   optionGroup: {
     gap: spacing.sm,
   },
-  optionRow: {
-    alignItems: 'center',
+  optionBlock: {
     backgroundColor: colors.surface,
     borderColor: colors.border,
     borderRadius: 12,
     borderWidth: StyleSheet.hairlineWidth,
+    overflow: 'hidden',
+  },
+  optionRow: {
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: spacing.md,
     paddingVertical: spacing.md,
+  },
+  optionRowStandalone: {
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+    borderRadius: 12,
+    borderWidth: StyleSheet.hairlineWidth,
   },
   optionLabel: {
     color: colors.textPrimary,
@@ -136,5 +199,47 @@ const styles = StyleSheet.create({
   optionMark: {
     color: colors.accent,
     fontSize: 16,
+  },
+  countRow: {
+    alignItems: 'center',
+    borderTopColor: colors.border,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    flexDirection: 'row',
+    gap: spacing.sm,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+  },
+  countLabel: {
+    color: colors.textSecondary,
+    fontSize: 14,
+  },
+  countChips: {
+    flex: 1,
+    flexDirection: 'row',
+    gap: spacing.xs,
+    justifyContent: 'flex-end',
+  },
+  countChip: {
+    alignItems: 'center',
+    backgroundColor: colors.background,
+    borderColor: colors.border,
+    borderRadius: 8,
+    borderWidth: StyleSheet.hairlineWidth,
+    justifyContent: 'center',
+    minWidth: 40,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+  },
+  countChipSelected: {
+    backgroundColor: colors.accent,
+    borderColor: colors.accent,
+  },
+  countChipText: {
+    color: colors.textPrimary,
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  countChipTextSelected: {
+    color: colors.surface,
   },
 });

@@ -50,7 +50,34 @@ export function getPackOpenPosition(db: SQLiteDatabase = openUserDatabase()): Pa
   return raw === 'start' ? 'start' : 'bookmark';
 }
 
-export function getRecallAutoPlayEnabled(db: SQLiteDatabase = openUserDatabase()): boolean {
-  const raw = getUserPreference(PREFERENCE_RECALL_AUTO_PLAY, 'true', db);
-  return raw !== 'false';
+export const RECALL_AUTO_PLAY_COUNTS = [1, 2, 3, 5] as const;
+export type RecallAutoPlayCount = (typeof RECALL_AUTO_PLAY_COUNTS)[number];
+
+const DEFAULT_RECALL_AUTO_PLAY_COUNT = 2;
+
+function parseRecallAutoPlayCount(raw: string): number {
+  if (raw === 'true') {
+    return DEFAULT_RECALL_AUTO_PLAY_COUNT;
+  }
+  if (raw === 'false') {
+    return 0;
+  }
+  const parsed = Number.parseInt(raw, 10);
+  if (parsed === 0) {
+    return 0;
+  }
+  if (RECALL_AUTO_PLAY_COUNTS.includes(parsed as RecallAutoPlayCount)) {
+    return parsed;
+  }
+  return DEFAULT_RECALL_AUTO_PLAY_COUNT;
+}
+
+/** 0 表示关闭；开启时为 1、2、3 或 5，缺省 2。 */
+export function getRecallAutoPlayCount(db: SQLiteDatabase = openUserDatabase()): number {
+  const raw = getUserPreference(PREFERENCE_RECALL_AUTO_PLAY, String(DEFAULT_RECALL_AUTO_PLAY_COUNT), db);
+  return parseRecallAutoPlayCount(raw);
+}
+
+export function isRecallAutoPlayEnabled(db: SQLiteDatabase = openUserDatabase()): boolean {
+  return getRecallAutoPlayCount(db) > 0;
 }

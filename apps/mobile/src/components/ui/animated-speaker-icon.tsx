@@ -1,6 +1,7 @@
 import type { ReactElement } from 'react';
-import { useEffect, useRef } from 'react';
-import { AccessibilityInfo, Animated, Easing, StyleSheet, View } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { AccessibilityInfo } from 'react-native';
+import type { AppIconName } from './app-icon';
 import { AppIcon } from './app-icon';
 import { colors } from '../../theme/colors';
 
@@ -10,88 +11,56 @@ interface AnimatedSpeakerIconProps {
   size?: 'sm' | 'md';
 }
 
+const PLAYING_ICON_FRAMES: AppIconName[] = [
+  'volume-low-outline',
+  'volume-medium-outline',
+  'volume-high-outline',
+];
+
+const FRAME_MS = 180;
+
 export function AnimatedSpeakerIcon(props: AnimatedSpeakerIconProps): ReactElement {
-  const waveAnim = useRef(new Animated.Value(0)).current;
-  const loopRef = useRef<Animated.CompositeAnimation | null>(null);
+  const [frameIndex, setFrameIndex] = useState(PLAYING_ICON_FRAMES.length - 1);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const color = props.color ?? colors.accent;
 
   useEffect(() => {
     let cancelled = false;
 
+    const stopFrames = (): void => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+
     void AccessibilityInfo.isReduceMotionEnabled().then((reduceMotion) => {
       if (cancelled) {
         return;
       }
-      loopRef.current?.stop();
-      loopRef.current = null;
+      stopFrames();
       if (!props.playing || reduceMotion) {
-        waveAnim.setValue(0);
+        setFrameIndex(PLAYING_ICON_FRAMES.length - 1);
         return;
       }
-      const loop = Animated.loop(
-        Animated.sequence([
-          Animated.timing(waveAnim, {
-            duration: 180,
-            easing: Easing.inOut(Easing.quad),
-            toValue: 1,
-            useNativeDriver: true,
-          }),
-          Animated.timing(waveAnim, {
-            duration: 180,
-            easing: Easing.inOut(Easing.quad),
-            toValue: 0,
-            useNativeDriver: true,
-          }),
-        ]),
-      );
-      loopRef.current = loop;
-      loop.start();
+
+      let index = 0;
+      setFrameIndex(index);
+      intervalRef.current = setInterval(() => {
+        index = (index + 1) % PLAYING_ICON_FRAMES.length;
+        setFrameIndex(index);
+      }, FRAME_MS);
     });
 
     return () => {
       cancelled = true;
-      loopRef.current?.stop();
+      stopFrames();
     };
-  }, [props.playing, waveAnim]);
+  }, [props.playing]);
 
-  const waveScale = waveAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [1, 1.18],
-  });
-  const waveOpacity = waveAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0.35, 1],
-  });
+  const iconName: AppIconName = props.playing
+    ? (PLAYING_ICON_FRAMES[frameIndex] ?? 'volume-high-outline')
+    : 'volume-high-outline';
 
-  return (
-    <View style={styles.root}>
-      {props.playing ? (
-        <Animated.View
-          style={[
-            styles.wave,
-            {
-              opacity: waveOpacity,
-              transform: [{ scale: waveScale }],
-            },
-          ]}
-        />
-      ) : null}
-      <AppIcon color={color} name="volume-high-outline" size={props.size ?? 'sm'} />
-    </View>
-  );
+  return <AppIcon color={color} name={iconName} size={props.size ?? 'sm'} />;
 }
-
-const styles = StyleSheet.create({
-  root: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  wave: {
-    backgroundColor: colors.accent,
-    borderRadius: 999,
-    height: 24,
-    opacity: 0.3,
-    position: 'absolute',
-    width: 24,
-  },
-});
