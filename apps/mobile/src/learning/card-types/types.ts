@@ -17,6 +17,8 @@ export interface CardRendererProps {
   onPlayPrimaryAudio: () => void;
   onPlayExampleAudio: (relativePath: string) => void;
   onTokenPress: (token: string) => void;
+  primaryAudioPlaying?: boolean;
+  playingExampleAudioPath?: string | null;
   initialAudioPositionMs?: number;
   onReaderBookmark?: (positionMs: number) => void;
   onNavigateLesson?: (knowledgeId: string) => void;

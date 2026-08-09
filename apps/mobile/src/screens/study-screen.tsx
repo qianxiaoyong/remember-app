@@ -62,6 +62,8 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
     handlePlayAudio,
     handlePlayPrimaryAudio,
     handlePlayExampleAudio,
+    primaryAudioPlaying,
+    playingExampleAudioPath,
     restartFromBeginning,
     dismissBrowseComplete,
     closeLexicon,
@@ -85,6 +87,15 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
       startBrowse();
     }
   }, [props.autoStart, browseReady, isBrowseMode, props.packId, startBrowse]);
+
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        touchInstalledPackLastOpenedUseCase(props.packId);
+        markLibraryNeedsRefresh();
+      };
+    }, [props.packId]),
+  );
 
   const handleNavigateLesson = useCallback(
     (knowledgeId: string) => {
@@ -190,6 +201,8 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
               onPlayPrimaryAudio={handlePlayPrimaryAudio}
               onTokenPress={openLexicon}
               packId={props.packId}
+              playingExampleAudioPath={playingExampleAudioPath}
+              primaryAudioPlaying={primaryAudioPlaying}
               revealed={revealed}
               setRevealed={setRevealed}
               sortOrder={cardDetail.sortOrder}

@@ -17,6 +17,7 @@ import {
   beginPrimaryAudioPlayback,
   cancelExpoAudioPlayback,
   playExpoAudioUriRepeated,
+  subscribeExpoAudioPosition,
 } from '../use-cases/play-expo-audio-uri';
 import { resolvePackAssetUri } from '../use-cases/resolve-pack-asset-uri';
 import { resolvePackLibraryPresentation } from '../use-cases/resolve-pack-library-presentation';
@@ -63,6 +64,9 @@ export function useStudyFlow(
   const [browseCompleteSummary, setBrowseCompleteSummary] =
     useState<PackBrowseCompleteSummary | null>(null);
   const recallAutoPlayTokenRef = useRef(0);
+  const activeStudyAudioRef = useRef<'primary' | { kind: 'example'; path: string } | null>(null);
+  const [primaryAudioPlaying, setPrimaryAudioPlaying] = useState(false);
+  const [playingExampleAudioPath, setPlayingExampleAudioPath] = useState<string | null>(null);
 
   const startBrowse = useCallback(() => {
     setMessage(null);
@@ -128,7 +132,28 @@ export function useStudyFlow(
 
   const cancelRecallAutoPlay = useCallback(() => {
     recallAutoPlayTokenRef.current += 1;
+    activeStudyAudioRef.current = null;
     cancelExpoAudioPlayback();
+    setPrimaryAudioPlaying(false);
+    setPlayingExampleAudioPath(null);
+  }, []);
+
+  useEffect(() => {
+    return subscribeExpoAudioPosition((state) => {
+      const active = activeStudyAudioRef.current;
+      if (!active) {
+        setPrimaryAudioPlaying(false);
+        setPlayingExampleAudioPath(null);
+        return;
+      }
+      if (active === 'primary') {
+        setPrimaryAudioPlaying(state.playing);
+        setPlayingExampleAudioPath(null);
+        return;
+      }
+      setPrimaryAudioPlaying(false);
+      setPlayingExampleAudioPath(state.playing ? active.path : null);
+    });
   }, []);
 
   useEffect(() => {
@@ -151,7 +176,12 @@ export function useStudyFlow(
 
     const token = beginPrimaryAudioPlayback();
     recallAutoPlayTokenRef.current = token;
-    void playExpoAudioUriRepeated(uri, 3, token);
+    activeStudyAudioRef.current = 'primary';
+    void playExpoAudioUriRepeated(uri, 3, token).finally(() => {
+      if (recallAutoPlayTokenRef.current === token) {
+        activeStudyAudioRef.current = null;
+      }
+    });
 
     return () => {
       if (recallAutoPlayTokenRef.current === token) {
@@ -285,6 +315,7 @@ export function useStudyFlow(
       return;
     }
     cancelRecallAutoPlay();
+    activeStudyAudioRef.current = 'primary';
     const relativePath =
       cardDetail.cardType === 'vocabulary'
         ? cardDetail.content.prompt.primaryAudio
@@ -297,12 +328,14 @@ export function useStudyFlow(
 
   const handlePlayExampleAudio = useCallback(
     (relativePath: string) => {
+      cancelRecallAutoPlay();
+      activeStudyAudioRef.current = { kind: 'example', path: relativePath };
       void playPackAssetAudio({
         packId,
         relativePath,
       });
     },
-    [packId],
+    [cancelRecallAutoPlay, packId],
   );
 
   const handlePlayAudio = useCallback(() => {
@@ -371,6 +404,8 @@ export function useStudyFlow(
     handlePlayAudio,
     handlePlayPrimaryAudio,
     handlePlayExampleAudio,
+    primaryAudioPlaying,
+    playingExampleAudioPath,
     browseCompleteVisible,
     browseCompleteSummary,
     restartFromBeginning,
