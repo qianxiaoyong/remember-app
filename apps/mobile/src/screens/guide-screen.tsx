@@ -42,7 +42,7 @@ function GuideSectionBlock(props: { section: GuideSection }): ReactElement {
         />
       ) : null}
       {props.section.paragraphs.map((paragraph, index) => (
-        <Text key={`${props.section.id}-${index}`} style={styles.paragraph}>
+        <Text key={`${props.section.id}-${String(index)}`} style={styles.paragraph}>
           {paragraph}
         </Text>
       ))}
