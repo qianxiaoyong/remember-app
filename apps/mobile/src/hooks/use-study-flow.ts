@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { normalizeSurfaceForm } from '@remember/contracts';
 import type { LexiconLookupResult } from '../data/repositories/lexicon-entry-repository';
 import type { PackCardSummary } from '../data/repositories/pack-card-repository';
@@ -11,7 +11,14 @@ import { getPackCardDetailUseCase } from '../use-cases/get-pack-card-detail';
 import { joinReviewPool } from '../use-cases/join-review-pool';
 import { lookupLexiconToken } from '../use-cases/lookup-lexicon-token';
 import { playOrCacheLexiconAudio } from '../use-cases/play-or-cache-lexicon-audio';
+import { getRecallAutoPlayEnabled } from '../data/repositories/user-preferences-repository';
 import { playPackAssetAudio } from '../use-cases/play-pack-asset-audio';
+import {
+  beginPrimaryAudioPlayback,
+  cancelExpoAudioPlayback,
+  playExpoAudioUriRepeated,
+} from '../use-cases/play-expo-audio-uri';
+import { resolvePackAssetUri } from '../use-cases/resolve-pack-asset-uri';
 import { resolvePackLibraryPresentation } from '../use-cases/resolve-pack-library-presentation';
 import { resolveStoryReaderEntry } from '../use-cases/resolve-story-reader-entry';
 import { resumePackBrowse } from '../use-cases/resume-pack-browse';
@@ -55,6 +62,7 @@ export function useStudyFlow(
   const [browseCompleteVisible, setBrowseCompleteVisible] = useState(false);
   const [browseCompleteSummary, setBrowseCompleteSummary] =
     useState<PackBrowseCompleteSummary | null>(null);
+  const recallAutoPlayTokenRef = useRef(0);
 
   const startBrowse = useCallback(() => {
     setMessage(null);
@@ -117,6 +125,48 @@ export function useStudyFlow(
       return currentKnowledgeId;
     }
   }, [currentKnowledgeId, packId]);
+
+  const cancelRecallAutoPlay = useCallback(() => {
+    recallAutoPlayTokenRef.current += 1;
+    cancelExpoAudioPlayback();
+  }, []);
+
+  useEffect(() => {
+    if (!isBrowseMode || revealed || !browseReady) {
+      cancelRecallAutoPlay();
+      return;
+    }
+    if (!getRecallAutoPlayEnabled()) {
+      return;
+    }
+    if (!cardDetail || cardDetail.cardType !== 'vocabulary') {
+      return;
+    }
+
+    const relativePath = cardDetail.content.prompt.primaryAudio;
+    const uri = resolvePackAssetUri(packId, relativePath);
+    if (!uri) {
+      return;
+    }
+
+    const token = beginPrimaryAudioPlayback();
+    recallAutoPlayTokenRef.current = token;
+    void playExpoAudioUriRepeated(uri, 3, token);
+
+    return () => {
+      if (recallAutoPlayTokenRef.current === token) {
+        cancelRecallAutoPlay();
+      }
+    };
+  }, [
+    browseReady,
+    cancelRecallAutoPlay,
+    cardDetail,
+    currentKnowledgeId,
+    isBrowseMode,
+    packId,
+    revealed,
+  ]);
 
   const advanceBrowse = useCallback(() => {
     if (!isBrowseMode || browseCards.length === 0) {
@@ -234,6 +284,7 @@ export function useStudyFlow(
     if (!cardDetail) {
       return;
     }
+    cancelRecallAutoPlay();
     const relativePath =
       cardDetail.cardType === 'vocabulary'
         ? cardDetail.content.prompt.primaryAudio
@@ -242,7 +293,7 @@ export function useStudyFlow(
       packId,
       relativePath,
     });
-  }, [cardDetail, packId]);
+  }, [cancelRecallAutoPlay, cardDetail, packId]);
 
   const handlePlayExampleAudio = useCallback(
     (relativePath: string) => {

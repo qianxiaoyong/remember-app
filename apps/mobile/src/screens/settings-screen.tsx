@@ -1,11 +1,14 @@
 import type { ReactElement } from 'react';
+import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { AppHeader } from '../components/shell/app-header';
 import { ScreenScaffold } from '../components/shell/screen-scaffold';
 import {
   getPackOpenPosition,
+  getRecallAutoPlayEnabled,
   PREFERENCE_PACK_OPEN_POSITION,
+  PREFERENCE_RECALL_AUTO_PLAY,
   setUserPreference,
   type PackOpenPosition,
 } from '../data/repositories/user-preferences-repository';
@@ -14,14 +17,25 @@ import { spacing } from '../theme/spacing';
 
 export function SettingsScreen(): ReactElement {
   const router = useRouter();
-  const openPosition = getPackOpenPosition();
+  const [openPosition, setOpenPosition] = useState<PackOpenPosition>(() => getPackOpenPosition());
+  const [recallAutoPlay, setRecallAutoPlay] = useState(() => getRecallAutoPlayEnabled());
 
-  const handleSelect = (value: PackOpenPosition): void => {
+  const handleSelectOpenPosition = (value: PackOpenPosition): void => {
     setUserPreference({
       key: PREFERENCE_PACK_OPEN_POSITION,
       value,
       updatedAt: new Date().toISOString(),
     });
+    setOpenPosition(value);
+  };
+
+  const handleSelectRecallAutoPlay = (enabled: boolean): void => {
+    setUserPreference({
+      key: PREFERENCE_RECALL_AUTO_PLAY,
+      value: enabled ? 'true' : 'false',
+      updatedAt: new Date().toISOString(),
+    });
+    setRecallAutoPlay(enabled);
   };
 
   return (
@@ -40,14 +54,31 @@ export function SettingsScreen(): ReactElement {
             label="从书签继续"
             selected={openPosition === 'bookmark'}
             onPress={() => {
-              handleSelect('bookmark');
+              handleSelectOpenPosition('bookmark');
             }}
           />
           <OptionRow
             label="从开头开始"
             selected={openPosition === 'start'}
             onPress={() => {
-              handleSelect('start');
+              handleSelectOpenPosition('start');
+            }}
+          />
+        </View>
+        <Text style={styles.sectionTitle}>回忆页自动发音</Text>
+        <View style={styles.optionGroup}>
+          <OptionRow
+            label="开启（每张词自动读 3 遍）"
+            selected={recallAutoPlay}
+            onPress={() => {
+              handleSelectRecallAutoPlay(true);
+            }}
+          />
+          <OptionRow
+            label="关闭"
+            selected={!recallAutoPlay}
+            onPress={() => {
+              handleSelectRecallAutoPlay(false);
             }}
           />
         </View>
@@ -80,6 +111,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     marginBottom: spacing.sm,
+    marginTop: spacing.md,
   },
   optionGroup: {
     gap: spacing.sm,
@@ -97,7 +129,9 @@ const styles = StyleSheet.create({
   },
   optionLabel: {
     color: colors.textPrimary,
+    flex: 1,
     fontSize: 15,
+    paddingRight: spacing.sm,
   },
   optionMark: {
     color: colors.accent,

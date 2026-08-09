@@ -3,6 +3,7 @@ import { openUserDatabase } from '../user-db/open-user-database';
 
 export const PREFERENCE_DAILY_REVIEW_LIMIT = 'dailyReviewLimit';
 export const PREFERENCE_PACK_OPEN_POSITION = 'packOpenPosition';
+export const PREFERENCE_RECALL_AUTO_PLAY = 'recallAutoPlay';
 
 export type PackOpenPosition = 'bookmark' | 'start';
 
@@ -47,4 +48,9 @@ export function getDailyReviewLimit(db: SQLiteDatabase = openUserDatabase()): nu
 export function getPackOpenPosition(db: SQLiteDatabase = openUserDatabase()): PackOpenPosition {
   const raw = getUserPreference(PREFERENCE_PACK_OPEN_POSITION, 'bookmark', db);
   return raw === 'start' ? 'start' : 'bookmark';
+}
+
+export function getRecallAutoPlayEnabled(db: SQLiteDatabase = openUserDatabase()): boolean {
+  const raw = getUserPreference(PREFERENCE_RECALL_AUTO_PLAY, 'true', db);
+  return raw !== 'false';
 }

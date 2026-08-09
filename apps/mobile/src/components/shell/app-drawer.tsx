@@ -47,12 +47,16 @@ export function AppDrawer(props: AppDrawerProps): ReactElement | null {
   const backdropAnim = useRef(new Animated.Value(0)).current;
 
   useLayoutEffect(() => {
+    if (props.visible) {
+      void refresh({ showLoading: false });
+    }
+  }, [props.visible, refresh]);
+
+  useLayoutEffect(() => {
     if (!props.visible) {
       setContactPanelVisible(false);
     }
   }, [props.visible]);
-
-  useLayoutEffect(() => {
     if (props.visible) {
       setRenderOverlay(true);
       slideAnim.setValue(-panelWidth);
@@ -203,6 +207,13 @@ export function AppDrawer(props: AppDrawerProps): ReactElement | null {
       >
         <Pressable accessibilityRole="button" onPress={props.onClose} style={styles.backdrop} />
       </Animated.View>
+
+      <ContactBottomPanel
+        onClose={() => {
+          setContactPanelVisible(false);
+        }}
+        visible={contactPanelVisible}
+      />
     </View>
   );
 }
