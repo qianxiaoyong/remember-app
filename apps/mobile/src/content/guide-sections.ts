@@ -4,7 +4,7 @@ export interface GuideSection {
   id: string;
   title: string;
   paragraphs: readonly string[];
-  /** 可选配图；后期按段插入 require(...) 或 uri 即可。 */
+  /** 可选配图；后期按段插入本地静态资源或 uri 即可。 */
   image?: ImageSourcePropType;
   imageAccessibilityLabel?: string;
 }
