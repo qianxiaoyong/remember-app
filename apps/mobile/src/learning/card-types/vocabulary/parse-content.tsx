@@ -10,6 +10,7 @@ export function VocabularyCardRenderer(props: CardRendererProps) {
   return (
     <VocabularyStudyPanel
       content={parseVocabularyContent(props.content)}
+      {...(props.contextLabel !== undefined ? { contextLabel: props.contextLabel } : {})}
       lexiconSelectedSurfaceForm={props.lexiconSelectedSurfaceForm}
       onHomePress={props.onHomePress}
       onMorePress={props.onMorePress}

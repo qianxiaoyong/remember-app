@@ -22,6 +22,8 @@ export interface CardRendererProps {
   initialAudioPositionMs?: number;
   onReaderBookmark?: (positionMs: number) => void;
   onNavigateLesson?: (knowledgeId: string) => void;
+  /** 顶栏居中副标题，如复习来源包或家长检查状态 */
+  contextLabel?: string;
 }
 
 export interface CardTypeDefinition {

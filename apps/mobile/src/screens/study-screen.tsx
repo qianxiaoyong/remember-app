@@ -20,6 +20,8 @@ import { listInstalledPacksUseCase } from '../use-cases/list-installed-packs';
 import { resetPackBrowseProgress } from '../use-cases/reset-pack-browse-progress';
 import { saveStoryReadingBookmark } from '../use-cases/save-story-reading-bookmark';
 import { touchInstalledPackLastOpenedUseCase } from '../use-cases/touch-installed-pack-last-opened';
+import { useInspectQueue, type InspectQueueConfig } from '../hooks/use-inspect-queue';
+import { InspectModeNavFloating } from '../components/calendar/inspect-mode-chrome';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 
@@ -27,11 +29,17 @@ interface StudyScreenProps {
   packId: string;
   knowledgeId?: string | null;
   autoStart?: boolean;
+  inspect?: InspectQueueConfig | null;
 }
 
 export function StudyScreen(props: StudyScreenProps): ReactElement {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const inspectQueue = useInspectQueue(props.inspect ?? null);
+  const activePackId = inspectQueue.currentItem?.packId ?? props.packId;
+  const activeKnowledgeId = inspectQueue.currentItem?.knowledgeId ?? props.knowledgeId;
+  const inspectMode = props.inspect !== null && props.inspect !== undefined;
+
   const {
     isReaderMode,
     isBrowseMode,
@@ -67,10 +75,10 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
     restartFromBeginning,
     dismissBrowseComplete,
     closeLexicon,
-  } = useStudyFlow(
-    props.packId,
-    props.knowledgeId === undefined ? undefined : { knowledgeId: props.knowledgeId },
-  );
+  } = useStudyFlow(activePackId, {
+    ...(activeKnowledgeId !== undefined ? { knowledgeId: activeKnowledgeId } : {}),
+    inspectMode,
+  });
   const [moreVisible, setMoreVisible] = useState(false);
   const [switchVisible, setSwitchVisible] = useState(false);
   const [resetVisible, setResetVisible] = useState(false);
@@ -111,8 +119,17 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
 
   const goHome = useCallback((): void => {
     dismissBrowseComplete();
+    if (inspectMode) {
+      router.back();
+      return;
+    }
     router.replace('/library');
-  }, [dismissBrowseComplete, router]);
+  }, [dismissBrowseComplete, inspectMode, router]);
+
+  const headerContextLabel =
+    inspectMode && props.inspect
+      ? `家长检查 · ${props.inspect.localDate.slice(5).replace('-', '/')} · ${inspectQueue.subCategoryLabel} · ${inspectQueue.index + 1}/${inspectQueue.queue.length}`
+      : undefined;
 
   const handleGoReview = useCallback((): void => {
     dismissBrowseComplete();
@@ -200,12 +217,13 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
               onPlayExampleAudio={handlePlayExampleAudio}
               onPlayPrimaryAudio={handlePlayPrimaryAudio}
               onTokenPress={openLexicon}
-              packId={props.packId}
+              packId={activePackId}
               playingExampleAudioPath={playingExampleAudioPath}
               primaryAudioPlaying={primaryAudioPlaying}
               revealed={revealed}
               setRevealed={setRevealed}
               sortOrder={cardDetail.sortOrder}
+              {...(headerContextLabel ? { contextLabel: headerContextLabel } : {})}
               {...(isReaderMode ? { onReaderBookmark: handleReaderBookmark } : {})}
               {...(isReaderMode ? { initialAudioPositionMs: readerInitialPositionMs } : {})}
             />
@@ -216,6 +234,19 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
           <UnsupportedCardPanel message="无法加载此阅读内容" onGoHome={goHome} />
         ) : browseReady ? (
           <UnsupportedCardPanel message="无法加载此卡片内容" onGoHome={goHome} />
+        ) : null}
+
+        {inspectMode && props.inspect ? (
+          <InspectModeNavFloating
+            canNext={inspectQueue.canNext}
+            canPrevious={inspectQueue.canPrevious}
+            index={inspectQueue.index}
+            localDate={props.inspect.localDate}
+            onNext={inspectQueue.goNext}
+            onPrevious={inspectQueue.goPrevious}
+            subCategoryLabel={inspectQueue.subCategoryLabel}
+            total={inspectQueue.queue.length}
+          />
         ) : null}
       </View>
 

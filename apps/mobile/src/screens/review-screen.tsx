@@ -11,13 +11,29 @@ import { ScreenScaffold } from '../components/shell/screen-scaffold';
 import { StudyMoreMenu } from '../components/study/study-more-menu';
 import { PrimaryButton } from '../components/ui/primary-button';
 import { useReviewFlow } from '../hooks/use-review-flow';
+import { useReviewInspectFlow } from '../hooks/use-review-inspect-flow';
+import { useInspectQueue, type InspectQueueConfig } from '../hooks/use-inspect-queue';
+import {
+  InspectModeNavFloating,
+} from '../components/calendar/inspect-mode-chrome';
 import { VocabularyStudyPanel } from '../learning/card-types/vocabulary/vocabulary-study-panel';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 
-export function ReviewScreen(): ReactElement {
+export function ReviewScreen(props: {
+  inspect?: InspectQueueConfig | null;
+  inspectKnowledgeId?: string | null;
+}): ReactElement {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const inspectQueue = useInspectQueue(props.inspect ?? null);
+  const inspectMode = props.inspect !== null && props.inspect !== undefined;
+  const inspectKnowledgeId =
+    inspectQueue.currentItem?.knowledgeId ?? props.inspectKnowledgeId ?? null;
+
+  const normalFlow = useReviewFlow();
+  const inspectFlow = useReviewInspectFlow(inspectMode ? inspectKnowledgeId : null);
+
   const {
     session,
     summary,
@@ -45,7 +61,16 @@ export function ReviewScreen(): ReactElement {
     primaryAudioPlaying,
     playingExampleAudioPath,
     closeLexicon,
-  } = useReviewFlow();
+  } = inspectMode
+    ? {
+        session: inspectKnowledgeId ? { currentItem: { knowledgeId: inspectKnowledgeId } } : null,
+        summary: normalFlow.summary,
+        ...inspectFlow,
+        handleSkipUnloaded: () => {},
+        setDailyReviewLimit: normalFlow.setDailyReviewLimit,
+        startReview: normalFlow.startReview,
+      }
+    : normalFlow;
 
   const [settingsVisible, setSettingsVisible] = useState(false);
   const [moreVisible, setMoreVisible] = useState(false);
@@ -57,8 +82,12 @@ export function ReviewScreen(): ReactElement {
   const moreMenuAnchorRight = spacing.lg;
 
   const goHome = useCallback((): void => {
+    if (inspectMode) {
+      router.back();
+      return;
+    }
     router.replace('/library');
-  }, [router]);
+  }, [inspectMode, router]);
 
   useFocusEffect(
     useCallback(() => {
@@ -86,7 +115,21 @@ export function ReviewScreen(): ReactElement {
     }, [closeLexicon, goHome, lexiconVisible, moreVisible, settingsVisible]),
   );
 
+  const headerContextLabel =
+    inspectMode && props.inspect
+      ? `家长检查 · ${props.inspect.localDate.slice(5).replace('-', '/')} · ${inspectQueue.subCategoryLabel} · ${inspectQueue.index + 1}/${inspectQueue.queue.length}`
+      : formatReviewSourcePackLabel(reviewContext?.sourcePackDisplayName ?? '');
+
   const renderEmptyState = (): ReactElement => {
+    if (inspectMode) {
+      return (
+        <View style={styles.empty}>
+          <Text style={styles.emptyText}>无法加载检查词条</Text>
+          <PrimaryButton label="返回" onPress={goHome} />
+        </View>
+      );
+    }
+
     if (summary.dueTotal === 0) {
       return (
         <View style={styles.empty}>
@@ -163,11 +206,13 @@ export function ReviewScreen(): ReactElement {
         {hasSession && reviewContext?.cardDetail?.cardType === 'vocabulary' ? (
           <VocabularyStudyPanel
             content={reviewContext.cardDetail.content}
-            contextLabel={formatReviewSourcePackLabel(reviewContext.sourcePackDisplayName)}
+            contextLabel={headerContextLabel}
             lexiconSelectedSurfaceForm={lexiconSelectedSurfaceForm}
             onHomePress={goHome}
             onMorePress={() => {
-              setMoreVisible(true);
+              if (!inspectMode) {
+                setMoreVisible(true);
+              }
             }}
             onPlayExampleAudio={handlePlayExampleAudio}
             onPlayPrimaryAudio={handlePlayPrimaryAudio}
@@ -182,6 +227,19 @@ export function ReviewScreen(): ReactElement {
         ) : (
           renderEmptyState()
         )}
+
+        {inspectMode && props.inspect ? (
+          <InspectModeNavFloating
+            canNext={inspectQueue.canNext}
+            canPrevious={inspectQueue.canPrevious}
+            index={inspectQueue.index}
+            localDate={props.inspect.localDate}
+            onNext={inspectQueue.goNext}
+            onPrevious={inspectQueue.goPrevious}
+            subCategoryLabel={inspectQueue.subCategoryLabel}
+            total={inspectQueue.queue.length}
+          />
+        ) : null}
       </View>
 
       <LexiconPopup
