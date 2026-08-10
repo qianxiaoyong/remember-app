@@ -34,10 +34,7 @@ export function insertActivityEvent<T extends LearningActivityEventTypeValue>(
       }
     }
 
-    if (
-      input.eventType === LearningActivityEventType.STORY_COMPLETED &&
-      input.knowledgeId
-    ) {
+    if (input.eventType === LearningActivityEventType.STORY_COMPLETED && input.knowledgeId) {
       if (hasStoryCompletedEvent(input.packId, input.knowledgeId)) {
         return;
       }
@@ -72,10 +69,7 @@ export function insertActivityEventInTransaction<T extends LearningActivityEvent
       }
     }
 
-    if (
-      input.eventType === LearningActivityEventType.STORY_COMPLETED &&
-      input.knowledgeId
-    ) {
+    if (input.eventType === LearningActivityEventType.STORY_COMPLETED && input.knowledgeId) {
       if (hasStoryCompletedEvent(input.packId, input.knowledgeId, db)) {
         return;
       }

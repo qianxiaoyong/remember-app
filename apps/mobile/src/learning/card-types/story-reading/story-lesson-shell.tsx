@@ -89,7 +89,9 @@ export function StoryLessonShell(props: StoryLessonShellProps): ReactElement {
     if (currentIndex < 0) {
       return { previous: null, next: null };
     }
-    const restrictToList = Boolean(props.lessonNavigationIds && props.lessonNavigationIds.length > 0);
+    const restrictToList = Boolean(
+      props.lessonNavigationIds && props.lessonNavigationIds.length > 0,
+    );
     if (restrictToList) {
       return {
         previous: currentIndex > 0 ? (lessons[currentIndex - 1]?.knowledgeId ?? null) : null,

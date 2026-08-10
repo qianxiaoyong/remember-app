@@ -117,7 +117,9 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
   const handleNavigateLesson = useCallback(
     (knowledgeId: string) => {
       if (inspectMode && props.inspect) {
-        const targetIndex = inspectQueue.queue.findIndex((item) => item.knowledgeId === knowledgeId);
+        const targetIndex = inspectQueue.queue.findIndex(
+          (item) => item.knowledgeId === knowledgeId,
+        );
         if (targetIndex < 0) {
           return;
         }
@@ -141,7 +143,10 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
   );
 
   const readerInspectLessonIds =
-    inspectMode && isReaderMode && props.inspect?.category === 'story' && inspectQueue.queue.length > 0
+    inspectMode &&
+    isReaderMode &&
+    props.inspect?.category === 'story' &&
+    inspectQueue.queue.length > 0
       ? inspectQueue.queue.map((item) => item.knowledgeId)
       : undefined;
 

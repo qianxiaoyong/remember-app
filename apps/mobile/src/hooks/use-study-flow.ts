@@ -115,7 +115,7 @@ export function useStudyFlow(
 
   const currentKnowledgeId = isReaderMode
     ? (readerEntry?.knowledgeId ?? null)
-    : inspectKnowledgeId ?? (browseCards[currentIndex]?.knowledgeId ?? null);
+    : (inspectKnowledgeId ?? browseCards[currentIndex]?.knowledgeId ?? null);
 
   useEffect(() => {
     if (!currentKnowledgeId || !isBrowseMode) {

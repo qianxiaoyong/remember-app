@@ -16,13 +16,13 @@
 
 ### 1.2 目标
 
-| 目标 | 说明 |
-| ---- | ---- |
-| G1 | **首页**保持现有概览卡 **布局与高度**，仅替换/扩展 **统计数据**；指标过多时 **横向滑动**，不增加首屏纵向空间 |
-| G2 | **抽屉**嵌入「学习日历」widget（近 90 天 **三数字 + 7×12 热力格**），作为主入口 |
-| G3 | **学习日历页**：真月历 + 选中日 **进度明细**（非汇总统计）；可进入 **家长检查模式** |
-| G4 | **家长检查**复用现有学习/复习/阅读 **同一套 UI 与算法**；仅队列改为 **手动上/下条**；顶栏与内容区 **最小增量**（角标 + 浮窗） |
-| G5 | **本地事件日志**支撑日历；**不同步云端**（第一期）；保留现有 `learning_states` / 书签 / `review_daily_stats` |
+| 目标 | 说明                                                                                                                          |
+| ---- | ----------------------------------------------------------------------------------------------------------------------------- |
+| G1   | **首页**保持现有概览卡 **布局与高度**，仅替换/扩展 **统计数据**；指标过多时 **横向滑动**，不增加首屏纵向空间                  |
+| G2   | **抽屉**嵌入「学习日历」widget（近 90 天 **三数字 + 7×12 热力格**），作为主入口                                               |
+| G3   | **学习日历页**：真月历 + 选中日 **进度明细**（非汇总统计）；可进入 **家长检查模式**                                           |
+| G4   | **家长检查**复用现有学习/复习/阅读 **同一套 UI 与算法**；仅队列改为 **手动上/下条**；顶栏与内容区 **最小增量**（角标 + 浮窗） |
+| G5   | **本地事件日志**支撑日历；**不同步云端**（第一期）；保留现有 `learning_states` / 书签 / `review_daily_stats`                  |
 
 ### 1.3 非目标（本 ADR）
 
@@ -81,22 +81,22 @@
 
 ### 4.2 三数字（近 90 天，设备本地时区）
 
-| 标签 | 计算 |
-| ---- | ---- |
-| **学习天数** | 近 90 天内 `learning_activity_events` 按 `localDate` **去重** 的天数 |
-| **新接触** | 近 90 天内 `eventType = vocabulary_first_reveal` 的 **事件条数**（每 packId+knowledgeId 一生最多 1） |
-| **复习词数** | 近 90 天内 `eventType = review_outcome` 的 **事件条数** |
+| 标签         | 计算                                                                                                 |
+| ------------ | ---------------------------------------------------------------------------------------------------- |
+| **学习天数** | 近 90 天内 `learning_activity_events` 按 `localDate` **去重** 的天数                                 |
+| **新接触**   | 近 90 天内 `eventType = vocabulary_first_reveal` 的 **事件条数**（每 packId+knowledgeId 一生最多 1） |
+| **复习词数** | 近 90 天内 `eventType = review_outcome` 的 **事件条数**                                              |
 
 ### 4.3 热力格（7×12）
 
 - **7 行** = 周一至周日；**12 列** ≈ 12 周 ≈ 84 天（与近 90 天对齐，最右列为当前周）。
 - **三档颜色（P1，已确认）：**
 
-| 档位 | 颜色 | 判定（按 `localDate` 聚合当日事件） |
-| ---- | ---- | ----------------------------------- |
-| 0 | **灰** | 无任何事件 |
-| 1 | **浅绿** | 有 **学习类** 事件，且 **无** `review_outcome` |
-| 2 | **深绿** | 有 **≥1** 条 `review_outcome`（可与学习类同日并存，取深绿） |
+| 档位 | 颜色     | 判定（按 `localDate` 聚合当日事件）                         |
+| ---- | -------- | ----------------------------------------------------------- |
+| 0    | **灰**   | 无任何事件                                                  |
+| 1    | **浅绿** | 有 **学习类** 事件，且 **无** `review_outcome`              |
+| 2    | **深绿** | 有 **≥1** 条 `review_outcome`（可与学习类同日并存，取深绿） |
 
 **学习类事件：** `vocabulary_first_reveal`、`vocabulary_join_review`、`vocabulary_skip_review`、`story_completed`。
 
@@ -124,23 +124,23 @@
 
 **新接触**（`vocabulary_first_reveal` 及后续决策事件）子类：
 
-| 子类 | 判定 |
-| ---- | ---- |
-| **待处理** | 已有 `vocabulary_first_reveal`，且同日（或截至日末）无 `vocabulary_join_review` / `vocabulary_skip_review` |
-| **已加入复习** | 有 `vocabulary_join_review`（含学习流内加入、家长检查模式内补加） |
-| **暂不** | 有 `vocabulary_skip_review` |
+| 子类           | 判定                                                                                                       |
+| -------------- | ---------------------------------------------------------------------------------------------------------- |
+| **待处理**     | 已有 `vocabulary_first_reveal`，且同日（或截至日末）无 `vocabulary_join_review` / `vocabulary_skip_review` |
+| **已加入复习** | 有 `vocabulary_join_review`（含学习流内加入、家长检查模式内补加）                                          |
+| **暂不**       | 有 `vocabulary_skip_review`                                                                                |
 
 **复习**（`review_outcome`）子类：
 
-| 子类 | `payload.outcome` |
-| ---- | ------------------- |
-| **记住了** | `remembered` |
-| **还不熟** | `not_familiar` |
+| 子类       | `payload.outcome` |
+| ---------- | ----------------- |
+| **记住了** | `remembered`      |
+| **还不熟** | `not_familiar`    |
 
 **短文**（P1 若 story 钩子就绪）：
 
-| 子类 | 事件 |
-| ---- | ---- |
+| 子类       | 事件              |
+| ---------- | ----------------- |
 | **已听完** | `story_completed` |
 
 每组右侧 **「检查 ›」** → 进入家长检查模式（§6），传入 `localDate` + `category` + 子类。
@@ -160,10 +160,10 @@
 
 ### 6.2 UI 增量（仅两处）
 
-| 位置 | 元素 |
-| ---- | ---- |
-| **顶栏**（与返回同一行） | `家长检查 · {localDate} · {子类} · {index}/{total}` |
-| **内容区浮窗**（角落，小图标） | `上一条` / `下一条`；不占用底栏 |
+| 位置                           | 元素                                                |
+| ------------------------------ | --------------------------------------------------- |
+| **顶栏**（与返回同一行）       | `家长检查 · {localDate} · {子类} · {index}/{total}` |
+| **内容区浮窗**（角落，小图标） | `上一条` / `下一条`；不占用底栏                     |
 
 - 可选：顶栏或浮窗旁 **极小号**「检查」角标（icon），不挡 headword。
 - **禁止**：底部新增大条导航；禁止缩略版/简化 card。
@@ -214,7 +214,7 @@ CREATE INDEX idx_activity_knowledge ON learning_activity_events (packId, knowled
 
 ### 7.2 保留策略（已确认）
 
-- P1：**至少保留 1 年**，不自动删除；超出 1 年的归档策略留 P2（**附录 D** rollup 或按 `localDate`  purge）。
+- P1：**至少保留 1 年**，不自动删除；超出 1 年的归档策略留 P2（**附录 D** rollup 或按 `localDate` purge）。
 - 事件 **不进** `sync_outbox`、不上传云端。
 
 ### 7.3 与 review_daily_stats
@@ -226,13 +226,13 @@ CREATE INDEX idx_activity_knowledge ON learning_activity_events (packId, knowled
 
 ## 8. 写入时机（钩子）
 
-| eventType | 触发点（现有 use-case / UI） | 幂等 |
-| --------- | ---------------------------- | ---- |
-| `vocabulary_first_reveal` | 首次 `revealed=true`（该 packId+knowledgeId） | **一生一条** |
-| `vocabulary_join_review` | `joinReviewPool` / `updateReviewPoolFromPack` 成功 | 每次操作一条 |
-| `vocabulary_skip_review` | `skipPackCard` 成功 | 每次操作一条 |
-| `review_outcome` | `confirmReviewOutcome` 成功 | 每次一条 |
-| `story_completed` | 短文完课（story 设计 § 完课条件） | 每课一条（packId+knowledgeId） |
+| eventType                 | 触发点（现有 use-case / UI）                       | 幂等                           |
+| ------------------------- | -------------------------------------------------- | ------------------------------ |
+| `vocabulary_first_reveal` | 首次 `revealed=true`（该 packId+knowledgeId）      | **一生一条**                   |
+| `vocabulary_join_review`  | `joinReviewPool` / `updateReviewPoolFromPack` 成功 | 每次操作一条                   |
+| `vocabulary_skip_review`  | `skipPackCard` 成功                                | 每次操作一条                   |
+| `review_outcome`          | `confirmReviewOutcome` 成功                        | 每次一条                       |
+| `story_completed`         | 短文完课（story 设计 § 完课条件）                  | 每课一条（packId+knowledgeId） |
 
 写入失败：**记录日志，不 throw**。
 
@@ -240,12 +240,12 @@ CREATE INDEX idx_activity_knowledge ON learning_activity_events (packId, knowled
 
 ## 9. 未来扩展
 
-| 扩展 | 方式 |
-| ---- | ---- |
+| 扩展               | 方式                                                   |
+| ------------------ | ------------------------------------------------------ |
 | 听写/跟读/做题复习 | `review_outcome.payload.modality` 新枚举值；日历多子组 |
-| 跟读/做题学习 | 新 `eventType` 或 `learning_completed` + modality |
-| 进度曲线 | `learning_activity_daily_rollup` 由事件聚合（附录 D） |
-| 云端同步 | 新 ADR；**不在 P1** |
+| 跟读/做题学习      | 新 `eventType` 或 `learning_completed` + modality      |
+| 进度曲线           | `learning_activity_daily_rollup` 由事件聚合（附录 D）  |
+| 云端同步           | 新 ADR；**不在 P1**                                    |
 
 ---
 
@@ -264,22 +264,22 @@ CREATE INDEX idx_activity_knowledge ON learning_activity_events (packId, knowled
 
 ### A.1 数据字段（`LibraryOverview` 扩展建议）
 
-| 字段 key | 展示标签 | 单位 | 数据来源 | 默认露出顺序 |
-| -------- | -------- | ---- | -------- | ------------ |
-| `todayDueCount` | 今日到期 | 条 | `countDueReviewItems` | 1 |
-| `todayReviewCompleted` | 今日已复习 | 条 | `review_daily_stats.reviewCompletedCount` / limit 可选展示 `8/20` | 2 |
-| `installedPackCount` | 已安装 | 本 | `listInstalledPacks().length` | 3 |
-| `reviewPoolTotal` | 复习池中 | 条 | `inReviewPool` count | 4 |
-| `reviewPoolLearning` | 复习中 | 条 | 0013 `learningCount` 聚合 | 5 |
-| `reviewPoolStable` | 记忆稳定 | 条 | 0013 `masteredCount` 聚合 | 6 |
-| `todayJoinedPool` | 今日新入池 | 词 | `review_daily_stats.joinedPoolCount` | 7（可选，靠后） |
+| 字段 key               | 展示标签   | 单位 | 数据来源                                                          | 默认露出顺序    |
+| ---------------------- | ---------- | ---- | ----------------------------------------------------------------- | --------------- |
+| `todayDueCount`        | 今日到期   | 条   | `countDueReviewItems`                                             | 1               |
+| `todayReviewCompleted` | 今日已复习 | 条   | `review_daily_stats.reviewCompletedCount` / limit 可选展示 `8/20` | 2               |
+| `installedPackCount`   | 已安装     | 本   | `listInstalledPacks().length`                                     | 3               |
+| `reviewPoolTotal`      | 复习池中   | 条   | `inReviewPool` count                                              | 4               |
+| `reviewPoolLearning`   | 复习中     | 条   | 0013 `learningCount` 聚合                                         | 5               |
+| `reviewPoolStable`     | 记忆稳定   | 条   | 0013 `masteredCount` 聚合                                         | 6               |
+| `todayJoinedPool`      | 今日新入池 | 词   | `review_daily_stats.joinedPoolCount`                              | 7（可选，靠后） |
 
 **不在横滑格：** `totalCards` — 固定在 **totalRow**（方案乙）。
 
 ### A.2 totalRow（已确认 · 方案乙）
 
-| totalRow | 横滑格 |
-| -------- | ------ |
+| totalRow                                             | 横滑格                             |
+| ---------------------------------------------------- | ---------------------------------- |
 | `共 {totalCards} 条学习内容`（维持现 UI 结构与字号） | 含 **今日到期** 为首格，其余见上表 |
 
 ### A.3 展示规则
@@ -337,20 +337,20 @@ interface ActivityPayloadBase {
 
 **按 eventType：**
 
-| eventType | payload 字段 |
-| --------- | -------------- |
-| `vocabulary_first_reveal` | `{ sortOrder?: number }` |
-| `vocabulary_join_review` | `{ sortOrder?: number; created?: boolean }` — `created` 区分新建 vs 更新复习 |
-| `vocabulary_skip_review` | `{ sortOrder?: number }` |
-| `review_outcome` | `{ outcome: 'remembered' \| 'not_familiar'; modality: 'vocabulary'; boxLevelAfter?: number }` |
-| `story_completed` | `{ positionMs?: number; durationMs?: number }` |
+| eventType                 | payload 字段                                                                                  |
+| ------------------------- | --------------------------------------------------------------------------------------------- |
+| `vocabulary_first_reveal` | `{ sortOrder?: number }`                                                                      |
+| `vocabulary_join_review`  | `{ sortOrder?: number; created?: boolean }` — `created` 区分新建 vs 更新复习                  |
+| `vocabulary_skip_review`  | `{ sortOrder?: number }`                                                                      |
+| `review_outcome`          | `{ outcome: 'remembered' \| 'not_familiar'; modality: 'vocabulary'; boxLevelAfter?: number }` |
+| `story_completed`         | `{ positionMs?: number; durationMs?: number }`                                                |
 
 **review_outcome.outcome 与 UI：**
 
-| UI | payload.outcome | 底层 use-case |
-| -- | --------------- | ------------- |
-| 记住了 | `remembered` | `confirmReviewOutcome('passed')` |
-| 还不熟 | `not_familiar` | `confirmReviewOutcome('failed')` |
+| UI     | payload.outcome | 底层 use-case                    |
+| ------ | --------------- | -------------------------------- |
+| 记住了 | `remembered`    | `confirmReviewOutcome('passed')` |
+| 还不熟 | `not_familiar`  | `confirmReviewOutcome('failed')` |
 
 **未来 modality：** `vocabulary` \| `dictation` \| `shadow_read` \| `choice` …
 
@@ -464,18 +464,18 @@ CREATE TABLE learning_activity_daily_rollup (
 
 ## 附录 E：与 0013 文案对齐
 
-| 0013 / 现 UI | 本 ADR 展示 |
-| ------------ | ----------- |
-| 通过 / failed | **记住了 / 还不熟**（仅 UI；use-case 仍 passed/failed） |
-| 学习中（首页） | 建议改为 **复习中**（复习池内未稳定） |
-| 已掌握（首页） | 建议改为 **记忆稳定** |
-| 待复习 | **今日到期** |
+| 0013 / 现 UI   | 本 ADR 展示                                             |
+| -------------- | ------------------------------------------------------- |
+| 通过 / failed  | **记住了 / 还不熟**（仅 UI；use-case 仍 passed/failed） |
+| 学习中（首页） | 建议改为 **复习中**（复习池内未稳定）                   |
+| 已掌握（首页） | 建议改为 **记忆稳定**                                   |
+| 待复习         | **今日到期**                                            |
 
 ---
 
 ## 变更记录
 
-| 日期 | 说明 |
-| ---- | ---- |
-| 2026-08-10 | 初稿：日历、检查模式、首页横滑、事件表、线框定稿 |
+| 日期       | 说明                                                                              |
+| ---------- | --------------------------------------------------------------------------------- |
+| 2026-08-10 | 初稿：日历、检查模式、首页横滑、事件表、线框定稿                                  |
 | 2026-08-10 | 定稿：totalRow 方案乙；热力格三档（灰/浅绿/深绿）；事件表 1 年保留；状态 → 已确认 |

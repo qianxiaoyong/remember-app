@@ -65,8 +65,7 @@ export function useReviewInspectFlow(
         !revealed &&
         reviewContext?.cardDetail?.cardType === 'vocabulary' &&
         Boolean(sourcePackId),
-      cardKey:
-        knowledgeId && sourcePackId ? `${sourcePackId}:${knowledgeId}` : knowledgeId,
+      cardKey: knowledgeId && sourcePackId ? `${sourcePackId}:${knowledgeId}` : knowledgeId,
     });
 
   const outcomeIntervalLabels = useMemo(() => {

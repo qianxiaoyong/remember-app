@@ -84,7 +84,12 @@ export function VocabularyStudyPanel(props: VocabularyStudyPanelProps): ReactEle
 
   useLayoutEffect(() => {
     captureRecallNavAnchor();
-  }, [captureRecallNavAnchor, props.revealed, props.content.prompt.headword, props.inspectNav?.index]);
+  }, [
+    captureRecallNavAnchor,
+    props.revealed,
+    props.content.prompt.headword,
+    props.inspectNav?.index,
+  ]);
 
   const handleRootLayout = useCallback(() => {
     captureRecallNavAnchor();

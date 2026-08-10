@@ -117,9 +117,7 @@ function buildReviewSection(localDate: string): CalendarDayDetail['review'] {
 
   for (const row of latestEventByWord.values()) {
     const sameWordEvents = dayEvents
-      .filter(
-        (event) => event.packId === row.packId && event.knowledgeId === row.knowledgeId,
-      )
+      .filter((event) => event.packId === row.packId && event.knowledgeId === row.knowledgeId)
       .map((event) => {
         if (event.eventType !== LearningActivityEventType.REVIEW_OUTCOME) {
           return {

@@ -72,8 +72,7 @@ export function InspectModeHeader(props: {
 
 function shouldCaptureHorizontalSwipe(gesture: PanResponderGestureState): boolean {
   return (
-    Math.abs(gesture.dx) > SWIPE_AXIS_LOCK_DX &&
-    Math.abs(gesture.dx) > Math.abs(gesture.dy) * 1.2
+    Math.abs(gesture.dx) > SWIPE_AXIS_LOCK_DX && Math.abs(gesture.dx) > Math.abs(gesture.dy) * 1.2
   );
 }
 
@@ -135,11 +134,7 @@ export function InspectModeNavFloating(
   const navTop = props.anchorCenterY - spacing.touchTarget / 2;
 
   return (
-    <View
-      collapsable={false}
-      pointerEvents="box-none"
-      style={[styles.navBar, { top: navTop }]}
-    >
+    <View collapsable={false} pointerEvents="box-none" style={[styles.navBar, { top: navTop }]}>
       <InspectEdgeNavButton
         accessibilityLabel="上一条"
         disabled={!props.canPrevious}
@@ -170,13 +165,7 @@ function InspectEdgeNavButton(props: {
       accessibilityLabel={props.accessibilityLabel}
       {...(props.disabled ? {} : { onPress: props.onPress })}
     >
-      <View
-        style={[
-          styles.iconWrap,
-          props.style,
-          props.disabled ? styles.iconWrapDisabled : null,
-        ]}
-      >
+      <View style={[styles.iconWrap, props.style, props.disabled ? styles.iconWrapDisabled : null]}>
         <ChevronWithShapeShadow color={NAV_ICON_COLOR} name={props.icon} />
       </View>
     </HeaderIconButton>

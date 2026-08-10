@@ -19,9 +19,7 @@ export function LibraryOverviewCard(props: LibraryOverviewCardProps): ReactEleme
   const { overview } = props;
   const { width: windowWidth } = useWindowDimensions();
   const horizontalPadding = spacing.lg * 2 + spacing.md * 2;
-  const visibleMinWidth = Math.floor(
-    (windowWidth - horizontalPadding - STAT_TILE_GAP * 2) / 3,
-  );
+  const visibleMinWidth = Math.floor((windowWidth - horizontalPadding - STAT_TILE_GAP * 2) / 3);
   const statTileMinWidth = Math.max(STAT_TILE_MIN_WIDTH, visibleMinWidth);
 
   return (
