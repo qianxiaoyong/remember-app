@@ -118,19 +118,20 @@ export function countDistinctActiveDays(
   return row?.count ?? 0;
 }
 
-export function countEventsByTypeInRange(
-  eventType: LearningActivityEventTypeValue,
-  startDate: string,
-  endDate: string,
-  db: SQLiteDatabase = openUserDatabase(),
-): number {
+export function countEventsByTypeInRange(input: {
+  eventType: LearningActivityEventTypeValue;
+  startDate: string;
+  endDate: string;
+  db?: SQLiteDatabase;
+}): number {
+  const db = input.db ?? openUserDatabase();
   const row = db.getFirstSync<{ count: number }>(
     `SELECT COUNT(*) AS count
      FROM learning_activity_events
      WHERE eventType = ?
        AND localDate >= ?
        AND localDate <= ?`,
-    [eventType, startDate, endDate],
+    [input.eventType, input.startDate, input.endDate],
   );
   return row?.count ?? 0;
 }

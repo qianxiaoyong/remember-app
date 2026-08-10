@@ -16,19 +16,18 @@ export interface InspectQueueItem {
 function mapStudyItems(items: CalendarDayItem[]): InspectQueueItem[] {
   const seen = new Set<string>();
   return items
-    .filter((item) => item.knowledgeId)
+    .filter((item): item is CalendarDayItem & { knowledgeId: string } => Boolean(item.knowledgeId))
     .filter((item) => {
-      const key = item.knowledgeId as string;
-      if (seen.has(key)) {
+      if (seen.has(item.knowledgeId)) {
         return false;
       }
-      seen.add(key);
+      seen.add(item.knowledgeId);
       return true;
     })
     .map((item) => ({
       packId: item.packId,
-      knowledgeId: item.knowledgeId as string,
-      displayLabel: item.displayLabel ?? (item.knowledgeId as string),
+      knowledgeId: item.knowledgeId,
+      displayLabel: item.displayLabel ?? item.knowledgeId,
       mode: 'study' as const,
     }));
 }
@@ -36,19 +35,18 @@ function mapStudyItems(items: CalendarDayItem[]): InspectQueueItem[] {
 function mapReviewItems(items: CalendarDayItem[]): InspectQueueItem[] {
   const seen = new Set<string>();
   return items
-    .filter((item) => item.knowledgeId)
+    .filter((item): item is CalendarDayItem & { knowledgeId: string } => Boolean(item.knowledgeId))
     .filter((item) => {
-      const key = item.knowledgeId as string;
-      if (seen.has(key)) {
+      if (seen.has(item.knowledgeId)) {
         return false;
       }
-      seen.add(key);
+      seen.add(item.knowledgeId);
       return true;
     })
     .map((item) => ({
       packId: item.packId,
-      knowledgeId: item.knowledgeId as string,
-      displayLabel: item.displayLabel ?? (item.knowledgeId as string),
+      knowledgeId: item.knowledgeId,
+      displayLabel: item.displayLabel ?? item.knowledgeId,
       mode: 'review' as const,
     }));
 }
@@ -83,7 +81,7 @@ export function buildInspectQueue(input: {
     return [];
   }
 
-  if (input.category === 'story' && input.subCategory === 'completed') {
+  if (input.subCategory === 'completed') {
     return mapStudyItems(detail.story.completed);
   }
 

@@ -6,11 +6,11 @@ vi.mock('../lib/get-device-time-zone', () => ({
 
 vi.mock('../data/repositories/learning-activity-event-repository', () => ({
   countDistinctActiveDays: vi.fn(() => 3),
-  countEventsByTypeInRange: vi.fn((eventType: string) => {
-    if (eventType === 'vocabulary_first_reveal') {
+  countEventsByTypeInRange: vi.fn((input: { eventType: string }) => {
+    if (input.eventType === 'vocabulary_first_reveal') {
       return 5;
     }
-    if (eventType === 'review_outcome') {
+    if (input.eventType === 'review_outcome') {
       return 2;
     }
     return 0;

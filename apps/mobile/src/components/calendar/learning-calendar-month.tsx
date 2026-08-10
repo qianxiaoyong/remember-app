@@ -56,7 +56,11 @@ export function LearningCalendarMonth(props: LearningCalendarMonthProps): ReactE
             <Pressable
               key={cell.key}
               accessibilityRole="button"
-              onPress={() => props.onSelectDate(cell.localDate as string)}
+              onPress={() => {
+                if (cell.localDate) {
+                  props.onSelectDate(cell.localDate);
+                }
+              }}
               style={[styles.cell, isSelected ? styles.cellSelected : null]}
             >
               <Text style={[styles.dayNumber, isSelected ? styles.dayNumberSelected : null]}>
@@ -151,11 +155,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 36,
     justifyContent: 'center',
-    width: `${100 / 7}%`,
+    width: `${String(100 / 7)}%`,
   },
   cellEmpty: {
     height: 36,
-    width: `${100 / 7}%`,
+    width: `${String(100 / 7)}%`,
   },
   cellSelected: {
     backgroundColor: colors.accentSoft,

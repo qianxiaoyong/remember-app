@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
-import { InteractionManager } from 'react-native';
 import { useFocusEffect } from 'expo-router';
+import { deferAfterFirstPaint } from '../lib/defer-after-first-paint';
 import { consumeDrawerReturnPending } from '../shell/drawer-return-intent';
 import { useShellActions } from '../shell/shell-provider';
 
@@ -13,12 +13,9 @@ export function useRestoreDrawerOnReturn(): void {
       if (!consumeDrawerReturnPending()) {
         return;
       }
-      const task = InteractionManager.runAfterInteractions(() => {
+      return deferAfterFirstPaint(() => {
         openDrawer();
       });
-      return () => {
-        task.cancel();
-      };
     }, [openDrawer]),
   );
 }

@@ -84,8 +84,12 @@ export function useInspectQueue(config: InspectQueueConfig | null) {
     subCategoryLabel,
     canPrevious: index > 0,
     canNext: index < queue.length - 1,
-    goPrevious: () => navigateToIndex(index - 1),
-    goNext: () => navigateToIndex(index + 1),
+    goPrevious: () => {
+      navigateToIndex(index - 1);
+    },
+    goNext: () => {
+      navigateToIndex(index + 1);
+    },
     advanceAfterAction,
   };
 }

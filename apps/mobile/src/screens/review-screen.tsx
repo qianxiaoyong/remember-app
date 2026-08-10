@@ -74,7 +74,7 @@ export function ReviewScreen(props: {
         session: inspectKnowledgeId ? { currentItem: { knowledgeId: inspectKnowledgeId } } : null,
         summary: normalFlow.summary,
         ...inspectFlow,
-        handleSkipUnloaded: () => {},
+        handleSkipUnloaded: normalFlow.handleSkipUnloaded,
         setDailyReviewLimit: normalFlow.setDailyReviewLimit,
         startReview: normalFlow.startReview,
       }

@@ -63,17 +63,19 @@ describe('insertActivityEvent', () => {
     vi.mocked(insertLearningActivityEvent).mockImplementation(() => {
       throw new Error('db error');
     });
-    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {
+      /* suppress expected warning */
+    });
 
-    expect(() =>
+    expect(() => {
       insertActivityEvent({
         localDate: '2026-08-09',
         occurredAt: '2026-08-09T10:00:00.000Z',
         eventType: 'vocabulary_join_review',
         packId: 'pack-a',
         knowledgeId: 'kid-1',
-      }),
-    ).not.toThrow();
+      });
+    }).not.toThrow();
 
     expect(warnSpy).toHaveBeenCalled();
     warnSpy.mockRestore();

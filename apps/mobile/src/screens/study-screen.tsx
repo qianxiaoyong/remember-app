@@ -126,7 +126,7 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
           return;
         }
         router.replace(
-          `/study?packId=${target.packId}&knowledgeId=${knowledgeId}&inspect=1&localDate=${props.inspect.localDate}&category=${props.inspect.category}&subCategory=${props.inspect.subCategory}&index=${targetIndex}`,
+          `/study?packId=${target.packId}&knowledgeId=${knowledgeId}&inspect=1&localDate=${props.inspect.localDate}&category=${props.inspect.category}&subCategory=${props.inspect.subCategory}&index=${String(targetIndex)}`,
         );
         return;
       }

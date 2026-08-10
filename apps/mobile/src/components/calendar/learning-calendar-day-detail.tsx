@@ -164,7 +164,7 @@ function formatDateLabel(localDate: string): string {
   const [year, month, day] = localDate.split('-');
   const weekdayNames = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
   const date = new Date(Number(year), Number(month) - 1, Number(day));
-  return `${month}月${day}日 ${weekdayNames[date.getDay()] ?? ''}`;
+  return `${month ?? ''}月${day ?? ''}日 ${weekdayNames[date.getDay()] ?? ''}`;
 }
 
 function buildInspectRouteItem(

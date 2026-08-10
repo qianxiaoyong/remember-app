@@ -20,7 +20,7 @@ export function ShellProvider(props: { children: ReactNode }): ReactElement {
   }, []);
   const closeDrawer = useCallback(() => {
     clearDrawerReturnPending();
-    setIsDrawerOpen(false);
+    setIsDrawerOpen((open) => (open ? false : open));
   }, []);
   const dismissDrawer = useCallback(() => {
     setIsDrawerOpen(false);

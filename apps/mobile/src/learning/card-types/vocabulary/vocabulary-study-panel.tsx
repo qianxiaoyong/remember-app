@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
-import { ScrollView, StyleSheet, View, type LayoutChangeEvent } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { headwordEmphasisSurfaceForms, type VocabularyContent } from '@remember/contracts';
 import { StudyHeaderBand } from '../../../components/study/study-header-band';
 import { StudyRecallPanel } from '../../../components/study/study-recall-panel';
@@ -61,10 +61,13 @@ export function VocabularyStudyPanel(props: VocabularyStudyPanelProps): ReactEle
         return;
       }
 
-      bodyRef.current.measureInWindow((_bodyX, bodyWindowY, _bodyWidth, bodyHeight) => {
+      bodyRef.current.measureInWindow((...layout: number[]) => {
         if (revealedRef.current || lockedNavAnchorYRef.current !== null || !rootRef.current) {
           return;
         }
+
+        const bodyWindowY = layout[1] ?? 0;
+        const bodyHeight = layout[3] ?? 0;
 
         rootRef.current.measureInWindow((_rootX, rootWindowY) => {
           if (revealedRef.current || lockedNavAnchorYRef.current !== null) {
@@ -83,19 +86,13 @@ export function VocabularyStudyPanel(props: VocabularyStudyPanelProps): ReactEle
     captureRecallNavAnchor();
   }, [captureRecallNavAnchor, props.revealed, props.content.prompt.headword, props.inspectNav?.index]);
 
-  const handleRootLayout = useCallback(
-    (_event: LayoutChangeEvent) => {
-      captureRecallNavAnchor();
-    },
-    [captureRecallNavAnchor],
-  );
+  const handleRootLayout = useCallback(() => {
+    captureRecallNavAnchor();
+  }, [captureRecallNavAnchor]);
 
-  const handleBodyLayout = useCallback(
-    (_event: LayoutChangeEvent) => {
-      captureRecallNavAnchor();
-    },
-    [captureRecallNavAnchor],
-  );
+  const handleBodyLayout = useCallback(() => {
+    captureRecallNavAnchor();
+  }, [captureRecallNavAnchor]);
 
   const showInspectNav = Boolean(props.inspectNav && props.inspectNav.total > 1);
 

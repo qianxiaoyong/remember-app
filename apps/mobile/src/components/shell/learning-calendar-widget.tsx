@@ -58,7 +58,12 @@ export function LearningCalendarWidget(): ReactElement {
   };
 
   return (
-    <Pressable accessibilityRole="button" onPress={() => openCalendar()}>
+    <Pressable
+      accessibilityRole="button"
+      onPress={() => {
+        openCalendar();
+      }}
+    >
       <SurfaceCard>
         <View style={styles.headerRow}>
           <View style={styles.titleGroup}>
@@ -69,7 +74,7 @@ export function LearningCalendarWidget(): ReactElement {
             accessibilityRole="button"
             hitSlop={8}
             onPress={(event) => {
-              event.stopPropagation?.();
+              event.stopPropagation();
               openCalendar();
             }}
           >
@@ -101,7 +106,7 @@ export function LearningCalendarWidget(): ReactElement {
                   accessibilityRole="button"
                   disabled={!cell.isInRange}
                   onPress={(event) => {
-                    event.stopPropagation?.();
+                    event.stopPropagation();
                     if (cell.isInRange) {
                       openCalendar(cell.localDate);
                     }
@@ -126,7 +131,10 @@ export function LearningCalendarWidget(): ReactElement {
         {monthLabels.length > 0 ? (
           <View style={styles.monthRow}>
             {monthLabels.map((item) => (
-              <Text key={item.key} style={[styles.monthLabel, { left: `${item.leftPercent}%` }]}>
+              <Text
+                key={item.key}
+                style={[styles.monthLabel, { left: `${String(item.leftPercent)}%` }]}
+              >
                 {item.label}
               </Text>
             ))}
@@ -158,7 +166,7 @@ function buildMonthLabels(
   let lastMonth = '';
 
   for (let col = 0; col < colCount; col += 1) {
-    const cell = heatGrid[0]?.[col];
+    const cell = heatGrid[0][col];
     if (!cell?.isInRange) {
       continue;
     }
@@ -169,7 +177,7 @@ function buildMonthLabels(
     lastMonth = month;
     labels.push({
       key: `${cell.localDate.slice(0, 7)}-${String(col)}`,
-      label: `${Number(month)}月`,
+      label: `${String(Number(month))}月`,
       leftPercent: (col / colCount) * 100,
     });
   }

@@ -59,13 +59,13 @@ export type VocabularySkipReviewPayload = z.infer<typeof vocabularySkipReviewPay
 export type ReviewOutcomeActivityPayload = z.infer<typeof reviewOutcomeActivityPayloadSchema>;
 export type StoryCompletedPayload = z.infer<typeof storyCompletedPayloadSchema>;
 
-export type ActivityPayloadByEventType = {
+export interface ActivityPayloadByEventType {
   [LearningActivityEventType.VOCABULARY_FIRST_REVEAL]: VocabularyFirstRevealPayload;
   [LearningActivityEventType.VOCABULARY_JOIN_REVIEW]: VocabularyJoinReviewPayload;
   [LearningActivityEventType.VOCABULARY_SKIP_REVIEW]: VocabularySkipReviewPayload;
   [LearningActivityEventType.REVIEW_OUTCOME]: ReviewOutcomeActivityPayload;
   [LearningActivityEventType.STORY_COMPLETED]: StoryCompletedPayload;
-};
+}
 
 const payloadSchemaByEventType = {
   [LearningActivityEventType.VOCABULARY_FIRST_REVEAL]: vocabularyFirstRevealPayloadSchema,

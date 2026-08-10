@@ -34,12 +34,13 @@ export function useStudyFlow(
     knowledgeId?: string | null;
     inspectMode?: boolean;
     inspectLocalDate?: string;
-    onInspectActionComplete?: () => InspectQueueAdvanceResult | void;
+    onInspectActionComplete?: () => InspectQueueAdvanceResult | undefined;
   },
 ) {
   const isReaderMode = useMemo(() => resolvePackLibraryPresentation(packId) === 'reader', [packId]);
   const isBrowseMode = !isReaderMode;
-  const inspectMode = options?.inspectMode === true;
+  const inspectSession = options?.inspectMode === true ? options : null;
+  const inspectMode = inspectSession !== null;
   const activitySource = inspectMode ? ('calendar_inspect' as const) : undefined;
   const [browseCards, setBrowseCards] = useState<PackCardSummary[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -94,7 +95,7 @@ export function useStudyFlow(
   }, [isReaderMode, options?.knowledgeId, packId]);
 
   useEffect(() => {
-    if (!inspectMode || !options?.knowledgeId || !isBrowseMode) {
+    if (!inspectMode || !inspectSession.knowledgeId || !isBrowseMode) {
       return;
     }
     setRevealed(false);
@@ -107,10 +108,10 @@ export function useStudyFlow(
     return () => {
       cancelAnimationFrame(frame);
     };
-  }, [inspectMode, isBrowseMode, options?.inspectLocalDate, options?.knowledgeId]);
+  }, [inspectMode, inspectSession?.inspectLocalDate, inspectSession?.knowledgeId, isBrowseMode]);
 
   const inspectKnowledgeId =
-    inspectMode && isBrowseMode ? (options?.knowledgeId ?? null) : null;
+    inspectMode && isBrowseMode ? (inspectSession.knowledgeId ?? null) : null;
 
   const currentKnowledgeId = isReaderMode
     ? (readerEntry?.knowledgeId ?? null)
@@ -159,10 +160,10 @@ export function useStudyFlow(
       return;
     }
     markLearningCalendarNeedsRefresh();
-    options?.onInspectActionComplete?.();
-  }, [inspectMode, options]);
+    inspectSession.onInspectActionComplete?.();
+  }, [inspectMode, inspectSession]);
 
-  const inspectActivityLocalDate = inspectMode ? options?.inspectLocalDate : undefined;
+  const inspectActivityLocalDate = inspectMode ? inspectSession.inspectLocalDate : undefined;
 
   const advanceBrowse = useCallback(() => {
     if (!isBrowseMode || browseCards.length === 0) {

@@ -54,7 +54,7 @@ export function formatInspectContextLabel(input: {
   const [, monthRaw, dayRaw] = input.localDate.split('-');
   const month = Number(monthRaw);
   const day = Number(dayRaw);
-  return `${month}月${day}日「${input.subCategoryLabel} · ${input.index + 1}/${input.total}」`;
+  return `${String(month)}月${String(day)}日「${input.subCategoryLabel} · ${String(input.index + 1)}/${String(input.total)}」`;
 }
 
 export function InspectModeHeader(props: {

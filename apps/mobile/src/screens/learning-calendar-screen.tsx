@@ -68,8 +68,12 @@ export function LearningCalendarScreen(props: LearningCalendarScreenProps): Reac
         <LearningCalendarMonth
           heatByDate={heatByDate}
           month={month}
-          onNextMonth={() => shiftMonth(1)}
-          onPrevMonth={() => shiftMonth(-1)}
+          onNextMonth={() => {
+            shiftMonth(1);
+          }}
+          onPrevMonth={() => {
+            shiftMonth(-1);
+          }}
           onSelectDate={(localDate) => {
             setSelectedDate(localDate);
             const parts = parseLocalDate(localDate);

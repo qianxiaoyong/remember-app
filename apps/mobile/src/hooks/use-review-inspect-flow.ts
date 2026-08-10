@@ -18,7 +18,7 @@ export function useReviewInspectFlow(
   knowledgeId: string | null,
   options?: {
     inspectLocalDate?: string;
-    onInspectActionComplete?: () => InspectQueueAdvanceResult | void;
+    onInspectActionComplete?: () => InspectQueueAdvanceResult | undefined;
   },
 ) {
   const [revealed, setRevealed] = useState(false);
@@ -138,8 +138,12 @@ export function useReviewInspectFlow(
     lexiconSelectedSurfaceForm: lexiconVisible ? lexiconSelectedSurfaceForm : null,
     audioMessage,
     setRevealed,
-    handlePassed: () => handleOutcome('passed'),
-    handleFailed: () => handleOutcome('failed'),
+    handlePassed: () => {
+      handleOutcome('passed');
+    },
+    handleFailed: () => {
+      handleOutcome('failed');
+    },
     openLexicon,
     handlePlayPrimaryAudio: () => {
       if (reviewContext?.cardDetail?.cardType === 'vocabulary') {

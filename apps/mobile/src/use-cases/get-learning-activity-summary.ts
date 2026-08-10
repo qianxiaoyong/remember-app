@@ -101,16 +101,16 @@ export function getLearningActivitySummary(now: Date = new Date()): LearningActi
 
   return {
     activeDays: countDistinctActiveDays(rangeStartDate, rangeEndDate),
-    firstRevealCount: countEventsByTypeInRange(
-      LearningActivityEventType.VOCABULARY_FIRST_REVEAL,
-      rangeStartDate,
-      rangeEndDate,
-    ),
-    reviewOutcomeCount: countEventsByTypeInRange(
-      LearningActivityEventType.REVIEW_OUTCOME,
-      rangeStartDate,
-      rangeEndDate,
-    ),
+    firstRevealCount: countEventsByTypeInRange({
+      eventType: LearningActivityEventType.VOCABULARY_FIRST_REVEAL,
+      startDate: rangeStartDate,
+      endDate: rangeEndDate,
+    }),
+    reviewOutcomeCount: countEventsByTypeInRange({
+      eventType: LearningActivityEventType.REVIEW_OUTCOME,
+      startDate: rangeStartDate,
+      endDate: rangeEndDate,
+    }),
     heatGrid: buildHeatGrid({ now, timeZone, eventsByDate }),
     rangeStartDate,
     rangeEndDate,
