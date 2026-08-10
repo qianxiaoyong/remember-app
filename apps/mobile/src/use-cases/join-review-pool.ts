@@ -16,6 +16,7 @@ import { openUserDatabase } from '../data/user-db/open-user-database';
 import { getDeviceTimeZone } from '../lib/get-device-time-zone';
 import { markReviewPoolChanged } from '../shell/review-pool-changed-signal';
 import { resolveContentPackId } from './resolve-content-pack-id';
+import { writeJoinReviewActivityEvent } from './write-activity-event-from-review';
 
 export type JoinReviewPoolResult = { status: 'created' } | { status: 'already_in_pool' };
 
@@ -49,6 +50,9 @@ export function buildReviewPoolLearningRow(input: {
 export function joinReviewPool(input: {
   knowledgeId: string;
   catalogPackId: string;
+  displayLabel?: string;
+  sortOrder?: number;
+  activitySource?: 'browse' | 'review_tab' | 'calendar_inspect';
   now?: Date;
 }): JoinReviewPoolResult {
   const now = input.now ?? new Date();
@@ -93,5 +97,18 @@ export function joinReviewPool(input: {
   }
 
   markReviewPoolChanged();
+
+  if (input.displayLabel) {
+    writeJoinReviewActivityEvent({
+      catalogPackId: input.catalogPackId,
+      knowledgeId: input.knowledgeId,
+      displayLabel: input.displayLabel,
+      sortOrder: input.sortOrder,
+      created: true,
+      source: input.activitySource,
+      now,
+    });
+  }
+
   return { status: 'created' };
 }

@@ -159,6 +159,11 @@ export function useReviewFlow() {
           sessionId: session.sessionId,
           knowledgeId: currentKnowledgeId,
           outcome,
+          displayLabel:
+            reviewContext?.cardDetail?.cardType === 'vocabulary'
+              ? reviewContext.cardDetail.content.prompt.headword
+              : undefined,
+          activitySource: 'review_tab',
         });
         markReviewPoolChanged();
         const nextSession = resumeOrStartReviewSession();
@@ -171,7 +176,7 @@ export function useReviewFlow() {
         setIsSubmitting(false);
       }
     },
-    [currentKnowledgeId, refreshSummary, session?.sessionId],
+    [currentKnowledgeId, refreshSummary, reviewContext?.cardDetail, session?.sessionId],
   );
 
   const handleSkipUnloaded = useCallback(() => {

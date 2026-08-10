@@ -19,11 +19,14 @@ import { getDeviceTimeZone } from '../lib/get-device-time-zone';
 import { findActiveReviewSession } from './find-active-review-session';
 import { uploadPendingSyncOutbox } from './sync/upload-pending-sync-outbox';
 import { markReviewPoolChanged } from '../shell/review-pool-changed-signal';
+import { writeReviewOutcomeActivityEvent } from './write-activity-event-from-review';
 
 export function confirmReviewOutcome(input: {
   sessionId: string;
   knowledgeId: string;
   outcome: 'passed' | 'failed';
+  displayLabel?: string;
+  activitySource?: 'browse' | 'review_tab' | 'calendar_inspect';
   now?: Date;
 }): void {
   const now = input.now ?? new Date();
@@ -104,4 +107,16 @@ export function confirmReviewOutcome(input: {
 
   void uploadPendingSyncOutbox();
   markReviewPoolChanged();
+
+  if (input.displayLabel && previous.firstAddedFromPackId) {
+    writeReviewOutcomeActivityEvent({
+      catalogPackId: previous.firstAddedFromPackId,
+      knowledgeId: input.knowledgeId,
+      displayLabel: input.displayLabel,
+      outcome: input.outcome,
+      boxLevelAfter: learningRow.boxLevel,
+      source: input.activitySource,
+      now,
+    });
+  }
 }

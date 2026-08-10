@@ -21,6 +21,7 @@ import { deleteStoryReadingBookmark } from '../data/repositories/story-reading-b
 import { saveStoryReadingBookmark } from '../use-cases/save-story-reading-bookmark';
 import { skipPackCard } from '../use-cases/skip-pack-card';
 import { updateReviewPoolFromPack } from '../use-cases/update-review-pool-from-pack';
+import { recordVocabularyFirstReveal } from '../use-cases/record-vocabulary-first-reveal';
 import { getCurrentCardHeadword } from '../use-cases/get-review-interval-labels';
 import {
   isLexiconItemSavedUseCase,
@@ -161,6 +162,8 @@ export function useStudyFlow(
       const result = joinReviewPool({
         knowledgeId: currentKnowledgeId,
         catalogPackId: packId,
+        displayLabel: headword ?? undefined,
+        sortOrder: browseCards[currentIndex]?.sortOrder,
       });
       if (result.status === 'created') {
         setInReviewPool(true);
@@ -171,7 +174,7 @@ export function useStudyFlow(
     } finally {
       setIsSubmitting(false);
     }
-  }, [advanceBrowse, currentKnowledgeId, packId]);
+  }, [advanceBrowse, browseCards, currentIndex, currentKnowledgeId, headword, packId]);
 
   const handleConfirmUpdateReview = useCallback(() => {
     if (!currentKnowledgeId) {
@@ -183,6 +186,8 @@ export function useStudyFlow(
       updateReviewPoolFromPack({
         knowledgeId: currentKnowledgeId,
         catalogPackId: packId,
+        displayLabel: headword ?? undefined,
+        sortOrder: browseCards[currentIndex]?.sortOrder,
       });
       setInReviewPool(true);
       setUpdateReviewVisible(false);
@@ -192,15 +197,40 @@ export function useStudyFlow(
     } finally {
       setIsSubmitting(false);
     }
-  }, [advanceBrowse, currentKnowledgeId, packId]);
+  }, [advanceBrowse, browseCards, currentIndex, currentKnowledgeId, headword, packId]);
 
   const handleSkip = useCallback(() => {
     if (!currentKnowledgeId) {
       return;
     }
-    skipPackCard({ packId, knowledgeId: currentKnowledgeId });
+    skipPackCard({
+      packId,
+      knowledgeId: currentKnowledgeId,
+      displayLabel: headword ?? undefined,
+      sortOrder: browseCards[currentIndex]?.sortOrder,
+    });
     advanceBrowse();
-  }, [advanceBrowse, currentKnowledgeId, packId]);
+  }, [advanceBrowse, browseCards, currentIndex, currentKnowledgeId, headword, packId]);
+
+  const handleSetRevealed = useCallback(
+    (value: boolean) => {
+      setRevealed(value);
+      if (
+        value &&
+        currentKnowledgeId &&
+        cardDetail?.cardType === 'vocabulary' &&
+        headword
+      ) {
+        recordVocabularyFirstReveal({
+          catalogPackId: packId,
+          knowledgeId: currentKnowledgeId,
+          headword,
+          sortOrder: cardDetail.sortOrder,
+        });
+      }
+    },
+    [cardDetail, currentKnowledgeId, headword, packId],
+  );
 
   const handleReaderBookmark = useCallback(
     (positionMs: number) => {
@@ -313,7 +343,7 @@ export function useStudyFlow(
     cardDetail,
     headword,
     startBrowse,
-    setRevealed,
+    setRevealed: handleSetRevealed,
     handleJoinReview,
     handleSkip,
     handleConfirmUpdateReview,
