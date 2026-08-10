@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, type DimensionValue } from 'react-native';
 import { Pressable } from 'react-native';
 import type { HeatLevel } from '@remember/domain';
 import { heatLevelColors } from './calendar-theme';
@@ -155,11 +155,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 36,
     justifyContent: 'center',
-    width: `${String(100 / 7)}%`,
+    width: `${String(100 / 7)}%` as DimensionValue,
   },
   cellEmpty: {
     height: 36,
-    width: `${String(100 / 7)}%`,
+    width: `${String(100 / 7)}%` as DimensionValue,
   },
   cellSelected: {
     backgroundColor: colors.accentSoft,

@@ -20,7 +20,11 @@ import { listInstalledPacksUseCase } from '../use-cases/list-installed-packs';
 import { resetPackBrowseProgress } from '../use-cases/reset-pack-browse-progress';
 import { saveStoryReadingBookmark } from '../use-cases/save-story-reading-bookmark';
 import { touchInstalledPackLastOpenedUseCase } from '../use-cases/touch-installed-pack-last-opened';
-import { useInspectQueue, type InspectQueueConfig } from '../hooks/use-inspect-queue';
+import {
+  useInspectQueue,
+  type InspectQueueAdvanceResult,
+  type InspectQueueConfig,
+} from '../hooks/use-inspect-queue';
 import { formatInspectContextLabel } from '../components/calendar/inspect-mode-chrome';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
@@ -40,11 +44,12 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
   const activeKnowledgeId = inspectQueue.currentItem?.knowledgeId ?? props.knowledgeId;
   const inspectMode = props.inspect !== null && props.inspect !== undefined;
 
-  const handleInspectActionComplete = useCallback(() => {
+  const handleInspectActionComplete = useCallback((): InspectQueueAdvanceResult => {
     const result = inspectQueue.advanceAfterAction();
     if (result === 'completed') {
       router.back();
     }
+    return result;
   }, [inspectQueue.advanceAfterAction, router]);
 
   const {

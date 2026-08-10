@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
 import { useCallback, useMemo, useState } from 'react';
-import { Dimensions, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, Pressable, StyleSheet, Text, View, type DimensionValue } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
 import type { HeatCell } from '../../use-cases/get-learning-activity-summary';
 import { getLearningActivitySummary } from '../../use-cases/get-learning-activity-summary';
@@ -133,7 +133,10 @@ export function LearningCalendarWidget(): ReactElement {
             {monthLabels.map((item) => (
               <Text
                 key={item.key}
-                style={[styles.monthLabel, { left: `${String(item.leftPercent)}%` }]}
+                style={[
+                  styles.monthLabel,
+                  { left: `${String(item.leftPercent)}%` as DimensionValue },
+                ]}
               >
                 {item.label}
               </Text>

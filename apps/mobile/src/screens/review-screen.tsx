@@ -12,7 +12,11 @@ import { StudyMoreMenu } from '../components/study/study-more-menu';
 import { PrimaryButton } from '../components/ui/primary-button';
 import { useReviewFlow } from '../hooks/use-review-flow';
 import { useReviewInspectFlow } from '../hooks/use-review-inspect-flow';
-import { useInspectQueue, type InspectQueueConfig } from '../hooks/use-inspect-queue';
+import {
+  useInspectQueue,
+  type InspectQueueAdvanceResult,
+  type InspectQueueConfig,
+} from '../hooks/use-inspect-queue';
 import { formatInspectContextLabel } from '../components/calendar/inspect-mode-chrome';
 import { VocabularyStudyPanel } from '../learning/card-types/vocabulary/vocabulary-study-panel';
 import { colors } from '../theme/colors';
@@ -29,11 +33,12 @@ export function ReviewScreen(props: {
   const inspectKnowledgeId =
     inspectQueue.currentItem?.knowledgeId ?? props.inspectKnowledgeId ?? null;
 
-  const handleInspectActionComplete = useCallback(() => {
+  const handleInspectActionComplete = useCallback((): InspectQueueAdvanceResult => {
     const result = inspectQueue.advanceAfterAction();
     if (result === 'completed') {
       router.back();
     }
+    return result;
   }, [inspectQueue.advanceAfterAction, router]);
 
   const normalFlow = useReviewFlow();
