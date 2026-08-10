@@ -29,6 +29,8 @@ export interface StoryLessonShellProps {
   onMorePress: () => void;
   onReaderBookmark?: (positionMs: number) => void;
   onNavigateLesson?: (knowledgeId: string) => void;
+  /** 限定上一篇/下一篇范围（如日历检查队列） */
+  lessonNavigationIds?: string[];
 }
 
 const BOOKMARK_DEBOUNCE_MS = 5000;
@@ -72,7 +74,12 @@ export function StoryLessonShell(props: StoryLessonShellProps): ReactElement {
   playbackDurationRef.current = audioPlayer.durationMs;
   const bookmarkTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const loopHandledRef = useRef(false);
-  const lessons = useMemo(() => listStoryLessonSummaries(props.packId), [props.packId]);
+  const lessons = useMemo(() => {
+    if (props.lessonNavigationIds && props.lessonNavigationIds.length > 0) {
+      return props.lessonNavigationIds.map((knowledgeId) => ({ knowledgeId }));
+    }
+    return listStoryLessonSummaries(props.packId);
+  }, [props.lessonNavigationIds, props.packId]);
 
   const adjacentLessonIds = useMemo(() => {
     if (lessons.length === 0) {
@@ -82,11 +89,21 @@ export function StoryLessonShell(props: StoryLessonShellProps): ReactElement {
     if (currentIndex < 0) {
       return { previous: null, next: null };
     }
+    const restrictToList = Boolean(props.lessonNavigationIds && props.lessonNavigationIds.length > 0);
+    if (restrictToList) {
+      return {
+        previous: currentIndex > 0 ? (lessons[currentIndex - 1]?.knowledgeId ?? null) : null,
+        next:
+          currentIndex < lessons.length - 1
+            ? (lessons[currentIndex + 1]?.knowledgeId ?? null)
+            : null,
+      };
+    }
     const previous =
       lessons[(currentIndex - 1 + lessons.length) % lessons.length]?.knowledgeId ?? null;
     const next = lessons[(currentIndex + 1) % lessons.length]?.knowledgeId ?? null;
     return { previous, next };
-  }, [lessons, props.knowledgeId]);
+  }, [lessons, props.knowledgeId, props.lessonNavigationIds]);
 
   useEffect(() => {
     setActiveTab('read');

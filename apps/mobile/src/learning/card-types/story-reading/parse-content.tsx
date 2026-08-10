@@ -18,6 +18,7 @@ export function StoryReadingCardRenderer(props: CardRendererProps) {
         : {})}
       {...(props.onNavigateLesson ? { onNavigateLesson: props.onNavigateLesson } : {})}
       {...(props.onReaderBookmark ? { onReaderBookmark: props.onReaderBookmark } : {})}
+      {...(props.lessonNavigationIds ? { lessonNavigationIds: props.lessonNavigationIds } : {})}
       packId={props.packId}
     />
   );

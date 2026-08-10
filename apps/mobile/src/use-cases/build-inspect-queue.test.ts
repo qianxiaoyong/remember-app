@@ -24,8 +24,23 @@ vi.mock('./get-learning-calendar-day-detail', () => ({
       counts: { remembered: 0, notFamiliar: 0, total: 0 },
     },
     story: {
-      completed: [],
-      counts: { completed: 0 },
+      completed: [
+        {
+          eventId: 's1',
+          packId: 'story-pack',
+          knowledgeId: 'story-pack:en:story:c1',
+          displayLabel: '第一篇',
+          occurredAt: '2026-08-09T11:00:00.000Z',
+        },
+        {
+          eventId: 's2',
+          packId: 'story-pack',
+          knowledgeId: 'story-pack:en:story:c2',
+          displayLabel: '第二篇',
+          occurredAt: '2026-08-09T12:00:00.000Z',
+        },
+      ],
+      counts: { completed: 2 },
     },
   })),
 }));
@@ -49,5 +64,18 @@ describe('buildInspectQueue', () => {
     expect(getInspectSubCategoryLabel('pending')).toBe('待回忆');
     expect(getInspectSubCategoryLabel('joined_review')).toBe('已加复习');
     expect(getInspectSubCategoryLabel('skipped')).toBe('不加复习');
+    expect(getInspectSubCategoryLabel('completed')).toBe('已听完');
+  });
+
+  it('returns story completed queue for the selected day', () => {
+    const queue = buildInspectQueue({
+      localDate: '2026-08-09',
+      category: 'story',
+      subCategory: 'completed',
+    });
+
+    expect(queue).toHaveLength(2);
+    expect(queue[0]?.knowledgeId).toBe('story-pack:en:story:c1');
+    expect(queue[1]?.knowledgeId).toBe('story-pack:en:story:c2');
   });
 });

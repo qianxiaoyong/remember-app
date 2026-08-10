@@ -116,6 +116,20 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
 
   const handleNavigateLesson = useCallback(
     (knowledgeId: string) => {
+      if (inspectMode && props.inspect) {
+        const targetIndex = inspectQueue.queue.findIndex((item) => item.knowledgeId === knowledgeId);
+        if (targetIndex < 0) {
+          return;
+        }
+        const target = inspectQueue.queue[targetIndex];
+        if (!target) {
+          return;
+        }
+        router.replace(
+          `/study?packId=${target.packId}&knowledgeId=${knowledgeId}&inspect=1&localDate=${props.inspect.localDate}&category=${props.inspect.category}&subCategory=${props.inspect.subCategory}&index=${targetIndex}`,
+        );
+        return;
+      }
       saveStoryReadingBookmark({
         packId: props.packId,
         knowledgeId,
@@ -123,8 +137,13 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
       });
       router.replace(`/study?packId=${props.packId}&knowledgeId=${knowledgeId}`);
     },
-    [props.packId, router],
+    [inspectMode, inspectQueue.queue, props.inspect, props.packId, router],
   );
+
+  const readerInspectLessonIds =
+    inspectMode && isReaderMode && props.inspect?.category === 'story' && inspectQueue.queue.length > 0
+      ? inspectQueue.queue.map((item) => item.knowledgeId)
+      : undefined;
 
   const goHome = useCallback((): void => {
     dismissBrowseComplete();
@@ -255,6 +274,7 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
               {...(inspectNavConfig && !isReaderMode ? { inspectNav: inspectNavConfig } : {})}
               {...(isReaderMode ? { onReaderBookmark: handleReaderBookmark } : {})}
               {...(isReaderMode ? { initialAudioPositionMs: readerInitialPositionMs } : {})}
+              {...(readerInspectLessonIds ? { lessonNavigationIds: readerInspectLessonIds } : {})}
             />
           ) : (
             <UnsupportedCardPanel onGoHome={goHome} />
