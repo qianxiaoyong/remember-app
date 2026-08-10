@@ -56,6 +56,12 @@ describe('getLearningCalendarDayDetail', () => {
 
     expect(detail.firstContact.counts.joinedReview).toBe(1);
     expect(detail.firstContact.counts.pending).toBe(1);
+    expect(detail.firstContact.counts.total).toBe(2);
+    expect(
+      detail.firstContact.counts.pending +
+        detail.firstContact.counts.joinedReview +
+        detail.firstContact.counts.skipped,
+    ).toBe(detail.firstContact.counts.total);
     expect(detail.review.counts.remembered).toBe(1);
   });
 

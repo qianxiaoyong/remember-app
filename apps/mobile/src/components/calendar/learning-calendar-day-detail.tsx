@@ -15,6 +15,7 @@ type InspectCategory = 'first_contact' | 'review' | 'story';
 const FIRST_CONTACT_ROWS = [
   { subCategory: 'joined_review', countKey: 'joinedReview' as const },
   { subCategory: 'skipped', countKey: 'skipped' as const },
+  { subCategory: 'pending', countKey: 'pending' as const },
 ] as const;
 
 const REVIEW_ROWS = [
@@ -48,6 +49,53 @@ export function LearningCalendarDayDetailPanel(
 
   const hasAnySection = reviewTotal > 0 || firstContactTotal > 0 || storyTotal > 0;
 
+  const visibleSections: ReactElement[] = [];
+  if (reviewTotal > 0) {
+    visibleSections.push(
+      <SectionCard key="review" title="复习量" total={reviewTotal}>
+        {REVIEW_ROWS.map((row) => (
+          <InspectRow
+            key={row.subCategory}
+            count={detail.review.counts[row.countKey]}
+            label={getInspectSubCategoryLabel(row.subCategory)}
+            onPress={() => {
+              openInspect('review', row.subCategory);
+            }}
+          />
+        ))}
+      </SectionCard>,
+    );
+  }
+  if (firstContactTotal > 0) {
+    visibleSections.push(
+      <SectionCard key="first_contact" title="新词量" total={firstContactTotal}>
+        {FIRST_CONTACT_ROWS.map((row) => (
+          <InspectRow
+            key={row.subCategory}
+            count={detail.firstContact.counts[row.countKey]}
+            label={getInspectSubCategoryLabel(row.subCategory)}
+            onPress={() => {
+              openInspect('first_contact', row.subCategory);
+            }}
+          />
+        ))}
+      </SectionCard>,
+    );
+  }
+  if (storyTotal > 0) {
+    visibleSections.push(
+      <SectionCard key="story" title="阅读量" total={storyTotal}>
+        <InspectRow
+          count={storyTotal}
+          label={getInspectSubCategoryLabel('completed')}
+          onPress={() => {
+            openInspect('story', 'completed');
+          }}
+        />
+      </SectionCard>,
+    );
+  }
+
   return (
     <View style={styles.panel}>
       <View style={styles.dayHeader}>
@@ -56,47 +104,14 @@ export function LearningCalendarDayDetailPanel(
 
       {hasAnySection ? (
         <View style={styles.sectionList}>
-          {reviewTotal > 0 ? (
-            <SectionCard title="复习量" total={reviewTotal}>
-              {REVIEW_ROWS.map((row) => (
-                <InspectRow
-                  key={row.subCategory}
-                  count={detail.review.counts[row.countKey]}
-                  label={getInspectSubCategoryLabel(row.subCategory)}
-                  onPress={() => {
-                    openInspect('review', row.subCategory);
-                  }}
-                />
-              ))}
-            </SectionCard>
-          ) : null}
-
-          {firstContactTotal > 0 ? (
-            <SectionCard title="新词量" total={firstContactTotal}>
-              {FIRST_CONTACT_ROWS.map((row) => (
-                <InspectRow
-                  key={row.subCategory}
-                  count={detail.firstContact.counts[row.countKey]}
-                  label={getInspectSubCategoryLabel(row.subCategory)}
-                  onPress={() => {
-                    openInspect('first_contact', row.subCategory);
-                  }}
-                />
-              ))}
-            </SectionCard>
-          ) : null}
-
-          {storyTotal > 0 ? (
-            <SectionCard title="阅读量" total={storyTotal}>
-              <InspectRow
-                count={storyTotal}
-                label={getInspectSubCategoryLabel('completed')}
-                onPress={() => {
-                  openInspect('story', 'completed');
-                }}
-              />
-            </SectionCard>
-          ) : null}
+          {visibleSections.map((section, index) => (
+            <View
+              key={section.key ?? String(index)}
+              style={index < visibleSections.length - 1 ? styles.sectionDivider : null}
+            >
+              {section}
+            </View>
+          ))}
         </View>
       ) : (
         <Text style={styles.emptyHint}>当日暂无学习记录</Text>
@@ -188,8 +203,6 @@ function buildInspectRouteItem(
   return { packId: item.packId, knowledgeId: item.knowledgeId, mode: 'study' };
 }
 
-const SECTION_CARD_RADIUS = 8;
-
 const styles = StyleSheet.create({
   panel: {
     backgroundColor: colors.surface,
@@ -203,6 +216,9 @@ const styles = StyleSheet.create({
     paddingTop: spacing.md,
   },
   dayHeader: {
+    borderBottomColor: colors.border,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    marginBottom: spacing.xs,
     paddingBottom: spacing.sm,
     paddingHorizontal: spacing.md,
   },
@@ -212,13 +228,13 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   sectionList: {
-    gap: spacing.sm,
     paddingHorizontal: spacing.md,
   },
+  sectionDivider: {
+    borderBottomColor: colors.border,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
   sectionCard: {
-    backgroundColor: colors.statTileBackground,
-    borderRadius: SECTION_CARD_RADIUS,
-    paddingHorizontal: spacing.md,
     paddingVertical: spacing.sm,
   },
   sectionHeader: {

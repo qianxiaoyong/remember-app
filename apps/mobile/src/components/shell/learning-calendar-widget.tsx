@@ -6,7 +6,7 @@ import type { HeatCell } from '../../use-cases/get-learning-activity-summary';
 import { getLearningActivitySummary } from '../../use-cases/get-learning-activity-summary';
 import { consumeLearningCalendarNeedsRefresh } from '../../shell/learning-calendar-refresh-signal';
 import { SurfaceCard } from '../ui/surface-card';
-import { heatLevelColors, weekdayLabels } from '../calendar/calendar-theme';
+import { heatLevelColors } from '../calendar/calendar-theme';
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
 
@@ -54,8 +54,8 @@ export function LearningCalendarWidget(): ReactElement {
 
         <View style={styles.statsRow}>
           <SummaryStat label="学习天数" value={summary.activeDays} />
-          <SummaryStat label="新接触" value={summary.firstRevealCount} />
-          <SummaryStat label="复习词数" value={summary.reviewOutcomeCount} />
+          <SummaryStat label="新词量" value={summary.firstRevealCount} />
+          <SummaryStat label="复习量" value={summary.reviewOutcomeCount} />
         </View>
 
         <View style={styles.gridWrap}>
@@ -85,14 +85,6 @@ export function LearningCalendarWidget(): ReactElement {
                 />
               ))}
             </View>
-          ))}
-        </View>
-
-        <View style={styles.weekdayRow}>
-          {weekdayLabels.map((label) => (
-            <Text key={label} style={styles.weekdayLabel}>
-              {label}
-            </Text>
           ))}
         </View>
 
@@ -175,7 +167,7 @@ function filterCrowdedMonthLabels(
 
 const styles = StyleSheet.create({
   headerRow: {
-    alignItems: 'center',
+    alignItems: 'baseline',
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: spacing.md,
@@ -197,8 +189,8 @@ const styles = StyleSheet.create({
   },
   viewAll: {
     color: colors.accent,
-    fontSize: 13,
-    fontWeight: '500',
+    fontSize: 11,
+    fontWeight: '400',
   },
   statsRow: {
     flexDirection: 'row',
@@ -210,12 +202,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   summaryValue: {
-    color: colors.textPrimary,
+    color: colors.textSecondary,
     fontSize: 22,
     fontWeight: '700',
   },
   summaryLabel: {
-    color: colors.textSecondary,
+    color: colors.textMuted,
     fontSize: 12,
     marginTop: spacing.xs,
   },
@@ -227,25 +219,14 @@ const styles = StyleSheet.create({
     gap: 3,
   },
   heatCell: {
+    aspectRatio: 1,
     borderRadius: 3,
     flex: 1,
-    height: 12,
     minWidth: 8,
   },
   heatCellToday: {
     borderColor: colors.accent,
     borderWidth: 1,
-  },
-  weekdayRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: spacing.xs,
-  },
-  weekdayLabel: {
-    color: colors.textMuted,
-    flex: 1,
-    fontSize: 10,
-    textAlign: 'center',
   },
   monthRow: {
     height: 16,
