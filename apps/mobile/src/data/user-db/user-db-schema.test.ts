@@ -2,12 +2,22 @@ import { describe, expect, it } from 'vitest';
 import { MIGRATIONS, USER_DB_TABLE_NAMES, USER_DB_VERSION } from './user-db-schema';
 
 describe('user-db-schema', () => {
-  it('当前版本为 4 且包含迁移 SQL', () => {
-    expect(USER_DB_VERSION).toBe(4);
+  it('当前版本为 5 且包含迁移 SQL', () => {
+    expect(USER_DB_VERSION).toBe(5);
     expect(MIGRATIONS[1]?.length).toBeGreaterThan(0);
     expect(MIGRATIONS[2]?.length).toBeGreaterThan(0);
     expect(MIGRATIONS[3]?.length).toBeGreaterThan(0);
     expect(MIGRATIONS[4]?.length).toBeGreaterThan(0);
+    expect(MIGRATIONS[5]?.length).toBeGreaterThan(0);
+  });
+
+  it('version 5 创建 learning_activity_events 及索引', () => {
+    const sql = MIGRATIONS[5]?.join('\n') ?? '';
+    expect(sql).toContain('CREATE TABLE learning_activity_events');
+    expect(sql).toContain('CREATE INDEX idx_activity_local_date');
+    expect(sql).toContain('CREATE INDEX idx_activity_pack_date');
+    expect(sql).toContain('CREATE INDEX idx_activity_type_date');
+    expect(sql).toContain('CREATE INDEX idx_activity_knowledge');
   });
 
   it('version 4 扩展 learning_states 并创建复习池相关表', () => {
@@ -38,7 +48,8 @@ describe('user-db-schema', () => {
         name !== 'story_reading_bookmarks' &&
         name !== 'pack_browse_bookmarks' &&
         name !== 'user_preferences' &&
-        name !== 'review_daily_stats',
+        name !== 'review_daily_stats' &&
+        name !== 'learning_activity_events',
     );
     for (const tableName of baseTables) {
       expect(sql).toContain(`CREATE TABLE ${tableName}`);

@@ -1,4 +1,4 @@
-export const USER_DB_VERSION = 4;
+export const USER_DB_VERSION = 5;
 
 export const USER_DB_TABLE_NAMES = [
   'installed_packs',
@@ -11,6 +11,7 @@ export const USER_DB_TABLE_NAMES = [
   'pack_browse_bookmarks',
   'user_preferences',
   'review_daily_stats',
+  'learning_activity_events',
 ] as const;
 
 export type UserDbTableName = (typeof USER_DB_TABLE_NAMES)[number];
@@ -116,9 +117,27 @@ export const MIGRATION_V4_SQL: readonly string[] = [
   )`,
 ];
 
+export const MIGRATION_V5_SQL: readonly string[] = [
+  `CREATE TABLE learning_activity_events (
+    eventId TEXT NOT NULL PRIMARY KEY,
+    localDate TEXT NOT NULL,
+    occurredAt TEXT NOT NULL,
+    eventType TEXT NOT NULL,
+    packId TEXT NOT NULL,
+    knowledgeId TEXT,
+    displayLabel TEXT,
+    payload TEXT NOT NULL DEFAULT '{}'
+  )`,
+  `CREATE INDEX idx_activity_local_date ON learning_activity_events (localDate)`,
+  `CREATE INDEX idx_activity_pack_date ON learning_activity_events (packId, localDate)`,
+  `CREATE INDEX idx_activity_type_date ON learning_activity_events (eventType, localDate)`,
+  `CREATE INDEX idx_activity_knowledge ON learning_activity_events (packId, knowledgeId)`,
+];
+
 export const MIGRATIONS: Readonly<Record<number, readonly string[]>> = {
   1: MIGRATION_V1_SQL,
   2: MIGRATION_V2_SQL,
   3: MIGRATION_V3_SQL,
   4: MIGRATION_V4_SQL,
+  5: MIGRATION_V5_SQL,
 };
