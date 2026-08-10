@@ -16,8 +16,8 @@ export function skipPackCard(input: {
     catalogPackId: input.packId,
     knowledgeId: input.knowledgeId,
     displayLabel: input.displayLabel,
-    sortOrder: input.sortOrder,
-    source: input.activitySource,
-    now: input.now,
+    ...(input.sortOrder !== undefined ? { sortOrder: input.sortOrder } : {}),
+    ...(input.activitySource ? { source: input.activitySource } : {}),
+    ...(input.now ? { now: input.now } : {}),
   });
 }

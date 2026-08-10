@@ -115,7 +115,7 @@ export function confirmReviewOutcome(input: {
       displayLabel: input.displayLabel,
       outcome: input.outcome,
       boxLevelAfter: learningRow.boxLevel,
-      source: input.activitySource,
+      ...(input.activitySource ? { source: input.activitySource } : {}),
       now,
     });
   }

@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import logoImage from '../../../assets/images/icon_108x108.png';
 import { SurfaceCard } from '../ui/surface-card';
 import type { LibraryOverview } from '../../use-cases/get-library-overview';
@@ -11,8 +11,14 @@ interface LibraryOverviewCardProps {
   overview: LibraryOverview;
 }
 
+const STAT_TILE_GAP = spacing.sm;
+const VISIBLE_TILE_COUNT = 3;
+
 export function LibraryOverviewCard(props: LibraryOverviewCardProps): ReactElement {
   const { overview } = props;
+  const { width: windowWidth } = useWindowDimensions();
+  const horizontalPadding = spacing.lg * 2 + spacing.md * 2;
+  const tileWidth = Math.floor((windowWidth - horizontalPadding - STAT_TILE_GAP * 2) / VISIBLE_TILE_COUNT);
 
   return (
     <SurfaceCard>
@@ -29,21 +35,37 @@ export function LibraryOverviewCard(props: LibraryOverviewCardProps): ReactEleme
         <View accessibilityLabel="同步状态预留" style={styles.syncPlaceholder} />
       </View>
 
-      <View style={styles.statsRow}>
-        <StatTile label="待复习" value={overview.todayTaskCount} />
-        <StatTile label="学习中" value={overview.learningCount} />
-        <StatTile label="已掌握" value={overview.masteredCount} />
-      </View>
+      <ScrollView
+        contentContainerStyle={styles.statsRowContent}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={styles.statsRow}
+      >
+        {overview.statTiles.map((tile) => (
+          <StatTile
+            key={tile.key}
+            label={tile.label}
+            unit={tile.unit}
+            value={tile.value}
+            width={tileWidth}
+          />
+        ))}
+      </ScrollView>
     </SurfaceCard>
   );
 }
 
-function StatTile(props: { label: string; value: number }): ReactElement {
+function StatTile(props: {
+  label: string;
+  value: string;
+  unit: string;
+  width: number;
+}): ReactElement {
   return (
-    <View style={styles.statTile}>
+    <View style={[styles.statTile, { width: props.width }]}>
       <Text style={styles.statLabel}>{props.label}</Text>
       <Text style={styles.statValue}>
-        {formatLearningCount(props.value)} <Text style={styles.statUnit}>条</Text>
+        {props.value} <Text style={styles.statUnit}>{props.unit}</Text>
       </Text>
     </View>
   );
@@ -89,13 +111,15 @@ const styles = StyleSheet.create({
     minWidth: 72,
   },
   statsRow: {
+    flexGrow: 0,
+  },
+  statsRowContent: {
     flexDirection: 'row',
-    gap: spacing.sm,
+    gap: STAT_TILE_GAP,
   },
   statTile: {
     backgroundColor: colors.statTileBackground,
     borderRadius: 14,
-    flex: 1,
     paddingHorizontal: spacing.sm,
     paddingVertical: spacing.md,
   },

@@ -36,8 +36,8 @@ export function insertActivityEvent<T extends LearningActivityEventTypeValue>(
       occurredAt: input.occurredAt,
       eventType: input.eventType,
       packId: input.packId,
-      knowledgeId: input.knowledgeId,
-      displayLabel: input.displayLabel,
+      knowledgeId: input.knowledgeId ?? null,
+      displayLabel: input.displayLabel ?? null,
       payload: JSON.stringify(input.payload ?? {}),
     });
   } catch (error) {
@@ -66,8 +66,8 @@ export function insertActivityEventInTransaction<T extends LearningActivityEvent
         occurredAt: input.occurredAt,
         eventType: input.eventType,
         packId: input.packId,
-        knowledgeId: input.knowledgeId,
-        displayLabel: input.displayLabel,
+        knowledgeId: input.knowledgeId ?? null,
+        displayLabel: input.displayLabel ?? null,
         payload: JSON.stringify(input.payload ?? {}),
       },
       db,

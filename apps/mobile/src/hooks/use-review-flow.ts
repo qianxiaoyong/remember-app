@@ -159,10 +159,9 @@ export function useReviewFlow() {
           sessionId: session.sessionId,
           knowledgeId: currentKnowledgeId,
           outcome,
-          displayLabel:
-            reviewContext?.cardDetail?.cardType === 'vocabulary'
-              ? reviewContext.cardDetail.content.prompt.headword
-              : undefined,
+          ...(reviewContext?.cardDetail?.cardType === 'vocabulary'
+            ? { displayLabel: reviewContext.cardDetail.content.prompt.headword }
+            : {}),
           activitySource: 'review_tab',
         });
         markReviewPoolChanged();

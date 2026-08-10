@@ -162,8 +162,10 @@ export function useStudyFlow(
       const result = joinReviewPool({
         knowledgeId: currentKnowledgeId,
         catalogPackId: packId,
-        displayLabel: headword ?? undefined,
-        sortOrder: browseCards[currentIndex]?.sortOrder,
+        ...(headword ? { displayLabel: headword } : {}),
+        ...(browseCards[currentIndex]?.sortOrder !== undefined
+          ? { sortOrder: browseCards[currentIndex].sortOrder }
+          : {}),
       });
       if (result.status === 'created') {
         setInReviewPool(true);
@@ -186,8 +188,10 @@ export function useStudyFlow(
       updateReviewPoolFromPack({
         knowledgeId: currentKnowledgeId,
         catalogPackId: packId,
-        displayLabel: headword ?? undefined,
-        sortOrder: browseCards[currentIndex]?.sortOrder,
+        ...(headword ? { displayLabel: headword } : {}),
+        ...(browseCards[currentIndex]?.sortOrder !== undefined
+          ? { sortOrder: browseCards[currentIndex].sortOrder }
+          : {}),
       });
       setInReviewPool(true);
       setUpdateReviewVisible(false);
@@ -206,8 +210,10 @@ export function useStudyFlow(
     skipPackCard({
       packId,
       knowledgeId: currentKnowledgeId,
-      displayLabel: headword ?? undefined,
-      sortOrder: browseCards[currentIndex]?.sortOrder,
+      ...(headword ? { displayLabel: headword } : {}),
+      ...(browseCards[currentIndex]?.sortOrder !== undefined
+        ? { sortOrder: browseCards[currentIndex].sortOrder }
+        : {}),
     });
     advanceBrowse();
   }, [advanceBrowse, browseCards, currentIndex, currentKnowledgeId, headword, packId]);

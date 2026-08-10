@@ -18,6 +18,7 @@ import {
 import { navigateShellTab } from '../shell/shell-tab-transition';
 import {
   loadLibraryScreenData,
+  createEmptyLibraryOverview,
   type InstalledPackSummary,
   type LibraryOverview,
 } from '../use-cases/get-library-overview';
@@ -26,14 +27,7 @@ import { deferAfterFirstPaint } from '../lib/defer-after-first-paint';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 
-const EMPTY_OVERVIEW: LibraryOverview = {
-  totalCards: 0,
-  todayTaskCount: 0,
-  learningCount: 0,
-  masteredCount: 0,
-  hasActiveTask: false,
-  activePackId: null,
-};
+const EMPTY_OVERVIEW: LibraryOverview = createEmptyLibraryOverview();
 
 export function LibraryScreen(): ReactElement {
   const router = useRouter();

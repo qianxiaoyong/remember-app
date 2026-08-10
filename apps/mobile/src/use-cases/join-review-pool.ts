@@ -103,9 +103,9 @@ export function joinReviewPool(input: {
       catalogPackId: input.catalogPackId,
       knowledgeId: input.knowledgeId,
       displayLabel: input.displayLabel,
-      sortOrder: input.sortOrder,
+      ...(input.sortOrder !== undefined ? { sortOrder: input.sortOrder } : {}),
       created: true,
-      source: input.activitySource,
+      ...(input.activitySource ? { source: input.activitySource } : {}),
       now,
     });
   }
