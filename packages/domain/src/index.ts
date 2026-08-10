@@ -41,3 +41,11 @@ export {
   type ReviewOutcome,
   type ReviewPoolState,
 } from './review-box-scheduler.js';
+export {
+  calculateHeatLevel,
+  type HeatLevel,
+} from './learning-activity-heat-level.js';
+export {
+  classifyFirstRevealSubCategory,
+  type FirstRevealSubCategory,
+} from './classify-vocabulary-first-reveal.js';
