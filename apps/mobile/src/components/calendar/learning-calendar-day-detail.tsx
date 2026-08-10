@@ -1,5 +1,4 @@
 import type { ReactElement } from 'react';
-import { Fragment } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import type { CalendarDayDetail } from '../../use-cases/get-learning-calendar-day-detail';
@@ -47,85 +46,77 @@ export function LearningCalendarDayDetailPanel(
     router.push(route);
   };
 
-  const sectionBlocks: ReactElement[] = [];
-
-  if (reviewTotal > 0) {
-    sectionBlocks.push(
-      <View key="review" style={styles.section}>
-        <Text style={styles.sectionCaption}>复习量</Text>
-        {REVIEW_ROWS.map((row, index) => (
-          <InspectRow
-            key={row.subCategory}
-            count={detail.review.counts[row.countKey]}
-            isLast={index === REVIEW_ROWS.length - 1}
-            label={getInspectSubCategoryLabel(row.subCategory)}
-            onPress={() => {
-              openInspect('review', row.subCategory);
-            }}
-          />
-        ))}
-      </View>,
-    );
-  }
-
-  if (firstContactTotal > 0) {
-    sectionBlocks.push(
-      <View key="first_contact" style={styles.section}>
-        <Text style={styles.sectionCaption}>新词量</Text>
-        {FIRST_CONTACT_ROWS.map((row, index) => (
-          <InspectRow
-            key={row.subCategory}
-            count={detail.firstContact.counts[row.countKey]}
-            isLast={index === FIRST_CONTACT_ROWS.length - 1}
-            label={getInspectSubCategoryLabel(row.subCategory)}
-            onPress={() => {
-              openInspect('first_contact', row.subCategory);
-            }}
-          />
-        ))}
-      </View>,
-    );
-  }
-
-  if (storyTotal > 0) {
-    sectionBlocks.push(
-      <View key="story" style={styles.section}>
-        <Text style={styles.sectionCaption}>阅读量</Text>
-        <InspectRow
-          count={storyTotal}
-          isLast
-          label={getInspectSubCategoryLabel('completed')}
-          onPress={() => {
-            openInspect('story', 'completed');
-          }}
-        />
-      </View>,
-    );
-  }
-
-  const summaryParts = [
-    `复习量 ${reviewTotal}`,
-    `新词量 ${firstContactTotal}`,
-    ...(storyTotal > 0 ? [`阅读量 ${storyTotal}`] : []),
-  ];
+  const hasAnySection = reviewTotal > 0 || firstContactTotal > 0 || storyTotal > 0;
 
   return (
     <View style={styles.panel}>
       <View style={styles.dayHeader}>
         <Text style={styles.dateTitle}>{dateLabel}</Text>
-        <Text style={styles.daySummary}>{summaryParts.join(' · ')}</Text>
       </View>
 
-      {sectionBlocks.length > 0 ? (
-        sectionBlocks.map((block, index) => (
-          <Fragment key={block.key ?? String(index)}>
-            {index > 0 ? <View style={styles.sectionGap} /> : null}
-            {block}
-          </Fragment>
-        ))
+      {hasAnySection ? (
+        <View style={styles.sectionList}>
+          {reviewTotal > 0 ? (
+            <SectionCard title="复习量" total={reviewTotal}>
+              {REVIEW_ROWS.map((row) => (
+                <InspectRow
+                  key={row.subCategory}
+                  count={detail.review.counts[row.countKey]}
+                  label={getInspectSubCategoryLabel(row.subCategory)}
+                  onPress={() => {
+                    openInspect('review', row.subCategory);
+                  }}
+                />
+              ))}
+            </SectionCard>
+          ) : null}
+
+          {firstContactTotal > 0 ? (
+            <SectionCard title="新词量" total={firstContactTotal}>
+              {FIRST_CONTACT_ROWS.map((row) => (
+                <InspectRow
+                  key={row.subCategory}
+                  count={detail.firstContact.counts[row.countKey]}
+                  label={getInspectSubCategoryLabel(row.subCategory)}
+                  onPress={() => {
+                    openInspect('first_contact', row.subCategory);
+                  }}
+                />
+              ))}
+            </SectionCard>
+          ) : null}
+
+          {storyTotal > 0 ? (
+            <SectionCard title="阅读量" total={storyTotal}>
+              <InspectRow
+                count={storyTotal}
+                label={getInspectSubCategoryLabel('completed')}
+                onPress={() => {
+                  openInspect('story', 'completed');
+                }}
+              />
+            </SectionCard>
+          ) : null}
+        </View>
       ) : (
         <Text style={styles.emptyHint}>当日暂无学习记录</Text>
       )}
+    </View>
+  );
+}
+
+function SectionCard(props: {
+  title: string;
+  total: number;
+  children: ReactElement | ReactElement[];
+}): ReactElement {
+  return (
+    <View style={styles.sectionCard}>
+      <View style={styles.sectionHeader}>
+        <Text style={styles.sectionTitle}>{props.title}</Text>
+        <Text style={styles.sectionTotal}>{props.total}</Text>
+      </View>
+      <View style={styles.sectionBody}>{props.children}</View>
     </View>
   );
 }
@@ -134,28 +125,21 @@ function InspectRow(props: {
   label: string;
   count: number;
   onPress: () => void;
-  isLast: boolean;
-}): ReactElement {
-  const enabled = props.count > 0;
+}): ReactElement | null {
+  if (props.count <= 0) {
+    return null;
+  }
 
   return (
     <Pressable
       accessibilityRole="button"
-      disabled={!enabled}
       onPress={props.onPress}
-      style={({ pressed }) => [
-        styles.inspectRow,
-        !props.isLast ? styles.inspectRowBorder : null,
-        !enabled ? styles.inspectRowDisabled : null,
-        pressed && enabled ? styles.inspectRowPressed : null,
-      ]}
+      style={({ pressed }) => [styles.inspectRow, pressed ? styles.inspectRowPressed : null]}
     >
-      <Text style={[styles.inspectLabel, !enabled ? styles.inspectMuted : null]}>{props.label}</Text>
+      <Text style={styles.inspectLabel}>{props.label}</Text>
       <View style={styles.inspectRight}>
-        <Text style={[styles.inspectCount, !enabled ? styles.inspectMuted : null]}>
-          {props.count}
-        </Text>
-        {enabled ? <Text style={styles.inspectAction}>查看 ›</Text> : null}
+        <Text style={styles.inspectCount}>{props.count}</Text>
+        <Text style={styles.inspectChevron}>›</Text>
       </View>
     </Pressable>
   );
@@ -204,6 +188,8 @@ function buildInspectRouteItem(
   return { packId: item.packId, knowledgeId: item.knowledgeId, mode: 'study' };
 }
 
+const SECTION_CARD_RADIUS = 8;
+
 const styles = StyleSheet.create({
   panel: {
     backgroundColor: colors.surface,
@@ -213,85 +199,84 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: spacing.sm,
     overflow: 'hidden',
-    paddingBottom: spacing.xs,
-    paddingTop: spacing.sm,
+    paddingBottom: spacing.md,
+    paddingTop: spacing.md,
   },
   dayHeader: {
-    alignItems: 'flex-end',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     paddingBottom: spacing.sm,
     paddingHorizontal: spacing.md,
   },
   dateTitle: {
     color: colors.textPrimary,
-    flexShrink: 1,
     fontSize: 16,
     fontWeight: '600',
   },
-  daySummary: {
-    color: colors.textMuted,
-    fontSize: 12,
-    lineHeight: 16,
-  },
-  section: {
+  sectionList: {
+    gap: spacing.sm,
     paddingHorizontal: spacing.md,
   },
-  sectionGap: {
-    backgroundColor: colors.border,
-    height: StyleSheet.hairlineWidth,
-    marginVertical: spacing.xs,
+  sectionCard: {
+    backgroundColor: colors.statTileBackground,
+    borderRadius: SECTION_CARD_RADIUS,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
   },
-  sectionCaption: {
-    color: colors.textSecondary,
-    fontSize: 12,
+  sectionHeader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: spacing.xs,
+  },
+  sectionTitle: {
+    color: colors.textPrimary,
+    fontSize: 15,
     fontWeight: '600',
-    letterSpacing: 0.2,
-    marginBottom: 2,
+  },
+  sectionTotal: {
+    color: colors.textPrimary,
+    fontSize: 15,
+    fontWeight: '600',
+    minWidth: 20,
+    textAlign: 'right',
+  },
+  sectionBody: {
+    gap: 2,
   },
   inspectRow: {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    minHeight: 32,
+    minHeight: 30,
+    paddingLeft: spacing.md,
     paddingVertical: 2,
-  },
-  inspectRowBorder: {
-    borderBottomColor: colors.border,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  inspectRowDisabled: {
-    opacity: 0.42,
   },
   inspectRowPressed: {
     opacity: 0.72,
   },
   inspectLabel: {
-    color: colors.textPrimary,
+    color: colors.textSecondary,
     flex: 1,
-    fontSize: 14,
-    fontWeight: '500',
-  },
-  inspectMuted: {
-    color: colors.textMuted,
+    fontSize: 13,
+    fontWeight: '400',
   },
   inspectRight: {
     alignItems: 'center',
     flexDirection: 'row',
-    gap: spacing.sm,
+    gap: spacing.xs,
   },
   inspectCount: {
     color: colors.textSecondary,
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: '600',
-    minWidth: 18,
+    minWidth: 16,
     textAlign: 'right',
   },
-  inspectAction: {
+  inspectChevron: {
     color: colors.accent,
-    fontSize: 13,
+    fontSize: 16,
     fontWeight: '500',
-    minWidth: 44,
+    lineHeight: 18,
+    minWidth: 12,
     textAlign: 'right',
   },
   emptyHint: {
