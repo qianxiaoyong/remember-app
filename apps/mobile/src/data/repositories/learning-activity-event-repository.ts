@@ -24,6 +24,22 @@ export interface InsertLearningActivityEventInput {
   payload?: string;
 }
 
+export function hasStoryCompletedEvent(
+  packId: string,
+  knowledgeId: string,
+  db: SQLiteDatabase = openUserDatabase(),
+): boolean {
+  const row = db.getFirstSync<{ count: number }>(
+    `SELECT COUNT(*) AS count
+     FROM learning_activity_events
+     WHERE packId = ?
+       AND knowledgeId = ?
+       AND eventType = 'story_completed'`,
+    [packId, knowledgeId],
+  );
+  return (row?.count ?? 0) > 0;
+}
+
 export function hasFirstRevealEvent(
   packId: string,
   knowledgeId: string,

@@ -26,7 +26,11 @@ export interface ExpoAudioPositionState {
 export type ExpoAudioPositionListener = (state: ExpoAudioPositionState) => void;
 
 const positionListeners = new Set<ExpoAudioPositionListener>();
+const finishedListeners = new Set<() => void>();
 let positionListenerAttached = false;
+let wasPlayingForFinish = false;
+
+const PLAYBACK_END_TOLERANCE_MS = 300;
 
 function readPlayerPositionState(): ExpoAudioPositionState {
   if (!sharedPlayer) {
@@ -49,14 +53,43 @@ function notifyPositionListeners(): void {
   }
 }
 
+function notifyPlaybackFinishedIfNeeded(): void {
+  const state = readPlayerPositionState();
+  if (
+    wasPlayingForFinish &&
+    !state.playing &&
+    state.durationMs > 0 &&
+    state.positionMs > 0 &&
+    state.positionMs >= state.durationMs - PLAYBACK_END_TOLERANCE_MS
+  ) {
+    for (const listener of finishedListeners) {
+      listener();
+    }
+  }
+  wasPlayingForFinish = state.playing;
+}
+
+function resetPlaybackFinishedTracking(): void {
+  wasPlayingForFinish = false;
+}
+
 function attachPositionListener(): void {
   if (positionListenerAttached || !sharedPlayer) {
     return;
   }
   sharedPlayer.addListener(PLAYBACK_STATUS_UPDATE, () => {
+    notifyPlaybackFinishedIfNeeded();
     notifyPositionListeners();
   });
   positionListenerAttached = true;
+}
+
+export function subscribeExpoAudioPlaybackFinished(listener: () => void): () => void {
+  finishedListeners.add(listener);
+  attachPositionListener();
+  return () => {
+    finishedListeners.delete(listener);
+  };
 }
 
 export function subscribeExpoAudioPosition(listener: ExpoAudioPositionListener): () => void {
@@ -79,10 +112,12 @@ export async function prepareExpoAudioUri(uri: string): Promise<'loaded' | 'fail
     if (!sharedPlayer) {
       sharedPlayer = createAudioPlayer({ uri: playbackUri }, { updateInterval: 100 });
       positionListenerAttached = false;
+      resetPlaybackFinishedTracking();
       attachPositionListener();
     } else {
       sharedPlayer.replace({ uri: playbackUri });
       await sharedPlayer.seekTo(0);
+      resetPlaybackFinishedTracking();
     }
     const ready = await waitForPlayback(sharedPlayer);
     notifyPositionListeners();
@@ -178,10 +213,12 @@ export async function playExpoAudioUri(uri: string): Promise<'played' | 'failed'
     if (!sharedPlayer) {
       sharedPlayer = createAudioPlayer({ uri: playbackUri }, { updateInterval: 100 });
       positionListenerAttached = false;
+      resetPlaybackFinishedTracking();
       attachPositionListener();
     } else {
       sharedPlayer.replace({ uri: playbackUri });
       await sharedPlayer.seekTo(0);
+      resetPlaybackFinishedTracking();
     }
 
     sharedPlayer.play();
@@ -269,5 +306,7 @@ export function resetExpoAudioPlayerForTests(): void {
   audioModeConfigured = false;
   activePlaybackToken = 0;
   positionListeners.clear();
+  finishedListeners.clear();
   positionListenerAttached = false;
+  wasPlayingForFinish = false;
 }

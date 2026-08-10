@@ -251,8 +251,8 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
               revealed={revealed}
               setRevealed={setRevealed}
               sortOrder={cardDetail.sortOrder}
-              {...(headerContextLabel ? { contextLabel: headerContextLabel } : {})}
-              {...(inspectNavConfig ? { inspectNav: inspectNavConfig } : {})}
+              {...(headerContextLabel && !isReaderMode ? { contextLabel: headerContextLabel } : {})}
+              {...(inspectNavConfig && !isReaderMode ? { inspectNav: inspectNavConfig } : {})}
               {...(isReaderMode ? { onReaderBookmark: handleReaderBookmark } : {})}
               {...(isReaderMode ? { initialAudioPositionMs: readerInitialPositionMs } : {})}
             />

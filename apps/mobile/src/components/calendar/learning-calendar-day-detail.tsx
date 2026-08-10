@@ -1,4 +1,5 @@
 import type { ReactElement } from 'react';
+import { Fragment } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import type { CalendarDayDetail } from '../../use-cases/get-learning-calendar-day-detail';
@@ -30,6 +31,7 @@ export function LearningCalendarDayDetailPanel(
   const dateLabel = formatDateLabel(detail.localDate);
   const firstContactTotal = detail.firstContact.counts.total;
   const reviewTotal = detail.review.counts.total;
+  const storyTotal = detail.story.counts.completed;
 
   const openInspect = (category: InspectCategory, subCategory: string): void => {
     const first = buildInspectRouteItem(detail, category, subCategory);
@@ -45,71 +47,85 @@ export function LearningCalendarDayDetailPanel(
     router.push(route);
   };
 
+  const sectionBlocks: ReactElement[] = [];
+
+  if (reviewTotal > 0) {
+    sectionBlocks.push(
+      <View key="review" style={styles.section}>
+        <Text style={styles.sectionCaption}>复习量</Text>
+        {REVIEW_ROWS.map((row, index) => (
+          <InspectRow
+            key={row.subCategory}
+            count={detail.review.counts[row.countKey]}
+            isLast={index === REVIEW_ROWS.length - 1}
+            label={getInspectSubCategoryLabel(row.subCategory)}
+            onPress={() => {
+              openInspect('review', row.subCategory);
+            }}
+          />
+        ))}
+      </View>,
+    );
+  }
+
+  if (firstContactTotal > 0) {
+    sectionBlocks.push(
+      <View key="first_contact" style={styles.section}>
+        <Text style={styles.sectionCaption}>新词量</Text>
+        {FIRST_CONTACT_ROWS.map((row, index) => (
+          <InspectRow
+            key={row.subCategory}
+            count={detail.firstContact.counts[row.countKey]}
+            isLast={index === FIRST_CONTACT_ROWS.length - 1}
+            label={getInspectSubCategoryLabel(row.subCategory)}
+            onPress={() => {
+              openInspect('first_contact', row.subCategory);
+            }}
+          />
+        ))}
+      </View>,
+    );
+  }
+
+  if (storyTotal > 0) {
+    sectionBlocks.push(
+      <View key="story" style={styles.section}>
+        <Text style={styles.sectionCaption}>阅读量</Text>
+        <InspectRow
+          count={storyTotal}
+          isLast
+          label={getInspectSubCategoryLabel('completed')}
+          onPress={() => {
+            openInspect('story', 'completed');
+          }}
+        />
+      </View>,
+    );
+  }
+
+  const summaryParts = [
+    `复习量 ${reviewTotal}`,
+    `新词量 ${firstContactTotal}`,
+    ...(storyTotal > 0 ? [`阅读量 ${storyTotal}`] : []),
+  ];
+
   return (
     <View style={styles.panel}>
       <View style={styles.dayHeader}>
         <Text style={styles.dateTitle}>{dateLabel}</Text>
-        <Text style={styles.daySummary}>
-          新接触 {firstContactTotal} · 复习 {reviewTotal}
-        </Text>
+        <Text style={styles.daySummary}>{summaryParts.join(' · ')}</Text>
       </View>
 
-      {firstContactTotal > 0 ? (
-        <View style={styles.section}>
-          <Text style={styles.sectionCaption}>新接触</Text>
-          {FIRST_CONTACT_ROWS.map((row, index) => (
-            <InspectRow
-              key={row.subCategory}
-              count={detail.firstContact.counts[row.countKey]}
-              isLast={index === FIRST_CONTACT_ROWS.length - 1}
-              label={getInspectSubCategoryLabel(row.subCategory)}
-              onPress={() => {
-                openInspect('first_contact', row.subCategory);
-              }}
-            />
-          ))}
-        </View>
-      ) : null}
-
-      {firstContactTotal > 0 && reviewTotal > 0 ? <View style={styles.sectionGap} /> : null}
-
-      {reviewTotal > 0 ? (
-        <View style={styles.section}>
-          <Text style={styles.sectionCaption}>复习</Text>
-          {REVIEW_ROWS.map((row, index) => (
-            <InspectRow
-              key={row.subCategory}
-              count={detail.review.counts[row.countKey]}
-              isLast={index === REVIEW_ROWS.length - 1}
-              label={getInspectSubCategoryLabel(row.subCategory)}
-              onPress={() => {
-                openInspect('review', row.subCategory);
-              }}
-            />
-          ))}
-        </View>
-      ) : null}
-
-      {detail.story.counts.completed > 0 ? (
-        <>
-          {firstContactTotal > 0 || reviewTotal > 0 ? <View style={styles.sectionGap} /> : null}
-          <View style={styles.section}>
-            <Text style={styles.sectionCaption}>短文</Text>
-            <InspectRow
-              count={detail.story.counts.completed}
-              isLast
-              label="已听完"
-              onPress={() => {
-                openInspect('story', 'completed');
-              }}
-            />
-          </View>
-        </>
-      ) : null}
-
-      {firstContactTotal === 0 && reviewTotal === 0 && detail.story.counts.completed === 0 ? (
+      {sectionBlocks.length > 0 ? (
+        sectionBlocks.map((block, index) => (
+          <Fragment key={block.key ?? String(index)}>
+            {index > 0 ? <View style={styles.sectionGap} /> : null}
+            {block}
+          </Fragment>
+        ))
+      ) : (
         <Text style={styles.emptyHint}>当日暂无学习记录</Text>
-      ) : null}
+      )}
     </View>
   );
 }

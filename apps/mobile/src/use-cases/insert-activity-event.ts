@@ -6,6 +6,7 @@ import { LearningActivityEventType } from '@remember/contracts';
 import { createRecordId } from '../data/create-record-id';
 import {
   hasFirstRevealEvent,
+  hasStoryCompletedEvent,
   insertLearningActivityEvent,
 } from '../data/repositories/learning-activity-event-repository';
 import { openUserDatabase } from '../data/user-db/open-user-database';
@@ -29,6 +30,15 @@ export function insertActivityEvent<T extends LearningActivityEventTypeValue>(
       input.knowledgeId
     ) {
       if (hasFirstRevealEvent(input.packId, input.knowledgeId)) {
+        return;
+      }
+    }
+
+    if (
+      input.eventType === LearningActivityEventType.STORY_COMPLETED &&
+      input.knowledgeId
+    ) {
+      if (hasStoryCompletedEvent(input.packId, input.knowledgeId)) {
         return;
       }
     }
@@ -58,6 +68,15 @@ export function insertActivityEventInTransaction<T extends LearningActivityEvent
       input.knowledgeId
     ) {
       if (hasFirstRevealEvent(input.packId, input.knowledgeId, db)) {
+        return;
+      }
+    }
+
+    if (
+      input.eventType === LearningActivityEventType.STORY_COMPLETED &&
+      input.knowledgeId
+    ) {
+      if (hasStoryCompletedEvent(input.packId, input.knowledgeId, db)) {
         return;
       }
     }
