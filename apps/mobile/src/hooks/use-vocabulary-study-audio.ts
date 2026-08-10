@@ -49,8 +49,9 @@ export function useVocabularyStudyAudio(input: {
   }, []);
 
   useEffect(() => {
+    cancelRecallAutoPlay();
+
     if (!input.autoPlayActive || !input.packId || !input.primaryAudioRelativePath) {
-      cancelRecallAutoPlay();
       return;
     }
 

@@ -27,12 +27,16 @@ import {
   isLexiconItemSavedUseCase,
   toggleSavedLexiconItem,
 } from '../use-cases/toggle-saved-lexicon-item';
+import type { InspectQueueAdvanceResult } from './use-inspect-queue';
+import { markLearningCalendarNeedsRefresh } from '../shell/learning-calendar-refresh-signal';
 
 export function useStudyFlow(
   packId: string,
   options?: {
     knowledgeId?: string | null;
     inspectMode?: boolean;
+    inspectLocalDate?: string;
+    onInspectActionComplete?: () => InspectQueueAdvanceResult | void;
   },
 ) {
   const isReaderMode = useMemo(() => resolvePackLibraryPresentation(packId) === 'reader', [packId]);
@@ -98,8 +102,14 @@ export function useStudyFlow(
     setRevealed(false);
     setBrowseCompleteVisible(false);
     setBrowseCompleteSummary(null);
-    setBrowseReady(true);
-  }, [inspectMode, isBrowseMode, options?.knowledgeId]);
+    setBrowseReady(false);
+    const frame = requestAnimationFrame(() => {
+      setBrowseReady(true);
+    });
+    return () => {
+      cancelAnimationFrame(frame);
+    };
+  }, [inspectMode, isBrowseMode, options?.inspectLocalDate, options?.knowledgeId]);
 
   const inspectKnowledgeId =
     inspectMode && isBrowseMode ? (options?.knowledgeId ?? null) : null;
@@ -142,8 +152,19 @@ export function useStudyFlow(
         cardDetail?.cardType === 'vocabulary' ? cardDetail.content.prompt.primaryAudio : null,
       autoPlayActive:
         isBrowseMode && !revealed && browseReady && cardDetail?.cardType === 'vocabulary',
-      cardKey: currentKnowledgeId,
+      cardKey:
+        currentKnowledgeId && packId ? `${packId}:${currentKnowledgeId}` : currentKnowledgeId,
     });
+
+  const finishInspectAction = useCallback(() => {
+    if (!inspectMode) {
+      return;
+    }
+    markLearningCalendarNeedsRefresh();
+    options?.onInspectActionComplete?.();
+  }, [inspectMode, options]);
+
+  const inspectActivityLocalDate = inspectMode ? options?.inspectLocalDate : undefined;
 
   const advanceBrowse = useCallback(() => {
     if (!isBrowseMode || browseCards.length === 0) {
@@ -185,12 +206,15 @@ export function useStudyFlow(
             ? { sortOrder: cardDetail.sortOrder }
             : {}),
         ...(activitySource ? { activitySource } : {}),
+        ...(inspectActivityLocalDate ? { activityLocalDate: inspectActivityLocalDate } : {}),
       });
       if (result.status === 'created') {
         setInReviewPool(true);
       }
       if (!inspectMode) {
         advanceBrowse();
+      } else {
+        finishInspectAction();
       }
     } catch (error) {
       setMessage(error instanceof Error ? error.message : '加入复习失败');
@@ -201,9 +225,12 @@ export function useStudyFlow(
     activitySource,
     advanceBrowse,
     browseCards,
+    cardDetail?.sortOrder,
     currentIndex,
     currentKnowledgeId,
+    finishInspectAction,
     headword,
+    inspectActivityLocalDate,
     inspectMode,
     packId,
   ]);
@@ -225,11 +252,14 @@ export function useStudyFlow(
             ? { sortOrder: cardDetail.sortOrder }
             : {}),
         ...(activitySource ? { activitySource } : {}),
+        ...(inspectActivityLocalDate ? { activityLocalDate: inspectActivityLocalDate } : {}),
       });
       setInReviewPool(true);
       setUpdateReviewVisible(false);
       if (!inspectMode) {
         advanceBrowse();
+      } else {
+        finishInspectAction();
       }
     } catch (error) {
       setMessage(error instanceof Error ? error.message : '更新复习失败');
@@ -240,9 +270,12 @@ export function useStudyFlow(
     activitySource,
     advanceBrowse,
     browseCards,
+    cardDetail?.sortOrder,
     currentIndex,
     currentKnowledgeId,
+    finishInspectAction,
     headword,
+    inspectActivityLocalDate,
     inspectMode,
     packId,
   ]);
@@ -261,17 +294,23 @@ export function useStudyFlow(
           ? { sortOrder: cardDetail.sortOrder }
           : {}),
       ...(activitySource ? { activitySource } : {}),
+      ...(inspectActivityLocalDate ? { activityLocalDate: inspectActivityLocalDate } : {}),
     });
     if (!inspectMode) {
       advanceBrowse();
+    } else {
+      finishInspectAction();
     }
   }, [
     activitySource,
     advanceBrowse,
     browseCards,
+    cardDetail?.sortOrder,
     currentIndex,
     currentKnowledgeId,
+    finishInspectAction,
     headword,
+    inspectActivityLocalDate,
     inspectMode,
     packId,
   ]);

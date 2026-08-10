@@ -18,6 +18,7 @@ export function updateReviewPoolFromPack(input: {
   displayLabel?: string;
   sortOrder?: number;
   activitySource?: 'browse' | 'review_tab' | 'calendar_inspect';
+  activityLocalDate?: string;
   now?: Date;
 }): void {
   const now = input.now ?? new Date();
@@ -63,6 +64,7 @@ export function updateReviewPoolFromPack(input: {
       ...(input.sortOrder !== undefined ? { sortOrder: input.sortOrder } : {}),
       created: false,
       ...(input.activitySource ? { source: input.activitySource } : {}),
+      ...(input.activityLocalDate ? { activityLocalDate: input.activityLocalDate } : {}),
       now,
     });
   }

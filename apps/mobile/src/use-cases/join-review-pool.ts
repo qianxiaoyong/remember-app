@@ -53,6 +53,8 @@ export function joinReviewPool(input: {
   displayLabel?: string;
   sortOrder?: number;
   activitySource?: 'browse' | 'review_tab' | 'calendar_inspect';
+  /** 家长检查：统计与事件挂在被查看的日历日 */
+  activityLocalDate?: string;
   now?: Date;
 }): JoinReviewPoolResult {
   const now = input.now ?? new Date();
@@ -72,7 +74,7 @@ export function joinReviewPool(input: {
     now,
   });
   const updatedAt = learningRow.updatedAt;
-  const localDate = formatLocalReviewDate(now, timeZone);
+  const localDate = input.activityLocalDate ?? formatLocalReviewDate(now, timeZone);
   const payload = buildSyncOutboxPayload({ row: learningRow });
 
   const db = openUserDatabase();
@@ -106,6 +108,7 @@ export function joinReviewPool(input: {
       ...(input.sortOrder !== undefined ? { sortOrder: input.sortOrder } : {}),
       created: true,
       ...(input.activitySource ? { source: input.activitySource } : {}),
+      ...(input.activityLocalDate ? { activityLocalDate: input.activityLocalDate } : {}),
       now,
     });
   }

@@ -6,6 +6,7 @@ export function skipPackCard(input: {
   displayLabel?: string;
   sortOrder?: number;
   activitySource?: 'browse' | 'review_tab' | 'calendar_inspect';
+  activityLocalDate?: string;
   now?: Date;
 }): void {
   if (!input.displayLabel) {
@@ -18,6 +19,7 @@ export function skipPackCard(input: {
     displayLabel: input.displayLabel,
     ...(input.sortOrder !== undefined ? { sortOrder: input.sortOrder } : {}),
     ...(input.activitySource ? { source: input.activitySource } : {}),
+    ...(input.activityLocalDate ? { activityLocalDate: input.activityLocalDate } : {}),
     ...(input.now ? { now: input.now } : {}),
   });
 }

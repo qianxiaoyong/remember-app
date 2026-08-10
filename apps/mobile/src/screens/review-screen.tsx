@@ -29,8 +29,18 @@ export function ReviewScreen(props: {
   const inspectKnowledgeId =
     inspectQueue.currentItem?.knowledgeId ?? props.inspectKnowledgeId ?? null;
 
+  const handleInspectActionComplete = useCallback(() => {
+    const result = inspectQueue.advanceAfterAction();
+    if (result === 'completed') {
+      router.back();
+    }
+  }, [inspectQueue.advanceAfterAction, router]);
+
   const normalFlow = useReviewFlow();
-  const inspectFlow = useReviewInspectFlow(inspectMode ? inspectKnowledgeId : null);
+  const inspectFlow = useReviewInspectFlow(inspectMode ? inspectKnowledgeId : null, {
+    ...(props.inspect?.localDate ? { inspectLocalDate: props.inspect.localDate } : {}),
+    ...(inspectMode ? { onInspectActionComplete: handleInspectActionComplete } : {}),
+  });
 
   const {
     session,

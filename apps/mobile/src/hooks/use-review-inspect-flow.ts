@@ -11,8 +11,16 @@ import {
   toggleSavedLexiconItem,
 } from '../use-cases/toggle-saved-lexicon-item';
 import { useVocabularyStudyAudio } from './use-vocabulary-study-audio';
+import type { InspectQueueAdvanceResult } from './use-inspect-queue';
+import { markLearningCalendarNeedsRefresh } from '../shell/learning-calendar-refresh-signal';
 
-export function useReviewInspectFlow(knowledgeId: string | null) {
+export function useReviewInspectFlow(
+  knowledgeId: string | null,
+  options?: {
+    inspectLocalDate?: string;
+    onInspectActionComplete?: () => InspectQueueAdvanceResult | void;
+  },
+) {
   const [revealed, setRevealed] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
@@ -21,12 +29,20 @@ export function useReviewInspectFlow(knowledgeId: string | null) {
   const [lexiconSaved, setLexiconSaved] = useState(false);
   const [lexiconSelectedSurfaceForm, setLexiconSelectedSurfaceForm] = useState<string | null>(null);
   const [audioMessage, setAudioMessage] = useState<string | null>(null);
+  const [audioReady, setAudioReady] = useState(false);
 
   useEffect(() => {
     setRevealed(false);
     setLexiconVisible(false);
     setLexiconSelectedSurfaceForm(null);
-  }, [knowledgeId]);
+    setAudioReady(false);
+    const frame = requestAnimationFrame(() => {
+      setAudioReady(true);
+    });
+    return () => {
+      cancelAnimationFrame(frame);
+    };
+  }, [knowledgeId, options?.inspectLocalDate]);
 
   const reviewContext = useMemo(() => {
     if (!knowledgeId) {
@@ -45,8 +61,12 @@ export function useReviewInspectFlow(knowledgeId: string | null) {
           ? reviewContext.cardDetail.content.prompt.primaryAudio
           : null,
       autoPlayActive:
-        !revealed && reviewContext?.cardDetail?.cardType === 'vocabulary' && Boolean(sourcePackId),
-      cardKey: knowledgeId,
+        audioReady &&
+        !revealed &&
+        reviewContext?.cardDetail?.cardType === 'vocabulary' &&
+        Boolean(sourcePackId),
+      cardKey:
+        knowledgeId && sourcePackId ? `${sourcePackId}:${knowledgeId}` : knowledgeId,
     });
 
   const outcomeIntervalLabels = useMemo(() => {
@@ -55,6 +75,11 @@ export function useReviewInspectFlow(knowledgeId: string | null) {
     }
     return getReviewOutcomeIntervalLabels(knowledgeId);
   }, [knowledgeId]);
+
+  const finishInspectAction = useCallback(() => {
+    markLearningCalendarNeedsRefresh();
+    options?.onInspectActionComplete?.();
+  }, [options]);
 
   const handleOutcome = useCallback(
     (outcome: 'passed' | 'failed') => {
@@ -69,18 +94,20 @@ export function useReviewInspectFlow(knowledgeId: string | null) {
           outcome,
           inspectMode: true,
           activitySource: 'calendar_inspect',
+          ...(options?.inspectLocalDate ? { activityLocalDate: options.inspectLocalDate } : {}),
           ...(reviewContext?.cardDetail?.cardType === 'vocabulary'
             ? { displayLabel: reviewContext.cardDetail.content.prompt.headword }
             : {}),
         });
         setRevealed(false);
+        finishInspectAction();
       } catch (error) {
         setMessage(error instanceof Error ? error.message : '保存复习结果失败');
       } finally {
         setIsSubmitting(false);
       }
     },
-    [knowledgeId, reviewContext?.cardDetail],
+    [finishInspectAction, knowledgeId, options?.inspectLocalDate, reviewContext?.cardDetail],
   );
 
   const openLexicon = useCallback(

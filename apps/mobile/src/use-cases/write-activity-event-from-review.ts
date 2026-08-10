@@ -11,14 +11,17 @@ export function writeJoinReviewActivityEvent(input: {
   sortOrder?: number;
   created: boolean;
   source?: 'browse' | 'review_tab' | 'calendar_inspect';
+  /** 家长检查：事件挂在被查看的日历日，而非操作当天 */
+  activityLocalDate?: string;
   now?: Date;
 }): void {
   const now = input.now ?? new Date();
   const timeZone = getDeviceTimeZone();
   const packId = resolveContentPackId(input.catalogPackId);
+  const localDate = input.activityLocalDate ?? formatLocalReviewDate(now, timeZone);
 
   insertActivityEvent({
-    localDate: formatLocalReviewDate(now, timeZone),
+    localDate,
     occurredAt: now.toISOString(),
     eventType: LearningActivityEventType.VOCABULARY_JOIN_REVIEW,
     packId,
@@ -38,14 +41,16 @@ export function writeSkipReviewActivityEvent(input: {
   displayLabel: string;
   sortOrder?: number;
   source?: 'browse' | 'review_tab' | 'calendar_inspect';
+  activityLocalDate?: string;
   now?: Date;
 }): void {
   const now = input.now ?? new Date();
   const timeZone = getDeviceTimeZone();
   const packId = resolveContentPackId(input.catalogPackId);
+  const localDate = input.activityLocalDate ?? formatLocalReviewDate(now, timeZone);
 
   insertActivityEvent({
-    localDate: formatLocalReviewDate(now, timeZone),
+    localDate,
     occurredAt: now.toISOString(),
     eventType: LearningActivityEventType.VOCABULARY_SKIP_REVIEW,
     packId,
@@ -65,14 +70,16 @@ export function writeReviewOutcomeActivityEvent(input: {
   outcome: 'passed' | 'failed';
   boxLevelAfter?: number;
   source?: 'browse' | 'review_tab' | 'calendar_inspect';
+  activityLocalDate?: string;
   now?: Date;
 }): void {
   const now = input.now ?? new Date();
   const timeZone = getDeviceTimeZone();
   const packId = resolveContentPackId(input.catalogPackId);
+  const localDate = input.activityLocalDate ?? formatLocalReviewDate(now, timeZone);
 
   insertActivityEvent({
-    localDate: formatLocalReviewDate(now, timeZone),
+    localDate,
     occurredAt: now.toISOString(),
     eventType: LearningActivityEventType.REVIEW_OUTCOME,
     packId,

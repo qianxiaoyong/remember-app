@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react';
 import { useCallback, useMemo, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 import { calculateHeatLevel } from '@remember/domain';
 import type { HeatLevel } from '@remember/domain';
 import { formatLocalReviewDate } from '@remember/domain';
@@ -12,6 +12,7 @@ import { LearningCalendarMonth } from '../components/calendar/learning-calendar-
 import { listEventsInDateRange } from '../data/repositories/learning-activity-event-repository';
 import { getLearningCalendarDayDetail } from '../use-cases/get-learning-calendar-day-detail';
 import { getDeviceTimeZone } from '../lib/get-device-time-zone';
+import { consumeLearningCalendarNeedsRefresh } from '../shell/learning-calendar-refresh-signal';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 
@@ -27,9 +28,21 @@ export function LearningCalendarScreen(props: LearningCalendarScreenProps): Reac
   const initialParts = parseLocalDate(selectedDate);
   const [year, setYear] = useState(initialParts.year);
   const [month, setMonth] = useState(initialParts.month);
+  const [refreshKey, setRefreshKey] = useState(0);
 
-  const heatByDate = useMemo(() => buildMonthHeatMap(year, month), [year, month]);
-  const dayDetail = useMemo(() => getLearningCalendarDayDetail(selectedDate), [selectedDate]);
+  useFocusEffect(
+    useCallback(() => {
+      if (consumeLearningCalendarNeedsRefresh()) {
+        setRefreshKey((key) => key + 1);
+      }
+    }, []),
+  );
+
+  const heatByDate = useMemo(() => buildMonthHeatMap(year, month), [year, month, refreshKey]);
+  const dayDetail = useMemo(
+    () => getLearningCalendarDayDetail(selectedDate),
+    [selectedDate, refreshKey],
+  );
 
   const goBack = useCallback((): void => {
     router.back();

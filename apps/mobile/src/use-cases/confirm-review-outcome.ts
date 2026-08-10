@@ -27,6 +27,7 @@ export function confirmReviewOutcome(input: {
   outcome: 'passed' | 'failed';
   displayLabel?: string;
   activitySource?: 'browse' | 'review_tab' | 'calendar_inspect';
+  activityLocalDate?: string;
   inspectMode?: boolean;
   now?: Date;
 }): void {
@@ -79,7 +80,7 @@ export function confirmReviewOutcome(input: {
     updatedAt,
   };
   const payload = buildSyncOutboxPayload({ row: learningRow, outcome: input.outcome });
-  const localDate = formatLocalReviewDate(now, timeZone);
+  const localDate = input.activityLocalDate ?? formatLocalReviewDate(now, timeZone);
 
   const db = openUserDatabase();
   db.execSync('BEGIN IMMEDIATE');
@@ -129,6 +130,7 @@ export function confirmReviewOutcome(input: {
       outcome: input.outcome,
       boxLevelAfter: learningRow.boxLevel,
       ...(input.activitySource ? { source: input.activitySource } : {}),
+      ...(input.activityLocalDate ? { activityLocalDate: input.activityLocalDate } : {}),
       now,
     });
   }

@@ -40,6 +40,13 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
   const activeKnowledgeId = inspectQueue.currentItem?.knowledgeId ?? props.knowledgeId;
   const inspectMode = props.inspect !== null && props.inspect !== undefined;
 
+  const handleInspectActionComplete = useCallback(() => {
+    const result = inspectQueue.advanceAfterAction();
+    if (result === 'completed') {
+      router.back();
+    }
+  }, [inspectQueue.advanceAfterAction, router]);
+
   const {
     isReaderMode,
     isBrowseMode,
@@ -78,6 +85,8 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
   } = useStudyFlow(activePackId, {
     ...(activeKnowledgeId !== undefined ? { knowledgeId: activeKnowledgeId } : {}),
     inspectMode,
+    ...(props.inspect?.localDate ? { inspectLocalDate: props.inspect.localDate } : {}),
+    ...(inspectMode ? { onInspectActionComplete: handleInspectActionComplete } : {}),
   });
   const [moreVisible, setMoreVisible] = useState(false);
   const [switchVisible, setSwitchVisible] = useState(false);

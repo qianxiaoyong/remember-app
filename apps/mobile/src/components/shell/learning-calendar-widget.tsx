@@ -1,9 +1,10 @@
 import type { ReactElement } from 'react';
-import { useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 import type { HeatCell } from '../../use-cases/get-learning-activity-summary';
 import { getLearningActivitySummary } from '../../use-cases/get-learning-activity-summary';
+import { consumeLearningCalendarNeedsRefresh } from '../../shell/learning-calendar-refresh-signal';
 import { SurfaceCard } from '../ui/surface-card';
 import { heatLevelColors, weekdayLabels } from '../calendar/calendar-theme';
 import { colors } from '../../theme/colors';
@@ -11,8 +12,17 @@ import { spacing } from '../../theme/spacing';
 
 export function LearningCalendarWidget(): ReactElement {
   const router = useRouter();
-  const summary = useMemo(() => getLearningActivitySummary(), []);
+  const [refreshKey, setRefreshKey] = useState(0);
+  const summary = useMemo(() => getLearningActivitySummary(), [refreshKey]);
   const monthLabels = useMemo(() => buildMonthLabels(summary.heatGrid), [summary.heatGrid]);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (consumeLearningCalendarNeedsRefresh()) {
+        setRefreshKey((key) => key + 1);
+      }
+    }, []),
+  );
 
   const openCalendar = (localDate?: string): void => {
     if (localDate) {
