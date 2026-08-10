@@ -4,12 +4,7 @@ import { getLearningCalendarDayDetail } from './get-learning-calendar-day-detail
 export type InspectCategory = 'first_contact' | 'review' | 'story';
 
 export type InspectSubCategory =
-  | 'pending'
-  | 'joined_review'
-  | 'skipped'
-  | 'remembered'
-  | 'not_familiar'
-  | 'completed';
+  'pending' | 'joined_review' | 'skipped' | 'remembered' | 'not_familiar' | 'completed';
 
 export interface InspectQueueItem {
   packId: string;
@@ -24,7 +19,7 @@ function mapStudyItems(items: CalendarDayItem[]): InspectQueueItem[] {
     .map((item) => ({
       packId: item.packId,
       knowledgeId: item.knowledgeId as string,
-      displayLabel: item.displayLabel ?? item.knowledgeId as string,
+      displayLabel: item.displayLabel ?? (item.knowledgeId as string),
       mode: 'study' as const,
     }));
 }
@@ -35,7 +30,7 @@ function mapReviewItems(items: CalendarDayItem[]): InspectQueueItem[] {
     .map((item) => ({
       packId: item.packId,
       knowledgeId: item.knowledgeId as string,
-      displayLabel: item.displayLabel ?? item.knowledgeId as string,
+      displayLabel: item.displayLabel ?? (item.knowledgeId as string),
       mode: 'review' as const,
     }));
 }

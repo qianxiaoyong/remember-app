@@ -1,4 +1,7 @@
-import type { ActivityPayloadByEventType, LearningActivityEventTypeValue } from '@remember/contracts';
+import type {
+  ActivityPayloadByEventType,
+  LearningActivityEventTypeValue,
+} from '@remember/contracts';
 import { LearningActivityEventType } from '@remember/contracts';
 import { createRecordId } from '../data/create-record-id';
 import {

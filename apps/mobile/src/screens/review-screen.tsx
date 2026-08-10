@@ -13,9 +13,7 @@ import { PrimaryButton } from '../components/ui/primary-button';
 import { useReviewFlow } from '../hooks/use-review-flow';
 import { useReviewInspectFlow } from '../hooks/use-review-inspect-flow';
 import { useInspectQueue, type InspectQueueConfig } from '../hooks/use-inspect-queue';
-import {
-  InspectModeNavFloating,
-} from '../components/calendar/inspect-mode-chrome';
+import { InspectModeNavFloating } from '../components/calendar/inspect-mode-chrome';
 import { VocabularyStudyPanel } from '../learning/card-types/vocabulary/vocabulary-study-panel';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';

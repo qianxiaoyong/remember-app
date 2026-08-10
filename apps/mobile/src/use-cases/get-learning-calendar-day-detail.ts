@@ -34,7 +34,10 @@ export interface CalendarDayDetail {
   };
 }
 
-function toDayItem(row: LearningActivityEventRow, extra?: Partial<CalendarDayItem>): CalendarDayItem {
+function toDayItem(
+  row: LearningActivityEventRow,
+  extra?: Partial<CalendarDayItem>,
+): CalendarDayItem {
   return {
     eventId: row.eventId,
     packId: row.packId,

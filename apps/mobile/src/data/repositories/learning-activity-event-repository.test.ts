@@ -80,12 +80,7 @@ describe('learning-activity-event-repository', () => {
     };
 
     expect(
-      countEventsByTypeInRange(
-        'review_outcome',
-        '2026-05-01',
-        '2026-08-09',
-        db as never,
-      ),
+      countEventsByTypeInRange('review_outcome', '2026-05-01', '2026-08-09', db as never),
     ).toBe(12);
   });
 });

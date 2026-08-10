@@ -25,73 +25,73 @@ export function LearningCalendarWidget(): ReactElement {
   return (
     <Pressable accessibilityRole="button" onPress={() => openCalendar()}>
       <SurfaceCard>
-      <View style={styles.headerRow}>
-        <Text style={styles.title}>学习日历</Text>
-        <Pressable
-          accessibilityRole="button"
-          hitSlop={8}
-          onPress={(event) => {
-            event.stopPropagation?.();
-            openCalendar();
-          }}
-        >
-          <Text style={styles.viewAll}>查看全部 ›</Text>
-        </Pressable>
-      </View>
+        <View style={styles.headerRow}>
+          <Text style={styles.title}>学习日历</Text>
+          <Pressable
+            accessibilityRole="button"
+            hitSlop={8}
+            onPress={(event) => {
+              event.stopPropagation?.();
+              openCalendar();
+            }}
+          >
+            <Text style={styles.viewAll}>查看全部 ›</Text>
+          </Pressable>
+        </View>
 
-      <View style={styles.statsRow}>
-        <SummaryStat label="学习天数" subLabel="近90天" value={summary.activeDays} />
-        <SummaryStat label="新接触" subLabel="近90天" value={summary.firstRevealCount} />
-        <SummaryStat label="复习词数" subLabel="近90天" value={summary.reviewOutcomeCount} />
-      </View>
+        <View style={styles.statsRow}>
+          <SummaryStat label="学习天数" subLabel="近90天" value={summary.activeDays} />
+          <SummaryStat label="新接触" subLabel="近90天" value={summary.firstRevealCount} />
+          <SummaryStat label="复习词数" subLabel="近90天" value={summary.reviewOutcomeCount} />
+        </View>
 
-      <View style={styles.gridWrap}>
-        {summary.heatGrid.map((row, rowIndex) => (
-          <View key={`row-${String(rowIndex)}`} style={styles.gridRow}>
-            {row.map((cell) => (
-              <Pressable
-                key={cell.localDate}
-                accessibilityLabel={`${cell.localDate} 学习记录`}
-                accessibilityRole="button"
-                disabled={!cell.isInRange}
-                onPress={(event) => {
-                  event.stopPropagation?.();
-                  if (cell.isInRange) {
-                    openCalendar(cell.localDate);
-                  }
-                }}
-                style={[
-                  styles.heatCell,
-                  {
-                    backgroundColor: cell.isInRange
-                      ? heatLevelColors[cell.level]
-                      : heatLevelColors[0],
-                  },
-                  cell.isToday ? styles.heatCellToday : null,
-                ]}
-              />
-            ))}
-          </View>
-        ))}
-      </View>
+        <View style={styles.gridWrap}>
+          {summary.heatGrid.map((row, rowIndex) => (
+            <View key={`row-${String(rowIndex)}`} style={styles.gridRow}>
+              {row.map((cell) => (
+                <Pressable
+                  key={cell.localDate}
+                  accessibilityLabel={`${cell.localDate} 学习记录`}
+                  accessibilityRole="button"
+                  disabled={!cell.isInRange}
+                  onPress={(event) => {
+                    event.stopPropagation?.();
+                    if (cell.isInRange) {
+                      openCalendar(cell.localDate);
+                    }
+                  }}
+                  style={[
+                    styles.heatCell,
+                    {
+                      backgroundColor: cell.isInRange
+                        ? heatLevelColors[cell.level]
+                        : heatLevelColors[0],
+                    },
+                    cell.isToday ? styles.heatCellToday : null,
+                  ]}
+                />
+              ))}
+            </View>
+          ))}
+        </View>
 
-      <View style={styles.weekdayRow}>
-        {weekdayLabels.map((label) => (
-          <Text key={label} style={styles.weekdayLabel}>
-            {label}
-          </Text>
-        ))}
-      </View>
-
-      {monthLabels.length > 0 ? (
-        <View style={styles.monthRow}>
-          {monthLabels.map((item) => (
-            <Text key={item.key} style={[styles.monthLabel, { left: `${item.leftPercent}%` }]}>
-              {item.label}
+        <View style={styles.weekdayRow}>
+          {weekdayLabels.map((label) => (
+            <Text key={label} style={styles.weekdayLabel}>
+              {label}
             </Text>
           ))}
         </View>
-      ) : null}
+
+        {monthLabels.length > 0 ? (
+          <View style={styles.monthRow}>
+            {monthLabels.map((item) => (
+              <Text key={item.key} style={[styles.monthLabel, { left: `${item.leftPercent}%` }]}>
+                {item.label}
+              </Text>
+            ))}
+          </View>
+        ) : null}
       </SurfaceCard>
     </Pressable>
   );

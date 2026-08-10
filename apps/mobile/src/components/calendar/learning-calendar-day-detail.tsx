@@ -9,7 +9,9 @@ interface LearningCalendarDayDetailProps {
   detail: CalendarDayDetail;
 }
 
-export function LearningCalendarDayDetailPanel(props: LearningCalendarDayDetailProps): ReactElement {
+export function LearningCalendarDayDetailPanel(
+  props: LearningCalendarDayDetailProps,
+): ReactElement {
   const router = useRouter();
   const { detail } = props;
   const dateLabel = formatDateLabel(detail.localDate);
@@ -54,8 +56,7 @@ export function LearningCalendarDayDetailPanel(props: LearningCalendarDayDetailP
         counts={`记住了 ${detail.review.counts.remembered} · 还不熟 ${detail.review.counts.notFamiliar}`}
         inspectEnabled={detail.review.counts.total > 0}
         onInspect={() => {
-          const subCategory =
-            detail.review.counts.remembered > 0 ? 'remembered' : 'not_familiar';
+          const subCategory = detail.review.counts.remembered > 0 ? 'remembered' : 'not_familiar';
           openInspect('review', subCategory);
         }}
         title={`复习 ${detail.review.counts.total}`}

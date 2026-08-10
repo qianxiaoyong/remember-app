@@ -18,7 +18,9 @@ export function LibraryOverviewCard(props: LibraryOverviewCardProps): ReactEleme
   const { overview } = props;
   const { width: windowWidth } = useWindowDimensions();
   const horizontalPadding = spacing.lg * 2 + spacing.md * 2;
-  const tileWidth = Math.floor((windowWidth - horizontalPadding - STAT_TILE_GAP * 2) / VISIBLE_TILE_COUNT);
+  const tileWidth = Math.floor(
+    (windowWidth - horizontalPadding - STAT_TILE_GAP * 2) / VISIBLE_TILE_COUNT,
+  );
 
   return (
     <SurfaceCard>

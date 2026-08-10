@@ -25,14 +25,14 @@
 
 ## 范围外（defer）
 
-| 项 | 说明 |
-| --- | --- |
-| `learning_activity_daily_rollup` 曲线 | ADR 附录 D；P2 |
-| 事件云端同步 | 新 ADR；P1 不做 |
-| 听写/跟读/做题 modality | enum 预留；P1 不写入 |
-| 独立「数据统计」二级页 | ADR §3.1 明确不做 |
-| 事件超 1 年 purge | P2 |
-| 首页格长按 ⓘ 说明 | P1.1 可选 |
+| 项                                    | 说明                 |
+| ------------------------------------- | -------------------- |
+| `learning_activity_daily_rollup` 曲线 | ADR 附录 D；P2       |
+| 事件云端同步                          | 新 ADR；P1 不做      |
+| 听写/跟读/做题 modality               | enum 预留；P1 不写入 |
+| 独立「数据统计」二级页                | ADR §3.1 明确不做    |
+| 事件超 1 年 purge                     | P2                   |
+| 首页格长按 ⓘ 说明                     | P1.1 可选            |
 
 ## 依赖与实施顺序
 
@@ -260,13 +260,13 @@ git commit -m "feat(mobile): learning activity event repository and insert use-c
 
 **规则（ADR §8）：**
 
-| eventType | 触发点 | payload |
-| --- | --- | --- |
-| `vocabulary_first_reveal` | 首次 `revealed=true` | `{ sortOrder? }` |
-| `vocabulary_join_review` | join / update 成功 | `{ sortOrder?, created? }` |
-| `vocabulary_skip_review` | skip 成功 | `{ sortOrder? }` |
-| `review_outcome` | confirmReviewOutcome 成功 | `{ outcome, modality: 'vocabulary', boxLevelAfter? }` |
-| `story_completed` | **若 reader 已有完课信号则挂钩**；否则本 Task 末留 TODO + 测试 `it.skip` | `{ positionMs?, durationMs? }` |
+| eventType                 | 触发点                                                                   | payload                                               |
+| ------------------------- | ------------------------------------------------------------------------ | ----------------------------------------------------- |
+| `vocabulary_first_reveal` | 首次 `revealed=true`                                                     | `{ sortOrder? }`                                      |
+| `vocabulary_join_review`  | join / update 成功                                                       | `{ sortOrder?, created? }`                            |
+| `vocabulary_skip_review`  | skip 成功                                                                | `{ sortOrder? }`                                      |
+| `review_outcome`          | confirmReviewOutcome 成功                                                | `{ outcome, modality: 'vocabulary', boxLevelAfter? }` |
+| `story_completed`         | **若 reader 已有完课信号则挂钩**；否则本 Task 末留 TODO + 测试 `it.skip` | `{ positionMs?, durationMs? }`                        |
 
 - `displayLabel`：vocabulary 用 headword；story 用课标题
 - 可选 `payload.source = 'calendar_inspect'`（Task 10）
@@ -512,12 +512,12 @@ pnpm --filter @remember/mobile typecheck
 
 ## 风险与缓解
 
-| 风险 | 缓解 |
-| --- | --- |
-| 旁路 insert 失败静默 | 单元测试 + 开发环境 console.warn |
+| 风险                                         | 缓解                                               |
+| -------------------------------------------- | -------------------------------------------------- |
+| 旁路 insert 失败静默                         | 单元测试 + 开发环境 console.warn                   |
 | inspect 模式 confirmReviewOutcome 需 session | 扩展 use-case 支持 `inspectMode` 跳过 session 校验 |
-| story 完课信号未就绪 | Task 5 TODO + skip 测试；Plan 已注明 |
-| 90 天 scan 性能 | P1 数据量小；索引 `localDate`；P2 rollup |
+| story 完课信号未就绪                         | Task 5 TODO + skip 测试；Plan 已注明               |
+| 90 天 scan 性能                              | P1 数据量小；索引 `localDate`；P2 rollup           |
 
 ---
 

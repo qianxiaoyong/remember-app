@@ -35,11 +35,5 @@ export default function StudyRoute(): ReactElement {
       ? { localDate, category, subCategory, initialIndex: Number.isFinite(index) ? index : 0 }
       : null;
 
-  return (
-    <StudyScreen
-      inspect={inspectConfig}
-      knowledgeId={knowledgeId ?? null}
-      packId={packId}
-    />
-  );
+  return <StudyScreen inspect={inspectConfig} knowledgeId={knowledgeId ?? null} packId={packId} />;
 }

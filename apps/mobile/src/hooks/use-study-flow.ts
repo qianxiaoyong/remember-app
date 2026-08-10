@@ -32,10 +32,13 @@ export function useStudyFlow(
   packId: string,
   options?: {
     knowledgeId?: string | null;
+    inspectMode?: boolean;
   },
 ) {
   const isReaderMode = useMemo(() => resolvePackLibraryPresentation(packId) === 'reader', [packId]);
   const isBrowseMode = !isReaderMode;
+  const inspectMode = options?.inspectMode === true;
+  const activitySource = inspectMode ? ('calendar_inspect' as const) : undefined;
   const [browseCards, setBrowseCards] = useState<PackCardSummary[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [browseReady, setBrowseReady] = useState(false);
@@ -166,17 +169,29 @@ export function useStudyFlow(
         ...(browseCards[currentIndex]?.sortOrder !== undefined
           ? { sortOrder: browseCards[currentIndex].sortOrder }
           : {}),
+        ...(activitySource ? { activitySource } : {}),
       });
       if (result.status === 'created') {
         setInReviewPool(true);
       }
-      advanceBrowse();
+      if (!inspectMode) {
+        advanceBrowse();
+      }
     } catch (error) {
       setMessage(error instanceof Error ? error.message : '加入复习失败');
     } finally {
       setIsSubmitting(false);
     }
-  }, [advanceBrowse, browseCards, currentIndex, currentKnowledgeId, headword, packId]);
+  }, [
+    activitySource,
+    advanceBrowse,
+    browseCards,
+    currentIndex,
+    currentKnowledgeId,
+    headword,
+    inspectMode,
+    packId,
+  ]);
 
   const handleConfirmUpdateReview = useCallback(() => {
     if (!currentKnowledgeId) {
@@ -192,16 +207,28 @@ export function useStudyFlow(
         ...(browseCards[currentIndex]?.sortOrder !== undefined
           ? { sortOrder: browseCards[currentIndex].sortOrder }
           : {}),
+        ...(activitySource ? { activitySource } : {}),
       });
       setInReviewPool(true);
       setUpdateReviewVisible(false);
-      advanceBrowse();
+      if (!inspectMode) {
+        advanceBrowse();
+      }
     } catch (error) {
       setMessage(error instanceof Error ? error.message : '更新复习失败');
     } finally {
       setIsSubmitting(false);
     }
-  }, [advanceBrowse, browseCards, currentIndex, currentKnowledgeId, headword, packId]);
+  }, [
+    activitySource,
+    advanceBrowse,
+    browseCards,
+    currentIndex,
+    currentKnowledgeId,
+    headword,
+    inspectMode,
+    packId,
+  ]);
 
   const handleSkip = useCallback(() => {
     if (!currentKnowledgeId) {
@@ -214,19 +241,26 @@ export function useStudyFlow(
       ...(browseCards[currentIndex]?.sortOrder !== undefined
         ? { sortOrder: browseCards[currentIndex].sortOrder }
         : {}),
+      ...(activitySource ? { activitySource } : {}),
     });
-    advanceBrowse();
-  }, [advanceBrowse, browseCards, currentIndex, currentKnowledgeId, headword, packId]);
+    if (!inspectMode) {
+      advanceBrowse();
+    }
+  }, [
+    activitySource,
+    advanceBrowse,
+    browseCards,
+    currentIndex,
+    currentKnowledgeId,
+    headword,
+    inspectMode,
+    packId,
+  ]);
 
   const handleSetRevealed = useCallback(
     (value: boolean) => {
       setRevealed(value);
-      if (
-        value &&
-        currentKnowledgeId &&
-        cardDetail?.cardType === 'vocabulary' &&
-        headword
-      ) {
+      if (value && currentKnowledgeId && cardDetail?.cardType === 'vocabulary' && headword) {
         recordVocabularyFirstReveal({
           catalogPackId: packId,
           knowledgeId: currentKnowledgeId,
