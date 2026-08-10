@@ -325,42 +325,36 @@ function buildLibraryStatTiles(input: {
       : formatLearningCount(input.todayReviewCompleted);
 
   return [
-    {
-      key: 'todayDueCount',
-      label: '今日到期',
-      value: formatLearningCount(input.todayDueCount),
-      unit: '条',
-    },
     { key: 'todayReviewCompleted', label: '今日已复习', value: reviewCompletedDisplay, unit: '条' },
-    {
-      key: 'installedPackCount',
-      label: '已安装',
-      value: formatLearningCount(input.installedPackCount),
-      unit: '本',
-    },
-    {
-      key: 'reviewPoolTotal',
-      label: '复习池中',
-      value: formatLearningCount(input.reviewPoolTotal),
-      unit: '条',
-    },
-    {
-      key: 'reviewPoolLearning',
-      label: '复习中',
-      value: formatLearningCount(input.reviewPoolLearning),
-      unit: '条',
-    },
-    {
-      key: 'reviewPoolStable',
-      label: '记忆稳定',
-      value: formatLearningCount(input.reviewPoolStable),
-      unit: '条',
-    },
     {
       key: 'todayJoinedPool',
       label: '今日新入池',
       value: formatLearningCount(input.todayJoinedPool),
       unit: '词',
+    },
+    {
+      key: 'reviewPoolTotal',
+      label: '复习池总数',
+      value: formatLearningCount(input.reviewPoolTotal),
+      unit: '条',
+    },
+    {
+      key: 'reviewPoolLearning',
+      label: '待复习总数',
+      value: formatLearningCount(input.reviewPoolLearning),
+      unit: '条',
+    },
+    {
+      key: 'reviewPoolStable',
+      label: '已记得',
+      value: formatLearningCount(input.reviewPoolStable),
+      unit: '条',
+    },
+    {
+      key: 'installedPackCount',
+      label: '已安装',
+      value: formatLearningCount(input.installedPackCount),
+      unit: '本',
     },
   ];
 }

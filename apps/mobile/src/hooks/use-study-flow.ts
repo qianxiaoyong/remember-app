@@ -91,9 +91,22 @@ export function useStudyFlow(
     }
   }, [isReaderMode, options?.knowledgeId, packId]);
 
+  useEffect(() => {
+    if (!inspectMode || !options?.knowledgeId || !isBrowseMode) {
+      return;
+    }
+    setRevealed(false);
+    setBrowseCompleteVisible(false);
+    setBrowseCompleteSummary(null);
+    setBrowseReady(true);
+  }, [inspectMode, isBrowseMode, options?.knowledgeId]);
+
+  const inspectKnowledgeId =
+    inspectMode && isBrowseMode ? (options?.knowledgeId ?? null) : null;
+
   const currentKnowledgeId = isReaderMode
     ? (readerEntry?.knowledgeId ?? null)
-    : (browseCards[currentIndex]?.knowledgeId ?? null);
+    : inspectKnowledgeId ?? (browseCards[currentIndex]?.knowledgeId ?? null);
 
   useEffect(() => {
     if (!currentKnowledgeId || !isBrowseMode) {
@@ -168,7 +181,9 @@ export function useStudyFlow(
         ...(headword ? { displayLabel: headword } : {}),
         ...(browseCards[currentIndex]?.sortOrder !== undefined
           ? { sortOrder: browseCards[currentIndex].sortOrder }
-          : {}),
+          : cardDetail?.sortOrder !== undefined
+            ? { sortOrder: cardDetail.sortOrder }
+            : {}),
         ...(activitySource ? { activitySource } : {}),
       });
       if (result.status === 'created') {
@@ -206,7 +221,9 @@ export function useStudyFlow(
         ...(headword ? { displayLabel: headword } : {}),
         ...(browseCards[currentIndex]?.sortOrder !== undefined
           ? { sortOrder: browseCards[currentIndex].sortOrder }
-          : {}),
+          : cardDetail?.sortOrder !== undefined
+            ? { sortOrder: cardDetail.sortOrder }
+            : {}),
         ...(activitySource ? { activitySource } : {}),
       });
       setInReviewPool(true);
@@ -240,7 +257,9 @@ export function useStudyFlow(
       ...(headword ? { displayLabel: headword } : {}),
       ...(browseCards[currentIndex]?.sortOrder !== undefined
         ? { sortOrder: browseCards[currentIndex].sortOrder }
-        : {}),
+        : cardDetail?.sortOrder !== undefined
+          ? { sortOrder: cardDetail.sortOrder }
+          : {}),
       ...(activitySource ? { activitySource } : {}),
     });
     if (!inspectMode) {
@@ -260,7 +279,13 @@ export function useStudyFlow(
   const handleSetRevealed = useCallback(
     (value: boolean) => {
       setRevealed(value);
-      if (value && currentKnowledgeId && cardDetail?.cardType === 'vocabulary' && headword) {
+      if (
+        value &&
+        !inspectMode &&
+        currentKnowledgeId &&
+        cardDetail?.cardType === 'vocabulary' &&
+        headword
+      ) {
         recordVocabularyFirstReveal({
           catalogPackId: packId,
           knowledgeId: currentKnowledgeId,
@@ -269,7 +294,7 @@ export function useStudyFlow(
         });
       }
     },
-    [cardDetail, currentKnowledgeId, headword, packId],
+    [cardDetail, currentKnowledgeId, headword, inspectMode, packId],
   );
 
   const handleReaderBookmark = useCallback(

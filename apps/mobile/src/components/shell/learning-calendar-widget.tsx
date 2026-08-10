@@ -26,7 +26,10 @@ export function LearningCalendarWidget(): ReactElement {
     <Pressable accessibilityRole="button" onPress={() => openCalendar()}>
       <SurfaceCard>
         <View style={styles.headerRow}>
-          <Text style={styles.title}>学习日历</Text>
+          <View style={styles.titleGroup}>
+            <Text style={styles.title}>学习日历</Text>
+            <Text style={styles.rangeHint}>近90天</Text>
+          </View>
           <Pressable
             accessibilityRole="button"
             hitSlop={8}
@@ -40,9 +43,9 @@ export function LearningCalendarWidget(): ReactElement {
         </View>
 
         <View style={styles.statsRow}>
-          <SummaryStat label="学习天数" subLabel="近90天" value={summary.activeDays} />
-          <SummaryStat label="新接触" subLabel="近90天" value={summary.firstRevealCount} />
-          <SummaryStat label="复习词数" subLabel="近90天" value={summary.reviewOutcomeCount} />
+          <SummaryStat label="学习天数" value={summary.activeDays} />
+          <SummaryStat label="新接触" value={summary.firstRevealCount} />
+          <SummaryStat label="复习词数" value={summary.reviewOutcomeCount} />
         </View>
 
         <View style={styles.gridWrap}>
@@ -97,12 +100,11 @@ export function LearningCalendarWidget(): ReactElement {
   );
 }
 
-function SummaryStat(props: { label: string; subLabel: string; value: number }): ReactElement {
+function SummaryStat(props: { label: string; value: number }): ReactElement {
   return (
     <View style={styles.summaryStat}>
       <Text style={styles.summaryValue}>{props.value}</Text>
       <Text style={styles.summaryLabel}>{props.label}</Text>
-      <Text style={styles.summarySubLabel}>{props.subLabel}</Text>
     </View>
   );
 }
@@ -135,7 +137,30 @@ function buildMonthLabels(
     });
   }
 
-  return labels;
+  return filterCrowdedMonthLabels(labels);
+}
+
+const MIN_MONTH_LABEL_GAP_PERCENT = 10;
+
+function filterCrowdedMonthLabels(
+  labels: { key: string; label: string; leftPercent: number }[],
+): { key: string; label: string; leftPercent: number }[] {
+  if (labels.length <= 1) {
+    return labels;
+  }
+
+  const filtered: { key: string; label: string; leftPercent: number }[] = [];
+  for (let i = 0; i < labels.length; i += 1) {
+    const current = labels[i];
+    const next = labels[i + 1];
+    if (current && next && next.leftPercent - current.leftPercent < MIN_MONTH_LABEL_GAP_PERCENT) {
+      continue;
+    }
+    if (current) {
+      filtered.push(current);
+    }
+  }
+  return filtered;
 }
 
 const styles = StyleSheet.create({
@@ -145,10 +170,20 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: spacing.md,
   },
+  titleGroup: {
+    alignItems: 'baseline',
+    flexDirection: 'row',
+    gap: spacing.xs,
+  },
   title: {
     color: colors.textPrimary,
     fontSize: 16,
     fontWeight: '600',
+  },
+  rangeHint: {
+    color: colors.textMuted,
+    fontSize: 11,
+    fontWeight: '400',
   },
   viewAll: {
     color: colors.accent,
@@ -173,10 +208,6 @@ const styles = StyleSheet.create({
     color: colors.textSecondary,
     fontSize: 12,
     marginTop: spacing.xs,
-  },
-  summarySubLabel: {
-    color: colors.textMuted,
-    fontSize: 10,
   },
   gridWrap: {
     gap: 3,

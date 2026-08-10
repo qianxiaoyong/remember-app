@@ -14,8 +14,17 @@ export interface InspectQueueItem {
 }
 
 function mapStudyItems(items: CalendarDayItem[]): InspectQueueItem[] {
+  const seen = new Set<string>();
   return items
     .filter((item) => item.knowledgeId)
+    .filter((item) => {
+      const key = item.knowledgeId as string;
+      if (seen.has(key)) {
+        return false;
+      }
+      seen.add(key);
+      return true;
+    })
     .map((item) => ({
       packId: item.packId,
       knowledgeId: item.knowledgeId as string,
@@ -25,8 +34,17 @@ function mapStudyItems(items: CalendarDayItem[]): InspectQueueItem[] {
 }
 
 function mapReviewItems(items: CalendarDayItem[]): InspectQueueItem[] {
+  const seen = new Set<string>();
   return items
     .filter((item) => item.knowledgeId)
+    .filter((item) => {
+      const key = item.knowledgeId as string;
+      if (seen.has(key)) {
+        return false;
+      }
+      seen.add(key);
+      return true;
+    })
     .map((item) => ({
       packId: item.packId,
       knowledgeId: item.knowledgeId as string,
@@ -74,9 +92,9 @@ export function buildInspectQueue(input: {
 
 export function getInspectSubCategoryLabel(subCategory: InspectSubCategory): string {
   const labels: Record<InspectSubCategory, string> = {
-    pending: '待处理',
-    joined_review: '已加入复习',
-    skipped: '暂不',
+    pending: '待回忆',
+    joined_review: '加入复习',
+    skipped: '未加复习',
     remembered: '记住了',
     not_familiar: '还不熟',
     completed: '已听完',

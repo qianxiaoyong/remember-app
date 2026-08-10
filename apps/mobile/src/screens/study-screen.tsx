@@ -21,7 +21,7 @@ import { resetPackBrowseProgress } from '../use-cases/reset-pack-browse-progress
 import { saveStoryReadingBookmark } from '../use-cases/save-story-reading-bookmark';
 import { touchInstalledPackLastOpenedUseCase } from '../use-cases/touch-installed-pack-last-opened';
 import { useInspectQueue, type InspectQueueConfig } from '../hooks/use-inspect-queue';
-import { InspectModeNavFloating } from '../components/calendar/inspect-mode-chrome';
+import { formatInspectContextLabel } from '../components/calendar/inspect-mode-chrome';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 
@@ -91,10 +91,10 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
     [props.packId, resetVisible, browseCompleteVisible],
   );
   useEffect(() => {
-    if (props.autoStart !== false && isBrowseMode && !browseReady) {
+    if (props.autoStart !== false && isBrowseMode && !browseReady && !inspectMode) {
       startBrowse();
     }
-  }, [props.autoStart, browseReady, isBrowseMode, props.packId, startBrowse]);
+  }, [inspectMode, props.autoStart, browseReady, isBrowseMode, props.packId, startBrowse]);
 
   useFocusEffect(
     useCallback(() => {
@@ -128,8 +128,27 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
 
   const headerContextLabel =
     inspectMode && props.inspect
-      ? `家长检查 · ${props.inspect.localDate.slice(5).replace('-', '/')} · ${inspectQueue.subCategoryLabel} · ${inspectQueue.index + 1}/${inspectQueue.queue.length}`
+      ? formatInspectContextLabel({
+          localDate: props.inspect.localDate,
+          subCategoryLabel: inspectQueue.subCategoryLabel,
+          index: inspectQueue.index,
+          total: inspectQueue.queue.length,
+        })
       : undefined;
+
+  const inspectNavConfig =
+    inspectMode && props.inspect
+      ? {
+          localDate: props.inspect.localDate,
+          subCategoryLabel: inspectQueue.subCategoryLabel,
+          index: inspectQueue.index,
+          total: inspectQueue.queue.length,
+          canPrevious: inspectQueue.canPrevious,
+          canNext: inspectQueue.canNext,
+          onPrevious: inspectQueue.goPrevious,
+          onNext: inspectQueue.goNext,
+        }
+      : null;
 
   const handleGoReview = useCallback((): void => {
     dismissBrowseComplete();
@@ -224,6 +243,7 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
               setRevealed={setRevealed}
               sortOrder={cardDetail.sortOrder}
               {...(headerContextLabel ? { contextLabel: headerContextLabel } : {})}
+              {...(inspectNavConfig ? { inspectNav: inspectNavConfig } : {})}
               {...(isReaderMode ? { onReaderBookmark: handleReaderBookmark } : {})}
               {...(isReaderMode ? { initialAudioPositionMs: readerInitialPositionMs } : {})}
             />
@@ -234,19 +254,6 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
           <UnsupportedCardPanel message="无法加载此阅读内容" onGoHome={goHome} />
         ) : browseReady ? (
           <UnsupportedCardPanel message="无法加载此卡片内容" onGoHome={goHome} />
-        ) : null}
-
-        {inspectMode && props.inspect ? (
-          <InspectModeNavFloating
-            canNext={inspectQueue.canNext}
-            canPrevious={inspectQueue.canPrevious}
-            index={inspectQueue.index}
-            localDate={props.inspect.localDate}
-            onNext={inspectQueue.goNext}
-            onPrevious={inspectQueue.goPrevious}
-            subCategoryLabel={inspectQueue.subCategoryLabel}
-            total={inspectQueue.queue.length}
-          />
         ) : null}
       </View>
 

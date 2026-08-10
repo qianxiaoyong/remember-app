@@ -1,4 +1,5 @@
 import type { ComponentProps, ReactElement } from 'react';
+import type { StyleProp, TextStyle } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../../theme/colors';
 import { type IconSize } from './shell-icon-scales';
@@ -7,6 +8,7 @@ export type AppIconName =
   | 'menu'
   | 'search'
   | 'chevron-back'
+  | 'chevron-forward'
   | 'add'
   | 'home'
   | 'home-outline'
@@ -44,6 +46,7 @@ const ICON_MAP: Record<AppIconName, IoniconName> = {
   menu: 'menu-outline',
   search: 'search-outline',
   'chevron-back': 'chevron-back',
+  'chevron-forward': 'chevron-forward',
   add: 'add',
   home: 'home',
   'home-outline': 'home-outline',
@@ -80,6 +83,7 @@ interface AppIconProps {
   name: AppIconName;
   size?: IconSize;
   color?: string;
+  style?: StyleProp<TextStyle>;
 }
 
 export function resolveIconPixelSize(size: IconSize = 'md'): number {
@@ -98,6 +102,7 @@ export function AppIcon(props: AppIconProps): ReactElement {
       color={props.color ?? colors.textPrimary}
       name={ICON_MAP[props.name]}
       size={resolveIconPixelSize(props.size)}
+      {...(props.style ? { style: props.style } : {})}
     />
   );
 }

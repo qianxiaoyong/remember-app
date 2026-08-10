@@ -1,5 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
-import { useRouter } from 'expo-router';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   buildInspectQueue,
   getInspectSubCategoryLabel,
@@ -15,7 +14,6 @@ export interface InspectQueueConfig {
 }
 
 export function useInspectQueue(config: InspectQueueConfig | null) {
-  const router = useRouter();
   const queue = useMemo(() => {
     if (!config) {
       return [];
@@ -28,6 +26,11 @@ export function useInspectQueue(config: InspectQueueConfig | null) {
   }, [config]);
 
   const [index, setIndex] = useState(config?.initialIndex ?? 0);
+
+  useEffect(() => {
+    setIndex(config?.initialIndex ?? 0);
+  }, [config?.initialIndex, config?.localDate, config?.category, config?.subCategory]);
+
   const currentItem = queue[index] ?? null;
   const subCategoryLabel = config ? getInspectSubCategoryLabel(config.subCategory) : '';
 
@@ -36,18 +39,10 @@ export function useInspectQueue(config: InspectQueueConfig | null) {
       if (!config || !queue[nextIndex]) {
         return;
       }
-      const item = queue[nextIndex];
+      // 队列内切词仅更新 state，不 router.replace，避免整页缩放动画
       setIndex(nextIndex);
-      const base = `/study?packId=${item.packId}&knowledgeId=${item.knowledgeId}&inspect=1&localDate=${config.localDate}&category=${config.category}&subCategory=${config.subCategory}&index=${String(nextIndex)}`;
-      if (item.mode === 'review') {
-        router.replace(
-          `/review?inspect=1&localDate=${config.localDate}&category=${config.category}&subCategory=${config.subCategory}&index=${String(nextIndex)}&knowledgeId=${item.knowledgeId}`,
-        );
-        return;
-      }
-      router.replace(base);
     },
-    [config, queue, router],
+    [config, queue],
   );
 
   return {

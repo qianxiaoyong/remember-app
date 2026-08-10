@@ -1,4 +1,5 @@
 import type { ReactElement } from 'react';
+import type { InspectModeChromeProps } from '../../components/calendar/inspect-mode-chrome';
 
 export type ReviewMode = 'sm2' | 'lesson_complete' | 'none' | 'interactive';
 
@@ -24,6 +25,8 @@ export interface CardRendererProps {
   onNavigateLesson?: (knowledgeId: string) => void;
   /** 顶栏居中副标题，如复习来源包或家长检查状态 */
   contextLabel?: string;
+  /** 家长检查：贴边导航 + 横滑切词 */
+  inspectNav?: InspectModeChromeProps | null;
 }
 
 export interface CardTypeDefinition {

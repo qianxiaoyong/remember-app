@@ -113,33 +113,34 @@ function buildMonthCells(
 
 const styles = StyleSheet.create({
   wrap: {
-    marginBottom: spacing.lg,
+    flexShrink: 0,
+    marginBottom: spacing.sm,
   },
   header: {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: spacing.md,
+    marginBottom: spacing.sm,
   },
   nav: {
     color: colors.accent,
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: '600',
-    paddingHorizontal: spacing.sm,
+    paddingHorizontal: spacing.xs,
   },
   monthTitle: {
     color: colors.textPrimary,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '600',
   },
   weekdayHeader: {
     flexDirection: 'row',
-    marginBottom: spacing.xs,
+    marginBottom: 2,
   },
   weekday: {
     color: colors.textMuted,
     flex: 1,
-    fontSize: 12,
+    fontSize: 11,
     textAlign: 'center',
   },
   grid: {
@@ -148,12 +149,12 @@ const styles = StyleSheet.create({
   },
   cell: {
     alignItems: 'center',
-    height: 44,
+    height: 36,
     justifyContent: 'center',
     width: `${100 / 7}%`,
   },
   cellEmpty: {
-    height: 44,
+    height: 36,
     width: `${100 / 7}%`,
   },
   cellSelected: {

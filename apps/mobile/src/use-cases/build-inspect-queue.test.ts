@@ -30,7 +30,7 @@ vi.mock('./get-learning-calendar-day-detail', () => ({
   })),
 }));
 
-import { buildInspectQueue } from './build-inspect-queue';
+import { buildInspectQueue, getInspectSubCategoryLabel } from './build-inspect-queue';
 
 describe('buildInspectQueue', () => {
   it('returns study queue items for pending first contact', () => {
@@ -43,5 +43,11 @@ describe('buildInspectQueue', () => {
     expect(queue).toHaveLength(1);
     expect(queue[0]?.mode).toBe('study');
     expect(queue[0]?.displayLabel).toBe('apple');
+  });
+
+  it('uses updated inspect subcategory labels', () => {
+    expect(getInspectSubCategoryLabel('pending')).toBe('待回忆');
+    expect(getInspectSubCategoryLabel('joined_review')).toBe('加入复习');
+    expect(getInspectSubCategoryLabel('skipped')).toBe('未加复习');
   });
 });

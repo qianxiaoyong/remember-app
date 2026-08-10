@@ -13,7 +13,7 @@ import { PrimaryButton } from '../components/ui/primary-button';
 import { useReviewFlow } from '../hooks/use-review-flow';
 import { useReviewInspectFlow } from '../hooks/use-review-inspect-flow';
 import { useInspectQueue, type InspectQueueConfig } from '../hooks/use-inspect-queue';
-import { InspectModeNavFloating } from '../components/calendar/inspect-mode-chrome';
+import { formatInspectContextLabel } from '../components/calendar/inspect-mode-chrome';
 import { VocabularyStudyPanel } from '../learning/card-types/vocabulary/vocabulary-study-panel';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
@@ -115,8 +115,27 @@ export function ReviewScreen(props: {
 
   const headerContextLabel =
     inspectMode && props.inspect
-      ? `家长检查 · ${props.inspect.localDate.slice(5).replace('-', '/')} · ${inspectQueue.subCategoryLabel} · ${inspectQueue.index + 1}/${inspectQueue.queue.length}`
+      ? formatInspectContextLabel({
+          localDate: props.inspect.localDate,
+          subCategoryLabel: inspectQueue.subCategoryLabel,
+          index: inspectQueue.index,
+          total: inspectQueue.queue.length,
+        })
       : formatReviewSourcePackLabel(reviewContext?.sourcePackDisplayName ?? '');
+
+  const inspectNavConfig =
+    inspectMode && props.inspect
+      ? {
+          localDate: props.inspect.localDate,
+          subCategoryLabel: inspectQueue.subCategoryLabel,
+          index: inspectQueue.index,
+          total: inspectQueue.queue.length,
+          canPrevious: inspectQueue.canPrevious,
+          canNext: inspectQueue.canNext,
+          onPrevious: inspectQueue.goPrevious,
+          onNext: inspectQueue.goNext,
+        }
+      : null;
 
   const renderEmptyState = (): ReactElement => {
     if (inspectMode) {
@@ -221,23 +240,11 @@ export function ReviewScreen(props: {
             playingExampleAudioPath={playingExampleAudioPath}
             primaryAudioPlaying={primaryAudioPlaying}
             revealed={revealed}
+            {...(inspectNavConfig ? { inspectNav: inspectNavConfig } : {})}
           />
         ) : (
           renderEmptyState()
         )}
-
-        {inspectMode && props.inspect ? (
-          <InspectModeNavFloating
-            canNext={inspectQueue.canNext}
-            canPrevious={inspectQueue.canPrevious}
-            index={inspectQueue.index}
-            localDate={props.inspect.localDate}
-            onNext={inspectQueue.goNext}
-            onPrevious={inspectQueue.goPrevious}
-            subCategoryLabel={inspectQueue.subCategoryLabel}
-            total={inspectQueue.queue.length}
-          />
-        ) : null}
       </View>
 
       <LexiconPopup

@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { normalizeSurfaceForm } from '@remember/contracts';
 import type { LexiconLookupResult } from '../data/repositories/lexicon-entry-repository';
 import { confirmReviewOutcome } from '../use-cases/confirm-review-outcome';
@@ -21,6 +21,12 @@ export function useReviewInspectFlow(knowledgeId: string | null) {
   const [lexiconSaved, setLexiconSaved] = useState(false);
   const [lexiconSelectedSurfaceForm, setLexiconSelectedSurfaceForm] = useState<string | null>(null);
   const [audioMessage, setAudioMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    setRevealed(false);
+    setLexiconVisible(false);
+    setLexiconSelectedSurfaceForm(null);
+  }, [knowledgeId]);
 
   const reviewContext = useMemo(() => {
     if (!knowledgeId) {

@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
 import { useCallback, useMemo, useState } from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { calculateHeatLevel } from '@remember/domain';
 import type { HeatLevel } from '@remember/domain';
@@ -45,13 +45,13 @@ export function LearningCalendarScreen(props: LearningCalendarScreenProps): Reac
   );
 
   return (
-    <ScreenScaffold safeAreaEdges={['left', 'right', 'bottom']}>
+    <ScreenScaffold safeAreaEdges={['top', 'left', 'right', 'bottom']}>
       <AppHeader
         centerContent={<Text style={styles.headerTitle}>学习日历</Text>}
         onBackPress={goBack}
         variant="back"
       />
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+      <View style={styles.body}>
         <LearningCalendarMonth
           heatByDate={heatByDate}
           month={month}
@@ -67,7 +67,7 @@ export function LearningCalendarScreen(props: LearningCalendarScreenProps): Reac
           year={year}
         />
         <LearningCalendarDayDetailPanel detail={dayDetail} />
-      </ScrollView>
+      </View>
     </ScreenScaffold>
   );
 }
@@ -103,8 +103,9 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: '600',
   },
-  content: {
-    padding: spacing.lg,
-    paddingBottom: spacing.xxl,
+  body: {
+    flex: 1,
+    paddingBottom: spacing.sm,
+    paddingHorizontal: spacing.lg,
   },
 });
