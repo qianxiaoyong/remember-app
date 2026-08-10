@@ -47,7 +47,7 @@ describe('buildInspectQueue', () => {
 
   it('uses updated inspect subcategory labels', () => {
     expect(getInspectSubCategoryLabel('pending')).toBe('待回忆');
-    expect(getInspectSubCategoryLabel('joined_review')).toBe('加入复习');
-    expect(getInspectSubCategoryLabel('skipped')).toBe('未加复习');
+    expect(getInspectSubCategoryLabel('joined_review')).toBe('已加复习');
+    expect(getInspectSubCategoryLabel('skipped')).toBe('不加复习');
   });
 });

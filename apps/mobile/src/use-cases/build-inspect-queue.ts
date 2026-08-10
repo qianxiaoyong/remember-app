@@ -93,8 +93,8 @@ export function buildInspectQueue(input: {
 export function getInspectSubCategoryLabel(subCategory: InspectSubCategory): string {
   const labels: Record<InspectSubCategory, string> = {
     pending: '待回忆',
-    joined_review: '加入复习',
-    skipped: '未加复习',
+    joined_review: '已加复习',
+    skipped: '不加复习',
     remembered: '记住了',
     not_familiar: '还不熟',
     completed: '已听完',

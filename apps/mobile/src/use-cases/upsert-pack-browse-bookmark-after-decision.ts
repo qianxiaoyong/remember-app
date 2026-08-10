@@ -3,7 +3,7 @@ import { upsertPackBrowseBookmark } from '../data/repositories/pack-browse-bookm
 
 type BrowseCardRef = Pick<PackCardSummary, 'knowledgeId' | 'sortOrder'>;
 
-/** 学习决策（加入复习 / 暂不）后，书签应落在下一词；最后一词则仍落在当前词。 */
+/** 学习决策（加入复习 / 不加复习）后，书签应落在下一词；最后一词则仍落在当前词。 */
 export function resolvePackBrowseBookmarkTarget(
   browseCards: readonly BrowseCardRef[],
   currentIndex: number,

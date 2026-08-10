@@ -12,15 +12,17 @@ interface LibraryOverviewCardProps {
 }
 
 const STAT_TILE_GAP = spacing.sm;
-const VISIBLE_TILE_COUNT = 3;
+const STAT_TILE_MIN_WIDTH = 96;
+const STAT_TILE_HEIGHT = 68;
 
 export function LibraryOverviewCard(props: LibraryOverviewCardProps): ReactElement {
   const { overview } = props;
   const { width: windowWidth } = useWindowDimensions();
   const horizontalPadding = spacing.lg * 2 + spacing.md * 2;
-  const tileWidth = Math.floor(
-    (windowWidth - horizontalPadding - STAT_TILE_GAP * 2) / VISIBLE_TILE_COUNT,
+  const visibleMinWidth = Math.floor(
+    (windowWidth - horizontalPadding - STAT_TILE_GAP * 2) / 3,
   );
+  const statTileMinWidth = Math.max(STAT_TILE_MIN_WIDTH, visibleMinWidth);
 
   return (
     <SurfaceCard>
@@ -47,9 +49,9 @@ export function LibraryOverviewCard(props: LibraryOverviewCardProps): ReactEleme
           <StatTile
             key={tile.key}
             label={tile.label}
+            minWidth={statTileMinWidth}
             unit={tile.unit}
             value={tile.value}
-            width={tileWidth}
           />
         ))}
       </ScrollView>
@@ -61,14 +63,19 @@ function StatTile(props: {
   label: string;
   value: string;
   unit: string;
-  width: number;
+  minWidth: number;
 }): ReactElement {
   return (
-    <View style={[styles.statTile, { width: props.width }]}>
-      <Text style={styles.statLabel}>{props.label}</Text>
-      <Text style={styles.statValue}>
-        {props.value} <Text style={styles.statUnit}>{props.unit}</Text>
+    <View style={[styles.statTile, { minWidth: props.minWidth }]}>
+      <Text numberOfLines={1} style={styles.statLabel}>
+        {props.label}
       </Text>
+      <View style={styles.statValueRow}>
+        <Text numberOfLines={1} style={styles.statValue}>
+          {props.value}
+        </Text>
+        <Text style={styles.statUnit}>{props.unit}</Text>
+      </View>
     </View>
   );
 }
@@ -122,21 +129,35 @@ const styles = StyleSheet.create({
   statTile: {
     backgroundColor: colors.statTileBackground,
     borderRadius: 14,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: spacing.md,
+    flexShrink: 0,
+    height: STAT_TILE_HEIGHT,
+    justifyContent: 'center',
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
   },
   statLabel: {
     color: colors.textSecondary,
     fontSize: 12,
+    lineHeight: 16,
     marginBottom: spacing.xs,
+  },
+  statValueRow: {
+    alignItems: 'baseline',
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
   },
   statValue: {
     color: colors.textPrimary,
+    flexShrink: 0,
     fontSize: 18,
     fontWeight: '700',
+    lineHeight: 22,
   },
   statUnit: {
+    flexShrink: 0,
     fontSize: 13,
     fontWeight: '500',
+    lineHeight: 18,
+    marginLeft: spacing.xs,
   },
 });
