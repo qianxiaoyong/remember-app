@@ -1,4 +1,8 @@
-import { classifyFirstRevealSubCategory, type FirstRevealSubCategory } from '@remember/domain';
+import {
+  classifyFirstRevealSubCategory,
+  resolveLatestReviewOutcomeSubCategory,
+  type FirstRevealSubCategory,
+} from '@remember/domain';
 import { parseActivityPayload, LearningActivityEventType } from '@remember/contracts';
 import {
   listEventsByLocalDate,
@@ -90,17 +94,57 @@ function buildFirstContactSection(localDate: string): CalendarDayDetail['firstCo
 }
 
 function buildReviewSection(localDate: string): CalendarDayDetail['review'] {
-  const reviewEvents = listEventsByLocalDate(localDate).filter(
+  const dayEvents = listEventsByLocalDate(localDate);
+  const reviewEvents = dayEvents.filter(
     (event) => event.eventType === LearningActivityEventType.REVIEW_OUTCOME,
   );
+
+  const latestEventByWord = new Map<string, LearningActivityEventRow>();
+
+  for (const row of reviewEvents) {
+    if (!row.knowledgeId) {
+      continue;
+    }
+    const key = `${row.packId}:${row.knowledgeId}`;
+    const existing = latestEventByWord.get(key);
+    if (!existing || row.occurredAt > existing.occurredAt) {
+      latestEventByWord.set(key, row);
+    }
+  }
 
   const remembered: CalendarDayItem[] = [];
   const notFamiliar: CalendarDayItem[] = [];
 
-  for (const row of reviewEvents) {
-    const payload = parseActivityPayload(LearningActivityEventType.REVIEW_OUTCOME, row.payload);
-    const item = toDayItem(row, { reviewOutcome: payload.outcome });
-    if (payload.outcome === 'remembered') {
+  for (const row of latestEventByWord.values()) {
+    const sameWordEvents = dayEvents
+      .filter(
+        (event) => event.packId === row.packId && event.knowledgeId === row.knowledgeId,
+      )
+      .map((event) => {
+        if (event.eventType !== LearningActivityEventType.REVIEW_OUTCOME) {
+          return {
+            eventType: event.eventType,
+            occurredAt: event.occurredAt,
+          };
+        }
+        const payload = parseActivityPayload(
+          LearningActivityEventType.REVIEW_OUTCOME,
+          event.payload,
+        );
+        return {
+          eventType: event.eventType,
+          occurredAt: event.occurredAt,
+          outcome: payload.outcome,
+        };
+      });
+
+    const latestOutcome = resolveLatestReviewOutcomeSubCategory(sameWordEvents);
+    if (!latestOutcome) {
+      continue;
+    }
+
+    const item = toDayItem(row, { reviewOutcome: latestOutcome });
+    if (latestOutcome === 'remembered') {
       remembered.push(item);
     } else {
       notFamiliar.push(item);
@@ -113,7 +157,7 @@ function buildReviewSection(localDate: string): CalendarDayDetail['review'] {
     counts: {
       remembered: remembered.length,
       notFamiliar: notFamiliar.length,
-      total: reviewEvents.length,
+      total: remembered.length + notFamiliar.length,
     },
   };
 }

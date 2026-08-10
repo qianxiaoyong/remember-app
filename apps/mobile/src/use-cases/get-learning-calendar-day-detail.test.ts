@@ -58,4 +58,47 @@ describe('getLearningCalendarDayDetail', () => {
     expect(detail.firstContact.counts.pending).toBe(1);
     expect(detail.review.counts.remembered).toBe(1);
   });
+
+  it('uses latest review outcome per word on the same day', () => {
+    vi.mocked(listEventsByLocalDate).mockReturnValue([
+      {
+        eventId: 'e1',
+        localDate: '2026-08-14',
+        occurredAt: '2026-08-14T10:00:00.000Z',
+        eventType: 'review_outcome',
+        packId: 'pack-a',
+        knowledgeId: 'kid-1',
+        displayLabel: 'am',
+        payload: JSON.stringify({ outcome: 'remembered', modality: 'vocabulary' }),
+      },
+      {
+        eventId: 'e2',
+        localDate: '2026-08-14',
+        occurredAt: '2026-08-14T11:00:00.000Z',
+        eventType: 'review_outcome',
+        packId: 'pack-a',
+        knowledgeId: 'kid-1',
+        displayLabel: 'am',
+        payload: JSON.stringify({ outcome: 'not_familiar', modality: 'vocabulary' }),
+      },
+      {
+        eventId: 'e3',
+        localDate: '2026-08-14',
+        occurredAt: '2026-08-14T12:00:00.000Z',
+        eventType: 'review_outcome',
+        packId: 'pack-a',
+        knowledgeId: 'kid-2',
+        displayLabel: 'go',
+        payload: JSON.stringify({ outcome: 'remembered', modality: 'vocabulary' }),
+      },
+    ]);
+
+    const detail = getLearningCalendarDayDetail('2026-08-14');
+
+    expect(detail.review.counts.remembered).toBe(1);
+    expect(detail.review.counts.notFamiliar).toBe(1);
+    expect(detail.review.counts.total).toBe(2);
+    expect(detail.review.remembered[0]?.knowledgeId).toBe('kid-2');
+    expect(detail.review.notFamiliar[0]?.knowledgeId).toBe('kid-1');
+  });
 });

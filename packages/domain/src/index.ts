@@ -46,3 +46,7 @@ export {
   classifyFirstRevealSubCategory,
   type FirstRevealSubCategory,
 } from './classify-vocabulary-first-reveal.js';
+export {
+  resolveLatestReviewOutcomeSubCategory,
+  type ReviewOutcomeSubCategory,
+} from './classify-review-outcome.js';
