@@ -2,10 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { normalizeSurfaceForm } from '@remember/contracts';
 import type { LexiconLookupResult } from '../data/repositories/lexicon-entry-repository';
 import type { PackCardSummary } from '../data/repositories/pack-card-repository';
-import {
-  upsertPackBrowseBookmark,
-  deletePackBrowseBookmark,
-} from '../data/repositories/pack-browse-bookmark-repository';
+import { deletePackBrowseBookmark } from '../data/repositories/pack-browse-bookmark-repository';
 import { getLearningStateByKnowledgeId } from '../data/repositories/learning-state-repository';
 import { getPackCardDetailUseCase } from '../use-cases/get-pack-card-detail';
 import { joinReviewPool } from '../use-cases/join-review-pool';
@@ -29,6 +26,7 @@ import {
 } from '../use-cases/toggle-saved-lexicon-item';
 import type { InspectQueueAdvanceResult } from './use-inspect-queue';
 import { markLearningCalendarNeedsRefresh } from '../shell/learning-calendar-refresh-signal';
+import { upsertPackBrowseBookmarkAfterDecision } from '../use-cases/upsert-pack-browse-bookmark-after-decision';
 
 export function useStudyFlow(
   packId: string,
@@ -170,15 +168,11 @@ export function useStudyFlow(
     if (!isBrowseMode || browseCards.length === 0) {
       return;
     }
-    const currentCard = browseCards[currentIndex];
-    if (currentCard) {
-      upsertPackBrowseBookmark({
-        packId,
-        knowledgeId: currentCard.knowledgeId,
-        sortOrder: currentCard.sortOrder,
-        updatedAt: new Date().toISOString(),
-      });
-    }
+    upsertPackBrowseBookmarkAfterDecision({
+      packId,
+      browseCards,
+      currentIndex,
+    });
     if (currentIndex < browseCards.length - 1) {
       setCurrentIndex((index) => index + 1);
       setRevealed(false);
