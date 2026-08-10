@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { InstalledPackRow } from '../components/library/installed-pack-row';
@@ -55,13 +55,22 @@ export function LibraryScreen(): ReactElement {
     }, [bumpRefresh]),
   );
 
+  const hasLoadedOnceRef = useRef(false);
+
   useEffect(() => {
-    return deferAfterFirstPaint(() => {
+    const applyData = (): void => {
       const data = loadLibraryScreenData();
       setOverview(data.overview);
       setInstalledPacks(data.installedPacks);
       setIsLibraryLoading(false);
-    });
+      hasLoadedOnceRef.current = true;
+    };
+
+    if (!hasLoadedOnceRef.current) {
+      return deferAfterFirstPaint(applyData);
+    }
+
+    applyData();
   }, [refreshKey]);
 
   const handleRefresh = useCallback(async () => {

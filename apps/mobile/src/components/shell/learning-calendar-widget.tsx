@@ -1,20 +1,43 @@
 import type { ReactElement } from 'react';
 import { useCallback, useMemo, useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
 import type { HeatCell } from '../../use-cases/get-learning-activity-summary';
 import { getLearningActivitySummary } from '../../use-cases/get-learning-activity-summary';
 import { consumeLearningCalendarNeedsRefresh } from '../../shell/learning-calendar-refresh-signal';
+import { markDrawerReturnPending } from '../../shell/drawer-return-intent';
+import { useShellActions } from '../../shell/shell-provider';
 import { SurfaceCard } from '../ui/surface-card';
 import { heatLevelColors } from '../calendar/calendar-theme';
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
 
+const HEAT_GRID_COLS = 12;
+const HEAT_GRID_ROWS = 7;
+const HEAT_GRID_GAP = 3;
+const DRAWER_WIDTH_RATIO = 0.86;
+
+function estimateHeatGridInnerWidth(): number {
+  const panelWidth = Dimensions.get('window').width * DRAWER_WIDTH_RATIO;
+  return panelWidth - spacing.lg * 2 - spacing.lg * 2;
+}
+
+function resolveHeatCellSize(gridWidth: number): number {
+  return Math.max(
+    8,
+    Math.floor((gridWidth - HEAT_GRID_GAP * (HEAT_GRID_COLS - 1)) / HEAT_GRID_COLS),
+  );
+}
+
 export function LearningCalendarWidget(): ReactElement {
   const router = useRouter();
+  const { dismissDrawer } = useShellActions();
   const [refreshKey, setRefreshKey] = useState(0);
+  const [gridWidth, setGridWidth] = useState(estimateHeatGridInnerWidth);
   const summary = useMemo(() => getLearningActivitySummary(), [refreshKey]);
   const monthLabels = useMemo(() => buildMonthLabels(summary.heatGrid), [summary.heatGrid]);
+  const heatCellSize = resolveHeatCellSize(gridWidth);
+  const heatGridHeight = heatCellSize * HEAT_GRID_ROWS + HEAT_GRID_GAP * (HEAT_GRID_ROWS - 1);
 
   useFocusEffect(
     useCallback(() => {
@@ -25,6 +48,8 @@ export function LearningCalendarWidget(): ReactElement {
   );
 
   const openCalendar = (localDate?: string): void => {
+    markDrawerReturnPending();
+    dismissDrawer();
     if (localDate) {
       router.push(`/learning-calendar?localDate=${localDate}`);
       return;
@@ -58,7 +83,15 @@ export function LearningCalendarWidget(): ReactElement {
           <SummaryStat label="复习量" value={summary.reviewOutcomeCount} />
         </View>
 
-        <View style={styles.gridWrap}>
+        <View
+          onLayout={(event) => {
+            const nextWidth = event.nativeEvent.layout.width;
+            if (nextWidth > 0 && Math.abs(nextWidth - gridWidth) > 1) {
+              setGridWidth(nextWidth);
+            }
+          }}
+          style={[styles.gridWrap, { height: heatGridHeight }]}
+        >
           {summary.heatGrid.map((row, rowIndex) => (
             <View key={`row-${String(rowIndex)}`} style={styles.gridRow}>
               {row.map((cell) => (
@@ -79,6 +112,8 @@ export function LearningCalendarWidget(): ReactElement {
                       backgroundColor: cell.isInRange
                         ? heatLevelColors[cell.level]
                         : heatLevelColors[0],
+                      height: heatCellSize,
+                      width: heatCellSize,
                     },
                     cell.isToday ? styles.heatCellToday : null,
                   ]}
@@ -188,7 +223,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
   },
   viewAll: {
-    color: colors.accent,
+    color: colors.textMuted,
     fontSize: 11,
     fontWeight: '400',
   },
@@ -212,17 +247,14 @@ const styles = StyleSheet.create({
     marginTop: spacing.xs,
   },
   gridWrap: {
-    gap: 3,
+    gap: HEAT_GRID_GAP,
   },
   gridRow: {
     flexDirection: 'row',
-    gap: 3,
+    gap: HEAT_GRID_GAP,
   },
   heatCell: {
-    aspectRatio: 1,
     borderRadius: 3,
-    flex: 1,
-    minWidth: 8,
   },
   heatCellToday: {
     borderColor: colors.accent,

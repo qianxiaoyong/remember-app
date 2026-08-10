@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { InteractionManager } from 'react-native';
 import { useFocusEffect } from 'expo-router';
 import { consumeDrawerReturnPending } from '../shell/drawer-return-intent';
 import { useShellActions } from '../shell/shell-provider';
@@ -9,9 +10,15 @@ export function useRestoreDrawerOnReturn(): void {
 
   useFocusEffect(
     useCallback(() => {
-      if (consumeDrawerReturnPending()) {
-        openDrawer();
+      if (!consumeDrawerReturnPending()) {
+        return;
       }
+      const task = InteractionManager.runAfterInteractions(() => {
+        openDrawer();
+      });
+      return () => {
+        task.cancel();
+      };
     }, [openDrawer]),
   );
 }
