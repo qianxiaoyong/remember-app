@@ -19,7 +19,7 @@ interface MarketSearchResultCardProps {
 }
 
 export function MarketSearchResultCard(props: MarketSearchResultCardProps): ReactElement {
-  const cover = resolveCatalogCover(props.item);
+  const cover = resolveCatalogCover(props.item, { imageKind: 'list' });
 
   return (
     <Pressable accessibilityRole="button" onPress={props.onPress} style={styles.wrap}>

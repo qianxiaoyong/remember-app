@@ -27,6 +27,7 @@ function marketPackCardPropsAreEqual(
     prevItem.packId === nextItem.packId &&
     prevItem.title === nextItem.title &&
     prevItem.coverUrl === nextItem.coverUrl &&
+    prevItem.coverThumbnailUrl === nextItem.coverThumbnailUrl &&
     prevItem.cardCount === nextItem.cardCount &&
     prevItem.contentTags.join('\0') === nextItem.contentTags.join('\0')
   );

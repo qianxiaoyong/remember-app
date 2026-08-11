@@ -18,6 +18,7 @@ function marketPackCoverPropsAreEqual(
   return (
     prevItem.packId === nextItem.packId &&
     prevItem.coverUrl === nextItem.coverUrl &&
+    prevItem.coverThumbnailUrl === nextItem.coverThumbnailUrl &&
     prevItem.coverBadge === nextItem.coverBadge &&
     prevItem.title === nextItem.title &&
     prevItem.version === nextItem.version &&
@@ -29,7 +30,7 @@ function marketPackCoverPropsAreEqual(
 }
 
 function MarketPackCoverInner(props: MarketPackCoverProps): ReactElement {
-  const cover = useMemo(() => resolveCatalogCover(props.item), [props.item]);
+  const cover = useMemo(() => resolveCatalogCover(props.item, { imageKind: 'list' }), [props.item]);
 
   return (
     <View style={styles.frame}>
