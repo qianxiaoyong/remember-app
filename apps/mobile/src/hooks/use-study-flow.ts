@@ -1,14 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { normalizeSurfaceForm } from '@remember/contracts';
-import type { LexiconLookupResult } from '../data/repositories/lexicon-entry-repository';
 import type { PackCardSummary } from '../data/repositories/pack-card-repository';
 import { deletePackBrowseBookmark } from '../data/repositories/pack-browse-bookmark-repository';
 import { getLearningStateByKnowledgeId } from '../data/repositories/learning-state-repository';
 import { getPackCardDetailUseCase } from '../use-cases/get-pack-card-detail';
-import { joinReviewPool } from '../use-cases/join-review-pool';
-import { lookupLexiconToken } from '../use-cases/lookup-lexicon-token';
-import { playOrCacheLexiconAudio } from '../use-cases/play-or-cache-lexicon-audio';
-import { getPackBrowseCompleteSummary } from '../use-cases/get-pack-browse-complete-summary';
 import type { PackBrowseCompleteSummary } from '../use-cases/get-pack-browse-complete-summary';
 import { useVocabularyStudyAudio } from './use-vocabulary-study-audio';
 import { resolvePackLibraryPresentation } from '../use-cases/resolve-pack-library-presentation';
@@ -16,17 +10,11 @@ import { resolveStoryReaderEntry } from '../use-cases/resolve-story-reader-entry
 import { resumePackBrowse } from '../use-cases/resume-pack-browse';
 import { deleteStoryReadingBookmark } from '../data/repositories/story-reading-bookmark-repository';
 import { saveStoryReadingBookmark } from '../use-cases/save-story-reading-bookmark';
-import { skipPackCard } from '../use-cases/skip-pack-card';
-import { updateReviewPoolFromPack } from '../use-cases/update-review-pool-from-pack';
 import { recordVocabularyFirstReveal } from '../use-cases/record-vocabulary-first-reveal';
 import { getCurrentCardHeadword } from '../use-cases/get-review-interval-labels';
-import {
-  isLexiconItemSavedUseCase,
-  toggleSavedLexiconItem,
-} from '../use-cases/toggle-saved-lexicon-item';
 import type { InspectQueueAdvanceResult } from './use-inspect-queue';
-import { markLearningCalendarNeedsRefresh } from '../shell/learning-calendar-refresh-signal';
-import { upsertPackBrowseBookmarkAfterDecision } from '../use-cases/upsert-pack-browse-bookmark-after-decision';
+import { useStudyBrowseDecisions } from './use-study-browse-decisions';
+import { useStudyLexicon } from './use-study-lexicon';
 
 export function useStudyFlow(
   packId: string,
@@ -54,14 +42,10 @@ export function useStudyFlow(
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [updateReviewVisible, setUpdateReviewVisible] = useState(false);
   const [inReviewPool, setInReviewPool] = useState(false);
-  const [lexiconEntry, setLexiconEntry] = useState<LexiconLookupResult | null>(null);
-  const [lexiconVisible, setLexiconVisible] = useState(false);
-  const [lexiconSaved, setLexiconSaved] = useState(false);
-  const [lexiconSelectedSurfaceForm, setLexiconSelectedSurfaceForm] = useState<string | null>(null);
-  const [audioMessage, setAudioMessage] = useState<string | null>(null);
   const [browseCompleteVisible, setBrowseCompleteVisible] = useState(false);
   const [browseCompleteSummary, setBrowseCompleteSummary] =
     useState<PackBrowseCompleteSummary | null>(null);
+  const lexicon = useStudyLexicon(packId);
 
   const startBrowse = useCallback(() => {
     setMessage(null);
@@ -155,160 +139,31 @@ export function useStudyFlow(
         currentKnowledgeId && packId ? `${packId}:${currentKnowledgeId}` : currentKnowledgeId,
     });
 
-  const finishInspectAction = useCallback(() => {
-    if (!inspectMode) {
-      return;
-    }
-    markLearningCalendarNeedsRefresh();
-    inspectSession.onInspectActionComplete?.();
-  }, [inspectMode, inspectSession]);
-
   const inspectActivityLocalDate = inspectMode ? inspectSession.inspectLocalDate : undefined;
 
-  const advanceBrowse = useCallback(() => {
-    if (!isBrowseMode || browseCards.length === 0) {
-      return;
-    }
-    upsertPackBrowseBookmarkAfterDecision({
-      packId,
-      browseCards,
-      currentIndex,
-    });
-    if (currentIndex < browseCards.length - 1) {
-      setCurrentIndex((index) => index + 1);
-      setRevealed(false);
-      return;
-    }
-    setRevealed(false);
-    setBrowseCompleteSummary(getPackBrowseCompleteSummary(packId));
-    setBrowseCompleteVisible(true);
-  }, [browseCards, currentIndex, isBrowseMode, packId]);
-
-  const handleJoinReview = useCallback(() => {
-    if (!currentKnowledgeId) {
-      return;
-    }
-    setIsSubmitting(true);
-    setMessage(null);
-    try {
-      const result = joinReviewPool({
-        knowledgeId: currentKnowledgeId,
-        catalogPackId: packId,
-        ...(headword ? { displayLabel: headword } : {}),
-        ...(browseCards[currentIndex]?.sortOrder !== undefined
-          ? { sortOrder: browseCards[currentIndex].sortOrder }
-          : cardDetail?.sortOrder !== undefined
-            ? { sortOrder: cardDetail.sortOrder }
-            : {}),
-        ...(activitySource ? { activitySource } : {}),
-        ...(inspectActivityLocalDate ? { activityLocalDate: inspectActivityLocalDate } : {}),
-      });
-      if (result.status === 'created') {
-        setInReviewPool(true);
-      }
-      if (!inspectMode) {
-        advanceBrowse();
-      } else {
-        finishInspectAction();
-      }
-    } catch (error) {
-      setMessage(error instanceof Error ? error.message : '加入复习失败');
-    } finally {
-      setIsSubmitting(false);
-    }
-  }, [
-    activitySource,
-    advanceBrowse,
+  const { handleJoinReview, handleConfirmUpdateReview, handleSkip } = useStudyBrowseDecisions({
+    packId,
+    isBrowseMode,
     browseCards,
-    cardDetail?.sortOrder,
     currentIndex,
     currentKnowledgeId,
-    finishInspectAction,
     headword,
-    inspectActivityLocalDate,
+    cardDetail,
     inspectMode,
-    packId,
-  ]);
-
-  const handleConfirmUpdateReview = useCallback(() => {
-    if (!currentKnowledgeId) {
-      return;
-    }
-    setIsSubmitting(true);
-    setMessage(null);
-    try {
-      updateReviewPoolFromPack({
-        knowledgeId: currentKnowledgeId,
-        catalogPackId: packId,
-        ...(headword ? { displayLabel: headword } : {}),
-        ...(browseCards[currentIndex]?.sortOrder !== undefined
-          ? { sortOrder: browseCards[currentIndex].sortOrder }
-          : cardDetail?.sortOrder !== undefined
-            ? { sortOrder: cardDetail.sortOrder }
-            : {}),
-        ...(activitySource ? { activitySource } : {}),
-        ...(inspectActivityLocalDate ? { activityLocalDate: inspectActivityLocalDate } : {}),
-      });
-      setInReviewPool(true);
-      setUpdateReviewVisible(false);
-      if (!inspectMode) {
-        advanceBrowse();
-      } else {
-        finishInspectAction();
-      }
-    } catch (error) {
-      setMessage(error instanceof Error ? error.message : '更新复习失败');
-    } finally {
-      setIsSubmitting(false);
-    }
-  }, [
     activitySource,
-    advanceBrowse,
-    browseCards,
-    cardDetail?.sortOrder,
-    currentIndex,
-    currentKnowledgeId,
-    finishInspectAction,
-    headword,
     inspectActivityLocalDate,
-    inspectMode,
-    packId,
-  ]);
-
-  const handleSkip = useCallback(() => {
-    if (!currentKnowledgeId) {
-      return;
-    }
-    skipPackCard({
-      packId,
-      knowledgeId: currentKnowledgeId,
-      ...(headword ? { displayLabel: headword } : {}),
-      ...(browseCards[currentIndex]?.sortOrder !== undefined
-        ? { sortOrder: browseCards[currentIndex].sortOrder }
-        : cardDetail?.sortOrder !== undefined
-          ? { sortOrder: cardDetail.sortOrder }
-          : {}),
-      ...(activitySource ? { activitySource } : {}),
-      ...(inspectActivityLocalDate ? { activityLocalDate: inspectActivityLocalDate } : {}),
-    });
-    if (!inspectMode) {
-      advanceBrowse();
-    } else {
-      finishInspectAction();
-    }
-  }, [
-    activitySource,
-    advanceBrowse,
-    browseCards,
-    cardDetail?.sortOrder,
-    currentIndex,
-    currentKnowledgeId,
-    finishInspectAction,
-    headword,
-    inspectActivityLocalDate,
-    inspectMode,
-    packId,
-  ]);
+    ...(inspectSession?.onInspectActionComplete
+      ? { onInspectActionComplete: inspectSession.onInspectActionComplete }
+      : {}),
+    setCurrentIndex,
+    setRevealed,
+    setBrowseCompleteVisible,
+    setBrowseCompleteSummary,
+    setInReviewPool,
+    setUpdateReviewVisible,
+    setIsSubmitting,
+    setMessage,
+  });
 
   const handleSetRevealed = useCallback(
     (value: boolean) => {
@@ -345,30 +200,6 @@ export function useStudyFlow(
     [currentKnowledgeId, packId],
   );
 
-  const openLexicon = useCallback(
-    (token: string) => {
-      const surfaceForm = normalizeSurfaceForm(token);
-      setLexiconSelectedSurfaceForm(surfaceForm);
-      const entry = lookupLexiconToken({ packId, token });
-      setLexiconEntry(entry);
-      setLexiconVisible(true);
-      setAudioMessage(null);
-      setLexiconSaved(entry ? isLexiconItemSavedUseCase(packId, entry.surfaceForm) : false);
-    },
-    [packId],
-  );
-
-  const handleToggleSave = useCallback(() => {
-    if (!lexiconEntry) {
-      return;
-    }
-    const saved = toggleSavedLexiconItem({
-      packId,
-      surfaceForm: lexiconEntry.surfaceForm,
-    });
-    setLexiconSaved(saved);
-  }, [lexiconEntry, packId]);
-
   const handlePlayPrimaryAudio = useCallback(() => {
     if (!cardDetail) {
       return;
@@ -386,26 +217,6 @@ export function useStudyFlow(
     },
     [playExampleAudio],
   );
-
-  const handlePlayAudio = useCallback(() => {
-    if (!lexiconEntry) {
-      return;
-    }
-    void playOrCacheLexiconAudio({
-      surfaceForm: lexiconEntry.surfaceForm,
-      audioUrl: lexiconEntry.audioUrl,
-    }).then((result) => {
-      if (result.status === 'no-audio') {
-        setAudioMessage('暂无远程发音');
-        return;
-      }
-      if (result.status === 'downloaded') {
-        setAudioMessage('首次下载完成，已缓存可离线播放');
-        return;
-      }
-      setAudioMessage('使用离线缓存发音');
-    });
-  }, [lexiconEntry]);
 
   const restartFromBeginning = useCallback(() => {
     if (isReaderMode) {
@@ -434,11 +245,11 @@ export function useStudyFlow(
     isSubmitting,
     inReviewPool,
     updateReviewVisible,
-    lexiconEntry,
-    lexiconVisible,
-    lexiconSaved,
-    lexiconSelectedSurfaceForm: lexiconVisible ? lexiconSelectedSurfaceForm : null,
-    audioMessage,
+    lexiconEntry: lexicon.lexiconEntry,
+    lexiconVisible: lexicon.lexiconVisible,
+    lexiconSaved: lexicon.lexiconSaved,
+    lexiconSelectedSurfaceForm: lexicon.lexiconSelectedSurfaceForm,
+    audioMessage: lexicon.audioMessage,
     cardDetail,
     headword,
     startBrowse,
@@ -448,9 +259,9 @@ export function useStudyFlow(
     handleConfirmUpdateReview,
     setUpdateReviewVisible,
     handleReaderBookmark,
-    openLexicon,
-    handleToggleSave,
-    handlePlayAudio,
+    openLexicon: lexicon.openLexicon,
+    handleToggleSave: lexicon.handleToggleSave,
+    handlePlayAudio: lexicon.handlePlayAudio,
     handlePlayPrimaryAudio,
     handlePlayExampleAudio,
     primaryAudioPlaying,
@@ -467,9 +278,6 @@ export function useStudyFlow(
       const state = getLearningStateByKnowledgeId(currentKnowledgeId);
       setInReviewPool(state?.inReviewPool ?? false);
     },
-    closeLexicon: () => {
-      setLexiconVisible(false);
-      setLexiconSelectedSurfaceForm(null);
-    },
+    closeLexicon: lexicon.closeLexicon,
   };
 }
