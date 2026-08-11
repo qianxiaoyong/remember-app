@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { BackHandler, StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LexiconPopup } from '../components/lexicon-popup';
@@ -27,7 +27,8 @@ import {
 } from '../hooks/use-inspect-queue';
 import { formatInspectContextLabel } from '../components/calendar/inspect-mode-chrome';
 import { exitCalendarInspect } from '../shell/calendar-inspect-navigation';
-import { colors } from '../theme/colors';
+import { useInspectHardwareBackHandler } from '../hooks/use-inspect-hardware-back-handler';
+import { studyScreenStyles as styles } from './study-screen.styles';
 import { spacing } from '../theme/spacing';
 
 interface StudyScreenProps {
@@ -165,31 +166,14 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
     router.replace('/library');
   }, [dismissBrowseComplete, inspectMode, router]);
 
-  useFocusEffect(
-    useCallback(() => {
-      if (!inspectMode) {
-        return;
-      }
-
-      const onHardwareBackPress = (): boolean => {
-        if (lexiconVisible) {
-          closeLexicon();
-          return true;
-        }
-        if (moreVisible) {
-          setMoreVisible(false);
-          return true;
-        }
-        goHome();
-        return true;
-      };
-
-      const subscription = BackHandler.addEventListener('hardwareBackPress', onHardwareBackPress);
-      return () => {
-        subscription.remove();
-      };
-    }, [closeLexicon, goHome, inspectMode, lexiconVisible, moreVisible]),
-  );
+  useInspectHardwareBackHandler({
+    closeLexicon,
+    enabled: inspectMode,
+    goHome,
+    lexiconVisible,
+    moreVisible,
+    setMoreVisible,
+  });
 
   const headerContextLabel =
     inspectMode && props.inspect
@@ -398,23 +382,3 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
     </ScreenScaffold>
   );
 }
-
-const styles = StyleSheet.create({
-  root: {
-    backgroundColor: colors.background,
-    flex: 1,
-  },
-  emptyState: {
-    padding: spacing.lg,
-  },
-  message: {
-    color: colors.studyRatingForgot,
-    paddingHorizontal: spacing.lg,
-    paddingTop: spacing.sm,
-  },
-  resetMessage: {
-    color: colors.studyHeaderBackground,
-    paddingHorizontal: spacing.lg,
-    paddingTop: spacing.sm,
-  },
-});
