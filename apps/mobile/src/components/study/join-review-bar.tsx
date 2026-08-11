@@ -14,6 +14,7 @@ interface JoinReviewBarProps {
 
 export function JoinReviewBar(props: JoinReviewBarProps): ReactElement {
   const insets = useSafeAreaInsets();
+  const skipLabel = props.inReviewPool ? '下一个词' : '不加复习';
 
   return (
     <View style={[styles.bar, { paddingBottom: Math.max(insets.bottom, spacing.sm) }]}>
@@ -40,9 +41,9 @@ export function JoinReviewBar(props: JoinReviewBarProps): ReactElement {
         accessibilityRole="button"
         disabled={props.disabled}
         onPress={props.onSkip}
-        style={[styles.ghostButton, props.disabled ? styles.disabled : null]}
+        style={[styles.skipButton, props.disabled ? styles.disabled : null]}
       >
-        <Text style={styles.ghostLabel}>暂不</Text>
+        <Text style={styles.skipLabel}>{skipLabel}</Text>
       </Pressable>
     </View>
   );
@@ -78,11 +79,15 @@ const styles = StyleSheet.create({
     minHeight: 44,
     paddingVertical: spacing.xs,
   },
-  ghostButton: {
+  skipButton: {
     alignItems: 'center',
+    borderColor: colors.border,
+    borderRadius: 8,
+    borderWidth: StyleSheet.hairlineWidth,
+    flex: 1,
     justifyContent: 'center',
     minHeight: 44,
-    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.xs,
   },
   disabled: {
     opacity: 0.6,
@@ -97,7 +102,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '700',
   },
-  ghostLabel: {
+  skipLabel: {
     color: colors.textSecondary,
     fontSize: 15,
     fontWeight: '600',

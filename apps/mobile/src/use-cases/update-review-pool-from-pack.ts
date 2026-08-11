@@ -10,10 +10,15 @@ import { openUserDatabase } from '../data/user-db/open-user-database';
 import { getDeviceTimeZone } from '../lib/get-device-time-zone';
 import { markReviewPoolChanged } from '../shell/review-pool-changed-signal';
 import { buildReviewPoolLearningRow } from './join-review-pool';
+import { writeJoinReviewActivityEvent } from './write-activity-event-from-review';
 
 export function updateReviewPoolFromPack(input: {
   knowledgeId: string;
   catalogPackId: string;
+  displayLabel?: string;
+  sortOrder?: number;
+  activitySource?: 'browse' | 'review_tab' | 'calendar_inspect';
+  activityLocalDate?: string;
   now?: Date;
 }): void {
   const now = input.now ?? new Date();
@@ -50,4 +55,17 @@ export function updateReviewPoolFromPack(input: {
   }
 
   markReviewPoolChanged();
+
+  if (input.displayLabel) {
+    writeJoinReviewActivityEvent({
+      catalogPackId: input.catalogPackId,
+      knowledgeId: input.knowledgeId,
+      displayLabel: input.displayLabel,
+      ...(input.sortOrder !== undefined ? { sortOrder: input.sortOrder } : {}),
+      created: false,
+      ...(input.activitySource ? { source: input.activitySource } : {}),
+      ...(input.activityLocalDate ? { activityLocalDate: input.activityLocalDate } : {}),
+      now,
+    });
+  }
 }

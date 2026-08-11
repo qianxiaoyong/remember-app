@@ -20,6 +20,12 @@ import { listInstalledPacksUseCase } from '../use-cases/list-installed-packs';
 import { resetPackBrowseProgress } from '../use-cases/reset-pack-browse-progress';
 import { saveStoryReadingBookmark } from '../use-cases/save-story-reading-bookmark';
 import { touchInstalledPackLastOpenedUseCase } from '../use-cases/touch-installed-pack-last-opened';
+import {
+  useInspectQueue,
+  type InspectQueueAdvanceResult,
+  type InspectQueueConfig,
+} from '../hooks/use-inspect-queue';
+import { formatInspectContextLabel } from '../components/calendar/inspect-mode-chrome';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 
@@ -27,11 +33,25 @@ interface StudyScreenProps {
   packId: string;
   knowledgeId?: string | null;
   autoStart?: boolean;
+  inspect?: InspectQueueConfig | null;
 }
 
 export function StudyScreen(props: StudyScreenProps): ReactElement {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const inspectQueue = useInspectQueue(props.inspect ?? null);
+  const activePackId = inspectQueue.currentItem?.packId ?? props.packId;
+  const activeKnowledgeId = inspectQueue.currentItem?.knowledgeId ?? props.knowledgeId;
+  const inspectMode = props.inspect !== null && props.inspect !== undefined;
+
+  const handleInspectActionComplete = useCallback((): InspectQueueAdvanceResult => {
+    const result = inspectQueue.advanceAfterAction();
+    if (result === 'completed') {
+      router.back();
+    }
+    return result;
+  }, [inspectQueue.advanceAfterAction, router]);
+
   const {
     isReaderMode,
     isBrowseMode,
@@ -67,10 +87,12 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
     restartFromBeginning,
     dismissBrowseComplete,
     closeLexicon,
-  } = useStudyFlow(
-    props.packId,
-    props.knowledgeId === undefined ? undefined : { knowledgeId: props.knowledgeId },
-  );
+  } = useStudyFlow(activePackId, {
+    ...(activeKnowledgeId !== undefined ? { knowledgeId: activeKnowledgeId } : {}),
+    inspectMode,
+    ...(props.inspect?.localDate ? { inspectLocalDate: props.inspect.localDate } : {}),
+    ...(inspectMode ? { onInspectActionComplete: handleInspectActionComplete } : {}),
+  });
   const [moreVisible, setMoreVisible] = useState(false);
   const [switchVisible, setSwitchVisible] = useState(false);
   const [resetVisible, setResetVisible] = useState(false);
@@ -83,10 +105,10 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
     [props.packId, resetVisible, browseCompleteVisible],
   );
   useEffect(() => {
-    if (props.autoStart !== false && isBrowseMode && !browseReady) {
+    if (props.autoStart !== false && isBrowseMode && !browseReady && !inspectMode) {
       startBrowse();
     }
-  }, [props.autoStart, browseReady, isBrowseMode, props.packId, startBrowse]);
+  }, [inspectMode, props.autoStart, browseReady, isBrowseMode, props.packId, startBrowse]);
 
   useFocusEffect(
     useCallback(() => {
@@ -99,6 +121,22 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
 
   const handleNavigateLesson = useCallback(
     (knowledgeId: string) => {
+      if (inspectMode && props.inspect) {
+        const targetIndex = inspectQueue.queue.findIndex(
+          (item) => item.knowledgeId === knowledgeId,
+        );
+        if (targetIndex < 0) {
+          return;
+        }
+        const target = inspectQueue.queue[targetIndex];
+        if (!target) {
+          return;
+        }
+        router.replace(
+          `/study?packId=${target.packId}&knowledgeId=${knowledgeId}&inspect=1&localDate=${props.inspect.localDate}&category=${props.inspect.category}&subCategory=${props.inspect.subCategory}&index=${String(targetIndex)}`,
+        );
+        return;
+      }
       saveStoryReadingBookmark({
         packId: props.packId,
         knowledgeId,
@@ -106,13 +144,49 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
       });
       router.replace(`/study?packId=${props.packId}&knowledgeId=${knowledgeId}`);
     },
-    [props.packId, router],
+    [inspectMode, inspectQueue.queue, props.inspect, props.packId, router],
   );
+
+  const readerInspectLessonIds =
+    inspectMode &&
+    isReaderMode &&
+    props.inspect?.category === 'story' &&
+    inspectQueue.queue.length > 0
+      ? inspectQueue.queue.map((item) => item.knowledgeId)
+      : undefined;
 
   const goHome = useCallback((): void => {
     dismissBrowseComplete();
+    if (inspectMode) {
+      router.back();
+      return;
+    }
     router.replace('/library');
-  }, [dismissBrowseComplete, router]);
+  }, [dismissBrowseComplete, inspectMode, router]);
+
+  const headerContextLabel =
+    inspectMode && props.inspect
+      ? formatInspectContextLabel({
+          localDate: props.inspect.localDate,
+          subCategoryLabel: inspectQueue.subCategoryLabel,
+          index: inspectQueue.index,
+          total: inspectQueue.queue.length,
+        })
+      : undefined;
+
+  const inspectNavConfig =
+    inspectMode && props.inspect
+      ? {
+          localDate: props.inspect.localDate,
+          subCategoryLabel: inspectQueue.subCategoryLabel,
+          index: inspectQueue.index,
+          total: inspectQueue.queue.length,
+          canPrevious: inspectQueue.canPrevious,
+          canNext: inspectQueue.canNext,
+          onPrevious: inspectQueue.goPrevious,
+          onNext: inspectQueue.goNext,
+        }
+      : null;
 
   const handleGoReview = useCallback((): void => {
     dismissBrowseComplete();
@@ -200,14 +274,17 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
               onPlayExampleAudio={handlePlayExampleAudio}
               onPlayPrimaryAudio={handlePlayPrimaryAudio}
               onTokenPress={openLexicon}
-              packId={props.packId}
+              packId={activePackId}
               playingExampleAudioPath={playingExampleAudioPath}
               primaryAudioPlaying={primaryAudioPlaying}
               revealed={revealed}
               setRevealed={setRevealed}
               sortOrder={cardDetail.sortOrder}
+              {...(headerContextLabel && !isReaderMode ? { contextLabel: headerContextLabel } : {})}
+              {...(inspectNavConfig && !isReaderMode ? { inspectNav: inspectNavConfig } : {})}
               {...(isReaderMode ? { onReaderBookmark: handleReaderBookmark } : {})}
               {...(isReaderMode ? { initialAudioPositionMs: readerInitialPositionMs } : {})}
+              {...(readerInspectLessonIds ? { lessonNavigationIds: readerInspectLessonIds } : {})}
             />
           ) : (
             <UnsupportedCardPanel onGoHome={goHome} />

@@ -227,6 +227,13 @@ export function countDueReviewPoolItems(
   return row?.count ?? 0;
 }
 
+export function countInReviewPoolTotal(db: SQLiteDatabase = openUserDatabase()): number {
+  const row = db.getFirstSync<{ count: number }>(
+    `SELECT COUNT(*) AS count FROM learning_states WHERE inReviewPool = 1`,
+  );
+  return row?.count ?? 0;
+}
+
 export function buildLearningStateMap(rows: readonly LearningStateRow[]): Map<string, StudyState> {
   const map = new Map<string, StudyState>();
   for (const row of rows) {

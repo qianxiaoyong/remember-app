@@ -47,6 +47,10 @@ vi.mock('./sync/upload-pending-sync-outbox', () => ({
   uploadPendingSyncOutbox: vi.fn(),
 }));
 
+vi.mock('./write-activity-event-from-review', () => ({
+  writeReviewOutcomeActivityEvent: vi.fn(),
+}));
+
 import { getLearningStateByKnowledgeId } from '../data/repositories/learning-state-repository';
 import { incrementReviewCompletedCount } from '../data/repositories/review-daily-stats-repository';
 import { upsertReviewPoolState } from '../data/repositories/learning-state-repository';

@@ -1,6 +1,8 @@
 import type { ReactElement, ReactNode } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { CircleIconButton } from '../ui/circle-icon-button';
+import { HeaderIconButton } from '../ui/header-icon-button';
+import { AppIcon } from '../ui/app-icon';
 import { BackChevronIcon, MenuIcon, SearchIcon } from '../ui/shell-icons';
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
@@ -9,6 +11,8 @@ export type AppHeaderVariant = 'shell' | 'back' | 'study';
 
 interface AppHeaderProps {
   variant: AppHeaderVariant;
+  /** 无背景圆形底，与学习页顶栏返回一致 */
+  plainBack?: boolean;
   onMenuPress?: () => void;
   onSearchPress?: () => void;
   onBackPress?: () => void;
@@ -17,7 +21,15 @@ interface AppHeaderProps {
 }
 
 export function AppHeader(props: AppHeaderProps): ReactElement {
-  const { variant, onMenuPress, onSearchPress, onBackPress, onMorePress, centerContent } = props;
+  const {
+    variant,
+    plainBack,
+    onMenuPress,
+    onSearchPress,
+    onBackPress,
+    onMorePress,
+    centerContent,
+  } = props;
 
   return (
     <View style={styles.row}>
@@ -30,7 +42,15 @@ export function AppHeader(props: AppHeaderProps): ReactElement {
             <MenuIcon size="sm" />
           </CircleIconButton>
         ) : null}
-        {variant === 'back' ? (
+        {variant === 'back' && plainBack ? (
+          <HeaderIconButton
+            accessibilityLabel="返回"
+            {...(onBackPress ? { onPress: onBackPress } : {})}
+          >
+            <AppIcon color={colors.textPrimary} name="chevron-back" size="sm" />
+          </HeaderIconButton>
+        ) : null}
+        {variant === 'back' && !plainBack ? (
           <CircleIconButton
             accessibilityLabel="返回"
             {...(onBackPress ? { onPress: onBackPress } : {})}

@@ -16,6 +16,7 @@ import { openUserDatabase } from '../data/user-db/open-user-database';
 import { getDeviceTimeZone } from '../lib/get-device-time-zone';
 import { markReviewPoolChanged } from '../shell/review-pool-changed-signal';
 import { resolveContentPackId } from './resolve-content-pack-id';
+import { writeJoinReviewActivityEvent } from './write-activity-event-from-review';
 
 export type JoinReviewPoolResult = { status: 'created' } | { status: 'already_in_pool' };
 
@@ -49,6 +50,11 @@ export function buildReviewPoolLearningRow(input: {
 export function joinReviewPool(input: {
   knowledgeId: string;
   catalogPackId: string;
+  displayLabel?: string;
+  sortOrder?: number;
+  activitySource?: 'browse' | 'review_tab' | 'calendar_inspect';
+  /** 家长检查：统计与事件挂在被查看的日历日 */
+  activityLocalDate?: string;
   now?: Date;
 }): JoinReviewPoolResult {
   const now = input.now ?? new Date();
@@ -68,7 +74,7 @@ export function joinReviewPool(input: {
     now,
   });
   const updatedAt = learningRow.updatedAt;
-  const localDate = formatLocalReviewDate(now, timeZone);
+  const localDate = input.activityLocalDate ?? formatLocalReviewDate(now, timeZone);
   const payload = buildSyncOutboxPayload({ row: learningRow });
 
   const db = openUserDatabase();
@@ -93,5 +99,19 @@ export function joinReviewPool(input: {
   }
 
   markReviewPoolChanged();
+
+  if (input.displayLabel) {
+    writeJoinReviewActivityEvent({
+      catalogPackId: input.catalogPackId,
+      knowledgeId: input.knowledgeId,
+      displayLabel: input.displayLabel,
+      ...(input.sortOrder !== undefined ? { sortOrder: input.sortOrder } : {}),
+      created: true,
+      ...(input.activitySource ? { source: input.activitySource } : {}),
+      ...(input.activityLocalDate ? { activityLocalDate: input.activityLocalDate } : {}),
+      now,
+    });
+  }
+
   return { status: 'created' };
 }

@@ -19,24 +19,37 @@ import { getDeviceTimeZone } from '../lib/get-device-time-zone';
 import { findActiveReviewSession } from './find-active-review-session';
 import { uploadPendingSyncOutbox } from './sync/upload-pending-sync-outbox';
 import { markReviewPoolChanged } from '../shell/review-pool-changed-signal';
+import { writeReviewOutcomeActivityEvent } from './write-activity-event-from-review';
 
 export function confirmReviewOutcome(input: {
-  sessionId: string;
+  sessionId?: string;
   knowledgeId: string;
   outcome: 'passed' | 'failed';
+  displayLabel?: string;
+  activitySource?: 'browse' | 'review_tab' | 'calendar_inspect';
+  activityLocalDate?: string;
+  inspectMode?: boolean;
   now?: Date;
 }): void {
   const now = input.now ?? new Date();
   const timeZone = getDeviceTimeZone();
-  const activeSession = findActiveReviewSession();
-  if (activeSession?.sessionId !== input.sessionId) {
-    throw new Error('no active review session');
-  }
+  const inspectMode = input.inspectMode === true;
 
-  const pendingItems = listPendingQueueItemsForSession(activeSession.sessionId);
-  const currentItem = pendingItems[0];
-  if (currentItem?.knowledgeId !== input.knowledgeId) {
-    throw new Error('review target does not match current queue item');
+  let currentItem: { itemId: string; knowledgeId: string } | null = null;
+  let activeSession: { sessionId: string } | null = null;
+  let pendingItems: { itemId: string; knowledgeId: string }[] = [];
+
+  if (!inspectMode) {
+    activeSession = findActiveReviewSession();
+    if (!input.sessionId || activeSession?.sessionId !== input.sessionId) {
+      throw new Error('no active review session');
+    }
+
+    pendingItems = listPendingQueueItemsForSession(activeSession.sessionId);
+    currentItem = pendingItems[0] ?? null;
+    if (currentItem?.knowledgeId !== input.knowledgeId) {
+      throw new Error('review target does not match current queue item');
+    }
   }
 
   const previous = getLearningStateByKnowledgeId(input.knowledgeId);
@@ -67,13 +80,15 @@ export function confirmReviewOutcome(input: {
     updatedAt,
   };
   const payload = buildSyncOutboxPayload({ row: learningRow, outcome: input.outcome });
-  const localDate = formatLocalReviewDate(now, timeZone);
+  const localDate = input.activityLocalDate ?? formatLocalReviewDate(now, timeZone);
 
   const db = openUserDatabase();
   db.execSync('BEGIN IMMEDIATE');
   try {
     upsertReviewPoolState(learningRow, db);
-    markQueueItemDone(currentItem.itemId, db);
+    if (!inspectMode && currentItem && activeSession) {
+      markQueueItemDone(currentItem.itemId, db);
+    }
     incrementReviewCompletedCount(localDate, updatedAt, db);
     insertSyncOutboxItem(
       {
@@ -85,15 +100,17 @@ export function confirmReviewOutcome(input: {
       },
       db,
     );
-    touchSessionUpdatedAt(activeSession.sessionId, updatedAt, db);
+    if (!inspectMode && activeSession) {
+      touchSessionUpdatedAt(activeSession.sessionId, updatedAt, db);
 
-    if (pendingItems.length === 1) {
-      updateSessionStatus({
-        sessionId: activeSession.sessionId,
-        status: 'completed',
-        updatedAt,
-        db,
-      });
+      if (pendingItems.length === 1) {
+        updateSessionStatus({
+          sessionId: activeSession.sessionId,
+          status: 'completed',
+          updatedAt,
+          db,
+        });
+      }
     }
 
     db.execSync('COMMIT');
@@ -104,4 +121,17 @@ export function confirmReviewOutcome(input: {
 
   void uploadPendingSyncOutbox();
   markReviewPoolChanged();
+
+  if (input.displayLabel && previous.firstAddedFromPackId) {
+    writeReviewOutcomeActivityEvent({
+      catalogPackId: previous.firstAddedFromPackId,
+      knowledgeId: input.knowledgeId,
+      displayLabel: input.displayLabel,
+      outcome: input.outcome,
+      boxLevelAfter: learningRow.boxLevel,
+      ...(input.activitySource ? { source: input.activitySource } : {}),
+      ...(input.activityLocalDate ? { activityLocalDate: input.activityLocalDate } : {}),
+      now,
+    });
+  }
 }

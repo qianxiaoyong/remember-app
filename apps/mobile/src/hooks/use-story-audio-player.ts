@@ -5,6 +5,7 @@ import {
   prepareExpoAudioUri,
   seekPreparedExpoAudio,
   setPreparedExpoAudioPlaybackRate,
+  subscribeExpoAudioPlaybackFinished,
   subscribeExpoAudioPosition,
   type ExpoAudioPositionState,
 } from '../use-cases/play-expo-audio-uri';
@@ -24,6 +25,7 @@ export function useStoryAudioPlayer(input: {
   isActive: boolean;
   initialPositionMs?: number;
   playbackRate?: number;
+  onNaturalPlaybackFinished?: () => void;
 }): StoryAudioPlayerState {
   const [positionMs, setPositionMs] = useState(0);
   const [durationMs, setDurationMs] = useState(0);
@@ -85,6 +87,20 @@ export function useStoryAudioPlayer(input: {
     };
     return subscribeExpoAudioPosition(handlePosition);
   }, []);
+
+  useEffect(() => {
+    if (!input.onNaturalPlaybackFinished) {
+      return;
+    }
+    let notifiedForUri = false;
+    return subscribeExpoAudioPlaybackFinished(() => {
+      if (!input.isActive || notifiedForUri) {
+        return;
+      }
+      notifiedForUri = true;
+      input.onNaturalPlaybackFinished?.();
+    });
+  }, [input.isActive, input.onNaturalPlaybackFinished, input.uri]);
 
   useEffect(() => {
     if (wasActiveRef.current && !input.isActive) {

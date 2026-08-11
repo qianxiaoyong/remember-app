@@ -1,23 +1,46 @@
+import { formatLocalReviewDate } from '@remember/domain';
 import { getPackCard, listPackCards } from '../data/repositories/pack-card-repository';
 import { listLearningStatesForPackContent } from '../data/repositories/learning-state-for-pack-content';
 import { listInstalledPacks } from '../data/repositories/installed-pack-repository';
 import { getPackBrowseBookmark } from '../data/repositories/pack-browse-bookmark-repository';
+import { countInReviewPoolTotal } from '../data/repositories/learning-state-repository';
+import { getReviewDailyStats } from '../data/repositories/review-daily-stats-repository';
+import { getDailyReviewLimit } from '../data/repositories/user-preferences-repository';
 import { resolvePackDisplayName } from '../catalog/resolve-pack-display-name';
 import { getStoryReadingBookmark } from '../data/repositories/story-reading-bookmark-repository';
 import { getPackCardDetailUseCase } from './get-pack-card-detail';
 import { resolvePackLibraryPresentation } from './resolve-pack-library-presentation';
 import { countDueReviewItems } from './count-due-review-items';
+import { getDeviceTimeZone } from '../lib/get-device-time-zone';
 import type { LibraryPresentation } from '../learning/card-types/types';
+
+export interface LibraryOverviewStatTile {
+  key: string;
+  label: string;
+  value: string;
+  unit: string;
+}
 
 export interface LibraryOverview {
   totalCards: number;
+  todayDueCount: number;
+  todayReviewCompleted: number;
+  todayReviewLimit: number;
+  installedPackCount: number;
+  reviewPoolTotal: number;
+  reviewPoolLearning: number;
+  reviewPoolStable: number;
+  todayJoinedPool: number;
+  statTiles: LibraryOverviewStatTile[];
+  /** @deprecated 保留兼容；等同 todayDueCount */
   todayTaskCount: number;
+  /** @deprecated 保留兼容；等同 reviewPoolLearning */
   learningCount: number;
+  /** @deprecated 保留兼容；等同 reviewPoolStable */
   masteredCount: number;
   hasActiveTask: boolean;
   activePackId: string | null;
 }
-
 export interface InstalledPackSummary {
   packId: string;
   displayName: string;
@@ -45,7 +68,11 @@ export function loadLibraryScreenData(now: Date = new Date()): {
 } {
   const installed = listInstalledPacks();
   const nowIso = now.toISOString();
-  const todayTaskCount = countDueReviewItems(now);
+  const timeZone = getDeviceTimeZone();
+  const localDate = formatLocalReviewDate(now, timeZone);
+  const dailyStats = getReviewDailyStats(localDate);
+  const dailyReviewLimit = getDailyReviewLimit();
+  const todayDueCount = countDueReviewItems(now);
   const statsCache = new Map<string, PackStats>();
 
   const getStats = (sqlitePath: string): PackStats => {
@@ -61,6 +88,7 @@ export function loadLibraryScreenData(now: Date = new Date()): {
   let totalCards = 0;
   let learningCount = 0;
   let masteredCount = 0;
+  const reviewPoolTotal = countInReviewPoolTotal();
   const aggregatedSqlitePaths = new Set<string>();
   for (const pack of installed) {
     if (aggregatedSqlitePaths.has(pack.sqlitePath)) {
@@ -75,10 +103,28 @@ export function loadLibraryScreenData(now: Date = new Date()): {
 
   const overview: LibraryOverview = {
     totalCards,
-    todayTaskCount,
+    todayDueCount,
+    todayReviewCompleted: dailyStats.reviewCompletedCount,
+    todayReviewLimit: dailyReviewLimit,
+    installedPackCount: installed.length,
+    reviewPoolTotal,
+    reviewPoolLearning: learningCount,
+    reviewPoolStable: masteredCount,
+    todayJoinedPool: dailyStats.joinedPoolCount,
+    statTiles: buildLibraryStatTiles({
+      todayDueCount,
+      todayReviewCompleted: dailyStats.reviewCompletedCount,
+      todayReviewLimit: dailyReviewLimit,
+      installedPackCount: installed.length,
+      reviewPoolTotal,
+      reviewPoolLearning: learningCount,
+      reviewPoolStable: masteredCount,
+      todayJoinedPool: dailyStats.joinedPoolCount,
+    }),
+    todayTaskCount: todayDueCount,
     learningCount,
     masteredCount,
-    hasActiveTask: todayTaskCount > 0,
+    hasActiveTask: todayDueCount > 0,
     activePackId: null,
   };
 
@@ -263,6 +309,85 @@ function aggregatePackStats(sqlitePath: string, nowIso: string): PackStats {
   };
 }
 
+function buildLibraryStatTiles(input: {
+  todayDueCount: number;
+  todayReviewCompleted: number;
+  todayReviewLimit: number;
+  installedPackCount: number;
+  reviewPoolTotal: number;
+  reviewPoolLearning: number;
+  reviewPoolStable: number;
+  todayJoinedPool: number;
+}): LibraryOverviewStatTile[] {
+  const reviewCompletedDisplay =
+    input.todayReviewLimit > 0
+      ? `${formatLearningCount(input.todayReviewCompleted)}/${formatLearningCount(input.todayReviewLimit)}`
+      : formatLearningCount(input.todayReviewCompleted);
+
+  return [
+    { key: 'todayReviewCompleted', label: '今日已复习', value: reviewCompletedDisplay, unit: '条' },
+    {
+      key: 'todayJoinedPool',
+      label: '今日新入池',
+      value: formatLearningCount(input.todayJoinedPool),
+      unit: '词',
+    },
+    {
+      key: 'reviewPoolTotal',
+      label: '复习池总数',
+      value: formatLearningCount(input.reviewPoolTotal),
+      unit: '条',
+    },
+    {
+      key: 'reviewPoolLearning',
+      label: '待复习总数',
+      value: formatLearningCount(input.reviewPoolLearning),
+      unit: '条',
+    },
+    {
+      key: 'reviewPoolStable',
+      label: '已记得',
+      value: formatLearningCount(input.reviewPoolStable),
+      unit: '条',
+    },
+    {
+      key: 'installedPackCount',
+      label: '已安装',
+      value: formatLearningCount(input.installedPackCount),
+      unit: '本',
+    },
+  ];
+}
+
 export function formatLearningCount(value: number): string {
   return value.toLocaleString('zh-CN');
+}
+
+export function createEmptyLibraryOverview(): LibraryOverview {
+  return {
+    totalCards: 0,
+    todayDueCount: 0,
+    todayReviewCompleted: 0,
+    todayReviewLimit: 20,
+    installedPackCount: 0,
+    reviewPoolTotal: 0,
+    reviewPoolLearning: 0,
+    reviewPoolStable: 0,
+    todayJoinedPool: 0,
+    statTiles: buildLibraryStatTiles({
+      todayDueCount: 0,
+      todayReviewCompleted: 0,
+      todayReviewLimit: 20,
+      installedPackCount: 0,
+      reviewPoolTotal: 0,
+      reviewPoolLearning: 0,
+      reviewPoolStable: 0,
+      todayJoinedPool: 0,
+    }),
+    todayTaskCount: 0,
+    learningCount: 0,
+    masteredCount: 0,
+    hasActiveTask: false,
+    activePackId: null,
+  };
 }

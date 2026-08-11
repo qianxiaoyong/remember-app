@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { InstalledPackRow } from '../components/library/installed-pack-row';
@@ -18,6 +18,7 @@ import {
 import { navigateShellTab } from '../shell/shell-tab-transition';
 import {
   loadLibraryScreenData,
+  createEmptyLibraryOverview,
   type InstalledPackSummary,
   type LibraryOverview,
 } from '../use-cases/get-library-overview';
@@ -26,14 +27,7 @@ import { deferAfterFirstPaint } from '../lib/defer-after-first-paint';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 
-const EMPTY_OVERVIEW: LibraryOverview = {
-  totalCards: 0,
-  todayTaskCount: 0,
-  learningCount: 0,
-  masteredCount: 0,
-  hasActiveTask: false,
-  activePackId: null,
-};
+const EMPTY_OVERVIEW: LibraryOverview = createEmptyLibraryOverview();
 
 export function LibraryScreen(): ReactElement {
   const router = useRouter();
@@ -61,13 +55,22 @@ export function LibraryScreen(): ReactElement {
     }, [bumpRefresh]),
   );
 
+  const hasLoadedOnceRef = useRef(false);
+
   useEffect(() => {
-    return deferAfterFirstPaint(() => {
+    const applyData = (): void => {
       const data = loadLibraryScreenData();
       setOverview(data.overview);
       setInstalledPacks(data.installedPacks);
       setIsLibraryLoading(false);
-    });
+      hasLoadedOnceRef.current = true;
+    };
+
+    if (!hasLoadedOnceRef.current) {
+      return deferAfterFirstPaint(applyData);
+    }
+
+    applyData();
   }, [refreshKey]);
 
   const handleRefresh = useCallback(async () => {

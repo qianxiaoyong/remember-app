@@ -13,3 +13,4 @@ export {
 export * from './payment/index.js';
 export * from './redemption/index.js';
 export * from './sync/index.js';
+export * from './activity/index.js';

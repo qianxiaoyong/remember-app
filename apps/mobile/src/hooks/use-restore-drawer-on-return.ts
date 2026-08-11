@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { useFocusEffect } from 'expo-router';
+import { deferAfterFirstPaint } from '../lib/defer-after-first-paint';
 import { consumeDrawerReturnPending } from '../shell/drawer-return-intent';
 import { useShellActions } from '../shell/shell-provider';
 
@@ -9,9 +10,12 @@ export function useRestoreDrawerOnReturn(): void {
 
   useFocusEffect(
     useCallback(() => {
-      if (consumeDrawerReturnPending()) {
-        openDrawer();
+      if (!consumeDrawerReturnPending()) {
+        return;
       }
+      return deferAfterFirstPaint(() => {
+        openDrawer();
+      });
     }, [openDrawer]),
   );
 }

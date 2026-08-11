@@ -18,6 +18,7 @@ import { markDrawerReturnPending } from '../../shell/drawer-return-intent';
 import { DrawerAccountHeader, DrawerAccountHeaderLoading } from './drawer-account-header';
 import { DrawerCommonFeaturesBlock } from './drawer-common-features-block';
 import { DrawerMenuListBlock } from './drawer-menu-list-block';
+import { LearningCalendarWidget } from './learning-calendar-widget';
 import { ContactBottomPanel } from './contact-bottom-panel';
 import { drawerContentPaddingTop } from '../../theme/drawer-styles';
 import { colors } from '../../theme/colors';
@@ -194,6 +195,7 @@ export function AppDrawer(props: AppDrawerProps): ReactElement | null {
             showsVerticalScrollIndicator={false}
             style={styles.menuScroll}
           >
+            <LearningCalendarWidget />
             <DrawerCommonFeaturesBlock
               items={drawerCommonFeatures}
               onItemPress={handleCommonFeaturePress}
