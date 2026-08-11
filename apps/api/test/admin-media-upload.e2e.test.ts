@@ -103,9 +103,7 @@ describe('admin media upload integration', () => {
     const originalPath = body.coverUrl.replace(/^.*\/api\/v1\/media\//, '');
     const thumbPath = body.coverThumbnailUrl.replace(/^.*\/api\/v1\/media\//, '');
 
-    const originalResponse = await request(server)
-      .get(`/api/v1/media/${originalPath}`)
-      .expect(200);
+    const originalResponse = await request(server).get(`/api/v1/media/${originalPath}`).expect(200);
     expect(originalResponse.headers['content-type']).toMatch(/^image\/jpeg/);
 
     const thumbResponse = await request(server).get(`/api/v1/media/${thumbPath}`).expect(200);

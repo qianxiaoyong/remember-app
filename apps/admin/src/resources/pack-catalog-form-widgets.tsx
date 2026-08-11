@@ -1,10 +1,4 @@
-import {
-  Button,
-  NumberInput,
-  useNotify,
-  useRecordContext,
-  useInput,
-} from 'react-admin';
+import { Button, NumberInput, useNotify, useRecordContext, useInput } from 'react-admin';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { Box, TextField as MuiTextField, Typography } from '@mui/material';
 import { useId, useRef, useState, type ChangeEvent, type ReactElement } from 'react';

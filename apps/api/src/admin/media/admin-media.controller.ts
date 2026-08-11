@@ -8,7 +8,11 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { MAX_ADMIN_MEDIA_UPLOAD_BYTES, adminMediaUploadCoverResponseSchema, adminMediaUploadResponseSchema } from '@remember/contracts';
+import {
+  MAX_ADMIN_MEDIA_UPLOAD_BYTES,
+  adminMediaUploadCoverResponseSchema,
+  adminMediaUploadResponseSchema,
+} from '@remember/contracts';
 import { AdminAuthGuard } from '../../admin-auth/admin-auth.guard.js';
 import { AdminMediaService } from './admin-media.service.js';
 
