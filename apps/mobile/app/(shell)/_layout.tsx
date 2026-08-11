@@ -7,7 +7,7 @@ import {
   navigateShellTab,
   resolveShellTabFromPathname,
 } from '../../src/shell/shell-tab-transition';
-import { ShellProvider, useDrawerOpen, useShellActions } from '../../src/shell/shell-provider';
+import { ShellProvider, useCapsuleVisible, useDrawerOpen, useShellActions } from '../../src/shell/shell-provider';
 import { colors } from '../../src/theme/colors';
 
 export default function ShellLayout(): ReactElement {
@@ -24,11 +24,16 @@ function ShellDrawerHost(): ReactElement {
   return <AppDrawer onClose={closeDrawer} onDismiss={dismissDrawer} visible={isDrawerOpen} />;
 }
 
-function ShellCapsuleTabBar(): ReactElement {
+function ShellCapsuleTabBar(): ReactElement | null {
   const pathname = usePathname();
   const router = useRouter();
   const { closeDrawer } = useShellActions();
+  const capsuleVisible = useCapsuleVisible();
   const activeTab: CapsuleTab = resolveShellTabFromPathname(pathname);
+
+  if (!capsuleVisible) {
+    return null;
+  }
 
   return (
     <CapsuleBar

@@ -12,9 +12,12 @@ interface ShellActions {
 
 const ShellActionsContext = createContext<ShellActions | null>(null);
 const DrawerOpenContext = createContext(false);
+const CapsuleVisibleContext = createContext(true);
+const SetCapsuleVisibleContext = createContext<((visible: boolean) => void) | null>(null);
 
 export function ShellProvider(props: { children: ReactNode }): ReactElement {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [capsuleVisible, setCapsuleVisible] = useState(true);
   const openDrawer = useCallback(() => {
     setIsDrawerOpen(true);
   }, []);
@@ -32,7 +35,11 @@ export function ShellProvider(props: { children: ReactNode }): ReactElement {
 
   return (
     <ShellActionsContext.Provider value={actions}>
-      <DrawerOpenContext.Provider value={isDrawerOpen}>{props.children}</DrawerOpenContext.Provider>
+      <SetCapsuleVisibleContext.Provider value={setCapsuleVisible}>
+        <CapsuleVisibleContext.Provider value={capsuleVisible}>
+          <DrawerOpenContext.Provider value={isDrawerOpen}>{props.children}</DrawerOpenContext.Provider>
+        </CapsuleVisibleContext.Provider>
+      </SetCapsuleVisibleContext.Provider>
     </ShellActionsContext.Provider>
   );
 }
@@ -47,6 +54,18 @@ export function useShellActions(): ShellActions {
 
 export function useDrawerOpen(): boolean {
   return useContext(DrawerOpenContext);
+}
+
+export function useCapsuleVisible(): boolean {
+  return useContext(CapsuleVisibleContext);
+}
+
+export function useSetCapsuleVisible(): (visible: boolean) => void {
+  const setVisible = useContext(SetCapsuleVisibleContext);
+  if (!setVisible) {
+    throw new Error('useSetCapsuleVisible must be used within ShellProvider');
+  }
+  return setVisible;
 }
 
 /** @deprecated 订阅 isDrawerOpen 会导致页面随抽屉开关重渲染；请改用 useShellActions / useDrawerOpen */
