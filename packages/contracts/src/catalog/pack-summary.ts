@@ -20,6 +20,7 @@ export const catalogPackSummarySchema = z
     priceCents: z.number().int().nonnegative(),
     summary: z.string().min(1),
     coverUrl: z.url().optional(),
+    coverThumbnailUrl: z.url().optional(),
     coverBadge: z.string().min(1).optional(),
     coverLines: z.array(z.string()).optional(),
     includedHighlights: z.array(includedHighlightSchema).max(4).optional(),

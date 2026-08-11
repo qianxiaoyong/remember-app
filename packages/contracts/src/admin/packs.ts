@@ -17,6 +17,19 @@ const optionalUrlSchema = z.preprocess(
   z.url().optional(),
 );
 
+const optionalClearableUrlSchema = z.preprocess(
+  (value) => {
+    if (value === '' || value === null) {
+      return null;
+    }
+    if (typeof value === 'string' && value.trim() === '') {
+      return null;
+    }
+    return value;
+  },
+  z.union([z.url(), z.null()]).optional(),
+);
+
 const optionalUuidSchema = z.preprocess(
   (value) => (typeof value === 'string' && value.trim() === '' ? undefined : value),
   z.uuid().optional(),
@@ -44,6 +57,7 @@ export const adminPackSummarySchema = z
     summary: z.string().min(1),
     priceCents: z.number().int().nonnegative(),
     coverUrl: z.url().optional(),
+    coverThumbnailUrl: z.url().optional(),
     coverBadge: z.string().min(1).optional(),
     coverLines: z.array(z.string()).optional(),
     includedHighlights: z.array(includedHighlightSchema).max(4).optional(),
@@ -80,6 +94,7 @@ const adminPackWriteFieldsSchema = z
     summary: z.string().min(1),
     priceCents: z.number().int().nonnegative(),
     coverUrl: optionalUrlSchema,
+    coverThumbnailUrl: optionalClearableUrlSchema,
     coverBadge: optionalNonEmptyStringSchema,
     coverLines: z.array(z.string()).optional(),
     includedHighlights: z.array(includedHighlightSchema).max(4).default([]),
@@ -136,6 +151,7 @@ export const adminUpdatePackRequestSchema = z
     summary: z.string().min(1).optional(),
     priceCents: z.number().int().nonnegative().optional(),
     coverUrl: optionalUrlSchema,
+    coverThumbnailUrl: optionalClearableUrlSchema,
     coverBadge: optionalNonEmptyStringSchema,
     coverLines: z.array(z.string()).optional(),
     includedHighlights: z.array(includedHighlightSchema).max(4).optional(),

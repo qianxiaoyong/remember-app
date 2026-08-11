@@ -1,8 +1,16 @@
-import { Button, NumberInput, useNotify, useRecordContext, useInput } from 'react-admin';
+import {
+  Button,
+  NumberInput,
+  useNotify,
+  useRecordContext,
+  useInput,
+} from 'react-admin';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { Box, TextField as MuiTextField, Typography } from '@mui/material';
-import { useState } from 'react';
+import { useId, useRef, useState, type ChangeEvent, type ReactElement } from 'react';
 import { extractSamplePreviews } from '../api/packs-api.js';
+import { uploadAdminCover } from '../api/media-api.js';
+import { resolveAdminMediaPreviewSrc } from '../api/resolve-admin-media-preview-src.js';
 import { AdminImageUploadButton } from '../components/admin-image-upload-field.js';
 import { AdminLabeledField } from '../components/admin-form-section.js';
 import { formatMoney } from '../components/format-money.js';
@@ -15,26 +23,161 @@ function normalizeCoverLines(value: unknown): [string, string] {
   return [raw[0] ?? '', raw[1] ?? ''];
 }
 
+function formatBytes(bytes: number): string {
+  if (bytes < 1024) {
+    return `${String(bytes)} B`;
+  }
+  if (bytes < 1024 * 1024) {
+    return `${(bytes / 1024).toFixed(1)} KB`;
+  }
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+interface CoverUploadSizeInfo {
+  originalSizeBytes: number;
+  thumbnailSizeBytes: number;
+}
+
+function CoverUploadButton(props: {
+  onUploaded: (result: {
+    coverUrl: string;
+    coverThumbnailUrl: string;
+    originalSizeBytes: number;
+    thumbnailSizeBytes: number;
+  }) => void;
+}): ReactElement {
+  const notify = useNotify();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const inputId = useId();
+  const [loading, setLoading] = useState(false);
+
+  async function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    event.target.value = '';
+    if (!file) {
+      return;
+    }
+    setLoading(true);
+    try {
+      const result = await uploadAdminCover(file);
+      props.onUploaded(result);
+      notify('封面与列表缩略图已上传', { type: 'success' });
+    } catch (error) {
+      notify(error instanceof Error ? error.message : '上传失败', { type: 'error' });
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <>
+      <input
+        ref={inputRef}
+        id={inputId}
+        type="file"
+        accept="image/jpeg,image/png,image/webp"
+        hidden
+        onChange={(event) => {
+          void handleFileChange(event);
+        }}
+      />
+      <Button
+        size="small"
+        variant="outlined"
+        disabled={loading}
+        onClick={() => {
+          inputRef.current?.click();
+        }}
+        sx={{ whiteSpace: 'nowrap', flexShrink: 0 }}
+      >
+        {loading ? '上传中…' : '上传图片'}
+      </Button>
+    </>
+  );
+}
+
 export function CoverUrlField() {
   const { field } = useInput({ source: 'coverUrl' });
+  const { field: thumbnailField } = useInput({ source: 'coverThumbnailUrl' });
+  const [sizeInfo, setSizeInfo] = useState<CoverUploadSizeInfo | null>(null);
   const value = typeof field.value === 'string' ? field.value : '';
 
   return (
-    <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', width: '100%' }}>
-      <MuiTextField
-        size="small"
-        fullWidth
-        value={value}
-        placeholder="https://..."
-        onChange={(event) => {
-          field.onChange(event.target.value);
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5, width: '100%' }}>
+      <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', width: '100%' }}>
+        <MuiTextField
+          size="small"
+          fullWidth
+          value={value}
+          placeholder="https://..."
+          onChange={(event) => {
+            field.onChange(event.target.value);
+            thumbnailField.onChange('');
+            setSizeInfo(null);
+          }}
+        />
+        <CoverUploadButton
+          onUploaded={(result) => {
+            field.onChange(result.coverUrl);
+            thumbnailField.onChange(result.coverThumbnailUrl);
+            setSizeInfo({
+              originalSizeBytes: result.originalSizeBytes,
+              thumbnailSizeBytes: result.thumbnailSizeBytes,
+            });
+          }}
+        />
+      </Box>
+      {sizeInfo ? (
+        <Typography variant="caption" color="text.secondary">
+          原图 {formatBytes(sizeInfo.originalSizeBytes)} · 列表缩略图{' '}
+          {formatBytes(sizeInfo.thumbnailSizeBytes)}
+        </Typography>
+      ) : null}
+    </Box>
+  );
+}
+
+export function CoverThumbnailPreview() {
+  const coverThumbnailUrl = useWatch<{ coverThumbnailUrl?: string }>({ name: 'coverThumbnailUrl' });
+  const url = typeof coverThumbnailUrl === 'string' ? coverThumbnailUrl.trim() : '';
+
+  if (!url) {
+    return null;
+  }
+
+  return (
+    <Box
+      sx={{
+        alignItems: 'center',
+        bgcolor: adminColors.surfaceSunken,
+        border: `1px solid ${adminColors.border}`,
+        borderRadius: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        flexShrink: 0,
+        gap: 0.25,
+        height: 56,
+        justifyContent: 'center',
+        overflow: 'hidden',
+        width: 42,
+      }}
+    >
+      <Box
+        alt=""
+        component="img"
+        src={resolveAdminMediaPreviewSrc(url)}
+        sx={{ height: '100%', objectFit: 'cover', width: '100%' }}
+        onError={(event) => {
+          event.currentTarget.style.display = 'none';
         }}
       />
-      <AdminImageUploadButton
-        onUploaded={(url) => {
-          field.onChange(url);
-        }}
-      />
+      <Typography
+        variant="caption"
+        color="text.secondary"
+        sx={{ fontSize: 9, lineHeight: 1, px: 0.25, textAlign: 'center' }}
+      >
+        列表
+      </Typography>
     </Box>
   );
 }
@@ -100,7 +243,7 @@ export function CoverPreview() {
         <Box
           alt=""
           component="img"
-          src={url}
+          src={resolveAdminMediaPreviewSrc(url)}
           sx={{ height: '100%', objectFit: 'cover', width: '100%' }}
           onError={(event) => {
             event.currentTarget.style.display = 'none';

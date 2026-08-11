@@ -4,7 +4,10 @@ import { join } from 'node:path';
 import type { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import type { PrismaClient } from '@prisma/client';
-import { adminMediaUploadResponseSchema } from '@remember/contracts';
+import {
+  adminMediaUploadCoverResponseSchema,
+  adminMediaUploadResponseSchema,
+} from '@remember/contracts';
 import request from 'supertest';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { AppModule } from '../src/app.module.js';
@@ -79,6 +82,37 @@ describe('admin media upload integration', () => {
 
     const savedFiles = await readFile(join(mediaDir, mediaPath));
     expect(savedFiles.equals(TINY_PNG)).toBe(true);
+  });
+
+  it('upload-cover 返回原图与缩略图 URL', async () => {
+    const server = app.getHttpServer() as HttpServer;
+    const admin = await adminLogin(server);
+
+    const uploadResponse = await request(server)
+      .post('/api/v1/admin/media/upload-cover')
+      .set('Authorization', `Bearer ${admin.token}`)
+      .attach('file', TINY_PNG, { filename: 'cover.png', contentType: 'image/png' })
+      .expect(200);
+
+    const body = adminMediaUploadCoverResponseSchema.parse(uploadResponse.body);
+    expect(body.coverUrl).toMatch(/\/api\/v1\/media\/[0-9a-f-]+\.jpg$/);
+    expect(body.coverThumbnailUrl).toMatch(/\/api\/v1\/media\/[0-9a-f-]+\.thumb\.webp$/);
+    expect(body.originalSizeBytes).toBeGreaterThan(0);
+    expect(body.thumbnailSizeBytes).toBeGreaterThan(0);
+
+    const originalPath = body.coverUrl.replace(/^.*\/api\/v1\/media\//, '');
+    const thumbPath = body.coverThumbnailUrl.replace(/^.*\/api\/v1\/media\//, '');
+
+    const originalResponse = await request(server)
+      .get(`/api/v1/media/${originalPath}`)
+      .expect(200);
+    expect(originalResponse.headers['content-type']).toMatch(/^image\/jpeg/);
+
+    const thumbResponse = await request(server).get(`/api/v1/media/${thumbPath}`).expect(200);
+    expect(thumbResponse.headers['content-type']).toMatch(/^image\/webp/);
+
+    const savedThumb = await readFile(join(mediaDir, thumbPath));
+    expect(savedThumb.byteLength).toBe(body.thumbnailSizeBytes);
   });
 
   it('非法类型返回 400', async () => {
