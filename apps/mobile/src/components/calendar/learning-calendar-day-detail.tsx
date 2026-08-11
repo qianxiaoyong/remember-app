@@ -41,7 +41,7 @@ export function LearningCalendarDayDetailPanel(
 
     const route =
       first.mode === 'review'
-        ? `/review?inspect=1&localDate=${detail.localDate}&category=${category}&subCategory=${subCategory}&index=0`
+        ? `/review-inspect?localDate=${detail.localDate}&category=${category}&subCategory=${subCategory}&index=0`
         : `/study?packId=${first.packId}&knowledgeId=${first.knowledgeId}&inspect=1&localDate=${detail.localDate}&category=${category}&subCategory=${subCategory}&index=0`;
 
     router.push(route);

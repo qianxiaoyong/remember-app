@@ -1,8 +1,12 @@
 import type { ReactElement } from 'react';
-import { useCallback, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Dimensions, Pressable, StyleSheet, Text, View, type DimensionValue } from 'react-native';
-import { useFocusEffect, useRouter } from 'expo-router';
-import type { HeatCell } from '../../use-cases/get-learning-activity-summary';
+import { deferAfterFirstPaint } from '../../lib/defer-after-first-paint';
+import { useRouter } from 'expo-router';
+import type {
+  HeatCell,
+  LearningActivitySummary,
+} from '../../use-cases/get-learning-activity-summary';
 import { getLearningActivitySummary } from '../../use-cases/get-learning-activity-summary';
 import { consumeLearningCalendarNeedsRefresh } from '../../shell/learning-calendar-refresh-signal';
 import { markDrawerReturnPending } from '../../shell/drawer-return-intent';
@@ -29,23 +33,46 @@ function resolveHeatCellSize(gridWidth: number): number {
   );
 }
 
-export function LearningCalendarWidget(): ReactElement {
+export function LearningCalendarWidget(props: { drawerVisible: boolean }): ReactElement {
   const router = useRouter();
   const { dismissDrawer } = useShellActions();
-  const [refreshKey, setRefreshKey] = useState(0);
+  const [summary, setSummary] = useState<LearningActivitySummary | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const summaryRef = useRef<LearningActivitySummary | null>(null);
   const [gridWidth, setGridWidth] = useState(estimateHeatGridInnerWidth);
-  const summary = useMemo(() => getLearningActivitySummary(), [refreshKey]);
-  const monthLabels = useMemo(() => buildMonthLabels(summary.heatGrid), [summary.heatGrid]);
+  const monthLabels = useMemo(() => (summary ? buildMonthLabels(summary.heatGrid) : []), [summary]);
   const heatCellSize = resolveHeatCellSize(gridWidth);
   const heatGridHeight = heatCellSize * HEAT_GRID_ROWS + HEAT_GRID_GAP * (HEAT_GRID_ROWS - 1);
 
-  useFocusEffect(
-    useCallback(() => {
-      if (consumeLearningCalendarNeedsRefresh()) {
-        setRefreshKey((key) => key + 1);
+  useEffect(() => {
+    if (!props.drawerVisible) {
+      return;
+    }
+
+    const needsRefresh = consumeLearningCalendarNeedsRefresh();
+    if (summaryRef.current !== null && !needsRefresh) {
+      setIsLoading(false);
+      return;
+    }
+
+    let cancelled = false;
+    setIsLoading(true);
+
+    const cancelDefer = deferAfterFirstPaint(() => {
+      if (cancelled) {
+        return;
       }
-    }, []),
-  );
+      const nextSummary = getLearningActivitySummary();
+      summaryRef.current = nextSummary;
+      setSummary(nextSummary);
+      setIsLoading(false);
+    });
+
+    return () => {
+      cancelled = true;
+      cancelDefer();
+    };
+  }, [props.drawerVisible]);
 
   const openCalendar = (localDate?: string): void => {
     markDrawerReturnPending();
@@ -83,9 +110,13 @@ export function LearningCalendarWidget(): ReactElement {
         </View>
 
         <View style={styles.statsRow}>
-          <SummaryStat label="学习天数" value={summary.activeDays} />
-          <SummaryStat label="新词量" value={summary.firstRevealCount} />
-          <SummaryStat label="复习量" value={summary.reviewOutcomeCount} />
+          <SummaryStat label="学习天数" loading={isLoading} value={summary?.activeDays ?? 0} />
+          <SummaryStat label="新词量" loading={isLoading} value={summary?.firstRevealCount ?? 0} />
+          <SummaryStat
+            label="复习量"
+            loading={isLoading}
+            value={summary?.reviewOutcomeCount ?? 0}
+          />
         </View>
 
         <View
@@ -97,35 +128,39 @@ export function LearningCalendarWidget(): ReactElement {
           }}
           style={[styles.gridWrap, { height: heatGridHeight }]}
         >
-          {summary.heatGrid.map((row, rowIndex) => (
-            <View key={`row-${String(rowIndex)}`} style={styles.gridRow}>
-              {row.map((cell) => (
-                <Pressable
-                  key={cell.localDate}
-                  accessibilityLabel={`${cell.localDate} 学习记录`}
-                  accessibilityRole="button"
-                  disabled={!cell.isInRange}
-                  onPress={(event) => {
-                    event.stopPropagation();
-                    if (cell.isInRange) {
-                      openCalendar(cell.localDate);
-                    }
-                  }}
-                  style={[
-                    styles.heatCell,
-                    {
-                      backgroundColor: cell.isInRange
-                        ? heatLevelColors[cell.level]
-                        : heatLevelColors[0],
-                      height: heatCellSize,
-                      width: heatCellSize,
-                    },
-                    cell.isToday ? styles.heatCellToday : null,
-                  ]}
-                />
-              ))}
-            </View>
-          ))}
+          {isLoading || !summary ? (
+            <HeatGridSkeleton cellSize={heatCellSize} />
+          ) : (
+            summary.heatGrid.map((row, rowIndex) => (
+              <View key={`row-${String(rowIndex)}`} style={styles.gridRow}>
+                {row.map((cell) => (
+                  <Pressable
+                    key={cell.localDate}
+                    accessibilityLabel={`${cell.localDate} 学习记录`}
+                    accessibilityRole="button"
+                    disabled={!cell.isInRange}
+                    onPress={(event) => {
+                      event.stopPropagation();
+                      if (cell.isInRange) {
+                        openCalendar(cell.localDate);
+                      }
+                    }}
+                    style={[
+                      styles.heatCell,
+                      {
+                        backgroundColor: cell.isInRange
+                          ? heatLevelColors[cell.level]
+                          : heatLevelColors[0],
+                        height: heatCellSize,
+                        width: heatCellSize,
+                      },
+                      cell.isToday ? styles.heatCellToday : null,
+                    ]}
+                  />
+                ))}
+              </View>
+            ))
+          )}
         </View>
 
         {monthLabels.length > 0 ? (
@@ -148,12 +183,35 @@ export function LearningCalendarWidget(): ReactElement {
   );
 }
 
-function SummaryStat(props: { label: string; value: number }): ReactElement {
+function SummaryStat(props: { label: string; value: number; loading?: boolean }): ReactElement {
   return (
     <View style={styles.summaryStat}>
-      <Text style={styles.summaryValue}>{props.value}</Text>
+      <Text style={[styles.summaryValue, props.loading ? styles.summaryValueLoading : null]}>
+        {props.loading ? '—' : props.value}
+      </Text>
       <Text style={styles.summaryLabel}>{props.label}</Text>
     </View>
+  );
+}
+
+function HeatGridSkeleton(props: { cellSize: number }): ReactElement {
+  return (
+    <>
+      {Array.from({ length: HEAT_GRID_ROWS }, (_, rowIndex) => (
+        <View key={`skeleton-row-${String(rowIndex)}`} style={styles.gridRow}>
+          {Array.from({ length: HEAT_GRID_COLS }, (_, colIndex) => (
+            <View
+              key={`skeleton-cell-${String(rowIndex)}-${String(colIndex)}`}
+              style={[
+                styles.heatCell,
+                styles.heatCellSkeleton,
+                { height: props.cellSize, width: props.cellSize },
+              ]}
+            />
+          ))}
+        </View>
+      ))}
+    </>
   );
 }
 
@@ -252,6 +310,9 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: '700',
   },
+  summaryValueLoading: {
+    color: colors.textMuted,
+  },
   summaryLabel: {
     color: colors.textMuted,
     fontSize: 12,
@@ -266,6 +327,9 @@ const styles = StyleSheet.create({
   },
   heatCell: {
     borderRadius: 3,
+  },
+  heatCellSkeleton: {
+    backgroundColor: colors.statTileBackground,
   },
   heatCellToday: {
     borderColor: colors.accent,

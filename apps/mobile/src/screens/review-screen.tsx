@@ -18,8 +18,9 @@ import {
   type InspectQueueConfig,
 } from '../hooks/use-inspect-queue';
 import { formatInspectContextLabel } from '../components/calendar/inspect-mode-chrome';
+import { exitCalendarInspect } from '../shell/calendar-inspect-navigation';
 import { VocabularyStudyPanel } from '../learning/card-types/vocabulary/vocabulary-study-panel';
-import { useSetCapsuleVisible } from '../shell/shell-provider';
+import { useOptionalSetCapsuleVisible } from '../shell/shell-provider';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 
@@ -37,12 +38,12 @@ export function ReviewScreen(props: {
   const handleInspectActionComplete = useCallback((): InspectQueueAdvanceResult => {
     const result = inspectQueue.advanceAfterAction();
     if (result === 'completed') {
-      router.back();
+      exitCalendarInspect(router);
     }
     return result;
   }, [inspectQueue.advanceAfterAction, router]);
 
-  const normalFlow = useReviewFlow();
+  const normalFlow = useReviewFlow({ enabled: !inspectMode });
   const inspectFlow = useReviewInspectFlow(inspectMode ? inspectKnowledgeId : null, {
     ...(props.inspect?.localDate ? { inspectLocalDate: props.inspect.localDate } : {}),
     ...(inspectMode ? { onInspectActionComplete: handleInspectActionComplete } : {}),
@@ -92,14 +93,14 @@ export function ReviewScreen(props: {
   const hasCurrentItem = Boolean(session?.currentItem);
   const canLoadCurrent = Boolean(reviewContext?.cardDetail);
   const hasSession = hasCurrentItem && canLoadCurrent;
-  const setCapsuleVisible = useSetCapsuleVisible();
+  const setCapsuleVisible = useOptionalSetCapsuleVisible();
   const [isScreenFocused, setIsScreenFocused] = useState(false);
   const moreMenuAnchorTop = insets.top + spacing.xs + spacing.touchTarget + spacing.xs;
   const moreMenuAnchorRight = spacing.lg;
 
   const goHome = useCallback((): void => {
     if (inspectMode) {
-      router.back();
+      exitCalendarInspect(router);
       return;
     }
     router.replace('/library');
@@ -110,13 +111,13 @@ export function ReviewScreen(props: {
       setIsScreenFocused(true);
       return () => {
         setIsScreenFocused(false);
-        setCapsuleVisible(true);
+        setCapsuleVisible?.(true);
       };
     }, [setCapsuleVisible]),
   );
 
   useEffect(() => {
-    if (!isScreenFocused) {
+    if (!isScreenFocused || !setCapsuleVisible) {
       return;
     }
     setCapsuleVisible(!hasSession);

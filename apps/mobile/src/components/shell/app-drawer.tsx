@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react';
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
   Alert,
   Animated,
@@ -10,6 +10,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
+import { deferAfterFirstPaint } from '../../lib/defer-after-first-paint';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import type { DrawerCommonFeatureItem, DrawerMenuItem } from '../../shell/drawer-menu-config';
@@ -46,11 +47,19 @@ export function AppDrawer(props: AppDrawerProps): ReactElement | null {
   const [contactPanelVisible, setContactPanelVisible] = useState(false);
   const slideAnim = useRef(new Animated.Value(-panelWidth)).current;
   const backdropAnim = useRef(new Animated.Value(0)).current;
+  const renderOverlayRef = useRef(renderOverlay);
+  renderOverlayRef.current = renderOverlay;
 
-  useLayoutEffect(() => {
-    if (props.visible) {
-      void refresh({ showLoading: false });
+  useEffect(() => {
+    if (!props.visible) {
+      return;
     }
+
+    const cancelDefer = deferAfterFirstPaint(() => {
+      void refresh({ showLoading: false });
+    });
+
+    return cancelDefer;
   }, [props.visible, refresh]);
 
   useLayoutEffect(() => {
@@ -81,7 +90,7 @@ export function AppDrawer(props: AppDrawerProps): ReactElement | null {
       return;
     }
 
-    if (!renderOverlay) {
+    if (!renderOverlayRef.current) {
       return;
     }
 
@@ -98,12 +107,8 @@ export function AppDrawer(props: AppDrawerProps): ReactElement | null {
         toValue: 0,
         useNativeDriver: true,
       }),
-    ]).start(({ finished }) => {
-      if (finished) {
-        setRenderOverlay(false);
-      }
-    });
-  }, [backdropAnim, panelWidth, props.visible, renderOverlay, slideAnim]);
+    ]).start();
+  }, [backdropAnim, panelWidth, props.visible, slideAnim]);
 
   const navigateFromDrawer = (route: string): void => {
     markDrawerReturnPending();
@@ -155,12 +160,12 @@ export function AppDrawer(props: AppDrawerProps): ReactElement | null {
     router.push('/login');
   };
 
-  if (!renderOverlay) {
+  if (!props.visible && !renderOverlay) {
     return null;
   }
 
   return (
-    <View pointerEvents="box-none" style={styles.host}>
+    <View pointerEvents={props.visible ? 'box-none' : 'none'} style={styles.host}>
       <Animated.View
         style={[
           styles.panel,
@@ -195,7 +200,7 @@ export function AppDrawer(props: AppDrawerProps): ReactElement | null {
             showsVerticalScrollIndicator={false}
             style={styles.menuScroll}
           >
-            <LearningCalendarWidget />
+            <LearningCalendarWidget drawerVisible={props.visible} />
             <DrawerCommonFeaturesBlock
               items={drawerCommonFeatures}
               onItemPress={handleCommonFeaturePress}

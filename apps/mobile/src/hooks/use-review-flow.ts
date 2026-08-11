@@ -22,7 +22,8 @@ import { getReviewOutcomeIntervalLabels } from '../use-cases/get-review-outcome-
 import { markReviewPoolChanged } from '../shell/review-pool-changed-signal';
 import { useVocabularyStudyAudio } from './use-vocabulary-study-audio';
 
-export function useReviewFlow() {
+export function useReviewFlow(options?: { enabled?: boolean }) {
+  const enabled = options?.enabled !== false;
   const [isScreenFocused, setIsScreenFocused] = useState(false);
   const [session, setSession] = useState<ActiveStudySession | null>(null);
   const [summary, setSummary] = useState(getReviewTabSummary());
@@ -55,12 +56,15 @@ export function useReviewFlow() {
 
   useFocusEffect(
     useCallback(() => {
+      if (!enabled) {
+        return;
+      }
       setIsScreenFocused(true);
       startReview();
       return () => {
         setIsScreenFocused(false);
       };
-    }, [startReview]),
+    }, [enabled, startReview]),
   );
 
   const currentKnowledgeId = session?.currentItem?.knowledgeId ?? null;
@@ -81,6 +85,7 @@ export function useReviewFlow() {
           ? reviewContext.cardDetail.content.prompt.primaryAudio
           : null,
       autoPlayActive:
+        enabled &&
         isScreenFocused &&
         !revealed &&
         reviewContext?.cardDetail?.cardType === 'vocabulary' &&

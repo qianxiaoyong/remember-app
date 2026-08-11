@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LexiconPopup } from '../components/lexicon-popup';
@@ -26,7 +26,9 @@ import {
   type InspectQueueConfig,
 } from '../hooks/use-inspect-queue';
 import { formatInspectContextLabel } from '../components/calendar/inspect-mode-chrome';
-import { colors } from '../theme/colors';
+import { exitCalendarInspect } from '../shell/calendar-inspect-navigation';
+import { useInspectHardwareBackHandler } from '../hooks/use-inspect-hardware-back-handler';
+import { studyScreenStyles as styles } from './study-screen.styles';
 import { spacing } from '../theme/spacing';
 
 interface StudyScreenProps {
@@ -47,7 +49,7 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
   const handleInspectActionComplete = useCallback((): InspectQueueAdvanceResult => {
     const result = inspectQueue.advanceAfterAction();
     if (result === 'completed') {
-      router.back();
+      exitCalendarInspect(router);
     }
     return result;
   }, [inspectQueue.advanceAfterAction, router]);
@@ -158,11 +160,20 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
   const goHome = useCallback((): void => {
     dismissBrowseComplete();
     if (inspectMode) {
-      router.back();
+      exitCalendarInspect(router);
       return;
     }
     router.replace('/library');
   }, [dismissBrowseComplete, inspectMode, router]);
+
+  useInspectHardwareBackHandler({
+    closeLexicon,
+    enabled: inspectMode,
+    goHome,
+    lexiconVisible,
+    moreVisible,
+    setMoreVisible,
+  });
 
   const headerContextLabel =
     inspectMode && props.inspect
@@ -371,23 +382,3 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
     </ScreenScaffold>
   );
 }
-
-const styles = StyleSheet.create({
-  root: {
-    backgroundColor: colors.background,
-    flex: 1,
-  },
-  emptyState: {
-    padding: spacing.lg,
-  },
-  message: {
-    color: colors.studyRatingForgot,
-    paddingHorizontal: spacing.lg,
-    paddingTop: spacing.sm,
-  },
-  resetMessage: {
-    color: colors.studyHeaderBackground,
-    paddingHorizontal: spacing.lg,
-    paddingTop: spacing.sm,
-  },
-});

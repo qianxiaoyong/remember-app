@@ -1,7 +1,6 @@
 import type { ReactElement } from 'react';
 import { Redirect, useLocalSearchParams } from 'expo-router';
 import { ReviewScreen } from '../../src/screens/review-screen';
-import type { InspectCategory, InspectSubCategory } from '../../src/use-cases/build-inspect-queue';
 
 export default function ReviewRoute(): ReactElement {
   const params = useLocalSearchParams<{
@@ -18,20 +17,27 @@ export default function ReviewRoute(): ReactElement {
 
   const inspect = readParam(params.inspect) === '1';
   const localDate = readParam(params.localDate);
-  const category = readParam(params.category) as InspectCategory | undefined;
-  const subCategory = readParam(params.subCategory) as InspectSubCategory | undefined;
+  const category = readParam(params.category);
+  const subCategory = readParam(params.subCategory);
   const indexRaw = readParam(params.index);
-  const index = indexRaw ? Number.parseInt(indexRaw, 10) : 0;
   const knowledgeId = readParam(params.knowledgeId);
 
-  if (inspect && (!localDate || !category || !subCategory)) {
+  if (inspect && localDate && category && subCategory) {
+    const query = new URLSearchParams({
+      localDate,
+      category,
+      subCategory,
+      index: indexRaw ?? '0',
+    });
+    if (knowledgeId) {
+      query.set('knowledgeId', knowledgeId);
+    }
+    return <Redirect href={`/review-inspect?${query.toString()}`} />;
+  }
+
+  if (inspect) {
     return <Redirect href="/learning-calendar" />;
   }
 
-  const inspectConfig =
-    inspect && localDate && category && subCategory
-      ? { localDate, category, subCategory, initialIndex: Number.isFinite(index) ? index : 0 }
-      : null;
-
-  return <ReviewScreen inspect={inspectConfig} inspectKnowledgeId={knowledgeId ?? null} />;
+  return <ReviewScreen />;
 }
