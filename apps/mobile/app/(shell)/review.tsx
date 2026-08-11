@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react';
 import { Redirect, useLocalSearchParams } from 'expo-router';
-import { ReviewScreen } from '../src/screens/review-screen';
-import type { InspectCategory, InspectSubCategory } from '../src/use-cases/build-inspect-queue';
+import { ReviewScreen } from '../../src/screens/review-screen';
+import type { InspectCategory, InspectSubCategory } from '../../src/use-cases/build-inspect-queue';
 
 export default function ReviewRoute(): ReactElement {
   const params = useLocalSearchParams<{

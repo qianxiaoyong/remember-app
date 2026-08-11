@@ -1,7 +1,7 @@
 # 0015 Shell 底部胶囊 Tab 保活（Expo Router Tabs）
 
 日期：2026-08-11  
-状态：**待确认**  
+状态：**已确认**（2026-08-11 产品确认采用 Expo Router Tabs 轻量方案）  
 关联：UI 规范 [§3.2](../superpowers/specs/2026-07-26-learning-app-mvp-ui-design.md)（悬浮胶囊三 Tab）、ADR [0013](./0013-unified-review-pool-and-leitner-scheduler.md)（复习 Tab）、ADR [0014](./0014-learning-activity-calendar.md)（日历返回首页体验）
 
 ---
@@ -17,13 +17,13 @@
 
 ### 1.2 目标
 
-| 目标 | 说明 |
-| ---- | ---- |
-| G1 | 三 Tab 切换时 **主屏组件保持挂载**（保活），切换回来 **状态与滚动位置保留** |
-| G2 | 消除 remount 导致的 **内容区高度跳变** |
-| G3 | **保留现有 UI**：悬浮 `CapsuleBar` 外观与三 Tab 语义不变 |
-| G4 | **保留 Shell 能力**：`ShellProvider`、抽屉、角标、沉浸页（学习/详情）叠在 Shell 之上 |
-| G5 | 改动 **最小、可测**；不引入自研 KeepAlive 框架 |
+| 目标 | 说明                                                                                 |
+| ---- | ------------------------------------------------------------------------------------ |
+| G1   | 三 Tab 切换时 **主屏组件保持挂载**（保活），切换回来 **状态与滚动位置保留**          |
+| G2   | 消除 remount 导致的 **内容区高度跳变**                                               |
+| G3   | **保留现有 UI**：悬浮 `CapsuleBar` 外观与三 Tab 语义不变                             |
+| G4   | **保留 Shell 能力**：`ShellProvider`、抽屉、角标、沉浸页（学习/详情）叠在 Shell 之上 |
+| G5   | 改动 **最小、可测**；不引入自研 KeepAlive 框架                                       |
 
 ### 1.3 非目标（本 ADR）
 
@@ -41,12 +41,12 @@
 
 **采用 Expo Router 原生 `Tabs`（`lazy: false`）作为 Shell 内 Tab 容器**，外层仍保留 `(shell)/_layout` 提供的 App Shell（抽屉 + 自定义胶囊栏）。
 
-| 方案 | 结论 |
-| ---- | ---- |
-| 继续 `Stack` + `replace` | 否决 — remount 根因未除 |
-| 首页快照 | 否决 — 已回滚 |
-| 自研 KeepAlive + Registry + 生命周期 + 缓存 | 否决 — MVP 过度设计 |
-| **Expo Router `Tabs` + `lazy: false` + 隐藏默认 TabBar** | **采纳** |
+| 方案                                                     | 结论                    |
+| -------------------------------------------------------- | ----------------------- |
+| 继续 `Stack` + `replace`                                 | 否决 — remount 根因未除 |
+| 首页快照                                                 | 否决 — 已回滚           |
+| 自研 KeepAlive + Registry + 生命周期 + 缓存              | 否决 — MVP 过度设计     |
+| **Expo Router `Tabs` + `lazy: false` + 隐藏默认 TabBar** | **采纳**                |
 
 ### 2.2 路由结构
 
@@ -73,12 +73,12 @@ app/pack/[packId].tsx              # 同上
 
 ### 2.4 保活与刷新
 
-| 场景 | 行为 |
-| ---- | ---- |
-| Tab 切换 | 组件 **不卸载**；`useState`、ScrollView 偏移保留 |
-| 回到首页 Tab | **仍可在 `useFocusEffect` 中刷新数据**（如 `libraryNeedsRefresh`），但 **不 remount**；加载态不得整页闪空（用局部 skeleton 或 silent refresh） |
-| 抽屉 → 日历 → 返回 | 沿用 ADR 0014 的 defer / refresh signal；与保活正交 |
-| 登录 / 装包 / 卸载包 | 现有 refresh signal 触发 **数据重拉**，不要求 remount |
+| 场景                 | 行为                                                                                                                                           |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Tab 切换             | 组件 **不卸载**；`useState`、ScrollView 偏移保留                                                                                               |
+| 回到首页 Tab         | **仍可在 `useFocusEffect` 中刷新数据**（如 `libraryNeedsRefresh`），但 **不 remount**；加载态不得整页闪空（用局部 skeleton 或 silent refresh） |
+| 抽屉 → 日历 → 返回   | 沿用 ADR 0014 的 defer / refresh signal；与保活正交                                                                                            |
+| 登录 / 装包 / 卸载包 | 现有 refresh signal 触发 **数据重拉**，不要求 remount                                                                                          |
 
 ### 2.5 UI 约束（不变）
 
@@ -100,12 +100,12 @@ app/pack/[packId].tsx              # 同上
 
 ## 3. 风险与缓解
 
-| 风险 | 缓解 |
-| ---- | ---- |
-| 三 Tab 同时挂载 **内存略增** | 仅 3 个列表页，MVP 可接受；`lazy: false` 可控 |
+| 风险                           | 缓解                                                            |
+| ------------------------------ | --------------------------------------------------------------- |
+| 三 Tab 同时挂载 **内存略增**   | 仅 3 个列表页，MVP 可接受；`lazy: false` 可控                   |
 | 首页 focus 刷新与保活 **并存** | 明确「只 refetch 不 reset state」；必要时用 refreshKey 局部更新 |
-| Tabs 无 Stack 滑动动画 | 第一期关闭 Tab 动画；体验以「不跳」为主 |
-| 深链 `/review?inspect=…` | 路由文件迁移后 URL 不变，query 解析逻辑原样迁入 |
+| Tabs 无 Stack 滑动动画         | 第一期关闭 Tab 动画；体验以「不跳」为主                         |
+| 深链 `/review?inspect=…`       | 路由文件迁移后 URL 不变，query 解析逻辑原样迁入                 |
 
 ---
 
