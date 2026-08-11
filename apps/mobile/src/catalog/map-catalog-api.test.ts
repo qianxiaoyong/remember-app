@@ -20,4 +20,27 @@ describe('mapCatalogSummaryToItem', () => {
 
     expect(mapCatalogSummaryToItem(summary).summary).toBe('三年级上册人教版单词表');
   });
+
+  it('maps coverThumbnailUrl from catalog list API', () => {
+    const summary: CatalogPackSummary = {
+      packId: 'remember-test-pack',
+      title: '记得测试包',
+      primaryCategory: 'junior',
+      secondaryCategory: '七年级',
+      versionLabel: '人教版',
+      contentTags: [],
+      cardCount: 10,
+      sizeLabel: '约 1 MB',
+      updatedAt: '2026-08-11T08:00:00.000Z',
+      priceCents: 100,
+      summary: '测试包',
+      coverUrl: 'https://cdn.example.com/cover.jpg',
+      coverThumbnailUrl: 'https://cdn.example.com/cover.thumb.webp',
+    };
+
+    expect(mapCatalogSummaryToItem(summary)).toMatchObject({
+      coverUrl: 'https://cdn.example.com/cover.jpg',
+      coverThumbnailUrl: 'https://cdn.example.com/cover.thumb.webp',
+    });
+  });
 });

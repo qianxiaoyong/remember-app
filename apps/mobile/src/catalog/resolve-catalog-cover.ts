@@ -81,9 +81,30 @@ function resolveDefaultLines(item: CatalogPackItem): string[] {
   return [item.title.slice(0, midpoint), item.title.slice(midpoint)];
 }
 
-export function resolveCatalogCover(item: CatalogPackItem): CatalogCoverPresentation {
-  const imageSource: ImageSourcePropType = item.coverUrl
-    ? resolveRemoteCoverImageSource(item.coverUrl)
+export type CatalogCoverImageKind = 'list' | 'detail';
+
+export interface ResolveCatalogCoverOptions {
+  imageKind?: CatalogCoverImageKind;
+}
+
+function resolveCoverRemoteUrl(
+  item: CatalogPackItem,
+  imageKind: CatalogCoverImageKind,
+): string | undefined {
+  if (imageKind === 'list') {
+    return item.coverThumbnailUrl ?? item.coverUrl;
+  }
+  return item.coverUrl ?? item.coverThumbnailUrl;
+}
+
+export function resolveCatalogCover(
+  item: CatalogPackItem,
+  options?: ResolveCatalogCoverOptions,
+): CatalogCoverPresentation {
+  const imageKind = options?.imageKind ?? 'detail';
+  const remoteUrl = resolveCoverRemoteUrl(item, imageKind);
+  const imageSource: ImageSourcePropType = remoteUrl
+    ? resolveRemoteCoverImageSource(remoteUrl)
     : (item.coverImage ?? resolveCatalogCoverImage(item.packId));
 
   return {

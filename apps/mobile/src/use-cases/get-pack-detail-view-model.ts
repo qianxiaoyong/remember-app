@@ -69,7 +69,7 @@ export async function getPackDetailViewModelFromCatalogItem(
     title: resolvePackDisplayTitle(catalogItem),
     categoryContextLabel: resolvePackCategoryContext(catalogItem),
     includedSubtitle: resolvePackIncludedSubtitle(catalogItem),
-    cover: resolveCatalogCover(catalogItem),
+    cover: resolveCatalogCover(catalogItem, { imageKind: 'detail' }),
     priceLabel: catalogItem.priceLabel,
     purchaseHint: action.packAccessUnavailable
       ? '暂时无法确认购买状态，请检查网络后重试'

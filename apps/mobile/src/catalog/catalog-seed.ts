@@ -29,8 +29,10 @@ export interface CatalogPackItem {
   coverBadge?: string;
   /** 封面主文案行（1～3 行）；后台目录可配置，App 直接展示 */
   coverLines?: string[];
-  /** 封面图 URL；后台下发 */
+  /** 封面图 URL（压缩原图，详情页优先）；后台 upload-cover 下发 */
   coverUrl?: string;
+  /** 列表缩略图 URL（240×320 WebP）；后台 upload-cover 下发 */
+  coverThumbnailUrl?: string;
   /** 封面图本地资源；mock 阶段可用 require */
   coverImage?: number;
   /** 后台 taxonomy 挂载；有则优先用于展示 label */

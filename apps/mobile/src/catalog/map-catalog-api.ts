@@ -27,6 +27,7 @@ export function mapCatalogSummaryToItem(summary: CatalogPackSummary): CatalogPac
     summary: summary.summary,
     sampleHeadwords: [],
     ...(summary.coverUrl ? { coverUrl: summary.coverUrl } : {}),
+    ...(summary.coverThumbnailUrl ? { coverThumbnailUrl: summary.coverThumbnailUrl } : {}),
     ...(summary.coverBadge ? { coverBadge: summary.coverBadge } : {}),
     ...(summary.coverLines ? { coverLines: summary.coverLines } : {}),
     ...(summary.includedHighlights ? { includedHighlights: summary.includedHighlights } : {}),

@@ -13,7 +13,7 @@ interface PackCoverThumbnailProps {
 export function PackCoverThumbnail(props: PackCoverThumbnailProps): ReactElement {
   const width = props.size ?? CATALOG_COVER_WIDTH_HOME;
   const height = catalogCoverHeight(width);
-  const cover = resolveCatalogCover(props.item);
+  const cover = resolveCatalogCover(props.item, { imageKind: 'list' });
 
   return (
     <ImageBackground
