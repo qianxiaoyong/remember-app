@@ -7,7 +7,12 @@ import {
   navigateShellTab,
   resolveShellTabFromPathname,
 } from '../../src/shell/shell-tab-transition';
-import { ShellProvider, useCapsuleVisible, useDrawerOpen, useShellActions } from '../../src/shell/shell-provider';
+import {
+  ShellProvider,
+  useCapsuleVisible,
+  useDrawerOpen,
+  useShellActions,
+} from '../../src/shell/shell-provider';
 import { colors } from '../../src/theme/colors';
 
 export default function ShellLayout(): ReactElement {

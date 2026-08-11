@@ -37,7 +37,9 @@ export function ShellProvider(props: { children: ReactNode }): ReactElement {
     <ShellActionsContext.Provider value={actions}>
       <SetCapsuleVisibleContext.Provider value={setCapsuleVisible}>
         <CapsuleVisibleContext.Provider value={capsuleVisible}>
-          <DrawerOpenContext.Provider value={isDrawerOpen}>{props.children}</DrawerOpenContext.Provider>
+          <DrawerOpenContext.Provider value={isDrawerOpen}>
+            {props.children}
+          </DrawerOpenContext.Provider>
         </CapsuleVisibleContext.Provider>
       </SetCapsuleVisibleContext.Provider>
     </ShellActionsContext.Provider>
