@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { BackHandler, StyleSheet, Text, View } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -19,6 +19,7 @@ import {
 } from '../hooks/use-inspect-queue';
 import { formatInspectContextLabel } from '../components/calendar/inspect-mode-chrome';
 import { VocabularyStudyPanel } from '../learning/card-types/vocabulary/vocabulary-study-panel';
+import { useSetCapsuleVisible } from '../shell/shell-provider';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 
@@ -91,6 +92,8 @@ export function ReviewScreen(props: {
   const hasCurrentItem = Boolean(session?.currentItem);
   const canLoadCurrent = Boolean(reviewContext?.cardDetail);
   const hasSession = hasCurrentItem && canLoadCurrent;
+  const setCapsuleVisible = useSetCapsuleVisible();
+  const [isScreenFocused, setIsScreenFocused] = useState(false);
   const moreMenuAnchorTop = insets.top + spacing.xs + spacing.touchTarget + spacing.xs;
   const moreMenuAnchorRight = spacing.lg;
 
@@ -101,6 +104,23 @@ export function ReviewScreen(props: {
     }
     router.replace('/library');
   }, [inspectMode, router]);
+
+  useFocusEffect(
+    useCallback(() => {
+      setIsScreenFocused(true);
+      return () => {
+        setIsScreenFocused(false);
+        setCapsuleVisible(true);
+      };
+    }, [setCapsuleVisible]),
+  );
+
+  useEffect(() => {
+    if (!isScreenFocused) {
+      return;
+    }
+    setCapsuleVisible(!hasSession);
+  }, [hasSession, isScreenFocused, setCapsuleVisible]);
 
   useFocusEffect(
     useCallback(() => {

@@ -21,12 +21,12 @@
 
 ## 范围外（defer）
 
-| 项 | 说明 |
-| --- | --- |
-| Tab 滑动动画 | ADR 允许第一期关闭 |
-| 自研 KeepAlive 框架 | ADR 明确不做 |
-| 复习 Tab 外其他页面的保活 | 仅 shell 三 Tab |
-| 首页 stats 内存缓存跨进程 | 非本 PR |
+| 项                        | 说明               |
+| ------------------------- | ------------------ |
+| Tab 滑动动画              | ADR 允许第一期关闭 |
+| 自研 KeepAlive 框架       | ADR 明确不做       |
+| 复习 Tab 外其他页面的保活 | 仅 shell 三 Tab    |
+| 首页 stats 内存缓存跨进程 | 非本 PR            |
 
 ## 依赖与实施顺序
 
@@ -59,6 +59,7 @@ apps/mobile/src/screens/library-screen.tsx       # focus 刷新语义（如需�
 ## Task 1：将 `/review` 迁入 `(shell)` 组
 
 **Files:**
+
 - Create: `apps/mobile/app/(shell)/review.tsx`（自 `app/review.tsx` 复制）
 - Delete: `apps/mobile/app/review.tsx`
 
@@ -74,6 +75,7 @@ apps/mobile/src/screens/library-screen.tsx       # focus 刷新语义（如需�
 ## Task 2：`(shell)/_layout` Stack 改 Tabs
 
 **Files:**
+
 - Modify: `apps/mobile/app/(shell)/_layout.tsx`
 
 - [ ] `import { Tabs } from 'expo-router'` 替代 `Stack`
@@ -86,6 +88,7 @@ apps/mobile/src/screens/library-screen.tsx       # focus 刷新语义（如需�
 - [ ] 三屏 `library` / `review` / `market` 均在 Tabs 下注册
 
 **Verify:**
+
 - [ ] 手动：三 Tab 可切换，胶囊与抽屉始终可见
 - [ ] `pnpm --filter @remember/mobile typecheck`
 
@@ -96,6 +99,7 @@ apps/mobile/src/screens/library-screen.tsx       # focus 刷新语义（如需�
 ## Task 3：`navigateShellTab` 改用 navigate
 
 **Files:**
+
 - Modify: `apps/mobile/src/shell/shell-tab-transition.ts`
 - Create: `apps/mobile/src/shell/shell-tab-transition.test.ts`
 
@@ -115,6 +119,7 @@ apps/mobile/src/screens/library-screen.tsx       # focus 刷新语义（如需�
 ## Task 4：首页 focus 刷新与保活共存
 
 **Files:**
+
 - Modify: `apps/mobile/src/screens/library-screen.tsx`（按需）
 
 - [ ] 审查 `useFocusEffect` / `isLibraryLoading` + `EMPTY_OVERVIEW` 首帧逻辑
@@ -125,6 +130,7 @@ apps/mobile/src/screens/library-screen.tsx       # focus 刷新语义（如需�
 - [ ] 确认 `deferAfterFirstPaint` 与 `useRestoreDrawerOnReturn` 行为不退化
 
 **Verify:**
+
 - [ ] 手动：首页滚动 → 切资料 → 切回，滚动位置保留且无高度跳变
 - [ ] 手动：装包后回首页，列表更新且不明显闪空
 
@@ -147,11 +153,13 @@ apps/mobile/src/screens/library-screen.tsx       # focus 刷新语义（如需�
 
 ```markdown
 ## Summary
+
 - Shell 三 Tab 改用 Expo Router Tabs（lazy: false）保活
 - review 路由迁入 (shell) 组；Tab 切换 navigate 替代 replace
 - 修复首页 ↔ 资料切换 remount 跳高
 
 ## Test plan
+
 - [ ] 首页 ↔ 资料 ↔ 复习快速切换无整页闪空
 - [ ] 首页滚动位置跨 Tab 保留
 - [ ] 学习/详情/日历/家长检查回归
