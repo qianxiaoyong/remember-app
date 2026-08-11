@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { BackHandler, StyleSheet, Text, View } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LexiconPopup } from '../components/lexicon-popup';
@@ -26,6 +26,7 @@ import {
   type InspectQueueConfig,
 } from '../hooks/use-inspect-queue';
 import { formatInspectContextLabel } from '../components/calendar/inspect-mode-chrome';
+import { exitCalendarInspect } from '../shell/calendar-inspect-navigation';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 
@@ -47,7 +48,7 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
   const handleInspectActionComplete = useCallback((): InspectQueueAdvanceResult => {
     const result = inspectQueue.advanceAfterAction();
     if (result === 'completed') {
-      router.back();
+      exitCalendarInspect(router);
     }
     return result;
   }, [inspectQueue.advanceAfterAction, router]);
@@ -158,11 +159,37 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
   const goHome = useCallback((): void => {
     dismissBrowseComplete();
     if (inspectMode) {
-      router.back();
+      exitCalendarInspect(router);
       return;
     }
     router.replace('/library');
   }, [dismissBrowseComplete, inspectMode, router]);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (!inspectMode) {
+        return;
+      }
+
+      const onHardwareBackPress = (): boolean => {
+        if (lexiconVisible) {
+          closeLexicon();
+          return true;
+        }
+        if (moreVisible) {
+          setMoreVisible(false);
+          return true;
+        }
+        goHome();
+        return true;
+      };
+
+      const subscription = BackHandler.addEventListener('hardwareBackPress', onHardwareBackPress);
+      return () => {
+        subscription.remove();
+      };
+    }, [closeLexicon, goHome, inspectMode, lexiconVisible, moreVisible]),
+  );
 
   const headerContextLabel =
     inspectMode && props.inspect

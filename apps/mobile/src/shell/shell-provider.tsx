@@ -70,6 +70,11 @@ export function useSetCapsuleVisible(): (visible: boolean) => void {
   return setVisible;
 }
 
+/** Shell 外（如 Stack 级 review-inspect）无胶囊栏时可安全调用，返回 null。 */
+export function useOptionalSetCapsuleVisible(): ((visible: boolean) => void) | null {
+  return useContext(SetCapsuleVisibleContext);
+}
+
 /** @deprecated 订阅 isDrawerOpen 会导致页面随抽屉开关重渲染；请改用 useShellActions / useDrawerOpen */
 export function useShell(): ShellActions & { isDrawerOpen: boolean } {
   return {
