@@ -1,4 +1,4 @@
-import type { ReactElement } from 'react';
+import { memo, type ReactElement } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import type { CatalogPackItem } from '../../catalog/catalog-seed';
 import { CATALOG_PACK_ROW_HEIGHT } from '../../catalog/catalog-cover-layout';
@@ -10,14 +10,38 @@ import { spacing } from '../../theme/spacing';
 interface MarketPackCardProps {
   item: CatalogPackItem;
   highlighted?: boolean;
-  onPress: () => void;
+  onPressPack: (packId: string) => void;
 }
 
-export function MarketPackCard(props: MarketPackCardProps): ReactElement {
+function marketPackCardPropsAreEqual(
+  prev: MarketPackCardProps,
+  next: MarketPackCardProps,
+): boolean {
+  if (prev.highlighted !== next.highlighted || prev.onPressPack !== next.onPressPack) {
+    return false;
+  }
+
+  const prevItem = prev.item;
+  const nextItem = next.item;
+  return (
+    prevItem.packId === nextItem.packId &&
+    prevItem.title === nextItem.title &&
+    prevItem.coverUrl === nextItem.coverUrl &&
+    prevItem.cardCount === nextItem.cardCount &&
+    prevItem.contentTags.join('\0') === nextItem.contentTags.join('\0')
+  );
+}
+
+function MarketPackCardInner(props: MarketPackCardProps): ReactElement {
   const { item, highlighted } = props;
 
   return (
-    <Pressable accessibilityRole="button" onPress={props.onPress}>
+    <Pressable
+      accessibilityRole="button"
+      onPress={() => {
+        props.onPressPack(item.packId);
+      }}
+    >
       <View style={[styles.card, highlighted ? styles.highlighted : null]}>
         <MarketPackCover item={item} />
         <View style={styles.body}>
@@ -41,6 +65,8 @@ export function MarketPackCard(props: MarketPackCardProps): ReactElement {
     </Pressable>
   );
 }
+
+export const MarketPackCard = memo(MarketPackCardInner, marketPackCardPropsAreEqual);
 
 const styles = StyleSheet.create({
   card: {

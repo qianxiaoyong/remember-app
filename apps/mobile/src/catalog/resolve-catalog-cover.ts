@@ -1,5 +1,6 @@
 import type { ImageSourcePropType } from 'react-native';
 import type { CatalogPackItem } from './catalog-seed';
+import { resolveRemoteCoverImageSource } from './catalog-cover-image-source-cache';
 import { resolveCatalogCoverImage } from './catalog-cover-images';
 import { packCoverPalette } from '../theme/colors';
 
@@ -81,8 +82,8 @@ function resolveDefaultLines(item: CatalogPackItem): string[] {
 }
 
 export function resolveCatalogCover(item: CatalogPackItem): CatalogCoverPresentation {
-  const imageSource = item.coverUrl
-    ? { uri: item.coverUrl }
+  const imageSource: ImageSourcePropType = item.coverUrl
+    ? resolveRemoteCoverImageSource(item.coverUrl)
     : (item.coverImage ?? resolveCatalogCoverImage(item.packId));
 
   return {
