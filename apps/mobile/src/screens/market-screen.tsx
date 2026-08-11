@@ -45,6 +45,7 @@ export function MarketScreen(): ReactElement {
   const { collapsed: sidebarCollapsed, toggleCollapsed: toggleSidebarCollapsed } =
     useMarketSidebarCollapsed();
   const listRef = useRef<ScrollView>(null);
+  const isFocusedRef = useRef(false);
   const [primaryCategory, setPrimaryCategory] = useState<CatalogPrimaryCategory>('all');
   const [secondaryCategory, setSecondaryCategory] = useState('全部');
   const [versionFilter, setVersionFilter] = useState<string>(CATALOG_ALL_VERSION_LABEL);
@@ -127,34 +128,52 @@ export function MarketScreen(): ReactElement {
     });
   }, []);
 
+  useFocusEffect(
+    useCallback(() => {
+      isFocusedRef.current = true;
+      void loadCatalogFromCache();
+
+      const selection = consumeMarketSearchSelection();
+      if (selection) {
+        setHighlightPackId(selection.highlightPackId);
+        setPrimaryCategory(selection.primaryCategory);
+        setSecondaryCategory(selection.secondaryCategory);
+        setVersionFilter(selection.versionFilter);
+        listRef.current?.scrollTo({ animated: true, y: 0 });
+      }
+
+      return () => {
+        isFocusedRef.current = false;
+      };
+    }, [loadCatalogFromCache]),
+  );
+
   useEffect(() => {
+    if (!isFocusedRef.current) {
+      return;
+    }
     void loadCatalogFromCache();
   }, [loadCatalogFromCache]);
 
   useEffect(() => {
     return subscribeCatalogCacheUpdates(() => {
+      if (!isFocusedRef.current) {
+        return;
+      }
       void loadCatalogFromCache();
     });
   }, [loadCatalogFromCache]);
 
-  useFocusEffect(
-    useCallback(() => {
-      const selection = consumeMarketSearchSelection();
-      if (!selection) {
-        return;
-      }
-
-      setHighlightPackId(selection.highlightPackId);
-      setPrimaryCategory(selection.primaryCategory);
-      setSecondaryCategory(selection.secondaryCategory);
-      setVersionFilter(selection.versionFilter);
-      listRef.current?.scrollTo({ animated: true, y: 0 });
-    }, []),
-  );
-
   const secondaryOptions = useMemo(
     () => getSecondaryCategoryOptions(cachedTaxonomy, primaryCategory),
     [cachedTaxonomy, primaryCategory],
+  );
+
+  const handlePressPack = useCallback(
+    (packId: string) => {
+      router.push(`/pack/${packId}`);
+    },
+    [router],
   );
 
   const emptyMessage =
@@ -240,9 +259,7 @@ export function MarketScreen(): ReactElement {
                     highlighted={highlightPackId === item.packId}
                     item={item}
                     key={item.packId}
-                    onPress={() => {
-                      router.push(`/pack/${item.packId}`);
-                    }}
+                    onPressPack={handlePressPack}
                   />
                 ))}
               </>
