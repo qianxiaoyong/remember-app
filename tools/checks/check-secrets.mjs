@@ -119,7 +119,6 @@ export function listChangedFiles(env = process.env) {
 
 export function runSecretlintCheck(options = {}) {
   const env = options.env ?? process.env;
-  const execFile = options.execFile ?? execFileSync;
   const spawn = options.spawn ?? spawnSync;
   const cwd = options.cwd ?? repoRoot;
   const changedFiles = listChangedFiles(env);
