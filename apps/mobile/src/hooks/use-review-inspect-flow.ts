@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useFocusEffect } from 'expo-router';
 import { normalizeSurfaceForm } from '@remember/contracts';
 import type { LexiconLookupResult } from '../data/repositories/lexicon-entry-repository';
 import { confirmReviewOutcome } from '../use-cases/confirm-review-outcome';
@@ -21,6 +22,7 @@ export function useReviewInspectFlow(
     onInspectActionComplete?: () => InspectQueueAdvanceResult | undefined;
   },
 ) {
+  const [isScreenFocused, setIsScreenFocused] = useState(false);
   const [revealed, setRevealed] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
@@ -30,6 +32,15 @@ export function useReviewInspectFlow(
   const [lexiconSelectedSurfaceForm, setLexiconSelectedSurfaceForm] = useState<string | null>(null);
   const [audioMessage, setAudioMessage] = useState<string | null>(null);
   const [audioReady, setAudioReady] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      setIsScreenFocused(true);
+      return () => {
+        setIsScreenFocused(false);
+      };
+    }, []),
+  );
 
   useEffect(() => {
     setRevealed(false);
@@ -61,6 +72,7 @@ export function useReviewInspectFlow(
           ? reviewContext.cardDetail.content.prompt.primaryAudio
           : null,
       autoPlayActive:
+        isScreenFocused &&
         audioReady &&
         !revealed &&
         reviewContext?.cardDetail?.cardType === 'vocabulary' &&

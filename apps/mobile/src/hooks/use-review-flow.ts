@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
+import { useFocusEffect } from 'expo-router';
 import { normalizeSurfaceForm } from '@remember/contracts';
 import type { LexiconLookupResult } from '../data/repositories/lexicon-entry-repository';
 import {
@@ -22,6 +23,7 @@ import { markReviewPoolChanged } from '../shell/review-pool-changed-signal';
 import { useVocabularyStudyAudio } from './use-vocabulary-study-audio';
 
 export function useReviewFlow() {
+  const [isScreenFocused, setIsScreenFocused] = useState(false);
   const [session, setSession] = useState<ActiveStudySession | null>(null);
   const [summary, setSummary] = useState(getReviewTabSummary());
   const [revealed, setRevealed] = useState(false);
@@ -51,9 +53,15 @@ export function useReviewFlow() {
     }
   }, [refreshSummary]);
 
-  useEffect(() => {
-    startReview();
-  }, [startReview]);
+  useFocusEffect(
+    useCallback(() => {
+      setIsScreenFocused(true);
+      startReview();
+      return () => {
+        setIsScreenFocused(false);
+      };
+    }, [startReview]),
+  );
 
   const currentKnowledgeId = session?.currentItem?.knowledgeId ?? null;
   const reviewContext = useMemo(() => {
@@ -73,7 +81,10 @@ export function useReviewFlow() {
           ? reviewContext.cardDetail.content.prompt.primaryAudio
           : null,
       autoPlayActive:
-        !revealed && reviewContext?.cardDetail?.cardType === 'vocabulary' && Boolean(sourcePackId),
+        isScreenFocused &&
+        !revealed &&
+        reviewContext?.cardDetail?.cardType === 'vocabulary' &&
+        Boolean(sourcePackId),
       cardKey: currentKnowledgeId,
     });
 
