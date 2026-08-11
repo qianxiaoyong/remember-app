@@ -86,6 +86,9 @@ export class AdminPacksService {
         summary: input.summary,
         priceCents: input.priceCents,
         ...(input.coverUrl !== undefined ? { coverUrl: input.coverUrl } : {}),
+        ...(input.coverThumbnailUrl !== undefined
+          ? { coverThumbnailUrl: input.coverThumbnailUrl }
+          : {}),
         ...(input.coverBadge !== undefined ? { coverBadge: input.coverBadge } : {}),
         ...(input.coverLines !== undefined ? { coverLines: input.coverLines } : {}),
         includedHighlights: input.includedHighlights,
@@ -142,6 +145,9 @@ export class AdminPacksService {
         ...(input.summary !== undefined ? { summary: input.summary } : {}),
         ...(input.priceCents !== undefined ? { priceCents: input.priceCents } : {}),
         ...(input.coverUrl !== undefined ? { coverUrl: input.coverUrl } : {}),
+        ...(input.coverThumbnailUrl !== undefined
+          ? { coverThumbnailUrl: input.coverThumbnailUrl }
+          : {}),
         ...(input.coverBadge !== undefined ? { coverBadge: input.coverBadge } : {}),
         ...(input.coverLines !== undefined ? { coverLines: input.coverLines } : {}),
         ...(input.includedHighlights !== undefined

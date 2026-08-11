@@ -40,6 +40,7 @@ export function toAdminPackSummary(
     summary: pack.summary,
     priceCents: pack.priceCents,
     ...(pack.coverUrl ? { coverUrl: pack.coverUrl } : {}),
+    ...(pack.coverThumbnailUrl ? { coverThumbnailUrl: pack.coverThumbnailUrl } : {}),
     ...(pack.coverBadge ? { coverBadge: pack.coverBadge } : {}),
     ...(coverLines.length > 0 ? { coverLines } : {}),
     ...(includedHighlights.length > 0 ? { includedHighlights } : {}),

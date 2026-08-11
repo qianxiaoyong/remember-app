@@ -145,6 +145,7 @@ model Pack {
   summary           String
   priceCents        Int           @map("price_cents")
   coverUrl          String?       @map("cover_url")
+  coverThumbnailUrl String?       @map("cover_thumbnail_url")
   coverBadge        String?       @map("cover_badge")
   coverLines        Json?         @map("cover_lines")
   includedHighlights Json?        @map("included_highlights")

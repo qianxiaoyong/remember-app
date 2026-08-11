@@ -12,3 +12,14 @@ export const adminMediaUploadResponseSchema = z
   .strict();
 
 export type AdminMediaUploadResponse = z.infer<typeof adminMediaUploadResponseSchema>;
+
+export const adminMediaUploadCoverResponseSchema = z
+  .object({
+    coverUrl: z.url(),
+    coverThumbnailUrl: z.url(),
+    originalSizeBytes: z.number().int().positive(),
+    thumbnailSizeBytes: z.number().int().positive(),
+  })
+  .strict();
+
+export type AdminMediaUploadCoverResponse = z.infer<typeof adminMediaUploadCoverResponseSchema>;

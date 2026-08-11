@@ -61,6 +61,7 @@ function mapPackSummary(pack: PackWithCatalogVersion): CatalogPackSummary {
     priceCents: pack.priceCents,
     summary: pack.summary,
     ...(pack.coverUrl ? { coverUrl: pack.coverUrl } : {}),
+    ...(pack.coverThumbnailUrl ? { coverThumbnailUrl: pack.coverThumbnailUrl } : {}),
     ...(pack.coverBadge ? { coverBadge: pack.coverBadge } : {}),
     ...(parseStringArray(pack.coverLines) ? { coverLines: parseStringArray(pack.coverLines) } : {}),
     ...(() => {

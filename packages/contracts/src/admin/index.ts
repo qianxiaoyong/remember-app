@@ -81,9 +81,11 @@ export {
 } from './packs.js';
 export {
   adminMediaUploadResponseSchema,
+  adminMediaUploadCoverResponseSchema,
   ADMIN_MEDIA_ALLOWED_MIME_TYPES,
   MAX_ADMIN_MEDIA_UPLOAD_BYTES,
   type AdminMediaUploadResponse,
+  type AdminMediaUploadCoverResponse,
 } from './media.js';
 export {
   adminCatalogTaxonomyResponseSchema,

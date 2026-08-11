@@ -17,6 +17,7 @@ import { ContentTagsInput } from './content-tags-input.js';
 import {
   CoverLinesInline,
   CoverPreview,
+  CoverThumbnailPreview,
   CoverUrlField,
   ExtractSamplePreviewsButton,
   hiddenLabel,
@@ -87,6 +88,7 @@ function CoverStripSection() {
         }}
       >
         <CoverPreview />
+        <CoverThumbnailPreview />
         <Box sx={{ flex: 1, minWidth: 200 }}>
           <AdminLabeledField label="封面 URL">
             <CoverUrlField />

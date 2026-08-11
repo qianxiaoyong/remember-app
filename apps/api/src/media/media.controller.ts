@@ -11,7 +11,7 @@ const EXT_TO_MIME: Record<string, string> = {
   '.webp': 'image/webp',
 };
 
-const SAFE_FILENAME_PATTERN = /^[0-9a-f-]{36}\.(jpg|jpeg|png|webp)$/i;
+const SAFE_FILENAME_PATTERN = /^[0-9a-f-]{36}(\.thumb)?\.(jpg|jpeg|png|webp)$/i;
 
 @Controller('media')
 export class MediaController {
