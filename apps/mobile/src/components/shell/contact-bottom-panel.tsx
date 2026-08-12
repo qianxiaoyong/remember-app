@@ -44,7 +44,7 @@ export function ContactBottomPanel(props: ContactBottomPanelProps): ReactElement
       <Pressable
         accessibilityRole="button"
         onPress={props.onClose}
-        style={[StyleSheet.absoluteFillObject, styles.backdrop]}
+        style={[StyleSheet.absoluteFill, styles.backdrop]}
       >
         <View style={styles.backdropFill} />
       </Pressable>
