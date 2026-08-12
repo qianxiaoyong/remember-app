@@ -203,7 +203,7 @@ export class AuthService {
     return sessionUserSchema.parse({
       userId,
       maskedPhone,
-      displayName: displayName?.trim() ?? '监护人',
+      displayName: displayName?.trim() ?? '用户',
     });
   }
 }

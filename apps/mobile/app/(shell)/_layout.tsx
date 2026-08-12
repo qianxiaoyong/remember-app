@@ -1,19 +1,21 @@
 import type { ReactElement } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Tabs, usePathname, useRouter } from 'expo-router';
-import { AppDrawer } from '../../src/components/shell/app-drawer';
-import { CapsuleBar, type CapsuleTab } from '../../src/components/shell/capsule-bar';
+import { ShellTabBar } from '../../src/components/shell/shell-tab-bar';
 import {
   navigateShellTab,
   resolveShellTabFromPathname,
+  type ShellTab,
 } from '../../src/shell/shell-tab-transition';
-import {
-  ShellProvider,
-  useCapsuleVisible,
-  useDrawerOpen,
-  useShellActions,
-} from '../../src/shell/shell-provider';
+import { ShellProvider, useShellActions, useTabBarVisible } from '../../src/shell/shell-provider';
 import { colors } from '../../src/theme/colors';
+
+const SHELL_TAB_HREF: Record<ShellTab, `/library` | `/review` | `/record` | `/profile`> = {
+  library: '/library',
+  review: '/review',
+  record: '/record',
+  profile: '/profile',
+};
 
 export default function ShellLayout(): ReactElement {
   return (
@@ -23,29 +25,23 @@ export default function ShellLayout(): ReactElement {
   );
 }
 
-function ShellDrawerHost(): ReactElement {
-  const isDrawerOpen = useDrawerOpen();
-  const { closeDrawer, dismissDrawer } = useShellActions();
-  return <AppDrawer onClose={closeDrawer} onDismiss={dismissDrawer} visible={isDrawerOpen} />;
-}
-
-function ShellCapsuleTabBar(): ReactElement | null {
+function ShellTabBarHost(): ReactElement | null {
   const pathname = usePathname();
   const router = useRouter();
   const { closeDrawer } = useShellActions();
-  const capsuleVisible = useCapsuleVisible();
-  const activeTab: CapsuleTab = resolveShellTabFromPathname(pathname);
+  const tabBarVisible = useTabBarVisible();
+  const activeTab = resolveShellTabFromPathname(pathname);
 
-  if (!capsuleVisible) {
+  if (!tabBarVisible) {
     return null;
   }
 
   return (
-    <CapsuleBar
+    <ShellTabBar
       activeTab={activeTab}
       onTabPress={(tab) => {
         closeDrawer();
-        const target = tab === 'market' ? '/market' : tab === 'review' ? '/review' : '/library';
+        const target = SHELL_TAB_HREF[tab];
         if (pathname.includes(target)) {
           return;
         }
@@ -62,7 +58,7 @@ function ShellLayoutInner(): ReactElement {
         screenOptions={{
           animation: 'none',
           headerShown: false,
-          lazy: false,
+          lazy: true,
           sceneStyle: {
             backgroundColor: colors.background,
           },
@@ -71,8 +67,7 @@ function ShellLayoutInner(): ReactElement {
           },
         }}
       />
-      <ShellCapsuleTabBar />
-      <ShellDrawerHost />
+      <ShellTabBarHost />
     </View>
   );
 }

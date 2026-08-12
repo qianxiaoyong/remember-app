@@ -4,7 +4,7 @@ import { AppIcon } from './app-icon';
 import { colors } from '../../theme/colors';
 import { type IconSize, sizeScale } from './shell-icon-scales';
 
-export { FolderTabIcon, HomeTabIcon, ReviewTabMark } from './shell-tab-icons';
+export { StudyTabIcon, ProfileTabIcon, RecordTabIcon, ReviewTabIcon } from './shell-tab-icons';
 
 interface ShellIconProps {
   color?: string;

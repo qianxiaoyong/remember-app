@@ -1,8 +1,10 @@
 import type { ReactElement } from 'react';
 import { Redirect, useLocalSearchParams } from 'expo-router';
 import { ReviewScreen } from '../../src/screens/review-screen';
+import { useShellTabHardwareBackHandler } from '../../src/hooks/use-shell-tab-hardware-back-handler';
 
 export default function ReviewRoute(): ReactElement {
+  useShellTabHardwareBackHandler();
   const params = useLocalSearchParams<{
     inspect?: string | string[];
     localDate?: string | string[];
@@ -36,7 +38,7 @@ export default function ReviewRoute(): ReactElement {
   }
 
   if (inspect) {
-    return <Redirect href="/learning-calendar" />;
+    return <Redirect href="/record" />;
   }
 
   return <ReviewScreen />;

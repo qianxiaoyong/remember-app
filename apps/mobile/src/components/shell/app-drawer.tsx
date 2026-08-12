@@ -1,32 +1,18 @@
 import type { ReactElement } from 'react';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
-  Alert,
   Animated,
   BackHandler,
   Dimensions,
   Easing,
   Pressable,
-  ScrollView,
   StyleSheet,
   View,
 } from 'react-native';
-import { deferAfterFirstPaint } from '../../lib/defer-after-first-paint';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useRouter } from 'expo-router';
-import type { DrawerCommonFeatureItem, DrawerMenuItem } from '../../shell/drawer-menu-config';
-import { drawerCommonFeatures, drawerMenuItems } from '../../shell/drawer-menu-config';
-import { markDrawerReturnPending } from '../../shell/drawer-return-intent';
-import { DrawerAccountHeader, DrawerAccountHeaderLoading } from './drawer-account-header';
-import { DrawerCommonFeaturesBlock } from './drawer-common-features-block';
-import { DrawerMenuListBlock } from './drawer-menu-list-block';
-import { LearningCalendarWidget } from './learning-calendar-widget';
-import { ContactBottomPanel } from './contact-bottom-panel';
+import { ProfileScreenBody } from '../profile/profile-screen-body';
 import { drawerContentPaddingTop } from '../../theme/drawer-styles';
 import { colors } from '../../theme/colors';
-import { spacing } from '../../theme/spacing';
-import { useAuthSession } from '../../hooks/use-auth-session';
-import { useSessionKickAlert } from '../../hooks/use-session-kick-alert';
 
 const DRAWER_WIDTH_RATIO = 0.86;
 const SLIDE_DURATION_MS = 260;
@@ -38,14 +24,10 @@ interface AppDrawerProps {
 }
 
 export function AppDrawer(props: AppDrawerProps): ReactElement | null {
-  const router = useRouter();
-  const { user, isLoading, isNotMainDevice, refresh } = useAuthSession();
-  useSessionKickAlert(isNotMainDevice);
   const insets = useSafeAreaInsets();
   const contentPaddingTop = drawerContentPaddingTop(insets.top);
   const panelWidth = Dimensions.get('window').width * DRAWER_WIDTH_RATIO;
   const [renderOverlay, setRenderOverlay] = useState(props.visible);
-  const [contactPanelVisible, setContactPanelVisible] = useState(false);
   const slideAnim = useRef(new Animated.Value(-panelWidth)).current;
   const backdropAnim = useRef(new Animated.Value(0)).current;
   const renderOverlayRef = useRef(renderOverlay);
@@ -56,29 +38,7 @@ export function AppDrawer(props: AppDrawerProps): ReactElement | null {
       return;
     }
 
-    const cancelDefer = deferAfterFirstPaint(() => {
-      void refresh({ showLoading: false });
-    });
-
-    return cancelDefer;
-  }, [props.visible, refresh]);
-
-  useLayoutEffect(() => {
-    if (!props.visible) {
-      setContactPanelVisible(false);
-    }
-  }, [props.visible]);
-
-  useEffect(() => {
-    if (!props.visible) {
-      return;
-    }
-
     const onHardwareBackPress = (): boolean => {
-      if (contactPanelVisible) {
-        setContactPanelVisible(false);
-        return true;
-      }
       props.onClose();
       return true;
     };
@@ -87,7 +47,7 @@ export function AppDrawer(props: AppDrawerProps): ReactElement | null {
     return () => {
       subscription.remove();
     };
-  }, [contactPanelVisible, props.onClose, props.visible]);
+  }, [props.onClose, props.visible]);
 
   useLayoutEffect(() => {
     if (props.visible) {
@@ -131,56 +91,6 @@ export function AppDrawer(props: AppDrawerProps): ReactElement | null {
     ]).start();
   }, [backdropAnim, panelWidth, props.visible, slideAnim]);
 
-  const navigateFromDrawer = (route: string): void => {
-    markDrawerReturnPending();
-    props.onDismiss();
-    router.push(route);
-  };
-
-  const handleMenuItemPress = (item: DrawerMenuItem): void => {
-    if (item.id === 'contact') {
-      setContactPanelVisible(true);
-      return;
-    }
-
-    if (item.reserved) {
-      Alert.alert('敬请期待', item.reservedMessage ?? '功能即将开放');
-      return;
-    }
-
-    if (item.route) {
-      navigateFromDrawer(item.route);
-    }
-  };
-
-  const handleCommonFeaturePress = (item: DrawerCommonFeatureItem): void => {
-    if (item.reserved) {
-      Alert.alert('敬请期待', item.reservedMessage ?? '功能即将开放');
-      return;
-    }
-
-    if (item.id === 'redeem' && !user) {
-      markDrawerReturnPending();
-      props.onDismiss();
-      router.push('/login?returnTo=%2Fredeem');
-      return;
-    }
-
-    if (item.route) {
-      navigateFromDrawer(item.route);
-    }
-  };
-
-  const handleAccountPress = (): void => {
-    markDrawerReturnPending();
-    props.onDismiss();
-    if (user) {
-      router.push('/account');
-      return;
-    }
-    router.push('/login');
-  };
-
   if (!props.visible && !renderOverlay) {
     return null;
   }
@@ -206,28 +116,7 @@ export function AppDrawer(props: AppDrawerProps): ReactElement | null {
             },
           ]}
         >
-          {isLoading ? (
-            <DrawerAccountHeaderLoading />
-          ) : (
-            <DrawerAccountHeader
-              displayName={user?.displayName ?? '监护人账号'}
-              hint={user ? user.maskedPhone : isNotMainDevice ? '账号已在其他设备登录' : '点击登录'}
-              onPress={handleAccountPress}
-            />
-          )}
-
-          <ScrollView
-            contentContainerStyle={styles.menuContent}
-            showsVerticalScrollIndicator={false}
-            style={styles.menuScroll}
-          >
-            <LearningCalendarWidget drawerVisible={props.visible} />
-            <DrawerCommonFeaturesBlock
-              items={drawerCommonFeatures}
-              onItemPress={handleCommonFeaturePress}
-            />
-            <DrawerMenuListBlock items={drawerMenuItems} onItemPress={handleMenuItemPress} />
-          </ScrollView>
+          <ProfileScreenBody drawerVisible={props.visible} fromDrawer />
         </View>
       </Animated.View>
 
@@ -237,13 +126,6 @@ export function AppDrawer(props: AppDrawerProps): ReactElement | null {
       >
         <Pressable accessibilityRole="button" onPress={props.onClose} style={styles.backdrop} />
       </Animated.View>
-
-      <ContactBottomPanel
-        onClose={() => {
-          setContactPanelVisible(false);
-        }}
-        visible={contactPanelVisible}
-      />
     </View>
   );
 }
@@ -265,9 +147,6 @@ const styles = StyleSheet.create({
   panelBody: {
     flex: 1,
   },
-  menuScroll: {
-    flex: 1,
-  },
   backdropWrap: {
     ...StyleSheet.absoluteFill,
     zIndex: 1,
@@ -275,11 +154,5 @@ const styles = StyleSheet.create({
   backdrop: {
     backgroundColor: colors.overlay,
     flex: 1,
-  },
-  menuContent: {
-    gap: spacing.md,
-    paddingBottom: spacing.xxl,
-    paddingHorizontal: spacing.lg,
-    paddingTop: spacing.sm,
   },
 });

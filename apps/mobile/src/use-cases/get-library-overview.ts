@@ -3,7 +3,7 @@ import { getPackCard, listPackCards } from '../data/repositories/pack-card-repos
 import { listLearningStatesForPackContent } from '../data/repositories/learning-state-for-pack-content';
 import { listInstalledPacks } from '../data/repositories/installed-pack-repository';
 import { getPackBrowseBookmark } from '../data/repositories/pack-browse-bookmark-repository';
-import { countInReviewPoolTotal } from '../data/repositories/learning-state-repository';
+import { countReviewableInReviewPoolTotal } from './count-reviewable-pool-items';
 import { getReviewDailyStats } from '../data/repositories/review-daily-stats-repository';
 import { getDailyReviewLimit } from '../data/repositories/user-preferences-repository';
 import { resolvePackDisplayName } from '../catalog/resolve-pack-display-name';
@@ -88,7 +88,7 @@ export function loadLibraryScreenData(now: Date = new Date()): {
   let totalCards = 0;
   let learningCount = 0;
   let masteredCount = 0;
-  const reviewPoolTotal = countInReviewPoolTotal();
+  const reviewPoolTotal = countReviewableInReviewPoolTotal();
   const aggregatedSqlitePaths = new Set<string>();
   for (const pack of installed) {
     if (aggregatedSqlitePaths.has(pack.sqlitePath)) {

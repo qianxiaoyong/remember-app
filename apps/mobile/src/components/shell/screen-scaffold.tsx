@@ -1,26 +1,29 @@
 import type { ReactElement, ReactNode } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { markAppContentReady } from '../../shell/app-content-ready';
+import { resolveShellTabBarInset } from '../../shell/shell-tab-bar-inset';
 import { colors } from '../../theme/colors';
-import { spacing } from '../../theme/spacing';
 
 interface ScreenScaffoldProps {
   children: ReactNode;
   footer?: ReactNode;
   overlay?: ReactNode;
-  withCapsulePadding?: boolean;
+  withTabBarPadding?: boolean;
   safeAreaEdges?: ('top' | 'right' | 'bottom' | 'left')[];
 }
 
 export function ScreenScaffold(props: ScreenScaffoldProps): ReactElement {
+  const insets = useSafeAreaInsets();
   const edges = props.safeAreaEdges ?? ['top', 'left', 'right'];
+  const withTabBarPadding = props.withTabBarPadding ?? false;
+  const tabBarInset = withTabBarPadding ? resolveShellTabBarInset(insets.bottom) : 0;
 
   return (
     <SafeAreaView edges={edges} style={styles.safeArea}>
       <View
         onLayout={markAppContentReady}
-        style={[styles.content, props.withCapsulePadding ? styles.withCapsulePadding : null]}
+        style={[styles.content, tabBarInset > 0 ? { paddingBottom: tabBarInset } : null]}
       >
         {props.children}
       </View>
@@ -48,8 +51,5 @@ const styles = StyleSheet.create({
     pointerEvents: 'box-none',
     zIndex: 100,
     ...(Platform.OS === 'android' ? { elevation: 100 } : null),
-  },
-  withCapsulePadding: {
-    paddingBottom: spacing.capsuleBottom,
   },
 });

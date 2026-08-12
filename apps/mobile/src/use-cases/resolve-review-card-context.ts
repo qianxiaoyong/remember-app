@@ -14,14 +14,16 @@ export function resolveReviewCardContext(knowledgeId: string): {
 
   const sourcePackId = state.firstAddedFromPackId ?? state.packId;
   const installed = getInstalledPack(sourcePackId);
-  const sourcePackDisplayName = installed?.displayName ?? '已卸载的学习包';
+  if (!installed) {
+    return null;
+  }
 
   try {
     const cardDetail = getPackCardDetailUseCase(sourcePackId, knowledgeId);
     return {
       cardDetail,
       sourcePackId,
-      sourcePackDisplayName,
+      sourcePackDisplayName: installed.displayName,
     };
   } catch {
     return null;

@@ -211,6 +211,15 @@ export function listDueReviewPoolItems(
   return rows.map(mapRow).filter((row) => isDueByEndOfLocalDay(row.dueAt, now, timeZone));
 }
 
+export function listInReviewPoolItems(db: SQLiteDatabase = openUserDatabase()): LearningStateRow[] {
+  const rows = db.getAllSync<LearningStateDbRow>(
+    `${LEARNING_STATE_SELECT}
+     WHERE inReviewPool = 1
+     ORDER BY dueAt ASC, knowledgeId ASC`,
+  );
+  return rows.map(mapRow);
+}
+
 export function countDueReviewPoolItems(
   now: Date,
   timeZone: string,

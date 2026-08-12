@@ -3,7 +3,7 @@ import { buildLearningCalendarHref, exitCalendarInspect } from './calendar-inspe
 
 describe('calendar inspect navigation', () => {
   it('buildLearningCalendarHref 带上 localDate', () => {
-    expect(buildLearningCalendarHref('2026-08-11')).toBe('/learning-calendar?localDate=2026-08-11');
+    expect(buildLearningCalendarHref('2026-08-11')).toBe('/record?localDate=2026-08-11');
   });
 
   it('exitCalendarInspect 使用 back 弹出检查页', () => {

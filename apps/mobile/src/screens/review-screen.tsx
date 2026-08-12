@@ -20,7 +20,7 @@ import {
 import { formatInspectContextLabel } from '../components/calendar/inspect-mode-chrome';
 import { exitCalendarInspect } from '../shell/calendar-inspect-navigation';
 import { VocabularyStudyPanel } from '../learning/card-types/vocabulary/vocabulary-study-panel';
-import { useOptionalSetCapsuleVisible } from '../shell/shell-provider';
+import { useOptionalSetTabBarVisible } from '../shell/shell-provider';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 
@@ -93,7 +93,7 @@ export function ReviewScreen(props: {
   const hasCurrentItem = Boolean(session?.currentItem);
   const canLoadCurrent = Boolean(reviewContext?.cardDetail);
   const hasSession = hasCurrentItem && canLoadCurrent;
-  const setCapsuleVisible = useOptionalSetCapsuleVisible();
+  const setTabBarVisible = useOptionalSetTabBarVisible();
   const [isScreenFocused, setIsScreenFocused] = useState(false);
   const moreMenuAnchorTop = insets.top + spacing.xs + spacing.touchTarget + spacing.xs;
   const moreMenuAnchorRight = spacing.lg;
@@ -111,17 +111,17 @@ export function ReviewScreen(props: {
       setIsScreenFocused(true);
       return () => {
         setIsScreenFocused(false);
-        setCapsuleVisible?.(true);
+        setTabBarVisible?.(true);
       };
-    }, [setCapsuleVisible]),
+    }, [setTabBarVisible]),
   );
 
   useEffect(() => {
-    if (!isScreenFocused || !setCapsuleVisible) {
+    if (!isScreenFocused || !setTabBarVisible) {
       return;
     }
-    setCapsuleVisible(!hasSession);
-  }, [hasSession, isScreenFocused, setCapsuleVisible]);
+    setTabBarVisible(!hasSession);
+  }, [hasSession, isScreenFocused, setTabBarVisible]);
 
   useFocusEffect(
     useCallback(() => {
@@ -252,6 +252,7 @@ export function ReviewScreen(props: {
         ) : null
       }
       safeAreaEdges={['left', 'right']}
+      withTabBarPadding={!hasSession}
     >
       <View style={styles.root}>
         {message ? <Text style={styles.message}>{message}</Text> : null}

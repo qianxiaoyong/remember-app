@@ -28,10 +28,10 @@ describe('auth contracts', () => {
       user: {
         userId: '550e8400-e29b-41d4-a716-446655440001',
         maskedPhone: '138****8000',
-        displayName: '监护人',
+        displayName: '用户',
       },
     });
-    expect(response.user.displayName).toBe('监护人');
+    expect(response.user.displayName).toBe('用户');
   });
 
   it('sessionUser 拒绝未知字段', () => {
@@ -39,7 +39,7 @@ describe('auth contracts', () => {
       sessionUserSchema.parse({
         userId: '550e8400-e29b-41d4-a716-446655440001',
         maskedPhone: '138****8000',
-        displayName: '监护人',
+        displayName: '用户',
         extra: true,
       }),
     ).toThrow();

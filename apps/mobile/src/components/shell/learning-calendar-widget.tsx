@@ -1,12 +1,9 @@
 import type { ReactElement } from 'react';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { Dimensions, Pressable, StyleSheet, Text, View, type DimensionValue } from 'react-native';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Dimensions, Pressable, StyleSheet, Text, View } from 'react-native';
 import { deferAfterFirstPaint } from '../../lib/defer-after-first-paint';
-import { useRouter } from 'expo-router';
-import type {
-  HeatCell,
-  LearningActivitySummary,
-} from '../../use-cases/get-learning-activity-summary';
+import { useFocusEffect, useRouter } from 'expo-router';
+import type { LearningActivitySummary } from '../../use-cases/get-learning-activity-summary';
 import { getLearningActivitySummary } from '../../use-cases/get-learning-activity-summary';
 import { consumeLearningCalendarNeedsRefresh } from '../../shell/learning-calendar-refresh-signal';
 import { markDrawerReturnPending } from '../../shell/drawer-return-intent';
@@ -20,10 +17,21 @@ const HEAT_GRID_COLS = 12;
 const HEAT_GRID_ROWS = 7;
 const HEAT_GRID_GAP = 3;
 const DRAWER_WIDTH_RATIO = 0.86;
+const MONTH_LABEL_WIDTH = 36;
 
-function estimateHeatGridInnerWidth(): number {
+interface LearningCalendarWidgetProps {
+  layout?: 'drawer' | 'page';
+  /** drawer 布局下随抽屉显隐加载 */
+  drawerVisible?: boolean;
+}
+
+function estimateDrawerHeatGridInnerWidth(): number {
   const panelWidth = Dimensions.get('window').width * DRAWER_WIDTH_RATIO;
   return panelWidth - spacing.lg * 2 - spacing.lg * 2;
+}
+
+function estimatePageHeatGridInnerWidth(): number {
+  return Dimensions.get('window').width - spacing.lg * 4;
 }
 
 function resolveHeatCellSize(gridWidth: number): number {
@@ -33,56 +41,69 @@ function resolveHeatCellSize(gridWidth: number): number {
   );
 }
 
-export function LearningCalendarWidget(props: { drawerVisible: boolean }): ReactElement {
+export function LearningCalendarWidget(props: LearningCalendarWidgetProps): ReactElement {
+  const layout = props.layout ?? 'drawer';
   const router = useRouter();
   const { dismissDrawer } = useShellActions();
   const [summary, setSummary] = useState<LearningActivitySummary | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const summaryRef = useRef<LearningActivitySummary | null>(null);
-  const [gridWidth, setGridWidth] = useState(estimateHeatGridInnerWidth);
-  const monthLabels = useMemo(() => (summary ? buildMonthLabels(summary.heatGrid) : []), [summary]);
+  const [gridWidth, setGridWidth] = useState(() =>
+    layout === 'page' ? estimatePageHeatGridInnerWidth() : estimateDrawerHeatGridInnerWidth(),
+  );
   const heatCellSize = resolveHeatCellSize(gridWidth);
   const heatGridHeight = heatCellSize * HEAT_GRID_ROWS + HEAT_GRID_GAP * (HEAT_GRID_ROWS - 1);
 
-  useEffect(() => {
-    if (!props.drawerVisible) {
-      return;
-    }
-
+  const loadSummary = useCallback(() => {
     const needsRefresh = consumeLearningCalendarNeedsRefresh();
     if (summaryRef.current !== null && !needsRefresh) {
       setIsLoading(false);
       return;
     }
 
-    let cancelled = false;
     setIsLoading(true);
-
     const cancelDefer = deferAfterFirstPaint(() => {
-      if (cancelled) {
-        return;
-      }
       const nextSummary = getLearningActivitySummary();
       summaryRef.current = nextSummary;
       setSummary(nextSummary);
       setIsLoading(false);
     });
 
-    return () => {
-      cancelled = true;
-      cancelDefer();
-    };
-  }, [props.drawerVisible]);
+    return cancelDefer;
+  }, []);
 
-  const openCalendar = (localDate?: string): void => {
-    markDrawerReturnPending();
-    dismissDrawer();
-    if (localDate) {
-      router.push(`/learning-calendar?localDate=${localDate}`);
+  useEffect(() => {
+    if (layout !== 'drawer') {
       return;
     }
-    router.push('/learning-calendar');
+    if (!props.drawerVisible) {
+      return;
+    }
+    return loadSummary();
+  }, [layout, loadSummary, props.drawerVisible]);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (layout !== 'page') {
+        return;
+      }
+      return loadSummary();
+    }, [layout, loadSummary]),
+  );
+
+  const openCalendar = (localDate?: string): void => {
+    if (layout === 'drawer') {
+      markDrawerReturnPending();
+      dismissDrawer();
+    }
+    if (localDate) {
+      router.push(`/record?localDate=${localDate}`);
+      return;
+    }
+    router.push('/record');
   };
+
+  const monthLabels = useMemo(() => summary?.monthLabels ?? [], [summary]);
 
   return (
     <Pressable
@@ -97,16 +118,18 @@ export function LearningCalendarWidget(props: { drawerVisible: boolean }): React
             <Text style={styles.title}>学习日历</Text>
             <Text style={styles.rangeHint}>近90天</Text>
           </View>
-          <Pressable
-            accessibilityRole="button"
-            hitSlop={8}
-            onPress={(event) => {
-              event.stopPropagation();
-              openCalendar();
-            }}
-          >
-            <Text style={styles.viewAll}>查看全部 ›</Text>
-          </Pressable>
+          {layout === 'drawer' ? (
+            <Pressable
+              accessibilityRole="button"
+              hitSlop={8}
+              onPress={(event) => {
+                event.stopPropagation();
+                openCalendar();
+              }}
+            >
+              <Text style={styles.viewAll}>查看全部 ›</Text>
+            </Pressable>
+          ) : null}
         </View>
 
         <View style={styles.statsRow}>
@@ -170,7 +193,11 @@ export function LearningCalendarWidget(props: { drawerVisible: boolean }): React
                 key={item.key}
                 style={[
                   styles.monthLabel,
-                  { left: `${String(item.leftPercent)}%` as DimensionValue },
+                  {
+                    left: `${String(((item.colIndex + 0.5) / HEAT_GRID_COLS) * 100)}%` as `${number}%`,
+                    marginLeft: -MONTH_LABEL_WIDTH / 2,
+                    width: MONTH_LABEL_WIDTH,
+                  },
                 ]}
               >
                 {item.label}
@@ -213,60 +240,6 @@ function HeatGridSkeleton(props: { cellSize: number }): ReactElement {
       ))}
     </>
   );
-}
-
-function buildMonthLabels(
-  heatGrid: HeatCell[][],
-): { key: string; label: string; leftPercent: number }[] {
-  if (heatGrid.length === 0 || !heatGrid[0]) {
-    return [];
-  }
-
-  const colCount = heatGrid[0].length;
-  const labels: { key: string; label: string; leftPercent: number }[] = [];
-  let lastMonth = '';
-
-  for (let col = 0; col < colCount; col += 1) {
-    const cell = heatGrid[0][col];
-    if (!cell?.isInRange) {
-      continue;
-    }
-    const month = cell.localDate.slice(5, 7);
-    if (month === lastMonth) {
-      continue;
-    }
-    lastMonth = month;
-    labels.push({
-      key: `${cell.localDate.slice(0, 7)}-${String(col)}`,
-      label: `${String(Number(month))}月`,
-      leftPercent: (col / colCount) * 100,
-    });
-  }
-
-  return filterCrowdedMonthLabels(labels);
-}
-
-const MIN_MONTH_LABEL_GAP_PERCENT = 10;
-
-function filterCrowdedMonthLabels(
-  labels: { key: string; label: string; leftPercent: number }[],
-): { key: string; label: string; leftPercent: number }[] {
-  if (labels.length <= 1) {
-    return labels;
-  }
-
-  const filtered: { key: string; label: string; leftPercent: number }[] = [];
-  for (let i = 0; i < labels.length; i += 1) {
-    const current = labels[i];
-    const next = labels[i + 1];
-    if (current && next && next.leftPercent - current.leftPercent < MIN_MONTH_LABEL_GAP_PERCENT) {
-      continue;
-    }
-    if (current) {
-      filtered.push(current);
-    }
-  }
-  return filtered;
 }
 
 const styles = StyleSheet.create({
@@ -344,5 +317,6 @@ const styles = StyleSheet.create({
     color: colors.textMuted,
     fontSize: 10,
     position: 'absolute',
+    textAlign: 'center',
   },
 });

@@ -1,6 +1,7 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useFocusEffect } from 'expo-router';
 import { normalizeSurfaceForm } from '@remember/contracts';
+import { deferAfterFirstPaint } from '../lib/defer-after-first-paint';
 import type { LexiconLookupResult } from '../data/repositories/lexicon-entry-repository';
 import {
   setUserPreference,
@@ -19,7 +20,10 @@ import {
   toggleSavedLexiconItem,
 } from '../use-cases/toggle-saved-lexicon-item';
 import { getReviewOutcomeIntervalLabels } from '../use-cases/get-review-outcome-interval-labels';
-import { markReviewPoolChanged } from '../shell/review-pool-changed-signal';
+import {
+  markReviewPoolChanged,
+  subscribeReviewPoolChanged,
+} from '../shell/review-pool-changed-signal';
 import { useVocabularyStudyAudio } from './use-vocabulary-study-audio';
 
 export function useReviewFlow(options?: { enabled?: boolean }) {
@@ -35,6 +39,7 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
   const [lexiconSaved, setLexiconSaved] = useState(false);
   const [lexiconSelectedSurfaceForm, setLexiconSelectedSurfaceForm] = useState<string | null>(null);
   const [audioMessage, setAudioMessage] = useState<string | null>(null);
+  const needsSessionRefreshRef = useRef(true);
 
   const refreshSummary = useCallback(() => {
     setSummary(getReviewTabSummary());
@@ -49,10 +54,17 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
       const nextSession = resumeOrStartReviewSession();
       setSession(nextSession);
       refreshSummary();
+      needsSessionRefreshRef.current = false;
     } catch (error) {
       setMessage(error instanceof Error ? error.message : '无法开始复习');
     }
   }, [refreshSummary]);
+
+  useEffect(() => {
+    return subscribeReviewPoolChanged(() => {
+      needsSessionRefreshRef.current = true;
+    });
+  }, []);
 
   useFocusEffect(
     useCallback(() => {
@@ -60,11 +72,18 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
         return;
       }
       setIsScreenFocused(true);
-      startReview();
+      const cancelDefer = deferAfterFirstPaint(() => {
+        if (needsSessionRefreshRef.current) {
+          startReview();
+          return;
+        }
+        refreshSummary();
+      });
       return () => {
+        cancelDefer();
         setIsScreenFocused(false);
       };
-    }, [enabled, startReview]),
+    }, [enabled, refreshSummary, startReview]),
   );
 
   const currentKnowledgeId = session?.currentItem?.knowledgeId ?? null;
@@ -181,6 +200,7 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
           activitySource: 'review_tab',
         });
         markReviewPoolChanged();
+        needsSessionRefreshRef.current = true;
         const nextSession = resumeOrStartReviewSession();
         setSession(nextSession);
         setRevealed(false);
