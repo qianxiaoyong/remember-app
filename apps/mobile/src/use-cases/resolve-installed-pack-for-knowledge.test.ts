@@ -35,10 +35,7 @@ import { resolveInstalledPackForKnowledgeId } from './resolve-installed-pack-for
 
 describe('resolveInstalledPackForKnowledgeId', () => {
   it('learning state 记录 content packId 时仍可通过 catalog 别名加载', () => {
-    const pack = resolveInstalledPackForKnowledgeId(
-      'content-pack:en:word:one',
-      'content-pack',
-    );
+    const pack = resolveInstalledPackForKnowledgeId('content-pack:en:word:one', 'content-pack');
 
     expect(pack?.packId).toBe('catalog-pack');
   });

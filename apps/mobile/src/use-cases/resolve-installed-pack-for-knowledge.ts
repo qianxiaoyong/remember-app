@@ -10,10 +10,7 @@ function packContainsKnowledgeId(pack: InstalledPackRow, knowledgeId: string): b
   return getPackCardDetail(pack.sqlitePath, knowledgeId) !== null;
 }
 
-function findPackOnSqlitePath(
-  sqlitePath: string,
-  knowledgeId: string,
-): InstalledPackRow | null {
+function findPackOnSqlitePath(sqlitePath: string, knowledgeId: string): InstalledPackRow | null {
   for (const pack of listInstalledPacks()) {
     if (pack.sqlitePath !== sqlitePath) {
       continue;

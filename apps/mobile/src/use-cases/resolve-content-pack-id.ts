@@ -30,8 +30,7 @@ export function resolveContentPackId(catalogPackId: string): string {
     return catalogPackId;
   }
 
-  const contentPackId =
-    extractContentPackIdFromKnowledgeId(firstCard.knowledgeId) ?? catalogPackId;
+  const contentPackId = extractContentPackIdFromKnowledgeId(firstCard.knowledgeId) ?? catalogPackId;
   contentPackIdCache.set(catalogPackId, contentPackId);
   return contentPackId;
 }
