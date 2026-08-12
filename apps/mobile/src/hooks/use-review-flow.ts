@@ -40,6 +40,7 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
   const [lexiconSelectedSurfaceForm, setLexiconSelectedSurfaceForm] = useState<string | null>(null);
   const [audioMessage, setAudioMessage] = useState<string | null>(null);
   const needsSessionRefreshRef = useRef(true);
+  const isScreenFocusedRef = useRef(false);
   const roundStatsRef = useRef({ passed: 0, failed: 0 });
   const [completedRound, setCompletedRound] = useState<{ passed: number; failed: number } | null>(
     null,
@@ -73,8 +74,12 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
   useEffect(() => {
     return subscribeReviewPoolChanged(() => {
       needsSessionRefreshRef.current = true;
+      refreshSummary();
+      if (enabled && isScreenFocusedRef.current) {
+        startReview();
+      }
     });
-  }, []);
+  }, [enabled, refreshSummary, startReview]);
 
   useFocusEffect(
     useCallback(() => {
@@ -82,6 +87,8 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
         return;
       }
       setIsScreenFocused(true);
+      isScreenFocusedRef.current = true;
+      refreshSummary();
       const cancelDefer = deferAfterFirstPaint(() => {
         if (needsSessionRefreshRef.current) {
           startReview();
@@ -92,6 +99,7 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
       return () => {
         cancelDefer();
         setIsScreenFocused(false);
+        isScreenFocusedRef.current = false;
       };
     }, [enabled, refreshSummary, startReview]),
   );

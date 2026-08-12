@@ -1,4 +1,10 @@
 import { describe, expect, it, vi } from 'vitest';
+import {
+  flushLearningCalendarNeedsRefresh,
+  markLearningCalendarNeedsRefresh,
+  resetLearningCalendarRefreshSignalForTests,
+  subscribeLearningCalendarRefresh,
+} from './learning-calendar-refresh-signal';
 import { buildLearningCalendarHref, exitCalendarInspect } from './calendar-inspect-navigation';
 
 describe('calendar inspect navigation', () => {
@@ -10,5 +16,19 @@ describe('calendar inspect navigation', () => {
     const router = { back: vi.fn() };
     exitCalendarInspect(router);
     expect(router.back).toHaveBeenCalledOnce();
+  });
+
+  it('exitCalendarInspect 会 flush 日历刷新', () => {
+    let flushed = 0;
+    const unsubscribe = subscribeLearningCalendarRefresh(() => {
+      flushed += 1;
+    });
+    markLearningCalendarNeedsRefresh();
+
+    exitCalendarInspect({ back: vi.fn() });
+    expect(flushed).toBe(1);
+
+    unsubscribe();
+    resetLearningCalendarRefreshSignalForTests();
   });
 });

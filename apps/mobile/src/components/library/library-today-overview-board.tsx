@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   valueRow: {
     alignItems: 'baseline',
     flexDirection: 'row',
-    gap: 2,
+    gap: spacing.xs,
     justifyContent: 'flex-start',
     minWidth: 0,
     width: '100%',
@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     fontWeight: '700',
     minWidth: 0,
+    paddingRight: 2,
   },
   unit: {
     color: colors.textPrimary,

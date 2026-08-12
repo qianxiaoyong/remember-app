@@ -217,24 +217,32 @@ export function ReviewScreen(props: {
       );
     }
 
-    if (!hasSession && summary.remainingQuota === 0) {
+    if (!hasSession) {
+      if (summary.remainingQuota === 0) {
+        return (
+          <View style={styles.empty}>
+            <Text style={styles.emptyText}>今日复习已达上限</Text>
+            <Text style={styles.emptyHint}>明天继续，或在设置中调整每日上限</Text>
+            <PrimaryButton
+              label="回学习"
+              onPress={() => {
+                router.replace('/library');
+              }}
+            />
+          </View>
+        );
+      }
+
       return (
         <View style={styles.empty}>
-          <Text style={styles.emptyText}>今日复习已达上限</Text>
-          <Text style={styles.emptyHint}>明天继续，或在设置中调整每日上限</Text>
-          <PrimaryButton
-            label="回学习"
-            onPress={() => {
-              router.replace('/library');
-            }}
-          />
+          <Text style={styles.emptyText}>正在加载复习词…</Text>
         </View>
       );
     }
 
     return (
       <View style={styles.empty}>
-        <Text style={styles.emptyText}>暂无到期复习词</Text>
+        <Text style={styles.emptyText}>无法加载当前复习词</Text>
         <PrimaryButton
           label="去学习"
           onPress={() => {
