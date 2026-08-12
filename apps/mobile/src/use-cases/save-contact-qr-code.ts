@@ -36,7 +36,7 @@ export async function resolveContactQrFileUri(): Promise<string | null> {
 
   const dest = `${cacheRoot}${CACHE_FILENAME}`;
   const existing = await getInfoAsync(dest);
-  if (existing.exists && (existing.size ?? 0) > 0) {
+  if (existing.exists && existing.size > 0) {
     return normalizeLocalFileUri(dest);
   }
 
@@ -59,7 +59,7 @@ export async function resolveContactQrFileUri(): Promise<string | null> {
 
   await copyAsync({ from: normalizedSource, to: dest });
   const written = await getInfoAsync(dest);
-  if (!written.exists || (written.size ?? 0) === 0) {
+  if (!written.exists || written.size === 0) {
     return null;
   }
 

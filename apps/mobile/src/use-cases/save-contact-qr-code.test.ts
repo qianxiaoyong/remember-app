@@ -41,10 +41,10 @@ describe('resolveContactQrFileUri', () => {
     vi.clearAllMocks();
     mockAsset.downloaded = true;
     mockAsset.localUri = 'assets_images_contact_official_qrcode';
-    mockAsset.downloadAsync.mockImplementation(async () => {
+    mockAsset.downloadAsync.mockImplementation(() => {
       mockAsset.downloaded = true;
       mockAsset.localUri = 'file:///data/user/0/com.remember.app/cache/ExponentAsset-abc.png';
-      return mockAsset;
+      return Promise.resolve(mockAsset);
     });
     getInfoAsync.mockResolvedValue({
       exists: false,
@@ -103,9 +103,9 @@ describe('saveContactQrCode', () => {
     vi.clearAllMocks();
     mockAsset.downloaded = true;
     mockAsset.localUri = 'assets_images_contact_official_qrcode';
-    mockAsset.downloadAsync.mockImplementation(async () => {
+    mockAsset.downloadAsync.mockImplementation(() => {
       mockAsset.localUri = 'file:///data/user/0/com.remember.app/cache/ExponentAsset-abc.png';
-      return mockAsset;
+      return Promise.resolve(mockAsset);
     });
     getInfoAsync.mockResolvedValue({
       exists: true,
