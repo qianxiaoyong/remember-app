@@ -267,13 +267,14 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
             onGoReview={handleGoReview}
             onRestartFromBeginning={handleRestartFromBeginning}
           />
-        ) : isBrowseMode && !browseReady ? (
+        ) : isBrowseMode && !browseReady && !inspectMode ? (
           <View style={styles.emptyState}>
             <PrimaryButton label="打开学习包" onPress={startBrowse} />
           </View>
         ) : cardDetail ? (
           cardTypeDefinition ? (
             <cardTypeDefinition.Renderer
+              key={`${activePackId}:${activeKnowledgeId ?? 'none'}`}
               content={cardDetail.content}
               knowledgeId={cardDetail.knowledgeId}
               lexiconSelectedSurfaceForm={lexiconSelectedSurfaceForm}

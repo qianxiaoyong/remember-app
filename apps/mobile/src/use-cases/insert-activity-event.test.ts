@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 vi.mock('../data/user-db/open-user-database', () => ({
   openUserDatabase: vi.fn(),
@@ -10,16 +10,26 @@ vi.mock('../data/create-record-id', () => ({
 
 vi.mock('../data/repositories/learning-activity-event-repository', () => ({
   hasFirstRevealEvent: vi.fn(),
+  hasStoryCompletedEvent: vi.fn(),
   insertLearningActivityEvent: vi.fn(),
+}));
+
+vi.mock('../shell/learning-calendar-refresh-signal', () => ({
+  markLearningCalendarNeedsRefresh: vi.fn(),
 }));
 
 import {
   hasFirstRevealEvent,
   insertLearningActivityEvent,
 } from '../data/repositories/learning-activity-event-repository';
+import { markLearningCalendarNeedsRefresh } from '../shell/learning-calendar-refresh-signal';
 import { insertActivityEvent } from './insert-activity-event';
 
 describe('insertActivityEvent', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
   it('skips duplicate vocabulary_first_reveal for same packId+knowledgeId', () => {
     vi.mocked(hasFirstRevealEvent).mockReturnValue(true);
 
@@ -56,6 +66,7 @@ describe('insertActivityEvent', () => {
         payload: JSON.stringify({ sortOrder: 3 }),
       }),
     );
+    expect(markLearningCalendarNeedsRefresh).toHaveBeenCalledOnce();
   });
 
   it('does not throw when insert fails', () => {
@@ -78,6 +89,7 @@ describe('insertActivityEvent', () => {
     }).not.toThrow();
 
     expect(warnSpy).toHaveBeenCalled();
+    expect(markLearningCalendarNeedsRefresh).not.toHaveBeenCalled();
     warnSpy.mockRestore();
   });
 });

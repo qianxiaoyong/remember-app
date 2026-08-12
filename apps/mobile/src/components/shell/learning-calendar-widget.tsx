@@ -1,11 +1,14 @@
 import type { ReactElement } from 'react';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Dimensions, Pressable, StyleSheet, Text, View } from 'react-native';
 import { deferAfterFirstPaint } from '../../lib/defer-after-first-paint';
 import { useFocusEffect, useRouter } from 'expo-router';
 import type { LearningActivitySummary } from '../../use-cases/get-learning-activity-summary';
 import { getLearningActivitySummary } from '../../use-cases/get-learning-activity-summary';
-import { consumeLearningCalendarNeedsRefresh } from '../../shell/learning-calendar-refresh-signal';
+import {
+  flushLearningCalendarNeedsRefresh,
+  subscribeLearningCalendarRefresh,
+} from '../../shell/learning-calendar-refresh-signal';
 import { SurfaceCard } from '../ui/surface-card';
 import { heatLevelColors } from '../calendar/calendar-theme';
 import { colors } from '../../theme/colors';
@@ -36,14 +39,10 @@ export function LearningCalendarWidget(): ReactElement {
   const heatCellSize = resolveHeatCellSize(gridWidth);
   const heatGridHeight = heatCellSize * HEAT_GRID_ROWS + HEAT_GRID_GAP * (HEAT_GRID_ROWS - 1);
 
-  const loadSummary = useCallback(() => {
-    const needsRefresh = consumeLearningCalendarNeedsRefresh();
-    if (summaryRef.current !== null && !needsRefresh) {
-      setIsLoading(false);
-      return;
+  const loadSummary = useCallback((silent = false) => {
+    if (!silent || summaryRef.current === null) {
+      setIsLoading(true);
     }
-
-    setIsLoading(true);
     const cancelDefer = deferAfterFirstPaint(() => {
       const nextSummary = getLearningActivitySummary();
       summaryRef.current = nextSummary;
@@ -54,9 +53,14 @@ export function LearningCalendarWidget(): ReactElement {
     return cancelDefer;
   }, []);
 
+  useEffect(() => subscribeLearningCalendarRefresh(() => loadSummary(true)), [loadSummary]);
+
   useFocusEffect(
     useCallback(() => {
-      return loadSummary();
+      flushLearningCalendarNeedsRefresh();
+      if (summaryRef.current === null) {
+        return loadSummary();
+      }
     }, [loadSummary]),
   );
 

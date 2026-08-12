@@ -7,7 +7,11 @@ export function useReviewTabBadge(): number {
     () => getReviewTabSummary().reviewableDueTotal,
   );
 
-  const refresh = useCallback(() => {
+  const refresh = useCallback((reason: 'refresh' | 'join_due') => {
+    if (reason === 'join_due') {
+      setReviewableDueTotal((total) => total + 1);
+      return;
+    }
     setReviewableDueTotal(getReviewTabSummary().reviewableDueTotal);
   }, []);
 

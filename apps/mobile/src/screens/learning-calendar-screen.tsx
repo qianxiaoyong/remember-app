@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ScrollView, StyleSheet, Text } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { calculateHeatLevel } from '@remember/domain';
@@ -15,7 +15,10 @@ import { SurfaceCard } from '../components/ui/surface-card';
 import { listEventsInDateRange } from '../data/repositories/learning-activity-event-repository';
 import { getLearningCalendarDayDetail } from '../use-cases/get-learning-calendar-day-detail';
 import { getDeviceTimeZone } from '../lib/get-device-time-zone';
-import { consumeLearningCalendarNeedsRefresh } from '../shell/learning-calendar-refresh-signal';
+import {
+  flushLearningCalendarNeedsRefresh,
+  subscribeLearningCalendarRefresh,
+} from '../shell/learning-calendar-refresh-signal';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 
@@ -34,12 +37,15 @@ export function LearningCalendarScreen(props: LearningCalendarScreenProps): Reac
   const [year, setYear] = useState(initialParts.year);
   const [month, setMonth] = useState(initialParts.month);
   const [refreshKey, setRefreshKey] = useState(0);
+  const bumpRefresh = useCallback(() => {
+    setRefreshKey((key) => key + 1);
+  }, []);
+
+  useEffect(() => subscribeLearningCalendarRefresh(bumpRefresh), [bumpRefresh]);
 
   useFocusEffect(
     useCallback(() => {
-      if (consumeLearningCalendarNeedsRefresh()) {
-        setRefreshKey((key) => key + 1);
-      }
+      flushLearningCalendarNeedsRefresh();
     }, []),
   );
 

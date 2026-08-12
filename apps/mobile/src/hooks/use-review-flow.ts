@@ -1,14 +1,17 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useFocusEffect } from 'expo-router';
 import { normalizeSurfaceForm } from '@remember/contracts';
-import { deferAfterFirstPaint } from '../lib/defer-after-first-paint';
 import type { LexiconLookupResult } from '../data/repositories/lexicon-entry-repository';
 import {
   setUserPreference,
   PREFERENCE_DAILY_REVIEW_LIMIT,
 } from '../data/repositories/user-preferences-repository';
 import { confirmReviewOutcome } from '../use-cases/confirm-review-outcome';
-import { getReviewTabSummary } from '../use-cases/get-review-tab-summary';
+import {
+  getReviewTabSummary,
+  invalidateReviewTabSummaryCache,
+  type ReviewTabSummary,
+} from '../use-cases/get-review-tab-summary';
 import { lookupLexiconToken } from '../use-cases/lookup-lexicon-token';
 import { playOrCacheLexiconAudio } from '../use-cases/play-or-cache-lexicon-audio';
 import { resolveReviewCardContext } from '../use-cases/resolve-review-card-context';
@@ -24,13 +27,15 @@ import {
   markReviewPoolChanged,
   subscribeReviewPoolChanged,
 } from '../shell/review-pool-changed-signal';
+import { deferAfterFirstPaint } from '../lib/defer-after-first-paint';
+import { EMPTY_REVIEW_SUMMARY, sessionHasLoadableCurrentItem } from './review-flow-session-helpers';
 import { useVocabularyStudyAudio } from './use-vocabulary-study-audio';
 
 export function useReviewFlow(options?: { enabled?: boolean }) {
   const enabled = options?.enabled !== false;
   const [isScreenFocused, setIsScreenFocused] = useState(false);
   const [session, setSession] = useState<ActiveStudySession | null>(null);
-  const [summary, setSummary] = useState(getReviewTabSummary());
+  const [summary, setSummary] = useState<ReviewTabSummary>(EMPTY_REVIEW_SUMMARY);
   const [revealed, setRevealed] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
@@ -40,7 +45,10 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
   const [lexiconSelectedSurfaceForm, setLexiconSelectedSurfaceForm] = useState<string | null>(null);
   const [audioMessage, setAudioMessage] = useState<string | null>(null);
   const needsSessionRefreshRef = useRef(true);
+  const isScreenFocusedRef = useRef(false);
+  const sessionReadyRef = useRef(false);
   const roundStatsRef = useRef({ passed: 0, failed: 0 });
+  const [isStartingReview, setIsStartingReview] = useState(false);
   const [completedRound, setCompletedRound] = useState<{ passed: number; failed: number } | null>(
     null,
   );
@@ -53,28 +61,65 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
     setCompletedRound(null);
   }, []);
 
-  const startReview = useCallback(() => {
+  const startReview = useCallback((startOptions?: { forceRebuild?: boolean }) => {
     setMessage(null);
     setRevealed(false);
     setLexiconVisible(false);
     setLexiconSelectedSurfaceForm(null);
     roundStatsRef.current = { passed: 0, failed: 0 };
     setCompletedRound(null);
+    setIsStartingReview(true);
     try {
-      const nextSession = resumeOrStartReviewSession();
+      const forceRebuild = startOptions?.forceRebuild ?? needsSessionRefreshRef.current;
+      const nextSession = resumeOrStartReviewSession(undefined, { forceRebuild });
       setSession(nextSession);
-      refreshSummary();
+      const latestSummary = getReviewTabSummary();
+      setSummary(latestSummary);
+      const hasLoadableItem = sessionHasLoadableCurrentItem(nextSession);
       needsSessionRefreshRef.current = false;
+      sessionReadyRef.current = hasLoadableItem || nextSession.sessionId === 'empty';
+      if (
+        !hasLoadableItem &&
+        latestSummary.reviewableDueTotal > 0 &&
+        latestSummary.remainingQuota > 0
+      ) {
+        setMessage('无法加载到期复习词，请返回后重试');
+      }
     } catch (error) {
+      needsSessionRefreshRef.current = true;
+      sessionReadyRef.current = false;
       setMessage(error instanceof Error ? error.message : '无法开始复习');
+    } finally {
+      setIsStartingReview(false);
     }
-  }, [refreshSummary]);
+  }, []);
+
+  const scheduleSessionRefresh = useCallback(
+    (forceRebuild: boolean) => {
+      needsSessionRefreshRef.current = true;
+      sessionReadyRef.current = false;
+      return deferAfterFirstPaint(() => {
+        if (!enabled || !isScreenFocusedRef.current) {
+          return;
+        }
+        startReview({ forceRebuild });
+      });
+    },
+    [enabled, startReview],
+  );
 
   useEffect(() => {
-    return subscribeReviewPoolChanged(() => {
-      needsSessionRefreshRef.current = true;
+    return subscribeReviewPoolChanged((reason) => {
+      if (reason !== 'join_due') {
+        invalidateReviewTabSummaryCache();
+      }
+      if (enabled && isScreenFocusedRef.current) {
+        scheduleSessionRefresh(true);
+      } else {
+        needsSessionRefreshRef.current = true;
+      }
     });
-  }, []);
+  }, [enabled, scheduleSessionRefresh]);
 
   useFocusEffect(
     useCallback(() => {
@@ -82,18 +127,22 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
         return;
       }
       setIsScreenFocused(true);
-      const cancelDefer = deferAfterFirstPaint(() => {
-        if (needsSessionRefreshRef.current) {
-          startReview();
-          return;
-        }
-        refreshSummary();
-      });
+      isScreenFocusedRef.current = true;
+
+      if (sessionReadyRef.current && !needsSessionRefreshRef.current) {
+        return () => {
+          setIsScreenFocused(false);
+          isScreenFocusedRef.current = false;
+        };
+      }
+
+      const cancelRefresh = scheduleSessionRefresh(needsSessionRefreshRef.current);
       return () => {
-        cancelDefer();
+        cancelRefresh();
         setIsScreenFocused(false);
+        isScreenFocusedRef.current = false;
       };
-    }, [enabled, refreshSummary, startReview]),
+    }, [enabled, scheduleSessionRefresh]),
   );
 
   const currentKnowledgeId = session?.currentItem?.knowledgeId ?? null;
@@ -220,6 +269,8 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
         setSession(nextSession);
         setRevealed(false);
         refreshSummary();
+        needsSessionRefreshRef.current = !sessionHasLoadableCurrentItem(nextSession);
+        sessionReadyRef.current = sessionHasLoadableCurrentItem(nextSession);
         if (!nextSession.currentItem) {
           const { passed, failed } = roundStatsRef.current;
           if (passed + failed > 0) {
@@ -249,10 +300,12 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
         sessionId: session.sessionId,
         knowledgeId: currentKnowledgeId,
       });
-      const nextSession = resumeOrStartReviewSession();
+      const nextSession = resumeOrStartReviewSession(undefined, { forceRebuild: true });
       setSession(nextSession);
       setRevealed(false);
       refreshSummary();
+      needsSessionRefreshRef.current = !sessionHasLoadableCurrentItem(nextSession);
+      sessionReadyRef.current = sessionHasLoadableCurrentItem(nextSession);
     } catch (error) {
       setMessage(error instanceof Error ? error.message : '跳过失败');
     } finally {
@@ -261,18 +314,19 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
   }, [currentKnowledgeId, refreshSummary, session?.sessionId]);
 
   useEffect(() => {
-    if (!enabled || !isScreenFocused || isSubmitting) {
+    if (!enabled || !isScreenFocused || isSubmitting || isStartingReview) {
       return;
     }
-    if (session?.currentItem && !reviewContext) {
+    if (session?.currentItem && !reviewContext?.cardDetail) {
       handleSkipUnloaded();
     }
   }, [
     enabled,
     handleSkipUnloaded,
     isScreenFocused,
+    isStartingReview,
     isSubmitting,
-    reviewContext,
+    reviewContext?.cardDetail,
     session?.currentItem,
   ]);
 
@@ -284,11 +338,15 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
         value: String(clamped),
         updatedAt: new Date().toISOString(),
       });
+      invalidateReviewTabSummaryCache();
       refreshSummary();
-      startReview();
+      startReview({ forceRebuild: true });
     },
     [refreshSummary, startReview],
   );
+
+  const isSessionBootstrapping =
+    enabled && isScreenFocused && isStartingReview && summary.reviewableDueTotal > 0;
 
   return {
     session,
@@ -296,6 +354,7 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
     completedRound,
     revealed,
     isSubmitting,
+    isSessionBootstrapping,
     message,
     reviewContext,
     outcomeIntervalLabels,

@@ -118,29 +118,42 @@ export function useStudyBrowseDecisions({
     if (!currentKnowledgeId) {
       return;
     }
-    setIsSubmitting(true);
     setMessage(null);
+    const joinPayload = {
+      knowledgeId: currentKnowledgeId,
+      catalogPackId: packId,
+      ...buildBrowseDecisionPayload({
+        browseCards,
+        currentIndex,
+        cardDetail,
+        headword,
+        activitySource,
+        inspectActivityLocalDate,
+      }),
+    };
+
+    if (inspectMode) {
+      setIsSubmitting(true);
+      setMessage(null);
+      try {
+        joinReviewPool(joinPayload);
+        setRevealed(false);
+        finishInspectAction();
+      } catch (error) {
+        setMessage(error instanceof Error ? error.message : '加入复习失败');
+      } finally {
+        setIsSubmitting(false);
+      }
+      return;
+    }
+
+    setIsSubmitting(true);
     try {
-      const result = joinReviewPool({
-        knowledgeId: currentKnowledgeId,
-        catalogPackId: packId,
-        ...buildBrowseDecisionPayload({
-          browseCards,
-          currentIndex,
-          cardDetail,
-          headword,
-          activitySource,
-          inspectActivityLocalDate,
-        }),
-      });
+      const result = joinReviewPool(joinPayload);
       if (result.status === 'created') {
         setInReviewPool(true);
       }
-      if (!inspectMode) {
-        advanceBrowse();
-      } else {
-        finishInspectAction();
-      }
+      advanceBrowse();
     } catch (error) {
       setMessage(error instanceof Error ? error.message : '加入复习失败');
     } finally {
@@ -161,6 +174,7 @@ export function useStudyBrowseDecisions({
     setInReviewPool,
     setIsSubmitting,
     setMessage,
+    setRevealed,
   ]);
 
   const handleConfirmUpdateReview = useCallback(() => {
@@ -209,6 +223,7 @@ export function useStudyBrowseDecisions({
     setInReviewPool,
     setIsSubmitting,
     setMessage,
+    setRevealed,
     setUpdateReviewVisible,
   ]);
 
@@ -231,6 +246,7 @@ export function useStudyBrowseDecisions({
     if (!inspectMode) {
       advanceBrowse();
     } else {
+      setRevealed(false);
       finishInspectAction();
     }
   }, [
@@ -245,6 +261,7 @@ export function useStudyBrowseDecisions({
     inspectActivityLocalDate,
     inspectMode,
     packId,
+    setRevealed,
   ]);
 
   return {

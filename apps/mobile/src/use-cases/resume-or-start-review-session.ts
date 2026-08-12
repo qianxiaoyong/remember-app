@@ -18,12 +18,22 @@ import { findActiveReviewSession } from './find-active-review-session';
 import { resolveReviewCardContext } from './resolve-review-card-context';
 import { REVIEW_POOL_SESSION_PACK_ID } from './review-session-constants';
 
-export function resumeOrStartReviewSession(now: Date = new Date()): ActiveStudySession {
+export function resumeOrStartReviewSession(
+  now: Date = new Date(),
+  options?: { forceRebuild?: boolean },
+): ActiveStudySession {
   const timeZone = getDeviceTimeZone();
   const activeSession = findActiveReviewSession();
   if (activeSession) {
     const pendingItems = listPendingQueueItemsForSession(activeSession.sessionId);
-    if (pendingItems.length > 0) {
+    const firstPending = pendingItems[0];
+    const canRestorePending =
+      !options?.forceRebuild &&
+      pendingItems.length > 0 &&
+      firstPending !== undefined &&
+      resolveReviewCardContext(firstPending.knowledgeId) !== null;
+
+    if (canRestorePending) {
       const allItems = listQueueItemsForSession(activeSession.sessionId);
       return buildActiveStudySession(
         activeSession.sessionId,
@@ -40,10 +50,13 @@ export function resumeOrStartReviewSession(now: Date = new Date()): ActiveStudyS
   }
 
   const dueItems = listDueReviewPoolItems(now, timeZone);
+  const loadableDueItems = dueItems.filter(
+    (item) => resolveReviewCardContext(item.knowledgeId) !== null,
+  );
   const localDate = formatLocalReviewDate(now, timeZone);
   const stats = getReviewDailyStats(localDate);
   const plan = buildReviewSessionPlan({
-    dueItems: dueItems.map((item) => ({
+    dueItems: loadableDueItems.map((item) => ({
       knowledgeId: item.knowledgeId,
       dueAt: item.dueAt,
     })),
@@ -53,9 +66,7 @@ export function resumeOrStartReviewSession(now: Date = new Date()): ActiveStudyS
     timeZone,
   });
 
-  const loadableKnowledgeIds = plan.sessionKnowledgeIds.filter(
-    (knowledgeId) => resolveReviewCardContext(knowledgeId) !== null,
-  );
+  const loadableKnowledgeIds = plan.sessionKnowledgeIds;
 
   if (loadableKnowledgeIds.length === 0) {
     return buildActiveStudySession('empty', REVIEW_POOL_SESSION_PACK_ID, []);

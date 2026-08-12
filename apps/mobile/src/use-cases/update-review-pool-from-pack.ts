@@ -9,7 +9,7 @@ import { buildSyncOutboxPayload } from '../data/sync/build-sync-outbox-payload';
 import { openUserDatabase } from '../data/user-db/open-user-database';
 import { getDeviceTimeZone } from '../lib/get-device-time-zone';
 import { markReviewPoolChanged } from '../shell/review-pool-changed-signal';
-import { buildReviewPoolLearningRow } from './join-review-pool';
+import { buildReviewPoolLearningRow } from './build-review-pool-learning-row';
 import { writeJoinReviewActivityEvent } from './write-activity-event-from-review';
 
 export function updateReviewPoolFromPack(input: {

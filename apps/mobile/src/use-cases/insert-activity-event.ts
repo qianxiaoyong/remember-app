@@ -10,6 +10,7 @@ import {
   insertLearningActivityEvent,
 } from '../data/repositories/learning-activity-event-repository';
 import { openUserDatabase } from '../data/user-db/open-user-database';
+import { markLearningCalendarNeedsRefresh } from '../shell/learning-calendar-refresh-signal';
 
 export interface InsertActivityEventInput<T extends LearningActivityEventTypeValue> {
   localDate: string;
@@ -50,6 +51,7 @@ export function insertActivityEvent<T extends LearningActivityEventTypeValue>(
       displayLabel: input.displayLabel ?? null,
       payload: JSON.stringify(input.payload ?? {}),
     });
+    markLearningCalendarNeedsRefresh();
   } catch (error) {
     console.warn('[insertActivityEvent] failed:', error);
   }
@@ -88,6 +90,7 @@ export function insertActivityEventInTransaction<T extends LearningActivityEvent
       },
       db,
     );
+    markLearningCalendarNeedsRefresh();
   } catch (error) {
     console.warn('[insertActivityEventInTransaction] failed:', error);
   }
