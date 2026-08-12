@@ -7,6 +7,12 @@ import { getReviewDailyStats } from '../data/repositories/review-daily-stats-rep
 import { getDailyReviewLimit } from '../data/repositories/user-preferences-repository';
 import { getDeviceTimeZone } from '../lib/get-device-time-zone';
 import { getReviewPoolVersion } from '../shell/review-pool-changed-signal';
+import {
+  bumpCachedReviewableDueTotal,
+  invalidateReviewTabSummaryCache,
+  readReviewTabSummaryCache,
+  writeReviewTabSummaryCache,
+} from '../shell/review-tab-summary-cache';
 import { countReviewableDueReviewPoolItems } from './count-reviewable-pool-items';
 
 export interface ReviewTabSummary {
@@ -20,28 +26,13 @@ export interface ReviewTabSummary {
   joinedPoolCountToday: number;
 }
 
-let summaryCache: ReviewTabSummary | null = null;
-let summaryCacheVersion = -1;
-
-export function invalidateReviewTabSummaryCache(): void {
-  summaryCache = null;
-  summaryCacheVersion = -1;
-}
-
-export function bumpCachedReviewableDueTotal(delta: number): void {
-  if (!summaryCache || delta === 0) {
-    return;
-  }
-  summaryCache = {
-    ...summaryCache,
-    reviewableDueTotal: Math.max(0, summaryCache.reviewableDueTotal + delta),
-  };
-}
+export { bumpCachedReviewableDueTotal, invalidateReviewTabSummaryCache };
 
 export function getReviewTabSummary(now: Date = new Date()): ReviewTabSummary {
   const version = getReviewPoolVersion();
-  if (summaryCache && summaryCacheVersion === version) {
-    return summaryCache;
+  const cached = readReviewTabSummaryCache(version);
+  if (cached) {
+    return cached;
   }
 
   const timeZone = getDeviceTimeZone();
@@ -54,7 +45,7 @@ export function getReviewTabSummary(now: Date = new Date()): ReviewTabSummary {
   const todayReviewCompleted = stats.reviewCompletedCount;
   const remainingQuota = Math.max(dailyReviewLimit - todayReviewCompleted, 0);
 
-  summaryCache = {
+  const summary: ReviewTabSummary = {
     dueTotal,
     reviewableDueTotal,
     dailyReviewLimit,
@@ -62,6 +53,6 @@ export function getReviewTabSummary(now: Date = new Date()): ReviewTabSummary {
     remainingQuota,
     joinedPoolCountToday: stats.joinedPoolCount,
   };
-  summaryCacheVersion = version;
-  return summaryCache;
+  writeReviewTabSummaryCache(summary, version);
+  return summary;
 }

@@ -1,7 +1,7 @@
 import {
   bumpCachedReviewableDueTotal,
   invalidateReviewTabSummaryCache,
-} from '../use-cases/get-review-tab-summary';
+} from './review-tab-summary-cache';
 
 export type ReviewPoolChangeReason = 'refresh' | 'join_due';
 

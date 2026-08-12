@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('../use-cases/get-review-tab-summary', () => ({
+vi.mock('./review-tab-summary-cache', () => ({
   bumpCachedReviewableDueTotal: vi.fn(),
   invalidateReviewTabSummaryCache: vi.fn(),
 }));
@@ -8,7 +8,7 @@ vi.mock('../use-cases/get-review-tab-summary', () => ({
 import {
   bumpCachedReviewableDueTotal,
   invalidateReviewTabSummaryCache,
-} from '../use-cases/get-review-tab-summary';
+} from './review-tab-summary-cache';
 import {
   markReviewPoolChanged,
   resetReviewPoolChangedSignalForTests,
