@@ -41,7 +41,11 @@ export function ContactBottomPanel(props: ContactBottomPanelProps): ReactElement
 
   return (
     <View collapsable={false} style={styles.host}>
-      <Pressable accessibilityRole="button" onPress={props.onClose} style={styles.backdrop}>
+      <Pressable
+        accessibilityRole="button"
+        onPress={props.onClose}
+        style={[StyleSheet.absoluteFillObject, styles.backdrop]}
+      >
         <View style={styles.backdropFill} />
       </Pressable>
 
@@ -85,15 +89,15 @@ export function ContactBottomPanel(props: ContactBottomPanelProps): ReactElement
 
 const styles = StyleSheet.create({
   host: {
-    ...StyleSheet.absoluteFillObject,
+    flex: 1,
+    justifyContent: 'flex-end',
   },
   backdrop: {
-    ...StyleSheet.absoluteFillObject,
     zIndex: 1,
-    ...(Platform.OS === 'android' ? { elevation: 24 } : null),
+    ...(Platform.OS === 'android' ? { elevation: 24 } : {}),
   },
   backdropFill: {
-    ...StyleSheet.absoluteFillObject,
+    flex: 1,
     backgroundColor: colors.overlay,
   },
   panel: {
@@ -109,7 +113,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
     zIndex: 2,
-    ...(Platform.OS === 'android' ? { elevation: 25 } : null),
+    ...(Platform.OS === 'android' ? { elevation: 25 } : {}),
   },
   titleRow: {
     alignItems: 'center',

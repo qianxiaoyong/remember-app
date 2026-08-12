@@ -18,37 +18,37 @@ export function buildMonthGridCells(year: number, month: number): MonthGridCell[
 
   for (let index = leadingPads - 1; index >= 0; index -= 1) {
     const day = daysInPrevMonth - index;
-    cells.push(createMonthGridCell(prevYear, prevMonth, day, false));
+    cells.push(createMonthGridCell({ year: prevYear, month: prevMonth, day, isCurrentMonth: false }));
   }
 
   for (let day = 1; day <= daysInMonth; day += 1) {
-    cells.push(createMonthGridCell(year, month, day, true));
+    cells.push(createMonthGridCell({ year, month, day, isCurrentMonth: true }));
   }
 
-  let nextMonth = month === 12 ? 1 : month + 1;
-  let nextYear = month === 12 ? year + 1 : year;
   let nextDay = 1;
+  const nextMonth = month === 12 ? 1 : month + 1;
+  const nextYear = month === 12 ? year + 1 : year;
   while (cells.length % 7 !== 0) {
-    cells.push(createMonthGridCell(nextYear, nextMonth, nextDay, false));
+    cells.push(createMonthGridCell({ year: nextYear, month: nextMonth, day: nextDay, isCurrentMonth: false }));
     nextDay += 1;
   }
 
   return cells;
 }
 
-function createMonthGridCell(
-  year: number,
-  month: number,
-  day: number,
-  isCurrentMonth: boolean,
-): MonthGridCell {
-  const monthStr = String(month).padStart(2, '0');
-  const dayStr = String(day).padStart(2, '0');
-  const localDate = `${String(year)}-${monthStr}-${dayStr}`;
+function createMonthGridCell(input: {
+  year: number;
+  month: number;
+  day: number;
+  isCurrentMonth: boolean;
+}): MonthGridCell {
+  const monthStr = String(input.month).padStart(2, '0');
+  const dayStr = String(input.day).padStart(2, '0');
+  const localDate = `${String(input.year)}-${monthStr}-${dayStr}`;
   return {
     key: localDate,
     localDate,
-    day,
-    isCurrentMonth,
+    day: input.day,
+    isCurrentMonth: input.isCurrentMonth,
   };
 }
