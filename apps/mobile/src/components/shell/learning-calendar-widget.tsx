@@ -58,7 +58,9 @@ export function LearningCalendarWidget(): ReactElement {
   useFocusEffect(
     useCallback(() => {
       flushLearningCalendarNeedsRefresh();
-      return loadSummary();
+      if (summaryRef.current === null) {
+        return loadSummary();
+      }
     }, [loadSummary]),
   );
 
