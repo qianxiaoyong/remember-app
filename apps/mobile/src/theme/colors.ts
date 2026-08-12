@@ -24,6 +24,8 @@ export const colors = {
   studyRatingForgot: '#E86B5C',
   studyRatingHard: '#F0A04B',
   studyRatingGood: '#5CB88A',
+  calendarToday: '#FFD000',
+  calendarOtherMonth: '#C8CAD4',
 } as const;
 
 export const packCoverPalette = ['#8E91C7', '#7FA889', '#C9937A', '#7A9EC9'] as const;

@@ -4,10 +4,10 @@ import { spacing } from '../theme/spacing';
 
 describe('resolveShellTabBarInset', () => {
   it('includes tab bar height and minimum bottom padding', () => {
-    expect(resolveShellTabBarInset(0)).toBe(spacing.sm + spacing.tabBarHeight + spacing.sm);
+    expect(resolveShellTabBarInset(0)).toBe(spacing.xs + spacing.tabBarHeight + spacing.sm);
   });
 
   it('uses larger safe area inset when present', () => {
-    expect(resolveShellTabBarInset(34)).toBe(spacing.sm + spacing.tabBarHeight + 34);
+    expect(resolveShellTabBarInset(34)).toBe(spacing.xs + spacing.tabBarHeight + 34);
   });
 });

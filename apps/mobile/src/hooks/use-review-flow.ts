@@ -40,9 +40,17 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
   const [lexiconSelectedSurfaceForm, setLexiconSelectedSurfaceForm] = useState<string | null>(null);
   const [audioMessage, setAudioMessage] = useState<string | null>(null);
   const needsSessionRefreshRef = useRef(true);
+  const roundStatsRef = useRef({ passed: 0, failed: 0 });
+  const [completedRound, setCompletedRound] = useState<{ passed: number; failed: number } | null>(
+    null,
+  );
 
   const refreshSummary = useCallback(() => {
     setSummary(getReviewTabSummary());
+  }, []);
+
+  const clearCompletedRound = useCallback(() => {
+    setCompletedRound(null);
   }, []);
 
   const startReview = useCallback(() => {
@@ -50,6 +58,8 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
     setRevealed(false);
     setLexiconVisible(false);
     setLexiconSelectedSurfaceForm(null);
+    roundStatsRef.current = { passed: 0, failed: 0 };
+    setCompletedRound(null);
     try {
       const nextSession = resumeOrStartReviewSession();
       setSession(nextSession);
@@ -201,10 +211,22 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
         });
         markReviewPoolChanged();
         needsSessionRefreshRef.current = true;
+        if (outcome === 'passed') {
+          roundStatsRef.current.passed += 1;
+        } else {
+          roundStatsRef.current.failed += 1;
+        }
         const nextSession = resumeOrStartReviewSession();
         setSession(nextSession);
         setRevealed(false);
         refreshSummary();
+        if (!nextSession.currentItem) {
+          const { passed, failed } = roundStatsRef.current;
+          if (passed + failed > 0) {
+            setCompletedRound({ passed, failed });
+            roundStatsRef.current = { passed: 0, failed: 0 };
+          }
+        }
       } catch (error) {
         setMessage(error instanceof Error ? error.message : '保存复习结果失败');
       } finally {
@@ -238,6 +260,22 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
     }
   }, [currentKnowledgeId, refreshSummary, session?.sessionId]);
 
+  useEffect(() => {
+    if (!enabled || !isScreenFocused || isSubmitting) {
+      return;
+    }
+    if (session?.currentItem && !reviewContext) {
+      handleSkipUnloaded();
+    }
+  }, [
+    enabled,
+    handleSkipUnloaded,
+    isScreenFocused,
+    isSubmitting,
+    reviewContext,
+    session?.currentItem,
+  ]);
+
   const setDailyReviewLimit = useCallback(
     (value: number) => {
       const clamped = Math.min(Math.max(value, 1), 999);
@@ -255,6 +293,7 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
   return {
     session,
     summary,
+    completedRound,
     revealed,
     isSubmitting,
     message,
@@ -276,6 +315,7 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
     setDailyReviewLimit,
     refreshSummary,
     startReview,
+    clearCompletedRound,
     openLexicon,
     handleToggleSave,
     handlePlayLexiconAudio,

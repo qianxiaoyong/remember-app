@@ -1,8 +1,9 @@
 import type { ReactElement } from 'react';
-import { StyleSheet, Text, View, type DimensionValue } from 'react-native';
-import { Pressable } from 'react-native';
+import { Pressable, StyleSheet, Text, View, type DimensionValue } from 'react-native';
 import type { HeatLevel } from '@remember/domain';
-import { heatLevelColors } from './calendar-theme';
+import { AppIcon } from '../ui/app-icon';
+import { heatLevelColors, weekdayLabels } from './calendar-theme';
+import { buildMonthGridCells } from './learning-calendar-month-grid';
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
 
@@ -17,25 +18,27 @@ interface LearningCalendarMonthProps {
 }
 
 export function LearningCalendarMonth(props: LearningCalendarMonthProps): ReactElement {
-  const cells = buildMonthCells(props.year, props.month);
+  const cells = buildMonthGridCells(props.year, props.month);
   const today = formatTodayLocalDate();
+  const monthLabel = `${String(props.year)}.${String(props.month).padStart(2, '0')}`;
 
   return (
     <View style={styles.wrap}>
-      <View style={styles.header}>
-        <Pressable accessibilityRole="button" hitSlop={12} onPress={props.onPrevMonth}>
-          <Text style={styles.nav}>‹</Text>
-        </Pressable>
-        <Text style={styles.monthTitle}>
-          {props.year} 年 {props.month} 月
-        </Text>
-        <Pressable accessibilityRole="button" hitSlop={12} onPress={props.onNextMonth}>
-          <Text style={styles.nav}>›</Text>
-        </Pressable>
+      <View style={styles.titleRow}>
+        <Text style={styles.sectionTitle}>学习记录</Text>
+        <View style={styles.navGroup}>
+          <Pressable accessibilityRole="button" hitSlop={12} onPress={props.onPrevMonth}>
+            <AppIcon color={colors.textSecondary} name="chevron-back" size="sm" />
+          </Pressable>
+          <Text style={styles.monthNavLabel}>{monthLabel}</Text>
+          <Pressable accessibilityRole="button" hitSlop={12} onPress={props.onNextMonth}>
+            <AppIcon color={colors.textSecondary} name="chevron-forward" size="sm" />
+          </Pressable>
+        </View>
       </View>
 
       <View style={styles.weekdayHeader}>
-        {['日', '一', '二', '三', '四', '五', '六'].map((label) => (
+        {weekdayLabels.map((label) => (
           <Text key={label} style={styles.weekday}>
             {label}
           </Text>
@@ -44,10 +47,6 @@ export function LearningCalendarMonth(props: LearningCalendarMonthProps): ReactE
 
       <View style={styles.grid}>
         {cells.map((cell) => {
-          if (!cell.localDate) {
-            return <View key={cell.key} style={styles.cellEmpty} />;
-          }
-
           const heat = props.heatByDate.get(cell.localDate) ?? 0;
           const isSelected = cell.localDate === props.selectedDate;
           const isToday = cell.localDate === today;
@@ -57,20 +56,29 @@ export function LearningCalendarMonth(props: LearningCalendarMonthProps): ReactE
               key={cell.key}
               accessibilityRole="button"
               onPress={() => {
-                if (cell.localDate) {
-                  props.onSelectDate(cell.localDate);
-                }
+                props.onSelectDate(cell.localDate);
               }}
-              style={[styles.cell, isSelected ? styles.cellSelected : null]}
+              style={[
+                styles.cell,
+                isSelected && !isToday ? styles.cellSelected : null,
+                isToday ? styles.cellToday : null,
+              ]}
             >
-              <Text style={[styles.dayNumber, isSelected ? styles.dayNumberSelected : null]}>
-                {cell.day}
+              <Text
+                style={[
+                  styles.dayNumber,
+                  !cell.isCurrentMonth ? styles.dayNumberOtherMonth : null,
+                  isSelected && !isToday ? styles.dayNumberSelected : null,
+                  isToday ? styles.dayNumberToday : null,
+                ]}
+              >
+                {isToday ? '今' : String(cell.day)}
               </Text>
               <View
                 style={[
                   styles.heatDot,
                   { backgroundColor: heatLevelColors[heat] },
-                  isToday ? styles.heatDotToday : null,
+                  !cell.isCurrentMonth && heat === 0 ? styles.heatDotOtherMonth : null,
                 ]}
               />
             </Pressable>
@@ -89,57 +97,36 @@ function formatTodayLocalDate(): string {
   return `${String(y)}-${m}-${d}`;
 }
 
-function buildMonthCells(
-  year: number,
-  month: number,
-): { key: string; localDate: string | null; day: number | null }[] {
-  const firstDay = new Date(year, month - 1, 1);
-  const startWeekday = firstDay.getDay();
-  const daysInMonth = new Date(year, month, 0).getDate();
-  const cells: { key: string; localDate: string | null; day: number | null }[] = [];
-
-  for (let i = 0; i < startWeekday; i += 1) {
-    cells.push({ key: `pad-${String(i)}`, localDate: null, day: null });
-  }
-
-  for (let day = 1; day <= daysInMonth; day += 1) {
-    const m = String(month).padStart(2, '0');
-    const d = String(day).padStart(2, '0');
-    cells.push({
-      key: `${String(year)}-${m}-${d}`,
-      localDate: `${String(year)}-${m}-${d}`,
-      day,
-    });
-  }
-
-  return cells;
-}
-
 const styles = StyleSheet.create({
   wrap: {
     flexShrink: 0,
-    marginBottom: spacing.sm,
   },
-  header: {
+  titleRow: {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: spacing.sm,
+    marginBottom: spacing.xl,
   },
-  nav: {
-    color: colors.accent,
-    fontSize: 22,
-    fontWeight: '600',
-    paddingHorizontal: spacing.xs,
-  },
-  monthTitle: {
+  sectionTitle: {
     color: colors.textPrimary,
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '600',
+  },
+  navGroup: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: spacing.xs,
+  },
+  monthNavLabel: {
+    color: colors.textPrimary,
+    fontSize: 13,
+    fontWeight: '500',
+    minWidth: 72,
+    textAlign: 'center',
   },
   weekdayHeader: {
     flexDirection: 'row',
-    marginBottom: 2,
+    marginBottom: spacing.sm,
   },
   weekday: {
     color: colors.textMuted,
@@ -153,25 +140,32 @@ const styles = StyleSheet.create({
   },
   cell: {
     alignItems: 'center',
-    height: 36,
+    height: 40,
     justifyContent: 'center',
-    width: `${String(100 / 7)}%` as DimensionValue,
-  },
-  cellEmpty: {
-    height: 36,
     width: `${String(100 / 7)}%` as DimensionValue,
   },
   cellSelected: {
     backgroundColor: colors.accentSoft,
-    borderRadius: 10,
+    borderRadius: 8,
+  },
+  cellToday: {
+    backgroundColor: colors.calendarToday,
+    borderRadius: 8,
   },
   dayNumber: {
     color: colors.textPrimary,
     fontSize: 14,
     fontWeight: '500',
   },
+  dayNumberOtherMonth: {
+    color: colors.calendarOtherMonth,
+  },
   dayNumberSelected: {
     color: colors.accent,
+    fontWeight: '700',
+  },
+  dayNumberToday: {
+    color: colors.textPrimary,
     fontWeight: '700',
   },
   heatDot: {
@@ -180,8 +174,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
     width: 6,
   },
-  heatDotToday: {
-    borderColor: colors.accent,
-    borderWidth: 1,
+  heatDotOtherMonth: {
+    backgroundColor: colors.statTileBackground,
   },
 });

@@ -106,8 +106,8 @@ function buildHeatGrid(input: {
   );
 
   for (let offset = 0; offset < HEAT_GRID_CELL_COUNT; offset += 1) {
-    const col = HEAT_GRID_WEEKS - 1 - (offset % HEAT_GRID_WEEKS);
-    const row = HEAT_GRID_DAYS_PER_WEEK - 1 - Math.floor(offset / HEAT_GRID_WEEKS);
+    const col = HEAT_GRID_WEEKS - 1 - Math.floor(offset / HEAT_GRID_DAYS_PER_WEEK);
+    const row = HEAT_GRID_DAYS_PER_WEEK - 1 - (offset % HEAT_GRID_DAYS_PER_WEEK);
     const cellDate = addLocalReviewDays(monthEnd, -offset, input.timeZone);
     const localDate = formatLocalReviewDate(cellDate, input.timeZone);
     const isInRange = localDate >= input.rangeStartDate && localDate <= today;

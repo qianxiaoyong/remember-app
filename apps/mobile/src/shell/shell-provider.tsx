@@ -8,15 +8,19 @@ interface ShellActions {
   closeDrawer: () => void;
   /** 仅关闭抽屉动画，保留返回意图（从抽屉进入子页时）。 */
   dismissDrawer: () => void;
+  openContactPanel: () => void;
+  closeContactPanel: () => void;
 }
 
 const ShellActionsContext = createContext<ShellActions | null>(null);
 const DrawerOpenContext = createContext(false);
+const ContactPanelOpenContext = createContext(false);
 const TabBarVisibleContext = createContext(true);
 const SetTabBarVisibleContext = createContext<((visible: boolean) => void) | null>(null);
 
 export function ShellProvider(props: { children: ReactNode }): ReactElement {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isContactPanelOpen, setIsContactPanelOpen] = useState(false);
   const [tabBarVisible, setTabBarVisible] = useState(true);
   const openDrawer = useCallback(() => {
     setIsDrawerOpen(true);
@@ -28,9 +32,15 @@ export function ShellProvider(props: { children: ReactNode }): ReactElement {
   const dismissDrawer = useCallback(() => {
     setIsDrawerOpen(false);
   }, []);
+  const openContactPanel = useCallback(() => {
+    setIsContactPanelOpen(true);
+  }, []);
+  const closeContactPanel = useCallback(() => {
+    setIsContactPanelOpen(false);
+  }, []);
   const actions = useMemo(
-    () => ({ closeDrawer, dismissDrawer, openDrawer }),
-    [closeDrawer, dismissDrawer, openDrawer],
+    () => ({ closeContactPanel, closeDrawer, dismissDrawer, openContactPanel, openDrawer }),
+    [closeContactPanel, closeDrawer, dismissDrawer, openContactPanel, openDrawer],
   );
 
   return (
@@ -38,7 +48,9 @@ export function ShellProvider(props: { children: ReactNode }): ReactElement {
       <SetTabBarVisibleContext.Provider value={setTabBarVisible}>
         <TabBarVisibleContext.Provider value={tabBarVisible}>
           <DrawerOpenContext.Provider value={isDrawerOpen}>
-            {props.children}
+            <ContactPanelOpenContext.Provider value={isContactPanelOpen}>
+              {props.children}
+            </ContactPanelOpenContext.Provider>
           </DrawerOpenContext.Provider>
         </TabBarVisibleContext.Provider>
       </SetTabBarVisibleContext.Provider>
@@ -56,6 +68,10 @@ export function useShellActions(): ShellActions {
 
 export function useDrawerOpen(): boolean {
   return useContext(DrawerOpenContext);
+}
+
+export function useContactPanelOpen(): boolean {
+  return useContext(ContactPanelOpenContext);
 }
 
 export function useTabBarVisible(): boolean {

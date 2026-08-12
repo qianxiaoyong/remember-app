@@ -1,6 +1,7 @@
 import type { ReactElement } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Tabs, usePathname, useRouter } from 'expo-router';
+import { ShellContactOverlayHost } from '../../src/components/shell/shell-contact-overlay';
 import { ShellTabBar } from '../../src/components/shell/shell-tab-bar';
 import {
   navigateShellTab,
@@ -54,19 +55,22 @@ function ShellTabBarHost(): ReactElement | null {
 function ShellLayoutInner(): ReactElement {
   return (
     <View style={styles.root}>
-      <Tabs
-        screenOptions={{
-          animation: 'none',
-          headerShown: false,
-          lazy: true,
-          sceneStyle: {
-            backgroundColor: colors.background,
-          },
-          tabBarStyle: {
-            display: 'none',
-          },
-        }}
-      />
+      <View style={styles.sceneHost}>
+        <Tabs
+          screenOptions={{
+            animation: 'none',
+            headerShown: false,
+            lazy: true,
+            sceneStyle: {
+              backgroundColor: colors.background,
+            },
+            tabBarStyle: {
+              display: 'none',
+            },
+          }}
+        />
+        <ShellContactOverlayHost />
+      </View>
       <ShellTabBarHost />
     </View>
   );
@@ -76,5 +80,9 @@ const styles = StyleSheet.create({
   root: {
     backgroundColor: colors.background,
     flex: 1,
+  },
+  sceneHost: {
+    flex: 1,
+    position: 'relative',
   },
 });
