@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
     zIndex: 50,
-    ...(Platform.OS === 'android' ? { elevation: 50 } : null),
+    ...(Platform.OS === 'android' ? { elevation: 50 } : {}),
   },
   bar: {
     flexDirection: 'row',

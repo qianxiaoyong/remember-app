@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
 import { useEffect } from 'react';
-import { BackHandler, Platform, StyleSheet, View } from 'react-native';
+import { BackHandler, Platform, StyleSheet, View, type ViewStyle } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { resolveShellTabBarInset } from '../../shell/shell-tab-bar-inset';
 import { useContactPanelOpen, useShellActions } from '../../shell/shell-provider';
@@ -31,16 +31,13 @@ export function ShellContactOverlayHost(): ReactElement | null {
     return null;
   }
 
+  const hostStyle: ViewStyle[] = [styles.host, { bottom: tabBarInset }];
+  if (Platform.OS === 'android') {
+    hostStyle.push(styles.hostAndroid);
+  }
+
   return (
-    <View
-      collapsable={false}
-      pointerEvents="box-none"
-      style={[
-        styles.host,
-        { bottom: tabBarInset },
-        Platform.OS === 'android' ? styles.hostAndroid : null,
-      ]}
-    >
+    <View collapsable={false} pointerEvents="box-none" style={hostStyle}>
       <ContactBottomPanel onClose={closeContactPanel} visible />
     </View>
   );
@@ -48,7 +45,11 @@ export function ShellContactOverlayHost(): ReactElement | null {
 
 const styles = StyleSheet.create({
   host: {
-    ...StyleSheet.absoluteFillObject,
+    bottom: 0,
+    left: 0,
+    position: 'absolute',
+    right: 0,
+    top: 0,
     zIndex: 20,
   },
   hostAndroid: {
