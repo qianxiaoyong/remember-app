@@ -8,11 +8,14 @@ interface PrimaryButtonProps {
   onPress: () => void;
   disabled?: boolean;
   loading?: boolean;
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'surface';
+  borderRadius?: number;
 }
 
 export function PrimaryButton(props: PrimaryButtonProps): ReactElement {
   const variant = props.variant ?? 'primary';
+  const borderRadius = props.borderRadius ?? 12;
+
   return (
     <Pressable
       accessibilityRole="button"
@@ -20,14 +23,29 @@ export function PrimaryButton(props: PrimaryButtonProps): ReactElement {
       onPress={props.onPress}
       style={[
         styles.button,
-        variant === 'secondary' ? styles.secondary : styles.primary,
+        { borderRadius },
+        variant === 'secondary'
+          ? styles.secondary
+          : variant === 'surface'
+            ? styles.surface
+            : styles.primary,
         props.disabled || props.loading ? styles.disabled : null,
       ]}
     >
       {props.loading ? (
-        <ActivityIndicator color={variant === 'secondary' ? colors.textPrimary : colors.surface} />
+        <ActivityIndicator
+          color={
+            variant === 'secondary' || variant === 'surface' ? colors.textPrimary : colors.surface
+          }
+        />
       ) : (
-        <Text style={[styles.label, variant === 'secondary' ? styles.secondaryLabel : null]}>
+        <Text
+          style={[
+            styles.label,
+            variant === 'secondary' ? styles.secondaryLabel : null,
+            variant === 'surface' ? styles.surfaceLabel : null,
+          ]}
+        >
           {props.label}
         </Text>
       )}
@@ -38,7 +56,6 @@ export function PrimaryButton(props: PrimaryButtonProps): ReactElement {
 const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
-    borderRadius: 12,
     minHeight: spacing.touchTarget,
     justifyContent: 'center',
     paddingHorizontal: spacing.lg,
@@ -51,6 +68,9 @@ const styles = StyleSheet.create({
     borderColor: colors.border,
     borderWidth: 1,
   },
+  surface: {
+    backgroundColor: colors.surface,
+  },
   disabled: {
     opacity: 0.6,
   },
@@ -61,5 +81,8 @@ const styles = StyleSheet.create({
   },
   secondaryLabel: {
     color: colors.textPrimary,
+  },
+  surfaceLabel: {
+    color: colors.accent,
   },
 });

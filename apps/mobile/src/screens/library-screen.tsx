@@ -1,20 +1,24 @@
 import type { ReactElement } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect, useRouter } from 'expo-router';
-import { InstalledPackRow } from '../components/library/installed-pack-row';
-import { LibraryOverviewCard } from '../components/library/library-overview-card';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { LibraryHomeWhiteCard } from '../components/library/library-home-white-card';
+import { LibraryInstalledPackShelf } from '../components/library/library-installed-pack-shelf';
 import { LibrarySectionHeader } from '../components/library/library-section-header';
 import { AppHeader } from '../components/shell/app-header';
 import { ScreenScaffold } from '../components/shell/screen-scaffold';
 import { PrimaryButton } from '../components/ui/primary-button';
 import { useShellActions } from '../shell/shell-provider';
 import { useRestoreDrawerOnReturn } from '../hooks/use-restore-drawer-on-return';
+import { useShellTabHardwareBackHandler } from '../hooks/use-shell-tab-hardware-back-handler';
 import { consumeLibraryNeedsRefresh } from '../shell/library-refresh-signal';
 import {
   readCatalogDiskCache,
   subscribeCatalogCacheUpdates,
 } from '../data/catalog/catalog-cache-store';
+import { touchInstalledPackLastOpened } from '../data/repositories/touch-installed-pack-last-opened';
 import { navigateShellTab } from '../shell/shell-tab-transition';
 import {
   loadLibraryScreenData,
@@ -28,16 +32,25 @@ import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 
 const EMPTY_OVERVIEW: LibraryOverview = createEmptyLibraryOverview();
+const CONTENT_HORIZONTAL_PADDING = spacing.lg;
+const GRADIENT_FALLBACK_HEIGHT = 320;
+
+function resolveDefaultActivePackId(packs: InstalledPackSummary[]): string | null {
+  return packs[0]?.packId ?? null;
+}
 
 export function LibraryScreen(): ReactElement {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   const { openDrawer } = useShellActions();
   useRestoreDrawerOnReturn();
+  useShellTabHardwareBackHandler();
   const [refreshKey, setRefreshKey] = useState(0);
-  const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLibraryLoading, setIsLibraryLoading] = useState(true);
   const [overview, setOverview] = useState<LibraryOverview>(EMPTY_OVERVIEW);
   const [installedPacks, setInstalledPacks] = useState<InstalledPackSummary[]>([]);
+  const [activePackId, setActivePackId] = useState<string | null>(null);
+  const [gradientHeight, setGradientHeight] = useState(GRADIENT_FALLBACK_HEIGHT);
 
   const bumpRefresh = useCallback(() => {
     setRefreshKey((value) => value + 1);
@@ -52,6 +65,9 @@ export function LibraryScreen(): ReactElement {
       if (consumeLibraryNeedsRefresh()) {
         bumpRefresh();
       }
+      void readCatalogDiskCache().then(() => {
+        void warmCatalogCacheFromNetwork().then(bumpRefresh);
+      });
     }, [bumpRefresh]),
   );
 
@@ -62,6 +78,15 @@ export function LibraryScreen(): ReactElement {
       const data = loadLibraryScreenData();
       setOverview(data.overview);
       setInstalledPacks(data.installedPacks);
+      setActivePackId((current) => {
+        if (data.installedPacks.length === 0) {
+          return null;
+        }
+        if (current && data.installedPacks.some((pack) => pack.packId === current)) {
+          return current;
+        }
+        return resolveDefaultActivePackId(data.installedPacks);
+      });
       setIsLibraryLoading(false);
       hasLoadedOnceRef.current = true;
     };
@@ -73,97 +98,156 @@ export function LibraryScreen(): ReactElement {
     applyData();
   }, [refreshKey]);
 
-  const handleRefresh = useCallback(async () => {
-    setIsRefreshing(true);
-    try {
-      await readCatalogDiskCache();
-      await warmCatalogCacheFromNetwork();
-      bumpRefresh();
-    } finally {
-      setIsRefreshing(false);
-    }
-  }, [bumpRefresh]);
+  const activePack =
+    installedPacks.find((pack) => pack.packId === activePackId) ?? installedPacks[0] ?? null;
+
+  const openStudy = useCallback(
+    (pack: InstalledPackSummary) => {
+      touchInstalledPackLastOpened(pack.packId);
+      setActivePackId(pack.packId);
+      router.push(`/study?packId=${pack.packId}`);
+    },
+    [router],
+  );
+
+  const openPackDetail = useCallback(
+    (pack: InstalledPackSummary) => {
+      router.push(`/pack/${pack.packId}`);
+    },
+    [router],
+  );
+
+  const handleWhiteCardLayout = useCallback(
+    (offsetY: number, height: number) => {
+      setGradientHeight(insets.top + offsetY + height * (2 / 3));
+    },
+    [insets.top],
+  );
 
   return (
-    <ScreenScaffold withCapsulePadding>
-      <AppHeader
-        onMenuPress={openDrawer}
-        onSearchPress={() => {
-          router.push('/library-search');
-        }}
-        variant="shell"
-      />
-      <ScrollView
-        contentContainerStyle={styles.content}
-        refreshControl={
-          <RefreshControl
-            colors={[colors.accent]}
-            onRefresh={() => {
-              void handleRefresh();
-            }}
-            refreshing={isRefreshing}
-            tintColor={colors.accent}
+    <ScreenScaffold safeAreaEdges={['left', 'right']} withCapsulePadding>
+      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+        <View style={styles.heroSection}>
+          <LinearGradient
+            colors={[colors.libraryGradientStart, colors.libraryGradientEnd]}
+            end={{ x: 0.5, y: 1 }}
+            pointerEvents="none"
+            start={{ x: 0.5, y: 0 }}
+            style={[styles.gradientBackground, { height: gradientHeight }]}
           />
-        }
-      >
-        <LibraryOverviewCard overview={overview} />
 
-        {isLibraryLoading ? (
-          <View style={styles.emptyBlock}>
-            <Text style={styles.emptyText}>加载中…</Text>
-          </View>
-        ) : installedPacks.length === 0 ? (
-          <View style={styles.emptyBlock}>
-            <Text style={styles.emptyText}>还没有安装知识库</Text>
-            <PrimaryButton
-              label="去资料看看"
-              onPress={() => {
-                navigateShellTab(router, 'market');
+          <View style={[styles.heroContent, { paddingTop: insets.top }]}>
+            <AppHeader
+              onMenuPress={openDrawer}
+              onSearchPress={() => {
+                router.push('/library-search');
               }}
+              tone="onGradient"
+              variant="shell"
+            />
+
+            {isLibraryLoading ? (
+              <View style={styles.gradientPlaceholder}>
+                <Text style={styles.placeholderText}>加载中…</Text>
+              </View>
+            ) : installedPacks.length === 0 ? (
+              <View style={[styles.gradientPlaceholder, styles.emptyBlock]}>
+                <Text style={styles.placeholderText}>还没有安装知识库</Text>
+                <PrimaryButton
+                  borderRadius={8}
+                  label="去资料看看"
+                  onPress={() => {
+                    navigateShellTab(router, 'market');
+                  }}
+                  variant="surface"
+                />
+              </View>
+            ) : activePack ? (
+              <View
+                onLayout={(event) => {
+                  handleWhiteCardLayout(
+                    event.nativeEvent.layout.y,
+                    event.nativeEvent.layout.height,
+                  );
+                }}
+                style={styles.whiteCardWrap}
+              >
+                <LibraryHomeWhiteCard
+                  activePack={activePack}
+                  onContinuePress={() => {
+                    openStudy(activePack);
+                  }}
+                  onDetailPress={() => {
+                    openPackDetail(activePack);
+                  }}
+                  overview={overview}
+                />
+              </View>
+            ) : null}
+          </View>
+        </View>
+
+        {!isLibraryLoading && installedPacks.length > 0 ? (
+          <View style={styles.installedSection}>
+            <View style={styles.installedHeaderWrap}>
+              <LibrarySectionHeader totalCards={overview.totalCards} />
+            </View>
+            <LibraryInstalledPackShelf
+              onDetailPress={openPackDetail}
+              onPackPress={openStudy}
+              packs={installedPacks}
             />
           </View>
-        ) : (
-          <>
-            <LibrarySectionHeader />
-            <View style={styles.list}>
-              {installedPacks.map((pack) => (
-                <InstalledPackRow
-                  key={pack.packId}
-                  onDetailPress={() => {
-                    router.push(`/pack/${pack.packId}`);
-                  }}
-                  onStudyPress={() => {
-                    router.push(`/study?packId=${pack.packId}`);
-                  }}
-                  pack={pack}
-                />
-              ))}
-            </View>
-          </>
-        )}
+        ) : null}
       </ScrollView>
     </ScreenScaffold>
   );
 }
 
 const styles = StyleSheet.create({
-  content: {
-    gap: spacing.md,
+  scrollContent: {
+    flexGrow: 1,
+  },
+  heroSection: {
+    position: 'relative',
+  },
+  gradientBackground: {
+    left: 0,
+    position: 'absolute',
+    right: 0,
+    top: 0,
+  },
+  heroContent: {
+    position: 'relative',
+    zIndex: 1,
+  },
+  whiteCardWrap: {
     paddingBottom: spacing.xl,
-    paddingHorizontal: spacing.lg,
-    paddingTop: spacing.xs,
+    paddingHorizontal: CONTENT_HORIZONTAL_PADDING,
+    paddingTop: spacing.sm,
+  },
+  gradientPlaceholder: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 160,
+    paddingBottom: spacing.lg,
+    paddingHorizontal: CONTENT_HORIZONTAL_PADDING,
   },
   emptyBlock: {
-    alignItems: 'stretch',
     gap: spacing.md,
-    marginTop: spacing.xl,
   },
-  emptyText: {
-    color: colors.textSecondary,
+  placeholderText: {
+    color: colors.textPrimary,
     fontSize: 14,
     textAlign: 'center',
   },
-  list: {
+  installedSection: {
+    backgroundColor: colors.background,
     gap: spacing.md,
+    paddingBottom: spacing.xl,
+    paddingTop: spacing.lg,
+  },
+  installedHeaderWrap: {
+    paddingHorizontal: CONTENT_HORIZONTAL_PADDING,
   },
 });

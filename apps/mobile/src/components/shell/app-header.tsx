@@ -13,6 +13,8 @@ interface AppHeaderProps {
   variant: AppHeaderVariant;
   /** 无背景圆形底，与学习页顶栏返回一致 */
   plainBack?: boolean;
+  /** 渐变顶栏：透明底 + 白色图标 */
+  tone?: 'default' | 'onGradient';
   onMenuPress?: () => void;
   onSearchPress?: () => void;
   onBackPress?: () => void;
@@ -24,17 +26,27 @@ export function AppHeader(props: AppHeaderProps): ReactElement {
   const {
     variant,
     plainBack,
+    tone = 'default',
     onMenuPress,
     onSearchPress,
     onBackPress,
     onMorePress,
     centerContent,
   } = props;
+  const onGradient = tone === 'onGradient';
 
   return (
     <View style={styles.row}>
       <View style={styles.side}>
-        {variant === 'shell' ? (
+        {variant === 'shell' && onGradient ? (
+          <HeaderIconButton
+            accessibilityLabel="菜单"
+            {...(onMenuPress ? { onPress: onMenuPress } : {})}
+          >
+            <MenuIcon color={colors.surface} size="sm" />
+          </HeaderIconButton>
+        ) : null}
+        {variant === 'shell' && !onGradient ? (
           <CircleIconButton
             accessibilityLabel="菜单"
             {...(onMenuPress ? { onPress: onMenuPress } : {})}
@@ -63,7 +75,15 @@ export function AppHeader(props: AppHeaderProps): ReactElement {
       <View style={styles.center}>{centerContent}</View>
 
       <View style={[styles.side, styles.right]}>
-        {variant === 'shell' ? (
+        {variant === 'shell' && onGradient ? (
+          <HeaderIconButton
+            accessibilityLabel="搜索"
+            {...(onSearchPress ? { onPress: onSearchPress } : {})}
+          >
+            <SearchIcon color={colors.surface} size="sm" />
+          </HeaderIconButton>
+        ) : null}
+        {variant === 'shell' && !onGradient ? (
           <CircleIconButton
             accessibilityLabel="搜索"
             {...(onSearchPress ? { onPress: onSearchPress } : {})}

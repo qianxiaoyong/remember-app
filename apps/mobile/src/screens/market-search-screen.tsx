@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import type { CatalogPackItem } from '../catalog/catalog-seed';
-import { MarketSearchResultCard } from '../components/search/market-search-result-card';
+import { CoverGrid } from '../components/catalog/cover-grid';
+import { MarketCatalogGridTile } from '../components/market/market-catalog-grid-tile';
 import { SearchPageScaffold } from '../components/search/search-page-scaffold';
 import { SearchResultCount } from '../components/search/search-result-count';
 import { SearchTopBar } from '../components/search/search-top-bar';
@@ -11,6 +12,8 @@ import { setMarketSearchSelection } from '../shell/market-search-navigation';
 import { searchMarketCatalog } from '../use-cases/search-market-catalog';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
+
+const SEARCH_HORIZONTAL_PADDING = spacing.lg;
 
 export function MarketSearchScreen(): ReactElement {
   const router = useRouter();
@@ -78,12 +81,13 @@ export function MarketSearchScreen(): ReactElement {
             ) : results.length === 0 ? (
               <Text style={styles.empty}>没有找到匹配的资料</Text>
             ) : (
-              <View style={styles.grid}>
-                {results.map((item) => (
-                  <MarketSearchResultCard
+              <CoverGrid
+                horizontalPadding={SEARCH_HORIZONTAL_PADDING}
+                items={results}
+                keyExtractor={(item) => item.packId}
+                renderItem={(item, tileWidth) => (
+                  <MarketCatalogGridTile
                     item={item}
-                    key={item.packId}
-                    keyword={trimmedQuery}
                     onPress={() => {
                       setMarketSearchSelection({
                         highlightPackId: item.packId,
@@ -93,9 +97,10 @@ export function MarketSearchScreen(): ReactElement {
                       });
                       router.back();
                     }}
+                    tileWidth={tileWidth}
                   />
-                ))}
-              </View>
+                )}
+              />
             )}
           </>
         ) : (
@@ -110,11 +115,7 @@ const styles = StyleSheet.create({
   content: {
     gap: spacing.md,
     paddingBottom: spacing.xxl,
-  },
-  grid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: spacing.md,
+    paddingHorizontal: SEARCH_HORIZONTAL_PADDING,
   },
   center: {
     alignItems: 'center',

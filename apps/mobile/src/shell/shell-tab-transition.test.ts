@@ -18,20 +18,20 @@ describe('resolveShellTabFromPathname', () => {
 
 describe('navigateShellTab', () => {
   it('navigates to the selected tab', () => {
-    const navigate = vi.fn();
-    navigateShellTab({ navigate }, 'market', 'library');
-    expect(navigate).toHaveBeenCalledWith('/market');
+    const replace = vi.fn();
+    navigateShellTab({ replace }, 'market', 'library');
+    expect(replace).toHaveBeenCalledWith('/market');
   });
 
   it('does not navigate when already on the tab', () => {
-    const navigate = vi.fn();
-    navigateShellTab({ navigate }, 'library', 'library');
-    expect(navigate).not.toHaveBeenCalled();
+    const replace = vi.fn();
+    navigateShellTab({ replace }, 'library', 'library');
+    expect(replace).not.toHaveBeenCalled();
   });
 
-  it('uses navigate instead of replace semantics', () => {
-    const navigate = vi.fn();
-    navigateShellTab({ navigate }, 'review', 'library');
-    expect(navigate).toHaveBeenCalledExactlyOnceWith('/review');
+  it('uses replace instead of pushing tab history', () => {
+    const replace = vi.fn();
+    navigateShellTab({ replace }, 'review', 'library');
+    expect(replace).toHaveBeenCalledExactlyOnceWith('/review');
   });
 });

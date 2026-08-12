@@ -1,44 +1,35 @@
 import type { ReactElement } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { MenuIcon } from '../ui/shell-icons';
+import { formatLearningCount } from '../../use-cases/get-library-overview';
 import { colors } from '../../theme/colors';
-import { spacing } from '../../theme/spacing';
 
-export function LibrarySectionHeader(): ReactElement {
+interface LibrarySectionHeaderProps {
+  totalCards: number;
+}
+
+export function LibrarySectionHeader(props: LibrarySectionHeaderProps): ReactElement {
   return (
     <View style={styles.row}>
       <Text style={styles.title}>已安装资料</Text>
-      <View
-        accessibilityElementsHidden
-        importantForAccessibility="no-hide-descendants"
-        style={styles.filterButton}
-      >
-        <MenuIcon color={colors.accent} size="sm" />
-      </View>
+      <Text style={styles.totalLabel}>共 {formatLearningCount(props.totalCards)} 条</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   row: {
-    alignItems: 'center',
+    alignItems: 'baseline',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: spacing.sm,
-    marginTop: spacing.lg,
   },
   title: {
     color: colors.textPrimary,
     fontSize: 14,
     fontWeight: '600',
   },
-  filterButton: {
-    alignItems: 'center',
-    backgroundColor: '#EEEFF8',
-    borderRadius: 8,
-    height: 28,
-    justifyContent: 'center',
-    opacity: 0.55,
-    width: 28,
+  totalLabel: {
+    color: colors.textSecondary,
+    fontSize: 12,
+    lineHeight: 18,
   },
 });

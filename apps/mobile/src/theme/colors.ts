@@ -18,6 +18,8 @@ export const colors = {
   studyHeaderBackground: '#5CB88A',
   studyHeaderGradientStart: '#4DB8A8',
   studyHeaderGradientEnd: '#3D9470',
+  libraryGradientStart: '#6D70E8',
+  libraryGradientEnd: '#F0F1FF',
   studyRatingForgot: '#E86B5C',
   studyRatingHard: '#F0A04B',
   studyRatingGood: '#5CB88A',

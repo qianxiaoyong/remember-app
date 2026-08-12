@@ -1,14 +1,17 @@
 import type { ReactElement } from 'react';
 import { useMemo, useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text } from 'react-native';
 import { useRouter } from 'expo-router';
-import { InstalledPackRow } from '../components/library/installed-pack-row';
+import { CoverGrid } from '../components/catalog/cover-grid';
+import { InstalledPackGridTile } from '../components/library/installed-pack-grid-tile';
 import { SearchPageScaffold } from '../components/search/search-page-scaffold';
 import { SearchResultCount } from '../components/search/search-result-count';
 import { SearchTopBar } from '../components/search/search-top-bar';
 import { searchInstalledPackSummaries } from '../use-cases/search-installed-packs';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
+
+const SEARCH_HORIZONTAL_PADDING = spacing.lg;
 
 export function LibrarySearchScreen(): ReactElement {
   const router = useRouter();
@@ -41,10 +44,12 @@ export function LibrarySearchScreen(): ReactElement {
             {results.length === 0 ? (
               <Text style={styles.empty}>没有找到匹配的知识库</Text>
             ) : (
-              <View style={styles.list}>
-                {results.map((pack) => (
-                  <InstalledPackRow
-                    key={pack.packId}
+              <CoverGrid
+                horizontalPadding={SEARCH_HORIZONTAL_PADDING}
+                items={results}
+                keyExtractor={(pack) => pack.packId}
+                renderItem={(pack, tileWidth) => (
+                  <InstalledPackGridTile
                     onDetailPress={() => {
                       router.push(`/pack/${pack.packId}`);
                     }}
@@ -53,9 +58,10 @@ export function LibrarySearchScreen(): ReactElement {
                       router.push(`/study?packId=${pack.packId}`);
                     }}
                     pack={pack}
+                    tileWidth={tileWidth}
                   />
-                ))}
-              </View>
+                )}
+              />
             )}
           </>
         ) : (
@@ -70,22 +76,17 @@ const styles = StyleSheet.create({
   content: {
     gap: spacing.md,
     paddingBottom: spacing.xxl,
-  },
-  list: {
-    gap: spacing.md,
-    paddingHorizontal: spacing.lg,
+    paddingHorizontal: SEARCH_HORIZONTAL_PADDING,
   },
   empty: {
     color: colors.textSecondary,
     fontSize: 14,
-    paddingHorizontal: spacing.lg,
     paddingTop: spacing.xl,
     textAlign: 'center',
   },
   hint: {
     color: colors.textMuted,
     fontSize: 14,
-    paddingHorizontal: spacing.lg,
     paddingTop: spacing.xl,
     textAlign: 'center',
   },

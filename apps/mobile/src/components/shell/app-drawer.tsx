@@ -3,6 +3,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
   Alert,
   Animated,
+  BackHandler,
   Dimensions,
   Easing,
   Pressable,
@@ -67,6 +68,26 @@ export function AppDrawer(props: AppDrawerProps): ReactElement | null {
       setContactPanelVisible(false);
     }
   }, [props.visible]);
+
+  useEffect(() => {
+    if (!props.visible) {
+      return;
+    }
+
+    const onHardwareBackPress = (): boolean => {
+      if (contactPanelVisible) {
+        setContactPanelVisible(false);
+        return true;
+      }
+      props.onClose();
+      return true;
+    };
+
+    const subscription = BackHandler.addEventListener('hardwareBackPress', onHardwareBackPress);
+    return () => {
+      subscription.remove();
+    };
+  }, [contactPanelVisible, props.onClose, props.visible]);
 
   useLayoutEffect(() => {
     if (props.visible) {

@@ -1,5 +1,5 @@
 interface ShellTabRouter {
-  navigate: (href: '/library' | '/review' | '/market') => void;
+  replace: (href: '/library' | '/review' | '/market') => void;
 }
 
 export function navigateShellTab(
@@ -11,14 +11,14 @@ export function navigateShellTab(
     return;
   }
   if (tab === 'market') {
-    router.navigate('/market');
+    router.replace('/market');
     return;
   }
   if (tab === 'review') {
-    router.navigate('/review');
+    router.replace('/review');
     return;
   }
-  router.navigate('/library');
+  router.replace('/library');
 }
 
 export function resolveShellTabFromPathname(pathname: string): 'library' | 'review' | 'market' {
