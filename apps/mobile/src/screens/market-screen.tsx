@@ -1,23 +1,33 @@
 import type { ReactElement } from 'react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
 import type { CatalogPrimaryCategory } from '../catalog/catalog-seed';
 import type { CatalogPackItem } from '../catalog/catalog-seed';
 import { CATALOG_ALL_VERSION_LABEL } from '../catalog/catalog-seed';
+import { MarketCatalogGridTile } from '../components/market/market-catalog-grid-tile';
+import { CoverGrid } from '../components/catalog/cover-grid';
 import { MarketListSectionHeader } from '../components/market/market-list-section-header';
-import { MarketPackCard } from '../components/market/market-pack-card';
 import { MarketPrimaryTabs } from '../components/market/market-primary-tabs';
 import { MarketSecondarySidebar } from '../components/market/market-secondary-sidebar';
 import {
   MarketSidebarColumn,
   MarketSidebarToggleButton,
+  MARKET_SIDEBAR_WIDTH,
 } from '../components/market/market-sidebar-column';
 import { MarketVersionDropdown } from '../components/market/market-version-dropdown';
 import { AppHeader } from '../components/shell/app-header';
 import { ScreenScaffold } from '../components/shell/screen-scaffold';
 import { useMarketSidebarCollapsed } from '../hooks/use-market-sidebar-collapsed';
 import { useRestoreDrawerOnReturn } from '../hooks/use-restore-drawer-on-return';
+import { useShellTabHardwareBackHandler } from '../hooks/use-shell-tab-hardware-back-handler';
 import { consumeMarketSearchSelection } from '../shell/market-search-navigation';
 import { useShellActions } from '../shell/shell-provider';
 import { readApiBaseUrl } from '../data/api/api-client';
@@ -38,10 +48,13 @@ import {
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 
+const MARKET_CONTENT_HORIZONTAL_PADDING = spacing.md;
+
 export function MarketScreen(): ReactElement {
   const router = useRouter();
   const { openDrawer } = useShellActions();
   useRestoreDrawerOnReturn();
+  useShellTabHardwareBackHandler();
   const { collapsed: sidebarCollapsed, toggleCollapsed: toggleSidebarCollapsed } =
     useMarketSidebarCollapsed();
   const listRef = useRef<ScrollView>(null);
@@ -176,6 +189,9 @@ export function MarketScreen(): ReactElement {
     [router],
   );
 
+  const { width: windowWidth } = useWindowDimensions();
+  const listColumnWidth = windowWidth - (sidebarCollapsed ? 0 : MARKET_SIDEBAR_WIDTH);
+
   const emptyMessage =
     !hasLoadedCache && items.length === 0
       ? '暂无目录缓存，下拉刷新加载最新资料'
@@ -254,14 +270,22 @@ export function MarketScreen(): ReactElement {
               <>
                 {taxonomyError ? <Text style={styles.cacheHint}>{taxonomyError}</Text> : null}
                 {cacheHint ? <Text style={styles.cacheHint}>{cacheHint}</Text> : null}
-                {items.map((item) => (
-                  <MarketPackCard
-                    highlighted={highlightPackId === item.packId}
-                    item={item}
-                    key={item.packId}
-                    onPressPack={handlePressPack}
-                  />
-                ))}
+                <CoverGrid
+                  contentWidth={listColumnWidth}
+                  horizontalPadding={MARKET_CONTENT_HORIZONTAL_PADDING}
+                  items={items}
+                  keyExtractor={(item) => item.packId}
+                  renderItem={(item, tileWidth) => (
+                    <MarketCatalogGridTile
+                      highlighted={highlightPackId === item.packId}
+                      item={item}
+                      onPress={() => {
+                        handlePressPack(item.packId);
+                      }}
+                      tileWidth={tileWidth}
+                    />
+                  )}
+                />
               </>
             )}
           </ScrollView>

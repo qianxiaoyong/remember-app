@@ -8,10 +8,23 @@ interface SurfaceCardProps {
   children: ReactNode;
   /** 首页等紧凑卡片：减小内边距。 */
   compact?: boolean;
+  borderRadius?: number;
+  contentPadding?: number;
 }
 
 export function SurfaceCard(props: SurfaceCardProps): ReactElement {
-  return <View style={[styles.card, props.compact ? styles.compact : null]}>{props.children}</View>;
+  return (
+    <View
+      style={[
+        styles.card,
+        props.compact ? styles.compact : null,
+        props.borderRadius !== undefined ? { borderRadius: props.borderRadius } : null,
+        props.contentPadding !== undefined ? { padding: props.contentPadding } : null,
+      ]}
+    >
+      {props.children}
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
