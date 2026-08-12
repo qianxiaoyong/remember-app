@@ -48,14 +48,21 @@ vi.mock('../lib/get-device-time-zone', () => ({
 }));
 
 vi.mock('./resolve-review-card-context', () => ({
-  resolveReviewCardContext: vi.fn(() => ({ sourcePackId: 'remember-test-pack' })),
+  resolveReviewCardContext: vi.fn(() => mockReviewCardContext),
 }));
 
 import { listDueReviewPoolItems } from '../data/repositories/learning-state-repository';
 import { insertQueueItems } from '../data/repositories/study-session-repository';
 import { findActiveReviewSession } from './find-active-review-session';
+import type { ReviewCardContext } from './resolve-review-card-context';
 import { resolveReviewCardContext } from './resolve-review-card-context';
 import { resumeOrStartReviewSession } from './resume-or-start-review-session';
+
+const mockReviewCardContext: ReviewCardContext = {
+  cardDetail: null,
+  sourcePackId: 'remember-test-pack',
+  sourcePackDisplayName: '测试包',
+};
 
 const now = new Date('2026-08-06T15:00:00+08:00');
 
@@ -92,9 +99,7 @@ describe('resumeOrStartReviewSession', () => {
 
   it('先过滤无法加载词条，再按剩余配额建队', () => {
     vi.mocked(resolveReviewCardContext).mockImplementation((knowledgeId: string) =>
-      knowledgeId === 'word-3' || knowledgeId === 'word-4'
-        ? { sourcePackId: 'remember-test-pack' }
-        : null,
+      knowledgeId === 'word-3' || knowledgeId === 'word-4' ? mockReviewCardContext : null,
     );
 
     const session = resumeOrStartReviewSession(now);
