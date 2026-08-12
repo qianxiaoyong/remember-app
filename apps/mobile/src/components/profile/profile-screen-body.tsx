@@ -106,7 +106,10 @@ export function ProfileScreenBody(props: ProfileScreenBodyProps): ReactElement {
         ) : (
           <LearningCalendarWidget layout="page" />
         )}
-        <DrawerCommonFeaturesBlock items={drawerCommonFeatures} onItemPress={handleCommonFeaturePress} />
+        <DrawerCommonFeaturesBlock
+          items={drawerCommonFeatures}
+          onItemPress={handleCommonFeaturePress}
+        />
         <DrawerMenuListBlock items={drawerMenuItems} onItemPress={handleMenuItemPress} />
       </ScrollView>
     </View>

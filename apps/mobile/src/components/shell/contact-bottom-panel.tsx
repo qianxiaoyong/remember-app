@@ -1,15 +1,6 @@
 import type { ReactElement } from 'react';
 import { useEffect, useRef } from 'react';
-import {
-  Alert,
-  Animated,
-  Easing,
-  Platform,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Alert, Animated, Easing, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
 
