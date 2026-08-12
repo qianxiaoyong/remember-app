@@ -28,23 +28,8 @@ import {
   subscribeReviewPoolChanged,
 } from '../shell/review-pool-changed-signal';
 import { deferAfterFirstPaint } from '../lib/defer-after-first-paint';
+import { EMPTY_REVIEW_SUMMARY, sessionHasLoadableCurrentItem } from './review-flow-session-helpers';
 import { useVocabularyStudyAudio } from './use-vocabulary-study-audio';
-
-const EMPTY_REVIEW_SUMMARY: ReviewTabSummary = {
-  dueTotal: 0,
-  reviewableDueTotal: 0,
-  dailyReviewLimit: 20,
-  todayReviewCompleted: 0,
-  remainingQuota: 20,
-  joinedPoolCountToday: 0,
-};
-
-function sessionHasLoadableCurrentItem(session: ActiveStudySession | null): boolean {
-  if (!session?.currentItem) {
-    return false;
-  }
-  return resolveReviewCardContext(session.currentItem.knowledgeId)?.cardDetail != null;
-}
 
 export function useReviewFlow(options?: { enabled?: boolean }) {
   const enabled = options?.enabled !== false;
