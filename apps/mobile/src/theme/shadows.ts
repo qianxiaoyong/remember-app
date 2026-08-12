@@ -9,14 +9,6 @@ export const cardShadow: ViewStyle = {
   shadowRadius: 20,
 };
 
-export const capsuleShadow: ViewStyle = {
-  elevation: 0,
-  shadowColor: '#202228',
-  shadowOffset: { width: 0, height: 2 },
-  shadowOpacity: 0.028,
-  shadowRadius: 16,
-};
-
 export const headerButtonShadow: ViewStyle = {
   elevation: 0,
   shadowColor: '#202228',

@@ -5,8 +5,6 @@ export const spacing = {
   lg: 16,
   xl: 24,
   xxl: 32,
-  /** @deprecated 使用 tabBarBottom */
-  capsuleBottom: 108,
   tabBarHeight: 40,
   tabBarBottom: 64,
   cardRadius: 12,
