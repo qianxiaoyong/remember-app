@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { InteractionManager } from 'react-native';
 import { useFocusEffect } from 'expo-router';
 import { normalizeSurfaceForm } from '@remember/contracts';
 import type { LexiconLookupResult } from '../data/repositories/lexicon-entry-repository';
@@ -28,6 +27,7 @@ import {
   markReviewPoolChanged,
   subscribeReviewPoolChanged,
 } from '../shell/review-pool-changed-signal';
+import { deferAfterFirstPaint } from '../lib/defer-after-first-paint';
 import { useVocabularyStudyAudio } from './use-vocabulary-study-audio';
 
 const EMPTY_REVIEW_SUMMARY: ReviewTabSummary = {
@@ -113,13 +113,12 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
     (forceRebuild: boolean) => {
       needsSessionRefreshRef.current = true;
       sessionReadyRef.current = false;
-      const handle = InteractionManager.runAfterInteractions(() => {
+      return deferAfterFirstPaint(() => {
         if (!enabled || !isScreenFocusedRef.current) {
           return;
         }
         startReview({ forceRebuild });
       });
-      return handle;
     },
     [enabled, startReview],
   );
@@ -152,9 +151,9 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
         };
       }
 
-      const handle = scheduleSessionRefresh(needsSessionRefreshRef.current);
+      const cancelRefresh = scheduleSessionRefresh(needsSessionRefreshRef.current);
       return () => {
-        handle.cancel();
+        cancelRefresh();
         setIsScreenFocused(false);
         isScreenFocusedRef.current = false;
       };

@@ -4,11 +4,11 @@ import { getReviewPoolVersion } from '../shell/review-pool-changed-signal';
 import type { getPackCardDetailUseCase } from './get-pack-card-detail';
 import { resolveInstalledPackForKnowledgeId } from './resolve-installed-pack-for-knowledge';
 
-export type ReviewCardContext = {
+export interface ReviewCardContext {
   cardDetail: ReturnType<typeof getPackCardDetailUseCase>;
   sourcePackId: string;
   sourcePackDisplayName: string;
-};
+}
 
 const contextCache = new Map<string, ReviewCardContext | null>();
 let contextCacheVersion = -1;
