@@ -12,12 +12,12 @@ interface ShellActions {
 
 const ShellActionsContext = createContext<ShellActions | null>(null);
 const DrawerOpenContext = createContext(false);
-const CapsuleVisibleContext = createContext(true);
-const SetCapsuleVisibleContext = createContext<((visible: boolean) => void) | null>(null);
+const TabBarVisibleContext = createContext(true);
+const SetTabBarVisibleContext = createContext<((visible: boolean) => void) | null>(null);
 
 export function ShellProvider(props: { children: ReactNode }): ReactElement {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [capsuleVisible, setCapsuleVisible] = useState(true);
+  const [tabBarVisible, setTabBarVisible] = useState(true);
   const openDrawer = useCallback(() => {
     setIsDrawerOpen(true);
   }, []);
@@ -35,13 +35,13 @@ export function ShellProvider(props: { children: ReactNode }): ReactElement {
 
   return (
     <ShellActionsContext.Provider value={actions}>
-      <SetCapsuleVisibleContext.Provider value={setCapsuleVisible}>
-        <CapsuleVisibleContext.Provider value={capsuleVisible}>
+      <SetTabBarVisibleContext.Provider value={setTabBarVisible}>
+        <TabBarVisibleContext.Provider value={tabBarVisible}>
           <DrawerOpenContext.Provider value={isDrawerOpen}>
             {props.children}
           </DrawerOpenContext.Provider>
-        </CapsuleVisibleContext.Provider>
-      </SetCapsuleVisibleContext.Provider>
+        </TabBarVisibleContext.Provider>
+      </SetTabBarVisibleContext.Provider>
     </ShellActionsContext.Provider>
   );
 }
@@ -58,21 +58,36 @@ export function useDrawerOpen(): boolean {
   return useContext(DrawerOpenContext);
 }
 
-export function useCapsuleVisible(): boolean {
-  return useContext(CapsuleVisibleContext);
+export function useTabBarVisible(): boolean {
+  return useContext(TabBarVisibleContext);
 }
 
-export function useSetCapsuleVisible(): (visible: boolean) => void {
-  const setVisible = useContext(SetCapsuleVisibleContext);
+export function useSetTabBarVisible(): (visible: boolean) => void {
+  const setVisible = useContext(SetTabBarVisibleContext);
   if (!setVisible) {
-    throw new Error('useSetCapsuleVisible must be used within ShellProvider');
+    throw new Error('useSetTabBarVisible must be used within ShellProvider');
   }
   return setVisible;
 }
 
-/** Shell 外（如 Stack 级 review-inspect）无胶囊栏时可安全调用，返回 null。 */
+/** Shell 外（如 Stack 级 review-inspect）无 Tab 栏时可安全调用，返回 null。 */
+export function useOptionalSetTabBarVisible(): ((visible: boolean) => void) | null {
+  return useContext(SetTabBarVisibleContext);
+}
+
+/** @deprecated 使用 useTabBarVisible */
+export function useCapsuleVisible(): boolean {
+  return useTabBarVisible();
+}
+
+/** @deprecated 使用 useSetTabBarVisible */
+export function useSetCapsuleVisible(): (visible: boolean) => void {
+  return useSetTabBarVisible();
+}
+
+/** @deprecated 使用 useOptionalSetTabBarVisible */
 export function useOptionalSetCapsuleVisible(): ((visible: boolean) => void) | null {
-  return useContext(SetCapsuleVisibleContext);
+  return useOptionalSetTabBarVisible();
 }
 
 /** @deprecated 订阅 isDrawerOpen 会导致页面随抽屉开关重渲染；请改用 useShellActions / useDrawerOpen */

@@ -22,10 +22,23 @@ vi.mock('../data/repositories/learning-activity-event-repository', () => ({
   ]),
 }));
 
-import { getLearningActivitySummary } from './get-learning-activity-summary';
+import {
+  buildHeatGridMonthLabels,
+  getLearningActivitySummary,
+} from './get-learning-activity-summary';
+
+describe('buildHeatGridMonthLabels', () => {
+  it('places first, middle and last months on fixed columns', () => {
+    expect(buildHeatGridMonthLabels('2026-08-31')).toEqual([
+      { key: '2026-06', label: '6月', colIndex: 2 },
+      { key: '2026-07', label: '7月', colIndex: 5.5 },
+      { key: '2026-08', label: '8月', colIndex: 9 },
+    ]);
+  });
+});
 
 describe('getLearningActivitySummary', () => {
-  it('returns 90-day counts and 7x12 heat grid', () => {
+  it('returns 90-day counts and heat grid anchored to month end', () => {
     const now = new Date('2026-08-09T15:00:00+08:00');
     const summary = getLearningActivitySummary(now);
 
@@ -35,8 +48,17 @@ describe('getLearningActivitySummary', () => {
     expect(summary.heatGrid).toHaveLength(7);
     expect(summary.heatGrid[0]).toHaveLength(12);
 
+    const bottomRight = summary.heatGrid[6]?.[11];
+    expect(bottomRight?.localDate).toBe('2026-08-31');
+
     const todayCell = summary.heatGrid.flat().find((cell) => cell.localDate === '2026-08-09');
     expect(todayCell?.isToday).toBe(true);
     expect(todayCell?.level).toBe(2);
+
+    expect(summary.monthLabels).toEqual([
+      { key: '2026-06', label: '6月', colIndex: 2 },
+      { key: '2026-07', label: '7月', colIndex: 5.5 },
+      { key: '2026-08', label: '8月', colIndex: 9 },
+    ]);
   });
 });

@@ -20,9 +20,13 @@ export type AppIconName =
   | 'information-circle-outline'
   | 'chatbubble-outline'
   | 'compass-outline'
+  | 'book-outline'
+  | 'book'
   | 'library-outline'
+  | 'library'
   | 'ticket-outline'
   | 'eye-outline'
+  | 'eye'
   | 'ellipsis-vertical'
   | 'star'
   | 'star-outline'
@@ -38,7 +42,11 @@ export type AppIconName =
   | 'arrow-down'
   | 'repeat'
   | 'repeat-outline'
-  | 'play-circle-outline';
+  | 'play-circle-outline'
+  | 'calendar-outline'
+  | 'calendar'
+  | 'person-outline'
+  | 'person';
 
 type IoniconName = ComponentProps<typeof Ionicons>['name'];
 
@@ -52,6 +60,8 @@ const ICON_MAP: Record<AppIconName, IoniconName> = {
   'home-outline': 'home-outline',
   folder: 'folder',
   'folder-outline': 'folder-outline',
+  'book-outline': 'book-outline',
+  book: 'book',
   'download-outline': 'download-outline',
   'bookmark-outline': 'bookmark-outline',
   'settings-outline': 'settings-outline',
@@ -59,8 +69,10 @@ const ICON_MAP: Record<AppIconName, IoniconName> = {
   'chatbubble-outline': 'chatbubble-outline',
   'compass-outline': 'compass-outline',
   'library-outline': 'library-outline',
+  library: 'library',
   'ticket-outline': 'ticket-outline',
   'eye-outline': 'eye-outline',
+  eye: 'eye',
   'ellipsis-vertical': 'ellipsis-vertical',
   star: 'star',
   'star-outline': 'star-outline',
@@ -77,6 +89,10 @@ const ICON_MAP: Record<AppIconName, IoniconName> = {
   repeat: 'repeat',
   'repeat-outline': 'repeat-outline',
   'play-circle-outline': 'play-circle-outline',
+  'calendar-outline': 'calendar-outline',
+  calendar: 'calendar',
+  'person-outline': 'person-outline',
+  person: 'person',
 };
 
 interface AppIconProps {

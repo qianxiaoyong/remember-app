@@ -11,6 +11,7 @@ import { readCachedSessionUser, readLastSyncedAt } from '../data/session/session
 import { getCurrentSessionUser } from '../use-cases/auth/get-current-session-user';
 import { logout } from '../use-cases/auth/logout';
 import { uploadPendingSyncOutbox } from '../use-cases/sync/upload-pending-sync-outbox';
+import { resolveUserDisplayName } from '../lib/resolve-user-display-name';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 
@@ -108,7 +109,7 @@ export function AccountScreen(): ReactElement {
         {user ? (
           <>
             <View style={styles.profileCard}>
-              <Text style={styles.displayName}>{user.displayName}</Text>
+              <Text style={styles.displayName}>{resolveUserDisplayName(user.displayName)}</Text>
               <Text style={styles.maskedPhone}>{user.maskedPhone}</Text>
             </View>
 

@@ -1,12 +1,13 @@
 import type { ReactElement } from 'react';
 import { useCallback, useMemo, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { calculateHeatLevel } from '@remember/domain';
 import type { HeatLevel } from '@remember/domain';
 import { formatLocalReviewDate } from '@remember/domain';
 import { AppHeader } from '../components/shell/app-header';
 import { ScreenScaffold } from '../components/shell/screen-scaffold';
+import { TabPageTopSpacer } from '../components/shell/tab-page-top-spacer';
 import { LearningCalendarDayDetailPanel } from '../components/calendar/learning-calendar-day-detail';
 import { LearningCalendarMonth } from '../components/calendar/learning-calendar-month';
 import { listEventsInDateRange } from '../data/repositories/learning-activity-event-repository';
@@ -18,9 +19,11 @@ import { spacing } from '../theme/spacing';
 
 interface LearningCalendarScreenProps {
   initialLocalDate?: string;
+  variant?: 'tab' | 'stack';
 }
 
 export function LearningCalendarScreen(props: LearningCalendarScreenProps): ReactElement {
+  const variant = props.variant ?? 'stack';
   const router = useRouter();
   const timeZone = getDeviceTimeZone();
   const today = formatLocalReviewDate(new Date(), timeZone);
@@ -57,14 +60,26 @@ export function LearningCalendarScreen(props: LearningCalendarScreenProps): Reac
     [month, year],
   );
 
+  const headerTitle = variant === 'tab' ? '记录' : '学习日历';
+
   return (
-    <ScreenScaffold safeAreaEdges={['top', 'left', 'right', 'bottom']}>
-      <AppHeader
-        centerContent={<Text style={styles.headerTitle}>学习日历</Text>}
-        onBackPress={goBack}
-        variant="back"
-      />
-      <View style={styles.body}>
+    <ScreenScaffold
+      safeAreaEdges={variant === 'tab' ? ['left', 'right'] : ['top', 'left', 'right', 'bottom']}
+      withTabBarPadding={variant === 'tab'}
+    >
+      {variant === 'tab' ? <TabPageTopSpacer /> : null}
+      {variant === 'stack' ? (
+        <AppHeader
+          centerContent={<Text style={styles.headerTitle}>{headerTitle}</Text>}
+          onBackPress={goBack}
+          variant="back"
+        />
+      ) : null}
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+        style={styles.scroll}
+      >
         <LearningCalendarMonth
           heatByDate={heatByDate}
           month={month}
@@ -84,7 +99,7 @@ export function LearningCalendarScreen(props: LearningCalendarScreenProps): Reac
           year={year}
         />
         <LearningCalendarDayDetailPanel detail={dayDetail} />
-      </View>
+      </ScrollView>
     </ScreenScaffold>
   );
 }
@@ -115,14 +130,17 @@ function buildMonthHeatMap(year: number, month: number): Map<string, HeatLevel> 
 }
 
 const styles = StyleSheet.create({
+  scroll: {
+    flex: 1,
+  },
+  scrollContent: {
+    gap: spacing.sm,
+    paddingBottom: spacing.md,
+    paddingHorizontal: spacing.lg,
+  },
   headerTitle: {
     color: colors.textPrimary,
     fontSize: 17,
     fontWeight: '600',
-  },
-  body: {
-    flex: 1,
-    paddingBottom: spacing.sm,
-    paddingHorizontal: spacing.lg,
   },
 });

@@ -23,7 +23,7 @@ export default function ReviewInspectRoute(): ReactElement {
   const knowledgeId = readParam(params.knowledgeId);
 
   if (!localDate || !category || !subCategory) {
-    return <Redirect href="/learning-calendar" />;
+    return <Redirect href="/record" />;
   }
 
   const inspectConfig = {

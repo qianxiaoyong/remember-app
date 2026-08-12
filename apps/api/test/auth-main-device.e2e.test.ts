@@ -88,7 +88,7 @@ describe('auth main device integration', () => {
     expect(meResponse.body).toEqual({
       userId: login.userId,
       maskedPhone: '138****8000',
-      displayName: '监护人',
+      displayName: '用户',
     });
   });
 

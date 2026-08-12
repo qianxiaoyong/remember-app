@@ -47,7 +47,7 @@ import { getCurrentSessionUser } from './get-current-session-user';
 const cachedUser = {
   userId: 'user-1',
   maskedPhone: '138****8000',
-  displayName: '监护人',
+  displayName: '用户',
 };
 
 describe('getCurrentSessionUser', () => {

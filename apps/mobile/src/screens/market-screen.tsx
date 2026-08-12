@@ -26,10 +26,7 @@ import { MarketVersionDropdown } from '../components/market/market-version-dropd
 import { AppHeader } from '../components/shell/app-header';
 import { ScreenScaffold } from '../components/shell/screen-scaffold';
 import { useMarketSidebarCollapsed } from '../hooks/use-market-sidebar-collapsed';
-import { useRestoreDrawerOnReturn } from '../hooks/use-restore-drawer-on-return';
-import { useShellTabHardwareBackHandler } from '../hooks/use-shell-tab-hardware-back-handler';
 import { consumeMarketSearchSelection } from '../shell/market-search-navigation';
-import { useShellActions } from '../shell/shell-provider';
 import { readApiBaseUrl } from '../data/api/api-client';
 import { ApiNetworkError } from '../data/api/api-errors';
 import { subscribeCatalogCacheUpdates } from '../data/catalog/catalog-cache-store';
@@ -52,9 +49,6 @@ const MARKET_CONTENT_HORIZONTAL_PADDING = spacing.md;
 
 export function MarketScreen(): ReactElement {
   const router = useRouter();
-  const { openDrawer } = useShellActions();
-  useRestoreDrawerOnReturn();
-  useShellTabHardwareBackHandler();
   const { collapsed: sidebarCollapsed, toggleCollapsed: toggleSidebarCollapsed } =
     useMarketSidebarCollapsed();
   const listRef = useRef<ScrollView>(null);
@@ -198,15 +192,19 @@ export function MarketScreen(): ReactElement {
       : '当前筛选下暂无资料';
 
   return (
-    <ScreenScaffold withCapsulePadding>
+    <ScreenScaffold>
       <View style={styles.topSection}>
         <View style={styles.headerPanel}>
           <AppHeader
-            onMenuPress={openDrawer}
+            centerContent={<Text style={styles.headerTitle}>资料</Text>}
+            onBackPress={() => {
+              router.back();
+            }}
             onSearchPress={() => {
               router.push('/market-search');
             }}
-            variant="shell"
+            plainBack
+            variant="back"
           />
 
           <MarketPrimaryTabs
@@ -304,6 +302,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     borderBottomColor: colors.borderStrong,
     borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  headerTitle: {
+    color: colors.textPrimary,
+    fontSize: 17,
+    fontWeight: '600',
   },
   bodyRow: {
     flex: 1,

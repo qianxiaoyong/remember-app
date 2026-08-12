@@ -1,14 +1,11 @@
 import type { ReactElement } from 'react';
-import { useLocalSearchParams } from 'expo-router';
-import { LearningCalendarScreen } from '../src/screens/learning-calendar-screen';
-import { formatLocalReviewDate } from '@remember/domain';
-import { getDeviceTimeZone } from '../src/lib/get-device-time-zone';
+import { Redirect, useLocalSearchParams } from 'expo-router';
 
 export default function LearningCalendarRoute(): ReactElement {
   const params = useLocalSearchParams<{ localDate?: string | string[] }>();
   const raw = params.localDate;
   const localDate = Array.isArray(raw) ? raw[0] : raw;
-  const today = formatLocalReviewDate(new Date(), getDeviceTimeZone());
+  const href = localDate ? `/record?localDate=${localDate}` : '/record';
 
-  return <LearningCalendarScreen initialLocalDate={localDate ?? today} />;
+  return <Redirect href={href} />;
 }

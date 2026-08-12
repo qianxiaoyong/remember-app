@@ -15,6 +15,7 @@ export const colors = {
   favoriteStar: '#F5B800',
   statTileBackground: '#EEF0F5',
   tabInactive: '#A0A4AE',
+  tabActive: '#6D70E8',
   studyHeaderBackground: '#5CB88A',
   studyHeaderGradientStart: '#4DB8A8',
   studyHeaderGradientEnd: '#3D9470',

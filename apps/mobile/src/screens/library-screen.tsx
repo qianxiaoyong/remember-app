@@ -10,8 +10,6 @@ import { LibrarySectionHeader } from '../components/library/library-section-head
 import { AppHeader } from '../components/shell/app-header';
 import { ScreenScaffold } from '../components/shell/screen-scaffold';
 import { PrimaryButton } from '../components/ui/primary-button';
-import { useShellActions } from '../shell/shell-provider';
-import { useRestoreDrawerOnReturn } from '../hooks/use-restore-drawer-on-return';
 import { useShellTabHardwareBackHandler } from '../hooks/use-shell-tab-hardware-back-handler';
 import { consumeLibraryNeedsRefresh } from '../shell/library-refresh-signal';
 import {
@@ -19,7 +17,6 @@ import {
   subscribeCatalogCacheUpdates,
 } from '../data/catalog/catalog-cache-store';
 import { touchInstalledPackLastOpened } from '../data/repositories/touch-installed-pack-last-opened';
-import { navigateShellTab } from '../shell/shell-tab-transition';
 import {
   loadLibraryScreenData,
   createEmptyLibraryOverview,
@@ -42,8 +39,6 @@ function resolveDefaultActivePackId(packs: InstalledPackSummary[]): string | nul
 export function LibraryScreen(): ReactElement {
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const { openDrawer } = useShellActions();
-  useRestoreDrawerOnReturn();
   useShellTabHardwareBackHandler();
   const [refreshKey, setRefreshKey] = useState(0);
   const [isLibraryLoading, setIsLibraryLoading] = useState(true);
@@ -125,7 +120,7 @@ export function LibraryScreen(): ReactElement {
   );
 
   return (
-    <ScreenScaffold safeAreaEdges={['left', 'right']} withCapsulePadding>
+    <ScreenScaffold safeAreaEdges={['left', 'right']} withTabBarPadding>
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         <View style={styles.heroSection}>
           <LinearGradient
@@ -138,7 +133,9 @@ export function LibraryScreen(): ReactElement {
 
           <View style={[styles.heroContent, { paddingTop: insets.top }]}>
             <AppHeader
-              onMenuPress={openDrawer}
+              onMarketPress={() => {
+                router.push('/market');
+              }}
               onSearchPress={() => {
                 router.push('/library-search');
               }}
@@ -157,7 +154,7 @@ export function LibraryScreen(): ReactElement {
                   borderRadius={8}
                   label="去资料看看"
                   onPress={() => {
-                    navigateShellTab(router, 'market');
+                    router.push('/market');
                   }}
                   variant="surface"
                 />
@@ -207,6 +204,7 @@ export function LibraryScreen(): ReactElement {
 const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
+    paddingBottom: spacing.md,
   },
   heroSection: {
     position: 'relative',
