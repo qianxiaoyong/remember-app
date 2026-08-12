@@ -18,7 +18,9 @@ export function buildMonthGridCells(year: number, month: number): MonthGridCell[
 
   for (let index = leadingPads - 1; index >= 0; index -= 1) {
     const day = daysInPrevMonth - index;
-    cells.push(createMonthGridCell({ year: prevYear, month: prevMonth, day, isCurrentMonth: false }));
+    cells.push(
+      createMonthGridCell({ year: prevYear, month: prevMonth, day, isCurrentMonth: false }),
+    );
   }
 
   for (let day = 1; day <= daysInMonth; day += 1) {
@@ -29,7 +31,14 @@ export function buildMonthGridCells(year: number, month: number): MonthGridCell[
   const nextMonth = month === 12 ? 1 : month + 1;
   const nextYear = month === 12 ? year + 1 : year;
   while (cells.length % 7 !== 0) {
-    cells.push(createMonthGridCell({ year: nextYear, month: nextMonth, day: nextDay, isCurrentMonth: false }));
+    cells.push(
+      createMonthGridCell({
+        year: nextYear,
+        month: nextMonth,
+        day: nextDay,
+        isCurrentMonth: false,
+      }),
+    );
     nextDay += 1;
   }
 
