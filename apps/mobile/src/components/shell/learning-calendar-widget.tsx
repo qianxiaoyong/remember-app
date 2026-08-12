@@ -1,13 +1,11 @@
 import type { ReactElement } from 'react';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { Dimensions, Pressable, StyleSheet, Text, View } from 'react-native';
 import { deferAfterFirstPaint } from '../../lib/defer-after-first-paint';
 import { useFocusEffect, useRouter } from 'expo-router';
 import type { LearningActivitySummary } from '../../use-cases/get-learning-activity-summary';
 import { getLearningActivitySummary } from '../../use-cases/get-learning-activity-summary';
 import { consumeLearningCalendarNeedsRefresh } from '../../shell/learning-calendar-refresh-signal';
-import { markDrawerReturnPending } from '../../shell/drawer-return-intent';
-import { useShellActions } from '../../shell/shell-provider';
 import { SurfaceCard } from '../ui/surface-card';
 import { heatLevelColors } from '../calendar/calendar-theme';
 import { colors } from '../../theme/colors';
@@ -16,21 +14,9 @@ import { spacing } from '../../theme/spacing';
 const HEAT_GRID_COLS = 12;
 const HEAT_GRID_ROWS = 7;
 const HEAT_GRID_GAP = 3;
-const DRAWER_WIDTH_RATIO = 0.86;
 const MONTH_LABEL_WIDTH = 36;
 
-interface LearningCalendarWidgetProps {
-  layout?: 'drawer' | 'page';
-  /** drawer 布局下随抽屉显隐加载 */
-  drawerVisible?: boolean;
-}
-
-function estimateDrawerHeatGridInnerWidth(): number {
-  const panelWidth = Dimensions.get('window').width * DRAWER_WIDTH_RATIO;
-  return panelWidth - spacing.lg * 2 - spacing.lg * 2;
-}
-
-function estimatePageHeatGridInnerWidth(): number {
+function estimateHeatGridInnerWidth(): number {
   return Dimensions.get('window').width - spacing.lg * 4;
 }
 
@@ -41,16 +27,12 @@ function resolveHeatCellSize(gridWidth: number): number {
   );
 }
 
-export function LearningCalendarWidget(props: LearningCalendarWidgetProps): ReactElement {
-  const layout = props.layout ?? 'drawer';
+export function LearningCalendarWidget(): ReactElement {
   const router = useRouter();
-  const { dismissDrawer } = useShellActions();
   const [summary, setSummary] = useState<LearningActivitySummary | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const summaryRef = useRef<LearningActivitySummary | null>(null);
-  const [gridWidth, setGridWidth] = useState(() =>
-    layout === 'page' ? estimatePageHeatGridInnerWidth() : estimateDrawerHeatGridInnerWidth(),
-  );
+  const [gridWidth, setGridWidth] = useState(estimateHeatGridInnerWidth);
   const heatCellSize = resolveHeatCellSize(gridWidth);
   const heatGridHeight = heatCellSize * HEAT_GRID_ROWS + HEAT_GRID_GAP * (HEAT_GRID_ROWS - 1);
 
@@ -72,30 +54,13 @@ export function LearningCalendarWidget(props: LearningCalendarWidgetProps): Reac
     return cancelDefer;
   }, []);
 
-  useEffect(() => {
-    if (layout !== 'drawer') {
-      return;
-    }
-    if (!props.drawerVisible) {
-      return;
-    }
-    return loadSummary();
-  }, [layout, loadSummary, props.drawerVisible]);
-
   useFocusEffect(
     useCallback(() => {
-      if (layout !== 'page') {
-        return;
-      }
       return loadSummary();
-    }, [layout, loadSummary]),
+    }, [loadSummary]),
   );
 
   const openCalendar = (localDate?: string): void => {
-    if (layout === 'drawer') {
-      markDrawerReturnPending();
-      dismissDrawer();
-    }
     if (localDate) {
       router.push(`/record?localDate=${localDate}`);
       return;
@@ -118,18 +83,6 @@ export function LearningCalendarWidget(props: LearningCalendarWidgetProps): Reac
             <Text style={styles.title}>学习日历</Text>
             <Text style={styles.rangeHint}>近90天</Text>
           </View>
-          {layout === 'drawer' ? (
-            <Pressable
-              accessibilityRole="button"
-              hitSlop={8}
-              onPress={(event) => {
-                event.stopPropagation();
-                openCalendar();
-              }}
-            >
-              <Text style={styles.viewAll}>查看全部 ›</Text>
-            </Pressable>
-          ) : null}
         </View>
 
         <View style={styles.statsRow}>
@@ -260,11 +213,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   rangeHint: {
-    color: colors.textMuted,
-    fontSize: 11,
-    fontWeight: '400',
-  },
-  viewAll: {
     color: colors.textMuted,
     fontSize: 11,
     fontWeight: '400',

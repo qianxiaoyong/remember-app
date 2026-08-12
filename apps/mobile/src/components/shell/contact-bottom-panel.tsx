@@ -1,6 +1,18 @@
 import type { ReactElement } from 'react';
-import { useEffect, useRef } from 'react';
-import { Alert, Animated, Easing, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import {
+  Alert,
+  Animated,
+  Easing,
+  Image,
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import { saveContactQrCode } from '../../use-cases/save-contact-qr-code';
+import { contactOfficialQrCodeSource } from '../../assets/contact-official-qrcode';
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
 
@@ -14,6 +26,7 @@ interface ContactBottomPanelProps {
 
 export function ContactBottomPanel(props: ContactBottomPanelProps): ReactElement {
   const slideAnim = useRef(new Animated.Value(SLIDE_DISTANCE)).current;
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     if (props.visible) {
@@ -36,7 +49,26 @@ export function ContactBottomPanel(props: ContactBottomPanelProps): ReactElement
   }, [props.visible, slideAnim]);
 
   const handleSaveQr = (): void => {
-    Alert.alert('保存二维码', '客服二维码即将开放');
+    if (isSaving) {
+      return;
+    }
+
+    setIsSaving(true);
+    void saveContactQrCode()
+      .then((result) => {
+        if (result === 'saved') {
+          Alert.alert('已保存', '二维码已保存到相册');
+          return;
+        }
+        if (result === 'permission_denied') {
+          Alert.alert('无法保存', '请在系统设置中允许保存到相册');
+          return;
+        }
+        Alert.alert('保存失败', '请稍后重试');
+      })
+      .finally(() => {
+        setIsSaving(false);
+      });
   };
 
   return (
@@ -70,17 +102,24 @@ export function ContactBottomPanel(props: ContactBottomPanelProps): ReactElement
           </Pressable>
         </View>
 
-        <View accessibilityLabel="客服二维码占位" style={styles.qrPlaceholder}>
-          <Text style={styles.qrPlaceholderText}>QR</Text>
-        </View>
+        <Image
+          accessibilityLabel="客服二维码"
+          source={contactOfficialQrCodeSource}
+          style={styles.qrImage}
+        />
 
         <View style={styles.steps}>
           <Text style={styles.stepText}>1. 保存二维码至本地相册</Text>
           <Text style={styles.stepText}>2. 打开微信识别二维码</Text>
         </View>
 
-        <Pressable accessibilityRole="button" onPress={handleSaveQr} style={styles.saveButton}>
-          <Text style={styles.saveButtonText}>保存二维码</Text>
+        <Pressable
+          accessibilityRole="button"
+          disabled={isSaving}
+          onPress={handleSaveQr}
+          style={[styles.saveButton, isSaving ? styles.saveButtonDisabled : null]}
+        >
+          <Text style={styles.saveButtonText}>{isSaving ? '保存中…' : '保存二维码'}</Text>
         </Pressable>
       </Animated.View>
     </View>
@@ -144,21 +183,11 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     marginTop: -1,
   },
-  qrPlaceholder: {
-    alignItems: 'center',
+  qrImage: {
     alignSelf: 'center',
-    backgroundColor: colors.surface,
-    borderColor: colors.border,
     borderRadius: 12,
-    borderWidth: StyleSheet.hairlineWidth,
     height: 200,
-    justifyContent: 'center',
     width: 200,
-  },
-  qrPlaceholderText: {
-    color: colors.textMuted,
-    fontSize: 28,
-    fontWeight: '600',
   },
   steps: {
     gap: spacing.sm,
@@ -175,6 +204,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     minHeight: 48,
     paddingHorizontal: spacing.lg,
+  },
+  saveButtonDisabled: {
+    opacity: 0.6,
   },
   saveButtonText: {
     color: colors.surface,

@@ -4,7 +4,6 @@ import { Alert, ScrollView, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import type { DrawerCommonFeatureItem, DrawerMenuItem } from '../../shell/drawer-menu-config';
 import { drawerCommonFeatures, drawerMenuItems } from '../../shell/drawer-menu-config';
-import { markDrawerReturnPending } from '../../shell/drawer-return-intent';
 import { useShellActions } from '../../shell/shell-provider';
 import { DrawerAccountHeader, DrawerAccountHeaderLoading } from '../shell/drawer-account-header';
 import { DrawerCommonFeaturesBlock } from '../shell/drawer-common-features-block';
@@ -15,13 +14,7 @@ import { resolveUserDisplayName } from '../../lib/resolve-user-display-name';
 import { useSessionKickAlert } from '../../hooks/use-session-kick-alert';
 import { spacing } from '../../theme/spacing';
 
-interface ProfileScreenBodyProps {
-  /** 从抽屉打开时为 true，子页返回时恢复抽屉。 */
-  fromDrawer?: boolean;
-  drawerVisible?: boolean;
-}
-
-export function ProfileScreenBody(props: ProfileScreenBodyProps): ReactElement {
+export function ProfileScreenBody(): ReactElement {
   const router = useRouter();
   const { openContactPanel } = useShellActions();
   const { user, isLoading, isNotMainDevice, refresh } = useAuthSession();
@@ -30,13 +23,6 @@ export function ProfileScreenBody(props: ProfileScreenBodyProps): ReactElement {
   useEffect(() => {
     void refresh({ showLoading: false });
   }, [refresh]);
-
-  const navigateFromProfile = (route: string): void => {
-    if (props.fromDrawer) {
-      markDrawerReturnPending();
-    }
-    router.push(route);
-  };
 
   const handleMenuItemPress = (item: DrawerMenuItem): void => {
     if (item.id === 'contact') {
@@ -50,7 +36,7 @@ export function ProfileScreenBody(props: ProfileScreenBodyProps): ReactElement {
     }
 
     if (item.route) {
-      navigateFromProfile(item.route);
+      router.push(item.route);
     }
   };
 
@@ -61,22 +47,16 @@ export function ProfileScreenBody(props: ProfileScreenBodyProps): ReactElement {
     }
 
     if (item.id === 'redeem' && !user) {
-      if (props.fromDrawer) {
-        markDrawerReturnPending();
-      }
       router.push('/login?returnTo=%2Fredeem');
       return;
     }
 
     if (item.route) {
-      navigateFromProfile(item.route);
+      router.push(item.route);
     }
   };
 
   const handleAccountPress = (): void => {
-    if (props.fromDrawer) {
-      markDrawerReturnPending();
-    }
     if (user) {
       router.push('/account');
       return;
@@ -101,11 +81,7 @@ export function ProfileScreenBody(props: ProfileScreenBodyProps): ReactElement {
         showsVerticalScrollIndicator={false}
         style={styles.menuScroll}
       >
-        {props.fromDrawer ? (
-          <LearningCalendarWidget drawerVisible={props.drawerVisible ?? false} layout="drawer" />
-        ) : (
-          <LearningCalendarWidget layout="page" />
-        )}
+        <LearningCalendarWidget />
         <DrawerCommonFeaturesBlock
           items={drawerCommonFeatures}
           onItemPress={handleCommonFeaturePress}

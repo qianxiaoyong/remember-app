@@ -8,7 +8,7 @@ import {
   resolveShellTabFromPathname,
   type ShellTab,
 } from '../../src/shell/shell-tab-transition';
-import { ShellProvider, useShellActions, useTabBarVisible } from '../../src/shell/shell-provider';
+import { ShellProvider, useTabBarVisible } from '../../src/shell/shell-provider';
 import { colors } from '../../src/theme/colors';
 
 const SHELL_TAB_HREF: Record<ShellTab, `/library` | `/review` | `/record` | `/profile`> = {
@@ -29,7 +29,6 @@ export default function ShellLayout(): ReactElement {
 function ShellTabBarHost(): ReactElement | null {
   const pathname = usePathname();
   const router = useRouter();
-  const { closeDrawer } = useShellActions();
   const tabBarVisible = useTabBarVisible();
   const activeTab = resolveShellTabFromPathname(pathname);
 
@@ -41,7 +40,6 @@ function ShellTabBarHost(): ReactElement | null {
     <ShellTabBar
       activeTab={activeTab}
       onTabPress={(tab) => {
-        closeDrawer();
         const target = SHELL_TAB_HREF[tab];
         if (pathname.includes(target)) {
           return;

@@ -44,7 +44,15 @@
       "./plugins/with-android-splash-brand.js",
       "./plugins/with-android-bundle-in-debug.js",
       "expo-audio",
-      "expo-secure-store"
+      "expo-secure-store",
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "允许「记得」将客服二维码保存到相册。",
+          "savePhotosPermission": "允许「记得」将客服二维码保存到相册。",
+          "isAccessMediaLocationEnabled": false
+        }
+      ]
     ]
   }
 }
