@@ -9,6 +9,7 @@ export const spacing = {
   capsuleBottom: 108,
   tabBarHeight: 40,
   tabBarBottom: 64,
-  cardRadius: 20,
+  cardRadius: 12,
+  modalRadius: 20,
   touchTarget: 44,
 } as const;

@@ -47,9 +47,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   overlay: {
-    ...StyleSheet.absoluteFill,
+    ...StyleSheet.absoluteFillObject,
     pointerEvents: 'box-none',
-    zIndex: 100,
-    ...(Platform.OS === 'android' ? { elevation: 100 } : null),
+    zIndex: 10,
+    ...(Platform.OS === 'android' ? { elevation: 10 } : null),
   },
 });

@@ -5,11 +5,12 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LibraryHomeWhiteCard } from '../components/library/library-home-white-card';
+import { LibraryHomeEmptyWhiteCard } from '../components/library/library-home-empty-white-card';
 import { LibraryInstalledPackShelf } from '../components/library/library-installed-pack-shelf';
+import { LibraryEmptyPackShelfPlaceholder } from '../components/library/library-empty-pack-shelf-placeholder';
 import { LibrarySectionHeader } from '../components/library/library-section-header';
 import { AppHeader } from '../components/shell/app-header';
 import { ScreenScaffold } from '../components/shell/screen-scaffold';
-import { PrimaryButton } from '../components/ui/primary-button';
 import { useShellTabHardwareBackHandler } from '../hooks/use-shell-tab-hardware-back-handler';
 import { consumeLibraryNeedsRefresh } from '../shell/library-refresh-signal';
 import {
@@ -148,16 +149,16 @@ export function LibraryScreen(): ReactElement {
                 <Text style={styles.placeholderText}>加载中…</Text>
               </View>
             ) : installedPacks.length === 0 ? (
-              <View style={[styles.gradientPlaceholder, styles.emptyBlock]}>
-                <Text style={styles.placeholderText}>还没有安装知识库</Text>
-                <PrimaryButton
-                  borderRadius={8}
-                  label="去资料看看"
-                  onPress={() => {
-                    router.push('/market');
-                  }}
-                  variant="surface"
-                />
+              <View
+                onLayout={(event) => {
+                  handleWhiteCardLayout(
+                    event.nativeEvent.layout.y,
+                    event.nativeEvent.layout.height,
+                  );
+                }}
+                style={styles.whiteCardWrap}
+              >
+                <LibraryHomeEmptyWhiteCard overview={overview} />
               </View>
             ) : activePack ? (
               <View
@@ -184,16 +185,24 @@ export function LibraryScreen(): ReactElement {
           </View>
         </View>
 
-        {!isLibraryLoading && installedPacks.length > 0 ? (
+        {!isLibraryLoading ? (
           <View style={styles.installedSection}>
             <View style={styles.installedHeaderWrap}>
               <LibrarySectionHeader totalCards={overview.totalCards} />
             </View>
-            <LibraryInstalledPackShelf
-              onDetailPress={openPackDetail}
-              onPackPress={openStudy}
-              packs={installedPacks}
-            />
+            {installedPacks.length > 0 ? (
+              <LibraryInstalledPackShelf
+                onDetailPress={openPackDetail}
+                onPackPress={openStudy}
+                packs={installedPacks}
+              />
+            ) : (
+              <LibraryEmptyPackShelfPlaceholder
+                onBrowsePress={() => {
+                  router.push('/market');
+                }}
+              />
+            )}
           </View>
         ) : null}
       </ScrollView>
@@ -230,9 +239,6 @@ const styles = StyleSheet.create({
     minHeight: 160,
     paddingBottom: spacing.lg,
     paddingHorizontal: CONTENT_HORIZONTAL_PADDING,
-  },
-  emptyBlock: {
-    gap: spacing.md,
   },
   placeholderText: {
     color: colors.textPrimary,

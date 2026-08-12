@@ -51,6 +51,9 @@ describe('getLearningActivitySummary', () => {
     const bottomRight = summary.heatGrid[6]?.[11];
     expect(bottomRight?.localDate).toBe('2026-08-31');
 
+    const aug30 = summary.heatGrid[5]?.[11];
+    expect(aug30?.localDate).toBe('2026-08-30');
+
     const todayCell = summary.heatGrid.flat().find((cell) => cell.localDate === '2026-08-09');
     expect(todayCell?.isToday).toBe(true);
     expect(todayCell?.level).toBe(2);

@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useReviewTabBadge } from '../../hooks/use-review-tab-badge';
 import type { ShellTab } from '../../shell/shell-tab-transition';
@@ -103,6 +103,8 @@ const styles = StyleSheet.create({
     left: 0,
     position: 'absolute',
     right: 0,
+    zIndex: 50,
+    ...(Platform.OS === 'android' ? { elevation: 50 } : null),
   },
   bar: {
     flexDirection: 'row',

@@ -9,7 +9,9 @@ import { AppHeader } from '../components/shell/app-header';
 import { ScreenScaffold } from '../components/shell/screen-scaffold';
 import { TabPageTopSpacer } from '../components/shell/tab-page-top-spacer';
 import { LearningCalendarDayDetailPanel } from '../components/calendar/learning-calendar-day-detail';
+import { buildMonthGridCells } from '../components/calendar/learning-calendar-month-grid';
 import { LearningCalendarMonth } from '../components/calendar/learning-calendar-month';
+import { SurfaceCard } from '../components/ui/surface-card';
 import { listEventsInDateRange } from '../data/repositories/learning-activity-event-repository';
 import { getLearningCalendarDayDetail } from '../use-cases/get-learning-calendar-day-detail';
 import { getDeviceTimeZone } from '../lib/get-device-time-zone';
@@ -80,24 +82,26 @@ export function LearningCalendarScreen(props: LearningCalendarScreenProps): Reac
         showsVerticalScrollIndicator={false}
         style={styles.scroll}
       >
-        <LearningCalendarMonth
-          heatByDate={heatByDate}
-          month={month}
-          onNextMonth={() => {
-            shiftMonth(1);
-          }}
-          onPrevMonth={() => {
-            shiftMonth(-1);
-          }}
-          onSelectDate={(localDate) => {
-            setSelectedDate(localDate);
-            const parts = parseLocalDate(localDate);
-            setYear(parts.year);
-            setMonth(parts.month);
-          }}
-          selectedDate={selectedDate}
-          year={year}
-        />
+        <SurfaceCard contentPadding={spacing.lg}>
+          <LearningCalendarMonth
+            heatByDate={heatByDate}
+            month={month}
+            onNextMonth={() => {
+              shiftMonth(1);
+            }}
+            onPrevMonth={() => {
+              shiftMonth(-1);
+            }}
+            onSelectDate={(localDate) => {
+              setSelectedDate(localDate);
+              const parts = parseLocalDate(localDate);
+              setYear(parts.year);
+              setMonth(parts.month);
+            }}
+            selectedDate={selectedDate}
+            year={year}
+          />
+        </SurfaceCard>
         <LearningCalendarDayDetailPanel detail={dayDetail} />
       </ScrollView>
     </ScreenScaffold>
@@ -110,10 +114,14 @@ function parseLocalDate(localDate: string): { year: number; month: number; day: 
 }
 
 function buildMonthHeatMap(year: number, month: number): Map<string, HeatLevel> {
-  const monthStr = String(month).padStart(2, '0');
-  const startDate = `${String(year)}-${monthStr}-01`;
-  const endDate = `${String(year)}-${monthStr}-${String(new Date(year, month, 0).getDate()).padStart(2, '0')}`;
-  const events = listEventsInDateRange(startDate, endDate);
+  const cells = buildMonthGridCells(year, month);
+  const firstCell = cells[0];
+  const lastCell = cells[cells.length - 1];
+  if (!firstCell || !lastCell) {
+    return new Map();
+  }
+
+  const events = listEventsInDateRange(firstCell.localDate, lastCell.localDate);
   const byDate = new Map<string, string[]>();
 
   for (const event of events) {

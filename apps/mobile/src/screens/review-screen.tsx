@@ -65,9 +65,9 @@ export function ReviewScreen(props: {
     setRevealed,
     handlePassed,
     handleFailed,
-    handleSkipUnloaded,
     setDailyReviewLimit,
-    startReview,
+    completedRound,
+    clearCompletedRound,
     openLexicon,
     handleToggleSave,
     handlePlayLexiconAudio,
@@ -81,9 +81,9 @@ export function ReviewScreen(props: {
         session: inspectKnowledgeId ? { currentItem: { knowledgeId: inspectKnowledgeId } } : null,
         summary: normalFlow.summary,
         ...inspectFlow,
-        handleSkipUnloaded: normalFlow.handleSkipUnloaded,
         setDailyReviewLimit: normalFlow.setDailyReviewLimit,
-        startReview: normalFlow.startReview,
+        completedRound: normalFlow.completedRound,
+        clearCompletedRound: normalFlow.clearCompletedRound,
       }
     : normalFlow;
 
@@ -183,10 +183,30 @@ export function ReviewScreen(props: {
       );
     }
 
-    if (summary.dueTotal === 0) {
+    if (completedRound) {
+      const total = completedRound.passed + completedRound.failed;
+      return (
+        <View style={styles.empty}>
+          <Text style={styles.emptyText}>今日复习已完成</Text>
+          <Text style={styles.emptyHint}>
+            本次完成 {total} 词 · 记住了 {completedRound.passed} · 还不熟 {completedRound.failed}
+          </Text>
+          <PrimaryButton
+            label="回学习"
+            onPress={() => {
+              clearCompletedRound();
+              router.replace('/library');
+            }}
+          />
+        </View>
+      );
+    }
+
+    if (summary.reviewableDueTotal === 0) {
       return (
         <View style={styles.empty}>
           <Text style={styles.emptyText}>暂无到期复习词</Text>
+          <Text style={styles.emptyHint}>新加入复习的词会在这里出现</Text>
           <PrimaryButton
             label="去学习"
             onPress={() => {
@@ -197,39 +217,30 @@ export function ReviewScreen(props: {
       );
     }
 
-    if (hasCurrentItem && !canLoadCurrent) {
+    if (!hasSession && summary.remainingQuota === 0) {
       return (
         <View style={styles.empty}>
-          <Text style={styles.emptyText}>无法加载此复习词</Text>
-          <Text style={styles.emptyHint}>来源学习包可能已卸载或内容损坏</Text>
-          <PrimaryButton disabled={isSubmitting} label="跳过" onPress={handleSkipUnloaded} />
-        </View>
-      );
-    }
-
-    if (!hasCurrentItem && summary.remainingQuota === 0) {
-      return (
-        <View style={styles.empty}>
-          <Text style={styles.emptyText}>今日复习配额已用完</Text>
-          <PrimaryButton label="刷新" onPress={startReview} />
-        </View>
-      );
-    }
-
-    if (!hasCurrentItem && summary.remainingQuota > 0) {
-      return (
-        <View style={styles.empty}>
-          <Text style={styles.emptyText}>暂无可复习的词</Text>
-          <Text style={styles.emptyHint}>到期词条可能来自已卸载的学习包</Text>
-          <PrimaryButton label="刷新" onPress={startReview} />
+          <Text style={styles.emptyText}>今日复习已达上限</Text>
+          <Text style={styles.emptyHint}>明天继续，或在设置中调整每日上限</Text>
+          <PrimaryButton
+            label="回学习"
+            onPress={() => {
+              router.replace('/library');
+            }}
+          />
         </View>
       );
     }
 
     return (
       <View style={styles.empty}>
-        <Text style={styles.emptyText}>今日复习配额已用完</Text>
-        <PrimaryButton label="刷新" onPress={startReview} />
+        <Text style={styles.emptyText}>暂无到期复习词</Text>
+        <PrimaryButton
+          label="去学习"
+          onPress={() => {
+            router.replace('/library');
+          }}
+        />
       </View>
     );
   };

@@ -1,88 +1,92 @@
 import type { ReactElement } from 'react';
 import { useEffect, useRef } from 'react';
-import { Animated, Dimensions, Easing, Pressable, StyleSheet, Text, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import {
+  Alert,
+  Animated,
+  Easing,
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
 
-const DRAWER_WIDTH_RATIO = 0.86;
-const SLIDE_DURATION_MS = 260;
+const SLIDE_DISTANCE = 360;
+const ANIMATION_MS = 260;
 
 interface ContactBottomPanelProps {
   visible: boolean;
   onClose: () => void;
 }
 
-export function ContactBottomPanel(props: ContactBottomPanelProps): ReactElement | null {
-  const insets = useSafeAreaInsets();
-  const panelWidth = Dimensions.get('window').width * DRAWER_WIDTH_RATIO;
-  const slideAnim = useRef(new Animated.Value(320)).current;
-  const backdropAnim = useRef(new Animated.Value(0)).current;
+export function ContactBottomPanel(props: ContactBottomPanelProps): ReactElement {
+  const slideAnim = useRef(new Animated.Value(SLIDE_DISTANCE)).current;
 
   useEffect(() => {
     if (props.visible) {
-      slideAnim.setValue(320);
-      backdropAnim.setValue(0);
-      Animated.parallel([
-        Animated.timing(slideAnim, {
-          duration: SLIDE_DURATION_MS,
-          easing: Easing.out(Easing.cubic),
-          toValue: 0,
-          useNativeDriver: true,
-        }),
-        Animated.timing(backdropAnim, {
-          duration: SLIDE_DURATION_MS,
-          easing: Easing.out(Easing.cubic),
-          toValue: 1,
-          useNativeDriver: true,
-        }),
-      ]).start();
+      slideAnim.setValue(SLIDE_DISTANCE);
+      Animated.timing(slideAnim, {
+        duration: ANIMATION_MS,
+        easing: Easing.out(Easing.cubic),
+        toValue: 0,
+        useNativeDriver: true,
+      }).start();
       return;
     }
 
-    Animated.parallel([
-      Animated.timing(slideAnim, {
-        duration: SLIDE_DURATION_MS,
-        easing: Easing.in(Easing.cubic),
-        toValue: 320,
-        useNativeDriver: true,
-      }),
-      Animated.timing(backdropAnim, {
-        duration: SLIDE_DURATION_MS,
-        easing: Easing.in(Easing.cubic),
-        toValue: 0,
-        useNativeDriver: true,
-      }),
-    ]).start();
-  }, [backdropAnim, props.visible, slideAnim]);
+    Animated.timing(slideAnim, {
+      duration: ANIMATION_MS,
+      easing: Easing.in(Easing.cubic),
+      toValue: SLIDE_DISTANCE,
+      useNativeDriver: true,
+    }).start();
+  }, [props.visible, slideAnim]);
 
-  if (!props.visible) {
-    return null;
-  }
+  const handleSaveQr = (): void => {
+    Alert.alert('保存二维码', '客服二维码即将开放');
+  };
 
   return (
-    <View pointerEvents="box-none" style={styles.host}>
-      <Animated.View
-        pointerEvents="box-none"
-        style={[styles.backdropWrap, { opacity: backdropAnim }]}
-      >
-        <Pressable accessibilityRole="button" onPress={props.onClose} style={styles.backdrop} />
-      </Animated.View>
+    <View collapsable={false} style={styles.host}>
+      <Pressable accessibilityRole="button" onPress={props.onClose} style={styles.backdrop}>
+        <View style={styles.backdropFill} />
+      </Pressable>
 
       <Animated.View
         style={[
           styles.panel,
           {
-            paddingBottom: insets.bottom + spacing.lg,
             transform: [{ translateY: slideAnim }],
-            width: panelWidth,
           },
         ]}
       >
-        <Text style={styles.description}>扫码联系客服（占位）</Text>
+        <View style={styles.titleRow}>
+          <Text style={styles.title}>联系我们</Text>
+          <Pressable
+            accessibilityLabel="关闭"
+            accessibilityRole="button"
+            hitSlop={8}
+            onPress={props.onClose}
+            style={styles.closeButton}
+          >
+            <Text style={styles.closeButtonText}>×</Text>
+          </Pressable>
+        </View>
+
         <View accessibilityLabel="客服二维码占位" style={styles.qrPlaceholder}>
           <Text style={styles.qrPlaceholderText}>QR</Text>
         </View>
+
+        <View style={styles.steps}>
+          <Text style={styles.stepText}>1. 保存二维码至本地相册</Text>
+          <Text style={styles.stepText}>2. 打开微信识别二维码</Text>
+        </View>
+
+        <Pressable accessibilityRole="button" onPress={handleSaveQr} style={styles.saveButton}>
+          <Text style={styles.saveButtonText}>保存二维码</Text>
+        </Pressable>
       </Animated.View>
     </View>
   );
@@ -90,36 +94,65 @@ export function ContactBottomPanel(props: ContactBottomPanelProps): ReactElement
 
 const styles = StyleSheet.create({
   host: {
-    ...StyleSheet.absoluteFill,
-    justifyContent: 'flex-end',
-    zIndex: 110,
-  },
-  backdropWrap: {
-    ...StyleSheet.absoluteFill,
+    ...StyleSheet.absoluteFillObject,
   },
   backdrop: {
+    ...StyleSheet.absoluteFillObject,
+    zIndex: 1,
+    ...(Platform.OS === 'android' ? { elevation: 24 } : null),
+  },
+  backdropFill: {
+    ...StyleSheet.absoluteFillObject,
     backgroundColor: colors.overlay,
-    flex: 1,
   },
   panel: {
-    alignSelf: 'flex-start',
-    backgroundColor: colors.background,
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
+    backgroundColor: colors.surface,
+    borderTopLeftRadius: spacing.modalRadius,
+    borderTopRightRadius: spacing.modalRadius,
+    bottom: 0,
     gap: spacing.lg,
+    left: 0,
+    paddingBottom: spacing.lg,
     paddingHorizontal: spacing.lg,
-    paddingTop: spacing.xl,
+    paddingTop: spacing.lg,
+    position: 'absolute',
+    right: 0,
+    zIndex: 2,
+    ...(Platform.OS === 'android' ? { elevation: 25 } : null),
   },
-  description: {
+  titleRow: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 32,
+  },
+  title: {
     color: colors.textPrimary,
-    fontSize: 16,
-    lineHeight: 24,
+    fontSize: 17,
+    fontWeight: '600',
     textAlign: 'center',
+  },
+  closeButton: {
+    alignItems: 'center',
+    backgroundColor: colors.statTileBackground,
+    borderRadius: 999,
+    height: 28,
+    justifyContent: 'center',
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    width: 28,
+  },
+  closeButtonText: {
+    color: colors.textSecondary,
+    fontSize: 18,
+    fontWeight: '400',
+    lineHeight: 20,
+    marginTop: -1,
   },
   qrPlaceholder: {
     alignItems: 'center',
     alignSelf: 'center',
-    backgroundColor: colors.statTileBackground,
+    backgroundColor: colors.surface,
     borderColor: colors.border,
     borderRadius: 12,
     borderWidth: StyleSheet.hairlineWidth,
@@ -130,6 +163,27 @@ const styles = StyleSheet.create({
   qrPlaceholderText: {
     color: colors.textMuted,
     fontSize: 28,
+    fontWeight: '600',
+  },
+  steps: {
+    gap: spacing.sm,
+  },
+  stepText: {
+    color: colors.textSecondary,
+    fontSize: 13,
+    lineHeight: 20,
+  },
+  saveButton: {
+    alignItems: 'center',
+    backgroundColor: colors.textPrimary,
+    borderRadius: 10,
+    justifyContent: 'center',
+    minHeight: 48,
+    paddingHorizontal: spacing.lg,
+  },
+  saveButtonText: {
+    color: colors.surface,
+    fontSize: 16,
     fontWeight: '600',
   },
 });
