@@ -54,6 +54,7 @@ vi.mock('./resolve-review-card-context', () => ({
 import { listDueReviewPoolItems } from '../data/repositories/learning-state-repository';
 import { insertQueueItems } from '../data/repositories/study-session-repository';
 import { findActiveReviewSession } from './find-active-review-session';
+import { resolveReviewCardContext } from './resolve-review-card-context';
 import { resumeOrStartReviewSession } from './resume-or-start-review-session';
 
 const now = new Date('2026-08-06T15:00:00+08:00');
@@ -87,5 +88,24 @@ describe('resumeOrStartReviewSession', () => {
     expect(session.sessionId).toBe('session-1');
     expect(session.totalCount).toBe(2);
     expect(insertQueueItems).toHaveBeenCalledOnce();
+  });
+
+  it('先过滤无法加载词条，再按剩余配额建队', () => {
+    vi.mocked(resolveReviewCardContext).mockImplementation((knowledgeId: string) =>
+      knowledgeId === 'word-3' || knowledgeId === 'word-4'
+        ? { sourcePackId: 'remember-test-pack' }
+        : null,
+    );
+
+    const session = resumeOrStartReviewSession(now);
+
+    expect(session.totalCount).toBe(2);
+    expect(insertQueueItems).toHaveBeenCalledWith(
+      [
+        expect.objectContaining({ knowledgeId: 'word-3', sortOrder: 1 }),
+        expect.objectContaining({ knowledgeId: 'word-4', sortOrder: 2 }),
+      ],
+      expect.anything(),
+    );
   });
 });

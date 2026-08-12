@@ -274,6 +274,7 @@ export function StudyScreen(props: StudyScreenProps): ReactElement {
         ) : cardDetail ? (
           cardTypeDefinition ? (
             <cardTypeDefinition.Renderer
+              key={`${activePackId}:${activeKnowledgeId ?? 'none'}`}
               content={cardDetail.content}
               knowledgeId={cardDetail.knowledgeId}
               lexiconSelectedSurfaceForm={lexiconSelectedSurfaceForm}

@@ -58,7 +58,7 @@ function ShellLayoutInner(): ReactElement {
           screenOptions={{
             animation: 'none',
             headerShown: false,
-            lazy: true,
+            lazy: false,
             sceneStyle: {
               backgroundColor: colors.background,
             },

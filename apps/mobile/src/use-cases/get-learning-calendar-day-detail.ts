@@ -52,15 +52,38 @@ function toDayItem(
   };
 }
 
-function classifyFirstRevealOnDate(row: LearningActivityEventRow): FirstRevealSubCategory {
-  const sameDayEvents = listEventsByLocalDate(row.localDate).filter(
-    (event) => event.packId === row.packId && event.knowledgeId === row.knowledgeId,
-  );
+function wordEventKey(packId: string, knowledgeId: string | null): string {
+  return `${packId}:${knowledgeId ?? ''}`;
+}
+
+function groupEventsByWord(
+  dayEvents: readonly LearningActivityEventRow[],
+): Map<string, LearningActivityEventRow[]> {
+  const grouped = new Map<string, LearningActivityEventRow[]>();
+  for (const event of dayEvents) {
+    const key = wordEventKey(event.packId, event.knowledgeId);
+    const list = grouped.get(key);
+    if (list) {
+      list.push(event);
+    } else {
+      grouped.set(key, [event]);
+    }
+  }
+  return grouped;
+}
+
+function classifyFirstRevealOnDate(
+  row: LearningActivityEventRow,
+  eventsByWord: ReadonlyMap<string, LearningActivityEventRow[]>,
+): FirstRevealSubCategory {
+  const sameDayEvents = eventsByWord.get(wordEventKey(row.packId, row.knowledgeId)) ?? [];
   return classifyFirstRevealSubCategory(sameDayEvents);
 }
 
 function buildFirstContactSection(localDate: string): CalendarDayDetail['firstContact'] {
-  const firstReveals = listEventsByLocalDate(localDate).filter(
+  const dayEvents = listEventsByLocalDate(localDate);
+  const eventsByWord = groupEventsByWord(dayEvents);
+  const firstReveals = dayEvents.filter(
     (event) => event.eventType === LearningActivityEventType.VOCABULARY_FIRST_REVEAL,
   );
 
@@ -69,7 +92,7 @@ function buildFirstContactSection(localDate: string): CalendarDayDetail['firstCo
   const skipped: CalendarDayItem[] = [];
 
   for (const row of firstReveals) {
-    const subCategory = classifyFirstRevealOnDate(row);
+    const subCategory = classifyFirstRevealOnDate(row, eventsByWord);
     const item = toDayItem(row, { subCategory });
     if (subCategory === 'joined_review') {
       joinedReview.push(item);

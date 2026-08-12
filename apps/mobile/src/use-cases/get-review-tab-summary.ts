@@ -6,6 +6,7 @@ import {
 import { getReviewDailyStats } from '../data/repositories/review-daily-stats-repository';
 import { getDailyReviewLimit } from '../data/repositories/user-preferences-repository';
 import { getDeviceTimeZone } from '../lib/get-device-time-zone';
+import { getReviewPoolVersion } from '../shell/review-pool-changed-signal';
 import { countReviewableDueReviewPoolItems } from './count-reviewable-pool-items';
 
 export interface ReviewTabSummary {
@@ -19,7 +20,30 @@ export interface ReviewTabSummary {
   joinedPoolCountToday: number;
 }
 
+let summaryCache: ReviewTabSummary | null = null;
+let summaryCacheVersion = -1;
+
+export function invalidateReviewTabSummaryCache(): void {
+  summaryCache = null;
+  summaryCacheVersion = -1;
+}
+
+export function bumpCachedReviewableDueTotal(delta: number): void {
+  if (!summaryCache || delta === 0) {
+    return;
+  }
+  summaryCache = {
+    ...summaryCache,
+    reviewableDueTotal: Math.max(0, summaryCache.reviewableDueTotal + delta),
+  };
+}
+
 export function getReviewTabSummary(now: Date = new Date()): ReviewTabSummary {
+  const version = getReviewPoolVersion();
+  if (summaryCache && summaryCacheVersion === version) {
+    return summaryCache;
+  }
+
   const timeZone = getDeviceTimeZone();
   const localDate = formatLocalReviewDate(now, timeZone);
   const dailyReviewLimit = getDailyReviewLimit();
@@ -30,7 +54,7 @@ export function getReviewTabSummary(now: Date = new Date()): ReviewTabSummary {
   const todayReviewCompleted = stats.reviewCompletedCount;
   const remainingQuota = Math.max(dailyReviewLimit - todayReviewCompleted, 0);
 
-  return {
+  summaryCache = {
     dueTotal,
     reviewableDueTotal,
     dailyReviewLimit,
@@ -38,4 +62,6 @@ export function getReviewTabSummary(now: Date = new Date()): ReviewTabSummary {
     remainingQuota,
     joinedPoolCountToday: stats.joinedPoolCount,
   };
+  summaryCacheVersion = version;
+  return summaryCache;
 }

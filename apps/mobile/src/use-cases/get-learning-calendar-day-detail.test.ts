@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 vi.mock('../data/repositories/learning-activity-event-repository', () => ({
   listEventsByLocalDate: vi.fn(),
@@ -8,6 +8,10 @@ import { listEventsByLocalDate } from '../data/repositories/learning-activity-ev
 import { getLearningCalendarDayDetail } from './get-learning-calendar-day-detail';
 
 describe('getLearningCalendarDayDetail', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
   it('groups first contact by subcategory on same day', () => {
     vi.mocked(listEventsByLocalDate).mockReturnValue([
       {
@@ -106,5 +110,24 @@ describe('getLearningCalendarDayDetail', () => {
     expect(detail.review.counts.total).toBe(2);
     expect(detail.review.remembered[0]?.knowledgeId).toBe('kid-2');
     expect(detail.review.notFamiliar[0]?.knowledgeId).toBe('kid-1');
+  });
+
+  it('loads same-day events once per section when classifying first contact words', () => {
+    vi.mocked(listEventsByLocalDate).mockReturnValue(
+      Array.from({ length: 5 }, (_, index) => ({
+        eventId: `reveal-${String(index)}`,
+        localDate: '2026-08-09',
+        occurredAt: `2026-08-09T10:0${String(index)}:00.000Z`,
+        eventType: 'vocabulary_first_reveal',
+        packId: 'pack-a',
+        knowledgeId: `kid-${String(index)}`,
+        displayLabel: `word-${String(index)}`,
+        payload: '{}',
+      })),
+    );
+
+    getLearningCalendarDayDetail('2026-08-09');
+
+    expect(listEventsByLocalDate).toHaveBeenCalledTimes(3);
   });
 });

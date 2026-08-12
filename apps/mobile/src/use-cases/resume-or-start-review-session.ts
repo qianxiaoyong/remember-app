@@ -50,10 +50,13 @@ export function resumeOrStartReviewSession(
   }
 
   const dueItems = listDueReviewPoolItems(now, timeZone);
+  const loadableDueItems = dueItems.filter(
+    (item) => resolveReviewCardContext(item.knowledgeId) !== null,
+  );
   const localDate = formatLocalReviewDate(now, timeZone);
   const stats = getReviewDailyStats(localDate);
   const plan = buildReviewSessionPlan({
-    dueItems: dueItems.map((item) => ({
+    dueItems: loadableDueItems.map((item) => ({
       knowledgeId: item.knowledgeId,
       dueAt: item.dueAt,
     })),
@@ -63,9 +66,7 @@ export function resumeOrStartReviewSession(
     timeZone,
   });
 
-  const loadableKnowledgeIds = plan.sessionKnowledgeIds.filter(
-    (knowledgeId) => resolveReviewCardContext(knowledgeId) !== null,
-  );
+  const loadableKnowledgeIds = plan.sessionKnowledgeIds;
 
   if (loadableKnowledgeIds.length === 0) {
     return buildActiveStudySession('empty', REVIEW_POOL_SESSION_PACK_ID, []);

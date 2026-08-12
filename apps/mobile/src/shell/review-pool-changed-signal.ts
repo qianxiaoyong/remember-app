@@ -1,10 +1,19 @@
-let reviewPoolVersion = 0;
-const listeners = new Set<() => void>();
+import { bumpCachedReviewableDueTotal, invalidateReviewTabSummaryCache } from '../use-cases/get-review-tab-summary';
 
-export function markReviewPoolChanged(): void {
+export type ReviewPoolChangeReason = 'refresh' | 'join_due';
+
+let reviewPoolVersion = 0;
+const listeners = new Set<(reason: ReviewPoolChangeReason) => void>();
+
+export function markReviewPoolChanged(reason: ReviewPoolChangeReason = 'refresh'): void {
   reviewPoolVersion += 1;
+  if (reason === 'join_due') {
+    bumpCachedReviewableDueTotal(1);
+  } else {
+    invalidateReviewTabSummaryCache();
+  }
   for (const listener of listeners) {
-    listener();
+    listener(reason);
   }
 }
 
@@ -12,7 +21,9 @@ export function getReviewPoolVersion(): number {
   return reviewPoolVersion;
 }
 
-export function subscribeReviewPoolChanged(listener: () => void): () => void {
+export function subscribeReviewPoolChanged(
+  listener: (reason: ReviewPoolChangeReason) => void,
+): () => void {
   listeners.add(listener);
   return () => {
     listeners.delete(listener);

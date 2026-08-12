@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { InteractionManager } from 'react-native';
 import { useFocusEffect } from 'expo-router';
 import { normalizeSurfaceForm } from '@remember/contracts';
 import type { LexiconLookupResult } from '../data/repositories/lexicon-entry-repository';
@@ -7,7 +8,11 @@ import {
   PREFERENCE_DAILY_REVIEW_LIMIT,
 } from '../data/repositories/user-preferences-repository';
 import { confirmReviewOutcome } from '../use-cases/confirm-review-outcome';
-import { getReviewTabSummary } from '../use-cases/get-review-tab-summary';
+import {
+  getReviewTabSummary,
+  invalidateReviewTabSummaryCache,
+  type ReviewTabSummary,
+} from '../use-cases/get-review-tab-summary';
 import { lookupLexiconToken } from '../use-cases/lookup-lexicon-token';
 import { playOrCacheLexiconAudio } from '../use-cases/play-or-cache-lexicon-audio';
 import { resolveReviewCardContext } from '../use-cases/resolve-review-card-context';
@@ -25,6 +30,15 @@ import {
 } from '../shell/review-pool-changed-signal';
 import { useVocabularyStudyAudio } from './use-vocabulary-study-audio';
 
+const EMPTY_REVIEW_SUMMARY: ReviewTabSummary = {
+  dueTotal: 0,
+  reviewableDueTotal: 0,
+  dailyReviewLimit: 20,
+  todayReviewCompleted: 0,
+  remainingQuota: 20,
+  joinedPoolCountToday: 0,
+};
+
 function sessionHasLoadableCurrentItem(session: ActiveStudySession | null): boolean {
   if (!session?.currentItem) {
     return false;
@@ -36,7 +50,7 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
   const enabled = options?.enabled !== false;
   const [isScreenFocused, setIsScreenFocused] = useState(false);
   const [session, setSession] = useState<ActiveStudySession | null>(null);
-  const [summary, setSummary] = useState(getReviewTabSummary());
+  const [summary, setSummary] = useState<ReviewTabSummary>(EMPTY_REVIEW_SUMMARY);
   const [revealed, setRevealed] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
@@ -47,7 +61,9 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
   const [audioMessage, setAudioMessage] = useState<string | null>(null);
   const needsSessionRefreshRef = useRef(true);
   const isScreenFocusedRef = useRef(false);
+  const sessionReadyRef = useRef(false);
   const roundStatsRef = useRef({ passed: 0, failed: 0 });
+  const [isStartingReview, setIsStartingReview] = useState(false);
   const [completedRound, setCompletedRound] = useState<{ passed: number; failed: number } | null>(
     null,
   );
@@ -67,6 +83,7 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
     setLexiconSelectedSurfaceForm(null);
     roundStatsRef.current = { passed: 0, failed: 0 };
     setCompletedRound(null);
+    setIsStartingReview(true);
     try {
       const forceRebuild = startOptions?.forceRebuild ?? needsSessionRefreshRef.current;
       const nextSession = resumeOrStartReviewSession(undefined, { forceRebuild });
@@ -75,6 +92,7 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
       setSummary(latestSummary);
       const hasLoadableItem = sessionHasLoadableCurrentItem(nextSession);
       needsSessionRefreshRef.current = false;
+      sessionReadyRef.current = hasLoadableItem || nextSession.sessionId === 'empty';
       if (
         !hasLoadableItem &&
         latestSummary.reviewableDueTotal > 0 &&
@@ -84,19 +102,40 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
       }
     } catch (error) {
       needsSessionRefreshRef.current = true;
+      sessionReadyRef.current = false;
       setMessage(error instanceof Error ? error.message : '无法开始复习');
+    } finally {
+      setIsStartingReview(false);
     }
   }, []);
 
-  useEffect(() => {
-    return subscribeReviewPoolChanged(() => {
+  const scheduleSessionRefresh = useCallback(
+    (forceRebuild: boolean) => {
       needsSessionRefreshRef.current = true;
-      refreshSummary();
+      sessionReadyRef.current = false;
+      const handle = InteractionManager.runAfterInteractions(() => {
+        if (!enabled || !isScreenFocusedRef.current) {
+          return;
+        }
+        startReview({ forceRebuild });
+      });
+      return handle;
+    },
+    [enabled, startReview],
+  );
+
+  useEffect(() => {
+    return subscribeReviewPoolChanged((reason) => {
+      if (reason !== 'join_due') {
+        invalidateReviewTabSummaryCache();
+      }
       if (enabled && isScreenFocusedRef.current) {
-        startReview({ forceRebuild: true });
+        scheduleSessionRefresh(true);
+      } else {
+        needsSessionRefreshRef.current = true;
       }
     });
-  }, [enabled, refreshSummary, startReview]);
+  }, [enabled, scheduleSessionRefresh]);
 
   useFocusEffect(
     useCallback(() => {
@@ -105,15 +144,21 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
       }
       setIsScreenFocused(true);
       isScreenFocusedRef.current = true;
-      refreshSummary();
-      if (needsSessionRefreshRef.current) {
-        startReview({ forceRebuild: true });
+
+      if (sessionReadyRef.current && !needsSessionRefreshRef.current) {
+        return () => {
+          setIsScreenFocused(false);
+          isScreenFocusedRef.current = false;
+        };
       }
+
+      const handle = scheduleSessionRefresh(needsSessionRefreshRef.current);
       return () => {
+        handle.cancel();
         setIsScreenFocused(false);
         isScreenFocusedRef.current = false;
       };
-    }, [enabled, refreshSummary, startReview]),
+    }, [enabled, scheduleSessionRefresh]),
   );
 
   const currentKnowledgeId = session?.currentItem?.knowledgeId ?? null;
@@ -241,6 +286,7 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
         setRevealed(false);
         refreshSummary();
         needsSessionRefreshRef.current = !sessionHasLoadableCurrentItem(nextSession);
+        sessionReadyRef.current = sessionHasLoadableCurrentItem(nextSession);
         if (!nextSession.currentItem) {
           const { passed, failed } = roundStatsRef.current;
           if (passed + failed > 0) {
@@ -275,6 +321,7 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
       setRevealed(false);
       refreshSummary();
       needsSessionRefreshRef.current = !sessionHasLoadableCurrentItem(nextSession);
+      sessionReadyRef.current = sessionHasLoadableCurrentItem(nextSession);
     } catch (error) {
       setMessage(error instanceof Error ? error.message : '跳过失败');
     } finally {
@@ -283,7 +330,7 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
   }, [currentKnowledgeId, refreshSummary, session?.sessionId]);
 
   useEffect(() => {
-    if (!enabled || !isScreenFocused || isSubmitting) {
+    if (!enabled || !isScreenFocused || isSubmitting || isStartingReview) {
       return;
     }
     if (session?.currentItem && !reviewContext?.cardDetail) {
@@ -293,6 +340,7 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
     enabled,
     handleSkipUnloaded,
     isScreenFocused,
+    isStartingReview,
     isSubmitting,
     reviewContext?.cardDetail,
     session?.currentItem,
@@ -306,6 +354,7 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
         value: String(clamped),
         updatedAt: new Date().toISOString(),
       });
+      invalidateReviewTabSummaryCache();
       refreshSummary();
       startReview({ forceRebuild: true });
     },
@@ -313,7 +362,7 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
   );
 
   const isSessionBootstrapping =
-    enabled && isScreenFocused && isSubmitting && summary.reviewableDueTotal > 0;
+    enabled && isScreenFocused && isStartingReview && summary.reviewableDueTotal > 0;
 
   return {
     session,

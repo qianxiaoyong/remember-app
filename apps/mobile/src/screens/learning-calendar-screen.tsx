@@ -46,8 +46,7 @@ export function LearningCalendarScreen(props: LearningCalendarScreenProps): Reac
   useFocusEffect(
     useCallback(() => {
       flushLearningCalendarNeedsRefresh();
-      bumpRefresh();
-    }, [bumpRefresh]),
+    }, []),
   );
 
   const heatByDate = useMemo(() => buildMonthHeatMap(year, month), [year, month, refreshKey]);

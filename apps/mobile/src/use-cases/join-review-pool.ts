@@ -16,6 +16,7 @@ import { openUserDatabase } from '../data/user-db/open-user-database';
 import { getDeviceTimeZone } from '../lib/get-device-time-zone';
 import { markReviewPoolChanged } from '../shell/review-pool-changed-signal';
 import { resolveContentPackId } from './resolve-content-pack-id';
+import { countsAsReviewableDueBadgeItem } from './counts-as-reviewable-due-badge-item';
 import { writeJoinReviewActivityEvent } from './write-activity-event-from-review';
 
 export type JoinReviewPoolResult = { status: 'created' } | { status: 'already_in_pool' };
@@ -98,7 +99,16 @@ export function joinReviewPool(input: {
     throw error;
   }
 
-  markReviewPoolChanged();
+  markReviewPoolChanged(
+    countsAsReviewableDueBadgeItem({
+      knowledgeId: input.knowledgeId,
+      dueAt: learningRow.dueAt,
+      now,
+      timeZone,
+    })
+      ? 'join_due'
+      : 'refresh',
+  );
 
   if (input.displayLabel) {
     writeJoinReviewActivityEvent({

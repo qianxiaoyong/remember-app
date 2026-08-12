@@ -35,10 +35,19 @@ vi.mock('./resolve-content-pack-id', () => ({
   resolveContentPackId: vi.fn((packId: string) => packId),
 }));
 
+vi.mock('./counts-as-reviewable-due-badge-item', () => ({
+  countsAsReviewableDueBadgeItem: vi.fn(() => true),
+}));
+
+vi.mock('../shell/review-pool-changed-signal', () => ({
+  markReviewPoolChanged: vi.fn(),
+}));
+
 import { getLearningStateByKnowledgeId } from '../data/repositories/learning-state-repository';
 import { incrementJoinedPoolCount } from '../data/repositories/review-daily-stats-repository';
 import { insertSyncOutboxItem } from '../data/repositories/sync-outbox-repository';
 import { upsertReviewPoolState } from '../data/repositories/learning-state-repository';
+import { markReviewPoolChanged } from '../shell/review-pool-changed-signal';
 import { joinReviewPool } from './join-review-pool';
 
 const now = new Date('2026-08-06T15:00:00+08:00');
@@ -61,6 +70,7 @@ describe('joinReviewPool', () => {
     expect(upsertReviewPoolState).toHaveBeenCalledOnce();
     expect(incrementJoinedPoolCount).toHaveBeenCalledOnce();
     expect(insertSyncOutboxItem).toHaveBeenCalledOnce();
+    expect(markReviewPoolChanged).toHaveBeenCalledWith('join_due');
   });
 
   it('已在复习池时返回 already_in_pool 且不改数据', () => {
@@ -89,5 +99,6 @@ describe('joinReviewPool', () => {
     expect(result).toEqual({ status: 'already_in_pool' });
     expect(upsertReviewPoolState).not.toHaveBeenCalled();
     expect(incrementJoinedPoolCount).not.toHaveBeenCalled();
+    expect(markReviewPoolChanged).not.toHaveBeenCalled();
   });
 });
