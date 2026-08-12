@@ -18,12 +18,22 @@ import { findActiveReviewSession } from './find-active-review-session';
 import { resolveReviewCardContext } from './resolve-review-card-context';
 import { REVIEW_POOL_SESSION_PACK_ID } from './review-session-constants';
 
-export function resumeOrStartReviewSession(now: Date = new Date()): ActiveStudySession {
+export function resumeOrStartReviewSession(
+  now: Date = new Date(),
+  options?: { forceRebuild?: boolean },
+): ActiveStudySession {
   const timeZone = getDeviceTimeZone();
   const activeSession = findActiveReviewSession();
   if (activeSession) {
     const pendingItems = listPendingQueueItemsForSession(activeSession.sessionId);
-    if (pendingItems.length > 0) {
+    const firstPending = pendingItems[0];
+    const canRestorePending =
+      !options?.forceRebuild &&
+      pendingItems.length > 0 &&
+      firstPending !== undefined &&
+      resolveReviewCardContext(firstPending.knowledgeId) !== null;
+
+    if (canRestorePending) {
       const allItems = listQueueItemsForSession(activeSession.sessionId);
       return buildActiveStudySession(
         activeSession.sessionId,

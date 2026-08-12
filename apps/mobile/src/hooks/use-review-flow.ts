@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useFocusEffect } from 'expo-router';
 import { normalizeSurfaceForm } from '@remember/contracts';
-import { deferAfterFirstPaint } from '../lib/defer-after-first-paint';
 import type { LexiconLookupResult } from '../data/repositories/lexicon-entry-repository';
 import {
   setUserPreference,
@@ -25,6 +24,13 @@ import {
   subscribeReviewPoolChanged,
 } from '../shell/review-pool-changed-signal';
 import { useVocabularyStudyAudio } from './use-vocabulary-study-audio';
+
+function sessionHasLoadableCurrentItem(session: ActiveStudySession | null): boolean {
+  if (!session?.currentItem) {
+    return false;
+  }
+  return resolveReviewCardContext(session.currentItem.knowledgeId)?.cardDetail != null;
+}
 
 export function useReviewFlow(options?: { enabled?: boolean }) {
   const enabled = options?.enabled !== false;
@@ -54,7 +60,7 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
     setCompletedRound(null);
   }, []);
 
-  const startReview = useCallback(() => {
+  const startReview = useCallback((startOptions?: { forceRebuild?: boolean }) => {
     setMessage(null);
     setRevealed(false);
     setLexiconVisible(false);
@@ -62,21 +68,32 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
     roundStatsRef.current = { passed: 0, failed: 0 };
     setCompletedRound(null);
     try {
-      const nextSession = resumeOrStartReviewSession();
+      const forceRebuild = startOptions?.forceRebuild ?? needsSessionRefreshRef.current;
+      const nextSession = resumeOrStartReviewSession(undefined, { forceRebuild });
       setSession(nextSession);
-      refreshSummary();
+      const latestSummary = getReviewTabSummary();
+      setSummary(latestSummary);
+      const hasLoadableItem = sessionHasLoadableCurrentItem(nextSession);
       needsSessionRefreshRef.current = false;
+      if (
+        !hasLoadableItem &&
+        latestSummary.reviewableDueTotal > 0 &&
+        latestSummary.remainingQuota > 0
+      ) {
+        setMessage('无法加载到期复习词，请返回后重试');
+      }
     } catch (error) {
+      needsSessionRefreshRef.current = true;
       setMessage(error instanceof Error ? error.message : '无法开始复习');
     }
-  }, [refreshSummary]);
+  }, []);
 
   useEffect(() => {
     return subscribeReviewPoolChanged(() => {
       needsSessionRefreshRef.current = true;
       refreshSummary();
       if (enabled && isScreenFocusedRef.current) {
-        startReview();
+        startReview({ forceRebuild: true });
       }
     });
   }, [enabled, refreshSummary, startReview]);
@@ -89,15 +106,10 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
       setIsScreenFocused(true);
       isScreenFocusedRef.current = true;
       refreshSummary();
-      const cancelDefer = deferAfterFirstPaint(() => {
-        if (needsSessionRefreshRef.current) {
-          startReview();
-          return;
-        }
-        refreshSummary();
-      });
+      if (needsSessionRefreshRef.current) {
+        startReview({ forceRebuild: true });
+      }
       return () => {
-        cancelDefer();
         setIsScreenFocused(false);
         isScreenFocusedRef.current = false;
       };
@@ -228,6 +240,7 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
         setSession(nextSession);
         setRevealed(false);
         refreshSummary();
+        needsSessionRefreshRef.current = !sessionHasLoadableCurrentItem(nextSession);
         if (!nextSession.currentItem) {
           const { passed, failed } = roundStatsRef.current;
           if (passed + failed > 0) {
@@ -257,10 +270,11 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
         sessionId: session.sessionId,
         knowledgeId: currentKnowledgeId,
       });
-      const nextSession = resumeOrStartReviewSession();
+      const nextSession = resumeOrStartReviewSession(undefined, { forceRebuild: true });
       setSession(nextSession);
       setRevealed(false);
       refreshSummary();
+      needsSessionRefreshRef.current = !sessionHasLoadableCurrentItem(nextSession);
     } catch (error) {
       setMessage(error instanceof Error ? error.message : '跳过失败');
     } finally {
@@ -272,7 +286,7 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
     if (!enabled || !isScreenFocused || isSubmitting) {
       return;
     }
-    if (session?.currentItem && !reviewContext) {
+    if (session?.currentItem && !reviewContext?.cardDetail) {
       handleSkipUnloaded();
     }
   }, [
@@ -280,7 +294,7 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
     handleSkipUnloaded,
     isScreenFocused,
     isSubmitting,
-    reviewContext,
+    reviewContext?.cardDetail,
     session?.currentItem,
   ]);
 
@@ -293,10 +307,13 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
         updatedAt: new Date().toISOString(),
       });
       refreshSummary();
-      startReview();
+      startReview({ forceRebuild: true });
     },
     [refreshSummary, startReview],
   );
+
+  const isSessionBootstrapping =
+    enabled && isScreenFocused && isSubmitting && summary.reviewableDueTotal > 0;
 
   return {
     session,
@@ -304,6 +321,7 @@ export function useReviewFlow(options?: { enabled?: boolean }) {
     completedRound,
     revealed,
     isSubmitting,
+    isSessionBootstrapping,
     message,
     reviewContext,
     outcomeIntervalLabels,

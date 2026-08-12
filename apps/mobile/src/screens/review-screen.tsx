@@ -68,6 +68,8 @@ export function ReviewScreen(props: {
     setDailyReviewLimit,
     completedRound,
     clearCompletedRound,
+    isSessionBootstrapping,
+    startReview,
     openLexicon,
     handleToggleSave,
     handlePlayLexiconAudio,
@@ -84,6 +86,8 @@ export function ReviewScreen(props: {
         setDailyReviewLimit: normalFlow.setDailyReviewLimit,
         completedRound: normalFlow.completedRound,
         clearCompletedRound: normalFlow.clearCompletedRound,
+        isSessionBootstrapping: normalFlow.isSessionBootstrapping,
+        startReview: normalFlow.startReview,
       }
     : normalFlow;
 
@@ -233,9 +237,23 @@ export function ReviewScreen(props: {
         );
       }
 
+      if (isSessionBootstrapping) {
+        return (
+          <View style={styles.empty}>
+            <Text style={styles.emptyText}>正在加载复习词…</Text>
+          </View>
+        );
+      }
+
       return (
         <View style={styles.empty}>
-          <Text style={styles.emptyText}>正在加载复习词…</Text>
+          <Text style={styles.emptyText}>{message ?? '无法加载到期复习词'}</Text>
+          <PrimaryButton
+            label="重试"
+            onPress={() => {
+              startReview({ forceRebuild: true });
+            }}
+          />
         </View>
       );
     }
@@ -244,9 +262,9 @@ export function ReviewScreen(props: {
       <View style={styles.empty}>
         <Text style={styles.emptyText}>无法加载当前复习词</Text>
         <PrimaryButton
-          label="去学习"
+          label="重试"
           onPress={() => {
-            router.replace('/library');
+            startReview({ forceRebuild: true });
           }}
         />
       </View>

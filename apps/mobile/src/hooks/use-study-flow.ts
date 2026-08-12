@@ -79,19 +79,18 @@ export function useStudyFlow(
   }, [isReaderMode, options?.knowledgeId, packId]);
 
   useEffect(() => {
+    if (inspectMode && isBrowseMode) {
+      setBrowseReady(true);
+    }
+  }, [inspectMode, inspectSession?.inspectLocalDate, inspectSession?.knowledgeId, isBrowseMode]);
+
+  useEffect(() => {
     if (!inspectMode || !inspectSession.knowledgeId || !isBrowseMode) {
       return;
     }
     setRevealed(false);
     setBrowseCompleteVisible(false);
     setBrowseCompleteSummary(null);
-    setBrowseReady(false);
-    const frame = requestAnimationFrame(() => {
-      setBrowseReady(true);
-    });
-    return () => {
-      cancelAnimationFrame(frame);
-    };
   }, [inspectMode, inspectSession?.inspectLocalDate, inspectSession?.knowledgeId, isBrowseMode]);
 
   const inspectKnowledgeId =
